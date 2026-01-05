@@ -183,7 +183,9 @@ export const trackWalletCredentialShowAuthSource = (
   );
 };
 
-export const trackWalletStartDeactivation = (credential: MixPanelCredential) => {
+export const trackWalletStartDeactivation = (
+  credential: MixPanelCredential
+) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_START_DEACTIVATION,
     buildEventProperties("UX", "action", { credential })

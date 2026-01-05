@@ -1,6 +1,13 @@
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
 import {
+  ItwFlow,
+  ItwIdMethod,
+  ItwStatus,
+  MixPanelCredential
+} from "../../analytics/utils/analyticsTypes";
+import { IssuanceFailure } from "../../machine/eid/failure";
+import {
   AddCredentialFailure,
   BackToWallet,
   CredentialUnexpectedFailure,
@@ -8,13 +15,8 @@ import {
   IdUnexpectedFailure,
   ItwCredentialReissuingFailedProperties,
   ItwExit,
-  ItwFlow,
-  ItwIdMethod,
-  ItwStatus,
-  MixPanelCredential,
   TrackCredentialPreview
-} from "../../analytics/utils/analyticsTypes";
-import { IssuanceFailure } from "../../machine/eid/failure";
+} from "./types";
 import {
   ITW_ISSUANCE_ACTIONS_EVENTS,
   ITW_ISSUANCE_ERRORS_EVENTS,

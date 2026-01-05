@@ -5,15 +5,7 @@ import {
   ITW_PROXIMITY_ERRORS_EVENTS,
   ITW_PROXIMITY_SCREENVIEW_EVENTS
 } from "./enum";
-
-type ItwProximityFailure = {
-  reason: unknown;
-  type: string;
-};
-
-type ItwProximityGenericFailure = ItwProximityFailure & {
-  proximity_sharing_status: "pre" | "post";
-};
+import { ItwProximityFailure, ItwProximityGenericFailure } from "./types";
 
 // #region SCREEN VIEW EVENTS
 

@@ -15,10 +15,8 @@ import {
   trackItWalletLastErrorPin,
   trackItWalletSecondErrorPin
 } from "../../analytics";
-import {
-  CieCardReadingFailureReason,
-  ItwFlow
-} from "../../../analytics/utils/analyticsTypes";
+import { CieCardReadingFailureReason } from "../../analytics/types";
+import { ItwFlow } from "../../../analytics/utils/analyticsTypes";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";

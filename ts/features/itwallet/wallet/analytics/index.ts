@@ -1,13 +1,13 @@
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
-import { ItwOfflineRicaricaAppIOSource } from "../../analytics/utils/analyticsTypes";
+import { ItwOfflineRicaricaAppIOSource } from "./types";
 import {
   ITW_OFFLINE_ACTIONS_EVENTS,
   ITW_OFFLINE_ERRORS_EVENTS,
   ITW_OFFLINE_SCREENVIEW_EVENTS
 } from "./enum";
 
-// #region SCREEN VIEW EVENTS 
+// #region SCREEN VIEW EVENTS
 
 export const trackItwOfflineWallet = () => {
   void mixpanelTrack(

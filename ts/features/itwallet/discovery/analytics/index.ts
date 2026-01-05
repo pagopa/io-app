@@ -8,19 +8,19 @@ import {
 
 // #region ACTIONS
 
-export function trackItWalletActivationStart(itw_flow: ItwFlow) {
+export const trackItWalletActivationStart = (itw_flow: ItwFlow) => {
   void mixpanelTrack(
     ITW_DISCOVERY_ACTIONS_EVENTS.ITW_ID_START,
     buildEventProperties("UX", "action", { itw_flow })
   );
-}
+};
 
-export function trackItwIntroBack(itw_flow: ItwFlow) {
+export const trackItwIntroBack = (itw_flow: ItwFlow) => {
   void mixpanelTrack(
     ITW_DISCOVERY_ACTIONS_EVENTS.ITW_INTRO_BACK,
     buildEventProperties("UX", "action", { itw_flow })
   );
-}
+};
 
 export const trackOpenItwTosAccepted = (itw_flow: ItwFlow) => {
   void mixpanelTrack(

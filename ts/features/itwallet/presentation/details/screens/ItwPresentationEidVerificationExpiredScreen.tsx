@@ -8,7 +8,7 @@ import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { useItwEidFeedbackBottomSheet } from "../../../common/hooks/useItwEidFeedbackBottomSheet.tsx";
 import { trackItwSurveyRequest } from "../../../analytics";
 import { trackItwEidReissuingMandatory } from "../analytics";
-import { ItwEidReissuingTrigger } from "../../../analytics/utils/analyticsTypes";
+import { ItwEidReissuingTrigger } from "../analytics/types";
 
 export const ItwPresentationEidVerificationExpiredScreen = () => {
   const navigation = useIONavigation();

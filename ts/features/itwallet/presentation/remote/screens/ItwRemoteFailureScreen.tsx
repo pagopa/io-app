@@ -23,10 +23,8 @@ import {
 } from "../../../common/hooks/useItwFailureSupportModal.tsx";
 import { useItwSendAuthorizationErrorResponse } from "../hooks/useItwSendAuthorizationErrorResponse.tsx";
 import { useItwRemoteEventsTracking } from "../hooks/useItwRemoteEventsTracking";
-import {
-  getDismissalContextFromFailure,
-  trackItwRemoteInvalidAuthResponseBottomSheet
-} from "../analytics";
+import { trackItwRemoteInvalidAuthResponseBottomSheet } from "../analytics";
+import { getDismissalContextFromFailure } from "../analytics/utils/analyticsUtils";
 import { trackItwKoStateAction } from "../../../analytics";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences.ts";

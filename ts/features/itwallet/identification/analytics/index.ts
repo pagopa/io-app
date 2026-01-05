@@ -2,13 +2,15 @@ import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
 import {
   ItwFlow,
-  ItwScreenFlowContext,
-  ItwUserWithoutL3requirements,
+  ItwScreenFlowContext
+} from "../../analytics/utils/analyticsTypes";
+import {
   TrackITWalletSpidIDPSelected,
+  TrackItWalletCieCardVerifyFailure,
   TrackItWalletCieCardReadingFailure,
   TrackItWalletCieCardReadingUnexpectedFailure,
-  TrackItWalletCieCardVerifyFailure
-} from "../../analytics/utils/analyticsTypes";
+  ItwUserWithoutL3requirements
+} from "./types";
 import {
   ITW_IDENTIFICATION_ACTIONS_EVENTS,
   ITW_IDENTIFICATION_ERRORS_EVENTS,

@@ -2,7 +2,6 @@ import { useEffect } from "react";
 
 import { RemoteFailure, RemoteFailureType } from "../machine/failure";
 import {
-  getOrderedCredential,
   trackItwRemoteIdentityNeedsVerification,
   trackItwRemoteMandatoryCredentialMissing,
   trackItwRemoteInvalidMandatoryCredential,
@@ -13,7 +12,8 @@ import {
   trackItwRemoteUntrustedRP,
   trackItwUpgradeL3Mandatory
 } from "../analytics";
-import { ItwL3UpgradeTrigger } from "../../../analytics/utils/analyticsTypes";
+import { ItwL3UpgradeTrigger } from "../analytics/utils/types";
+import { getOrderedCredential } from "../analytics/utils/analyticsUtils";
 import {
   serializeFailureReason,
   shouldSerializeReason

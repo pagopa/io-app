@@ -24,7 +24,7 @@ export type MixPanelCredentialVersion = "V2" | "V3";
  * ITW_RES: Residency (obtained with IT Wallet)
  * UNKNOWN: placeholder used when a credential exists in the app but is not yet tracked on Mixpanel
  */
-export const mixPanelCredentials = [
+const mixPanelCredentials = [
   "ITW_ID_V2",
   "ITW_PG_V2",
   "ITW_TS_V2",
@@ -41,21 +41,9 @@ export const mixPanelCredentials = [
 
 export type MixPanelCredential = (typeof mixPanelCredentials)[number];
 
-export type TrackCredentialDetail = {
-  credential: MixPanelCredential; // MixPanelCredential
-  credential_status: string; // ItwPg
-  credential_type?: "multiple" | "unique";
-};
+type OtherMixPanelCredential = "welfare" | "payment_method" | "CGN";
 
-export type TrackCredentialPreview = {
-  credential: MixPanelCredential; // MixPanelCredential
-  credential_type?: "multiple" | "unique";
-};
-
-export type OtherMixPanelCredential = "welfare" | "payment_method" | "CGN";
 export type NewCredential = MixPanelCredential | OtherMixPanelCredential;
-
-export type ItwFailureCause = "CredentialIssuer" | "WalletProvider";
 
 /**
  * This map is used to map the credential type to the MixPanel credential
@@ -74,50 +62,6 @@ export const CREDENTIALS_MAP: Record<
   residency: "ITW_RES"
 };
 
-export type BackToWallet = {
-  exit_page: string;
-  credential: Extract<MixPanelCredential, "ITW_ID_V2">;
-};
-
-export type ItwExit = {
-  exit_page: string;
-  credential: MixPanelCredential;
-};
-
-export type AddCredentialFailure = {
-  credential: MixPanelCredential;
-  reason: unknown;
-  type: string;
-  caused_by: ItwFailureCause;
-};
-
-export type IdRequestFailure = {
-  ITW_ID_method: ItwIdMethod;
-  reason: unknown;
-  type: string;
-  caused_by: ItwFailureCause;
-  itw_flow: ItwFlow;
-};
-
-export type IdUnexpectedFailure = {
-  reason: unknown;
-  type: string;
-  itw_flow: ItwFlow;
-};
-
-export type CredentialUnexpectedFailure = {
-  credential: MixPanelCredential;
-  reason: unknown;
-  type: string;
-};
-
-export type ItwCredentialReissuingFailedProperties = {
-  reason: unknown;
-  credential_failed: MixPanelCredential;
-  itw_flow: ItwFlow;
-  type: string;
-};
-
 export type CredentialStatusAssertionFailure = {
   credential: MixPanelCredential;
   credential_status: string;
@@ -126,7 +70,6 @@ export type CredentialStatusAssertionFailure = {
 
 export type ItwIdMethod = IdentificationContext["mode"];
 
-// PROPERTIES TYPES
 export type TrackITWalletBannerClosureProperties = {
   banner_id: string;
   banner_page: string;
@@ -139,40 +82,6 @@ export type TrackITWalletIDMethodSelected = {
   itw_flow: ItwFlow;
 };
 
-export type TrackITWalletSpidIDPSelected = { idp: string };
-
-export type TrackItWalletCieCardVerifyFailure = {
-  reason: CieCardVerifyFailureReason;
-  itw_flow: ItwFlow;
-  cie_reading_progress: number;
-};
-
-export type TrackItWalletCieCardReadingFailure = {
-  reason: CieCardReadingFailureReason;
-  itw_flow: ItwFlow;
-  cie_reading_progress: number;
-};
-
-export type TrackItWalletCieCardReadingUnexpectedFailure = {
-  reason: string | undefined;
-  cie_reading_progress: number;
-};
-
-export type CieCardVerifyFailureReason =
-  | "CERTIFICATE_EXPIRED"
-  | "CERTIFICATE_REVOKED";
-
-export enum CieCardReadingFailureReason {
-  KO = "KO",
-  ON_TAG_DISCOVERED_NOT_CIE = "ON_TAG_DISCOVERED_NOT_CIE",
-  GENERIC_ERROR = "GENERIC_ERROR",
-  APDU_ERROR = "APDU_ERROR",
-  START_NFC_ERROR = "START_NFC_ERROR",
-  STOP_NFC_ERROR = "STOP_NFC_ERROR",
-  NO_INTERNET_CONNECTION = "NO_INTERNET_CONNECTION",
-  AUTHENTICATION_ERROR = "AUTHENTICATION_ERROR"
-}
-
 export type ItwCredentialMixpanelStatus =
   | "not_available"
   | "valid"
@@ -184,6 +93,7 @@ export type ItwCredentialMixpanelStatus =
   | "unknown";
 
 export type ItwStatus = "not_active" | "L2" | "L3";
+
 // Assuming that the eID status is the same as the PID status
 export type ItwPIDStatus = Extract<
   ItwCredentialMixpanelStatus,
@@ -227,36 +137,10 @@ export type ItwCopyListItem = {
   item_copied: string;
 };
 
-export type ItwOfflineRicaricaAppIOSource =
-  | "bottom_sheet"
-  | "banner"
-  | "access_expired_screen";
-
 export type ItwCredentialInfoDetails = {
   credential: MixPanelCredential;
   credential_screen_type: "detail" | "preview";
 };
-
-/**
- * Actions that can trigger the eID reissuing flow.
- * This type represents the user action that was performed immediately before
- * the eID reissuing process is initiated.
- * Add new values here when implementing additional flows that should start
- * the reissuing procedure.
- */
-export enum ItwEidReissuingTrigger {
-  ADD_CREDENTIAL = "add_credential"
-}
-
-/**
- * Actions that trigger the requirement for L3 upgrade.
- * This type represents the user action that was performed immediately before
- * the L3 mandatory upgrade screen was displayed.
- * Add new values when implementing additional flows that require L3 upgrade.
- */
-export enum ItwL3UpgradeTrigger {
-  REMOTE_QR_CODE = "remote_qr_code"
-}
 
 // TODO: Add reissuing_PID when the L3 PID reissuance flow is ready
 export type ItwFlow = "L2" | "L3" | "reissuing_eID" | "not_available";
@@ -272,15 +156,7 @@ export type ItwDismissalAction = {
   user_action: string;
 };
 
-export type ItwUserWithoutL3requirements = {
-  screen_name: string;
-  reason: "user_without_cie" | "user_without_pin";
-  position: "screen" | "bottom_sheet";
-};
-
-export type QualtricsSurveyId =
-  | "confirm_eid_flow_success"
-  | "confirm_eid_flow_exit";
+type QualtricsSurveyId = "confirm_eid_flow_success" | "confirm_eid_flow_exit";
 
 export type TrackQualtricsSurvey = {
   survey_id: QualtricsSurveyId;

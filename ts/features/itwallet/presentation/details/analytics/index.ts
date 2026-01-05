@@ -1,10 +1,7 @@
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { buildEventProperties } from "../../../../../utils/analytics";
-import {
-  ItwEidReissuingTrigger,
-  MixPanelCredential,
-  TrackCredentialDetail
-} from "../../../analytics/utils/analyticsTypes";
+import { MixPanelCredential } from "../../../analytics/utils/analyticsTypes";
+import { ItwEidReissuingTrigger, TrackCredentialDetail } from "./types";
 import {
   ITW_PRESENTATION_DETAILS_ACTIONS_EVENTS,
   ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS
@@ -66,7 +63,9 @@ export const trackWalletShowBack = (credential: MixPanelCredential) => {
   );
 };
 
-export const trackWalletCredentialSupport = (credential: MixPanelCredential) => {
+export const trackWalletCredentialSupport = (
+  credential: MixPanelCredential
+) => {
   void mixpanelTrack(
     ITW_PRESENTATION_DETAILS_ACTIONS_EVENTS.ITW_CREDENTIAL_SUPPORT,
     buildEventProperties("UX", "action", { credential })
