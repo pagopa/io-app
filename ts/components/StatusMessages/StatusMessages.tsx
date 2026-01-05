@@ -30,7 +30,7 @@ export const StatusMessages = ({ children }: StatusMessagesProps) => {
     if (!statusAlert || !statusBarBackgroundColor) {
       return;
     }
-    // Ensure Android status bar resets after full-screen modal overrides.
+    // Ensure status bar resets after full-screen modal overrides.
     StatusBar.setBackgroundColor?.(statusBarBackgroundColor);
     StatusBar.setBarStyle("dark-content");
   }, [statusAlert, statusBarBackgroundColor]);
