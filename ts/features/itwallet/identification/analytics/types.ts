@@ -2,9 +2,7 @@ import { ItwFlow } from "../../analytics/utils/analyticsTypes";
 
 export type TrackITWalletSpidIDPSelected = { idp: string };
 
-type CieCardVerifyFailureReason =
-  | "CERTIFICATE_EXPIRED"
-  | "CERTIFICATE_REVOKED";
+type CieCardVerifyFailureReason = "CERTIFICATE_EXPIRED" | "CERTIFICATE_REVOKED";
 
 export type TrackItWalletCieCardVerifyFailure = {
   reason: CieCardVerifyFailureReason;
