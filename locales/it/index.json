@@ -3974,7 +3974,6 @@
             "paragraph1": "Conserva il codice QR, ti servirà per rileggere la notifica in app",
             "paragraph2": "Puoi inquadrarlo oppure caricare una sua foto su IO",
             "paragraph3": "Tutte le tue notifiche sono disponibili sul sito di SEND - Notifiche Digitali",
-            "paragraphDelegate3": "Tutte le tue notifiche e quelle per cui hai una delega sono disponibili sul sito di SEND - Notifiche Digitali",
             "link": "Vai sul sito di SEND",
             "primaryAction": "Torna alla notifica",
             "secondaryAction": "Chiudi la notifica"
@@ -3987,6 +3986,39 @@
             "title": "Posiziona la CIE su una superficie stabile per la lettura",
             "description": "Dovrai poggiare il retro del telefono sulla carta e tenerlo fermo per la lettura.",
             "primaryAction": "Inizia lettura CIE"
+          },
+          "androidNfcActivation": {
+            "title": "Attiva l’NFC per\ncontinuare",
+            "description": "Per consentire a IO di leggere la CIE, attiva l’NFC dalle Impostazioni del tuo dispositivo.",
+            "content": {
+              "listItemsHeader": "Come fare",
+              "listItems": {
+                "step1": {
+                  "label": "Step 1",
+                  "value": "Apri “Impostazioni”"
+                },
+                "step2": {
+                  "label": "Step 2",
+                  "value": "Cerca la funzionalità “NFC”"
+                },
+                "step3": {
+                  "label": "Step 3",
+                  "value": "Attiva la funzionalità"
+                }
+              }
+            },
+            "primaryAction": "Apri Impostazioni",
+            "secondaryAction": "Continua",
+            "alertOnClose": {
+              "title": "Vuoi interrompere l’apertura della notifica?",
+              "message": "Puoi aprire la notifica SEND in qualsiasi altro momento, dovrai però ripartire dal codice QR.",
+              "confirm": "Sì, interrompi",
+              "cancel": "No, continua"
+            },
+            "alertOnContinue": {
+              "title": "Attiva l’NFC per permettere a IO di leggere la CIE!",
+              "confirm": "Attiva NFC"
+            }
           },
           "cieScanning": {
             "idle": {
