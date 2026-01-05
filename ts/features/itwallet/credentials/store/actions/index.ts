@@ -17,7 +17,7 @@ export const itwCredentialsStore = createStandardAction(
  */
 export const itwCredentialsRemove = createStandardAction(
   "ITW_CREDENTIALS_REMOVE"
-)<ReadonlyArray<CredentialMetadata>>();
+)<ReadonlyArray<CredentialMetadata["credentialId"]>>();
 
 /**
  * Remove all credentials of the specified type. Used to fully clean
@@ -26,7 +26,7 @@ export const itwCredentialsRemove = createStandardAction(
  */
 export const itwCredentialsRemoveByType = createStandardAction(
   "ITW_CREDENTIALS_REMOVE_BY_TYPE"
-)<string>();
+)<CredentialMetadata["credentialType"]>();
 
 export type ItwCredentialsActions =
   | ActionType<typeof itwCredentialsStore>

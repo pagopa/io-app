@@ -42,7 +42,7 @@ const reducer = (
     }
 
     case getType(itwCredentialsRemove): {
-      const idsToRemove = new Set(action.payload.map(c => c.credentialId));
+      const idsToRemove = new Set(action.payload);
 
       const otherCredentials = Object.values(state.credentials)
         .filter(c => !idsToRemove.has(c.credentialId))
