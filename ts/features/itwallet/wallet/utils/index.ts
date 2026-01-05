@@ -13,6 +13,6 @@ export const mapCredentialToWalletCard = (
   category: "itw",
   credentialType: credential.credentialType,
   credentialStatus: getCredentialStatus(credential),
-  isItwCredential: false, // replaced in SIW-3581
+  issuedAt: credential.jwt.issuedAt,
   isMultiCredential: isMultiLevelCredential(credential)
 });

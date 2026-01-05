@@ -63,18 +63,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -144,13 +140,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -583,7 +575,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -595,7 +586,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -1582,7 +1572,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -1594,7 +1583,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -1990,22 +1978,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -2076,18 +2056,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -2157,13 +2133,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -2643,7 +2615,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -2655,7 +2626,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -3642,7 +3612,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -3654,7 +3623,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -4050,22 +4018,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -4136,18 +4096,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -4217,13 +4173,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -4684,7 +4636,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -4696,7 +4647,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -5683,7 +5633,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -5695,7 +5644,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -6091,22 +6039,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -6177,18 +6117,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -6258,13 +6194,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -6710,7 +6642,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -6722,7 +6653,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -7709,7 +7639,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -7721,7 +7650,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -8117,22 +8045,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -8203,18 +8123,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -8284,13 +8200,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -8750,7 +8662,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -8762,7 +8673,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -9749,7 +9659,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -9761,7 +9670,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -10157,22 +10065,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -10243,18 +10143,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -10324,13 +10220,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -10890,7 +10782,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -10902,7 +10793,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -11889,7 +11779,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -11901,7 +11790,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -12297,22 +12185,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -12383,18 +12263,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -12464,13 +12340,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -13002,7 +12874,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -13014,7 +12885,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -14001,7 +13871,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -14013,7 +13882,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -14409,22 +14277,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -14495,18 +14355,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -14576,13 +14432,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -15028,7 +14880,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -15040,7 +14891,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -16027,7 +15877,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -16039,7 +15888,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -16435,22 +16283,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -16521,18 +16361,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -16602,13 +16438,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -17004,7 +16836,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -17016,7 +16847,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -18003,7 +17833,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -18015,7 +17844,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -18411,22 +18239,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -18497,18 +18317,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -18578,13 +18394,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -19064,7 +18876,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -19076,7 +18887,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -20063,7 +19873,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -20075,7 +19884,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -20471,22 +20279,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -20557,18 +20357,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -20638,13 +20434,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -21104,7 +20896,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -21116,7 +20907,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -22103,7 +21893,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -22115,7 +21904,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -22511,22 +22299,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -22597,18 +22377,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -22678,13 +22454,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -23164,7 +22936,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -23176,7 +22947,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -24163,7 +23933,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -24175,7 +23944,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -24571,22 +24339,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -24657,18 +24417,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -24738,13 +24494,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -25304,7 +25056,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -25316,7 +25067,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -26303,7 +26053,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -26315,7 +26064,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -26711,22 +26459,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -26797,18 +26537,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -26878,13 +26614,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -27364,7 +27096,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -27376,7 +27107,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -28363,7 +28093,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -28375,7 +28104,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -28771,22 +28499,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -28857,18 +28577,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -28938,13 +28654,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -29424,7 +29136,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -29436,7 +29147,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -30423,7 +30133,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -30435,7 +30144,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -30831,22 +30539,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -30917,18 +30617,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -30998,13 +30694,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -31492,7 +31184,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -31504,7 +31195,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -32491,7 +32181,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -32503,7 +32192,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -32899,22 +32587,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -32985,18 +32665,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -33066,13 +32742,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -33532,7 +33204,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -33544,7 +33215,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -34531,7 +34201,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -34543,7 +34212,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -34939,22 +34607,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -35025,18 +34685,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -35106,13 +34762,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -35674,7 +35326,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -35686,7 +35337,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -36673,7 +36323,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -36685,7 +36334,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -37081,22 +36729,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -37167,18 +36807,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -37248,13 +36884,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -37714,7 +37346,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -37726,7 +37357,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -38713,7 +38343,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -38725,7 +38354,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -39121,22 +38749,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -39207,18 +38827,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -39288,13 +38904,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -39796,7 +39408,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -39808,7 +39419,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -40795,7 +40405,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -40807,7 +40416,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -41203,22 +40811,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -41289,18 +40889,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -41370,13 +40966,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -41939,7 +41531,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -41951,7 +41542,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -42938,7 +42528,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -42950,7 +42539,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -43346,22 +42934,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -43432,18 +43012,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -43513,13 +43089,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -44143,7 +43715,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -44155,7 +43726,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -45142,7 +44712,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -45154,7 +44723,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -45550,22 +45118,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -45636,18 +45196,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -45717,13 +45273,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -46169,7 +45721,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -46181,7 +45732,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -47168,7 +46718,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -47180,7 +46729,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -47576,22 +47124,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -47662,18 +47202,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -47743,13 +47279,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -48237,7 +47769,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -48249,7 +47780,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -49236,7 +48766,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -49248,7 +48777,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -49644,22 +49172,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -49730,18 +49250,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -49811,13 +49327,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -50277,7 +49789,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -50289,7 +49800,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -51276,7 +50786,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -51288,7 +50797,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -51684,22 +51192,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -51770,18 +51270,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -51851,13 +51347,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -52337,7 +51829,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -52349,7 +51840,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -53336,7 +52826,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -53348,7 +52837,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -53744,22 +53232,14 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>

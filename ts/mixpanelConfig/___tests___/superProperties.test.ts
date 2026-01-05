@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { MixpanelProperties } from "mixpanel-react-native";
+import { Appearance } from "react-native";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
 import * as PUSHUTILS from "../../features/pushNotifications/utils";
@@ -12,12 +13,6 @@ import * as lifecycleSelectors from "../../features/itwallet/lifecycle/store/sel
 import { updateMixpanelSuperProperties } from "../superProperties";
 
 const mockColorScheme = "light";
-jest.mock("react-native", () => ({
-  ...jest.requireActual("react-native"),
-  Appearance: {
-    getColorScheme: jest.fn(() => mockColorScheme)
-  }
-}));
 
 // eslint-disable-next-line functional/no-let
 let mockIsMixpanelInitialized = true;
@@ -29,6 +24,14 @@ jest.mock("../../mixpanel", () => ({
 }));
 
 describe("superProperties", () => {
+  beforeEach(() => {
+    // Reset all mocks before each test
+    jest.clearAllMocks();
+
+    // Mock Appearance.getColorScheme using spyOn
+    jest.spyOn(Appearance, "getColorScheme").mockReturnValue(mockColorScheme);
+  });
+
   afterEach(() => {
     jest.restoreAllMocks();
     jest.clearAllMocks();
