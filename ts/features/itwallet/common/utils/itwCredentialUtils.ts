@@ -3,6 +3,7 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { SdJwt, Mdoc } from "@pagopa/io-react-native-wallet";
 import I18n from "i18next";
+import { isBefore } from "date-fns";
 import { CredentialType } from "./itwMocksUtils";
 import {
   CredentialFormat,
@@ -157,4 +158,21 @@ export const isItwCredential = ({
     ),
     O.getOrElse(() => false)
   );
+};
+
+/**
+ * Checks if the credential was issued before the PID.
+ * @param credentialIssuedAt - Credential issuance date
+ * @param pidIssuedAt - PID issuance date
+ * @returns true if credential was issued before PID, false otherwise
+ */
+export const isCredentialIssuedBeforePid = (
+  credentialIssuedAt?: string,
+  pidIssuedAt?: string
+): boolean => {
+  if (!credentialIssuedAt || !pidIssuedAt) {
+    return false;
+  }
+
+  return isBefore(new Date(credentialIssuedAt), new Date(pidIssuedAt));
 };
