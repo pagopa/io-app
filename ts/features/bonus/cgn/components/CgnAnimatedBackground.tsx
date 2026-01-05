@@ -1,5 +1,5 @@
 import WebView from "react-native-webview";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Point, generateRandomSvgMovement } from "../utils/svgBackground";
 import { playSvg } from "./detail/CardSvgPayload";
 
@@ -10,10 +10,7 @@ export function CgnAnimatedBackground({ onLoadEnd }: { onLoadEnd?(): void }) {
       accessible={false}
       importantForAccessibility="no-hide-descendants"
       accessibilityElementsHidden={true}
-      style={{
-        height: "100%",
-        width: "100%"
-      }}
+      style={StyleSheet.absoluteFillObject}
     >
       <WebView
         androidCameraAccessDisabled={true}
@@ -24,8 +21,7 @@ export function CgnAnimatedBackground({ onLoadEnd }: { onLoadEnd?(): void }) {
           html: generatedSvg
         }}
         style={{
-          height: "100%",
-          width: "100%",
+          ...StyleSheet.absoluteFillObject,
           backgroundColor
         }}
         onLoadEnd={onLoadEnd}
@@ -33,6 +29,7 @@ export function CgnAnimatedBackground({ onLoadEnd }: { onLoadEnd?(): void }) {
     </View>
   );
 }
+
 const minPointA: Point = {
   x: 80,
   y: -100
