@@ -5167,6 +5167,10 @@
           "subtitleStart": "Questa richiesta non è più valida ma puoi aggiungere di nuovo la tua ",
           "subtitleBold": "Patente su IO.",
           "primaryAction": "Aggiungi di nuovo"
+        },
+        "mrtdChallengeInitError": {
+          "title": "Un problema non permette di continuare",
+          "subtitle": "Si è verificato un errore che impedisce di procedere con la lettura della CIE. Riprova. Se il problema persiste, contatta l'assistenza."
         }
       },
       "notMatchingIdentityScreen": {
