@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.22.0-rc.8](https://github.com/pagopa/io-app/compare/3.22.0-rc.7...3.22.0-rc.8) (2026-01-05)
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-3581](https://pagopa.atlassian.net/browse/SIW-3581)] Update "Da aggiornare" badge logic based on credential issuance date ([#7739](https://github.com/pagopa/io-app/issues/7739)) ([9b4b095](https://github.com/pagopa/io-app/commit/9b4b09557f837dd7af3ba0026e2b258242933564))
+
+## [3.22.0-rc.7](https://github.com/pagopa/io-app/compare/3.22.0-rc.6...3.22.0-rc.7) (2025-12-19)
+
+
+### Features
+
+* **AAR:** [[IOCOM-2750](https://pagopa.atlassian.net/browse/IOCOM-2750)][Android] NFC activation screen ([#7718](https://github.com/pagopa/io-app/issues/7718)) ([e9162cc](https://github.com/pagopa/io-app/commit/e9162ccc89f6d3fa5ed796fd83fbd1bc555d5c7f))
+
 ## [3.22.0-rc.6](https://github.com/pagopa/io-app/compare/3.22.0-rc.5...3.22.0-rc.6) (2025-12-19)
 
 
