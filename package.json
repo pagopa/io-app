@@ -1,6 +1,6 @@
 {
   "name": "io",
-  "version": "3.22.0-rc.8",
+  "version": "3.22.0-rc.9",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -69,7 +69,7 @@
     "@pagopa/io-react-native-jwt": "^2.1.0",
     "@pagopa/io-react-native-login-utils": "1.2.0",
     "@pagopa/io-react-native-secure-storage": "^0.2.1",
-    "@pagopa/io-react-native-wallet": "^2.4.0",
+    "@pagopa/io-react-native-wallet": "^2.4.2",
     "@pagopa/io-react-native-wallet-legacy": "npm:@pagopa/io-react-native-wallet@0.30.0",
     "@pagopa/io-react-native-zendesk": "^0.3.30",
     "@pagopa/react-native-cie": "^1.5.0",
