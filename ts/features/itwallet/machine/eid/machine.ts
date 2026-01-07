@@ -95,7 +95,8 @@ export const itwEidIssuanceMachine = setup({
     trackWalletInstanceCreation: notImplemented,
     trackWalletInstanceRevocation: notImplemented,
     trackIdentificationMethodSelected: notImplemented,
-
+    trackItwIdAuthenticationCompleted: notImplemented,
+    trackItwIdVerifiedDocument: notImplemented,
     /**
      * Context manipulation
      */
@@ -245,7 +246,8 @@ export const itwEidIssuanceMachine = setup({
         start: {
           actions: assign(({ event }) => ({
             mode: event.mode,
-            level: event.level
+            level: event.level,
+            credentialType: event.credentialType
           })),
           target: "EvaluatingIssuanceMode"
         },
@@ -849,7 +851,8 @@ export const itwEidIssuanceMachine = setup({
       onDone: [
         {
           guard: "requiresMrtdVerification",
-          target: "MrtdPoP"
+          target: "MrtdPoP",
+          actions: "trackItwIdAuthenticationCompleted"
         },
         {
           target: "Issuance"
@@ -967,6 +970,12 @@ export const itwEidIssuanceMachine = setup({
                   }
                 };
               })
+            },
+            close: {
+              target: "#itwEidIssuanceMachine.UserIdentification"
+            },
+            back: {
+              target: "DisplayingCieNfcPreparationInstructions"
             }
           }
         },
@@ -1006,7 +1015,11 @@ export const itwEidIssuanceMachine = setup({
           on: {
             "mrtd-pop-verification-completed": {
               target: "#itwEidIssuanceMachine.MrtdPoP.Completed",
-              actions: ["completeMrtdPoP", "storeAuthLevel"]
+              actions: [
+                "completeMrtdPoP",
+                "storeAuthLevel",
+                "trackItwIdVerifiedDocument"
+              ]
             }
           }
         },

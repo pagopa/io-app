@@ -81,3 +81,11 @@ Created on **19/05/2025**
 #### Reason:
 
 - Patch to fix a visualization error that prevented cards to be incorrectly rendered in Wallet Home Screen.
+
+### react-native-screenshot-prevent-npm-1.2.1-d115315590.patch
+
+Created on **24/11/2025**
+
+#### Reason:
+
+- Patch to make the library ready for react-native new architecture

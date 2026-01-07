@@ -55,6 +55,7 @@ import { DSLayout } from "../core/DSLayout";
 import { DSListItems } from "../core/DSListItems";
 import { DSLoaders } from "../core/DSLoaders";
 import { DSLoadingScreen } from "../core/DSLoadingScreen";
+import { DSLoadingScreenExtendedProps } from "../core/DSLoadingScreenExtendedProps";
 import { DSLogos } from "../core/DSLogos";
 import { DSModules } from "../core/DSModules";
 import { DSNumberPad } from "../core/DSNumberPad";
@@ -520,6 +521,18 @@ export const DesignSystemNavigator = () => {
           component={DSLoadingScreen}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.SCREENS.LOADING_SCREEN.title
+          }}
+        />
+
+        <Stack.Screen
+          name={
+            DESIGN_SYSTEM_ROUTES.SCREENS.LOADING_SCREEN_EXTENDED_PROPS.route
+          }
+          component={DSLoadingScreenExtendedProps}
+          options={{
+            headerShown: false,
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.SCREENS.LOADING_SCREEN_EXTENDED_PROPS.title
           }}
         />
 

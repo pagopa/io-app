@@ -8,7 +8,10 @@ export type SendAARFailurePhase =
   | "Entry Point"
   | "Fetch Notification"
   | "Fetch QRCode"
-  | "Show Notification";
+  | "Validate Mandate"
+  | "Playground"
+  | "Show Notification"
+  | "Create Mandate";
 
 export type RecipientInfo = {
   denomination: string;
@@ -258,10 +261,7 @@ export const validAARStatusTransitions = new Map<
   ],
   [
     sendAARFlowStates.validatingMandate,
-    new Set([
-      sendAARFlowStates.ko,
-      sendAARFlowStates.displayingNotificationData
-    ])
+    new Set([sendAARFlowStates.ko, sendAARFlowStates.fetchingNotificationData])
   ]
 ]);
 
@@ -309,3 +309,7 @@ export type AARFlowState =
   | AARFlowDefaultState
   | AARFlowDelegatedState
   | AarErrorStates;
+
+export type AarStatesByName = {
+  [K in AARFlowStateName]: Extract<AARFlowState, { type: K }>;
+};

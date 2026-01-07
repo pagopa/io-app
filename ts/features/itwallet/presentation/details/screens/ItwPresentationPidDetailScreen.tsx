@@ -1,10 +1,10 @@
-import { ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
+import { ContentWrapper, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { Canvas } from "@shopify/react-native-skia";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useCallback } from "react";
-import { useWindowDimensions } from "react-native";
+import { useWindowDimensions, View } from "react-native";
 import { useIOSelector } from "../../../../../store/hooks";
 import {
   mapPIDStatusToMixpanel,
@@ -14,6 +14,7 @@ import {
   ItwBrandedSkiaGradient,
   ItwSkiaBrandedGradientVariant
 } from "../../../common/components/ItwBrandedSkiaGradient";
+import { PoweredByItWalletText } from "../../../common/components/PoweredByItWalletText";
 import {
   ItwJwtCredentialStatus,
   StoredCredential
@@ -52,10 +53,13 @@ export const ItwPresentationPidDetailScreen = () => {
 
       {/* Page content */}
       <ContentWrapper>
-        <VSpacer size={16} />
-        <ItwPresentationPidDetail credential={credential} />
-        <VSpacer size={16} />
-        <ItwPresentationPidDetailFooter credential={credential} />
+        <VStack style={{ paddingVertical: 16 }} space={16}>
+          <ItwPresentationPidDetail credential={credential} />
+          <ItwPresentationPidDetailFooter credential={credential} />
+          <View style={{ alignItems: "center" }}>
+            <PoweredByItWalletText />
+          </View>
+        </VStack>
       </ContentWrapper>
     </ItwPresentationDetailsScreenBase>
   );

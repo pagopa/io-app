@@ -15,8 +15,6 @@ const CGNDiscountExpiredScreen = () => {
         onPress,
         testID: "close-button"
       }}
-      enableAnimatedPictogram
-      loop
     />
   );
 };

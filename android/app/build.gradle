@@ -119,9 +119,10 @@ android {
         applicationId "it.pagopa.io.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 100155093
-        versionName "3.21.0.7"
+        versionCode 100155104
+        versionName "3.22.0.9"
         multiDexEnabled true
+        manifestPlaceholders = [usesCleartextTraffic: "true"]
         // The resConfigs attribute will remove all not required localized resources while building the application,
         // including the localized resources from libraries.
 

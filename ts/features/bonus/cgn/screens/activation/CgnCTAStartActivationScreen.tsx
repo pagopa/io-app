@@ -52,6 +52,7 @@ const CgnCTAStartOnboardingComponent: FC<Props> = (props: Props) => {
   if (props.hasError) {
     return (
       <OperationResultScreenContent
+        pictogram="umbrella"
         title={I18n.t("global.genericError")}
         action={{
           label: I18n.t("global.buttons.retry"),
@@ -61,11 +62,7 @@ const CgnCTAStartOnboardingComponent: FC<Props> = (props: Props) => {
     );
   }
 
-  return (
-    <LoadingScreenContent
-      contentTitle={I18n.t("global.remoteStates.loading")}
-    />
-  );
+  return <LoadingScreenContent title={I18n.t("global.remoteStates.loading")} />;
 };
 
 /**

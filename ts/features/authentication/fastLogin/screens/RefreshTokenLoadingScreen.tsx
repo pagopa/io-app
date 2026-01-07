@@ -6,14 +6,11 @@ import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBa
 
 const RefreshTokenLoadingScreen = () => {
   useAvoidHardwareBackButton();
-
-  const contentTitle = I18n.t("fastLogin.loadingScreen.title");
-
   const theme = useIOTheme();
 
   return (
     <Modal backdropColor={IOColors[theme["appBackground-primary"]]}>
-      <LoadingScreenContent contentTitle={contentTitle} />
+      <LoadingScreenContent title={I18n.t("fastLogin.loadingScreen.title")} />
     </Modal>
   );
 };

@@ -80,7 +80,10 @@ describe("UseEngamentScreenFocusLogic", () => {
           const spiedOnMockedAnalyticsOutcomeEvent = jest
             .spyOn(analytics, "trackSystemNotificationPermissionScreenOutcome")
             .mockImplementation();
-
+          const removeMock = jest.fn();
+          jest
+            .spyOn(RN.AppState, "addEventListener")
+            .mockImplementation(() => ({ remove: removeMock }));
           renderHook(flow, openingSource, userType);
 
           expect(testOpenNotifications).toHaveBeenCalledTimes(0);
@@ -124,7 +127,7 @@ describe("UseEngamentScreenFocusLogic", () => {
           const removeMock = jest.fn();
           const appStateSpy = jest
             .spyOn(RN.AppState, "addEventListener")
-            .mockReturnValue({ remove: removeMock });
+            .mockImplementation(() => ({ remove: removeMock }));
 
           renderHook(
             flow,
@@ -186,7 +189,7 @@ describe("UseEngamentScreenFocusLogic", () => {
     expect(eventListenerMock).toHaveBeenCalledTimes(1);
     expect(eventListenerMock.mock.calls[0][0]).toBe("change");
     expect(removeMock).toHaveBeenCalledTimes(0);
-    act(hook.unmount);
+    hook.unmount();
     expect(removeMock).toHaveBeenCalledTimes(1);
   });
 });
@@ -218,7 +221,10 @@ describe("appStateHandler", () => {
         .mockImplementation(
           () => new Promise((res, _rej) => res(isNotificationAuthorized))
         );
-
+      const removeMock = jest.fn();
+      jest
+        .spyOn(RN.AppState, "addEventListener")
+        .mockImplementation(() => ({ remove: removeMock }));
       await MAIN_FILE.testable!.appStateHandler(
         mockOnReturnToApp,
         mockOnSuccess,

@@ -2559,12 +2559,6 @@
           "title": "Abilita il metodo per effettuare pagamenti in app",
           "subtitle": "Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”."
         },
-        "PAYMENT_METHODS_NOT_AVAILABLE": {
-          "title": "Vuoi pagare con carta? Aggiungila ora!",
-          "subtitle": "Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.",
-          "primaryAction": "Aggiungi carta",
-          "secondaryAction": "Usa altri metodi"
-        },
         "PAYMENT_METHODS_EXPIRED": {
           "title": "La tua carta è scaduta!",
           "subtitle": "Rimuovi la carta e aggiungine una nuova.\nVerrà salvata nel Portafoglio, così la prossima volta potrai pagare più facilmente.",
@@ -2986,7 +2980,8 @@
           }
         }
       },
-      "searchLink": "Cerca tra tutti i servizi locali disponibili"
+      "searchLink": "Cerca tra tutti i servizi locali disponibili",
+      "favourites": "Servizi preferiti"
     },
     "institution": {
       "failure": {
@@ -3055,6 +3050,35 @@
         "title": "Termini e Privacy",
         "tosLink": "Termini e condizioni d'uso",
         "privacyLink": "Informativa sulla privacy"
+      }
+    },
+    "favouriteServices": {
+      "title": "I miei preferiti",
+      "add": "Aggiungi ai preferiti",
+      "remove": "Rimuovi dai preferiti",
+      "sortButton": "Ordina",
+      "toasts": {
+        "added": "Aggiunto ai preferiti!",
+        "removed": "Rimosso dai preferiti!",
+        "limitReached": "Hai raggiunto il limite massimo di preferiti"
+      },
+      "emptyList": {
+        "title": "Crea la tua lista di preferiti",
+        "subtitle": "Salva i servizi che usi di più per averli sempre a portata di mano",
+        "searchAction": "Inizia la ricerca"
+      },
+      "removeAlert": {
+        "title": "Vuoi rimuovere il servizio dai preferiti?",
+        "confirm": "Sì, rimuovi"
+      },
+      "bottomSheet": {
+        "title": "Ordina per",
+        "a11y": "Ordina i servizi preferiti",
+        "content": {
+          "addedAt_desc": "Dal più recente",
+          "name_asc": "Per nome (A-Z)",
+          "addedAt_asc": "Dal meno recente"
+        }
       }
     }
   },
@@ -3587,6 +3611,7 @@
         "navigationTitle": "Agevolazioni",
         "screenTitle": "Scopri le opportunità",
         "merchantsAll": "Tutti i partner",
+        "a11yTitle": "Categoria: {{categoryName}}",
         "tabs": {
           "perInitiative": "Per categoria",
           "perMerchant": "Per partner",
@@ -3949,7 +3974,6 @@
             "paragraph1": "Conserva il codice QR, ti servirà per rileggere la notifica in app",
             "paragraph2": "Puoi inquadrarlo oppure caricare una sua foto su IO",
             "paragraph3": "Tutte le tue notifiche sono disponibili sul sito di SEND - Notifiche Digitali",
-            "paragraphDelegate3": "Tutte le tue notifiche e quelle per cui hai una delega sono disponibili sul sito di SEND - Notifiche Digitali",
             "link": "Vai sul sito di SEND",
             "primaryAction": "Torna alla notifica",
             "secondaryAction": "Chiudi la notifica"
@@ -3957,6 +3981,44 @@
           "cieCanInsertion": {
             "title": "Inserisci il codice a 6 cifre che trovi in basso a destra della CIE",
             "description": "È il codice a 6 cifre (CAN) che trovi stampato sul fronte della Carta di Identità Elettronica, in basso a destra."
+          },
+          "cieScanningAdvisory": {
+            "title": "Posiziona la CIE su una superficie stabile per la lettura",
+            "description": "Dovrai poggiare il retro del telefono sulla carta e tenerlo fermo per la lettura.",
+            "primaryAction": "Inizia lettura CIE"
+          },
+          "androidNfcActivation": {
+            "title": "Attiva l’NFC per\ncontinuare",
+            "description": "Per consentire a IO di leggere la CIE, attiva l’NFC dalle Impostazioni del tuo dispositivo.",
+            "content": {
+              "listItemsHeader": "Come fare",
+              "listItems": {
+                "step1": {
+                  "label": "Step 1",
+                  "value": "Apri “Impostazioni”"
+                },
+                "step2": {
+                  "label": "Step 2",
+                  "value": "Cerca la funzionalità “NFC”"
+                },
+                "step3": {
+                  "label": "Step 3",
+                  "value": "Attiva la funzionalità"
+                }
+              }
+            },
+            "primaryAction": "Apri Impostazioni",
+            "secondaryAction": "Continua",
+            "alertOnClose": {
+              "title": "Vuoi interrompere l’apertura della notifica?",
+              "message": "Puoi aprire la notifica SEND in qualsiasi altro momento, dovrai però ripartire dal codice QR.",
+              "confirm": "Sì, interrompi",
+              "cancel": "No, continua"
+            },
+            "alertOnContinue": {
+              "title": "Attiva l’NFC per permettere a IO di leggere la CIE!",
+              "confirm": "Attiva NFC"
+            }
           },
           "cieScanning": {
             "idle": {
@@ -4018,6 +4080,9 @@
             "cieContextualHelp": {
               "title": "Come accedere a una notifica SEND destinata a un’altra persona",
               "body": "Per visualizzare una notifica SEND destinata a un’altra persona hai bisogno della sua Carta di Identità Elettronica e di uno smartphone che ne supporti la lettura."
+            },
+            "createMandate": {
+              "loadingText": "Attendi qualche secondo"
             }
           }
         }
@@ -4343,8 +4408,14 @@
     },
     "wallet": {
       "home": {
-        "emptyMessage": "Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.",
-        "cta": "Aggiungi al Portafoglio",
+        "screen": {
+          "legacy": {
+            "emptyMessage": "Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.",
+            "cta": "Aggiungi al Portafoglio"
+          },
+          "emptyMessage": "La tua Patente di guida, la tua Tessera Sanitaria e altri documenti digitali appariranno qui!",
+          "cta": "Aggiungi un documento"
+        },
         "toast": {
           "newMethod": "Elemento aggiunto!"
         },
@@ -4633,7 +4704,7 @@
         "screen": {
           "legacy": {
             "title": "La versione digitale dei tuoi documenti, su IO",
-            "content": "Aggiungi la versione digitale dei tuoi documenti personali al Portafoglio dell'app! \n\n Hanno lo **stesso valore legale** di quelli fisici, in specifici contesti d'uso. \n\n ###### È facile e veloce \n Continua per attivare la nuova funzionalità in meno di 3 minuti: oltre **6 Milioni** di persone stanno già usando i **Documenti su IO**!",
+            "content": "Aggiungi la versione digitale dei tuoi documenti personali al Portafoglio dell'app! \n\n Hanno lo **stesso valore legale** di quelli fisici, in specifici contesti d'uso. \n\n ###### È facile e veloce \n Continua per attivare la nuova funzionalità in meno di 3 minuti: oltre **8 Milioni** di persone stanno già usando i **Documenti su IO**!",
             "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso]({{tos_url}}).",
             "actions": {
               "primary": "Continua"
@@ -4734,6 +4805,12 @@
           "button": {
             "label": "Continua"
           }
+        }
+      },
+      "credentialsCatalogue": {
+        "failure": {
+          "content": "Non siamo riusciti a caricare la lista dei documenti disponibili",
+          "action": "Prova di nuovo"
         }
       },
       "identification": {
@@ -5041,11 +5118,6 @@
           "body": "Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.",
           "primaryAction": "Ho capito"
         },
-        "asyncCredentialError": {
-          "title": "La Motorizzazione Civile ha preso in carico la tua richiesta",
-          "body": "Riceverai un messaggio in app per continuare appena La Motorizzazione Civile avrà elaborato la tua richiesta.",
-          "primaryAction": "Ho capito"
-        },
         "issuerNotTrustedCommonError": {
           "title": "Un problema non permette di continuare",
           "subtitle": "Si è verificato un errore tecnico che impedisce di ottenere {{credential}}. Riprova.\nSe il problema persiste, contatta l’assistenza.",
@@ -5089,6 +5161,16 @@
         "cieNotRegistered": {
           "title": "Registra la CIE in app CieID per continuare",
           "subtitle": "Per ottenere IT-Wallet, completa prima la registrazione della tua CIE in app CieID e poi riprova."
+        },
+        "mdlMessageExpired": {
+          "title": "Richiesta scaduta",
+          "subtitleStart": "Questa richiesta non è più valida ma puoi aggiungere di nuovo la tua ",
+          "subtitleBold": "Patente su IO.",
+          "primaryAction": "Aggiungi di nuovo"
+        },
+        "mrtdChallengeInitError": {
+          "title": "Un problema non permette di continuare",
+          "subtitle": "Si è verificato un errore che impedisce di procedere con la lettura della CIE. Riprova. Se il problema persiste, contatta l'assistenza."
         }
       },
       "notMatchingIdentityScreen": {

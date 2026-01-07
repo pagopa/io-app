@@ -5,8 +5,16 @@ import { useIODispatch } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { identificationRequest } from "../../../identification/store/actions";
 
-const BsFooterButton = () => {
+type BsFooterButtonProps = {
+  onIdentificationSuccess?: () => void;
+  onIdentificationCancel?: () => void;
+};
+const BsFooterButton = ({
+  onIdentificationCancel = constUndefined,
+  onIdentificationSuccess = constUndefined
+}: BsFooterButtonProps) => {
   const dispatch = useIODispatch();
+
   const handlePress = () => {
     dispatch(
       identificationRequest(
@@ -15,10 +23,10 @@ const BsFooterButton = () => {
         undefined,
         {
           label: i18n.t("global.buttons.cancel"),
-          onCancel: constUndefined // TBD
+          onCancel: onIdentificationCancel
         },
         {
-          onSuccess: constUndefined // TBD
+          onSuccess: onIdentificationSuccess
         }
       )
     );
@@ -34,15 +42,20 @@ const BsFooterButton = () => {
     />
   );
 };
-type NameProp = {
-  name: string;
-};
-const BsBody = ({ name }: NameProp) => {
+type SendAarDelegationProposalBsProps = {
+  citizenName: string;
+} & BsFooterButtonProps;
+
+export const useSendAarDelegationProposalScreenBottomSheet = ({
+  citizenName,
+  onIdentificationSuccess,
+  onIdentificationCancel
+}: SendAarDelegationProposalBsProps) => {
   const featureInfoText = i18n.t(
     "features.pn.aar.flow.delegated.notAdressee.bottomSheet.featureInfos",
-    { returnObjects: true, name }
+    { returnObjects: true, name: citizenName }
   );
-  return (
+  const Body = () => (
     <VStack space={24}>
       <FeatureInfo
         pictogramProps={{
@@ -52,21 +65,21 @@ const BsBody = ({ name }: NameProp) => {
       />
       <FeatureInfo
         pictogramProps={{
-          name: "stopSecurity"
+          name: "pinSecurity"
         }}
         body={featureInfoText[1]}
       />
-      <BsFooterButton />
+      <BsFooterButton
+        onIdentificationSuccess={onIdentificationSuccess}
+        onIdentificationCancel={onIdentificationCancel}
+      />
     </VStack>
   );
-};
 
-export const useSendAarDelegationProposalScreenBottomSheet = (
-  citizenFullName: string
-) =>
-  useIOBottomSheetModal({
+  return useIOBottomSheetModal({
     title: i18n.t(
       "features.pn.aar.flow.delegated.notAdressee.bottomSheet.title"
     ),
-    component: <BsBody name={citizenFullName} />
+    component: <Body />
   });
+};
