@@ -1,7 +1,8 @@
 import { constNull } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { Linking } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import {
   CieCardReadingFailureReason,
@@ -60,9 +61,12 @@ export const ItwCieCardReadFailureContent = ({
   useDebugInfo({ failure });
 
   // Track error on mount
-  useEffect(
-    () => trackError({ failure, isL3, identification, readProgress: progress }),
-    [failure, isL3, progress, identification]
+  useFocusEffect(
+    useCallback(
+      () =>
+        trackError({ failure, isL3, identification, readProgress: progress }),
+      [failure, isL3, progress, identification]
+    )
   );
 
   const dismissalDialog = useItwDismissalDialog({
