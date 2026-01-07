@@ -182,7 +182,6 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

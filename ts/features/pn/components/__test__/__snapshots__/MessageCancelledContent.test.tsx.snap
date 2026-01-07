@@ -182,7 +182,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -668,7 +667,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1154,7 +1152,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1640,7 +1637,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2126,7 +2122,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2612,7 +2607,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3098,7 +3092,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3584,7 +3577,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4070,7 +4062,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4556,7 +4547,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4909,7 +4899,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5262,7 +5251,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5615,7 +5603,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5968,7 +5955,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6321,7 +6307,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6674,7 +6659,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7027,7 +7011,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7380,7 +7363,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7733,7 +7715,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8086,7 +8067,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8439,7 +8419,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8792,7 +8771,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9145,7 +9123,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9498,7 +9475,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9851,7 +9827,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10204,7 +10179,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10557,7 +10531,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

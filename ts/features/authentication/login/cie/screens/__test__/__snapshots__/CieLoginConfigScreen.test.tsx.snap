@@ -41,7 +41,6 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

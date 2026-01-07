@@ -182,7 +182,6 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

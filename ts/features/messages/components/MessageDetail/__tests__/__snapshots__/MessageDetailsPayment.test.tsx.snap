@@ -182,7 +182,6 @@ exports[`MessageDetailsPayment Should match snapshot for no payment data 1`] = `
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -535,7 +534,6 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

@@ -41,7 +41,6 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1140,7 +1139,6 @@ exports[`SendQRScanFlowScreen should match snapshot when no app update is requir
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

@@ -182,7 +182,6 @@ exports[`FimsHistoryListItems should match snapshot for FailureListItem 1`] = `
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -747,7 +746,6 @@ exports[`FimsHistoryListItems should match snapshot for SuccessListItem 1`] = `
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

@@ -182,7 +182,6 @@ exports[`MessageDetailsBody should match snapshot for message with CTA (IOMarkdo
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -541,7 +540,6 @@ exports[`MessageDetailsBody should match snapshot for message with CTA (Old Mark
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -943,7 +941,6 @@ exports[`MessageDetailsBody should match snapshot for message with invalid CTA 1
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1483,7 +1480,6 @@ exports[`MessageDetailsBody should match snapshot for message with no CTA (IOMar
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1842,7 +1838,6 @@ exports[`MessageDetailsBody should match snapshot for message with no CTA (Old M
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

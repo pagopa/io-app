@@ -182,7 +182,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -888,7 +887,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

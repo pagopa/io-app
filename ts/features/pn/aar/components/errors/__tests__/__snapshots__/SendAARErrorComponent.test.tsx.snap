@@ -182,7 +182,6 @@ exports[`SendAARErrorComponent - Full Test Suite should match snapshot and call 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

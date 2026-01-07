@@ -182,7 +182,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -603,7 +602,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1024,7 +1022,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1445,7 +1442,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1866,7 +1862,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2287,7 +2282,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2708,7 +2702,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3129,7 +3122,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3550,7 +3542,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3971,7 +3962,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4392,7 +4382,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4813,7 +4802,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5234,7 +5222,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5655,7 +5642,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6076,7 +6062,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6497,7 +6482,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6918,7 +6902,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7339,7 +7322,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7760,7 +7742,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8181,7 +8162,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8602,7 +8582,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9023,7 +9002,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9444,7 +9422,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9865,7 +9842,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10286,7 +10262,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10707,7 +10682,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -11128,7 +11102,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -11549,7 +11522,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -11970,7 +11942,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -12391,7 +12362,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -12812,7 +12782,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -13233,7 +13202,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -13654,7 +13622,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -14075,7 +14042,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -14496,7 +14462,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -14917,7 +14882,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -15338,7 +15302,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -15759,7 +15722,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -16180,7 +16142,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -16601,7 +16562,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -17022,7 +16982,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -17443,7 +17402,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -17864,7 +17822,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -18285,7 +18242,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -18706,7 +18662,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -19127,7 +19082,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -19548,7 +19502,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -19969,7 +19922,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -20390,7 +20342,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -20811,7 +20762,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -21232,7 +21182,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -21653,7 +21602,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -22074,7 +22022,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -22495,7 +22442,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -22916,7 +22862,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -23337,7 +23282,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -23758,7 +23702,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -24179,7 +24122,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -24600,7 +24542,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -25021,7 +24962,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -25442,7 +25382,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -25863,7 +25802,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -26284,7 +26222,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -26705,7 +26642,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -27126,7 +27062,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -27547,7 +27482,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -27968,7 +27902,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -28389,7 +28322,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -28810,7 +28742,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -29231,7 +29162,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -29652,7 +29582,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -30073,7 +30002,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -30494,7 +30422,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -30915,7 +30842,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -31336,7 +31262,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -31757,7 +31682,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -32178,7 +32102,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -32599,7 +32522,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -33020,7 +32942,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -33441,7 +33362,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -33862,7 +33782,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -34283,7 +34202,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -34704,7 +34622,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -35125,7 +35042,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -35546,7 +35462,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -35967,7 +35882,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -36388,7 +36302,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -36809,7 +36722,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -37230,7 +37142,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -37651,7 +37562,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -38072,7 +37982,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -38493,7 +38402,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -38914,7 +38822,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -39335,7 +39242,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -39756,7 +39662,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -40177,7 +40082,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -40598,7 +40502,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -41019,7 +40922,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -41440,7 +41342,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -41861,7 +41762,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -42282,7 +42182,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -42703,7 +42602,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -43124,7 +43022,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -43545,7 +43442,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -43966,7 +43862,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -44387,7 +44282,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -44808,7 +44702,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -45229,7 +45122,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -45650,7 +45542,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -46071,7 +45962,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -46492,7 +46382,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -46913,7 +46802,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -47334,7 +47222,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -47755,7 +47642,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -48176,7 +48062,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -48597,7 +48482,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -49018,7 +48902,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -49439,7 +49322,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -49860,7 +49742,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -50281,7 +50162,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -50702,7 +50582,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -51123,7 +51002,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -51544,7 +51422,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -51965,7 +51842,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -52386,7 +52262,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -52807,7 +52682,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -53228,7 +53102,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -53649,7 +53522,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -54070,7 +53942,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -54491,7 +54362,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -54912,7 +54782,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -55333,7 +55202,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -55754,7 +55622,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -56175,7 +56042,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -56596,7 +56462,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -57017,7 +56882,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -57438,7 +57302,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -57859,7 +57722,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -58280,7 +58142,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -58701,7 +58562,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -59122,7 +58982,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -59543,7 +59402,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -59964,7 +59822,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -60385,7 +60242,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

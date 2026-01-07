@@ -182,7 +182,6 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -854,7 +853,6 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1207,7 +1205,6 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1879,7 +1876,6 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

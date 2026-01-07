@@ -182,7 +182,6 @@ exports[`PreconditionsFeedback should match snapshot with title and no subtitle 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -746,7 +745,6 @@ exports[`PreconditionsFeedback should match snapshot with title and subtitle 1`]
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

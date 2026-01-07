@@ -182,7 +182,6 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -722,7 +721,6 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1262,7 +1260,6 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1802,7 +1799,6 @@ exports[`loadingFimsHistoryItem should match snapshot 1`] = `
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

@@ -41,7 +41,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -595,7 +594,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1149,7 +1147,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1703,7 +1700,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2344,7 +2340,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2985,7 +2980,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3626,7 +3620,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4267,7 +4260,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4908,7 +4900,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5549,7 +5540,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6377,7 +6367,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7205,7 +7194,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8033,7 +8021,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8861,7 +8848,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9689,7 +9675,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10517,7 +10502,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -11239,7 +11223,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -11961,7 +11944,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

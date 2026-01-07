@@ -182,7 +182,6 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1202,7 +1201,6 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1969,7 +1967,6 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2580,7 +2577,6 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3191,7 +3187,6 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

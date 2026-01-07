@@ -182,7 +182,6 @@ exports[`SendEngagementScreen should match snapshot and track screen visualizati
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

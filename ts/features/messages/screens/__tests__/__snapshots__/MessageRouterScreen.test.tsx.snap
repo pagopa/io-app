@@ -41,7 +41,6 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -882,7 +881,6 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1723,7 +1721,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2803,7 +2800,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3644,7 +3640,6 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

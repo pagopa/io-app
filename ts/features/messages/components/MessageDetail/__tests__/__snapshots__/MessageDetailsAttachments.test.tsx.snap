@@ -182,7 +182,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -535,7 +534,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -888,7 +886,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1241,7 +1238,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1594,7 +1590,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1947,7 +1942,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2300,7 +2294,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2653,7 +2646,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3006,7 +2998,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3359,7 +3350,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3712,7 +3702,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4065,7 +4054,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4418,7 +4406,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4771,7 +4758,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5124,7 +5110,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5477,7 +5462,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5830,7 +5814,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6183,7 +6166,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6536,7 +6518,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6889,7 +6870,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7242,7 +7222,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7595,7 +7574,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7948,7 +7926,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8301,7 +8278,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8654,7 +8630,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9007,7 +8982,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9360,7 +9334,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9713,7 +9686,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10066,7 +10038,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10419,7 +10390,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10772,7 +10742,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -11125,7 +11094,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -11478,7 +11446,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -11831,7 +11798,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -12184,7 +12150,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -12537,7 +12502,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -12890,7 +12854,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -13243,7 +13206,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -13596,7 +13558,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -13949,7 +13910,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -14302,7 +14262,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -14655,7 +14614,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -15008,7 +14966,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -15361,7 +15318,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -15714,7 +15670,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -16067,7 +16022,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -16420,7 +16374,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -16773,7 +16726,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -17126,7 +17078,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -17479,7 +17430,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -17832,7 +17782,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -18185,7 +18134,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -18538,7 +18486,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -18891,7 +18838,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -19244,7 +19190,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -19728,7 +19673,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -20212,7 +20156,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -20696,7 +20639,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -21180,7 +21122,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -21664,7 +21605,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -22148,7 +22088,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -22632,7 +22571,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -23116,7 +23054,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -23600,7 +23537,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -24084,7 +24020,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -24568,7 +24503,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -25052,7 +24986,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -25536,7 +25469,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -26020,7 +25952,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -26504,7 +26435,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -26988,7 +26918,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -27472,7 +27401,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -27956,7 +27884,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -28440,7 +28367,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -28924,7 +28850,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -29408,7 +29333,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -29892,7 +29816,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -30376,7 +30299,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -30860,7 +30782,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -31344,7 +31265,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -31828,7 +31748,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -32312,7 +32231,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -32793,7 +32711,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -33274,7 +33191,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -33755,7 +33671,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -34236,7 +34151,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -34717,7 +34631,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -35198,7 +35111,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -35679,7 +35591,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -36160,7 +36071,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -36641,7 +36551,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -37122,7 +37031,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -37603,7 +37511,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -38084,7 +37991,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -38565,7 +38471,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -39046,7 +38951,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -39527,7 +39431,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -40008,7 +39911,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -40489,7 +40391,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -40970,7 +40871,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -41451,7 +41351,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -41932,7 +41831,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -42413,7 +42311,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -42894,7 +42791,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -43375,7 +43271,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -43856,7 +43751,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -44337,7 +44231,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -44818,7 +44711,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -45299,7 +45191,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -45927,7 +45818,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -46555,7 +46445,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -47183,7 +47072,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -47811,7 +47699,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -48439,7 +48326,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -49067,7 +48953,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -49767,7 +49652,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -50467,7 +50351,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -51167,7 +51050,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -51795,7 +51677,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -52423,7 +52304,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -53051,7 +52931,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -53679,7 +53558,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -54307,7 +54185,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -54935,7 +54812,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -55635,7 +55511,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -56335,7 +56210,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -57035,7 +56909,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -57663,7 +57536,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -58291,7 +58163,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -58919,7 +58790,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -59547,7 +59417,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -60175,7 +60044,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -60803,7 +60671,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -61503,7 +61370,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -62203,7 +62069,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -62903,7 +62768,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -63528,7 +63392,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -64153,7 +64016,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -64778,7 +64640,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -65403,7 +65264,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -66028,7 +65888,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -66653,7 +66512,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -67350,7 +67208,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -68047,7 +67904,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -68744,7 +68600,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -69369,7 +69224,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -69994,7 +69848,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -70619,7 +70472,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -71244,7 +71096,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -71869,7 +71720,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -72494,7 +72344,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -73191,7 +73040,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -73888,7 +73736,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -74585,7 +74432,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -75210,7 +75056,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -75835,7 +75680,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -76460,7 +76304,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -77085,7 +76928,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -77710,7 +77552,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -78335,7 +78176,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -79032,7 +78872,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -79729,7 +79568,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

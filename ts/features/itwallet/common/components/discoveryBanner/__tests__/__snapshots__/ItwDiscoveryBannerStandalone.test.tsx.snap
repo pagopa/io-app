@@ -182,7 +182,6 @@ exports[`ItwDiscoveryBannerStandalone should match snapshot when isItwDiscoveryB
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -535,7 +534,6 @@ exports[`ItwDiscoveryBannerStandalone should match snapshot when isItwDiscoveryB
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

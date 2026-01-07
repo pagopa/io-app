@@ -182,7 +182,6 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

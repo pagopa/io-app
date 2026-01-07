@@ -41,7 +41,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2035,7 +2034,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4076,7 +4074,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6098,7 +6095,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8105,7 +8101,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10126,7 +10121,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -12247,7 +12241,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -14340,7 +14333,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -16347,7 +16339,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -18304,7 +18295,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -20345,7 +20335,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -22366,7 +22355,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -24407,7 +24395,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -26528,7 +26515,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -28569,7 +28555,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -30610,7 +30595,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -32659,7 +32643,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -34680,7 +34663,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -36803,7 +36785,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -38824,7 +38805,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -40887,7 +40867,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -43011,7 +42990,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -45196,7 +45174,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -47203,7 +47180,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -49252,7 +49228,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -51273,7 +51248,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

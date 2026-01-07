@@ -182,7 +182,6 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -739,7 +738,6 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1351,7 +1349,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2143,7 +2140,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2935,7 +2931,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3915,7 +3910,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4895,7 +4889,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6721,7 +6714,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

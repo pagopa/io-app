@@ -182,7 +182,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1158,7 +1157,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2407,7 +2405,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3526,7 +3523,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4367,7 +4363,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5481,7 +5476,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6465,7 +6459,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7418,7 +7411,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8644,7 +8636,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9740,7 +9731,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10558,7 +10548,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -11649,7 +11638,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

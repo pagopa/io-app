@@ -182,7 +182,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled false,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1459,7 +1458,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled false,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6732,7 +6730,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8009,7 +8006,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled undefi
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9286,7 +9282,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled undefi
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10563,7 +10558,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled undefi
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -11840,7 +11834,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -17755,7 +17748,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -18229,7 +18221,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -18703,7 +18694,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -19202,7 +19192,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -20479,7 +20468,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -22026,7 +22014,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -23573,7 +23560,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -25120,7 +25106,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -30698,7 +30683,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -31172,7 +31156,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -31671,7 +31654,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -32089,7 +32071,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -32507,7 +32488,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -32950,7 +32930,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -33368,7 +33347,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -34228,7 +34206,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -34646,7 +34623,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -35064,7 +35040,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -35507,7 +35482,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -35925,7 +35899,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -36343,7 +36316,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

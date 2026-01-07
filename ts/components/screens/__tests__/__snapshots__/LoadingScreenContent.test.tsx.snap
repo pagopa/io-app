@@ -182,7 +182,6 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -822,7 +821,6 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1462,7 +1460,6 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2079,7 +2076,6 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

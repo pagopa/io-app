@@ -182,7 +182,6 @@ exports[`MessagePayments should match snapshot when cancelled with payments with
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -535,7 +534,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2694,7 +2692,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4853,7 +4850,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5206,7 +5202,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6805,7 +6800,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8404,7 +8398,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10152,7 +10145,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -11900,7 +11892,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -12503,7 +12494,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -13106,7 +13096,6 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -13459,7 +13448,6 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

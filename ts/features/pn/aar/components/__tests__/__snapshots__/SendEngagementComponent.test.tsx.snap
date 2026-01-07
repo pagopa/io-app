@@ -41,7 +41,6 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1957,7 +1956,6 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

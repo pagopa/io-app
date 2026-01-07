@@ -182,7 +182,6 @@ exports[`MessageDetailsContent component should match snapshot when user type is
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -578,7 +577,6 @@ exports[`MessageDetailsContent component should match snapshot when user type is
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1016,7 +1014,6 @@ exports[`MessageDetailsContent component should match snapshot when user type is
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1432,7 +1429,6 @@ exports[`MessageDetailsContent component should match snapshot when user type is
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1890,7 +1886,6 @@ exports[`MessageDetailsContent component should match snapshot when user type is
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2286,7 +2281,6 @@ exports[`MessageDetailsContent component should match snapshot when user type is
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2724,7 +2718,6 @@ exports[`MessageDetailsContent component should match snapshot when user type is
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3140,7 +3133,6 @@ exports[`MessageDetailsContent component should match snapshot when user type is
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3598,7 +3590,6 @@ exports[`MessageDetailsContent component should match snapshot when user type is
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3995,7 +3986,6 @@ exports[`MessageDetailsContent component should match snapshot when user type is
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4415,7 +4405,6 @@ exports[`MessageDetailsContent component should match snapshot when user type is
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4832,7 +4821,6 @@ exports[`MessageDetailsContent component should match snapshot when user type is
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5272,7 +5260,6 @@ exports[`MessageDetailsContent component should match snapshot when user type is
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5669,7 +5656,6 @@ exports[`MessageDetailsContent component should match snapshot when user type is
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6089,7 +6075,6 @@ exports[`MessageDetailsContent component should match snapshot when user type is
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6506,7 +6491,6 @@ exports[`MessageDetailsContent component should match snapshot when user type is
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6946,7 +6930,6 @@ exports[`MessageDetailsContent component should match snapshot when user type is
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7343,7 +7326,6 @@ exports[`MessageDetailsContent component should match snapshot when user type is
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7763,7 +7745,6 @@ exports[`MessageDetailsContent component should match snapshot when user type is
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8180,7 +8161,6 @@ exports[`MessageDetailsContent component should match snapshot when user type is
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8620,7 +8600,6 @@ exports[`MessageDetailsContent component should match snapshot when user type is
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9017,7 +8996,6 @@ exports[`MessageDetailsContent component should match snapshot when user type is
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9437,7 +9415,6 @@ exports[`MessageDetailsContent component should match snapshot when user type is
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9854,7 +9831,6 @@ exports[`MessageDetailsContent component should match snapshot when user type is
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

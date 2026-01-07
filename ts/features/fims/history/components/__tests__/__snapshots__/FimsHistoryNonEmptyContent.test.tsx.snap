@@ -182,7 +182,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1031,7 +1030,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2020,7 +2018,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2700,7 +2697,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3380,7 +3376,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4296,7 +4291,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5352,7 +5346,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6274,7 +6267,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
