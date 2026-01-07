@@ -8,6 +8,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
 import I18n from "i18next";
 import React, { useCallback, useMemo } from "react";
+import { View } from "react-native";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import {
@@ -310,7 +311,11 @@ export const ItwPresentationCredentialDetail = ({
             />
           )}
           <ItwPresentationDetailsFooter credential={credential} />
-          {isL3Credential && <PoweredByItWalletText />}
+          {isL3Credential && (
+            <View style={{ alignItems: "center" }}>
+              <PoweredByItWalletText />
+            </View>
+          )}
         </VStack>
       </ContentWrapper>
     </ItwPresentationDetailsScreenBase>

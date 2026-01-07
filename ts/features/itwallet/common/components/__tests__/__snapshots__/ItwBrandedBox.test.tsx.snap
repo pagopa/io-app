@@ -7,20 +7,17 @@ exports[`ItwBrandedBox should render correctly for variant default 1`] = `
     [
       {
         "borderCurve": "continuous",
-        "borderRadius": 16,
         "gap": 6,
         "overflow": "hidden",
         "padding": 16,
       },
       {
         "backgroundColor": "#F2F9FF",
+        "borderRadius": 16,
       },
     ]
   }
 >
-  <Text>
-    Test Content
-  </Text>
   <View
     style={
       {
@@ -359,6 +356,9 @@ exports[`ItwBrandedBox should render correctly for variant default 1`] = `
       </skGroup>
     </skGroup>
   </View>
+  <Text>
+    Test Content
+  </Text>
 </View>
 `;
 
@@ -369,20 +369,17 @@ exports[`ItwBrandedBox should render correctly for variant error 1`] = `
     [
       {
         "borderCurve": "continuous",
-        "borderRadius": 16,
         "gap": 6,
         "overflow": "hidden",
         "padding": 16,
       },
       {
         "backgroundColor": "#F2F9FF",
+        "borderRadius": 16,
       },
     ]
   }
 >
-  <Text>
-    Test Content
-  </Text>
   <View
     style={
       {
@@ -721,6 +718,9 @@ exports[`ItwBrandedBox should render correctly for variant error 1`] = `
       </skGroup>
     </skGroup>
   </View>
+  <Text>
+    Test Content
+  </Text>
 </View>
 `;
 
@@ -731,20 +731,17 @@ exports[`ItwBrandedBox should render correctly for variant warning 1`] = `
     [
       {
         "borderCurve": "continuous",
-        "borderRadius": 16,
         "gap": 6,
         "overflow": "hidden",
         "padding": 16,
       },
       {
         "backgroundColor": "#F2F9FF",
+        "borderRadius": 16,
       },
     ]
   }
 >
-  <Text>
-    Test Content
-  </Text>
   <View
     style={
       {
@@ -1083,5 +1080,8 @@ exports[`ItwBrandedBox should render correctly for variant warning 1`] = `
       </skGroup>
     </skGroup>
   </View>
+  <Text>
+    Test Content
+  </Text>
 </View>
 `;
