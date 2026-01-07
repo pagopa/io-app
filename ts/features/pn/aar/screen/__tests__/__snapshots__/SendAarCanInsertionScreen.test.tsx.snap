@@ -398,8 +398,9 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                                     onStartShouldSetResponder={[Function]}
                                     style={
                                       {
+                                        "columnGap": 8,
                                         "flexDirection": "row",
-                                        "justifyContent": "space-around",
+                                        "justifyContent": "space-between",
                                       }
                                     }
                                   >
@@ -429,11 +430,13 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                                         [
                                           {
                                             "alignItems": "center",
+                                            "aspectRatio": 0.75,
                                             "borderCurve": "continuous",
                                             "borderRadius": 8,
-                                            "height": 60,
+                                            "flex": 1,
                                             "justifyContent": "center",
-                                            "width": 35,
+                                            "maxHeight": 64,
+                                            "maxWidth": 48,
                                           },
                                           {
                                             "borderColor": "#0B3EE3",
@@ -448,11 +451,13 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                                         [
                                           {
                                             "alignItems": "center",
+                                            "aspectRatio": 0.75,
                                             "borderCurve": "continuous",
                                             "borderRadius": 8,
-                                            "height": 60,
+                                            "flex": 1,
                                             "justifyContent": "center",
-                                            "width": 35,
+                                            "maxHeight": 64,
+                                            "maxWidth": 48,
                                           },
                                           {
                                             "borderColor": "#636B82",
@@ -467,11 +472,13 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                                         [
                                           {
                                             "alignItems": "center",
+                                            "aspectRatio": 0.75,
                                             "borderCurve": "continuous",
                                             "borderRadius": 8,
-                                            "height": 60,
+                                            "flex": 1,
                                             "justifyContent": "center",
-                                            "width": 35,
+                                            "maxHeight": 64,
+                                            "maxWidth": 48,
                                           },
                                           {
                                             "borderColor": "#636B82",
@@ -486,11 +493,13 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                                         [
                                           {
                                             "alignItems": "center",
+                                            "aspectRatio": 0.75,
                                             "borderCurve": "continuous",
                                             "borderRadius": 8,
-                                            "height": 60,
+                                            "flex": 1,
                                             "justifyContent": "center",
-                                            "width": 35,
+                                            "maxHeight": 64,
+                                            "maxWidth": 48,
                                           },
                                           {
                                             "borderColor": "#636B82",
@@ -505,11 +514,13 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                                         [
                                           {
                                             "alignItems": "center",
+                                            "aspectRatio": 0.75,
                                             "borderCurve": "continuous",
                                             "borderRadius": 8,
-                                            "height": 60,
+                                            "flex": 1,
                                             "justifyContent": "center",
-                                            "width": 35,
+                                            "maxHeight": 64,
+                                            "maxWidth": 48,
                                           },
                                           {
                                             "borderColor": "#636B82",
@@ -524,11 +535,13 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                                         [
                                           {
                                             "alignItems": "center",
+                                            "aspectRatio": 0.75,
                                             "borderCurve": "continuous",
                                             "borderRadius": 8,
-                                            "height": 60,
+                                            "flex": 1,
                                             "justifyContent": "center",
-                                            "width": 35,
+                                            "maxHeight": 64,
+                                            "maxWidth": 48,
                                           },
                                           {
                                             "borderColor": "#636B82",
