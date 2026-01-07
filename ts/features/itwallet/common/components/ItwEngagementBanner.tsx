@@ -3,15 +3,14 @@ import {
   H4,
   IconButton,
   IOButton,
+  IOButtonProps,
   VSpacer,
   VStack,
   WithTestID
 } from "@pagopa/io-app-design-system";
 import { TxtParagraphNode, TxtStrongNode } from "@textlint/ast-node-types";
-import { constNull } from "fp-ts/lib/function";
-import I18n from "i18next";
-import { useCallback, useMemo } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { useMemo } from "react";
+import { StyleSheet, View } from "react-native";
 import ItWalletDeck from "../../../../../img/features/itWallet/brand/itw_deck_engagement.svg";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { getTxtNodeKey } from "../../../../components/IOMarkdown/renderRules";
@@ -28,6 +27,8 @@ type Props = {
   // Events
   onPress: () => void;
   onDismiss: () => void;
+  // Variants
+  variant?: IOButtonProps["variant"];
 };
 
 export const ItwEngagementBanner = ({
@@ -37,30 +38,9 @@ export const ItwEngagementBanner = ({
   action,
   dismissable,
   onPress,
-  onDismiss
+  onDismiss,
+  variant
 }: WithTestID<Props>) => {
-  const handleOnClosePress = useCallback(() => {
-    Alert.alert(
-      I18n.t("features.itWallet.engagementBanner.dismissAlert.title"),
-      I18n.t("features.itWallet.engagementBanner.dismissAlert.description"),
-      [
-        {
-          text: I18n.t(
-            "features.itWallet.engagementBanner.dismissAlert.cancel"
-          ),
-          onPress: constNull
-        },
-        {
-          text: I18n.t(
-            "features.itWallet.engagementBanner.dismissAlert.confirm"
-          ),
-          style: "destructive",
-          onPress: onDismiss
-        }
-      ]
-    );
-  }, [onDismiss]);
-
   // Generates a complete fallbackAccessibilityLabel by concatenating the title, content, and action
   // if they are present. Removes markdown formatting characters like asterisks.
   const accessibilityLabel = [title, description, action]
@@ -110,7 +90,7 @@ export const ItwEngagementBanner = ({
                 color="contrast"
                 accessibilityLabel="close"
                 icon="closeMedium"
-                onPress={handleOnClosePress}
+                onPress={onDismiss}
               />
             )}
           </View>
@@ -121,11 +101,11 @@ export const ItwEngagementBanner = ({
         </VStack>
         <VSpacer size={8} />
         <IOButton
+          variant={variant}
           testID="itwEngagementBannerActionButtonTestID"
           color="primary"
           label={action}
           onPress={onPress}
-          fullWidth
         />
       </ItwBrandedBox>
     </View>

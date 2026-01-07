@@ -1,7 +1,8 @@
 import { constNull } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { Linking } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import {
   CieCardReadingFailureReason,
@@ -19,7 +20,11 @@ import {
 } from "../../../analytics";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
+import { type IdentificationContext } from "../../../machine/eid/context.ts";
+import {
+  isL3FeaturesEnabledSelector,
+  selectIdentification
+} from "../../../machine/eid/selectors";
 import { CieManagerFailure, CieManagerState } from "../hooks/useCieManager";
 import { isNfcError } from "../utils/error";
 import {
@@ -49,12 +54,20 @@ export const ItwCieCardReadFailureContent = ({
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
+  const identification =
+    ItwEidIssuanceMachineContext.useSelector(selectIdentification);
 
   // Display failure information for debug
   useDebugInfo({ failure });
 
   // Track error on mount
-  useEffect(() => trackError(failure, isL3, progress));
+  useFocusEffect(
+    useCallback(
+      () =>
+        trackError({ failure, isL3, identification, readProgress: progress }),
+      [failure, isL3, progress, identification]
+    )
+  );
 
   const dismissalDialog = useItwDismissalDialog({
     handleDismiss: () => issuanceActor.send({ type: "close" })
@@ -210,11 +223,19 @@ export const ItwCieCardReadFailureContent = ({
   );
 };
 
-const trackError = (
-  failure: CieManagerFailure,
-  isL3: boolean,
-  readProgress?: number
-) => {
+type TrackErrorParams = {
+  failure: CieManagerFailure;
+  isL3: boolean;
+  readProgress?: number;
+  identification?: IdentificationContext;
+};
+
+const trackError = ({
+  failure,
+  isL3,
+  readProgress,
+  identification
+}: TrackErrorParams) => {
   const itw_flow: ItwFlow = isL3 ? "L3" : "L2";
   // readProgress is a number between 0 and 1, mixpanel needs a number between 0 and 100
   const progress = Number(((readProgress ?? 0) * 100).toFixed(0));
@@ -222,7 +243,11 @@ const trackError = (
   if (isNfcError(failure)) {
     switch (failure.name) {
       case "TAG_LOST":
-        trackItWalletErrorCardReading(itw_flow, progress);
+        trackItWalletErrorCardReading({
+          itw_flow,
+          cie_reading_progress: progress,
+          ITW_ID_method: identification?.mode
+        });
         return;
       case "WRONG_PIN":
         if (failure.attemptsLeft > 1) {
@@ -238,21 +263,24 @@ const trackError = (
         trackItWalletCieCardVerifyFailure({
           itw_flow,
           reason: "CERTIFICATE_EXPIRED",
-          cie_reading_progress: progress
+          cie_reading_progress: progress,
+          ITW_ID_method: identification?.mode
         });
         return;
       case "CERTIFICATE_REVOKED":
         trackItWalletCieCardVerifyFailure({
           itw_flow,
           reason: "CERTIFICATE_REVOKED",
-          cie_reading_progress: progress
+          cie_reading_progress: progress,
+          ITW_ID_method: identification?.mode
         });
         return;
       case "NOT_A_CIE":
         trackItWalletCieCardReadingFailure({
           reason: CieCardReadingFailureReason.ON_TAG_DISCOVERED_NOT_CIE,
           itw_flow,
-          cie_reading_progress: progress
+          cie_reading_progress: progress,
+          ITW_ID_method: identification?.mode
         });
         return;
       case "GENERIC_ERROR":
@@ -262,18 +290,25 @@ const trackError = (
         trackItWalletCieCardReadingFailure({
           reason: CieCardReadingFailureReason[failure.name],
           itw_flow,
-          cie_reading_progress: progress
+          cie_reading_progress: progress,
+          ITW_ID_method: identification?.mode
         });
         return;
 
       case "CANCELLED_BY_USER":
-        trackItWalletCardReadingClose(progress);
+        trackItWalletCardReadingClose({
+          cie_reading_progress: progress,
+          itw_flow,
+          ITW_ID_method: identification?.mode
+        });
         return;
     }
   }
 
   trackItWalletCieCardReadingUnexpectedFailure({
     reason: failure?.name ?? "UNEXPECTED_ERROR",
-    cie_reading_progress: progress
+    cie_reading_progress: progress,
+    itw_flow,
+    ITW_ID_method: identification?.mode
   });
 };
