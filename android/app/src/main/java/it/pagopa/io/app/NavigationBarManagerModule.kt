@@ -20,7 +20,7 @@ class NavigationBarManagerModule(reactContext: ReactApplicationContext) : ReactC
 
     @ReactMethod
     fun setNavigationBarColor(theme: String, backgroundColor: String, promise: Promise) {
-        val activity = currentActivity
+        val activity = reactApplicationContext.currentActivity
         if (activity == null) {
             promise.reject("NO_ACTIVITY", "No current activity available")
             return
