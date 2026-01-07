@@ -6,15 +6,9 @@ import {
   hexToRgba,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-
 import { FunctionComponent, useState } from "react";
-import {
-  Platform,
-  Pressable,
-  SafeAreaView,
-  StyleSheet,
-  View
-} from "react-native";
+import { Platform, Pressable, StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { connect } from "react-redux";
 import { selectItwEnv } from "../features/itwallet/common/store/selectors/environment";
 import { ReduxProps } from "../store/actions/types";
