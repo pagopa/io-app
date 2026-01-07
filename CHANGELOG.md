@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.22.0-rc.10](https://github.com/pagopa/io-app/compare/3.22.0-rc.9...3.22.0-rc.10) (2026-01-07)
+
 ## [3.22.0-rc.9](https://github.com/pagopa/io-app/compare/3.22.0-rc.8...3.22.0-rc.9) (2026-01-07)
 
 
