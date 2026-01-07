@@ -133,6 +133,10 @@ export const useCieManager: UseCieManager = ({
         ? HapticFeedbackTypes.notificationWarning
         : HapticFeedbackTypes.notificationError
     );
+
+    CieManager.stopReading().catch(() => {
+      // Ignore errors on stop reading
+    });
   };
 
   /**
@@ -182,7 +186,9 @@ export const useCieManager: UseCieManager = ({
       // Remove the event listener on exit
       cleanup.forEach(remove => remove());
       // Ensure the reading is stopped when state is exited
-      void CieManager.stopReading();
+      void CieManager.stopReading().catch(() => {
+        // Ignore errors on stop reading
+      });
     };
   }, [completionHandler, onInternalAuthAndMRTDWithPaceSuccess, onSuccess]);
 
