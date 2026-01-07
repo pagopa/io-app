@@ -7,5 +7,5 @@ export const preferredLanguageToString = (
 ) =>
   pipe(
     preferredLanguageMaybe,
-    O.getOrElse(() => "it")
+    O.getOrElseW(() => "it")
   );

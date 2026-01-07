@@ -23,5 +23,6 @@ export type PnParamsList = {
   [PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL]: undefined;
   [PN_ROUTES.SEND_AAR_CIE_CAN_INSERTION]: undefined;
   [PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL]: undefined;
+  [PN_ROUTES.SEND_AAR_NFC_ACTIVATION]: undefined;
   [PN_ROUTES.SEND_AAR_CIE_CARD_READING]: SendAARCieCardReadingScreenRouteParams;
 };

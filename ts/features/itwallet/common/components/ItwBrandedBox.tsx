@@ -30,7 +30,7 @@ import { ItwSkiaBrandedGradientVariant } from "./ItwBrandedSkiaGradient";
 type ItwIridescentBorderProps = {
   variant?: ItwSkiaBrandedGradientVariant;
   borderThickness?: number;
-  cornerRadius?: number;
+  borderRadius?: number;
 };
 
 /* Light */
@@ -43,7 +43,7 @@ const visibleLightPercentage = 0.25; // Visible light when it's near box boundar
  */
 export const ItwBrandedBox = ({
   borderThickness = 3,
-  cornerRadius = 16,
+  borderRadius = 16,
   variant = "default",
   children
 }: PropsWithChildren<ItwIridescentBorderProps>) => {
@@ -154,13 +154,11 @@ export const ItwBrandedBox = ({
       style={[
         styles.container,
         {
+          borderRadius,
           backgroundColor: theme["banner-background"]
         }
       ]}
     >
-      {/* Box content */}
-      {children}
-
       {/* Skia Canvas for border and light effect */}
       <Canvas
         style={{
@@ -178,17 +176,19 @@ export const ItwBrandedBox = ({
           height={size.height}
           variant={variant}
           thickness={borderThickness}
-          cornerRadius={cornerRadius}
+          borderRadius={borderRadius}
           themeType={themeType}
         />
       </Canvas>
+
+      {/* Box content */}
+      {children}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 16,
     borderCurve: "continuous",
     padding: 16,
     gap: 6,
