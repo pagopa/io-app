@@ -6,7 +6,6 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import { Canvas } from "@shopify/react-native-skia";
-import { constNull } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useState } from "react";
 import { Alert, useWindowDimensions, View } from "react-native";
@@ -134,40 +133,6 @@ const ItwEngagementBannerSection = () => (
           variant="link"
         />
       </DSComponentViewerBox>
-    </VStack>
-  </View>
-);
-
-const ItwEngagementBannerSection = () => (
-  <View
-    style={{
-      marginHorizontal: -24,
-      paddingHorizontal: 24,
-      paddingBottom: 24
-    }}
-  >
-    <ListItemHeader label="IT-Wallet Engagement Banner" />
-    <VStack space={8}>
-      <ItwEngagementBanner
-        title={I18n.t("features.itWallet.engagementBanner.activation.title")}
-        description={I18n.t(
-          "features.itWallet.engagementBanner.activation.description"
-        )}
-        action={I18n.t("features.itWallet.engagementBanner.activation.action")}
-        onPress={constNull}
-        onDismiss={constNull}
-        dismissable={true}
-      />
-      <ItwEngagementBanner
-        title={I18n.t("features.itWallet.engagementBanner.upgrade.title")}
-        description={I18n.t(
-          "features.itWallet.engagementBanner.upgrade.description"
-        )}
-        action={I18n.t("features.itWallet.engagementBanner.upgrade.action")}
-        onPress={constNull}
-        onDismiss={constNull}
-        dismissable={true}
-      />
     </VStack>
   </View>
 );
