@@ -5,23 +5,23 @@ import {
   IOButton,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { SafeAreaView, StyleSheet, View } from "react-native";
-import { useEffect } from "react";
 import { constNull } from "fp-ts/lib/function";
 import I18n from "i18next";
+import { useEffect } from "react";
+import { StyleSheet, View } from "react-native";
+import { SubscriptionStateEnum } from "../../../../../definitions/trial_system/SubscriptionState";
+import { TrialId } from "../../../../../definitions/trial_system/TrialId";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import {
+  trialSystemActivationStatus,
+  trialSystemActivationStatusUpsert
+} from "../../../trialSystem/store/actions";
 import {
   isLoadingTrialStatusSelector,
   isUpdatingTrialStatusSelector,
   trialStatusSelector
 } from "../../../trialSystem/store/reducers";
-import { TrialId } from "../../../../../definitions/trial_system/TrialId";
-import {
-  trialSystemActivationStatus,
-  trialSystemActivationStatusUpsert
-} from "../../../trialSystem/store/actions";
-import { SubscriptionStateEnum } from "../../../../../definitions/trial_system/SubscriptionState";
 
 const styles = StyleSheet.create({
   row: {
@@ -52,46 +52,44 @@ const TrialSystemPlayground = () => {
   });
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ContentWrapper>
-        <H3>{"Sperimentazione di IT-Wallet"}</H3>
-        <VSpacer />
-        <View style={styles.row}>
-          <Body color="black" weight="Semibold">
-            {"Stato attuale: "}
-          </Body>
-          <Body color="black" weight="Semibold">
-            {trialStatus ? trialStatus : "Non presente"}
-          </Body>
-        </View>
-        <VSpacer />
+    <ContentWrapper>
+      <H3>{"Sperimentazione di IT-Wallet"}</H3>
+      <VSpacer />
+      <View style={styles.row}>
+        <Body color="black" weight="Semibold">
+          {"Stato attuale: "}
+        </Body>
+        <Body color="black" weight="Semibold">
+          {trialStatus ? trialStatus : "Non presente"}
+        </Body>
+      </View>
+      <VSpacer />
 
-        {!isTrialStatusLoading && (
-          <>
-            {trialStatus === undefined ||
-            trialStatus === SubscriptionStateEnum.UNSUBSCRIBED ? (
-              <IOButton
-                fullWidth
-                variant="solid"
-                loading={isTrialStatusUpdating}
-                label={I18n.t("profile.main.trial.titleSection")}
-                onPress={() =>
-                  dispatch(trialSystemActivationStatusUpsert.request(TRIAL_ID))
-                }
-              />
-            ) : (
-              <IOButton
-                fullWidth
-                variant="solid"
-                color="danger"
-                label={"Disiscriviti"}
-                onPress={constNull}
-              />
-            )}
-          </>
-        )}
-      </ContentWrapper>
-    </SafeAreaView>
+      {!isTrialStatusLoading && (
+        <>
+          {trialStatus === undefined ||
+          trialStatus === SubscriptionStateEnum.UNSUBSCRIBED ? (
+            <IOButton
+              fullWidth
+              variant="solid"
+              loading={isTrialStatusUpdating}
+              label={I18n.t("profile.main.trial.titleSection")}
+              onPress={() =>
+                dispatch(trialSystemActivationStatusUpsert.request(TRIAL_ID))
+              }
+            />
+          ) : (
+            <IOButton
+              fullWidth
+              variant="solid"
+              color="danger"
+              label={"Disiscriviti"}
+              onPress={constNull}
+            />
+          )}
+        </>
+      )}
+    </ContentWrapper>
   );
 };
 
