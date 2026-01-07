@@ -77,6 +77,7 @@ export const trackItwUpgradeBanner = (banner_page: string) => {
     ITW_SCREENVIEW_EVENTS.ITW_BANNER,
     buildEventProperties("UX", "screen_view", { banner_page })
   );
+
 };
 
 export const trackItwSurveyRequest = (properties: TrackQualtricsSurvey) => {
@@ -322,6 +323,24 @@ export const trackItwRequest = (method?: ItwIdMethod, itw_flow?: ItwFlow) => {
       })
     );
   }
+};
+
+export const trackItwIdAuthenticationCompleted = (
+  ITW_ID_method: Exclude<ItwIdMethod, "ciePin">
+) => {
+  void mixpanelTrack(
+    ITW_TECH_EVENTS.ITW_ID_AUTHENTICATION_COMPLETED,
+    buildEventProperties("TECH", undefined, { ITW_ID_method })
+  );
+};
+
+export const trackItwIdVerifiedDocument = (
+  ITW_ID_method: Exclude<ItwIdMethod, "ciePin">
+) => {
+  void mixpanelTrack(
+    ITW_TECH_EVENTS.ITW_ID_VERIFIED_DOCUMENT,
+    buildEventProperties("TECH", undefined, { ITW_ID_method })
+  );
 };
 
 // #endregion TECH

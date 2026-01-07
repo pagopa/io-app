@@ -9,7 +9,11 @@ import {
   TrackItWalletCieCardVerifyFailure,
   TrackItWalletCieCardReadingFailure,
   TrackItWalletCieCardReadingUnexpectedFailure,
-  ItwUserWithoutL3requirements
+  ItwUserWithoutL3requirements,
+  TrackCieScreenProperties,
+  TrackCieCanProperties,
+  TrackItWalletErrorCardReading,
+  TrackItWalletCardReadingClose
 } from "./types";
 import {
   ITW_IDENTIFICATION_ACTIONS_EVENTS,
@@ -26,10 +30,10 @@ export const trackItWalletIDMethod = (itw_flow: ItwFlow) => {
   );
 };
 
-export const trackItWalletSpidIDPSelection = () => {
+export const trackItWalletSpidIDPSelection = (itw_flow: ItwFlow) => {
   void mixpanelTrack(
     ITW_IDENTIFICATION_SCREENVIEW_EVENTS.ITW_SPID_IDP_SELECTION,
-    buildEventProperties("UX", "screen_view")
+    buildEventProperties("UX", "screen_view", { itw_flow })
   );
 };
 
@@ -47,17 +51,17 @@ export const trackItWalletCieNfcActivation = (itw_flow: ItwFlow) => {
   );
 };
 
-export const trackItWalletCieCardReading = (itw_flow: ItwFlow) => {
+export const trackItWalletCieCardReading = (properties: TrackCieScreenProperties) => {
   void mixpanelTrack(
     ITW_IDENTIFICATION_SCREENVIEW_EVENTS.ITW_CIE_CARD_READING,
-    buildEventProperties("UX", "screen_view", { itw_flow })
+    buildEventProperties("UX", "screen_view", properties)
   );
 };
 
-export const trackItWalletCieCardReadingSuccess = (itw_flow: ItwFlow) => {
+export const trackItWalletCieCardReadingSuccess = (properties: TrackCieScreenProperties) => {
   void mixpanelTrack(
     ITW_IDENTIFICATION_SCREENVIEW_EVENTS.ITW_CARD_READING_SUCCESS,
-    buildEventProperties("UX", "screen_view", { itw_flow })
+    buildEventProperties("UX", "screen_view", properties)
   );
 };
 
@@ -79,10 +83,10 @@ export const trackItwCieInfoBottomSheet = (
   );
 };
 
-export const trackItwCiePinTutorialCie = (itw_flow: ItwFlow) => {
+export const trackItwCiePinTutorialCie = (properties: TrackCieScreenProperties) => {
   void mixpanelTrack(
     ITW_IDENTIFICATION_SCREENVIEW_EVENTS.ITW_CIE_PIN_TUTORIAL_CIE,
-    buildEventProperties("UX", "screen_view", { itw_flow })
+    buildEventProperties("UX", "screen_view", properties)
   );
 };
 
@@ -90,6 +94,22 @@ export const trackItwCiePinTutorialPin = (itw_flow: ItwFlow) => {
   void mixpanelTrack(
     ITW_IDENTIFICATION_SCREENVIEW_EVENTS.ITW_CIE_PIN_TUTORIAL_PIN,
     buildEventProperties("UX", "screen_view", { itw_flow })
+  );
+};
+
+export const trackItwIdCieCanTutorialCan = (
+  properties: TrackCieCanProperties
+) => {
+  void mixpanelTrack(
+    ITW_IDENTIFICATION_SCREENVIEW_EVENTS.ITW_ID_CIE_CAN_TUTORIAL_CAN,
+    buildEventProperties("UX", "screen_view", properties)
+  );
+};
+
+export const trackItwIdEnterCan = (properties: TrackCieCanProperties) => {
+  void mixpanelTrack(
+    ITW_IDENTIFICATION_SCREENVIEW_EVENTS.ITW_ID_ENTER_CAN,
+    buildEventProperties("UX", "screen_view", properties)
   );
 };
 
@@ -146,12 +166,11 @@ export const trackItWalletCieNfcGoToSettings = (itw_flow: ItwFlow) => {
 // #region ERRORS
 
 export const trackItWalletErrorCardReading = (
-  itw_flow: ItwFlow,
-  cie_reading_progress: number
+  properties: TrackItWalletErrorCardReading
 ) => {
   void mixpanelTrack(
     ITW_IDENTIFICATION_ERRORS_EVENTS.ITW_CIE_CARD_READING_ERROR,
-    buildEventProperties("UX", "error", { itw_flow, cie_reading_progress })
+    buildEventProperties("UX", "error", properties)
   );
 };
 
@@ -185,10 +204,10 @@ export const trackItWalletLastErrorPin = (
   );
 };
 
-export const trackItWalletCardReadingClose = (cie_reading_progress: number) => {
+export const trackItWalletCardReadingClose = (  properties: TrackItWalletCardReadingClose) => {
   void mixpanelTrack(
     ITW_IDENTIFICATION_ERRORS_EVENTS.ITW_CIE_CARD_READING_CLOSE,
-    buildEventProperties("UX", "error", { cie_reading_progress })
+    buildEventProperties("UX", "error", properties)
   );
 };
 

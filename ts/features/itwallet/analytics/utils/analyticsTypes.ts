@@ -78,7 +78,7 @@ export type TrackITWalletBannerClosureProperties = {
 };
 
 export type TrackITWalletIDMethodSelected = {
-  ITW_ID_method: "spid" | "ciePin" | "cieId";
+  ITW_ID_method: ItwIdMethod;
   itw_flow: ItwFlow;
 };
 

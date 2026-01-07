@@ -253,6 +253,26 @@ const ContentView = ({ failure }: ContentViewProps) => {
               }
             }
           };
+        case IssuanceFailureType.MRTD_CHALLENGE_INIT_ERROR:
+          return {
+            title: I18n.t(
+              "features.itWallet.issuance.mrtdChallengeInitError.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.issuance.mrtdChallengeInitError.subtitle"
+            ),
+            pictogram: "umbrella",
+            action: {
+              label: I18n.t("global.buttons.close"),
+              onPress: () => machineRef.send({ type: "retry" }) // Retry event goes to UserIdentification
+            },
+            secondaryAction: {
+              label: I18n.t("features.itWallet.support.button"),
+              onPress: () => {
+                supportModal.present();
+              }
+            }
+          };
       }
     };
 

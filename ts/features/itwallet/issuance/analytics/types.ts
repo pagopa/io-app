@@ -54,3 +54,8 @@ export type TrackCredentialPreview = {
   credential: MixPanelCredential; // MixPanelCredential
   credential_type?: "multiple" | "unique";
 };
+
+export type TrackGetChallengeInfoFailure = {
+  ITW_ID_method: ItwIdMethod;
+  reason?: string;
+};

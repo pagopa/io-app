@@ -15,7 +15,8 @@ import {
   IdUnexpectedFailure,
   ItwCredentialReissuingFailedProperties,
   ItwExit,
-  TrackCredentialPreview
+  TrackCredentialPreview,
+  TrackGetChallengeInfoFailure
 } from "./types";
 import {
   ITW_ISSUANCE_ACTIONS_EVENTS,
@@ -188,6 +189,15 @@ export const trackItwCredentialReissuingFailed = (
 ) => {
   void mixpanelTrack(
     ITW_ISSUANCE_ERRORS_EVENTS.ITW_CREDENTIAL_REISSUING_FAILED,
+    buildEventProperties("KO", "screen_view", properties)
+  );
+};
+
+export const trackMrtdPoPChallengeInfoFailed = (
+  properties: TrackGetChallengeInfoFailure
+) => {
+  void mixpanelTrack(
+    ITW_ISSUANCE_ERRORS_EVENTS.ITW_GET_CHALLENGE_INFO_FAILED,
     buildEventProperties("KO", "screen_view", properties)
   );
 };

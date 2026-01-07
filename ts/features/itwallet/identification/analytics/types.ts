@@ -1,6 +1,30 @@
-import { ItwFlow } from "../../analytics/utils/analyticsTypes";
+import { ItwFlow, ItwIdMethod } from "../../analytics/utils/analyticsTypes";
 
-export type TrackITWalletSpidIDPSelected = { idp: string };
+export type TrackITWalletSpidIDPSelected = {
+  idp: string;
+  itw_flow: ItwFlow;
+};
+
+export type TrackCieScreenProperties = {
+  itw_flow: ItwFlow;
+  ITW_ID_method?: ItwIdMethod;
+};
+
+export type TrackCieCanProperties = {
+  ITW_ID_method?: ItwIdMethod;
+};
+
+export type TrackItWalletErrorCardReading = {
+  itw_flow: ItwFlow;
+  cie_reading_progress: number;
+  ITW_ID_method?: ItwIdMethod;
+};
+
+export type TrackItWalletCardReadingClose = {
+  cie_reading_progress: number;
+  itw_flow: ItwFlow;
+  ITW_ID_method?: ItwIdMethod;
+};
 
 type CieCardVerifyFailureReason = "CERTIFICATE_EXPIRED" | "CERTIFICATE_REVOKED";
 
@@ -8,17 +32,21 @@ export type TrackItWalletCieCardVerifyFailure = {
   reason: CieCardVerifyFailureReason;
   itw_flow: ItwFlow;
   cie_reading_progress: number;
+  ITW_ID_method?: ItwIdMethod;
 };
 
 export type TrackItWalletCieCardReadingFailure = {
   reason: CieCardReadingFailureReason;
   itw_flow: ItwFlow;
   cie_reading_progress: number;
+  ITW_ID_method?: ItwIdMethod;
 };
 
 export type TrackItWalletCieCardReadingUnexpectedFailure = {
   reason: string | undefined;
   cie_reading_progress: number;
+  itw_flow: ItwFlow;
+  ITW_ID_method?: ItwIdMethod;
 };
 
 export enum CieCardReadingFailureReason {
