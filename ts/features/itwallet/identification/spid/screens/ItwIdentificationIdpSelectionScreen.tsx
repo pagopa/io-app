@@ -12,8 +12,10 @@ import { idps as idpsFallback, SpidIdp } from "../../../../../utils/idps";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { ItwFlow } from "../../../analytics/utils/analyticsTypes";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
-import { trackItWalletSpidIDPSelection, trackItWalletSpidIDPSelected } from "../../analytics";
-
+import {
+  trackItWalletSpidIDPSelection,
+  trackItWalletSpidIDPSelected
+} from "../../analytics";
 
 export const ItwIdentificationIdpSelectionScreen = () => {
   const dispatch = useIODispatch();

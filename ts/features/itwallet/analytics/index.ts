@@ -77,7 +77,6 @@ export const trackItwUpgradeBanner = (banner_page: string) => {
     ITW_SCREENVIEW_EVENTS.ITW_BANNER,
     buildEventProperties("UX", "screen_view", { banner_page })
   );
-
 };
 
 export const trackItwSurveyRequest = (properties: TrackQualtricsSurvey) => {
