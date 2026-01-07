@@ -3167,9 +3167,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-app-design-system@npm:5.11.12":
-  version: 5.11.12
-  resolution: "@pagopa/io-app-design-system@npm:5.11.12"
+"@pagopa/io-app-design-system@npm:5.11.13":
+  version: 5.11.13
+  resolution: "@pagopa/io-app-design-system@npm:5.11.13"
   dependencies:
     auto-changelog: ^2.4.0
     lodash: ^4.17.21
@@ -3190,7 +3190,7 @@ __metadata:
     react-native-reanimated: "*"
     react-native-safe-area-context: "*"
     react-native-svg: "*"
-  checksum: 0828c034f442a217d1c29d955261712d835a724a7522fbf12c59bb8ae71bb6dbe2e87e324a1cfdd4f9d1d3dd4b743af04d3fb73868a51a9b50877a6ed64ca595
+  checksum: c71811f615b9b2eda2635845e4ea415efb3c2dddbeedb995cd7b4641e2d3937ef5fd7f449214d2c54a4dcf32e8ec47f42d7cad06e35b43422970c25c141ce2ea
   languageName: node
   linkType: hard
 
@@ -3205,25 +3205,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-cie@npm:1.3.0-beta.1":
-  version: 1.3.0-beta.1
-  resolution: "@pagopa/io-react-native-cie@npm:1.3.0-beta.1"
+"@pagopa/io-react-native-cie@npm:1.3.0":
+  version: 1.3.0
+  resolution: "@pagopa/io-react-native-cie@npm:1.3.0"
   dependencies:
     zod: ^3.24.4
   peerDependencies:
     react: ">=19.1"
     react-native: ">=0.81"
-  checksum: 9f5e5a55ca57e683e9ec07d2bcf9e9590684da412651480d176f11edea981a24c7440f5c80f0f1bbb92fa180d060dba7fde5e35729690b822e10c85036d30ba1
+  checksum: 82fc01aa8c16fe12e79b8934412fde0b3e7be0333a13284e36f2a51c217b4378bc2f82cde2c3aefb0614b8fea65c99715b3ce5b9c8089bb404d483850a306e15
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-cieid@npm:0.4.0-beta.0":
-  version: 0.4.0-beta.0
-  resolution: "@pagopa/io-react-native-cieid@npm:0.4.0-beta.0"
+"@pagopa/io-react-native-cieid@npm:0.4.0":
+  version: 0.4.0
+  resolution: "@pagopa/io-react-native-cieid@npm:0.4.0"
   peerDependencies:
     react: ">=19.1"
     react-native: ">=0.81"
-  checksum: 332a8b1ccd4b3b9cbb1f3a88ad828af88b91311a44967f287a6da80c417cd4bd76f1c50d0302515930b377317c7f5a7ba0a1b2d28e62b49c18092d3884b86ab2
+  checksum: ad1f1562526107e4b5f1d10e59770a876849ffda167cdc850715f16cf5c5d86d6b9d23cdb4641d57210e39a1bae25015e04afee41f9682de3be26e662f9a17f0
   languageName: node
   linkType: hard
 
@@ -3326,9 +3326,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-wallet@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "@pagopa/io-react-native-wallet@npm:2.3.0"
+"@pagopa/io-react-native-wallet@npm:^2.4.0":
+  version: 2.4.1
+  resolution: "@pagopa/io-react-native-wallet@npm:2.4.1"
   dependencies:
     dcql: ^0.2.21
     js-base64: ^3.7.7
@@ -3346,7 +3346,7 @@ __metadata:
     "@pagopa/io-react-native-jwt": "*"
     react: "*"
     react-native: "*"
-  checksum: 0df61952691653392f0f1492f6520416ebcda1ad19d054612fab3cecddb7f204378ca79f314f94d9820ccb926f8429efc68ad2bdb7be599ed1ec7a48eaebc1b3
+  checksum: 23dff582a4a8f560b5ef90b0e2c29b807877947ed5efc0e245fce2f21ce02d2795a4329fa5c4800475594f9445ce37454d9392d189503ce2d8e7d2790986819f
   languageName: node
   linkType: hard
 
@@ -3360,9 +3360,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/openapi-codegen-ts@npm:^14.0.1":
-  version: 14.0.1
-  resolution: "@pagopa/openapi-codegen-ts@npm:14.0.1"
+"@pagopa/openapi-codegen-ts@npm:^14.2.0":
+  version: 14.2.0
+  resolution: "@pagopa/openapi-codegen-ts@npm:14.2.0"
   dependencies:
     "@pagopa/ts-commons": ^10.15.0
     fs-extra: ^6.0.0
@@ -3380,7 +3380,7 @@ __metadata:
     bundle-api-spec: dist/commands/bundle-api-spec/cli.js
     gen-api-models: dist/commands/gen-api-models/cli.js
     gen-api-sdk: dist/commands/gen-api-sdk/cli.js
-  checksum: 4be08809b52a3d0a9af4c692fe3f5c982f2d02cd47243a0edc91b9361800c7228ce5d8a4deacbbe822ac240ef42c60d0603fdd0e44e69dbd369019d5c52b62e4
+  checksum: 02439ab0df1c2008b67dc79b235fac61439ff67acbcc03f7b2dc8e576a1601673f19d29c0b929088cfd3d9f1ba9ee407e3a9cba4a2a80fff25ab02914eeb17b1
   languageName: node
   linkType: hard
 
@@ -11302,10 +11302,10 @@ __metadata:
     "@babel/runtime": ^7.25.0
     "@gorhom/bottom-sheet": ^5.1.2
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
-    "@pagopa/io-app-design-system": 5.11.12
+    "@pagopa/io-app-design-system": 5.11.13
     "@pagopa/io-pagopa-commons": ^3.1.0
-    "@pagopa/io-react-native-cie": 1.3.0-beta.1
-    "@pagopa/io-react-native-cieid": 0.4.0-beta.0
+    "@pagopa/io-react-native-cie": 1.3.0
+    "@pagopa/io-react-native-cieid": 0.4.0
     "@pagopa/io-react-native-crypto": ^1.2.3
     "@pagopa/io-react-native-http-client": 1.0.5
     "@pagopa/io-react-native-integrity": ^0.3.2
@@ -11313,10 +11313,10 @@ __metadata:
     "@pagopa/io-react-native-jwt": ^2.1.0
     "@pagopa/io-react-native-login-utils": 1.2.0
     "@pagopa/io-react-native-secure-storage": ^0.2.1
-    "@pagopa/io-react-native-wallet": ^2.3.0
+    "@pagopa/io-react-native-wallet": ^2.4.0
     "@pagopa/io-react-native-wallet-legacy": "npm:@pagopa/io-react-native-wallet@0.30.0"
     "@pagopa/io-react-native-zendesk": ^0.3.30
-    "@pagopa/openapi-codegen-ts": ^14.0.1
+    "@pagopa/openapi-codegen-ts": ^14.2.0
     "@pagopa/react-native-cie": ^1.5.0
     "@pagopa/ts-commons": ^10.15.0
     "@react-native-async-storage/async-storage": ^2.0.0
@@ -11446,7 +11446,7 @@ __metadata:
     react-native-reanimated: ^3.19.3
     react-native-safe-area-context: ^5.5.2
     react-native-screen-brightness: ^2.0.0-alpha
-    react-native-screens: ^4.17.1
+    react-native-screens: 4.16.0
     react-native-screenshot-prevent: ^1.2.1
     react-native-share: ^12.0.9
     react-native-splash-screen: ^3.2.0
@@ -16243,6 +16243,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-is-edge-to-edge@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "react-native-is-edge-to-edge@npm:1.2.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 8fb6d8ab7b953c7d7cec8c987cef24f1c5348a293a85cb49c7c53b54ef110c0ca746736ae730e297603c8c76020df912e93915fb17518c4f2f91143757177aba
+  languageName: node
+  linkType: hard
+
 "react-native-keychain@npm:^10.0.0":
   version: 10.0.0
   resolution: "react-native-keychain@npm:10.0.0"
@@ -16468,26 +16478,37 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-screens@npm:^4.17.1":
-  version: 4.17.1
-  resolution: "react-native-screens@npm:4.17.1"
+"react-native-screens@npm:4.16.0":
+  version: 4.16.0
+  resolution: "react-native-screens@npm:4.16.0"
   dependencies:
     react-freeze: ^1.0.0
+    react-native-is-edge-to-edge: ^1.2.1
     warn-once: ^0.1.0
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 7c17118bc1313acd6001e63bf1d6c6a95ca5250c9a06450cceec50768571648d2d5f3e17ed19fb757d176a65bbe80fcba142b937a92cbbc795a6da71243c375e
+  checksum: 71bebbead1d8f886b80b70cf9d69b0179e035fb425fae84fbcbb2930167220cb90c2ee70b26d3fd94f940fa3e6ce325b0ec2e283d039d5abb29bf6898c58e485
   languageName: node
   linkType: hard
 
-"react-native-screenshot-prevent@npm:^1.2.1":
+"react-native-screenshot-prevent@npm:1.2.1":
   version: 1.2.1
   resolution: "react-native-screenshot-prevent@npm:1.2.1"
   peerDependencies:
     react: "*"
     react-native: "*"
   checksum: 5563adea419627ce1a066495c7779ffdfa85bdb9c180b47eb25215175a02fc4af402bf24cea684d208ae18651df9396fb545998dd3c566afe67f119ecfa62a4a
+  languageName: node
+  linkType: hard
+
+"react-native-screenshot-prevent@patch:react-native-screenshot-prevent@npm%3A1.2.1#./.yarn/patches/react-native-screenshot-prevent-npm-1.2.1-d115315590.patch::locator=io%40workspace%3A.":
+  version: 1.2.1
+  resolution: "react-native-screenshot-prevent@patch:react-native-screenshot-prevent@npm%3A1.2.1#./.yarn/patches/react-native-screenshot-prevent-npm-1.2.1-d115315590.patch::version=1.2.1&hash=e49943&locator=io%40workspace%3A."
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 454bc5a24eae9be8f6bc3ccab374be801b5ada6c984aa1d848dc14569436163c476038720c866fd34bab94f9d7441dc83dd8a31449c9a0e5b70cd825edc87b9a
   languageName: node
   linkType: hard
 
@@ -16603,14 +16624,14 @@ __metadata:
 
 "react-native-webview@patch:react-native-webview@npm%3A13.16.0#./.yarn/patches/react-native-webview-npm-13.16.0-82f4e13202.patch::locator=io%40workspace%3A.":
   version: 13.16.0
-  resolution: "react-native-webview@patch:react-native-webview@npm%3A13.16.0#./.yarn/patches/react-native-webview-npm-13.16.0-82f4e13202.patch::version=13.16.0&hash=c47d69&locator=io%40workspace%3A."
+  resolution: "react-native-webview@patch:react-native-webview@npm%3A13.16.0#./.yarn/patches/react-native-webview-npm-13.16.0-82f4e13202.patch::version=13.16.0&hash=ac17ad&locator=io%40workspace%3A."
   dependencies:
     escape-string-regexp: ^4.0.0
     invariant: 2.2.4
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 20ca3a4bc78dc13e78c6ef7ac1dbfbab758d72fd1446219411a6d4fbb9bb1523d77ca8f554b318c14a5f7832e45c82c673384c9966a1a2dff4fefc22e5026f2e
+  checksum: e4a5902b133a2afa03b0320a706fff3324216e56f628719bc956ec59659c7f099cd2f44207e1525b47e0272e2ea0929d18c9cea8c95473b6d5992fc55a58179d
   languageName: node
   linkType: hard
 

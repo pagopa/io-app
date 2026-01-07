@@ -169,7 +169,6 @@ const IdPayInitiativeDetailsScreenComponent = () => {
     return (
       <OperationResultScreenContent
         pictogram="umbrella"
-        enableAnimatedPictogram
         title={I18n.t(
           "idpay.initiative.details.initiativeDetailsScreen.error.title"
         )}

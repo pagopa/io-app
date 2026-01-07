@@ -3,6 +3,7 @@ import {
   ContentWrapper,
   IOButton,
   ModuleNavigationAlt,
+  VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -11,11 +12,7 @@ import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
-import {
-  IOStackNavigationRouteProps,
-  useIONavigation
-} from "../../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../../navigation/routes";
+import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
 import {
   trackItWalletIDMethod,
@@ -52,7 +49,6 @@ export const ItwIdentificationModeSelectionScreen = ({
   const { name: routeName, params } = route;
   const { eidReissuing } = params;
 
-  const navigation = useIONavigation();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
@@ -72,8 +68,8 @@ export const ItwIdentificationModeSelectionScreen = ({
     [disabledIdentificationMethods, level]
   );
   const isSpidDisabled = useMemo(
-    () => disabledIdentificationMethods.includes("SPID") || level === "l3",
-    [disabledIdentificationMethods, level]
+    () => disabledIdentificationMethods.includes("SPID"),
+    [disabledIdentificationMethods]
   );
   const isCieIdDisabled = useMemo(
     () => disabledIdentificationMethods.includes("CieID"),
@@ -145,25 +141,12 @@ export const ItwIdentificationModeSelectionScreen = ({
       body: ""
     },
     handleDismiss: () => {
-      navigation.reset({
-        index: 1,
-        routes: [
-          {
-            name: ROUTES.MAIN,
-            params: {
-              screen: ROUTES.WALLET_HOME,
-              params: { requiredEidFeedback: true }
-            }
-          }
-        ]
-      });
+      machineRef.send({ type: "close" });
     }
   });
 
   if (isLoading) {
-    return (
-      <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
-    );
+    return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
   }
 
   return (
@@ -177,6 +160,7 @@ export const ItwIdentificationModeSelectionScreen = ({
       goBack={eidReissuing ? dismissalDialog.show : undefined}
     >
       <ContentWrapper>
+        <VSpacer size={8} />
         <VStack space={16}>
           {!isCiePinDisabled && <CiePinMethodModule />}
           {!isSpidDisabled && <SpidMethodModule />}
@@ -207,20 +191,6 @@ const CiePinMethodModule = () => {
     machineRef.send({ type: "select-identification-mode", mode: "ciePin" });
   }, [machineRef]);
 
-  const { title, subtitle } = useMemo(() => {
-    if (level === "l3-next") {
-      return {
-        title: I18n.t(`${i18nNs}.mode.ciePin.title`),
-        subtitle: I18n.t(`${i18nNs}.mode.ciePin.subtitle.l3-next`)
-      };
-    }
-
-    return {
-      title: I18n.t(`${i18nNs}.mode.ciePin.title`),
-      subtitle: I18n.t(`${i18nNs}.mode.ciePin.subtitle.default`)
-    };
-  }, [level]);
-
   const badgeProps: Badge | undefined = useMemo(() => {
     if (level === "l2" && mode === "issuance") {
       // Should not display the recommended badge for L2 issuance
@@ -237,8 +207,8 @@ const CiePinMethodModule = () => {
 
   return (
     <ModuleNavigationAlt
-      title={title}
-      subtitle={subtitle}
+      title={I18n.t(`${i18nNs}.mode.ciePin.title`)}
+      subtitle={I18n.t(`${i18nNs}.mode.ciePin.subtitle`)}
       testID="CiePinMethodModuleTestID"
       icon="cieCard"
       onPress={handleOnPress}
@@ -256,10 +226,10 @@ const SpidMethodModule = () => {
   }, [machineRef]);
 
   const { title, subtitle } = useMemo(() => {
-    if (level === "l3-next") {
+    if (level === "l3") {
       return {
-        title: I18n.t(`${i18nNs}.mode.spid.title.l3-next`),
-        subtitle: I18n.t(`${i18nNs}.mode.spid.subtitle.l3-next`)
+        title: I18n.t(`${i18nNs}.mode.spid.title.l3`),
+        subtitle: I18n.t(`${i18nNs}.mode.spid.subtitle.l3`)
       };
     }
 
@@ -289,10 +259,10 @@ const CieIdMethodModule = () => {
   }, [machineRef]);
 
   const { title, subtitle } = useMemo(() => {
-    if (level === "l3-next") {
+    if (level === "l3") {
       return {
         title: I18n.t(`${i18nNs}.mode.cieId.title`),
-        subtitle: I18n.t(`${i18nNs}.mode.cieId.subtitle.l3-next`)
+        subtitle: I18n.t(`${i18nNs}.mode.cieId.subtitle.l3`)
       };
     }
 

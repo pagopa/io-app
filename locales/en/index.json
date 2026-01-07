@@ -2559,12 +2559,6 @@
           "title": "Abilita il metodo per effettuare pagamenti in app",
           "subtitle": "Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”."
         },
-        "PAYMENT_METHODS_NOT_AVAILABLE": {
-          "title": "Vuoi pagare con carta? Aggiungila ora!",
-          "subtitle": "Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.",
-          "primaryAction": "Aggiungi carta",
-          "secondaryAction": "Usa altri metodi"
-        },
         "PAYMENT_METHODS_EXPIRED": {
           "title": "Your card is expired!",
           "subtitle": "Remove the card and add a new one.\nIt will be saved in your Wallet, making it easier for you to pay next time.",
@@ -2986,7 +2980,8 @@
           }
         }
       },
-      "searchLink": "Search all available local services"
+      "searchLink": "Search all available local services",
+      "favourites": "Favourite services"
     },
     "institution": {
       "failure": {
@@ -3055,6 +3050,35 @@
         "title": "Terms of use and Privacy",
         "tosLink": "Terms and conditions",
         "privacyLink": "Privacy information"
+      }
+    },
+    "favouriteServices": {
+      "title": "My favourites",
+      "add": "Add to favourites",
+      "remove": "Remove from favourites",
+      "sortButton": "Sort",
+      "toasts": {
+        "added": "Added to favourites!",
+        "removed": "Removed from favourites!",
+        "limitReached": "Maximum number of favorites reached"
+      },
+      "emptyList": {
+        "title": "Create your favorites list",
+        "subtitle": "Save your favorite services for easy access",
+        "searchAction": "Start searching"
+      },
+      "removeAlert": {
+        "title": "Do you want to remove the service from favorites?",
+        "confirm": "Yes, remove"
+      },
+      "bottomSheet": {
+        "title": "Sort by",
+        "a11y": "Sort favourite services",
+        "content": {
+          "addedAt_desc": "Newest",
+          "name_asc": "Name (A-Z)",
+          "addedAt_asc": "Oldest first"
+        }
       }
     }
   },
@@ -3625,7 +3649,8 @@
             "byName": "Alphabetical order"
           }
         },
-        "discountOf": "Discount of {{discount}}%"
+        "discountOf": "Discount of {{discount}}%",
+        "a11yTitle": "Category: {{categoryName}}"
       },
       "merchantDetail": {
         "title": {
@@ -3940,10 +3965,33 @@
             "paragraph1": "Conserva il codice QR, ti servirà per rileggere la notifica in app",
             "paragraph2": "Puoi inquadrarlo oppure caricare una sua foto su IO",
             "paragraph3": "Tutte le tue notifiche sono disponibili sul sito di SEND - Notifiche Digitali",
-            "paragraphDelegate3": "Tutte le tue notifiche e quelle per cui hai una delega sono disponibili sul sito di SEND - Notifiche Digitali",
             "link": "Vai sul sito di SEND",
             "primaryAction": "Torna alla notifica",
             "secondaryAction": "Chiudi la notifica"
+          },
+          "cieScanning": {
+            "idle": {
+              "title": "Poggia il retro del telefono sulla CIE",
+              "status": "Posiziona il telefono sulla CIE per iniziare la lettura."
+            },
+            "reading": {
+              "title": "La lettura è in corso...",
+              "subtitle": "Non muovere il telefono.",
+              "status": "Non muovere il telefono."
+            },
+            "success": {
+              "title": "Lettura completata!",
+              "status": "Fatto!"
+            },
+            "error": {
+              "TAG_LOST": {
+                "title": "Hai rimosso il telefono troppo presto!",
+                "subtitle": "Riprova e tieni fermo il telefono per la lettura."
+              }
+            }
+          },
+          "validatingMandate": {
+            "loadingText": "Verifica della Carta di Identità Elettronica in corso"
           }
         }
       },
@@ -4268,8 +4316,6 @@
     },
     "wallet": {
       "home": {
-        "emptyMessage": "Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.",
-        "cta": "Aggiungi al Portafoglio",
         "toast": {
           "newMethod": "Elemento aggiunto!"
         },
@@ -4805,11 +4851,6 @@
         "notEntitledCredentialError": {
           "title": "Non è possibile aggiungere il documento",
           "body": "Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.",
-          "primaryAction": "Ho capito"
-        },
-        "asyncCredentialError": {
-          "title": "La Motorizzazione Civile ha preso in carico la tua richiesta",
-          "body": "Riceverai un messaggio in app per continuare appena La Motorizzazione Civile avrà elaborato la tua richiesta.",
           "primaryAction": "Ho capito"
         },
         "issuerNotTrustedCommonError": {
@@ -5517,13 +5558,13 @@
       "resultScreen": {
         "success": {
           "header": "Ecco il codice sconto!",
-          "body": "Chiedi al venditore di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:",
+          "body": "Il codice ha durata limitata. Una volta scaduto, potrai generare un nuovo codice.",
           "validUpTo": "Vale fino a ",
-          "expiresIn": "Il codice scade tra ",
+          "expiresIn": "Il codice è valido per ",
           "copyCodeCta": "Copy code",
           "expired": {
-            "header": "Il codice è scaduto",
-            "CTA": "Usa un nuovo codice"
+            "header": "Questo codice non è più valido",
+            "CTA": "Genera un nuovo codice"
           }
         },
         "error": {
@@ -5677,7 +5718,7 @@
                 "SUSPENDED": "Sospensione",
                 "READMITTED": "Riattivazione",
                 "CIE": "Abilitazione carta d’identità elettronica",
-                "UNSUBSCRIBED": "Recesso dall’iniziativa"
+                "UNSUBSCRIBED": "Scadenza iniziativa"
               }
             }
           }

@@ -5,6 +5,7 @@ import {
   StoredCredential,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
+import { DigitalCredentialMetadata } from "../../common/utils/itwCredentialsCatalogueUtils";
 import { CredentialIssuanceFailure } from "./failure";
 
 /**
@@ -27,11 +28,6 @@ export type Context = {
    * Flag to indicate if the user has access to the L3 features.
    */
   isItWalletValid: boolean;
-  /**
-   * Used to indicate that the flow is coming from the asynchrnous issuance flow for the MDL.
-   * TODO to be removed in [SIW-2839]
-   */
-  isAsyncContinuation: boolean;
   /**
    * The type of the credential being issued.
    */
@@ -59,12 +55,15 @@ export type Context = {
    * The failure that occurred during the credential issuance process, if any.
    */
   failure: CredentialIssuanceFailure | undefined;
+  /**
+   * The credentials catalogue as a dictionary, with an entry for each credential type.
+   */
+  credentialsCatalogue: Record<string, DigitalCredentialMetadata> | undefined;
 };
 
 export const InitialContext: Context = {
   mode: "issuance",
   isItWalletValid: false,
-  isAsyncContinuation: false,
   credentialType: undefined,
   wiaCryptoContext: undefined,
   walletInstanceAttestation: undefined,
@@ -73,5 +72,6 @@ export const InitialContext: Context = {
   codeVerifier: undefined,
   requestedCredential: undefined,
   credentials: undefined,
-  failure: undefined
+  failure: undefined,
+  credentialsCatalogue: undefined
 };

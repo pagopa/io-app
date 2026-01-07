@@ -27,6 +27,8 @@
 		8D51BCD77547410BBC7E6050 /* TitilliumSansPro-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 148E8F80A1D5448DAD5263B7 /* TitilliumSansPro-Italic.otf */; };
 		8DCB405D579147AAB059BEE6 /* Titillio-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E8C4B91357FA47018EE5ACF0 /* Titillio-BlackItalic.otf */; };
 		A5C4E8CE93074865A66DFAC1 /* TitilliumSansPro-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 015E4FBE7D1D4C2485C73321 /* TitilliumSansPro-SemiboldItalic.otf */; };
+		A626A6B62ED9AED30084EC6E /* PdfHighResGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A626A6B52ED9AED00084EC6E /* PdfHighResGenerator.swift */; };
+		A626A6B92ED9B0260084EC6E /* PdfHighResGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = A626A6B82ED9B0260084EC6E /* PdfHighResGenerator.m */; };
 		B551AC412DA55A0E00A4E30F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B551AC402DA55A0E00A4E30F /* AppDelegate.swift */; };
 		B572E1E42DC12161009BA244 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		B57C5DCD2D8B12A500173EF4 /* AppReviewModule.m in Sources */ = {isa = PBXBuildFile; fileRef = B57C5DCC2D8B129A00173EF4 /* AppReviewModule.m */; };
@@ -91,6 +93,8 @@
 		9205B2AD16D94BDAA69E880E /* Titillio-Black.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Titillio-Black.otf"; path = "../assets/fonts/Titillio/Titillio-Black.otf"; sourceTree = "<group>"; };
 		96C2E93186814D36AD451D83 /* Titillio-ExtrablackItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Titillio-ExtrablackItalic.otf"; path = "../assets/fonts/Titillio/Titillio-ExtrablackItalic.otf"; sourceTree = "<group>"; };
 		A245EDE7064D4143BF1857DB /* Titillio-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Titillio-Regular.otf"; path = "../assets/fonts/Titillio/Titillio-Regular.otf"; sourceTree = "<group>"; };
+		A626A6B52ED9AED00084EC6E /* PdfHighResGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfHighResGenerator.swift; sourceTree = "<group>"; };
+		A626A6B82ED9B0260084EC6E /* PdfHighResGenerator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PdfHighResGenerator.m; sourceTree = "<group>"; };
 		B242A588B065130DE65386E4 /* Pods-IO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IO.debug.xcconfig"; path = "Target Support Files/Pods-IO/Pods-IO.debug.xcconfig"; sourceTree = "<group>"; };
 		B551AC402DA55A0E00A4E30F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B57593872B70FFA400674515 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -211,6 +215,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				A626A6B82ED9B0260084EC6E /* PdfHighResGenerator.m */,
+				A626A6B52ED9AED00084EC6E /* PdfHighResGenerator.swift */,
 				B57C5DCE2D8B12D200173EF4 /* AppReviewModule.swift */,
 				B57C5DCC2D8B129A00173EF4 /* AppReviewModule.m */,
 				194A5D2A1F027F5A0078620E /* Podfile */,
@@ -522,8 +528,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A626A6B92ED9B0260084EC6E /* PdfHighResGenerator.m in Sources */,
 				B57C5DCD2D8B12A500173EF4 /* AppReviewModule.m in Sources */,
 				B57C5DCF2D8B12DC00173EF4 /* AppReviewModule.swift in Sources */,
+				A626A6B62ED9AED30084EC6E /* PdfHighResGenerator.swift in Sources */,
 				B551AC412DA55A0E00A4E30F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -566,7 +574,7 @@
 				CODE_SIGN_ENTITLEMENTS = IO/IO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 8;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				ENABLE_BITCODE = NO;
@@ -603,7 +611,7 @@
 				CODE_SIGN_ENTITLEMENTS = IO/IO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 8;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				ENABLE_BITCODE = NO;
@@ -844,7 +852,7 @@
 				CODE_SIGN_ENTITLEMENTS = IO/IO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 8;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				ENABLE_BITCODE = NO;

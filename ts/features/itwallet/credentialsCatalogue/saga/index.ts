@@ -1,14 +1,13 @@
-import { call, select } from "typed-redux-saga/macro";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { put, takeLatest } from "typed-redux-saga/macro";
+import { itwFetchCredentialsCatalogue } from "../store/actions";
 import { fetchCredentialsCatalogueSaga } from "./fetchCredentialsCatalogue";
 
 export function* watchItwCredentialsCatalogueSaga() {
-  const isItwEnabled = yield* select(itwIsL3EnabledSelector);
+  yield* takeLatest(
+    itwFetchCredentialsCatalogue.request,
+    fetchCredentialsCatalogueSaga
+  );
 
-  // The Credential Catalogue is only available to IT-Wallet enabled users
-  if (!isItwEnabled) {
-    return;
-  }
-
-  yield* call(fetchCredentialsCatalogueSaga);
+  // Fetch the catalogue immediately
+  yield* put(itwFetchCredentialsCatalogue.request());
 }

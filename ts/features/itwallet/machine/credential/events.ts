@@ -5,7 +5,6 @@ export type SelectCredential = {
   type: "select-credential";
   credentialType: string;
   mode: CredentialIssuanceMode;
-  isAsyncContinuation?: boolean; // TODO to be removed in [SIW-2839]
 };
 
 export type ConfirmTrustData = {
@@ -28,6 +27,10 @@ export type Close = {
   type: "close";
 };
 
+export type Continue = {
+  type: "continue";
+};
+
 export type CredentialIssuanceEvents =
   | SelectCredential
   | ConfirmTrustData
@@ -35,4 +38,5 @@ export type CredentialIssuanceEvents =
   | Retry
   | Back
   | Close
+  | Continue
   | ErrorActorEvent;

@@ -143,11 +143,13 @@ type IdRequestFailure = {
   reason: unknown;
   type: string;
   caused_by: ItwFailureCause;
+  itw_flow: ItwFlow;
 };
 
 type IdUnexpectedFailure = {
   reason: unknown;
   type: string;
+  itw_flow: ItwFlow;
 };
 
 type CredentialUnexpectedFailure = {
@@ -272,7 +274,10 @@ type ItwCopyListItem = {
   item_copied: string;
 };
 
-export type ItwOfflineRicaricaAppIOSource = "bottom_sheet" | "banner";
+export type ItwOfflineRicaricaAppIOSource =
+  | "bottom_sheet"
+  | "banner"
+  | "access_expired_screen";
 
 type ItwCredentialInfoDetails = {
   credential: MixPanelCredential;
@@ -297,8 +302,7 @@ export enum ItwEidReissuingTrigger {
  * Add new values when implementing additional flows that require L3 upgrade.
  */
 export enum ItwL3UpgradeTrigger {
-  REMOTE_QR_CODE = "remote_qr_code",
-  ADD_CREDENTIAL = "add_credential"
+  REMOTE_QR_CODE = "remote_qr_code"
 }
 
 // TODO: Add reissuing_PID when the L3 PID reissuance flow is ready
@@ -319,6 +323,13 @@ type ItwUserWithoutL3requirements = {
   screen_name: string;
   reason: "user_without_cie" | "user_without_pin";
   position: "screen" | "bottom_sheet";
+};
+
+type QualtricsSurveyId = "confirm_eid_flow_success" | "confirm_eid_flow_exit";
+
+export type TrackQualtricsSurvey = {
+  survey_id: QualtricsSurveyId;
+  survey_page: string;
 };
 
 // #region SCREEN VIEW EVENTS
@@ -349,6 +360,13 @@ export const trackCredentialPreview = (
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_CREDENTIAL_PREVIEW,
     buildEventProperties("UX", "screen_view", credentialPreview)
+  );
+};
+
+export const trackItwCredentialIntro = (credential: MixPanelCredential) => {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_CREDENTIAL_INTRO,
+    buildEventProperties("UX", "screen_view", { credential })
   );
 };
 
@@ -416,13 +434,6 @@ export function trackItWalletCieCardReadingSuccess(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_CARD_READING_SUCCESS,
     buildEventProperties("UX", "screen_view", { itw_flow })
-  );
-}
-
-export function trackItWalletDeferredIssuing(credential: MixPanelCredential) {
-  void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.ITW_DEFERRED_ISSUING,
-    buildEventProperties("UX", "screen_view", { credential })
   );
 }
 
@@ -535,6 +546,13 @@ export const trackItwOfflineAccessExpired = () => {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_OFFLINE_ACCESS_EXPIRED,
     buildEventProperties("KO", "screen_view")
+  );
+};
+
+export const trackItwSurveyRequest = (properties: TrackQualtricsSurvey) => {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.SURVEY_REQUEST,
+    buildEventProperties("UX", "screen_view", properties)
   );
 };
 
@@ -761,6 +779,15 @@ export function trackWalletNewIdReset(state: GlobalState) {
   );
 }
 
+export const trackItwCredentialStartIssuing = (
+  credential: MixPanelCredential
+) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_START_ISSUING,
+    buildEventProperties("UX", "action", { credential })
+  );
+};
+
 export function trackItwIntroBack(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_INTRO_BACK,
@@ -887,6 +914,24 @@ export function trackItwCredentialQualificationDetail(
   );
 }
 
+export const trackItwSurveyRequestAccepted = (
+  properties: TrackQualtricsSurvey
+) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.SURVEY_REQUEST_ACCEPTED,
+    buildEventProperties("UX", "action", properties)
+  );
+};
+
+export const trackItwSurveyRequestDeclined = (
+  properties: TrackQualtricsSurvey
+) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.SURVEY_REQUEST_DECLINED,
+    buildEventProperties("UX", "action", properties)
+  );
+};
+
 // #endregion ACTIONS
 
 // #region ERRORS
@@ -965,19 +1010,25 @@ export function trackItWalletCieCardReadingUnexpectedFailure(
   );
 }
 
-export const trackIdNotMatch = (ITW_ID_method: ItwIdMethod) => {
+export const trackIdNotMatch = (
+  ITW_ID_method: ItwIdMethod,
+  itw_flow: ItwFlow
+) => {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_ID_NOT_MATCH,
-    buildEventProperties("KO", "error", { ITW_ID_method })
+    buildEventProperties("KO", "error", { ITW_ID_method, itw_flow })
   );
 };
 
 // TODO: Track IPZS timeout on eID flow
-export const trackItwIdRequestTimeout = (ITW_ID_method?: ItwIdMethod) => {
+export const trackItwIdRequestTimeout = (
+  ITW_ID_method?: ItwIdMethod,
+  itw_flow: ItwFlow = "not_available"
+) => {
   if (ITW_ID_method) {
     void mixpanelTrack(
       ITW_ERRORS_EVENTS.ITW_ID_REQUEST_TIMEOUT,
-      buildEventProperties("KO", "error", { ITW_ID_method })
+      buildEventProperties("KO", "error", { ITW_ID_method, itw_flow })
     );
   }
 };
@@ -1060,18 +1111,19 @@ export const trackCredentialInvalidStatusFailure = ({
 
 export const trackItwIdRequestUnexpectedFailure = ({
   reason,
-  type
+  type,
+  itw_flow
 }: IdUnexpectedFailure) => {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_ID_REQUEST_UNEXPECTED_FAILURE,
-    buildEventProperties("KO", "error", { reason, type })
+    buildEventProperties("KO", "error", { reason, type, itw_flow })
   );
 };
 
-export const trackItwAlreadyActivated = () => {
+export const trackItwAlreadyActivated = (itw_flow: ItwFlow) => {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_ALREADY_ACTIVATED,
-    buildEventProperties("KO", "error")
+    buildEventProperties("KO", "error", { itw_flow })
   );
 };
 

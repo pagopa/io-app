@@ -105,6 +105,7 @@ const IdPayCompletionScreen = () => {
 
   return (
     <OperationResultScreenContent
+      pictogram="success"
       title={I18n.t("idpay.onboarding.success.requestSent.title")}
       subtitle={subtitle}
       action={{
@@ -112,9 +113,6 @@ const IdPayCompletionScreen = () => {
         accessibilityLabel: I18n.t("idpay.onboarding.success.button.continue"),
         onPress: handleClosePress
       }}
-      pictogram="success"
-      enableAnimatedPictogram
-      loop={false}
     />
   );
 };

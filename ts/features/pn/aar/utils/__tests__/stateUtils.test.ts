@@ -53,7 +53,13 @@ describe("stateUtils", () => {
           sendAARFlowStates.fetchingNotificationData
         ]
       ],
-      [sendAARFlowStates.notAddressee, [sendAARFlowStates.creatingMandate]],
+      [
+        sendAARFlowStates.notAddressee,
+        [
+          sendAARFlowStates.creatingMandate,
+          sendAARFlowStates.nfcNotSupportedFinal
+        ]
+      ],
       [
         sendAARFlowStates.creatingMandate,
         [sendAARFlowStates.cieCanAdvisory, sendAARFlowStates.ko]
@@ -84,7 +90,7 @@ describe("stateUtils", () => {
       ],
       [
         sendAARFlowStates.validatingMandate,
-        [sendAARFlowStates.displayingNotificationData, sendAARFlowStates.ko]
+        [sendAARFlowStates.fetchingNotificationData, sendAARFlowStates.ko]
       ]
     ];
 

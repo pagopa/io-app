@@ -36,9 +36,9 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { itwIsPidReissuingSurveyHiddenSelector } from "../../common/store/selectors/preferences";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
-import { isL3IssuanceFeaturesEnabled } from "./utils";
 
 export const createEidIssuanceActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
@@ -148,7 +148,7 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToCiePreparationScreen: () => {
+  navigateToCieNfcPreparationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.NFC_SCREEN
     });
@@ -166,9 +166,42 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToCieReadCardScreen: () => {
+  navigateToCieCardPreparationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CARD_SCREEN
+    });
+  },
+
+  navigateToCieCanPreparationScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CAN_SCREEN
+    });
+  },
+
+  navigateToCieCanScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.CAN_SCREEN
+    });
+  },
+
+  navigateToCieAuthenticationScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.AUTH_SCREEN
+    });
+  },
+
+  navigateToCieInternalAuthAndMrtdScreen: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assert(context.mrtdContext, "mrtdContext is undefined");
+    assert(context.mrtdContext.can, "CAN is undefined");
+
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.INTERNAL_AUTH_MRTD_SCREEN,
+      params: {
+        can: context.mrtdContext.can,
+        challenge: context.mrtdContext.challenge
+      }
     });
   },
 
@@ -202,7 +235,9 @@ export const createEidIssuanceActionsImplementation = (
           params: {
             screen: ROUTES.WALLET_HOME,
             params: {
-              requiredEidFeedback: context.mode === "reissuance"
+              requiredEidFeedback:
+                context.mode === "reissuance" &&
+                !itwIsPidReissuingSurveyHiddenSelector(store.getState())
             }
           }
         }
@@ -284,7 +319,7 @@ export const createEidIssuanceActionsImplementation = (
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     trackSaveCredentialSuccess(
-      isL3IssuanceFeaturesEnabled(context.level) ? "ITW_PID" : "ITW_ID_V2"
+      context.level === "l3" ? "ITW_PID" : "ITW_ID_V2"
     );
     updateITWStatusAndPIDProperties(store.getState());
   },
@@ -302,7 +337,7 @@ export const createEidIssuanceActionsImplementation = (
 
     trackItWalletIDMethodSelected({
       ITW_ID_method: event.mode,
-      itw_flow: isL3IssuanceFeaturesEnabled(context.level) ? "L3" : "L2"
+      itw_flow: context.level === "l3" ? "L3" : "L2"
     });
   }
 });

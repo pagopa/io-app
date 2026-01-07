@@ -9,7 +9,9 @@ import { watchHomeSaga } from "../../../home/saga";
 import { watchInstitutionSaga } from "../../../institution/saga";
 import { watchSearchSaga } from "../../../search/saga";
 import { loadServicePreference } from "../../../details/store/actions/preference";
+import { watchFavouriteServicesSaga } from "../../../favouriteServices/saga";
 import { specialServicePreferencesSaga } from "../specialServicePreferencesSaga";
+import { isFavouriteServicesEnabledSelector } from "../../store/selectors/remoteConfig";
 
 describe("index", () => {
   describe("watchServicesSaga", () => {
@@ -29,6 +31,10 @@ describe("index", () => {
         .fork(watchInstitutionSaga, servicesClient)
         .next()
         .fork(watchSearchSaga, servicesClient)
+        .next()
+        .select(isFavouriteServicesEnabledSelector)
+        .next(true)
+        .fork(watchFavouriteServicesSaga)
         .next()
         .takeEvery(loadServicePreference.success, specialServicePreferencesSaga)
         .next()

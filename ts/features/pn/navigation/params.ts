@@ -1,3 +1,4 @@
+import { SendAARCieCardReadingScreenRouteParams } from "../aar/screen/SendAARCieCardReadingScreen";
 import { SendEngagementScreenNavigationParams } from "../aar/screen/SendEngagementScreen";
 import { SendQRScanFlowScreenProps } from "../aar/screen/SendQRScanFlowScreen";
 import { MessageAttachmentScreenRouteParams } from "../screens/MessageAttachmentScreen";
@@ -18,4 +19,10 @@ export type PnParamsList = {
   [PN_ROUTES.SEND_ENGAGEMENT_ON_FIRST_APP_OPENING]: undefined;
   [PN_ROUTES.SEND_ENGAGEMENT_ACTIVATION_ERROR]: undefined;
   [PN_ROUTES.SEND_AAR_ERROR]: undefined;
+  [PN_ROUTES.SEND_AAR_DELEGATION_PROPOSAL]: undefined;
+  [PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL]: undefined;
+  [PN_ROUTES.SEND_AAR_CIE_CAN_INSERTION]: undefined;
+  [PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL]: undefined;
+  [PN_ROUTES.SEND_AAR_NFC_ACTIVATION]: undefined;
+  [PN_ROUTES.SEND_AAR_CIE_CARD_READING]: SendAARCieCardReadingScreenRouteParams;
 };

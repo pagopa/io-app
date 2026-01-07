@@ -103,11 +103,10 @@ describe("itwCredentialIssuanceMachine", () => {
   const navigateToCredentialPreviewScreen = jest.fn();
   const navigateToFailureScreen = jest.fn();
   const navigateToWallet = jest.fn();
+  const navigateToCredentialIntroductionScreen = jest.fn();
   const closeIssuance = jest.fn();
   const storeWalletInstanceAttestation = jest.fn();
   const storeCredential = jest.fn();
-  const flagCredentialAsRequested = jest.fn();
-  const unflagCredentialAsRequested = jest.fn();
   const handleSessionExpired = jest.fn();
   const trackStartAddCredential = jest.fn();
   const trackAddCredential = jest.fn();
@@ -121,24 +120,23 @@ describe("itwCredentialIssuanceMachine", () => {
   const obtainStatusAssertion = jest.fn();
 
   const isSessionExpired = jest.fn();
-  const isDeferredIssuance = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn();
   const isStatusError = jest.fn();
   const isSkipNavigation = jest.fn();
   const isEidExpired = jest.fn();
+  const hasCredentialIntroContent = jest.fn();
 
   const mockedMachine = itwCredentialIssuanceMachine.provide({
     actions: {
       onInit: assign(onInit),
       navigateToTrustIssuerScreen,
       navigateToCredentialPreviewScreen,
+      navigateToCredentialIntroductionScreen,
       navigateToFailureScreen,
       navigateToWallet,
       closeIssuance,
       storeWalletInstanceAttestation,
       storeCredential,
-      flagCredentialAsRequested,
-      unflagCredentialAsRequested,
       handleSessionExpired,
       trackStartAddCredential,
       trackAddCredential,
@@ -164,10 +162,10 @@ describe("itwCredentialIssuanceMachine", () => {
     },
     guards: {
       isSessionExpired,
-      isDeferredIssuance,
       hasValidWalletInstanceAttestation,
       isStatusError,
-      isEidExpired
+      isEidExpired,
+      hasCredentialIntroContent
     }
   });
 
@@ -759,5 +757,25 @@ describe("itwCredentialIssuanceMachine", () => {
     await waitFor(() =>
       expect(navigateToTrustIssuerScreen).toHaveBeenCalledTimes(1)
     );
+  });
+
+  it("should navigate to the introduction screen if the catalogue contains the Auth Source user information", async () => {
+    isEidExpired.mockImplementation(() => false);
+    hasValidWalletInstanceAttestation.mockImplementation(() => true);
+    hasCredentialIntroContent.mockImplementation(() => true);
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    actor.send({
+      type: "select-credential",
+      credentialType: "education_degree",
+      mode: "issuance"
+    });
+
+    await waitForActor(actor, snapshot =>
+      snapshot.matches("CredentialIntroduction")
+    );
+    expect(navigateToCredentialIntroductionScreen).toHaveBeenCalledTimes(1);
   });
 });

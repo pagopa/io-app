@@ -44,13 +44,9 @@ import {
   centsToAmount,
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
-import {
-  formatPaymentNoticeNumber,
-  isPaymentMethodExpired
-} from "../../common/utils";
+import { formatPaymentNoticeNumber } from "../../common/utils";
 import { storeNewPaymentAttemptAction } from "../../history/store/actions";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
-import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
 import * as analytics from "../analytics";
 import { WalletPaymentFailureDetail } from "../components/WalletPaymentFailureDetail";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
@@ -63,7 +59,6 @@ import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 import { walletPaymentDetailsSelector } from "../store/selectors";
 import { walletPaymentEnabledUserWalletsSelector } from "../store/selectors/paymentMethods";
 import { WalletPaymentStepEnum } from "../types";
-import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import { FaultCodeCategoryEnum as FaultCodeSlowdownCategoryEnum } from "../types/PaymentSlowdownErrorProblemJson";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 import { formatAndValidateDueDate } from "../utils";
@@ -153,7 +148,6 @@ const WalletPaymentDetailContent = ({
   const dispatch = useIODispatch();
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const userWalletsPots = useIOSelector(
     walletPaymentEnabledUserWalletsSelector
   );
@@ -200,42 +194,18 @@ const WalletPaymentDetailContent = ({
     dispatch(storeNewPaymentAttemptAction(rptId));
     dispatch(
       paymentsGetPaymentUserMethodsAction.request({
-        onResponse: wallets => {
-          const hasAllPaymentMethodsExpired =
-            wallets?.filter(wallet => !isPaymentMethodExpired(wallet.details))
-              .length === 0;
-          const isWalletEmpty = wallets && wallets.length === 0;
-          if (!isWalletEmpty && !hasAllPaymentMethodsExpired) {
-            dispatch(
-              walletPaymentSetCurrentStep(
-                WalletPaymentStepEnum.PICK_PAYMENT_METHOD
-              )
-            );
-            navigation.navigate(
-              PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR,
-              {
-                screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE
-              }
-            );
-          } else {
-            const paymentDetails = pot.toUndefined(paymentDetailsPot);
-            dispatch(
-              paymentsInitOnboardingWithRptIdToResume({
-                rptId: paymentDetails?.rptId
-              })
-            );
-            navigation.navigate(
-              PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR,
-              {
-                screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
-                params: {
-                  outcome: isWalletEmpty
-                    ? WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE
-                    : WalletPaymentOutcomeEnum.PAYMENT_METHODS_EXPIRED
-                }
-              }
-            );
-          }
+        onResponse: () => {
+          dispatch(
+            walletPaymentSetCurrentStep(
+              WalletPaymentStepEnum.PICK_PAYMENT_METHOD
+            )
+          );
+          navigation.navigate(
+            PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR,
+            {
+              screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE
+            }
+          );
         }
       })
     );
