@@ -6,8 +6,6 @@ import {
   ITW_DISCOVERY_ERRORS_EVENTS
 } from "./enum";
 
-// #region ACTIONS
-
 export const trackItWalletActivationStart = (itw_flow: ItwFlow) => {
   void mixpanelTrack(
     ITW_DISCOVERY_ACTIONS_EVENTS.ITW_ID_START,
@@ -36,10 +34,6 @@ export const trackItwDiscoveryPlus = () => {
   );
 };
 
-// #endregion ACTIONS
-
-// #region ERRORS
-
 export const trackItwAlreadyActivated = (itw_flow: ItwFlow) => {
   void mixpanelTrack(
     ITW_DISCOVERY_ERRORS_EVENTS.ITW_ALREADY_ACTIVATED,
@@ -53,5 +47,3 @@ export const trackItwNfcNotSupported = () => {
     buildEventProperties("KO", "screen_view")
   );
 };
-
-// #endregion ERRORS

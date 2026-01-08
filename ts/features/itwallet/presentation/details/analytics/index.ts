@@ -7,8 +7,6 @@ import {
   ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS
 } from "./enum";
 
-// #region SCREEN VIEW EVENTS
-
 export const trackCredentialDetail = (
   credentialDetails: TrackCredentialDetail
 ) => {
@@ -35,10 +33,6 @@ export const trackItwCredentialBottomSheet = (
     buildEventProperties("UX", "screen_view", properties)
   );
 };
-
-// #endregion SCREEN VIEW EVENTS
-
-// #region ACTIONS
 
 export const trackItwCredentialDelete = (credential: MixPanelCredential) => {
   void mixpanelTrack(
@@ -116,5 +110,3 @@ export const trackItwEidReissuingMandatory = (
     buildEventProperties("KO", "screen_view", { action })
   );
 };
-
-// #endregion ACTIONS
