@@ -13,9 +13,9 @@ import {
   trackItwCieIdCieNotRegistered,
   trackItwIdRequestFailure,
   trackItwIdRequestUnexpectedFailure,
-  trackItwUnsupportedDevice
+  trackItwUnsupportedDevice,
+  trackMrtdPoPChallengeInfoFailed
 } from "../analytics";
-import { trackMrtdPoPChallengeInfoFailed } from "../../identification/analytics";
 import {
   serializeFailureReason,
   shouldSerializeReason
