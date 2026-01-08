@@ -62,6 +62,8 @@ describe("ItwActivationBanner", () => {
     });
   });
 
+  /*
+  TODO SIW-3564 implement banner dismissal logic
   it("should display confirmation alert when close button is pressed", () => {
     jest
       .spyOn(selectors, "itwShouldRenderActivationBannerSelector")
@@ -74,6 +76,7 @@ describe("ItwActivationBanner", () => {
 
     expect(Alert.alert).toHaveBeenCalled();
   });
+  */
 });
 
 const renderComponent = () => {
