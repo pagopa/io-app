@@ -153,6 +153,11 @@ import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { checkItWalletIdentitySaga } from "./startup/checkItWalletIdentitySaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
+import {
+  isAppSupportedSelector,
+  versionInfoDataSelector
+} from "../common/versionInfo/store/reducers/versionInfo";
+import { versionInfoLoadSuccess } from "../common/versionInfo/store/actions/versionInfo";
 
 export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 
@@ -264,6 +269,18 @@ export function* initializeApplicationSaga(
   const remoteConfig = yield* select(remoteConfigSelector);
   if (O.isNone(remoteConfig)) {
     yield* take(backendStatusLoadSuccess);
+  }
+
+  // Before proceeding, ensure that version info is loaded and app is supported
+  // we need to check that the min app version is satisfied to proceed any other step
+  const versionInfo = yield* select(versionInfoDataSelector);
+  if (versionInfo === null) {
+    yield* take(versionInfoLoadSuccess);
+  }
+
+  const isAppSupported = yield* select(isAppSupportedSelector);
+  if (!isAppSupported) {
+    return;
   }
 
   // ingress screen
