@@ -7,7 +7,7 @@ import {
 } from "./enum";
 import { ItwProximityFailure, ItwProximityGenericFailure } from "./types";
 
-// #region SCREEN VIEW EVENTS
+// Screen view events
 
 export const trackItwProximityBluetoothBlock = () => {
   void mixpanelTrack(
@@ -72,9 +72,7 @@ export const trackItwProximityUnofficialVerifierBottomSheet = () => {
   );
 };
 
-// #endregion SCREEN VIEW EVENTS
-
-// #region ACTIONS
+// Actions events
 
 export const trackItwProximityShowQrCode = () => {
   void mixpanelTrack(
@@ -132,9 +130,7 @@ export const trackItwProximityContinuePresentation = () => {
   );
 };
 
-// #endregion ACTIONS
-
-// #region ERRORS
+// Errors events
 
 export const trackItwProximityQrCodeLoadingFailure = ({
   reason,
@@ -190,5 +186,3 @@ export const trackItwProximityUnofficialVerifier = ({
     buildEventProperties("KO", "screen_view", { reason, type })
   );
 };
-
-// #endregion ERRORS

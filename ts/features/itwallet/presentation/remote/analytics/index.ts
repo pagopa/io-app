@@ -14,7 +14,7 @@ import {
   ItwL3UpgradeTrigger
 } from "./utils/types";
 
-// #region SCREEN VIEW EVENTS
+// Screen view events
 
 export const trackItwRemoteUntrustedRPBottomSheet = () => {
   void mixpanelTrack(
@@ -47,9 +47,7 @@ export const trackItwRemotePresentationCompleted = (redirect_url: boolean) => {
   );
 };
 
-// #endregion SCREEN VIEW EVENTS
-
-// #region ACTIONS
+// Actions events
 
 export const trackItwRemoteContinuePresentation = () => {
   void mixpanelTrack(
@@ -58,9 +56,7 @@ export const trackItwRemoteContinuePresentation = () => {
   );
 };
 
-// #endregion ACTIONS
-
-// #region ERRORS
+// Errors events
 
 export const trackItwRemoteUnexpectedFailure = ({
   reason,
@@ -155,9 +151,8 @@ export const trackItwUpgradeL3Mandatory = (action: ItwL3UpgradeTrigger) => {
     buildEventProperties("KO", "screen_view", { action })
   );
 };
-// #endregion ERRORS
 
-// #region TECH
+// Tech events
 
 export const trackItwRemoteStart = () => {
   void mixpanelTrack(
@@ -165,5 +160,3 @@ export const trackItwRemoteStart = () => {
     buildEventProperties("TECH", undefined)
   );
 };
-
-// #endregion TECH

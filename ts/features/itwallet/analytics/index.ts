@@ -24,7 +24,7 @@ import {
   CredentialStatusAssertionFailure
 } from "./utils/analyticsTypes";
 
-// #region SCREEN VIEW EVENTS
+// Screen view events
 
 export const trackITWalletBannerVisualized = (
   properties: TrackITWalletBannerClosureProperties
@@ -86,9 +86,7 @@ export const trackItwSurveyRequest = (properties: TrackQualtricsSurvey) => {
   );
 };
 
-// #endregion SCREEN VIEW EVENTS
-
-// #region ACTIONS
+// Actions events
 
 export const trackItWalletBannerTap = (
   properties: TrackITWalletBannerClosureProperties
@@ -249,9 +247,7 @@ export const trackItwSurveyRequestDeclined = (
   );
 };
 
-// #endregion ACTIONS
-
-// #region ERRORS
+// Errors events
 
 // TODO: Track IPZS timeout on eID flow
 export const trackItwIdRequestTimeout = (
@@ -290,9 +286,7 @@ export const trackItwTrustmarkRenewFailure = (
   );
 };
 
-// #endregion ERRORS
-
-// #region CONFIRM
+// Confirm events
 
 export const trackSaveCredentialSuccess = (credential: MixPanelCredential) => {
   void mixpanelTrack(
@@ -308,9 +302,7 @@ export const trackItwDeactivated = (credential: MixPanelCredential) => {
   );
 };
 
-// #endregion CONFIRM
-
-// #region TECH
+// Tech events
 
 export const trackItwRequest = (method?: ItwIdMethod, itw_flow?: ItwFlow) => {
   if (method) {
@@ -341,5 +333,3 @@ export const trackItwIdVerifiedDocument = (
     buildEventProperties("TECH", undefined, { ITW_ID_method })
   );
 };
-
-// #endregion TECH
