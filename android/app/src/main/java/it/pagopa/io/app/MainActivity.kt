@@ -31,7 +31,10 @@ class MainActivity : ReactActivity() {
 
   // https://github.com/crazycodeboy/react-native-splash-screen#third-stepplugin-configuration
     override fun onCreate(savedInstanceState: Bundle?) {
-
+        // Enable edge to edge support
+        // https://developer.android.com/develop/ui/views/layout/edge-to-edge?hl=it
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        
         SplashScreen.show(this, R.style.SplashScreenTheme);
         // This is needed for react-native-screens to solve the issue described here:
         // https://github.com/software-mansion/react-native-screens/issues/17#issuecomment-424704633
