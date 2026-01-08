@@ -776,7 +776,6 @@ export function trackWalletCredentialShowFAC_SIMILE() {
   );
 }
 
-// ITW_CREDENTIAL_SHOW_TRUSTMARK
 export function trackWalletCredentialShowTrustmark(
   credential: MixPanelCredential
 ) {
