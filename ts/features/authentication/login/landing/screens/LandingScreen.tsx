@@ -1,13 +1,8 @@
-/**
- * A screen where the user can choose to login with SPID or get more informations.
- * It includes a carousel with highlights on the app functionalities
- */
 import {
   Banner,
   ContentWrapper,
   IOButton,
   ModuleNavigation,
-  Tooltip,
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -24,7 +19,6 @@ import {
   useState
 } from "react";
 import { Alert, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { LandingCardComponent } from "../../../../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import SectionStatusComponent from "../../../../../components/SectionStatus";
@@ -32,10 +26,6 @@ import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../../config"
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import {
-  sessionCorrupted,
-  sessionExpired
-} from "../../../common/store/actions";
 import {
   useIODispatch,
   useIOSelector,
@@ -58,6 +48,10 @@ import {
 } from "../../../common/analytics";
 import { Carousel } from "../../../common/components/Carousel";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import {
+  sessionCorrupted,
+  sessionExpired
+} from "../../../common/store/actions";
 
 import { startupLoadSuccess } from "../../../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../../../store/reducers/startup";
@@ -70,11 +64,7 @@ import {
   isSessionCorruptedSelector,
   isSessionExpiredSelector
 } from "../../../common/store/selectors";
-import { cieIDDisableTourGuide } from "../../cie/store/actions";
-import {
-  isCieIDTourGuideEnabledSelector,
-  isCieLoginUatEnabledSelector
-} from "../../cie/store/selectors";
+import { isCieLoginUatEnabledSelector } from "../../cie/store/selectors";
 import { SpidLevel } from "../../cie/utils";
 import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
 import { LandingSessionExpiredComponent } from "../components/LandingSessionExpiredComponent";
@@ -89,13 +79,14 @@ const SPACE_BETWEEN_BUTTONS = 8;
 const SPACE_AROUND_BUTTON_LINK = 16;
 const SPID_LEVEL: SpidLevel = "SpidL2";
 
+/**
+ * A screen where the user can choose to login with SPID or get more informations.
+ * It includes a carousel with highlights on the app functionalities
+ */
 export const LandingScreen = () => {
   const { error } = useIOToast();
   const store = useIOStore();
-  const insets = useSafeAreaInsets();
-  const isCieIDTourGuideEnabled = useIOSelector(
-    isCieIDTourGuideEnabledSelector
-  );
+
   const itwOfflineAccessAvailable = useIOSelector(
     itwOfflineAccessAvailableSelector
   );
@@ -386,23 +377,15 @@ export const LandingScreen = () => {
 
         <SectionStatusComponent sectionKey={"login"} />
         <ContentWrapper>
-          <Tooltip
-            closeIconAccessibilityLabel={I18n.t("global.buttons.close")}
-            isVisible={isCieIDTourGuideEnabled}
-            onClose={() => dispatch(cieIDDisableTourGuide())}
-            title={I18n.t("authentication.landing.tour_guide.title")}
-            content={I18n.t("authentication.landing.tour_guide.content")}
-          >
-            <IOButton
-              fullWidth
-              variant="solid"
-              color={isCieUatEnabled ? "danger" : "primary"}
-              label={I18n.t("authentication.landing.loginCie")}
-              icon="cieLetter"
-              onPress={navigateToCiePinScreen}
-              testID="landing-button-login-cie"
-            />
-          </Tooltip>
+          <IOButton
+            fullWidth
+            variant="solid"
+            color={isCieUatEnabled ? "danger" : "primary"}
+            label={I18n.t("authentication.landing.loginCie")}
+            icon="cieLetter"
+            onPress={navigateToCiePinScreen}
+            testID="landing-button-login-cie"
+          />
           <VSpacer size={SPACE_BETWEEN_BUTTONS} />
           <IOButton
             fullWidth
@@ -432,7 +415,6 @@ export const LandingScreen = () => {
               <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
             </View>
           )}
-          {insets.bottom !== 0 && <VSpacer size={SPACE_AROUND_BUTTON_LINK} />}
           {bottomSheet}
           {infoBottomsheetComponent}
         </ContentWrapper>
