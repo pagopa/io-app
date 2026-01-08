@@ -8,6 +8,7 @@ import {
 } from "./enum";
 
 // #region ACTIONS
+
 export const trackWalletNewIdReset = () => {
   updatePropertiesWalletRevoked();
   void mixpanelTrack(
