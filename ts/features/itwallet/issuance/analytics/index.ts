@@ -26,7 +26,7 @@ import {
   ITW_ISSUANCE_TECH_EVENTS
 } from "./enum";
 
-// #region SCREEN VIEW EVENTS
+// Screen view events
 
 export const trackCredentialPreview = (
   credentialPreview: TrackCredentialPreview
@@ -44,9 +44,7 @@ export const trackItwCredentialIntro = (credential: MixPanelCredential) => {
   );
 };
 
-// #endregion SCREEN VIEW EVENTS
-
-// #region ACTIONS
+// Actions events
 
 export const trackAddFirstCredential = () => {
   void mixpanelTrack(
@@ -83,9 +81,7 @@ export const trackIssuanceCredentialScrollToBottom = (
   );
 };
 
-// #endregion ACTIONS
-
-// #region ERRORS
+// Errors events
 
 export const trackIdNotMatch = (
   ITW_ID_method: ItwIdMethod,
@@ -202,9 +198,7 @@ export const trackMrtdPoPChallengeInfoFailed = (
   );
 };
 
-// #endregion ERRORS
-
-// #region EXIT
+// Exit events
 
 export const trackItwExit = ({ exit_page, credential }: ItwExit) => {
   void mixpanelTrack(
@@ -225,9 +219,8 @@ export const trackBackToWallet = ({ exit_page, credential }: BackToWallet) => {
     })
   );
 };
-// #endregion EXIT
 
-// TECH EVENTS
+// Tech events
 
 export const trackItwRequestSuccess = (
   method?: ItwIdMethod,
@@ -245,5 +238,3 @@ export const trackItwRequestSuccess = (
     );
   }
 };
-
-// #endregion TECH EVENTS

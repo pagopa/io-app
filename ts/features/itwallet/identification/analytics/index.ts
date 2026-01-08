@@ -21,7 +21,7 @@ import {
   ITW_IDENTIFICATION_SCREENVIEW_EVENTS
 } from "./enum";
 
-// #region SCREEN VIEW EVENTS
+// Screen view events
 
 export const trackItWalletIDMethod = (itw_flow: ItwFlow) => {
   void mixpanelTrack(
@@ -126,9 +126,7 @@ export const trackItwUserWithoutL3Bottomsheet = () => {
   );
 };
 
-// #endregion SCREEN VIEW EVENTS
-
-// #region ACTIONS
+// Actions events
 
 export const trackItWalletSpidIDPSelected = (
   properties: TrackITWalletSpidIDPSelected
@@ -167,9 +165,7 @@ export const trackItWalletCieNfcGoToSettings = (itw_flow: ItwFlow) => {
   );
 };
 
-// #endregion ACTIONS
-
-// #region ERRORS
+// Errors events
 
 export const trackItWalletErrorCardReading = (
   properties: TrackItWalletErrorCardReading
@@ -254,5 +250,3 @@ export const trackItwUserWithoutL3Requirements = (
     buildEventProperties("KO", "screen_view", itwUserWithoutL3requirements)
   );
 };
-
-// #endregion ERRORS

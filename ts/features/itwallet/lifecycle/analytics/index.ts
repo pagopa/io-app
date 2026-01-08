@@ -7,6 +7,8 @@ import {
   ITW_LIFECYCLE_ERRORS_EVENTS
 } from "./enum";
 
+// Actions events
+
 export const trackWalletNewIdReset = () => {
   updatePropertiesWalletRevoked();
   void mixpanelTrack(
@@ -14,6 +16,8 @@ export const trackWalletNewIdReset = () => {
     buildEventProperties("UX", "action")
   );
 };
+
+// Errors events
 
 export const trackItwIdNotMatch = () => {
   void mixpanelTrack(

@@ -7,6 +7,8 @@ import {
   ITW_OFFLINE_SCREENVIEW_EVENTS
 } from "./enum";
 
+// Screen view events
+
 export const trackItwOfflineWallet = () => {
   void mixpanelTrack(
     ITW_OFFLINE_SCREENVIEW_EVENTS.ITW_OFFLINE_WALLET,
@@ -35,6 +37,8 @@ export const trackItwOfflineAccessExpired = () => {
   );
 };
 
+// Actions events
+
 export const trackItwOfflineRicaricaAppIO = (
   source: ItwOfflineRicaricaAppIOSource
 ) => {
@@ -45,6 +49,8 @@ export const trackItwOfflineRicaricaAppIO = (
     })
   );
 };
+
+// Errors events
 
 export const trackItwOfflineReloadFailure = () => {
   void mixpanelTrack(

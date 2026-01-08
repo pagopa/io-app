@@ -7,6 +7,8 @@ import {
   ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS
 } from "./enum";
 
+// Screen view events
+
 export const trackCredentialDetail = (
   credentialDetails: TrackCredentialDetail
 ) => {
@@ -33,6 +35,8 @@ export const trackItwCredentialBottomSheet = (
     buildEventProperties("UX", "screen_view", properties)
   );
 };
+
+// Actions events
 
 export const trackItwCredentialDelete = (credential: MixPanelCredential) => {
   void mixpanelTrack(
