@@ -3,7 +3,7 @@ import {
   IOVisualCostants,
   ListItemNav
 } from "@pagopa/io-app-design-system";
-import { FlatList, ListRenderItemInfo } from "react-native";
+import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import I18n from "i18next";
 import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
 import { isReady } from "../../../common/model/RemoteValue";
@@ -97,7 +97,7 @@ const ZendeskChooseCategory = (props: Props) => {
         section: I18n.t("support.chooseCategory.header")
       }}
       description={I18n.t("support.chooseCategory.subTitle.category")}
-      ignoreSafeAreaMargin={true}
+      ignoreSafeAreaMargin={Platform.OS === "ios" ? true : false}
       testID={"ZendeskChooseCategory"}
     >
       <FlatList
