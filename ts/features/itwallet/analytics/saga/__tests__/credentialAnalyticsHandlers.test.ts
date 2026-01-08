@@ -10,9 +10,8 @@ import {
 } from "../../../credentials/store/actions";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import {
-  updateCredentialAddedProperties,
-  updateItwStatusAndPIDProperties,
-  updateCredentialDeletedProperties
+  updateCredentialProperties,
+  updateItwStatusAndPIDProperties
 } from "../../properties/propertyUpdaters";
 import {
   handleCredentialStoredAnalytics,
@@ -22,8 +21,7 @@ import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 
 jest.mock("../../properties/propertyUpdaters", () => ({
-  updateCredentialAddedProperties: jest.fn(),
-  updateCredentialDeletedProperties: jest.fn(),
+  updateCredentialProperties: jest.fn(),
   updateItwStatusAndPIDProperties: jest.fn()
 }));
 
@@ -91,7 +89,7 @@ describe("credentialAnalyticsHandlers", () => {
       ])
       .run();
 
-    expect(updateCredentialAddedProperties).toHaveBeenCalledTimes(1);
+    expect(updateCredentialProperties).toHaveBeenCalledTimes(1);
     expect(updateItwStatusAndPIDProperties).not.toHaveBeenCalled();
   });
 
@@ -105,7 +103,7 @@ describe("credentialAnalyticsHandlers", () => {
       .run();
 
     expect(updateItwStatusAndPIDProperties).toHaveBeenCalledTimes(1);
-    expect(updateCredentialAddedProperties).not.toHaveBeenCalled();
+    expect(updateCredentialProperties).not.toHaveBeenCalled();
   });
 
   it("tracks credential deletion for non-eID credentials", async () => {
@@ -117,7 +115,7 @@ describe("credentialAnalyticsHandlers", () => {
       .provide([[select(itwLifecycleIsITWalletValidSelector), true]])
       .run();
 
-    expect(updateCredentialDeletedProperties).toHaveBeenCalledTimes(1);
+    expect(updateCredentialProperties).toHaveBeenCalledTimes(1);
   });
 
   it("does NOT delete eIDs analytics properties when eID is removed", async () => {
@@ -129,6 +127,6 @@ describe("credentialAnalyticsHandlers", () => {
       .provide([[select(itwLifecycleIsITWalletValidSelector), true]])
       .run();
 
-    expect(updateCredentialDeletedProperties).not.toHaveBeenCalled();
+    expect(updateCredentialProperties).not.toHaveBeenCalled();
   });
 });

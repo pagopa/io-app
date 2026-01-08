@@ -79,8 +79,6 @@ export const buildItwBaseProperties = (
   };
 };
 
-// #region  Utility functions
-
 const getWalletStatus = (state: GlobalState): ItwStatus => {
   const authLevel = itwAuthLevelSelector(state);
   return authLevel ? authLevel : "not_active";
@@ -133,5 +131,3 @@ const getMixpanelCredentialStatus = (
     O.getOrElse(() => "not_available" as ItwCredentialMixpanelStatus)
   );
 };
-
-// #endregion

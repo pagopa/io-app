@@ -3,7 +3,7 @@ import * as baseBuilder from "../basePropertyBuilder";
 import * as superProp from "../superProperties";
 import * as profileProp from "../profileProperties";
 import {
-  updateCredentialAddedProperties,
+  updateCredentialProperties,
   updateItwAnalyticsProperties,
   updatePropertiesWalletRevoked
 } from "../propertyUpdaters";
@@ -55,8 +55,8 @@ describe("propertyUpdaters", () => {
     );
     const superSpy = jest.spyOn(superProp, "forceUpdateItwSuperProperties");
 
-    updateCredentialAddedProperties("ITW_PG_V3");
-    updateCredentialAddedProperties("ITW_RES");
+    updateCredentialProperties("ITW_PG_V3", "valid");
+    updateCredentialProperties("ITW_RES", "valid");
 
     expect(profileSpy).toHaveBeenCalledTimes(1);
     expect(superSpy).toHaveBeenCalledTimes(1);
