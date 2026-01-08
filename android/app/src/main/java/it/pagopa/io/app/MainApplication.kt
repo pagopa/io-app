@@ -23,7 +23,7 @@ class MainApplication : Application(), ReactApplication {
             // add(MyReactNativePackage())
             add(CiePackage())
             add(AppReviewPackage())
-            // add(NavigationBarManagerPackage())
+            add(NavigationBarManagerPackage())
             add(PdfHighResGeneratorPackage())
           }
  
