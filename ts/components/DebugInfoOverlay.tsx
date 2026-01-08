@@ -8,7 +8,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { FunctionComponent, useState } from "react";
 import { Platform, Pressable, StyleSheet, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { connect } from "react-redux";
 import { selectItwEnv } from "../features/itwallet/common/store/selectors/environment";
 import { ReduxProps } from "../store/actions/types";
@@ -63,11 +63,16 @@ const DebugInfoOverlay: FunctionComponent<Props> = (props: Props) => {
   const [isDebugDataVisibile, showDebugData] = useState(false);
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
 
+  const insets = useSafeAreaInsets();
+
   const appVersionText = `v. ${appVersion}`;
 
   return (
     <>
-      <SafeAreaView style={styles.versionContainer} pointerEvents="box-none">
+      <View
+        style={[styles.versionContainer, { paddingTop: insets.top }]}
+        pointerEvents="box-none"
+      >
         <VStack space={4} style={{ alignItems: "center" }}>
           <HStack space={4}>
             <Pressable
@@ -117,7 +122,7 @@ const DebugInfoOverlay: FunctionComponent<Props> = (props: Props) => {
             onPress={() => showDebugData(prevState => !prevState)}
           />
         </VStack>
-      </SafeAreaView>
+      </View>
       {isDebugDataVisibile && (
         <DebugDataOverlay onDismissed={() => showDebugData(false)} />
       )}
