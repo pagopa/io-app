@@ -7,8 +7,7 @@ import {
 } from "../../credentials/store/actions";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import {
-  updateCredentialAddedProperties,
-  updateCredentialDeletedProperties,
+  updateCredentialProperties,
   updateItwStatusAndPIDProperties
 } from "../properties/propertyUpdaters";
 import { getMixPanelCredential } from "../utils/analyticsUtils";
@@ -41,7 +40,7 @@ export function* handleCredentialStoredAnalytics(
     return;
   }
 
-  updateCredentialAddedProperties(credential);
+  updateCredentialProperties(credential, "valid");
 }
 
 /**
@@ -68,7 +67,7 @@ export function* handleCredentialRemovedAnalytics(
     return;
   }
 
-  updateCredentialDeletedProperties(credential);
+  updateCredentialProperties(credential, "not_available");
 }
 
 function getAnalyticsCredentialFromStored(

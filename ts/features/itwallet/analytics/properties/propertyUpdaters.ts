@@ -105,33 +105,20 @@ export const updatePropertiesWalletRevoked = () => {
   forceUpdateItwSuperProperties(finalProps);
 };
 
-export const updateCredentialDeletedProperties = (
-  credential: MixPanelCredential
+export const updateCredentialProperties = (
+  credential: MixPanelCredential,
+  status: "valid" | "not_available"
 ) => {
   if (!isItwAnalyticsCredential(credential)) {
     return;
   }
 
   forceUpdateItwProfileProperties({
-    [credential]: "not_available"
+    [credential]: status
   });
-  forceUpdateItwSuperProperties({
-    [credential]: "not_available"
-  });
-};
 
-export const updateCredentialAddedProperties = (
-  credential: MixPanelCredential
-) => {
-  if (!isItwAnalyticsCredential(credential)) {
-    return;
-  }
-
-  forceUpdateItwProfileProperties({
-    [credential]: "valid"
-  });
   forceUpdateItwSuperProperties({
-    [credential]: "valid"
+    [credential]: status
   });
 };
 
