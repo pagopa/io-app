@@ -38,9 +38,9 @@ export function usePreventScreenCapture(key?: string) {
 
   useFocusEffect(
     useCallback(() => {
-      // if (isDevEnv) {
-      //   return;
-      // }
+      if (isDevEnv) {
+        return;
+      }
 
       clearTimeout(timeoutRef.current);
 
