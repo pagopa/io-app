@@ -3,7 +3,6 @@ import {
   ContentWrapper,
   IOButton,
   ModuleNavigation,
-  Tooltip,
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -54,7 +53,6 @@ import {
   sessionExpired
 } from "../../../common/store/actions";
 
-import { useFooterActionsMargin } from "../../../../../hooks/useFooterActionsMargin";
 import { startupLoadSuccess } from "../../../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../../../store/reducers/startup";
 import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
@@ -66,11 +64,7 @@ import {
   isSessionCorruptedSelector,
   isSessionExpiredSelector
 } from "../../../common/store/selectors";
-import { cieIDDisableTourGuide } from "../../cie/store/actions";
-import {
-  isCieIDTourGuideEnabledSelector,
-  isCieLoginUatEnabledSelector
-} from "../../cie/store/selectors";
+import { isCieLoginUatEnabledSelector } from "../../cie/store/selectors";
 import { SpidLevel } from "../../cie/utils";
 import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
 import { LandingSessionExpiredComponent } from "../components/LandingSessionExpiredComponent";
@@ -92,11 +86,7 @@ const SPID_LEVEL: SpidLevel = "SpidL2";
 export const LandingScreen = () => {
   const { error } = useIOToast();
   const store = useIOStore();
-  const { bottomMargin: paddingBottom } = useFooterActionsMargin();
 
-  const isCieIDTourGuideEnabled = useIOSelector(
-    isCieIDTourGuideEnabledSelector
-  );
   const itwOfflineAccessAvailable = useIOSelector(
     itwOfflineAccessAvailableSelector
   );
@@ -387,54 +377,44 @@ export const LandingScreen = () => {
 
         <SectionStatusComponent sectionKey={"login"} />
         <ContentWrapper>
-          <View style={{ paddingBottom }}>
-            <Tooltip
-              closeIconAccessibilityLabel={I18n.t("global.buttons.close")}
-              isVisible={isCieIDTourGuideEnabled}
-              onClose={() => dispatch(cieIDDisableTourGuide())}
-              title={I18n.t("authentication.landing.tour_guide.title")}
-              content={I18n.t("authentication.landing.tour_guide.content")}
-            >
+          <IOButton
+            fullWidth
+            variant="solid"
+            color={isCieUatEnabled ? "danger" : "primary"}
+            label={I18n.t("authentication.landing.loginCie")}
+            icon="cieLetter"
+            onPress={navigateToCiePinScreen}
+            testID="landing-button-login-cie"
+          />
+          <VSpacer size={SPACE_BETWEEN_BUTTONS} />
+          <IOButton
+            fullWidth
+            variant="solid"
+            color="primary"
+            // if CIE is not supported, since the new DS has not a
+            // "semi-enabled" state, we leave the button enabled
+            // but we navigate to the CIE unsupported info screen.
+            label={I18n.t("authentication.landing.loginSpid")}
+            icon="spid"
+            onPress={() => {
+              void trackSpidLoginSelected();
+              navigateToIdpSelection();
+            }}
+            testID="landing-button-login-spid"
+          />
+          <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
+          {itwOfflineAccessAvailable && isSessionExpired && (
+            <View style={{ alignSelf: "center" }}>
               <IOButton
-                fullWidth
-                variant="solid"
-                color={isCieUatEnabled ? "danger" : "primary"}
-                label={I18n.t("authentication.landing.loginCie")}
-                icon="cieLetter"
-                onPress={navigateToCiePinScreen}
-                testID="landing-button-login-cie"
+                variant="link"
+                accessibilityRole="link"
+                color="primary"
+                label={I18n.t("authentication.landing.show_wallet")}
+                onPress={navigateToWallet}
               />
-            </Tooltip>
-            <VSpacer size={SPACE_BETWEEN_BUTTONS} />
-            <IOButton
-              fullWidth
-              variant="solid"
-              color="primary"
-              // if CIE is not supported, since the new DS has not a
-              // "semi-enabled" state, we leave the button enabled
-              // but we navigate to the CIE unsupported info screen.
-              label={I18n.t("authentication.landing.loginSpid")}
-              icon="spid"
-              onPress={() => {
-                void trackSpidLoginSelected();
-                navigateToIdpSelection();
-              }}
-              testID="landing-button-login-spid"
-            />
-            <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
-            {itwOfflineAccessAvailable && isSessionExpired && (
-              <View style={{ alignSelf: "center" }}>
-                <IOButton
-                  variant="link"
-                  accessibilityRole="link"
-                  color="primary"
-                  label={I18n.t("authentication.landing.show_wallet")}
-                  onPress={navigateToWallet}
-                />
-                <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
-              </View>
-            )}
-          </View>
+              <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
+            </View>
+          )}
           {bottomSheet}
           {infoBottomsheetComponent}
         </ContentWrapper>
