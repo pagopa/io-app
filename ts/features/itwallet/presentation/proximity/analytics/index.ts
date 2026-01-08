@@ -15,7 +15,7 @@ type ItwProximityGenericFailure = ItwProximityFailure & {
   proximity_sharing_status: "pre" | "post";
 };
 
-// #region SCREEN VIEW EVENTS
+// Screen view events
 
 export const trackItwProximityBluetoothBlock = () => {
   void mixpanelTrack(
@@ -80,9 +80,7 @@ export function trackItwProximityUnofficialVerifierBottomSheet() {
   );
 }
 
-// #endregion SCREEN VIEW EVENTS
-
-// #region ACTIONS
+// Actions events
 
 export const trackItwProximityShowQrCode = () => {
   void mixpanelTrack(
@@ -140,9 +138,7 @@ export function trackItwProximityContinuePresentation() {
   );
 }
 
-// #endregion ACTIONS
-
-// #region ERRORS
+// Errors events
 
 export const trackItwProximityQrCodeLoadingFailure = ({
   reason,
@@ -198,5 +194,3 @@ export const trackItwProximityUnofficialVerifier = ({
     buildEventProperties("KO", "screen_view", { reason, type })
   );
 };
-
-// #endregion ERRORS

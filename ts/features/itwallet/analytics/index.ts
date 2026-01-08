@@ -333,7 +333,8 @@ export type TrackQualtricsSurvey = {
   survey_page: string;
 };
 
-// #region SCREEN VIEW EVENTS
+// Screen view events
+
 export const trackWalletDataShare = (properties: ItwWalletDataShare) => {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_DATA_SHARE,
@@ -579,9 +580,7 @@ export const trackItwIdEnterCan = (properties: TrackCieCanProperties) => {
   );
 };
 
-// #endregion SCREEN VIEW EVENTS
-
-// #region ACTIONS
+// Actions events
 
 export const trackItwCredentialDelete = (credential: MixPanelCredential) => {
   void mixpanelTrack(
@@ -962,9 +961,7 @@ export const trackItwSurveyRequestDeclined = (
   );
 };
 
-// #endregion ACTIONS
-
-// #region ERRORS
+// Errors events
 
 export function trackItWalletErrorCardReading(
   properties: TrackItWalletErrorCardReading
@@ -1278,9 +1275,7 @@ export const trackMrtdPoPChallengeInfoFailed = (
   );
 };
 
-// #endregion ERRORS
-
-// #region CONFIRM
+// Confirm events
 
 export const trackSaveCredentialSuccess = (credential: MixPanelCredential) => {
   void mixpanelTrack(
@@ -1296,9 +1291,7 @@ export const trackItwDeactivated = (credential: MixPanelCredential) => {
   );
 };
 
-// #endregion CONFIRM
-
-// #region EXIT
+// Exit events
 
 export const trackItwExit = ({ exit_page, credential }: ItwExit) => {
   void mixpanelTrack(
@@ -1319,9 +1312,8 @@ export const trackBackToWallet = ({ exit_page, credential }: BackToWallet) => {
     })
   );
 };
-// #endregion EXIT
 
-// #region TECH
+// Tech events
 
 export const trackItwRequest = (method?: ItwIdMethod, itw_flow?: ItwFlow) => {
   if (method) {
@@ -1376,5 +1368,3 @@ export const trackItwIdVerifiedDocument = (
     buildEventProperties("TECH", undefined, { ITW_ID_method })
   );
 };
-
-// #endregion TECH
