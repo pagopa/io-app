@@ -138,6 +138,11 @@ import { showSessionExpirationBlockingScreenSelector } from "../features/authent
 import { watchCdcSaga } from "../features/bonus/cdc/common/saga";
 import { watchMessagesSaga } from "../features/messages/saga";
 import { watchWalletSaga } from "../features/wallet/saga";
+import {
+  isAppSupportedSelector,
+  versionInfoDataSelector
+} from "../common/versionInfo/store/reducers/versionInfo";
+import { versionInfoLoadSuccess } from "../common/versionInfo/store/actions/versionInfo";
 import { maybeHandlePendingBackgroundActions } from "./backgroundActions";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -153,11 +158,6 @@ import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { checkItWalletIdentitySaga } from "./startup/checkItWalletIdentitySaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
-import {
-  isAppSupportedSelector,
-  versionInfoDataSelector
-} from "../common/versionInfo/store/reducers/versionInfo";
-import { versionInfoLoadSuccess } from "../common/versionInfo/store/actions/versionInfo";
 
 export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 
