@@ -6,10 +6,6 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
         <item name="android:forceDarkAllowed">false</item>
-
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-        <!-- Optional: set to transparent if your app is drawing behind the status bar. -->
-        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="SplashScreenTheme" parent="SplashScreen_SplashTheme">
