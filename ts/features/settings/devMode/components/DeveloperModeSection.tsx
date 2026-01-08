@@ -352,13 +352,6 @@ const PlaygroundsSection = () => {
         })
     },
     {
-      value: I18n.t("profile.main.trial.titleSection"),
-      onPress: () =>
-        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-          screen: SETTINGS_ROUTES.TRIALS_SYSTEM_PLAYGROUND
-        })
-    },
-    {
       condition: isIdPayTestEnabled,
       value: "IDPay Onboarding",
       onPress: () =>
