@@ -355,129 +355,177 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                                 <View
                                   accessible={false}
                                   style={
-                                    [
-                                      {
-                                        "alignItems": "center",
-                                        "aspectRatio": 0.75,
-                                        "borderCurve": "continuous",
-                                        "borderRadius": 8,
-                                        "flex": 1,
-                                        "justifyContent": "center",
-                                        "maxHeight": 64,
-                                        "maxWidth": 48,
-                                      },
-                                      {
-                                        "borderColor": "#636B82",
-                                        "borderWidth": 1,
-                                      },
-                                    ]
+                                    {
+                                      "aspectRatio": 0.75,
+                                      "flex": 1,
+                                      "maxHeight": 64,
+                                      "maxWidth": 48,
+                                    }
                                   }
-                                />
+                                >
+                                  <View
+                                    style={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "borderCurve": "continuous",
+                                          "borderRadius": 8,
+                                          "flex": 1,
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "borderColor": "#636B82",
+                                          "borderWidth": 1,
+                                        },
+                                      ]
+                                    }
+                                  />
+                                </View>
                                 <View
                                   accessible={false}
                                   style={
-                                    [
-                                      {
-                                        "alignItems": "center",
-                                        "aspectRatio": 0.75,
-                                        "borderCurve": "continuous",
-                                        "borderRadius": 8,
-                                        "flex": 1,
-                                        "justifyContent": "center",
-                                        "maxHeight": 64,
-                                        "maxWidth": 48,
-                                      },
-                                      {
-                                        "borderColor": "#636B82",
-                                        "borderWidth": 1,
-                                      },
-                                    ]
+                                    {
+                                      "aspectRatio": 0.75,
+                                      "flex": 1,
+                                      "maxHeight": 64,
+                                      "maxWidth": 48,
+                                    }
                                   }
-                                />
+                                >
+                                  <View
+                                    style={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "borderCurve": "continuous",
+                                          "borderRadius": 8,
+                                          "flex": 1,
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "borderColor": "#636B82",
+                                          "borderWidth": 1,
+                                        },
+                                      ]
+                                    }
+                                  />
+                                </View>
                                 <View
                                   accessible={false}
                                   style={
-                                    [
-                                      {
-                                        "alignItems": "center",
-                                        "aspectRatio": 0.75,
-                                        "borderCurve": "continuous",
-                                        "borderRadius": 8,
-                                        "flex": 1,
-                                        "justifyContent": "center",
-                                        "maxHeight": 64,
-                                        "maxWidth": 48,
-                                      },
-                                      {
-                                        "borderColor": "#636B82",
-                                        "borderWidth": 1,
-                                      },
-                                    ]
+                                    {
+                                      "aspectRatio": 0.75,
+                                      "flex": 1,
+                                      "maxHeight": 64,
+                                      "maxWidth": 48,
+                                    }
                                   }
-                                />
+                                >
+                                  <View
+                                    style={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "borderCurve": "continuous",
+                                          "borderRadius": 8,
+                                          "flex": 1,
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "borderColor": "#636B82",
+                                          "borderWidth": 1,
+                                        },
+                                      ]
+                                    }
+                                  />
+                                </View>
                                 <View
                                   accessible={false}
                                   style={
-                                    [
-                                      {
-                                        "alignItems": "center",
-                                        "aspectRatio": 0.75,
-                                        "borderCurve": "continuous",
-                                        "borderRadius": 8,
-                                        "flex": 1,
-                                        "justifyContent": "center",
-                                        "maxHeight": 64,
-                                        "maxWidth": 48,
-                                      },
-                                      {
-                                        "borderColor": "#636B82",
-                                        "borderWidth": 1,
-                                      },
-                                    ]
+                                    {
+                                      "aspectRatio": 0.75,
+                                      "flex": 1,
+                                      "maxHeight": 64,
+                                      "maxWidth": 48,
+                                    }
                                   }
-                                />
+                                >
+                                  <View
+                                    style={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "borderCurve": "continuous",
+                                          "borderRadius": 8,
+                                          "flex": 1,
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "borderColor": "#636B82",
+                                          "borderWidth": 1,
+                                        },
+                                      ]
+                                    }
+                                  />
+                                </View>
                                 <View
                                   accessible={false}
                                   style={
-                                    [
-                                      {
-                                        "alignItems": "center",
-                                        "aspectRatio": 0.75,
-                                        "borderCurve": "continuous",
-                                        "borderRadius": 8,
-                                        "flex": 1,
-                                        "justifyContent": "center",
-                                        "maxHeight": 64,
-                                        "maxWidth": 48,
-                                      },
-                                      {
-                                        "borderColor": "#636B82",
-                                        "borderWidth": 1,
-                                      },
-                                    ]
+                                    {
+                                      "aspectRatio": 0.75,
+                                      "flex": 1,
+                                      "maxHeight": 64,
+                                      "maxWidth": 48,
+                                    }
                                   }
-                                />
+                                >
+                                  <View
+                                    style={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "borderCurve": "continuous",
+                                          "borderRadius": 8,
+                                          "flex": 1,
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "borderColor": "#636B82",
+                                          "borderWidth": 1,
+                                        },
+                                      ]
+                                    }
+                                  />
+                                </View>
                                 <View
                                   accessible={false}
                                   style={
-                                    [
-                                      {
-                                        "alignItems": "center",
-                                        "aspectRatio": 0.75,
-                                        "borderCurve": "continuous",
-                                        "borderRadius": 8,
-                                        "flex": 1,
-                                        "justifyContent": "center",
-                                        "maxHeight": 64,
-                                        "maxWidth": 48,
-                                      },
-                                      {
-                                        "borderColor": "#636B82",
-                                        "borderWidth": 1,
-                                      },
-                                    ]
+                                    {
+                                      "aspectRatio": 0.75,
+                                      "flex": 1,
+                                      "maxHeight": 64,
+                                      "maxWidth": 48,
+                                    }
                                   }
-                                />
+                                >
+                                  <View
+                                    style={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "borderCurve": "continuous",
+                                          "borderRadius": 8,
+                                          "flex": 1,
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "borderColor": "#636B82",
+                                          "borderWidth": 1,
+                                        },
+                                      ]
+                                    }
+                                  />
+                                </View>
                               </View>
                               <View
                                 style={
