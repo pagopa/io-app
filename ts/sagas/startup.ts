@@ -93,7 +93,6 @@ import { watchUserDataProcessingSaga } from "../features/settings/common/sagas/u
 import { loadUserDataProcessing } from "../features/settings/common/store/actions/userDataProcessing";
 import { isProfileFirstOnBoarding } from "../features/settings/common/store/utils/guards";
 import { handleApplicationStartupTransientError } from "../features/startup/sagas";
-import { watchTrialSystemSaga } from "../features/trialSystem/store/sagas/watchTrialSystemSaga";
 import {
   watchGetZendeskTokenSaga,
   watchZendeskGetSessionSaga
@@ -659,9 +658,6 @@ export function* initializeApplicationSaga(
     // Start watching for IDPay actions
     yield* fork(watchIDPaySaga, bpdToken);
   }
-
-  // Start watching for trial system saga
-  yield* fork(watchTrialSystemSaga, sessionToken);
 
   // Start watching for itw saga
   yield* fork(watchItwSaga);

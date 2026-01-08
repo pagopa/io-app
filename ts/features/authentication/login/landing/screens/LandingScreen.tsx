@@ -7,7 +7,6 @@ import {
   ContentWrapper,
   IOButton,
   ModuleNavigation,
-  Tooltip,
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -70,11 +69,7 @@ import {
   isSessionCorruptedSelector,
   isSessionExpiredSelector
 } from "../../../common/store/selectors";
-import { cieIDDisableTourGuide } from "../../cie/store/actions";
-import {
-  isCieIDTourGuideEnabledSelector,
-  isCieLoginUatEnabledSelector
-} from "../../cie/store/selectors";
+import { isCieLoginUatEnabledSelector } from "../../cie/store/selectors";
 import { SpidLevel } from "../../cie/utils";
 import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
 import { LandingSessionExpiredComponent } from "../components/LandingSessionExpiredComponent";
@@ -93,9 +88,6 @@ export const LandingScreen = () => {
   const { error } = useIOToast();
   const store = useIOStore();
   const insets = useSafeAreaInsets();
-  const isCieIDTourGuideEnabled = useIOSelector(
-    isCieIDTourGuideEnabledSelector
-  );
   const itwOfflineAccessAvailable = useIOSelector(
     itwOfflineAccessAvailableSelector
   );
@@ -386,23 +378,15 @@ export const LandingScreen = () => {
 
         <SectionStatusComponent sectionKey={"login"} />
         <ContentWrapper>
-          <Tooltip
-            closeIconAccessibilityLabel={I18n.t("global.buttons.close")}
-            isVisible={isCieIDTourGuideEnabled}
-            onClose={() => dispatch(cieIDDisableTourGuide())}
-            title={I18n.t("authentication.landing.tour_guide.title")}
-            content={I18n.t("authentication.landing.tour_guide.content")}
-          >
-            <IOButton
-              fullWidth
-              variant="solid"
-              color={isCieUatEnabled ? "danger" : "primary"}
-              label={I18n.t("authentication.landing.loginCie")}
-              icon="cieLetter"
-              onPress={navigateToCiePinScreen}
-              testID="landing-button-login-cie"
-            />
-          </Tooltip>
+          <IOButton
+            fullWidth
+            variant="solid"
+            color={isCieUatEnabled ? "danger" : "primary"}
+            label={I18n.t("authentication.landing.loginCie")}
+            icon="cieLetter"
+            onPress={navigateToCiePinScreen}
+            testID="landing-button-login-cie"
+          />
           <VSpacer size={SPACE_BETWEEN_BUTTONS} />
           <IOButton
             fullWidth
