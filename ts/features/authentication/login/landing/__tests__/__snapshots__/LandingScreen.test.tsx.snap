@@ -199,7 +199,15 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                         }
                       }
                     >
-                      <View
+                      <RNCSafeAreaView
+                        edges={
+                          {
+                            "bottom": "additive",
+                            "left": "additive",
+                            "right": "additive",
+                            "top": "additive",
+                          }
+                        }
                         style={
                           {
                             "flex": 1,
@@ -3072,7 +3080,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                             </View>
                           </RCTScrollView>
                         </View>
-                      </View>
+                      </RNCSafeAreaView>
                     </View>
                     <View
                       collapsable={false}

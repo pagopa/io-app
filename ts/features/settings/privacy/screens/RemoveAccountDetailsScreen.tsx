@@ -11,35 +11,32 @@ import {
   useIOToast
 } from "@pagopa/io-app-design-system";
 import { StackActions } from "@react-navigation/native";
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {
-  AccessibilityInfo,
-  Alert,
-  Keyboard,
-  SafeAreaView,
-  View
-} from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "i18next";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { AccessibilityInfo, Alert, Keyboard, View } from "react-native";
+import {
+  SafeAreaView,
+  useSafeAreaInsets
+} from "react-native-safe-area-context";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { shufflePinPadOnPayment } from "../../../../config";
-import { isCgnEnrolledSelector } from "../../../bonus/cgn/store/reducers/details";
 import NavigationService from "../../../../navigation/NavigationService";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { setAccessibilityFocus } from "../../../../utils/accessibility";
+import { withKeyboard } from "../../../../utils/keyboard";
+import { isCgnEnrolledSelector } from "../../../bonus/cgn/store/reducers/details";
 import { identificationRequest } from "../../../identification/store/actions";
 import {
   RemoveAccountMotivationEnum,
   removeAccountMotivation
 } from "../../common/store/actions";
+import { resetDeleteUserDataProcessing } from "../../common/store/actions/userDataProcessing";
 import {
   isUserDataProcessingDeleteErrorSelector,
   isUserDataProcessingDeleteLoadingSelector
 } from "../../common/store/selectors/userDataProcessing";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
-import { resetDeleteUserDataProcessing } from "../../common/store/actions/userDataProcessing";
-import { withKeyboard } from "../../../../utils/keyboard";
-import { setAccessibilityFocus } from "../../../../utils/accessibility";
 
 type FooterButtonProps = {
   isLoading: boolean;
