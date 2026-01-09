@@ -53,10 +53,10 @@ export const ItwOnboardingModuleCredentialsList = ({
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL
           });
-        } else if (isL3Enabled && !isItWalletValid) {
+        } else if (isL3Enabled && !isItWalletValid && isNewCredential(type)) {
           /**
            * User has a whitelisted fiscal code but has not yet obtained an IT Wallet.
-           * Start the credential issuance flow with contextual PID issuance
+           * If he requests an ITW credential, start the credential issuance flow with contextual PID issuance
            */
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.DISCOVERY.INFO,
