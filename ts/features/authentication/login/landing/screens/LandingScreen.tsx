@@ -19,6 +19,7 @@ import {
   useState
 } from "react";
 import { Alert, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { LandingCardComponent } from "../../../../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import SectionStatusComponent from "../../../../../components/SectionStatus";
@@ -336,7 +337,7 @@ export const LandingScreen = () => {
       : "session_corrupted";
 
     return (
-      <View style={{ flex: 1 }} testID="LandingScreen">
+      <SafeAreaView style={{ flex: 1 }} testID="LandingScreen">
         {isSessionExpired || isSessionCorrupted ? (
           <LandingSessionExpiredComponent
             ref={accessibilityFirstFocuseViewRef}
@@ -418,7 +419,7 @@ export const LandingScreen = () => {
           {bottomSheet}
           {infoBottomsheetComponent}
         </ContentWrapper>
-      </View>
+      </SafeAreaView>
     );
   };
 
