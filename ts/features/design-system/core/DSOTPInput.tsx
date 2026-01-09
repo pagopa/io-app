@@ -153,12 +153,14 @@ export const DSOTPInput = () => {
   const sectionTitleMargin = 16;
   const blockMargin = 40;
 
-   
   useFocusEffect(
-    useCallback(() => () => {
+    // eslint-disable-next-line arrow-body-style
+    useCallback(() => {
+      return () => {
         // Dismiss bottom-sheet when navigating out of this screen
         dismiss();
-      }, [dismiss])
+      };
+    }, [dismiss])
   );
 
   const otpConfig = otpConfigMap[selectedItem];
