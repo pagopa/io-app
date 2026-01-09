@@ -3167,9 +3167,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-app-design-system@npm:5.11.13":
-  version: 5.11.13
-  resolution: "@pagopa/io-app-design-system@npm:5.11.13"
+"@pagopa/io-app-design-system@npm:5.11.17":
+  version: 5.11.17
+  resolution: "@pagopa/io-app-design-system@npm:5.11.17"
   dependencies:
     auto-changelog: ^2.4.0
     lodash: ^4.17.21
@@ -3190,7 +3190,7 @@ __metadata:
     react-native-reanimated: "*"
     react-native-safe-area-context: "*"
     react-native-svg: "*"
-  checksum: c71811f615b9b2eda2635845e4ea415efb3c2dddbeedb995cd7b4641e2d3937ef5fd7f449214d2c54a4dcf32e8ec47f42d7cad06e35b43422970c25c141ce2ea
+  checksum: 7b00bd6845c860c04c5a8f45c529161da4efbbf248ab6f4a0eeee7cfe962ba2a856979ae7a6588c743c91dbbc5337657a27ad742d46b25153591ddce64da2efa
   languageName: node
   linkType: hard
 
@@ -11302,7 +11302,7 @@ __metadata:
     "@babel/runtime": ^7.25.0
     "@gorhom/bottom-sheet": ^5.1.2
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
-    "@pagopa/io-app-design-system": 5.11.13
+    "@pagopa/io-app-design-system": 5.11.17
     "@pagopa/io-pagopa-commons": ^3.1.0
     "@pagopa/io-react-native-cie": 1.3.0
     "@pagopa/io-react-native-cieid": 0.4.0

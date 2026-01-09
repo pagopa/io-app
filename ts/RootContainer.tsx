@@ -6,7 +6,8 @@ import {
   AppState,
   AppStateStatus,
   EmitterSubscription,
-  NativeEventSubscription
+  NativeEventSubscription,
+  StatusBar
 } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
@@ -110,6 +111,11 @@ class RootContainer extends PureComponent<Props> {
 
     return (
       <>
+        <StatusBar
+          translucent
+          barStyle={"dark-content"}
+          backgroundColor={"transparent"}
+        />
         <IONavigationContainer />
 
         {/* When debug mode is enabled, the following information
