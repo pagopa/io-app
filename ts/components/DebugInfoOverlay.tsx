@@ -6,7 +6,6 @@ import {
   hexToRgba,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-
 import { FunctionComponent, useState } from "react";
 import { Platform, Pressable, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";

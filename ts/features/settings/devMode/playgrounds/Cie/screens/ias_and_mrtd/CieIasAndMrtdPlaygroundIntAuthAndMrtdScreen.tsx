@@ -9,24 +9,20 @@ import {
   InternalAuthAndMrtdResponse,
   type NfcEvent
 } from "@pagopa/io-react-native-cie";
+import { useHeaderHeight } from "@react-navigation/elements";
 import { useEffect, useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
   StyleSheet,
   View
 } from "react-native";
-
-import { useHeaderHeight } from "@react-navigation/elements";
-import { SETTINGS_ROUTES } from "../../../../../common/navigation/routes";
-import { useIONavigation } from "../../../../../../../navigation/params/AppParamsList";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useDebugInfo } from "../../../../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../../../../hooks/useScreenEndMargin";
-import { ReadStatusComponent } from "../../components/ReadStatusComponent";
-import { encodeChallenge } from "../../utils/encoding";
-import { ReadStatus } from "../../types/ReadStatus";
+import { useIONavigation } from "../../../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../../../store/hooks";
 import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../../../../store/reducers/backendStatus/remoteConfig";
 import { testAarCreateMandate } from "../../../../../../pn/aar/store/actions";
@@ -35,7 +31,10 @@ import {
   sendMandateErrorSelector,
   sendVerificationCodeSelector
 } from "../../../../../../pn/aar/store/reducers/tempAarMandate";
-import { useDebugInfo } from "../../../../../../../hooks/useDebugInfo";
+import { SETTINGS_ROUTES } from "../../../../../common/navigation/routes";
+import { ReadStatusComponent } from "../../components/ReadStatusComponent";
+import { ReadStatus } from "../../types/ReadStatus";
+import { encodeChallenge } from "../../utils/encoding";
 
 export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
   const navigation = useIONavigation();

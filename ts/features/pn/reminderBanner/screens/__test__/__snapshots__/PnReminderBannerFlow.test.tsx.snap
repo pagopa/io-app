@@ -2638,7 +2638,15 @@ exports[`loading screens + error interop should render the correct loading scree
                         }
                       }
                     >
-                      <RCTSafeAreaView
+                      <RNCSafeAreaView
+                        edges={
+                          {
+                            "bottom": "additive",
+                            "left": "additive",
+                            "right": "additive",
+                            "top": "additive",
+                          }
+                        }
                         style={
                           {
                             "alignItems": "center",
@@ -2886,7 +2894,7 @@ exports[`loading screens + error interop should render the correct loading scree
                           }
                           testID="LoadingSpinnerCaptionSubTitleID"
                         />
-                      </RCTSafeAreaView>
+                      </RNCSafeAreaView>
                     </View>
                   </View>
                 </View>
@@ -3240,7 +3248,15 @@ exports[`loading screens + error interop should render the correct loading scree
                         }
                       }
                     >
-                      <RCTSafeAreaView
+                      <RNCSafeAreaView
+                        edges={
+                          {
+                            "bottom": "additive",
+                            "left": "additive",
+                            "right": "additive",
+                            "top": "additive",
+                          }
+                        }
                         style={
                           {
                             "alignItems": "center",
@@ -3488,7 +3504,7 @@ exports[`loading screens + error interop should render the correct loading scree
                           }
                           testID="LoadingSpinnerCaptionSubTitleID"
                         />
-                      </RCTSafeAreaView>
+                      </RNCSafeAreaView>
                     </View>
                   </View>
                 </View>
@@ -3842,7 +3858,15 @@ exports[`loading screens + error interop should render the correct loading scree
                         }
                       }
                     >
-                      <RCTSafeAreaView
+                      <RNCSafeAreaView
+                        edges={
+                          {
+                            "bottom": "additive",
+                            "left": "additive",
+                            "right": "additive",
+                            "top": "additive",
+                          }
+                        }
                         style={
                           {
                             "alignItems": "center",
@@ -4090,7 +4114,7 @@ exports[`loading screens + error interop should render the correct loading scree
                           }
                           testID="LoadingSpinnerCaptionSubTitleID"
                         />
-                      </RCTSafeAreaView>
+                      </RNCSafeAreaView>
                     </View>
                   </View>
                 </View>
@@ -4444,7 +4468,15 @@ exports[`loading screens + error interop should render the correct loading scree
                         }
                       }
                     >
-                      <RCTSafeAreaView
+                      <RNCSafeAreaView
+                        edges={
+                          {
+                            "bottom": "additive",
+                            "left": "additive",
+                            "right": "additive",
+                            "top": "additive",
+                          }
+                        }
                         style={
                           {
                             "alignItems": "center",
@@ -4692,7 +4724,7 @@ exports[`loading screens + error interop should render the correct loading scree
                           }
                           testID="LoadingSpinnerCaptionSubTitleID"
                         />
-                      </RCTSafeAreaView>
+                      </RNCSafeAreaView>
                     </View>
                   </View>
                 </View>
@@ -5046,7 +5078,15 @@ exports[`loading screens + error interop should render the correct loading scree
                         }
                       }
                     >
-                      <RCTSafeAreaView
+                      <RNCSafeAreaView
+                        edges={
+                          {
+                            "bottom": "additive",
+                            "left": "additive",
+                            "right": "additive",
+                            "top": "additive",
+                          }
+                        }
                         style={
                           {
                             "alignItems": "center",
@@ -5294,7 +5334,7 @@ exports[`loading screens + error interop should render the correct loading scree
                           }
                           testID="LoadingSpinnerCaptionSubTitleID"
                         />
-                      </RCTSafeAreaView>
+                      </RNCSafeAreaView>
                     </View>
                   </View>
                 </View>
