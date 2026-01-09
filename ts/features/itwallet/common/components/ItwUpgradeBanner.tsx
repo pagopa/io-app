@@ -20,12 +20,6 @@ export const ItwUpgradeBanner = () => {
     return null;
   }
 
-  const handleAddDocumentPress = () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ONBOARDING
-    });
-  };
-
   const handleStartPress = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
@@ -47,7 +41,7 @@ export const ItwUpgradeBanner = () => {
         action={I18n.t(
           "features.itWallet.engagementBanner.upgrade_empty.action"
         )}
-        onPress={handleAddDocumentPress}
+        onPress={handleStartPress}
         onDismiss={handleOnDismiss}
       />
     );
