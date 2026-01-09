@@ -4,17 +4,17 @@ import {
   OTPInput
 } from "@pagopa/io-app-design-system";
 import { CieManager, NfcEvent } from "@pagopa/io-react-native-cie";
+import { useHeaderHeight } from "@react-navigation/elements";
 import { createRef, useEffect, useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
   StyleSheet,
   View
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import WebView, { WebViewNavigation } from "react-native-webview";
-import { useHeaderHeight } from "@react-navigation/elements";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../../hooks/useScreenEndMargin";

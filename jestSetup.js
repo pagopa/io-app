@@ -7,9 +7,8 @@
 import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
 import mockClipboard from "@react-native-clipboard/clipboard/jest/clipboard-mock.js";
 import nodeFetch from "node-fetch";
-import { NativeModules, AccessibilityInfo } from "react-native";
+import { NativeModules, AccessibilityInfo, AppState } from "react-native";
 import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
-import mockBackHandler from "react-native/Libraries/Utilities/__mocks__/BackHandler";
 import mockZendesk from "./ts/__mocks__/io-react-native-zendesk.ts";
 import { initI18n } from "./ts/i18n.ts";
 
@@ -161,18 +160,6 @@ jest.mock("react-native", () => {
     requestReview: jest.fn()
   };
 
-  // eslint-disable-next-line functional/immutable-data
-  RN.AppState = {
-    ...RN.AppState,
-    addEventListener: jest.fn((event, callback) => {
-      // Store the callback for later use in tests
-      if (event === "change") {
-        // eslint-disable-next-line functional/immutable-data
-        mockSubscription.callback = callback;
-      }
-      return mockSubscription;
-    })
-  };
   return RN;
 });
 
@@ -217,21 +204,7 @@ jest.mock(
     };
   }
 );
-
-jest.mock("react-native/Libraries/AppState/AppState", () => {
-  const appState = jest.requireActual(
-    "react-native/Libraries/AppState/AppState"
-  );
-
-  return {
-    ...appState,
-    addEventListener: () => ({
-      remove: jest.fn()
-    })
-  };
-});
-
-jest.mock('react-native/Libraries/Utilities/BackHandler', () => mockBackHandler);
+jest.spyOn(AppState, "addEventListener").mockImplementation(() => ({remove: jest.fn()}));
 
 jest.mock("mixpanel-react-native", () => ({
   __esModule: true,
@@ -295,13 +268,13 @@ jest.mock("react-native-bluetooth-state-manager", () => ({
 }));
 
 jest.mock("@pagopa/io-react-native-iso18013", () => ({
-    CBOR: {
-      decodeIssuerSigned: jest.fn(() => Promise.resolve("test"))
-    },
-    COSE: {
-      verify: jest.fn(() => Promise.resolve(true))
-    }
-  }));
+  CBOR: {
+    decodeIssuerSigned: jest.fn(() => Promise.resolve("test"))
+  },
+  COSE: {
+    verify: jest.fn(() => Promise.resolve(true))
+  }
+}));
 
 jest.mock("@pagopa/io-react-native-cie", () => ({
   CieManager: jest.fn()

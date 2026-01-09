@@ -267,7 +267,7 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
         },
         {
           "height": NaN,
-          "paddingBottom": undefined,
+          "paddingBottom": NaN,
         },
       ]
     }
@@ -1296,7 +1296,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
         },
         {
           "height": NaN,
-          "paddingBottom": undefined,
+          "paddingBottom": NaN,
         },
       ]
     }
@@ -2377,7 +2377,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
         },
         {
           "height": NaN,
-          "paddingBottom": undefined,
+          "paddingBottom": NaN,
         },
       ]
     }
@@ -2742,7 +2742,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
         },
         {
           "height": NaN,
-          "paddingBottom": undefined,
+          "paddingBottom": NaN,
         },
       ]
     }
