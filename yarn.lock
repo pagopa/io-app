@@ -11443,7 +11443,7 @@ __metadata:
     react-native-permissions: ^5.3.0
     react-native-push-notification: ^8.1.1
     react-native-qrcode-svg: ^6.3.12
-    react-native-reanimated: ^3.19.3
+    react-native-reanimated: ^3.19.5
     react-native-safe-area-context: ^5.5.2
     react-native-screen-brightness: ^2.0.0-alpha
     react-native-screens: 4.16.0
@@ -16434,9 +16434,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-reanimated@npm:^3.19.3":
-  version: 3.19.3
-  resolution: "react-native-reanimated@npm:3.19.3"
+"react-native-reanimated@npm:^3.19.5":
+  version: 3.19.5
+  resolution: "react-native-reanimated@npm:3.19.5"
   dependencies:
     "@babel/plugin-transform-arrow-functions": ^7.0.0-0
     "@babel/plugin-transform-class-properties": ^7.0.0-0
@@ -16454,7 +16454,7 @@ __metadata:
     "@babel/core": ^7.0.0-0
     react: "*"
     react-native: "*"
-  checksum: 6b88d75be9eb5c7c33e52534faff4ce69d3a3ce0d285006b801c31dffc5569c6dbefbfcd085f4eaa546b8687cb1d955701b41a30f5e5d20de8d6581a23b023d9
+  checksum: d3e5e38c23bd0f86e19110c1e16353a3b58166cb3a13ec1b600b5bbe287d8c57ab199023231b7960fd11b5c605f2a78428d7b80f28818e74eaecde1360dec4f6
   languageName: node
   linkType: hard
 
