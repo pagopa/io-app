@@ -50,12 +50,9 @@ import { getDeviceId } from "../../../../utils/device";
 import { isDevEnv, isLocalEnv } from "../../../../utils/environment";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import { ITW_ROUTES } from "../../../itwallet/navigation/routes.ts";
-import {
-  setActiveSessionLoginLocalFlag,
-  setStartActiveSessionLogin
-} from "../../../authentication/activeSessionLogin/store/actions/index.ts";
-import { AUTHENTICATION_ROUTES } from "../../../authentication/common/navigation/routes.ts";
+import { setActiveSessionLoginLocalFlag } from "../../../authentication/activeSessionLogin/store/actions/index.ts";
 import { isActiveSessionLoginLocallyEnabledSelector } from "../../../authentication/activeSessionLogin/store/selectors/index.ts";
+import { useActiveSessionLoginPlaygroundBottomsheet } from "../../../authentication/activeSessionLogin/utils/useActiveSessionLoginPlaygroundBottomsheet.tsx";
 import ExperimentalDesignEnableSwitch from "./ExperimentalDesignEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -326,8 +323,11 @@ const DesignSystemSection = () => {
 
 const PlaygroundsSection = () => {
   const navigation = useIONavigation();
-  const dispatch = useIODispatch();
   const isIdPayTestEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
+  const {
+    presentActiveSessionLoginPlaygroundBottomSheet,
+    activeSessionLoginPlaygroundBottomSheet
+  } = useActiveSessionLoginPlaygroundBottomsheet();
 
   const playgroundsNavListItems: ReadonlyArray<PlaygroundsNavListItem> = [
     {
@@ -400,10 +400,7 @@ const PlaygroundsSection = () => {
         "profile.main.loginEnvironment.activeSession.playground.title"
       ),
       onPress: () => {
-        dispatch(setStartActiveSessionLogin());
-        navigation.navigate(SETTINGS_ROUTES.AUTHENTICATION, {
-          screen: AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN
-        });
+        presentActiveSessionLoginPlaygroundBottomSheet();
       }
     }
   ];
@@ -432,19 +429,22 @@ const PlaygroundsSection = () => {
   };
 
   return (
-    <FlatList
-      ListHeaderComponent={<ListItemHeader label="Playground" />}
-      scrollEnabled={false}
-      keyExtractor={(item: PlaygroundsNavListItem, index: number) =>
-        `${item.value}-${index}`
-      }
-      contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault
-      }}
-      data={filteredPlaygroundsNavListItems}
-      renderItem={renderPlaygroundsNavItem}
-      ItemSeparatorComponent={() => <Divider />}
-    />
+    <>
+      <FlatList
+        ListHeaderComponent={<ListItemHeader label="Playground" />}
+        scrollEnabled={false}
+        keyExtractor={(item: PlaygroundsNavListItem, index: number) =>
+          `${item.value}-${index}`
+        }
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
+        data={filteredPlaygroundsNavListItems}
+        renderItem={renderPlaygroundsNavItem}
+        ItemSeparatorComponent={() => <Divider />}
+      />
+      {activeSessionLoginPlaygroundBottomSheet}
+    </>
   );
 };
 

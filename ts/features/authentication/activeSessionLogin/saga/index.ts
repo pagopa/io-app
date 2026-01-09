@@ -37,6 +37,7 @@ import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
 } from "../../../../store/actions/analytics";
+import { watchTestActiveSessionLoginRequestSaga } from "./testActiveSessionLoginSaga";
 
 export function* watchActiveSessionLoginSaga() {
   yield* takeLatest(
@@ -54,7 +55,7 @@ export function* handleActiveSessionLoginSaga(): Generator<
   yield* put(analyticsAuthenticationStarted("reauth"));
 
   yield* fork(watchCieAuthenticationSaga);
-
+  yield* fork(watchTestActiveSessionLoginRequestSaga);
   const { success, failure } = yield* race({
     success: take(activeSessionLoginSuccess),
     failure: take(activeSessionLoginFailure)

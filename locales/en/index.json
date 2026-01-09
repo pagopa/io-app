@@ -639,7 +639,12 @@
             "alertConfirmButton": "Prosegui"
           },
           "playground": {
-            "title": "Active session login playground"
+            "title": "Active session login playground",
+            "bottomSheet": {
+              "title": "Which login method do you want to use?",
+              "standardLogin": "Continue with standard login",
+              "testLogin": "Continue with test login"
+            }
           }
         }
       },

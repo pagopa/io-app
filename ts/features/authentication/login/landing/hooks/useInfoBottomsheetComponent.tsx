@@ -22,7 +22,7 @@ import { Identifier } from "../../optIn/screens/OptInScreen";
 
 const TAPS_TO_INIT_TESTIDP_FLOW = 5;
 
-const TestIdp: SpidIdp = {
+export const TestIdp: SpidIdp = {
   id: "test" as keyof IdpData,
   name: "Test Idp",
   logo: {

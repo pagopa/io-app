@@ -37,6 +37,7 @@ import ActiveSessionCieIdLoginScreen from "../../activeSessionLogin/screens/cieI
 import ActiveSessionLoginCieCardReaderScreen from "../../activeSessionLogin/screens/cie/ActiveSessionLoginCieCardReaderScreen";
 import ActiveSessionLoginCieConsentDataUsageScreen from "../../activeSessionLogin/screens/cie/ActiveSessionLoginCieConsentDataUsageScreen";
 import ActiveSessionIdpLoginScreen from "../../activeSessionLogin/screens/spid/ActiveSessionIdpLoginScreen";
+import TestActiveSessionAuthenticationScreen from "../../activeSessionLogin/screens/TestActiveSessionAuthenticationScreen";
 import { AUTHENTICATION_ROUTES } from "./routes";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 
@@ -122,6 +123,12 @@ const AuthenticationStackNavigator = () => (
     <Stack.Screen
       name={AUTHENTICATION_ROUTES.IDP_TEST}
       component={TestAuthenticationScreen}
+    />
+
+    <Stack.Screen
+      name={AUTHENTICATION_ROUTES.TEST_ACTIVE_SESSION_LOGIN}
+      component={TestActiveSessionAuthenticationScreen}
+      options={{ headerShown: true }}
     />
 
     <Stack.Screen

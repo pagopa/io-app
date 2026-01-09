@@ -2,6 +2,7 @@ import { ActionType, createStandardAction } from "typesafe-actions";
 import { SpidIdp } from "../../../../../utils/idps";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { SpidLevel } from "../../../login/cie/utils";
+import { PasswordLogin } from "../../../../../../definitions/session_manager/PasswordLogin";
 
 export const setActiveSessionLoginLocalFlag = createStandardAction(
   "SET_ACTIVE_SESSION_LOGIN_LOCAL_FLAG"
@@ -84,6 +85,10 @@ export const closeSessionExpirationBanner = createStandardAction(
   "CLOSE_SESSION_EXPIRATION_BANNER"
 )();
 
+export const testActiveSessionLoginRequest = createStandardAction(
+  "TEST_ACTIVE_SESSION_LOGIN_REQUEST"
+)<PasswordLogin>();
+
 export type LoginInfoActions =
   | ActionType<typeof setActiveSessionLoginLocalFlag>
   | ActionType<typeof setActiveSessionLoginBlockingScreenHasBeenVisualized>
@@ -99,4 +104,5 @@ export type LoginInfoActions =
   | ActionType<typeof logoutBeforeSessionCorrupted>
   | ActionType<typeof setFinalizeLoggedOutUserWithDifferentCF>
   | ActionType<typeof setCieIDSelectedSecurityLevelActiveSessionLogin>
-  | ActionType<typeof closeSessionExpirationBanner>;
+  | ActionType<typeof closeSessionExpirationBanner>
+  | ActionType<typeof testActiveSessionLoginRequest>;

@@ -65,7 +65,8 @@ export function BackendPublicClient(
     publicKey?: PublicKey,
     hashAlgorithm?: string,
     isFastLogin?: boolean,
-    idpId?: string
+    idpId?: string,
+    hashedFiscalCode?: string
   ): PostTestLoginT => ({
     method: "post",
     url: () => `/api/auth/v1/test-login`,
@@ -74,7 +75,13 @@ export function BackendPublicClient(
       publicKey && hashAlgorithm
         ? () => ({
             "Content-Type": "application/json",
-            ...getLoginHeaders(publicKey, hashAlgorithm, !!isFastLogin, idpId)
+            ...getLoginHeaders(
+              publicKey,
+              hashAlgorithm,
+              !!isFastLogin,
+              idpId,
+              hashedFiscalCode
+            )
           })
         : ApiHeaderJson,
     body: (passwordLogin: PasswordLogin) => JSON.stringify(passwordLogin),
@@ -85,10 +92,17 @@ export function BackendPublicClient(
     postTestLogin: (
       publicKey?: PublicKey,
       hashAlgorithm?: string,
-      isFastLogin?: boolean
+      isFastLogin?: boolean,
+      hashedFiscalCode?: string
     ) =>
       createFetchRequestForApi(
-        getPostLoginTestT(publicKey, hashAlgorithm, isFastLogin, "spid"),
+        getPostLoginTestT(
+          publicKey,
+          hashAlgorithm,
+          isFastLogin,
+          "spid",
+          hashedFiscalCode
+        ),
         options
       )
   };
