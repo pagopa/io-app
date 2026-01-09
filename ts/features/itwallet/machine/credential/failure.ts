@@ -11,7 +11,6 @@ const {
 
 export enum CredentialIssuanceFailureType {
   UNEXPECTED = "UNEXPECTED",
-  ASYNC_ISSUANCE = "ASYNC_ISSUANCE",
   INVALID_STATUS = "INVALID_STATUS",
   ISSUER_GENERIC = "ISSUER_GENERIC",
   UNTRUSTED_ISS = "UNTRUSTED_ISS",
@@ -24,7 +23,6 @@ export enum CredentialIssuanceFailureType {
 export type ReasonTypeByFailure = {
   [CredentialIssuanceFailureType.ISSUER_GENERIC]: Errors.IssuerResponseError;
   [CredentialIssuanceFailureType.INVALID_STATUS]: WithCredentialMetadata<Errors.IssuerResponseError>;
-  [CredentialIssuanceFailureType.ASYNC_ISSUANCE]: Errors.IssuerResponseError;
   [CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC]: Errors.WalletProviderResponseError;
   [CredentialIssuanceFailureType.UNTRUSTED_ISS]: Trust.Errors.FederationError;
   [CredentialIssuanceFailureType.UNEXPECTED]: unknown;
@@ -65,13 +63,6 @@ export const mapEventToFailure = (
   if (isIssuerResponseError(error, Codes.CredentialInvalidStatus)) {
     return {
       type: CredentialIssuanceFailureType.INVALID_STATUS,
-      reason: error
-    };
-  }
-
-  if (isIssuerResponseError(error, Codes.CredentialIssuingNotSynchronous)) {
-    return {
-      type: CredentialIssuanceFailureType.ASYNC_ISSUANCE,
       reason: error
     };
   }

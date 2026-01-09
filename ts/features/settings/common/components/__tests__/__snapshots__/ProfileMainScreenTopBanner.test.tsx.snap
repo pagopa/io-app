@@ -494,7 +494,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
             "padding": 16,
           },
           {
-            "backgroundColor": "#FFD9D9",
+            "backgroundColor": "rgba(255,102,102,0.2)",
           },
           {
             "transform": [
@@ -523,7 +523,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           align="xMidYMid"
           bbHeight={36}
           bbWidth={36}
-          color="#5D1313"
+          color="#FFD9D9"
           focusable={false}
           height={36}
           importantForAccessibility="no-hide-descendants"
@@ -599,7 +599,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
                 [
                   {},
                   {
-                    "color": "#5D1313",
+                    "color": "#FFD9D9",
                     "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
@@ -620,7 +620,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
                 [
                   {},
                   {
-                    "color": "#5D1313",
+                    "color": "#FFD9D9",
                     "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",

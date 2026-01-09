@@ -1,23 +1,18 @@
 import {
-  IOButton,
   FooterActions,
   H2,
   IconButton,
+  IOButton,
   IOColors,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
 
-import { FunctionComponent, useEffect, useState } from "react";
-import {
-  BackHandler,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  View
-} from "react-native";
-import WebView from "react-native-webview";
 import I18n from "i18next";
+import { FunctionComponent, useEffect, useState } from "react";
+import { BackHandler, ScrollView, StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import WebView from "react-native-webview";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../../utils/webview";
 
