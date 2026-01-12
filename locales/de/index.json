@@ -1387,8 +1387,8 @@
         "cta": "Mehr erfahren"
       },
       "error": {
-        "title": "Es ist ein Fehler aufgetreten",
-        "subtitle": "Versuche es erneut oder kontaktiere den Support",
+        "title": "Questo metodo di pagamento non è disponibile",
+        "subtitle": "Chiudi l’app e riaprila per aggiornare il portafoglio",
         "primaryButton": "Schließen",
         "secondaryButton": "Erneut versuchen"
       }
