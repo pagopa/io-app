@@ -2,7 +2,7 @@ import { VStack } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useMemo } from "react";
-import { StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import { AnimatedImage } from "../../../../../components/AnimatedImage";
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { renderActionButtons } from "../../../../../components/ui/IOScrollView";
@@ -14,7 +14,6 @@ import {
   trackItwPinInfoBottomSheet,
   trackItwUserWithoutL3Requirements
 } from "../../../analytics";
-import { useItwInfoDialog } from "../../../common/hooks/useItwInfoDialog";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { CieWarningType } from "../utils/types";
@@ -58,46 +57,50 @@ export const useCieInfoBottomSheet = ({
   const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
-  const pinNotFoundDialog = useItwInfoDialog({
-    title: I18n.t(
-      "features.itWallet.identification.cie.bottomSheet.pin.dialog.title"
-    ),
-    body: I18n.t(
-      "features.itWallet.identification.cie.bottomSheet.pin.dialog.body"
-    ),
-    actions: [
-      {
-        text: I18n.t(
-          "features.itWallet.identification.cie.bottomSheet.pin.dialog.back"
-        ),
-        onPress: () => {
-          navigation.goBack();
+  const showPinNotFoundAlert = () =>
+    Alert.alert(
+      I18n.t(
+        "features.itWallet.identification.cie.bottomSheet.pin.dialog.title"
+      ),
+      I18n.t(
+        "features.itWallet.identification.cie.bottomSheet.pin.dialog.body"
+      ),
+      [
+        {
+          text: I18n.t(
+            "features.itWallet.identification.cie.bottomSheet.pin.dialog.back"
+          ),
+          onPress: () => {
+            navigation.goBack();
+          },
+          style: "destructive"
         },
-        style: "destructive"
-      },
-      {
-        text: I18n.t(
-          "features.itWallet.identification.cie.bottomSheet.pin.dialog.cieIdAction"
-        ),
-        onPress: () => {
-          machineRef.send({
-            type: "select-identification-mode",
-            mode: "cieId"
-          });
+        {
+          text: I18n.t(
+            "features.itWallet.identification.cie.bottomSheet.pin.dialog.cieIdAction"
+          ),
+          onPress: () => {
+            machineRef.send({
+              type: "select-identification-mode",
+              mode: "cieId"
+            });
+          },
+          style: "default"
         },
-        style: "default"
-      },
-      {
-        text: I18n.t(
-          "features.itWallet.identification.cie.bottomSheet.pin.dialog.spidCieAction"
-        ),
-        onPress: () => {
-          machineRef.send({ type: "select-identification-mode", mode: "spid" });
-        },
-        style: "default"
-      }
-    ]
-  });
+        {
+          text: I18n.t(
+            "features.itWallet.identification.cie.bottomSheet.pin.dialog.spidCieAction"
+          ),
+          onPress: () => {
+            machineRef.send({
+              type: "select-identification-mode",
+              mode: "spid"
+            });
+          },
+          style: "default"
+        }
+      ]
+    );
 
   const itw_flow = isL3FeaturesEnabled ? "L3" : "L2";
 
@@ -148,7 +151,7 @@ export const useCieInfoBottomSheet = ({
                         reason,
                         position: "bottom_sheet"
                       });
-                      pinNotFoundDialog.show();
+                      showPinNotFoundAlert();
                       bottomSheet.dismiss();
                     }
                   }
