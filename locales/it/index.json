@@ -4737,7 +4737,7 @@
             }
           },
           "itw": {
-            "title": "IO è il tuo portafoglio digitale di Stato: pubblico, sicuro, gratuito.",
+            "title": "IO è ora il tuo portafoglio digitale pubblico: sicuro, gratuito, tuo.",
             "features": {
               "1": "Usi la tua Patente su IO come documento di riconoscimento",
               "2": "Ti basta il tuo telefono per dimostrare la tua identità",
@@ -5167,6 +5167,10 @@
           "subtitleStart": "Questa richiesta non è più valida ma puoi aggiungere di nuovo la tua ",
           "subtitleBold": "Patente su IO.",
           "primaryAction": "Aggiungi di nuovo"
+        },
+        "mrtdChallengeInitError": {
+          "title": "Un problema non permette di continuare",
+          "subtitle": "Si è verificato un errore che impedisce di procedere con la lettura della CIE. Riprova. Se il problema persiste, contatta l'assistenza."
         }
       },
       "notMatchingIdentityScreen": {
