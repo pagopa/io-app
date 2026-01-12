@@ -1601,10 +1601,10 @@
         "cta": "Scopri di più"
       },
       "error": {
-        "title": "Questo metodo di pagamento non è disponibile",
-        "subtitle": "Chiudi l’app e riaprila per aggiornare il portafoglio",
-        "primaryButton": "Indietro",
-        "secondaryButton": "Riprova"
+        "title": "This payment method is not available.",
+        "subtitle": "Close the app and reopen it to update your wallet.",
+        "primaryButton": "Back",
+        "secondaryButton": "Retry"
       }
     },
     "wallet": "Wallet",
