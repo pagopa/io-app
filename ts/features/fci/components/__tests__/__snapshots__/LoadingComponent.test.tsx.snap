@@ -1,7 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Test LoadingComponent component should render a LoadingComponent component with props correctly 1`] = `
-<RCTSafeAreaView
+<RNCSafeAreaView
+  edges={
+    {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "additive",
+    }
+  }
   style={
     {
       "alignItems": "center",
@@ -250,5 +258,5 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
   >
     Please wait...
   </Text>
-</RCTSafeAreaView>
+</RNCSafeAreaView>
 `;

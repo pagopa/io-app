@@ -46,7 +46,6 @@ import { profileSettingsReducerInitialState } from "../../features/profileSettin
 import { persistedNotificationsReducer } from "../../features/pushNotifications/store/reducers";
 import profileReducer from "../../features/settings/common/store/reducers";
 import userDataProcessingReducer from "../../features/settings/common/store/reducers/userDataProcessing";
-import { trialSystemActivationStatusReducer } from "../../features/trialSystem/store/reducers";
 import { whatsNewInitialState } from "../../features/whatsnew/store/reducers";
 import { isDevEnv } from "../../utils/environment";
 import { Action } from "../actions/types";
@@ -170,8 +169,7 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   content: contentReducer,
   emailValidation: emailValidationReducer,
   crossSessions: crossSessionsReducer,
-  lollipop: lollipopPersistor,
-  trialSystem: trialSystemActivationStatusReducer
+  lollipop: lollipopPersistor
 });
 
 export function createRootReducer(

@@ -5,9 +5,9 @@ import {
   Text,
   Share,
   Alert,
-  Platform,
-  SafeAreaView
+  Platform
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Clipboard from "@react-native-clipboard/clipboard";
 import { IOButton } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
