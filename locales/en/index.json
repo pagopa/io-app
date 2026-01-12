@@ -1603,7 +1603,7 @@
       "error": {
         "title": "Questo metodo di pagamento non è disponibile",
         "subtitle": "Chiudi l’app e riaprila per aggiornare il portafoglio",
-        "primaryButton": "Chiudi",
+        "primaryButton": "Indietro",
         "secondaryButton": "Riprova"
       }
     },
