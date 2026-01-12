@@ -1,8 +1,31 @@
-import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
+import {
+  Alert,
+  IOIcons,
+  ListItemHeader,
+  ListItemInfo,
+  makeFontStyleObject,
+  VStack
+} from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { renderActionButtons } from "../../../../../components/ui/IOScrollView";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { useIOSelector } from "../../../../../store/hooks";
+import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
+
+type ModeType = "ciePin" | "cieId" | "spid";
+
+const firstIconMap: Record<ModeType, IOIcons> = {
+  ciePin: "fiscalCodeIndividual",
+  cieId: "fiscalCodeIndividual",
+  spid: "spid"
+};
+
+const secondIconMap: Record<ModeType, IOIcons> = {
+  ciePin: "securityPad",
+  cieId: "cie",
+  spid: "fiscalCodeIndividual"
+};
 
 type Props = {
   type: "ciePin" | "cieId" | "spid";
@@ -19,31 +42,7 @@ export const useContinueWithBottomSheet = ({
   type,
   onPrimaryAction
 }: Props) => {
-  const firstIcon = (type: string) => {
-    switch (type) {
-      case "ciePin":
-        return "fiscalCodeIndividual";
-      case "cieId":
-        return "fiscalCodeIndividual";
-      case "spid":
-        return "spid";
-      default:
-        return undefined;
-    }
-  };
-
-  const secondIcon = (type: string) => {
-    switch (type) {
-      case "ciePin":
-        return "securityPad";
-      case "cieId":
-        return "cie";
-      case "spid":
-        return "fiscalCodeIndividual";
-      default:
-        return undefined;
-    }
-  };
+  const typefacePreference = useIOSelector(fontPreferenceSelector);
 
   const bottomSheet = useIOBottomSheetModal({
     title: I18n.t(
@@ -51,18 +50,43 @@ export const useContinueWithBottomSheet = ({
     ),
     component: (
       <VStack space={24}>
+        <Text
+          allowFontScaling={false}
+          style={{
+            ...makeFontStyleObject(
+              16,
+              typefacePreference === "comfortable"
+                ? "Titillio"
+                : "TitilliumSansPro",
+              24,
+              "Regular"
+            )
+          }}
+        >
+          {I18n.t(
+            `features.itWallet.identification.modeSelection.mode.${type}.bottomSheet.subtitle`
+          )}
+        </Text>
         <ListItemHeader
           label={I18n.t(
             `features.itWallet.identification.modeSelection.mode.${type}.bottomSheet.entry-1`
           )}
-          iconName={firstIcon(type)}
+          iconName={firstIconMap[type]}
         />
         <ListItemHeader
           label={I18n.t(
             `features.itWallet.identification.modeSelection.mode.${type}.bottomSheet.entry-2`
           )}
-          iconName={secondIcon(type)}
+          iconName={secondIconMap[type]}
         />
+        {type === "spid" && (
+          <Alert
+            variant="warning"
+            content={I18n.t(
+              `features.itWallet.identification.modeSelection.mode.spid.bottomSheet.warning`
+            )}
+          />
+        )}
         <View>
           {renderActionButtons(
             {
@@ -90,7 +114,7 @@ export const useContinueWithBottomSheet = ({
     // Pass { skipTracking: true } to skip sending the analytics event.
     present: (options?: { skipTracking: boolean }) => {
       if (!options?.skipTracking) {
-        // TODO: add tracking
+        // TODO: [SIW-3546] add tracking
       }
       bottomSheet.present();
     }
