@@ -12,11 +12,12 @@ import { getPaymentCardPropsFromWalletInfo } from "../../common/utils";
 import { PaymentsMethodDetailsBaseScreenComponent } from "../components/PaymentsMethodDetailsBaseScreenComponent";
 import { PaymentsMethodDetailsDeleteButton } from "../components/PaymentsMethodDetailsDeleteButton";
 import { PaymentsMethodDetailsErrorContent } from "../components/PaymentsMethodDetailsErrorContent";
+import { PaymentsMethodDetailsUpdateDataButton } from "../components/PaymentsMethodDetailsUpdateDataButton";
+import { PaymentsMethodPspDetailsAlert } from "../components/PaymentsMethodPspDetailsAlert";
 import WalletDetailsPaymentMethodFeatures from "../components/WalletDetailsPaymentMethodFeatures";
 import { PaymentsMethodDetailsParamsList } from "../navigation/params";
 import { paymentsGetMethodDetailsAction } from "../store/actions";
 import { selectPaymentMethodDetails } from "../store/selectors";
-import { PaymentsMethodPspDetailsAlert } from "../components/PaymentsMethodPspDetailsAlert";
 
 export type PaymentsMethodDetailsScreenNavigationParams = Readonly<{
   walletId: string;
@@ -70,19 +71,22 @@ const PaymentsMethodDetailsScreen = () => {
     const paymentMethodDetails = paymentMethod.details as UIWalletInfoDetails;
 
     return (
-      <PaymentsMethodDetailsBaseScreenComponent
-        card={{ ...cardProps, isExpired: false }}
-        headerTitle={headerTitle}
-      >
-        {paymentMethodDetails.pspBusinessName && (
-          <PaymentsMethodPspDetailsAlert
-            pspBusinessName={paymentMethodDetails.pspBusinessName}
-          />
-        )}
-        <WalletDetailsPaymentMethodFeatures paymentMethod={paymentMethod} />
-        <VSpacer size={24} />
-        <PaymentsMethodDetailsDeleteButton paymentMethod={paymentMethod} />
-      </PaymentsMethodDetailsBaseScreenComponent>
+      <>
+        <PaymentsMethodDetailsBaseScreenComponent
+          card={{ ...cardProps, isExpired: false }}
+          headerTitle={headerTitle}
+        >
+          {paymentMethodDetails.pspBusinessName && (
+            <PaymentsMethodPspDetailsAlert
+              pspBusinessName={paymentMethodDetails.pspBusinessName}
+            />
+          )}
+          <WalletDetailsPaymentMethodFeatures paymentMethod={paymentMethod} />
+          <VSpacer size={24} />
+          <PaymentsMethodDetailsDeleteButton paymentMethod={paymentMethod} />
+        </PaymentsMethodDetailsBaseScreenComponent>
+        <PaymentsMethodDetailsUpdateDataButton paymentMethod={paymentMethod} />
+      </>
     );
   }
 
