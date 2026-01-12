@@ -1,6 +1,6 @@
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
-import { ItwFlow } from "../../analytics/utils/analyticsTypes";
+import { ItwFlow } from "../../analytics/utils/types";
 import {
   ITW_DISCOVERY_ACTIONS_EVENTS,
   ITW_DISCOVERY_ERRORS_EVENTS

@@ -22,7 +22,7 @@ import {
   ItwDismissalAction,
   ItwIdMethod,
   CredentialStatusAssertionFailure
-} from "./utils/analyticsTypes";
+} from "./utils/types";
 
 // Screen view events
 

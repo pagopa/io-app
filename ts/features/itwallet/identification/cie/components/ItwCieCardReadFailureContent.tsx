@@ -17,7 +17,7 @@ import {
   trackItWalletSecondErrorPin
 } from "../../analytics";
 import { CieCardReadingFailureReason } from "../../analytics/types";
-import { ItwFlow } from "../../../analytics/utils/analyticsTypes.ts";
+import { ItwFlow } from "../../../analytics/utils/types.ts";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { type IdentificationContext } from "../../../machine/eid/context.ts";

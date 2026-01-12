@@ -10,8 +10,8 @@ import {
   updateCredentialProperties,
   updateItwStatusAndPIDProperties
 } from "../properties/propertyUpdaters";
-import { getMixPanelCredential } from "../utils/analyticsUtils";
-import { MixPanelCredential } from "../utils/analyticsTypes";
+import { getMixPanelCredential } from "../utils";
+import { MixPanelCredential } from "../utils/types";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { GlobalState } from "../../../../store/reducers/types";
 

@@ -28,7 +28,7 @@ import {
   trackItwExit
 } from "../analytics";
 import { trackOpenItwTos } from "../../analytics";
-import { getMixPanelCredential } from "../../analytics/utils/analyticsUtils";
+import { getMixPanelCredential } from "../../analytics/utils";
 import { ItwDataExchangeIcons } from "../../common/components/ItwDataExchangeIcons";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";

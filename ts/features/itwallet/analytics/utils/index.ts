@@ -7,7 +7,7 @@ import {
   ItwPIDStatus,
   MixPanelCredential,
   CREDENTIALS_MAP
-} from "./analyticsTypes";
+} from "./types";
 
 /**
  * Maps an PID status to its corresponding Mixpanel tracking status.

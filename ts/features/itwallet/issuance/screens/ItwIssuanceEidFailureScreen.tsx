@@ -24,7 +24,7 @@ import {
   useItwFailureSupportModal,
   ZendeskSubcategoryValue
 } from "../../common/hooks/useItwFailureSupportModal";
-import { KoState } from "../../analytics/utils/analyticsTypes";
+import { KoState } from "../../analytics/utils/types";
 import { trackItwKoStateAction } from "../../analytics";
 import { openWebUrl } from "../../../../utils/url";
 import { useEidEventsTracking } from "../hooks/useEidEventsTracking";

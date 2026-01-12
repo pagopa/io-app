@@ -12,7 +12,7 @@ import {
   trackItwPinInfoBottomSheet,
   trackItwUserWithoutL3Requirements
 } from "../../analytics";
-import { ItwFlow } from "../../../analytics/utils/analyticsTypes";
+import { ItwFlow } from "../../../analytics/utils/types";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { CieWarningType } from "../utils/types";

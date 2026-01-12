@@ -1,6 +1,6 @@
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { buildEventProperties } from "../../../../../utils/analytics";
-import { MixPanelCredential } from "../../../analytics/utils/analyticsTypes";
+import { MixPanelCredential } from "../../../analytics/utils/types";
 import { ItwEidReissuingTrigger, TrackCredentialDetail } from "./types";
 import {
   ITW_PRESENTATION_DETAILS_ACTIONS_EVENTS,

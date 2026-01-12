@@ -6,7 +6,7 @@ import {
   trackItwDismissalAction,
   trackItwDismissalContext
 } from "../../analytics";
-import { ItwScreenFlowContext } from "../../analytics/utils/analyticsTypes";
+import { ItwScreenFlowContext } from "../../analytics/utils/types";
 
 type ItwDismissalDialogProps = {
   handleDismiss?: () => void;

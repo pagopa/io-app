@@ -1,4 +1,4 @@
-import { MixPanelCredential } from "../../../analytics/utils/analyticsTypes";
+import { MixPanelCredential } from "../../../analytics/utils/types";
 
 export type TrackCredentialDetail = {
   credential: MixPanelCredential; // MixPanelCredential

@@ -3,7 +3,7 @@ import { buildEventProperties } from "../../../../utils/analytics";
 import {
   ItwFlow,
   ItwScreenFlowContext
-} from "../../analytics/utils/analyticsTypes";
+} from "../../analytics/utils/types";
 import {
   TrackITWalletSpidIDPSelected,
   TrackItWalletCieCardVerifyFailure,

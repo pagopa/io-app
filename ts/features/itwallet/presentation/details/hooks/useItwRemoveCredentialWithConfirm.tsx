@@ -4,7 +4,7 @@ import I18n from "i18next";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { trackItwCredentialDelete } from "../analytics";
-import { getMixPanelCredential } from "../../../analytics/utils/analyticsUtils";
+import { getMixPanelCredential } from "../../../analytics/utils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { itwCredentialsRemoveByType } from "../../../credentials/store/actions";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";

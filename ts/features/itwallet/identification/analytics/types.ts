@@ -1,4 +1,4 @@
-import { ItwFlow, ItwIdMethod } from "../../analytics/utils/analyticsTypes";
+import { ItwFlow, ItwIdMethod } from "../../analytics/utils/types";
 
 export type TrackITWalletSpidIDPSelected = {
   idp: string;

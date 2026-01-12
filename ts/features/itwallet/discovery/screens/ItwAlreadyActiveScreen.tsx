@@ -9,7 +9,7 @@ import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisable
 import { useIOSelector } from "../../../../store/hooks";
 import { itwAuthLevelSelector } from "../../common/store/selectors/preferences";
 import { trackItwAlreadyActivated } from "../analytics";
-import { ItwFlow } from "../../analytics/utils/analyticsTypes";
+import { ItwFlow } from "../../analytics/utils/types";
 
 export const ItwAlreadyActiveScreen = () => {
   useItwDisableGestureNavigation();

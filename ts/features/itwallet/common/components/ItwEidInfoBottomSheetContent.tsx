@@ -16,7 +16,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { trackWalletStartDeactivation } from "../../analytics";
 import { trackCredentialDetail } from "../../presentation/details/analytics";
-import { mapPIDStatusToMixpanel } from "../../analytics/utils/analyticsUtils";
+import { mapPIDStatusToMixpanel } from "../../analytics/utils";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import {
   itwCredentialsEidSelector,

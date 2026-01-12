@@ -13,7 +13,7 @@ import {
   trackItwUpgradeL3Mandatory
 } from "../analytics";
 import { ItwL3UpgradeTrigger } from "../analytics/utils/types";
-import { getOrderedCredential } from "../analytics/utils/analyticsUtils";
+import { getOrderedCredential } from "../analytics/utils";
 import {
   serializeFailureReason,
   shouldSerializeReason

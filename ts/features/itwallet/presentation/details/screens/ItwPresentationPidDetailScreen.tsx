@@ -7,7 +7,7 @@ import { useCallback } from "react";
 import { useWindowDimensions, View } from "react-native";
 import { useIOSelector } from "../../../../../store/hooks";
 import { trackCredentialDetail } from "../analytics";
-import { mapPIDStatusToMixpanel } from "../../../analytics/utils/analyticsUtils";
+import { mapPIDStatusToMixpanel } from "../../../analytics/utils";
 import {
   ItwBrandedSkiaGradient,
   ItwSkiaBrandedGradientVariant

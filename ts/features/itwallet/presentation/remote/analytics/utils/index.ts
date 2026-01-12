@@ -3,7 +3,7 @@ import {
   ItwScreenFlowContext,
   MixPanelCredential,
   MixPanelCredentialVersion
-} from "../../../../analytics/utils/analyticsTypes";
+} from "../../../../analytics/utils/types";
 import { RemoteFailureType } from "../../machine/failure";
 import { ITW_REMOTE_ERRORS_EVENTS } from "../enum";
 

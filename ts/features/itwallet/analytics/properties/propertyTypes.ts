@@ -2,7 +2,7 @@ import {
   ItwStatus,
   ItwPIDStatus,
   ItwCredentialMixpanelStatus
-} from "../utils/analyticsTypes";
+} from "../utils/types";
 
 export type ItwBaseProperties = {
   ITW_STATUS_V2: ItwStatus;

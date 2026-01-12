@@ -11,13 +11,13 @@ import {
 } from "../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils";
-import { mapPIDStatusToMixpanel } from "../utils/analyticsUtils";
+import { mapPIDStatusToMixpanel } from "../utils";
 import {
   ItwStatus,
   ItwPIDStatus,
   ItwCredentialMixpanelStatus,
   CREDENTIAL_STATUS_MAP
-} from "../utils/analyticsTypes";
+} from "../utils/types";
 import { ItwBaseProperties } from "./propertyTypes";
 
 /**

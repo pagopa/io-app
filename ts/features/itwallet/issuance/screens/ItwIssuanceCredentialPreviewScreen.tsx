@@ -23,7 +23,7 @@ import {
   trackItwExit,
   trackSaveCredentialToWallet
 } from "../analytics";
-import { getMixPanelCredential } from "../../analytics/utils/analyticsUtils";
+import { getMixPanelCredential } from "../../analytics/utils";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";

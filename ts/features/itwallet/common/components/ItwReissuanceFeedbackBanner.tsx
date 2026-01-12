@@ -9,7 +9,7 @@ import {
   trackItwSurveyRequest,
   trackItwSurveyRequestAccepted
 } from "../../analytics";
-import { TrackQualtricsSurvey } from "../../analytics/utils/analyticsTypes.ts";
+import { TrackQualtricsSurvey } from "../../analytics/utils/types.ts";
 
 const ItwReissuanceFeedbackBanner = () => {
   const { name: routeName } = useRoute();

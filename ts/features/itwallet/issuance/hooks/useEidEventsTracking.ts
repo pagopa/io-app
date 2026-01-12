@@ -7,7 +7,7 @@ import {
   IssuanceFailure,
   IssuanceFailureType
 } from "../../machine/eid/failure";
-import { ItwFlow } from "../../analytics/utils/analyticsTypes";
+import { ItwFlow } from "../../analytics/utils/types";
 import {
   trackIdNotMatch,
   trackItwCieIdCieNotRegistered,

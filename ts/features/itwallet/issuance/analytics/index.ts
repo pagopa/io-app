@@ -5,7 +5,7 @@ import {
   ItwIdMethod,
   ItwStatus,
   MixPanelCredential
-} from "../../analytics/utils/analyticsTypes";
+} from "../../analytics/utils/types";
 import { IssuanceFailure } from "../../machine/eid/failure";
 import {
   AddCredentialFailure,

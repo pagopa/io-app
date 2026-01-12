@@ -2,7 +2,7 @@ import {
   ItwFlow,
   ItwIdMethod,
   MixPanelCredential
-} from "../../analytics/utils/analyticsTypes";
+} from "../../analytics/utils/types";
 
 export type BackToWallet = {
   exit_page: string;

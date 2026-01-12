@@ -10,7 +10,7 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { idpsRemoteValueSelector } from "../../../../../store/reducers/content";
 import { idps as idpsFallback, SpidIdp } from "../../../../../utils/idps";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import { ItwFlow } from "../../../analytics/utils/analyticsTypes";
+import { ItwFlow } from "../../../analytics/utils/types";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import {
   trackItWalletSpidIDPSelection,
