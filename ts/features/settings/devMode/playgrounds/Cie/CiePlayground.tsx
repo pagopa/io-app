@@ -153,7 +153,11 @@ export const CiePlayground = () => {
   }
 
   if (authenticatedUrl) {
-    return <WebView source={{ uri: authenticatedUrl }} />;
+    return (
+      <SafeAreaView style={{ flex: 1 }} edges={["bottom"]}>
+        <WebView source={{ uri: authenticatedUrl }} />;
+      </SafeAreaView>
+    );
   }
 
   const handleStartReading = async () => {
