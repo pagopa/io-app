@@ -2,16 +2,15 @@ import {
   Alert,
   IOIcons,
   ListItemHeader,
-  ListItemInfo,
   makeFontStyleObject,
   VStack
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { View, Text } from "react-native";
+import { Text, View } from "react-native";
 import { renderActionButtons } from "../../../../../components/ui/IOScrollView";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useIOSelector } from "../../../../../store/hooks";
 import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 
 type ModeType = "ciePin" | "cieId" | "spid";
 
