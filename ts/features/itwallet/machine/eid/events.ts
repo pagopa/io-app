@@ -31,8 +31,8 @@ export type AddToWallet = {
   type: "add-to-wallet";
 };
 
-export type UpdateCredentials = {
-  type: "update-credentials";
+export type UpgradeCredentials = {
+  type: "upgrade-credentials";
 };
 
 export type GoToWallet = {
@@ -143,7 +143,7 @@ export type EidIssuanceEvents =
   | MrtdChallengedSigned
   | MrtdPoPVerificationCompleted
   | AddToWallet
-  | UpdateCredentials
+  | UpgradeCredentials
   | GoToWallet
   | AddNewCredential
   | Retry

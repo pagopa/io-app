@@ -1110,15 +1110,15 @@ export const itwEidIssuanceMachine = setup({
               ],
               target: "Completed"
             },
-            "update-credentials": {
-              target: "UpdateCredentials"
+            "upgrade-credentials": {
+              target: "UpgradeCredentials"
             },
             close: {
               actions: ["closeIssuance"]
             }
           }
         },
-        UpdateCredentials: {
+        UpgradeCredentials: {
           description:
             "Navigates to upgrade credential page before proceeding with add-to-wallet",
           entry: "navigateToUpgradeCredentialsScreen",

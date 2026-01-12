@@ -11,15 +11,15 @@ import {
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useCallback, useLayoutEffect } from "react";
 import I18n from "i18next";
+import { useCallback, useLayoutEffect } from "react";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { identificationRequest } from "../../../identification/store/actions";
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import { identificationRequest } from "../../../identification/store/actions";
 import {
   trackCredentialPreview,
   trackItwExit,
@@ -28,16 +28,16 @@ import {
 } from "../../analytics";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
+import { isItwCredential } from "../../common/utils/itwCredentialUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
   selectEidOption,
   selectIdentification,
-  selectIssuanceMode
+  selectLegacyCredentialsCount
 } from "../../machine/eid/selectors";
-import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
-import { isItwCredential } from "../../common/utils/itwCredentialUtils";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const eidOption = ItwEidIssuanceMachineContext.useSelector(selectEidOption);
@@ -72,8 +72,9 @@ const ContentView = ({ eid }: ContentViewProps) => {
   const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
-  const issuanceMode =
-    ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
+  const legacyCredentialsCount = ItwEidIssuanceMachineContext.useSelector(
+    selectLegacyCredentialsCount
+  );
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const route = useRoute();
@@ -124,8 +125,8 @@ const ContentView = ({ eid }: ContentViewProps) => {
           onSuccess: () =>
             machineRef.send({
               type:
-                issuanceMode === "upgrade"
-                  ? "update-credentials"
+                legacyCredentialsCount > 0
+                  ? "upgrade-credentials"
                   : "add-to-wallet"
             })
         }
