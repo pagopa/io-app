@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.22.0-canary.7900](https://github.com/pagopa/io-app/compare/3.22.0-rc.11...3.22.0-canary.7900) (2026-01-12)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-3644](https://pagopa.atlassian.net/browse/SIW-3644)] Fix margins in IT-Wallet credentials details screens ([#7755](https://github.com/pagopa/io-app/issues/7755)) ([f3636fa](https://github.com/pagopa/io-app/commit/f3636fab2c63a5cf9b8ccec6360bb915143ab108))
+* [[IOPLT-1502](https://pagopa.atlassian.net/browse/IOPLT-1502)] Fixes android crash reason on new react-native-screenshot-prevent patch ([9f05c5f](https://github.com/pagopa/io-app/commit/9f05c5f6fc1839cc4c9984e419f61dda1bd8b772))
+* crash on animated progress bars ([50ea776](https://github.com/pagopa/io-app/commit/50ea7764cf2fe2c9f102dffb4d6421068ec172af))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-3283](https://pagopa.atlassian.net/browse/SIW-3283)] Add new federation event KO in eID flow ([#7659](https://github.com/pagopa/io-app/issues/7659)) ([117c35e](https://github.com/pagopa/io-app/commit/117c35e959f25b8bf2145e914b379009459c3f20))
+* [[IOPLT-1421](https://pagopa.atlassian.net/browse/IOPLT-1421)] Make react-native-screenshot-prevent ready for fabric ([30b0e05](https://github.com/pagopa/io-app/commit/30b0e0576b73a3e5b5add6529374bfa90b4824bb))
+* add missing pod ([10f66c3](https://github.com/pagopa/io-app/commit/10f66c3f88498fc1ea9c1c9ec13c5af560fb4bad))
+* update reanimated version to 3.19.5 ([eae056c](https://github.com/pagopa/io-app/commit/eae056c84680ee16be657e65cbfde863f2fc502d))
+
 ## [3.22.0-rc.11](https://github.com/pagopa/io-app/compare/3.22.0-rc.10...3.22.0-rc.11) (2026-01-09)
 
 
