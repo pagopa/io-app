@@ -1605,6 +1605,9 @@
         "subtitle": "Riprova o contatta l'assistenza",
         "primaryButton": "Chiudi",
         "secondaryButton": "Riprova"
+      },
+      "update":{
+        "primaryButton": "Aggiorna i dati"
       }
     },
     "wallet": "Portafoglio",
