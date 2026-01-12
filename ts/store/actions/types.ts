@@ -45,7 +45,6 @@ import { ServicesActions } from "../../features/services/common/store/actions";
 import { ProfileActions } from "../../features/settings/common/store/actions";
 import { UserDataProcessingActions } from "../../features/settings/common/store/actions/userDataProcessing";
 import { PinSetActions } from "../../features/settings/security/store/actions/pinset";
-import { TrialSystemActions } from "../../features/trialSystem/store/actions";
 import { UtmLinkActions } from "../../features/utmLink/store/actions";
 import { WalletActions } from "../../features/wallet/store/actions";
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
@@ -113,7 +112,6 @@ export type Action =
   | CieLoginConfigActions
   | FimsActions
   | ItwActions
-  | TrialSystemActions
   | AppearanceSettingsActions
   | IngressScreenActions
   | MixpanelFeatureActions
