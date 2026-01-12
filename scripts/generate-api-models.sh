@@ -16,8 +16,8 @@ declare -a apis=(
   # pagoPA APIs
   "./definitions/pagopa assets/paymentManager/spec.json"
   "./definitions/pagopa/walletv2 https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/bonus/specs/bpd/pm/walletv2.json"
-  "./definitions/pagopa/walletv3 https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.202.0/src/domains/pay-wallet-app/api/io-payment-wallet/v1/_openapi.json.tpl"
-  "./definitions/pagopa/ecommerce https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.202.0/src/domains/ecommerce-app/api/ecommerce-io/v2/_openapi.json.tpl"
+  "./definitions/pagopa/walletv3 https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.731.1/src/domains/pay-wallet-app/api/io-payment-wallet/v1/_openapi.json.tpl"
+  "./definitions/pagopa/ecommerce https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.731.1/src/domains/ecommerce-app/api/ecommerce-io/v2/_openapi.json.tpl"
   "./definitions/pagopa/biz-events https://raw.githubusercontent.com/pagopa/pagopa-biz-events-service/refs/tags/0.1.87/openapi/openapi_lap_jwt.json"
   "./definitions/pagopa/platform https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.64.0/src/domains/shared-app/api/session-wallet/v1/_openapi.json.tpl"
   "./definitions/pagopa/cobadge/configuration https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/pagopa/cobadge/abi_definitions.yml"
@@ -28,8 +28,6 @@ declare -a apis=(
   "./definitions/services https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_services_app_backend.yaml"
   # Lollipop APIs
   "./definitions/lollipop https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_lollipop_first_consumer.yaml"
-  # Trial system APIs
-  "./definitions/trial_system https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_trial_system.yaml"
   # Fims APIs
   "./definitions/fims_history https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_io_fims.yaml"
   "./definitions/fims_sso https://raw.githubusercontent.com/pagopa/io-fims/a93f1a1abf5230f103d9f489b139902b87288061/apps/op-app/openapi.yaml"

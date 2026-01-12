@@ -96,7 +96,8 @@ export const itwEidIssuanceMachine = setup({
     trackWalletInstanceCreation: notImplemented,
     trackWalletInstanceRevocation: notImplemented,
     trackIdentificationMethodSelected: notImplemented,
-
+    trackItwIdAuthenticationCompleted: notImplemented,
+    trackItwIdVerifiedDocument: notImplemented,
     /**
      * Context manipulation
      */
@@ -873,7 +874,8 @@ export const itwEidIssuanceMachine = setup({
       onDone: [
         {
           guard: "requiresMrtdVerification",
-          target: "MrtdPoP"
+          target: "MrtdPoP",
+          actions: "trackItwIdAuthenticationCompleted"
         },
         {
           target: "Issuance"
@@ -1036,7 +1038,11 @@ export const itwEidIssuanceMachine = setup({
           on: {
             "mrtd-pop-verification-completed": {
               target: "#itwEidIssuanceMachine.MrtdPoP.Completed",
-              actions: ["completeMrtdPoP", "storeAuthLevel"]
+              actions: [
+                "completeMrtdPoP",
+                "storeAuthLevel",
+                "trackItwIdVerifiedDocument"
+              ]
             }
           }
         },

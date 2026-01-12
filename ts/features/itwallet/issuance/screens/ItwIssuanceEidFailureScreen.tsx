@@ -14,7 +14,8 @@ import {
 } from "../../machine/eid/failure";
 import {
   selectFailureOption,
-  selectIdentification
+  selectIdentification,
+  selectIssuanceLevel
 } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
@@ -57,6 +58,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const identification =
     ItwEidIssuanceMachineContext.useSelector(selectIdentification);
+  const issuanceLevel =
+    ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
   const toast = useIOToast();
 
   const FAQ_URL = useIOSelector(state =>
@@ -249,10 +252,30 @@ const ContentView = ({ failure }: ContentViewProps) => {
               }
             }
           };
+        case IssuanceFailureType.MRTD_CHALLENGE_INIT_ERROR:
+          return {
+            title: I18n.t(
+              "features.itWallet.issuance.mrtdChallengeInitError.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.issuance.mrtdChallengeInitError.subtitle"
+            ),
+            pictogram: "umbrella",
+            action: {
+              label: I18n.t("global.buttons.close"),
+              onPress: () => machineRef.send({ type: "retry" }) // Retry event goes to UserIdentification
+            },
+            secondaryAction: {
+              label: I18n.t("features.itWallet.support.button"),
+              onPress: () => {
+                supportModal.present();
+              }
+            }
+          };
       }
     };
 
-  useEidEventsTracking({ failure, identification });
+  useEidEventsTracking({ failure, identification, issuanceLevel });
 
   const resultScreenProps = getOperationResultScreenContentProps();
 

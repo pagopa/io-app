@@ -47,3 +47,9 @@ export const itwCredentialsCatalogueByTypesSelector = createSelector(
       O.toUndefined
     )
 );
+
+export const itwIsCredentialsCatalogueLoading = (state: GlobalState) =>
+  pot.isLoading(state.features.itWallet.credentialsCatalogue.catalogue);
+
+export const itwIsCredentialsCatalogueUnavailable = (state: GlobalState) =>
+  pot.isNone(state.features.itWallet.credentialsCatalogue.catalogue);

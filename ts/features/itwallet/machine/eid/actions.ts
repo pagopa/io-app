@@ -10,6 +10,8 @@ import { checkCurrentSession } from "../../../authentication/common/store/action
 import {
   trackItWalletIDMethodSelected,
   trackItwDeactivated,
+  trackItwIdAuthenticationCompleted,
+  trackItwIdVerifiedDocument,
   trackSaveCredentialSuccess,
   updateITWStatusAndPIDProperties
 } from "../../analytics";
@@ -299,8 +301,7 @@ export const createEidIssuanceActionsImplementation = (
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     // Save the auth level in the preferences
-    const authLevel = context.level === "l3" ? "L3" : "L2";
-    store.dispatch(itwSetAuthLevel(authLevel));
+    store.dispatch(itwSetAuthLevel(context.identification?.level));
   },
 
   freezeSimplifiedActivationRequirements: () => {
@@ -346,5 +347,31 @@ export const createEidIssuanceActionsImplementation = (
       ITW_ID_method: event.mode,
       itw_flow: context.level === "l3" ? "L3" : "L2"
     });
+  },
+
+  // Track SPID+CIE first phase
+  trackItwIdAuthenticationCompleted: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assert(context.identification, "identification context is undefined");
+    assert(
+      context.identification.mode !== "ciePin",
+      "identification mode can not be ciePin"
+    );
+
+    trackItwIdAuthenticationCompleted(context.identification.mode);
+  },
+
+  // Track SPID+CIE final phase
+  trackItwIdVerifiedDocument: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assert(context.identification, "identification context is undefined");
+    assert(
+      context.identification.mode !== "ciePin",
+      "identification mode can not be ciePin"
+    );
+
+    trackItwIdVerifiedDocument(context.identification.mode);
   }
 });
