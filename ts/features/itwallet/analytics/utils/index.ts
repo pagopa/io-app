@@ -3,11 +3,7 @@ import {
   ItwAnalyticsCredential,
   ITW_ANALYTICS_CREDENTIALS
 } from "../properties/propertyTypes";
-import {
-  ItwPIDStatus,
-  MixPanelCredential,
-  CREDENTIALS_MAP
-} from "./types";
+import { ItwPIDStatus, MixPanelCredential, CREDENTIALS_MAP } from "./types";
 
 /**
  * Maps an PID status to its corresponding Mixpanel tracking status.

@@ -1,9 +1,6 @@
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
-import {
-  ItwFlow,
-  ItwScreenFlowContext
-} from "../../analytics/utils/types";
+import { ItwFlow, ItwScreenFlowContext } from "../../analytics/utils/types";
 import {
   TrackITWalletSpidIDPSelected,
   TrackItWalletCieCardVerifyFailure,
