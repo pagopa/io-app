@@ -226,9 +226,9 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToUpdateCredentialsScreen: () => {
+  navigateToUpgradeCredentialsScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.UPDATE_CREDENTIALS
+      screen: ITW_ROUTES.ISSUANCE.UPGRADE_CREDENTIALS
     });
   },
 

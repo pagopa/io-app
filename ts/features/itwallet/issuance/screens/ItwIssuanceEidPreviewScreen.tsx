@@ -32,7 +32,8 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
   isL3FeaturesEnabledSelector,
   selectEidOption,
-  selectIdentification
+  selectIdentification,
+  selectIssuanceMode
 } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
@@ -71,6 +72,8 @@ const ContentView = ({ eid }: ContentViewProps) => {
   const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
+  const issuanceMode =
+    ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const route = useRoute();
@@ -120,7 +123,10 @@ const ContentView = ({ eid }: ContentViewProps) => {
         {
           onSuccess: () =>
             machineRef.send({
-              type: isL3 ? "update-credentials" : "add-to-wallet"
+              type:
+                issuanceMode === "upgrade"
+                  ? "update-credentials"
+                  : "add-to-wallet"
             })
         }
       )

@@ -5043,7 +5043,7 @@
             "cancel": "Annulla connessione"
           }
         },
-        "updateCredential": {
+        "upgradeCredential": {
           "title": "I tuoi documenti saranno aggiornati",
           "description": "Continuando, otterrai una versione digitale aggiornata dei tuoi documenti presenti nel Portafoglio di IO",
           "button": "Continua"

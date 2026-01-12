@@ -15,7 +15,7 @@ type ButtonProps = Pick<
   "label" | "accessibilityLabel" | "onPress" | "testID" | "icon"
 >;
 
-type ItwIssuanceUpdateCredentialsScreenContentProps = {
+type ItwIssuanceUpgradeCredentialsScreenContentProps = {
   pictogram: IOPictograms;
   title: string;
   subtitle?: string;
@@ -29,7 +29,7 @@ type ItwIssuanceUpdateCredentialsScreenContentProps = {
   >["ignoreAccessibilityCheck"];
   goBack?: BackProps["goBack"];
 };
-const ItwIssuanceUpdateCredentialsScreenContent = ({
+const ItwIssuanceUpgradeCredentialsScreenContent = ({
   pictogram,
   title,
   subtitle,
@@ -37,7 +37,7 @@ const ItwIssuanceUpdateCredentialsScreenContent = ({
   ignoreSafeAreaMargin = false,
   ignoreAccessibilityCheck = false,
   goBack
-}: PropsWithChildren<ItwIssuanceUpdateCredentialsScreenContentProps>) => {
+}: PropsWithChildren<ItwIssuanceUpgradeCredentialsScreenContentProps>) => {
   const navigation = useNavigation();
 
   const headerProps: ComponentProps<typeof HeaderSecondLevel> = {
@@ -69,5 +69,5 @@ const ItwIssuanceUpdateCredentialsScreenContent = ({
   );
 };
 
-export { ItwIssuanceUpdateCredentialsScreenContent };
-export type { ItwIssuanceUpdateCredentialsScreenContentProps };
+export { ItwIssuanceUpgradeCredentialsScreenContent };
+export type { ItwIssuanceUpgradeCredentialsScreenContentProps };

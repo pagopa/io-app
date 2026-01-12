@@ -72,7 +72,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToCieWarningScreen: notImplemented,
     navigateToCieCanScreen: notImplemented,
     navigateToCieInternalAuthAndMrtdScreen: notImplemented,
-    navigateToUpdateCredentialsScreen: notImplemented,
+    navigateToUpgradeCredentialsScreen: notImplemented,
     closeIssuance: notImplemented,
 
     /**
@@ -1120,8 +1120,8 @@ export const itwEidIssuanceMachine = setup({
         },
         UpdateCredentials: {
           description:
-            "Navigates to update credential page before proceeding with add-to-wallet",
-          entry: "navigateToUpdateCredentialsScreen",
+            "Navigates to upgrade credential page before proceeding with add-to-wallet",
+          entry: "navigateToUpgradeCredentialsScreen",
           on: {
             "add-to-wallet": {
               actions: [
@@ -1130,7 +1130,8 @@ export const itwEidIssuanceMachine = setup({
                 "freezeSimplifiedActivationRequirements"
               ],
               target: "Completed"
-            }
+            },
+            back: { target: "DisplayingPreview" }
           }
         },
         Completed: {
