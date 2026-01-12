@@ -8,24 +8,23 @@ import {
   InternalAuthResponse,
   type NfcEvent
 } from "@pagopa/io-react-native-cie";
+import { useHeaderHeight } from "@react-navigation/elements";
 import { useEffect, useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
   StyleSheet,
   View
 } from "react-native";
-
-import { useHeaderHeight } from "@react-navigation/elements";
-import { SETTINGS_ROUTES } from "../../../../../common/navigation/routes";
-import { useIONavigation } from "../../../../../../../navigation/params/AppParamsList";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useHeaderSecondLevel } from "../../../../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../../../../hooks/useScreenEndMargin";
+import { useIONavigation } from "../../../../../../../navigation/params/AppParamsList";
+import { SETTINGS_ROUTES } from "../../../../../common/navigation/routes";
 import { ReadStatusComponent } from "../../components/ReadStatusComponent";
-import { encodeChallenge } from "../../utils/encoding";
 import { ReadStatus } from "../../types/ReadStatus";
+import { encodeChallenge } from "../../utils/encoding";
 
 export function CieIasAndMrtdPlaygroundIntAuthScreen() {
   const navigation = useIONavigation();

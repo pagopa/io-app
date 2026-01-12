@@ -414,6 +414,7 @@ export const IdentificationModal = () => {
           </View>
         )}
         <ScrollView
+          alwaysBounceVertical={false}
           centerContent={true}
           contentContainerStyle={[
             styles.scrollViewContentContainer,
