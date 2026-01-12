@@ -199,7 +199,15 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                         }
                       }
                     >
-                      <View
+                      <RNCSafeAreaView
+                        edges={
+                          {
+                            "bottom": "additive",
+                            "left": "additive",
+                            "right": "additive",
+                            "top": "additive",
+                          }
+                        }
                         style={
                           {
                             "flex": 1,
@@ -3132,7 +3140,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                             </RCTScrollView>
                           </Modal>
                         </View>
-                      </View>
+                      </RNCSafeAreaView>
                     </View>
                     <View
                       collapsable={false}
