@@ -118,7 +118,10 @@ const ContentView = ({ eid }: ContentViewProps) => {
           onCancel: () => undefined
         },
         {
-          onSuccess: () => machineRef.send({ type: "add-to-wallet" })
+          onSuccess: () =>
+            machineRef.send({
+              type: isL3 ? "update-credentials" : "add-to-wallet"
+            })
         }
       )
     );
@@ -168,8 +171,19 @@ const ContentView = ({ eid }: ContentViewProps) => {
       <ContentWrapper style={{ flexGrow: 1 }}>
         <VStack space={24}>
           <HStack space={8} style={{ alignItems: "center" }}>
-            <Icon name="legalValue" color={theme["interactiveElem-default"]} />
-            <H2>{I18n.t("features.itWallet.issuance.eidPreview.title")}</H2>
+            {!isL3 && (
+              <Icon
+                name="legalValue"
+                color={theme["interactiveElem-default"]}
+              />
+            )}
+            <H2>
+              {I18n.t(
+                `features.itWallet.issuance.eidPreview.${
+                  isL3 ? "titleL3" : "title"
+                }`
+              )}
+            </H2>
           </HStack>
           <IOMarkdown
             content={I18n.t(

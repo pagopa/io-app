@@ -72,6 +72,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToCieWarningScreen: notImplemented,
     navigateToCieCanScreen: notImplemented,
     navigateToCieInternalAuthAndMrtdScreen: notImplemented,
+    navigateToUpdateCredentialsScreen: notImplemented,
     closeIssuance: notImplemented,
 
     /**
@@ -1103,8 +1104,26 @@ export const itwEidIssuanceMachine = setup({
               ],
               target: "Completed"
             },
+            "update-credentials": {
+              target: "UpdateCredentials"
+            },
             close: {
               actions: ["closeIssuance"]
+            }
+          }
+        },
+        UpdateCredentials: {
+          description:
+            "Navigates to update credential page before proceeding with add-to-wallet",
+          entry: "navigateToUpdateCredentialsScreen",
+          on: {
+            "add-to-wallet": {
+              actions: [
+                "storeEidCredential",
+                "trackWalletInstanceCreation",
+                "freezeSimplifiedActivationRequirements"
+              ],
+              target: "Completed"
             }
           }
         },

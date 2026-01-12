@@ -224,6 +224,12 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
+  navigateToUpdateCredentialsScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ISSUANCE.UPDATE_CREDENTIALS
+    });
+  },
+
   closeIssuance: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
