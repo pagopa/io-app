@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.22.0-rc.11](https://github.com/pagopa/io-app/compare/3.22.0-rc.10...3.22.0-rc.11) (2026-01-09)
+
+
+### Bug Fixes
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Fixes the missing safearea space on LandingScreen ([#7751](https://github.com/pagopa/io-app/issues/7751)) ([1631bd8](https://github.com/pagopa/io-app/commit/1631bd83c75dbf637d8fe0b184505fc519e1ebcd))
+* [[IOPLT-0000](https://pagopa.atlassian.net/browse/IOPLT-0000)] Fixes drift on plist file ([#7750](https://github.com/pagopa/io-app/issues/7750)) ([1fe226f](https://github.com/pagopa/io-app/commit/1fe226fa2ae3daaa1622f83a64c1779ec0d4fedd))
+
+
+### Chores
+
+* **DS:** [[IOCOM-2863](https://pagopa.atlassian.net/browse/IOCOM-2863)] Improve Design System OTPInput section ([#7753](https://github.com/pagopa/io-app/issues/7753)) ([57b8d03](https://github.com/pagopa/io-app/commit/57b8d038d32370776a4229fb35fb0436e48fcb5d))
+* [[IOPLT-1420](https://pagopa.atlassian.net/browse/IOPLT-1420)] Remove deprecated `SafeAreaView` imported from `react-native` ([#7623](https://github.com/pagopa/io-app/issues/7623)) ([5ddf434](https://github.com/pagopa/io-app/commit/5ddf43477440ce525c013b24d859e012d5b0776f))
+* **IT-Wallet:** [[SIW-3588](https://pagopa.atlassian.net/browse/SIW-3588)] Update IT-Wallet discovery screen  ([#7746](https://github.com/pagopa/io-app/issues/7746)) ([969945d](https://github.com/pagopa/io-app/commit/969945dc73a19a68acdae6bb716eb03ae2be2362))
+* [[IOAPPX-463](https://pagopa.atlassian.net/browse/IOAPPX-463)] Enable full support for edge-to-edge navigation on Android ([#6602](https://github.com/pagopa/io-app/issues/6602)) ([6c35d5d](https://github.com/pagopa/io-app/commit/6c35d5dfca4ed83c32adb15577618ba6187d7de8))
+* [[IOPID-3373](https://pagopa.atlassian.net/browse/IOPID-3373)] remove `Tooltip` on `LandingScreen` ([#7732](https://github.com/pagopa/io-app/issues/7732)) ([0584e11](https://github.com/pagopa/io-app/commit/0584e1190b766d1064993011b5874eb9b7bdb1d6)), closes [/#diff-de1a9b8339ce69ba5fcbd760f4b7bb464fcfbc340d6679a3e045ceae01fde3feL389-L395](https://github.com/pagopa///issues/diff-de1a9b8339ce69ba5fcbd760f4b7bb464fcfbc340d6679a3e045ceae01fde3feL389-L395) [/#diff-de1a9b8339ce69ba5fcbd760f4b7bb464fcfbc340d6679a3e045ceae01fde3feL405](https://github.com/pagopa///issues/diff-de1a9b8339ce69ba5fcbd760f4b7bb464fcfbc340d6679a3e045ceae01fde3feL405) [/#diff-d25d5e9fd97febac4faf6fceee9f5a366114483d87fe27507be55b2a9837b766L1389-L1391](https://github.com/pagopa///issues/diff-d25d5e9fd97febac4faf6fceee9f5a366114483d87fe27507be55b2a9837b766L1389-L1391) [/#diff-d25d5e9fd97febac4faf6fceee9f5a366114483d87fe27507be55b2a9837b766L1578](https://github.com/pagopa///issues/diff-d25d5e9fd97febac4faf6fceee9f5a366114483d87fe27507be55b2a9837b766L1578)
+* [[IOPLT-1500](https://pagopa.atlassian.net/browse/IOPLT-1500)] Removes Trial System APIs and playground ([#7744](https://github.com/pagopa/io-app/issues/7744)) ([6344cfb](https://github.com/pagopa/io-app/commit/6344cfb9d67d9af4df3e2ee979b243b3d4d8f7d9))
+
 ## [3.22.0-rc.10](https://github.com/pagopa/io-app/compare/3.22.0-rc.9...3.22.0-rc.10) (2026-01-07)
 
 ## [3.22.0-rc.9](https://github.com/pagopa/io-app/compare/3.22.0-rc.8...3.22.0-rc.9) (2026-01-07)

@@ -1,19 +1,19 @@
+import { IOButton } from "@pagopa/io-app-design-system";
+import { MrtdResponse } from "@pagopa/io-react-native-cie";
+import Clipboard from "@react-native-clipboard/clipboard";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import {
-  ScrollView,
-  View,
-  StyleSheet,
-  Text,
-  Share,
   Alert,
   Platform,
-  SafeAreaView
+  ScrollView,
+  Share,
+  StyleSheet,
+  Text,
+  View
 } from "react-native";
-import Clipboard from "@react-native-clipboard/clipboard";
-import { IOButton } from "@pagopa/io-app-design-system";
-import { RouteProp, useRoute } from "@react-navigation/native";
-import { MrtdResponse } from "@pagopa/io-react-native-cie";
-import { SettingsParamsList } from "../../../../../common/navigation/params/SettingsParamsList";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useHeaderSecondLevel } from "../../../../../../../hooks/useHeaderSecondLevel";
+import { SettingsParamsList } from "../../../../../common/navigation/params/SettingsParamsList";
 
 export type CieMrtdResultNavParams = {
   result: MrtdResponse;
