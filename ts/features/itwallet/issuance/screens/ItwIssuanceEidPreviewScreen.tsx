@@ -34,8 +34,7 @@ import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
   selectEidOption,
-  selectIdentification,
-  selectLegacyCredentialsCount
+  selectIdentification
 } from "../../machine/eid/selectors";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 
@@ -71,9 +70,6 @@ const ContentView = ({ eid }: ContentViewProps) => {
     ItwEidIssuanceMachineContext.useSelector(selectIdentification);
   const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
-  );
-  const legacyCredentialsCount = ItwEidIssuanceMachineContext.useSelector(
-    selectLegacyCredentialsCount
   );
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
@@ -124,10 +120,7 @@ const ContentView = ({ eid }: ContentViewProps) => {
         {
           onSuccess: () =>
             machineRef.send({
-              type:
-                legacyCredentialsCount > 0
-                  ? "upgrade-credentials"
-                  : "add-to-wallet"
+              type: "add-to-wallet"
             })
         }
       )
