@@ -26,7 +26,6 @@ import TosScreen from "../../privacy/screens/TosScreen";
 import { IdPayCodePlayGround } from "../../devMode/playgrounds/IdPayCodePlayground";
 import IdPayOnboardingPlayground from "../../devMode/playgrounds/IdPayOnboardingPlayground";
 import { isGestureEnabled } from "../../../../utils/navigation";
-import TrialSystemPlayground from "../../devMode/playgrounds/TrialSystemPlayground";
 import ProfileMainScreen from "../screens/ProfileMainScreen";
 import { IOMarkdownPlayground } from "../../devMode/playgrounds/IOMarkdownPlayground";
 import { AppFeedbackPlayground } from "../../devMode/playgrounds/AppFeedbackPlayground";
@@ -155,10 +154,6 @@ const SettingsStackNavigator = () => (
     <Stack.Screen
       name={SETTINGS_ROUTES.CGN_LANDING_PLAYGROUND}
       component={CgnLandingPlayground}
-    />
-    <Stack.Screen
-      name={SETTINGS_ROUTES.TRIALS_SYSTEM_PLAYGROUND}
-      component={TrialSystemPlayground}
     />
     <Stack.Screen
       options={{
