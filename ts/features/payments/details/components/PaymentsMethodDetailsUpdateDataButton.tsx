@@ -1,4 +1,4 @@
-import { FooterActions } from "@pagopa/io-app-design-system";
+import { FooterActions, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -38,16 +38,19 @@ const PaymentsMethodDetailsUpdateDataButton = ({
 
   return (
     isPaymentMethodExpired(paymentMethod?.details) && (
-      <FooterActions
-        fixed
-        actions={{
-          type: "SingleButton",
-          primary: {
-            label: I18n.t("wallet.methodDetails.update.primaryButton"),
-            onPress: handleUpdatePress
-          }
-        }}
-      />
+      <>
+        <VSpacer size={24} />
+        <FooterActions
+          fixed
+          actions={{
+            type: "SingleButton",
+            primary: {
+              label: I18n.t("wallet.methodDetails.update.primaryButton"),
+              onPress: handleUpdatePress
+            }
+          }}
+        />
+      </>
     )
   );
 };
