@@ -12,8 +12,8 @@ import {
   trackITWalletBannerVisualized
 } from "../../../analytics";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import { useItwDiscoveryBannerType } from "../../hooks/useItwDiscoveryBannerType.ts";
-import { itwCloseBanner } from "../../store/actions/banners.ts";
+import { useItwDiscoveryBannerType } from "../../hooks/useItwDiscoveryBannerType";
+import { itwCloseBanner } from "../../store/actions/banners";
 
 const bannerConfig = {
   onboarding: {
