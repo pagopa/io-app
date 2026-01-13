@@ -2870,13 +2870,13 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
       }
     >
       <View
-        accessibilityLabel="500%"
+        accessibilityLabel="50%"
         accessibilityRole="progressbar"
         accessibilityValue={
           {
             "max": 100,
             "min": 0,
-            "now": 0.5,
+            "now": 50,
           }
         }
         accessible={true}
@@ -3387,13 +3387,13 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
       }
     >
       <View
-        accessibilityLabel="1000%"
+        accessibilityLabel="100%"
         accessibilityRole="progressbar"
         accessibilityValue={
           {
             "max": 100,
             "min": 0,
-            "now": 1,
+            "now": 100,
           }
         }
         accessible={true}

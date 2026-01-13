@@ -11430,27 +11430,27 @@ __metadata:
     react-native-exception-handler: ^2.10.8
     react-native-fingerprint-scanner: "git+https://github.com/hieuvp/react-native-fingerprint-scanner.git#9cecc0db326471c571553ea85f7c016fee2f803d"
     react-native-fs: ^2.18.0
-    react-native-gesture-handler: ^2.25.0
+    react-native-gesture-handler: ^2.28.0
     react-native-get-random-values: ^1.11.0
     react-native-haptic-feedback: ^2.3.3
     react-native-image-picker: 7.2.3
     react-native-keychain: ^10.0.0
     react-native-linear-gradient: ^2.5.6
     react-native-notifications-utils: ^0.3.0
-    react-native-pager-view: ^6.4.1
+    react-native-pager-view: ^6.7.1
     react-native-pdf: 6.7.7
     react-native-pdf-thumbnail: ^1.3.1
     react-native-permissions: ^5.3.0
     react-native-push-notification: ^8.1.1
     react-native-qrcode-svg: ^6.3.12
-    react-native-reanimated: ^3.19.3
+    react-native-reanimated: ^3.19.5
     react-native-safe-area-context: ^5.5.2
     react-native-screen-brightness: ^2.0.0-alpha
     react-native-screens: 4.16.0
     react-native-screenshot-prevent: ^1.2.1
     react-native-share: ^12.0.9
     react-native-splash-screen: ^3.2.0
-    react-native-svg: ^15.11.2
+    react-native-svg: ^15.15.1
     react-native-svg-transformer: 1.5.1
     react-native-url-polyfill: ^2.0.0
     react-native-vision-camera: ^4.7.2
@@ -16203,6 +16203,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-gesture-handler@npm:^2.28.0":
+  version: 2.29.1
+  resolution: "react-native-gesture-handler@npm:2.29.1"
+  dependencies:
+    "@egjs/hammerjs": ^2.0.17
+    hoist-non-react-statics: ^3.3.0
+    invariant: ^2.2.4
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: dddabdb12ce31d68ef71796e8fcaa57acd4608cca14412f36ce36fee14911fb629f325f0ced86bea1336a64673a434e34cde32a63be8d33f29d9a7bed292c5b2
+  languageName: node
+  linkType: hard
+
 "react-native-get-random-values@npm:^1.11.0":
   version: 1.11.0
   resolution: "react-native-get-random-values@npm:1.11.0"
@@ -16289,13 +16303,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-pager-view@npm:^6.4.1":
-  version: 6.4.1
-  resolution: "react-native-pager-view@npm:6.4.1"
+"react-native-pager-view@npm:^6.7.1":
+  version: 6.9.1
+  resolution: "react-native-pager-view@npm:6.9.1"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 558f08efccf748eed91a2a88be4f90e49e2b63a28c1b9db5de9711eb324a75e9565a3dbf92c523a623a2c7d5a7e0d8a0db88599bc85d33158544a7d0e724319e
+  checksum: 64f4f1b05173217ee5bb288c6c1e396ceaf686fd1ef9458a6ab9c9da44e5ee76c2a091e95b756c78bbcddd30caf37965ef37e0eabe54331f385fdcb87b5d5ab6
   languageName: node
   linkType: hard
 
@@ -16420,9 +16434,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-reanimated@npm:^3.19.3":
-  version: 3.19.3
-  resolution: "react-native-reanimated@npm:3.19.3"
+"react-native-reanimated@npm:^3.19.5":
+  version: 3.19.5
+  resolution: "react-native-reanimated@npm:3.19.5"
   dependencies:
     "@babel/plugin-transform-arrow-functions": ^7.0.0-0
     "@babel/plugin-transform-class-properties": ^7.0.0-0
@@ -16440,7 +16454,7 @@ __metadata:
     "@babel/core": ^7.0.0-0
     react: "*"
     react-native: "*"
-  checksum: 6b88d75be9eb5c7c33e52534faff4ce69d3a3ce0d285006b801c31dffc5569c6dbefbfcd085f4eaa546b8687cb1d955701b41a30f5e5d20de8d6581a23b023d9
+  checksum: d3e5e38c23bd0f86e19110c1e16353a3b58166cb3a13ec1b600b5bbe287d8c57ab199023231b7960fd11b5c605f2a78428d7b80f28818e74eaecde1360dec4f6
   languageName: node
   linkType: hard
 
@@ -16504,11 +16518,11 @@ __metadata:
 
 "react-native-screenshot-prevent@patch:react-native-screenshot-prevent@npm%3A1.2.1#./.yarn/patches/react-native-screenshot-prevent-npm-1.2.1-d115315590.patch::locator=io%40workspace%3A.":
   version: 1.2.1
-  resolution: "react-native-screenshot-prevent@patch:react-native-screenshot-prevent@npm%3A1.2.1#./.yarn/patches/react-native-screenshot-prevent-npm-1.2.1-d115315590.patch::version=1.2.1&hash=94a261&locator=io%40workspace%3A."
+  resolution: "react-native-screenshot-prevent@patch:react-native-screenshot-prevent@npm%3A1.2.1#./.yarn/patches/react-native-screenshot-prevent-npm-1.2.1-d115315590.patch::version=1.2.1&hash=7682fa&locator=io%40workspace%3A."
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 70533f9f8ffc5f5885206a287a76941a73acddeb46ce5f3cec6b4d990f01b744aa847efe8333d8eadc00f62c6484aa9a7fa581d433059c8da88e5b0e67801864
+  checksum: 2b17f9e11946507d401d17b551fc794ea48df1b7b33203e7fddfcd31a9d31f49f5b8d13579980cb8448ceb5462480097f34b81891f6ade4f86a33f3319138b09
   languageName: node
   linkType: hard
 
@@ -16543,20 +16557,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-svg@npm:^15.11.2":
-  version: 15.11.2
-  resolution: "react-native-svg@npm:15.11.2"
-  dependencies:
-    css-select: ^5.1.0
-    css-tree: ^1.1.3
-    warn-once: 0.1.1
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 7bc2d9a5b7ceb66905e358d995bf102d63ce017db40b024d31a6ada03c21733fd3620f9ad867d631b878e2380033ea8777e75c4f654bc5b420ea902695ed9ba8
-  languageName: node
-  linkType: hard
-
 "react-native-svg@npm:^15.12.0":
   version: 15.12.0
   resolution: "react-native-svg@npm:15.12.0"
@@ -16568,6 +16568,20 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 0a78333ab4fb1aae38f190a22a1afcbfa2ae9192ccd2ac7a989f3108bd32afe1b84800b4dce0f92c68ad4eca6809046b5f997fbfcb072b872dd34ea04c8f44aa
+  languageName: node
+  linkType: hard
+
+"react-native-svg@npm:^15.15.1":
+  version: 15.15.1
+  resolution: "react-native-svg@npm:15.15.1"
+  dependencies:
+    css-select: ^5.1.0
+    css-tree: ^1.1.3
+    warn-once: 0.1.1
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: a65590d7344e39179b5f7de305001d821d1d25ab17d915781039fdd0b46f71115682fddd9617295ea4c0c0f6bd484633d993abc8f9a3444ea3f72e6cb40cde8a
   languageName: node
   linkType: hard
 
