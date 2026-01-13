@@ -18,7 +18,7 @@ export const itwIsBannerHiddenSelector = (id: ItwBannerId) =>
 
     const { dismissedOn, dismissCount } = state;
     if (!dismissedOn || dismissCount === undefined) {
-      // Banners was never dismissed, so it's not hidden
+      // Banner was never dismissed, so it's not hidden
       return false;
     }
 
