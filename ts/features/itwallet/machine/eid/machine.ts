@@ -465,7 +465,10 @@ export const itwEidIssuanceMachine = setup({
     },
     EvaluatingSimplifiedActivationFlow: {
       description: "State that manages the wallet's simplified activation flow",
-      entry: "clearSimplifiedActivationRequirements",
+      entry: [
+        "clearSimplifiedActivationRequirements",
+        "trackWalletInstanceCreation"
+      ],
       always: [
         {
           guard: "hasLegacyCredentials",
