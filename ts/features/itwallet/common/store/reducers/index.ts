@@ -31,6 +31,7 @@ import preferencesReducer, { ItwPreferencesState } from "./preferences";
 import securePreferencesReducer, {
   ItwSecurePreferencesState
 } from "./securePreferences";
+import bannersReducer, { ItwBannersState } from "./banners";
 
 export type ItWalletState = {
   environment: ItwEnvironmentState;
@@ -41,6 +42,7 @@ export type ItWalletState = {
   preferences: ItwPreferencesState;
   securePreferences: ItwSecurePreferencesState & PersistPartial;
   credentialsCatalogue: ItwCredentialsCatalogueState;
+  banners: ItwBannersState;
 };
 
 export type PersistedItWalletState = ReturnType<typeof persistedReducer>;
@@ -53,7 +55,8 @@ const itwReducer = combineReducers({
   walletInstance: wiaReducer,
   preferences: preferencesReducer,
   securePreferences: securePreferencesReducer,
-  credentialsCatalogue: itwCredentialsCatalogueReducer
+  credentialsCatalogue: itwCredentialsCatalogueReducer,
+  banners: bannersReducer
 });
 
 const CURRENT_REDUX_ITW_STORE_VERSION = 9;
@@ -122,7 +125,8 @@ const itwPersistConfig: PersistConfig = {
   whitelist: [
     "preferences",
     "environment",
-    "credentialsCatalogue"
+    "credentialsCatalogue",
+    "banners"
   ] satisfies Array<keyof ItWalletState>,
   version: CURRENT_REDUX_ITW_STORE_VERSION,
   migrate: createMigrate(migrations, { debug: isDevEnv })

@@ -1,9 +1,10 @@
 import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
+import I18n from "i18next";
 import { createRef, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-import I18n from "i18next";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { useIODispatch } from "../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
   trackItWalletBannerClosure,
@@ -11,9 +12,8 @@ import {
   trackITWalletBannerVisualized
 } from "../../../analytics";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import { useIODispatch } from "../../../../../store/hooks";
-import { itwCloseDiscoveryBanner } from "../../store/actions/preferences";
 import { useItwDiscoveryBannerType } from "../../hooks/useItwDiscoveryBannerType.ts";
+import { itwCloseBanner } from "../../store/actions/banners.ts";
 
 const bannerConfig = {
   onboarding: {
@@ -76,7 +76,7 @@ export const ItwDiscoveryBanner = ({
   const handleClose = () => {
     trackItWalletBannerClosure(trackBannerProperties);
     handleOnClose?.();
-    dispatch(itwCloseDiscoveryBanner());
+    dispatch(itwCloseBanner("discovery"));
   };
 
   if (!bannerType) {
