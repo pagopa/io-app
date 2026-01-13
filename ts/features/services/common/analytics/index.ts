@@ -11,6 +11,7 @@ import {
 } from "../../home/store/actions";
 import { paginatedServicesGet } from "../../institution/store/actions";
 import { searchPaginatedInstitutionsGet } from "../../search/store/actions";
+import { FavouriteServicesSortType } from "../../favouriteServices/types";
 
 type ServiceBaseType = {
   service_id: string;
@@ -326,7 +327,9 @@ export const trackServicesFavouritesSortCancel = () =>
     buildEventProperties("UX", "action")
   );
 
-export const trackServicesFavouritesSortSelected = (sortType: string) =>
+export const trackServicesFavouritesSortSelected = (
+  sortType: FavouriteServicesSortType
+) =>
   void mixpanelTrack(
     "SERVICES_FAVOURITES_SORT_SELECTED",
     buildEventProperties("UX", "action", { sortType })
