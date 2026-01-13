@@ -1,12 +1,16 @@
 import {
   Alert,
+  Body,
+  HStack,
+  Icon,
   IOIcons,
-  ListItemHeader,
+  IOListItemVisualParams,
   makeFontStyleObject,
+  useIOTheme,
   VStack
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { renderActionButtons } from "../../../../../components/ui/IOScrollView";
 import { useIOSelector } from "../../../../../store/hooks";
 import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
@@ -66,17 +70,17 @@ export const useContinueWithBottomSheet = ({
             `features.itWallet.identification.modeSelection.mode.${type}.bottomSheet.subtitle`
           )}
         </Text>
-        <ListItemHeader
-          label={I18n.t(
+        <ListItem
+          content={I18n.t(
             `features.itWallet.identification.modeSelection.mode.${type}.bottomSheet.entry-1`
           )}
-          iconName={firstIconMap[type]}
+          icon={firstIconMap[type]}
         />
-        <ListItemHeader
-          label={I18n.t(
+        <ListItem
+          content={I18n.t(
             `features.itWallet.identification.modeSelection.mode.${type}.bottomSheet.entry-2`
           )}
-          iconName={secondIconMap[type]}
+          icon={secondIconMap[type]}
         />
         {type === "spid" && (
           <Alert
@@ -119,3 +123,32 @@ export const useContinueWithBottomSheet = ({
     }
   };
 };
+
+const ListItem = (props: { content: string; icon: IOIcons }) => {
+  const theme = useIOTheme();
+
+  return (
+    <HStack
+      space={16}
+      style={{
+        ...styles.listItem
+      }}
+    >
+      <Icon
+        allowFontScaling
+        name={props.icon}
+        color={theme["icon-decorative"]}
+        size={IOListItemVisualParams.iconSize}
+      />
+      <Body style={{ flex: 1, flexWrap: "wrap" }}>{props.content}</Body>
+    </HStack>
+  );
+};
+
+const styles = StyleSheet.create({
+  listItem: {
+    alignItems: "center",
+    paddingVertical: 8,
+    paddingHorizontal: 16
+  }
+});
