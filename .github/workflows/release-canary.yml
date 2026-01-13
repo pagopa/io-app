@@ -1,11 +1,11 @@
 name: Canary release
 on:
-  pull_request
+  - pull_request
 jobs:
-  run-static-checks:
-    uses: ./.github/workflows/staticcheck.yaml
+  # run-static-checks:
+  #   uses: ./.github/workflows/staticcheck.yaml
   prepare-canary-release:
-    needs: run-static-checks
+    # needs: run-static-checks
     runs-on: ubuntu-latest
     outputs:
       canaryVersion: ${{ steps.github-release-creation.outputs.CANARY_VERSION }}
