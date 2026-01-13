@@ -1,7 +1,7 @@
-import { isPast } from "date-fns";
+import { addDays, isPast } from "date-fns";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { ItwBannerId } from "../reducers/banners";
+import { bannerHideDurations, ItwBannerId } from "../reducers/banners";
 
 const itwBannersSelector = (state: GlobalState) =>
   state.features.itWallet.banners;
@@ -12,10 +12,16 @@ const itwBannersSelector = (state: GlobalState) =>
 export const itwIsBannerHiddenSelector = (id: ItwBannerId) =>
   createSelector(itwBannersSelector, banners => {
     const state = banners[id];
-    if (!state.hiddenUntil) {
+    const { dismissedOn, dismissCount } = state;
+
+    if (!dismissedOn || dismissCount === undefined) {
+      // Banners was never dismissed, so it's not hidden
       return false;
     }
-    const hiddenUntilDate = new Date(state.hiddenUntil);
+    const durations = bannerHideDurations[id];
+    const durationIndex = Math.min(dismissCount - 1, durations.length - 1);
+    const duration = durations[durationIndex];
+    const hiddenUntilDate = addDays(new Date(dismissedOn), duration);
     return !isNaN(hiddenUntilDate.getTime()) && !isPast(hiddenUntilDate);
   });
 

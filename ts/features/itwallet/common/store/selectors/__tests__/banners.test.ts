@@ -1,3 +1,4 @@
+import MockDate from "mockdate";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { itwIsDiscoveryBannerHiddenSelector } from "../banners";
 
@@ -7,26 +8,30 @@ describe("itwIsDiscoveryBannerHiddenSelector", () => {
     jest.clearAllMocks();
   });
 
+  const mockDate = "2025-01-14T20:43:21.361Z";
+
   it.each`
-    hiddenUntil                   | expected
-    ${undefined}                  | ${false}
-    ${new Date(Date.now() + 100)} | ${true}
-    ${new Date(Date.now() - 100)} | ${false}
-    ${"invalid-date"}             | ${false}
+    dismissedOn                   | duration     | expected
+    ${undefined}                  | ${100}       | ${false}
+    ${undefined}                  | ${undefined} | ${false}
+    ${"2025-01-5T20:43:21.361Z"}  | ${7}         | ${false}
+    ${"2025-01-11T20:43:21.361Z"} | ${7}         | ${true}
   `(
-    "should return $expected when hiddenUntil is $hiddenUntil",
-    ({ hiddenUntil, expected }) => {
+    "should return $expected when dismissedOn is $dismissedOn, duration is $duration",
+    ({ dismissedOn, duration, expected }) => {
+      MockDate.set(mockDate);
       const state = {
         features: {
           itWallet: {
             banners: {
-              discovery: { hiddenUntil }
+              discovery: { dismissedOn, duration, dismissCount: 1 }
             }
           }
         }
       } as unknown as GlobalState;
 
       expect(itwIsDiscoveryBannerHiddenSelector(state)).toBe(expected);
+      MockDate.reset();
     }
   );
 });

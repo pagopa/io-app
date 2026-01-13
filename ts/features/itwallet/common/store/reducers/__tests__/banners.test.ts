@@ -12,16 +12,19 @@ describe("IT Wallet banners reducer", () => {
 
   it("should handle itwLifecycleStoresReset action", () => {
     const initialState: ItwBannersState = {
-      discovery: { hiddenUntil: new Date().toISOString(), dismissCount: 2 },
+      discovery: {
+        dismissedOn: new Date().toISOString(),
+        dismissCount: 2
+      },
       upgradeMDLDetails: {
-        hiddenUntil: new Date().toISOString(),
-        dismissCount: 1
+        dismissedOn: new Date().toISOString(),
+        dismissCount: 2
       }
     };
 
     const expectedState: ItwBannersState = {
-      discovery: { hiddenUntil: undefined, dismissCount: 0 },
-      upgradeMDLDetails: { hiddenUntil: undefined, dismissCount: 0 }
+      discovery: {},
+      upgradeMDLDetails: {}
     };
 
     const action = itwLifecycleStoresReset();
@@ -37,25 +40,30 @@ describe("IT Wallet banners reducer", () => {
     expect(newState).toEqual({
       ...newState,
       discovery: {
-        hiddenUntil: expect.any(String),
+        dismissedOn: expect.any(String),
         dismissCount: 1
       }
     });
   });
 
   it("should handle itwShowBanner action", () => {
-    const action = itwShowBanner("discovery");
-    const newState = reducer(
-      {
-        ...itwBannersInitialState,
-        discovery: { hiddenUntil: new Date().toISOString(), dismissCount: 2 }
+    const initialState: ItwBannersState = {
+      discovery: {
+        dismissedOn: new Date().toISOString(),
+        dismissCount: 2
       },
-      action
-    );
+      upgradeMDLDetails: {
+        dismissedOn: new Date().toISOString(),
+        dismissCount: 2
+      }
+    };
+
+    const action = itwShowBanner("discovery");
+    const newState = reducer(initialState, action);
 
     expect(newState).toEqual({
       ...newState,
-      discovery: { hiddenUntil: undefined, dismissCount: 0 }
+      discovery: {}
     });
   });
 });
