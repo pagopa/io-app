@@ -7,6 +7,8 @@ import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { ItwCiePreparationScreenContent } from "../components/ItwCiePreparationScreenContent";
 import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
+import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 
 export const ItwCiePreparationPinScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -14,12 +16,17 @@ export const ItwCiePreparationPinScreen = () => {
     isL3FeaturesEnabledSelector
   );
   const itw_flow = isL3FeaturesEnabled ? "L3" : "L2";
-
+  const navigation = useIONavigation();
   useFocusEffect(
     useCallback(() => {
       trackItwCiePinTutorialPin(itw_flow);
     }, [itw_flow])
   );
+
+  useHardwareBackButton(() => {
+    navigation.goBack();
+    return true;
+  });
 
   const infoBottomSheet = useCieInfoBottomSheet({
     type: "pin",

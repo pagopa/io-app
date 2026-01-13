@@ -16,6 +16,8 @@ import {
   trackItWalletSpidIDPSelection
 } from "../../../analytics";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
+import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 
 export const ItwIdentificationIdpSelectionScreen = () => {
   const dispatch = useIODispatch();
@@ -24,6 +26,7 @@ export const ItwIdentificationIdpSelectionScreen = () => {
     isL3FeaturesEnabledSelector
   );
 
+  const navigation = useIONavigation();
   const idps = useIOSelector(idpsRemoteValueSelector);
   const idpValue = isReady(idps) ? idps.value : idpsFallback;
   const randomIdps = useRef<ReadonlyArray<SpidIdp>>(randomOrderIdps(idpValue));
@@ -36,6 +39,11 @@ export const ItwIdentificationIdpSelectionScreen = () => {
       dispatch(loadIdps.request());
     }, [dispatch, itw_flow])
   );
+
+  useHardwareBackButton(() => {
+    navigation.goBack();
+    return true;
+  });
 
   const onIdpSelected = (idp: SpidIdp) => {
     trackItWalletSpidIDPSelected({ idp: idp.name, itw_flow });

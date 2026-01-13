@@ -13,13 +13,15 @@ import {
 } from "../../machine/eid/selectors";
 import ItwPrivacyWebViewComponent from "../components/ItwPrivacyWebViewComponent";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 const ItwIpzsPrivacyScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoadingMachine =
     ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
-
+  const navigation = useIONavigation();
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
@@ -40,11 +42,17 @@ const ItwIpzsPrivacyScreen = () => {
     onLoadEnd();
     machineRef.send({ type: "error", scope: "ipzs-privacy" });
   };
-
+  useHardwareBackButton(() => {
+    navigation.goBack();
+    return true;
+  });
   useHeaderSecondLevel({
     title: "",
     canGoBack: true,
-    supportRequest: true
+    supportRequest: true,
+    goBack: () => {
+      navigation.goBack();
+    }
   });
 
   if (isLoadingMachine) {
