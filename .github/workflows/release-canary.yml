@@ -1,6 +1,6 @@
 name: Canary release
 on:
-  pull_request:
+  pull_request
 jobs:
   run-static-checks:
     uses: ./.github/workflows/staticcheck.yaml
