@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.22.0-canary.7920](https://github.com/pagopa/io-app/compare/3.22.0-rc.12...3.22.0-canary.7920) (2026-01-13)
+
+
+### Bug Fixes
+
+* [[IOPLT-1502](https://pagopa.atlassian.net/browse/IOPLT-1502)] Fixes android crash reason on new react-native-screenshot-prevent patch ([9f05c5f](https://github.com/pagopa/io-app/commit/9f05c5f6fc1839cc4c9984e419f61dda1bd8b772))
+* crash on animated progress bars ([50ea776](https://github.com/pagopa/io-app/commit/50ea7764cf2fe2c9f102dffb4d6421068ec172af))
+
+
+### Chores
+
+* [[IOBP-000](https://pagopa.atlassian.net/browse/IOBP-000)] Add [@soixdev91](https://github.com/soixdev91) as codeowner ([#7759](https://github.com/pagopa/io-app/issues/7759)) ([184d907](https://github.com/pagopa/io-app/commit/184d9071cb7510bc008cdef072701a0328cb5113))
+* [[IOBP-2418](https://pagopa.atlassian.net/browse/IOBP-2418)] Ignore element element under the scan bottomsheet ([#7752](https://github.com/pagopa/io-app/issues/7752)) ([5bd73fb](https://github.com/pagopa/io-app/commit/5bd73fbe14b2f21b7b0785bb7bb07b056171c952))
+* [[IOPLT-1421](https://pagopa.atlassian.net/browse/IOPLT-1421)] Make react-native-screenshot-prevent ready for fabric ([30b0e05](https://github.com/pagopa/io-app/commit/30b0e0576b73a3e5b5add6529374bfa90b4824bb))
+* add missing pod ([10f66c3](https://github.com/pagopa/io-app/commit/10f66c3f88498fc1ea9c1c9ec13c5af560fb4bad))
+* update reanimated version to 3.19.5 ([eae056c](https://github.com/pagopa/io-app/commit/eae056c84680ee16be657e65cbfde863f2fc502d))
+
 ## [3.22.0-rc.12](https://github.com/pagopa/io-app/compare/3.22.0-rc.11...3.22.0-rc.12) (2026-01-12)
 
 
