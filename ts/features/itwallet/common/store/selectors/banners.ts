@@ -12,12 +12,16 @@ const itwBannersSelector = (state: GlobalState) =>
 export const itwIsBannerHiddenSelector = (id: ItwBannerId) =>
   createSelector(itwBannersSelector, banners => {
     const state = banners[id];
-    const { dismissedOn, dismissCount } = state;
+    if (state === undefined) {
+      return false;
+    }
 
+    const { dismissedOn, dismissCount } = state;
     if (!dismissedOn || dismissCount === undefined) {
       // Banners was never dismissed, so it's not hidden
       return false;
     }
+
     const durations = bannerHideDurations[id];
     const durationIndex = Math.min(dismissCount - 1, durations.length - 1);
     const duration = durations[durationIndex];
