@@ -2163,7 +2163,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - react-native-pdf (6.7.7):
+  - react-native-pdf (7.0.3):
     - boost
     - DoubleConversion
     - fast_float
@@ -3947,7 +3947,7 @@ SPEC CHECKSUMS:
   react-native-netinfo: cec9c4e86083cb5b6aba0e0711f563e2fbbff187
   react-native-notifications-utils: 3e4bfc85db8610c150945472a8976a036a8931a7
   react-native-pager-view: a0516effb17ca5120ac2113bfd21b91130ad5748
-  react-native-pdf: c586da0d19c14e6d859e62bf957851687fba0f25
+  react-native-pdf: edc236298f13f1609e42d41e45b8b6ea88ed10f9
   react-native-pdf-thumbnail: 89dd3532effd7733a33229ce666fd02068dac985
   react-native-safe-area-context: c6e2edd1c1da07bdce287fa9d9e60c5f7b514616
   react-native-screen-brightness: 16a7b26d12d89654fc6a2e9ff1e55c1a4a10afcb

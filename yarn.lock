@@ -11438,7 +11438,7 @@ __metadata:
     react-native-linear-gradient: ^2.5.6
     react-native-notifications-utils: ^0.3.0
     react-native-pager-view: ^6.7.1
-    react-native-pdf: 6.7.7
+    react-native-pdf: 7.0.3
     react-native-pdf-thumbnail: ^1.3.1
     react-native-permissions: ^5.3.0
     react-native-push-notification: ^8.1.1
@@ -16333,9 +16333,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-pdf@npm:6.7.7":
-  version: 6.7.7
-  resolution: "react-native-pdf@npm:6.7.7"
+"react-native-pdf@npm:7.0.3":
+  version: 7.0.3
+  resolution: "react-native-pdf@npm:7.0.3"
   dependencies:
     crypto-js: 4.2.0
     deprecated-react-native-prop-types: ^2.3.0
@@ -16343,13 +16343,13 @@ __metadata:
     react: "*"
     react-native: "*"
     react-native-blob-util: ">=0.13.7"
-  checksum: ee6c86016596ecb386f869c435d4af76537c816d1183b5baf4c49326ff46226800c1e5186e3a6a213862adba2235970b109ff8074c5fb49703fc0cad78d5cc8e
+  checksum: befa2871c6b77d3490af5ba4624499733b2917fa95dc27fa751613dcbada18d25c0d0f144c07d0a3addf81fbc9a101527e277dbbe822ff012889521fe196ef63
   languageName: node
   linkType: hard
 
-"react-native-pdf@patch:react-native-pdf@npm%3A6.7.7#./.yarn/patches/react-native-pdf-npm-6.7.7-7aa1e3a631.patch::locator=io%40workspace%3A.":
-  version: 6.7.7
-  resolution: "react-native-pdf@patch:react-native-pdf@npm%3A6.7.7#./.yarn/patches/react-native-pdf-npm-6.7.7-7aa1e3a631.patch::version=6.7.7&hash=0e934d&locator=io%40workspace%3A."
+"react-native-pdf@patch:react-native-pdf@npm%3A7.0.3#./.yarn/patches/react-native-pdf-npm-7.0.3-6313469aca.patch::locator=io%40workspace%3A.":
+  version: 7.0.3
+  resolution: "react-native-pdf@patch:react-native-pdf@npm%3A7.0.3#./.yarn/patches/react-native-pdf-npm-7.0.3-6313469aca.patch::version=7.0.3&hash=cb383a&locator=io%40workspace%3A."
   dependencies:
     crypto-js: 4.2.0
     deprecated-react-native-prop-types: ^2.3.0
@@ -16357,7 +16357,7 @@ __metadata:
     react: "*"
     react-native: "*"
     react-native-blob-util: ">=0.13.7"
-  checksum: fc3090754994be10532354a60af16c5c6ef3e8bb154a55a8c12dd4cb2269617172cf7081d410d523f04deb01266ef76a46e8da7ab558395d1039856babefa123
+  checksum: c4d26f5da39e7344c279920f12992f2f7bbc00058b0220de4828c941b007f3391148cc9e6215b78d554305d884f2da3f437353a99ef38bdcc4d197568b065fba
   languageName: node
   linkType: hard
 
