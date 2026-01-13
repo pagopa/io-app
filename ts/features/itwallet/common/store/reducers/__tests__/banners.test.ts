@@ -22,10 +22,7 @@ describe("IT Wallet banners reducer", () => {
       }
     };
 
-    const expectedState: ItwBannersState = {
-      discovery: {},
-      upgradeMDLDetails: {}
-    };
+    const expectedState: ItwBannersState = {};
 
     const action = itwLifecycleStoresReset();
     const newState = reducer(initialState, action);
