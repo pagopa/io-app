@@ -6,9 +6,11 @@ import { StyleSheet, View } from "react-native";
 import { useIOSelector } from "../../../../../store/hooks";
 import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { itwCredentialsEidIssuedAtSelector } from "../../../credentials/store/selectors";
 import { useItwDisplayCredentialStatus } from "../../../presentation/details/hooks/useItwDisplayCredentialStatus";
 import {
   getCredentialNameFromType,
+  isCredentialIssuedBeforePid,
   tagPropsByStatus,
   useBorderColorByStatus,
   validCredentialStatuses
@@ -31,12 +33,12 @@ export type ItwCredentialCard = {
    */
   credentialStatus?: ItwCredentialStatus;
   /**
-   * Used to determine if the card should be displayed with a
-   * badge for the upgrade pending status.
-   * If its false but the user has an L3 PID, the card will
-   * be displayed with a badge.
+   * Issue date of the credential.
+   * Used to determine whether the card should display
+   * the "upgrade pending" badge when the user owns
+   * an L3 PID and the credential was issued before it.
    */
-  isItwCredential?: boolean;
+  issuedAt?: string;
   /**
    * Indicates if the credential is a multi-level credential,
    * which affects the display of a specific badge on the card.
@@ -53,12 +55,14 @@ type StyleProps = {
 export const ItwCredentialCard = ({
   credentialType,
   credentialStatus = "valid",
-  isItwCredential,
+  issuedAt,
   isMultiCredential
 }: ItwCredentialCard) => {
   const typefacePreference = useIOSelector(fontPreferenceSelector);
   const isItwPid = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const needsItwUpgrade = isItwPid && !isItwCredential;
+  const pidIssuedAt = useIOSelector(itwCredentialsEidIssuedAtSelector);
+  const needsItwUpgrade =
+    isItwPid && isCredentialIssuedBeforePid(issuedAt, pidIssuedAt);
   const status = useItwDisplayCredentialStatus(credentialStatus);
   const theme = useThemeColorByCredentialType(credentialType);
   const borderColorMap = useBorderColorByStatus();

@@ -3965,7 +3965,6 @@
             "paragraph1": "Conserva il codice QR, ti servirà per rileggere la notifica in app",
             "paragraph2": "Puoi inquadrarlo oppure caricare una sua foto su IO",
             "paragraph3": "Tutte le tue notifiche sono disponibili sul sito di SEND - Notifiche Digitali",
-            "paragraphDelegate3": "Tutte le tue notifiche e quelle per cui hai una delega sono disponibili sul sito di SEND - Notifiche Digitali",
             "link": "Vai sul sito di SEND",
             "primaryAction": "Torna alla notifica",
             "secondaryAction": "Chiudi la notifica"
@@ -4852,11 +4851,6 @@
         "notEntitledCredentialError": {
           "title": "Non è possibile aggiungere il documento",
           "body": "Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.",
-          "primaryAction": "Ho capito"
-        },
-        "asyncCredentialError": {
-          "title": "La Motorizzazione Civile ha preso in carico la tua richiesta",
-          "body": "Riceverai un messaggio in app per continuare appena La Motorizzazione Civile avrà elaborato la tua richiesta.",
           "primaryAction": "Ho capito"
         },
         "issuerNotTrustedCommonError": {

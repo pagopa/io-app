@@ -19,9 +19,10 @@ import {
 } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { ComponentProps, useCallback, useLayoutEffect } from "react";
-import { AccessibilityInfo, SafeAreaView, StyleSheet } from "react-native";
 import I18n from "i18next";
+import { ComponentProps, useCallback, useLayoutEffect } from "react";
+import { AccessibilityInfo, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
@@ -120,6 +121,8 @@ const WalletPaymentDetailScreen = () => {
   }
 
   return (
+    /* TODO: We should use a `LoadingScreenContent` component, to avoid
+    duplicates of the loading screen throughout the app */
     <SafeAreaView style={styles.loadingContainer}>
       <LoadingIndicator
         testID="wallet-payment-detail-loading-indicator"
@@ -211,12 +214,12 @@ const WalletPaymentDetailContent = ({
   const amountInfoBottomSheet = useIOBottomSheetModal({
     title: I18n.t("wallet.firstTransactionSummary.amountInfo.title"),
     component: (
-      <SafeAreaView>
+      <>
         <IOMarkdown
           content={I18n.t("wallet.firstTransactionSummary.amountInfo.message")}
         />
-        <VSpacer size={24} />
-      </SafeAreaView>
+        <VSpacer size={16} />
+      </>
     )
   });
 

@@ -9,7 +9,8 @@ import {
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import { SafeAreaView, View } from "react-native";
+import { View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import DESIGN_SYSTEM_ROUTES from "../navigation/routes";

@@ -78,6 +78,8 @@ const clearSimplifiedActivationRequirements = jest.fn();
 const loadPidIntoContext = jest.fn();
 const navigateToCieCanScreen = jest.fn();
 const navigateToCieInternalAuthAndMrtdScreen = jest.fn();
+const trackItwIdAuthenticationCompleted = jest.fn();
+const trackItwIdVerifiedDocument = jest.fn();
 
 /**
  * Actors
@@ -141,6 +143,8 @@ describe("itwEidIssuanceMachine", () => {
       storeAuthLevel,
       freezeSimplifiedActivationRequirements,
       clearSimplifiedActivationRequirements,
+      trackItwIdAuthenticationCompleted,
+      trackItwIdVerifiedDocument,
       loadPidIntoContext: assign(loadPidIntoContext)
     },
     actors: {
