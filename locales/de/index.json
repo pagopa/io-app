@@ -1385,12 +1385,6 @@
         "title": "Möchtest du in der App bezahlen?",
         "content": "Finde heraus, welche Zahlungsmethoden du in dein Konto aufnehmen kannst.",
         "cta": "Mehr erfahren"
-      },
-      "error": {
-        "title": "Questo metodo di pagamento non è disponibile",
-        "subtitle": "Chiudi l’app e riaprila per aggiornare il portafoglio",
-        "primaryButton": "Indietro",
-        "secondaryButton": "Erneut versuchen"
       }
     },
     "wallet": "Konto",
