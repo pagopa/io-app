@@ -8,6 +8,8 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { WalletOnboardingOutcomeEnum } from "../types/OnboardingOutcomeEnum";
 import { walletContextualOnboardingWebViewPayloadSelector } from "../../checkout/store/selectors";
 import PaymentWebView from "../../common/components/PaymentWebView";
+import * as analytics from "../analytics";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 
 const PaymentsContextualOnboardingWebViewScreen = () => {
   const payload = useIOSelector(
@@ -15,6 +17,10 @@ const PaymentsContextualOnboardingWebViewScreen = () => {
   );
 
   const navigation = useIONavigation();
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
+
+  const savedPaymentMethods =
+    paymentAnalyticsData?.savedPaymentMethods?.length ?? 0;
 
   useEffect(() => {
     // Disable swipe gesure
@@ -27,6 +33,9 @@ const PaymentsContextualOnboardingWebViewScreen = () => {
   }, [navigation]);
 
   const handleConfirmClose = () => {
+    analytics.trackPaymentOnboardingUserCancellationContinue({
+      savedPaymentMethods
+    });
     navigation.pop();
     payload?.onCancel?.(WalletOnboardingOutcomeEnum.CANCELED_BY_USER);
   };
@@ -42,11 +51,15 @@ const PaymentsContextualOnboardingWebViewScreen = () => {
   };
 
   const handleCloseAlert = () => {
-    // TODO: Add android webview contextual onboarding analytics
+    analytics.trackPaymentOnboardingUserCancellationBack({
+      savedPaymentMethods
+    });
   };
 
   const promptUserToClose = () => {
-    // TODO: Add android webview contextual onboarding analytics
+    analytics.trackPaymentOnboardingUserCancellationRequest({
+      savedPaymentMethods
+    });
     Alert.alert(I18n.t("wallet.payment.abortDialog.title"), undefined, [
       {
         text: I18n.t("wallet.payment.abortDialog.confirm"),
