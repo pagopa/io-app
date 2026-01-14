@@ -9,7 +9,7 @@ import {
 } from "../store/actions";
 import { logoutRequest } from "../../../authentication/common/store/actions";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import { useIODispatch, useIOStore } from "../../../../store/hooks";
+import { useIODispatch } from "../../../../store/hooks";
 import { trackItwIdNotMatch, trackWalletNewIdReset } from "../../analytics";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
@@ -22,12 +22,11 @@ export const ItwIdentityNotMatchingScreen = () => {
   useFocusEffect(trackItwIdNotMatch);
 
   const dispatch = useIODispatch();
-  const store = useIOStore();
 
   const resetWallet = () => {
     dispatch(itwLifecycleWalletReset());
     dispatch(itwLifecycleIdentityCheckCompleted());
-    trackWalletNewIdReset(store.getState());
+    trackWalletNewIdReset();
   };
 
   const handleCancel = () => {
