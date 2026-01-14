@@ -72,6 +72,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToCieWarningScreen: notImplemented,
     navigateToCieCanScreen: notImplemented,
     navigateToCieInternalAuthAndMrtdScreen: notImplemented,
+    navigateToUpgradeCredentialsScreen: notImplemented,
     closeIssuance: notImplemented,
 
     /**
@@ -1114,35 +1115,50 @@ export const itwEidIssuanceMachine = setup({
       entry: "navigateToSuccessScreen",
       description:
         "This state handles the upgrade of credentials in the wallet",
-      invoke: {
-        src: "credentialUpgradeMachine",
-        input: ({ context }) => {
-          assert(context.eid, "PID must be defined for credential upgrade");
-          assert(
-            context.walletInstanceAttestation,
-            "Wallet instance attestation must be defined"
-          );
-          assert(context.mode, "Issuance mode must be defined");
+      initial: "Intro",
+      states: {
+        Intro: {
+          entry: "navigateToUpgradeCredentialsScreen",
+          on: {
+            next: {
+              target: "Upgrading"
+            }
+          }
+        },
+        Upgrading: {
+          tags: [ItwTags.Loading],
+          invoke: {
+            src: "credentialUpgradeMachine",
+            input: ({ context }) => {
+              assert(context.eid, "PID must be defined for credential upgrade");
+              assert(
+                context.walletInstanceAttestation,
+                "Wallet instance attestation must be defined"
+              );
+              assert(context.mode, "Issuance mode must be defined");
 
-          return {
-            pid: context.eid,
-            walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
-            credentials: context.legacyCredentials,
-            issuanceMode: context.mode
-          };
-        },
-        onDone: {
-          description: "Credentials upgrade completed successfully",
-          actions: assign(({ event }) => ({
-            failedCredentials: event.output.failedCredentials
-          })),
-          target: "#itwEidIssuanceMachine.Success"
-        },
-        onError: {
-          description:
-            "An unexpected error occurred during the credentials upgrade",
-          actions: "setFailure",
-          target: "#itwEidIssuanceMachine.Failure"
+              return {
+                pid: context.eid,
+                walletInstanceAttestation:
+                  context.walletInstanceAttestation?.jwt,
+                credentials: context.legacyCredentials,
+                issuanceMode: context.mode
+              };
+            },
+            onDone: {
+              description: "Credentials upgrade completed successfully",
+              actions: assign(({ event }) => ({
+                failedCredentials: event.output.failedCredentials
+              })),
+              target: "#itwEidIssuanceMachine.Success"
+            },
+            onError: {
+              description:
+                "An unexpected error occurred during the credentials upgrade",
+              actions: "setFailure",
+              target: "#itwEidIssuanceMachine.Failure"
+            }
+          }
         }
       }
     },
