@@ -114,6 +114,12 @@ type IdRequestFailure = {
   itw_flow: ItwFlow;
 };
 
+type IdRequestFederationFailure = {
+  credential: "ITW_ID" | "ITW_PID";
+  reason: unknown;
+  type: string;
+};
+
 type IdUnexpectedFailure = {
   reason: unknown;
   type: string;
@@ -1067,6 +1073,15 @@ export const trackItwIdRequestFailure = (properties: IdRequestFailure) => {
       buildEventProperties("KO", "error", properties)
     );
   }
+};
+
+export const trackItwIdRequestFederationFailed = (
+  properties: IdRequestFederationFailure
+) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_ID_REQUEST_FEDERATION_FAILED,
+    buildEventProperties("KO", "error", properties)
+  );
 };
 
 export const trackItwUnsupportedDevice = (properties: IssuanceFailure) => {

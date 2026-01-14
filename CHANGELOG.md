@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.22.0-rc.13](https://github.com/pagopa/io-app/compare/3.22.0-rc.12...3.22.0-rc.13) (2026-01-13)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-3625](https://pagopa.atlassian.net/browse/SIW-3625)] Track ITW_UX_SUCCESS in the Simplified Activation Flow ([#7762](https://github.com/pagopa/io-app/issues/7762)) ([6318a45](https://github.com/pagopa/io-app/commit/6318a452949d74fc9846cc55fd1ba8a0718662bd))
+
+
+### Chores
+
+* [[IOBP-000](https://pagopa.atlassian.net/browse/IOBP-000)] Add [@soixdev91](https://github.com/soixdev91) as codeowner ([#7759](https://github.com/pagopa/io-app/issues/7759)) ([184d907](https://github.com/pagopa/io-app/commit/184d9071cb7510bc008cdef072701a0328cb5113))
+* [[IOBP-2234](https://pagopa.atlassian.net/browse/IOBP-2234)] Add payment card contextual onboarding events ([#7748](https://github.com/pagopa/io-app/issues/7748)) ([9c97211](https://github.com/pagopa/io-app/commit/9c97211e1202ef029b1c6fe21e935bbb4950b8ed))
+* [[IOBP-2418](https://pagopa.atlassian.net/browse/IOBP-2418)] Ignore element element under the scan bottomsheet ([#7752](https://github.com/pagopa/io-app/issues/7752)) ([5bd73fb](https://github.com/pagopa/io-app/commit/5bd73fbe14b2f21b7b0785bb7bb07b056171c952))
+* [[IOBP-2429](https://pagopa.atlassian.net/browse/IOBP-2429)] Add missing payment card `WALLET_PAYMENT_METHOD_DETAIL` event ([#7747](https://github.com/pagopa/io-app/issues/7747)) ([77ae04b](https://github.com/pagopa/io-app/commit/77ae04babc7c7ba855566c4b6f6d88b16df9c42d))
+
+## [3.22.0-rc.12](https://github.com/pagopa/io-app/compare/3.22.0-rc.11...3.22.0-rc.12) (2026-01-12)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-3644](https://pagopa.atlassian.net/browse/SIW-3644)] Fix margins in IT-Wallet credentials details screens ([#7755](https://github.com/pagopa/io-app/issues/7755)) ([f3636fa](https://github.com/pagopa/io-app/commit/f3636fab2c63a5cf9b8ccec6360bb915143ab108))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-3283](https://pagopa.atlassian.net/browse/SIW-3283)] Add new federation event KO in eID flow ([#7659](https://github.com/pagopa/io-app/issues/7659)) ([117c35e](https://github.com/pagopa/io-app/commit/117c35e959f25b8bf2145e914b379009459c3f20))
+
 ## [3.22.0-rc.11](https://github.com/pagopa/io-app/compare/3.22.0-rc.10...3.22.0-rc.11) (2026-01-09)
 
 
