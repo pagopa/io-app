@@ -3032,7 +3032,8 @@
       },
       "metadata": {
         "a11y": {
-          "website": "Browse the institution's website"
+          "website": "Browse the institution's website",
+          "copyIntoClipboard": "Copy to clipboard"
         },
         "title": "Contacts and info",
         "website": "Browse Website",
@@ -3042,7 +3043,6 @@
         "email": "Send email",
         "pec": "Send PEC",
         "fiscalCode": "Institution's fiscal code",
-        "fiscalCodeAccessibilityHint": "Copy to clipboard",
         "address": "Address",
         "serviceId": "Service ID"
       },

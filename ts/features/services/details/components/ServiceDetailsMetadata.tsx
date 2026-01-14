@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import {
   Divider,
@@ -135,7 +135,7 @@ export const ServiceDetailsMetadata = ({
     {
       kind: "ListItemInfoCopy",
       accessibilityHint: I18n.t(
-        "services.details.metadata.fiscalCodeAccessibilityHint"
+        "services.details.metadata.a11y.copyIntoClipboard"
       ),
       icon: "entityCode",
       label: I18n.t("services.details.metadata.fiscalCode"),
@@ -152,9 +152,13 @@ export const ServiceDetailsMetadata = ({
       value: address
     },
     {
-      kind: "ListItemInfo",
+      kind: "ListItemInfoCopy",
+      accessibilityHint: I18n.t(
+        "services.details.metadata.a11y.copyIntoClipboard"
+      ),
       icon: "pinOff",
       label: I18n.t("services.details.metadata.serviceId"),
+      onPress: handleItemOnPress(serviceId, "COPY"),
       testID: "service-details-metadata-service-id",
       value: serviceId
     }
@@ -182,11 +186,14 @@ export const ServiceDetailsMetadata = ({
     []
   );
 
-  const ListHeaderComponent = (
-    <ListItemHeader
-      label={I18n.t("services.details.metadata.title")}
-      testID="service-details-metadata-header"
-    />
+  const ListHeaderComponent = useMemo(
+    () => (
+      <ListItemHeader
+        label={I18n.t("services.details.metadata.title")}
+        testID="service-details-metadata-header"
+      />
+    ),
+    []
   );
 
   return (
