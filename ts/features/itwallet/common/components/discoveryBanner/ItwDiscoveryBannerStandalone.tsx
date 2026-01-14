@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { useIOSelector } from "../../../../../store/hooks";
 import { isItwDiscoveryBannerRenderableSelector } from "../../store/selectors";
-import { ItwDiscoveryBanner } from "./ItwDiscoveryBanner";
+import { ItwDiscoveryBannerLegacy } from "./ItwDiscoveryBanner";
 
 /**
  * to use in flows where we do not want to handle the banner's visibility logic externally
@@ -21,7 +21,7 @@ export const ItwDiscoveryBannerStandalone = () => {
       testID="itwDiscoveryBannerStandaloneTestID"
       style={{ marginVertical: 16 }}
     >
-      <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
+      <ItwDiscoveryBannerLegacy ignoreMargins={true} closable={false} />
     </View>
   );
 };

@@ -1,9 +1,10 @@
 import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
+import I18n from "i18next";
 import { createRef, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-import I18n from "i18next";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { useIODispatch } from "../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
   trackItWalletBannerClosure,
@@ -11,9 +12,8 @@ import {
   trackITWalletBannerVisualized
 } from "../../../analytics";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import { useIODispatch } from "../../../../../store/hooks";
-import { itwCloseDiscoveryBanner } from "../../store/actions/preferences";
 import { useItwDiscoveryBannerType } from "../../hooks/useItwDiscoveryBannerType.ts";
+import { itwCloseDiscoveryBanner } from "../../store/actions/preferences";
 
 const bannerConfig = {
   onboarding: {
@@ -38,8 +38,9 @@ export type ItwDiscoveryBannerProps = {
 /**
  * Discovery banner used in flows where we want to handle the banner's visibility logic externally
  *  (see MultiBanner feature for the landing screen)
+ * @deprecated this banners is for the legacy Documenti su IO flow.
  */
-export const ItwDiscoveryBanner = ({
+export const ItwDiscoveryBannerLegacy = ({
   withTitle = true,
   ignoreMargins = false,
   closable,
