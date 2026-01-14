@@ -24,11 +24,11 @@ import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import {
-  getMixPanelCredential,
   trackIssuanceCredentialScrollToBottom,
   trackItwExit,
   trackOpenItwTos
 } from "../../analytics";
+import { getMixPanelCredential } from "../../analytics/utils/analyticsUtils";
 import { ItwDataExchangeIcons } from "../../common/components/ItwDataExchangeIcons";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
