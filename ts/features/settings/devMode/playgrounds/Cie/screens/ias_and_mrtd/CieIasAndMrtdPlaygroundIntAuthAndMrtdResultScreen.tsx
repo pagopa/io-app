@@ -1,32 +1,32 @@
+import { IOButton, useIOToast } from "@pagopa/io-app-design-system";
+import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
+import Clipboard from "@react-native-clipboard/clipboard";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import { useEffect } from "react";
 import {
-  ScrollView,
-  View,
-  StyleSheet,
-  Text,
-  Share,
   Alert,
   Platform,
-  SafeAreaView
+  ScrollView,
+  Share,
+  StyleSheet,
+  Text,
+  View
 } from "react-native";
-import Clipboard from "@react-native-clipboard/clipboard";
-import { IOButton, useIOToast } from "@pagopa/io-app-design-system";
-import { RouteProp, useRoute } from "@react-navigation/native";
-import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
-import { SettingsParamsList } from "../../../../../common/navigation/params/SettingsParamsList";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useDebugInfo } from "../../../../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../../../../store/hooks";
 import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../../../../store/reducers/backendStatus/remoteConfig";
+import {
+  testAarAcceptMandate,
+  testAarClearData
+} from "../../../../../../pn/aar/store/actions";
 import {
   hasSendMandateSelector,
   sendValidationErrorSelector,
   sendValidationStatusSelector
 } from "../../../../../../pn/aar/store/reducers/tempAarMandate";
-import {
-  testAarAcceptMandate,
-  testAarClearData
-} from "../../../../../../pn/aar/store/actions";
-import { useDebugInfo } from "../../../../../../../hooks/useDebugInfo";
+import { SettingsParamsList } from "../../../../../common/navigation/params/SettingsParamsList";
 
 export type CieIasAndMrtdResultNavParams = {
   result: InternalAuthAndMrtdResponse;

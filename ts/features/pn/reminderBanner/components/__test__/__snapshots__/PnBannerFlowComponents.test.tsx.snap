@@ -2125,7 +2125,15 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                         }
                       }
                     >
-                      <RCTSafeAreaView
+                      <RNCSafeAreaView
+                        edges={
+                          {
+                            "bottom": "additive",
+                            "left": "additive",
+                            "right": "additive",
+                            "top": "additive",
+                          }
+                        }
                         style={
                           {
                             "alignItems": "center",
@@ -2373,7 +2381,7 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                           }
                           testID="LoadingSpinnerCaptionSubTitleID"
                         />
-                      </RCTSafeAreaView>
+                      </RNCSafeAreaView>
                     </View>
                   </View>
                 </View>
@@ -2727,7 +2735,15 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                         }
                       }
                     >
-                      <RCTSafeAreaView
+                      <RNCSafeAreaView
+                        edges={
+                          {
+                            "bottom": "additive",
+                            "left": "additive",
+                            "right": "additive",
+                            "top": "additive",
+                          }
+                        }
                         style={
                           {
                             "alignItems": "center",
@@ -2975,7 +2991,7 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                           }
                           testID="LoadingSpinnerCaptionSubTitleID"
                         />
-                      </RCTSafeAreaView>
+                      </RNCSafeAreaView>
                     </View>
                   </View>
                 </View>

@@ -268,18 +268,25 @@ const BarcodeScanScreen = () => {
 
   return (
     <>
-      <BarcodeScanBaseScreenComponent
-        barcodeFormats={barcodeFormats}
-        barcodeTypes={barcodeTypes}
-        onBarcodeSuccess={handleBarcodeSuccess}
-        onBarcodeError={handleBarcodeError}
-        onFileInputPressed={showFilePicker}
-        onManualInputPressed={handleManualInputPressed}
-        contextualHelp={emptyContextualHelp}
-        barcodeAnalyticsFlow="home"
-        isLoading={isFileReaderLoading}
-        isDisabled={isFilePickerVisible || isFileReaderLoading}
-      />
+      <View
+        style={{ flex: 1 }}
+        importantForAccessibility={
+          isFilePickerVisible ? "no-hide-descendants" : "auto"
+        }
+      >
+        <BarcodeScanBaseScreenComponent
+          barcodeFormats={barcodeFormats}
+          barcodeTypes={barcodeTypes}
+          onBarcodeSuccess={handleBarcodeSuccess}
+          onBarcodeError={handleBarcodeError}
+          onFileInputPressed={showFilePicker}
+          onManualInputPressed={handleManualInputPressed}
+          contextualHelp={emptyContextualHelp}
+          barcodeAnalyticsFlow="home"
+          isLoading={isFileReaderLoading}
+          isDisabled={isFilePickerVisible || isFileReaderLoading}
+        />
+      </View>
       {filePickerBottomSheet}
       {manualInputModal.bottomSheet}
     </>

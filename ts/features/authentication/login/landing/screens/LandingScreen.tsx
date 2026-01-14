@@ -1,7 +1,3 @@
-/**
- * A screen where the user can choose to login with SPID or get more informations.
- * It includes a carousel with highlights on the app functionalities
- */
 import {
   Banner,
   ContentWrapper,
@@ -23,7 +19,7 @@ import {
   useState
 } from "react";
 import { Alert, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { LandingCardComponent } from "../../../../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import SectionStatusComponent from "../../../../../components/SectionStatus";
@@ -31,10 +27,6 @@ import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../../config"
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import {
-  sessionCorrupted,
-  sessionExpired
-} from "../../../common/store/actions";
 import {
   useIODispatch,
   useIOSelector,
@@ -57,6 +49,10 @@ import {
 } from "../../../common/analytics";
 import { Carousel } from "../../../common/components/Carousel";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import {
+  sessionCorrupted,
+  sessionExpired
+} from "../../../common/store/actions";
 
 import { startupLoadSuccess } from "../../../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../../../store/reducers/startup";
@@ -84,10 +80,14 @@ const SPACE_BETWEEN_BUTTONS = 8;
 const SPACE_AROUND_BUTTON_LINK = 16;
 const SPID_LEVEL: SpidLevel = "SpidL2";
 
+/**
+ * A screen where the user can choose to login with SPID or get more informations.
+ * It includes a carousel with highlights on the app functionalities
+ */
 export const LandingScreen = () => {
   const { error } = useIOToast();
   const store = useIOStore();
-  const insets = useSafeAreaInsets();
+
   const itwOfflineAccessAvailable = useIOSelector(
     itwOfflineAccessAvailableSelector
   );
@@ -337,7 +337,7 @@ export const LandingScreen = () => {
       : "session_corrupted";
 
     return (
-      <View style={{ flex: 1 }} testID="LandingScreen">
+      <SafeAreaView style={{ flex: 1 }} testID="LandingScreen">
         {isSessionExpired || isSessionCorrupted ? (
           <LandingSessionExpiredComponent
             ref={accessibilityFirstFocuseViewRef}
@@ -416,11 +416,10 @@ export const LandingScreen = () => {
               <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
             </View>
           )}
-          {insets.bottom !== 0 && <VSpacer size={SPACE_AROUND_BUTTON_LINK} />}
           {bottomSheet}
           {infoBottomsheetComponent}
         </ContentWrapper>
-      </View>
+      </SafeAreaView>
     );
   };
 

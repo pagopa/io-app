@@ -11,6 +11,7 @@ import {
   ItwFlow,
   trackIdNotMatch,
   trackItwCieIdCieNotRegistered,
+  trackItwIdRequestFederationFailed,
   trackItwIdRequestFailure,
   trackItwIdRequestUnexpectedFailure,
   trackItwUnsupportedDevice,
@@ -21,10 +22,13 @@ import {
   shouldSerializeReason
 } from "../../common/utils/itwStoreUtils";
 
+type EidTrackedCredential = "ITW_ID" | "ITW_PID";
+
 type Params = {
   failure: IssuanceFailure;
   identification?: IdentificationContext;
   issuanceLevel?: EidIssuanceLevel;
+  credential: EidTrackedCredential;
 };
 /**
  * Maps the eID issuance level to the corresponding ItwFlow value.
@@ -49,7 +53,8 @@ const mapIssuanceLevelToFlow = (issuanceLevel?: EidIssuanceLevel): ItwFlow => {
 export const useEidEventsTracking = ({
   failure,
   identification,
-  issuanceLevel
+  issuanceLevel,
+  credential
 }: Params) => {
   const itwFlow: ItwFlow = mapIssuanceLevelToFlow(issuanceLevel);
 
@@ -88,6 +93,14 @@ export const useEidEventsTracking = ({
       });
     }
 
+    if (failure.type === IssuanceFailureType.UNTRUSTED_ISS) {
+      return trackItwIdRequestFederationFailed({
+        credential,
+        reason: failure.reason,
+        type: failure.type
+      });
+    }
+
     if (
       failure.type === IssuanceFailureType.CIE_NOT_REGISTERED &&
       identification
@@ -118,5 +131,5 @@ export const useEidEventsTracking = ({
           : { ...failure, itw_flow: itwFlow }
       );
     }
-  }, [failure, identification, itwFlow]);
+  }, [failure, identification, itwFlow, credential]);
 };

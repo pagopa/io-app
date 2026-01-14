@@ -1601,9 +1601,9 @@
         "cta": "Scopri di più"
       },
       "error": {
-        "title": "Si è verificato un errore",
-        "subtitle": "Riprova o contatta l'assistenza",
-        "primaryButton": "Chiudi",
+        "title": "Questo metodo di pagamento non è disponibile",
+        "subtitle": "Chiudi l’app e riaprila per aggiornare il portafoglio",
+        "primaryButton": "Indietro",
         "secondaryButton": "Riprova"
       }
     },
@@ -4737,7 +4737,7 @@
             }
           },
           "itw": {
-            "title": "IO è il tuo portafoglio digitale di Stato: pubblico, sicuro, gratuito.",
+            "title": "IO è ora il tuo portafoglio digitale pubblico: sicuro, gratuito, tuo.",
             "features": {
               "1": "Usi la tua Patente su IO come documento di riconoscimento",
               "2": "Ti basta il tuo telefono per dimostrare la tua identità",
