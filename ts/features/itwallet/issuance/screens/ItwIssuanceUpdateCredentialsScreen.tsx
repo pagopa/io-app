@@ -1,25 +1,15 @@
-import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
-import { ComponentProps } from "react";
 import { IOScrollViewCentredContent } from "../../../../components/ui/IOScrollViewCentredContent";
-import { useHeaderProps } from "../../../../hooks/useHeaderProps";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 
 export const ItwIssuanceUpgradeCredentialsScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const navigation = useNavigation();
 
-  const headerProps: ComponentProps<typeof HeaderSecondLevel> = {
-    ignoreSafeAreaMargin: false,
-    ignoreAccessibilityCheck: false,
-    ...useHeaderProps({
-      title: I18n.t(`features.itWallet.identification.updateCredential.title`),
-      backAccessibilityLabel: I18n.t("global.buttons.back"),
-      goBack: navigation.goBack,
-      showHelp: true
-    })
-  };
+  useHeaderSecondLevel({
+    supportRequest: true,
+    title: ""
+  });
 
   return (
     <IOScrollViewCentredContent
@@ -28,7 +18,6 @@ export const ItwIssuanceUpgradeCredentialsScreen = () => {
       description={I18n.t(
         `features.itWallet.identification.updateCredential.description`
       )}
-      headerConfig={headerProps}
       actions={{
         type: "SingleButton",
         primary: {

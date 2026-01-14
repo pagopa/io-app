@@ -1111,8 +1111,6 @@ export const itwEidIssuanceMachine = setup({
       ]
     },
     CredentialsUpgrade: {
-      tags: [ItwTags.Loading],
-      entry: "navigateToSuccessScreen",
       description:
         "This state handles the upgrade of credentials in the wallet",
       initial: "Intro",
@@ -1126,6 +1124,7 @@ export const itwEidIssuanceMachine = setup({
           }
         },
         Upgrading: {
+          entry: "navigateToSuccessScreen",
           tags: [ItwTags.Loading],
           invoke: {
             src: "credentialUpgradeMachine",
