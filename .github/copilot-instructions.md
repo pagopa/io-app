@@ -1,5 +1,20 @@
 # IO App - Copilot Instructions
 
+## Operational Modes
+
+### Plan Mode
+
+- Make the plan extremely concise. Sacrifice grammar for the sake of concision.
+- At the end of each plan, give me a list of unresolved questions to answer, if any.
+- End every plan with a numbered list of concrete steps. This should be the last thing visible in the terminal.
+
+### Debug Mode
+
+When asked to debug:
+1. Reflect on 5-7 different possible sources of the problem.
+2. Distill those down to 1-2 most likely sources. 
+3. If necessary, add logs to validate your assumptions before we move on to implementing the actual code fix.
+
 ## Project Overview
 IO is the Italian government's official mobile app for public services, built with **React Native 0.78** and **TypeScript**. It uses **Redux** for state management and **Redux-Saga** for side effects.
 
@@ -88,13 +103,6 @@ yarn dev:run-android    # Run Android in production debug mode
 yarn run-ios            # Run iOS
 ```
 
-### Android Emulator Setup
-Before running on Android emulator, disable hardware keystore check:
-```bash
-yarn lollipop_checks:comment   # Before running emulator
-yarn lollipop_checks:uncomment # Before committing (required!)
-```
-
 ## Code Style
 - **Language**: Strict TypeScript; no `any` unless unavoidable. Prefer type aliases and discriminated unions for complex states. Use `const` by default and avoid `let` unless mutation is strictly required.
 - **Types**: Avoid `enum` unless strictly required (e.g. interop with external APIs). Prefer string literal unions in lowercase `snake_case`, e.g. `type MyType = "type_a" | "type_b"`.
@@ -171,3 +179,7 @@ navigation.navigate(ITW_ROUTES.MAIN, { screen: ITW_ROUTES.DISCOVERY.INFO });
 - Prefer `pot` (Pot type) for async data states in reducers
 - Feature flags come from remote config selectors in `store/reducers/backendStatus/`
 - Use `useIOSelector` and `useIOStore` hooks, not raw `useSelector`
+
+### Testings
+
+Refer to [`tests.instructions.md`](./instructions/tests.instructions.md) for detailed testing guidelines.
