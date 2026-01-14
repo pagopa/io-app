@@ -46,10 +46,7 @@ export const createCredentialUpgradeActorsImplementation = (env: Env) => ({
       issuerConf,
       clientId,
       codeVerifier,
-      pid,
-      // TODO [SIW-3039]: Pass undefined as operationType when issuanceMode is "reissuance",
-      // once the sync flow for mDL issuing is ready
-      operationType: "reissuing"
+      pid
     });
 
     return {
