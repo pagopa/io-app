@@ -1,19 +1,17 @@
 import {
   Alert,
   Body,
+  BodySmall,
   HStack,
   Icon,
   IOIcons,
   IOListItemVisualParams,
-  makeFontStyleObject,
   useIOTheme,
   VStack
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { renderActionButtons } from "../../../../../components/ui/IOScrollView";
-import { useIOSelector } from "../../../../../store/hooks";
-import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 
 type ModeType = "ciePin" | "cieId" | "spid";
@@ -45,31 +43,17 @@ export const useContinueWithBottomSheet = ({
   type,
   onPrimaryAction
 }: Props) => {
-  const typefacePreference = useIOSelector(fontPreferenceSelector);
-
   const bottomSheet = useIOBottomSheetModal({
     title: I18n.t(
       `features.itWallet.identification.modeSelection.mode.${type}.bottomSheet.title`
     ),
     component: (
       <VStack space={24}>
-        <Text
-          allowFontScaling={false}
-          style={{
-            ...makeFontStyleObject(
-              16,
-              typefacePreference === "comfortable"
-                ? "Titillio"
-                : "TitilliumSansPro",
-              24,
-              "Regular"
-            )
-          }}
-        >
+        <BodySmall>
           {I18n.t(
             `features.itWallet.identification.modeSelection.mode.${type}.bottomSheet.subtitle`
           )}
-        </Text>
+        </BodySmall>
         <ListItem
           content={I18n.t(
             `features.itWallet.identification.modeSelection.mode.${type}.bottomSheet.entry-1`
