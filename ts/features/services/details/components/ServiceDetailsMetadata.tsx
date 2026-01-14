@@ -135,7 +135,7 @@ export const ServiceDetailsMetadata = ({
     {
       kind: "ListItemInfoCopy",
       accessibilityHint: I18n.t(
-        "services.details.metadata.a11y.copyIntoClipboard"
+        "services.details.metadata.a11y.copyToClipboard"
       ),
       icon: "entityCode",
       label: I18n.t("services.details.metadata.fiscalCode"),
@@ -154,7 +154,7 @@ export const ServiceDetailsMetadata = ({
     {
       kind: "ListItemInfoCopy",
       accessibilityHint: I18n.t(
-        "services.details.metadata.a11y.copyIntoClipboard"
+        "services.details.metadata.a11y.copyToClipboard"
       ),
       icon: "pinOff",
       label: I18n.t("services.details.metadata.serviceId"),

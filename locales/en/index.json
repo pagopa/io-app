@@ -3033,7 +3033,7 @@
       "metadata": {
         "a11y": {
           "website": "Browse the institution's website",
-          "copyIntoClipboard": "Copy to clipboard"
+          "copyToClipboard": "Copy to clipboard"
         },
         "title": "Contacts and info",
         "website": "Browse Website",
