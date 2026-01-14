@@ -12,11 +12,11 @@ import { getPaymentCardPropsFromWalletInfo } from "../../common/utils";
 import { PaymentsMethodDetailsBaseScreenComponent } from "../components/PaymentsMethodDetailsBaseScreenComponent";
 import { PaymentsMethodDetailsDeleteButton } from "../components/PaymentsMethodDetailsDeleteButton";
 import { PaymentsMethodDetailsErrorContent } from "../components/PaymentsMethodDetailsErrorContent";
+import { PaymentsMethodPspDetailsAlert } from "../components/PaymentsMethodPspDetailsAlert";
 import WalletDetailsPaymentMethodFeatures from "../components/WalletDetailsPaymentMethodFeatures";
 import { PaymentsMethodDetailsParamsList } from "../navigation/params";
 import { paymentsGetMethodDetailsAction } from "../store/actions";
 import { selectPaymentMethodDetails } from "../store/selectors";
-import { PaymentsMethodPspDetailsAlert } from "../components/PaymentsMethodPspDetailsAlert";
 
 export type PaymentsMethodDetailsScreenNavigationParams = Readonly<{
   walletId: string;
@@ -86,7 +86,7 @@ const PaymentsMethodDetailsScreen = () => {
     );
   }
 
-  return <PaymentsMethodDetailsErrorContent walletId={walletId} />;
+  return <PaymentsMethodDetailsErrorContent />;
 };
 
 const getCardHeaderTitle = (details?: UIWalletInfoDetails) => {

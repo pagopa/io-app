@@ -199,69 +199,85 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
                         }
                       }
                     >
-                      <View
+                      <RNCSafeAreaView
+                        edges={
+                          {
+                            "bottom": "additive",
+                            "left": "off",
+                            "right": "off",
+                            "top": "off",
+                          }
+                        }
                         style={
-                          [
-                            {
-                              "flex": 1,
-                              "overflow": "hidden",
-                            },
-                            undefined,
-                          ]
+                          {
+                            "flex": 1,
+                          }
                         }
                       >
-                        <RNCWebView
-                          allowsBackForwardNavigationGestures={true}
-                          allowsPictureInPictureMediaPlayback={true}
-                          androidCameraAccessDisabled={true}
-                          androidMicrophoneAccessDisabled={true}
-                          cacheEnabled={true}
-                          fraudulentWebsiteWarningEnabled={true}
-                          hasOnFileDownload={false}
-                          hasOnOpenWindowEvent={false}
-                          injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
-                          injectedJavaScriptForMainFrameOnly={true}
-                          javaScriptEnabled={true}
-                          messagingEnabled={false}
-                          messagingModuleName=""
-                          newSource={
-                            {
-                              "uri": "https://google.com",
-                            }
-                          }
-                          onContentProcessDidTerminate={[Function]}
-                          onHttpError={[Function]}
-                          onLoadingError={[Function]}
-                          onLoadingFinish={[Function]}
-                          onLoadingProgress={[Function]}
-                          onLoadingStart={[Function]}
-                          onMessage={[Function]}
-                          onShouldStartLoadWithRequest={[Function]}
-                          paymentRequestEnabled={true}
-                          source={
-                            {
-                              "uri": "https://google.com",
-                            }
-                          }
+                        <View
                           style={
                             [
                               {
                                 "flex": 1,
                                 "overflow": "hidden",
                               },
-                              {
-                                "backgroundColor": "#ffffff",
-                              },
-                              {
-                                "flex": 1,
-                              },
+                              undefined,
                             ]
                           }
-                          testID="webview"
-                          textInteractionEnabled={true}
-                          useSharedProcessPool={true}
-                        />
-                      </View>
+                        >
+                          <RNCWebView
+                            allowsBackForwardNavigationGestures={true}
+                            allowsPictureInPictureMediaPlayback={true}
+                            androidCameraAccessDisabled={true}
+                            androidMicrophoneAccessDisabled={true}
+                            cacheEnabled={true}
+                            fraudulentWebsiteWarningEnabled={true}
+                            hasOnFileDownload={false}
+                            hasOnOpenWindowEvent={false}
+                            injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
+                            injectedJavaScriptForMainFrameOnly={true}
+                            javaScriptEnabled={true}
+                            messagingEnabled={false}
+                            messagingModuleName=""
+                            newSource={
+                              {
+                                "uri": "https://google.com",
+                              }
+                            }
+                            onContentProcessDidTerminate={[Function]}
+                            onHttpError={[Function]}
+                            onLoadingError={[Function]}
+                            onLoadingFinish={[Function]}
+                            onLoadingProgress={[Function]}
+                            onLoadingStart={[Function]}
+                            onMessage={[Function]}
+                            onShouldStartLoadWithRequest={[Function]}
+                            paymentRequestEnabled={true}
+                            source={
+                              {
+                                "uri": "https://google.com",
+                              }
+                            }
+                            style={
+                              [
+                                {
+                                  "flex": 1,
+                                  "overflow": "hidden",
+                                },
+                                {
+                                  "backgroundColor": "#ffffff",
+                                },
+                                {
+                                  "flex": 1,
+                                },
+                              ]
+                            }
+                            testID="webview"
+                            textInteractionEnabled={true}
+                            useSharedProcessPool={true}
+                          />
+                        </View>
+                      </RNCSafeAreaView>
                     </View>
                     <View
                       collapsable={false}
