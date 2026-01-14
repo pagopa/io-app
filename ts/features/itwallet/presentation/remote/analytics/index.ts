@@ -40,7 +40,7 @@ const isCredentialRecord = (
 ): c is Record<MixPanelCredentialVersion, MixPanelCredential> =>
   typeof c === "object" && c !== null && "V3" in c;
 
-// #region SCREEN VIEW EVENTS
+// Screen view events
 
 export function trackItwRemoteUntrustedRPBottomSheet() {
   void mixpanelTrack(
@@ -73,9 +73,7 @@ export function trackItwRemotePresentationCompleted(redirect_url: boolean) {
   );
 }
 
-// #endregion SCREEN VIEW EVENTS
-
-// #region ACTIONS
+// Actions events
 
 export function trackItwRemoteContinuePresentation() {
   void mixpanelTrack(
@@ -84,9 +82,7 @@ export function trackItwRemoteContinuePresentation() {
   );
 }
 
-// #endregion ACTIONS
-
-// #region ERRORS
+// Errors events
 
 export const trackItwRemoteUnexpectedFailure = ({
   reason,
@@ -174,7 +170,6 @@ export const trackItwRemoteDeepLinkFailure = (reason: Error) => {
     buildEventProperties("KO", "screen_view", { reason })
   );
 };
-// #endregion ERRORS
 
 /**
  * Returns a string of missing or invalid credentials formatted for tracking,
