@@ -15,19 +15,20 @@ import {
   ItwEidInfoBottomSheetTitle
 } from "../../common/components/ItwEidInfoBottomSheetContent";
 import { ItwEidLifecycleAlert } from "../../common/components/ItwEidLifecycleAlert";
-import { ItwUpgradeBanner } from "../../common/components/ItwUpgradeBanner.tsx";
 import { ItwWalletReadyBanner } from "../../common/components/ItwWalletReadyBanner";
 import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingReviewRequest";
 import { useItwStatusIconColor } from "../../common/hooks/useItwStatusIconColor.ts";
 import {
   itwShouldHideEidLifecycleAlert,
-  itwShouldRenderNewItWalletSelector
+  itwShouldRenderNewItWalletSelector,
+  itwShouldRenderUpgradeBannerSelector
 } from "../../common/store/selectors";
 import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils.ts";
 import {
   itwCredentialsEidExpirationSelector,
   itwCredentialsEidStatusSelector
 } from "../../credentials/store/selectors";
+import { ItwDiscoveryBanner } from "../../discovery/components/ItwDiscoveryBanner.tsx";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
 import { ItwWalletIdStatus } from "./ItwWalletIdStatus.tsx";
 
@@ -37,9 +38,14 @@ const LIFECYCLE_STATUS: Array<ItwJwtCredentialStatus> = [
 ];
 
 export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
+  const navigation = useIONavigation();
+
   const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
   const shouldHideEidAlert = useIOSelector(itwShouldHideEidLifecycleAlert);
-  const navigation = useIONavigation();
+  const shouldRenderUpgradeBanner = useIOSelector(
+    itwShouldRenderUpgradeBannerSelector
+  );
+
   const cards = useIOSelector(state =>
     selectWalletCardsByCategory(state, "itw")
   );
@@ -130,7 +136,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         header={sectionHeader}
         topElement={
           <VStack space={16}>
-            <ItwUpgradeBanner />
+            {shouldRenderUpgradeBanner && <ItwDiscoveryBanner />}
             <ItwWalletReadyBanner />
             {!shouldHideEidAlert && (
               <ItwEidLifecycleAlert

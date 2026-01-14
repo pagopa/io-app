@@ -59,8 +59,7 @@ export const itwShouldRenderWalletReadyBannerSelector = (state: GlobalState) =>
   itwLifecycleIsValidSelector(state) &&
   !itwIsWalletInstanceStatusFailureSelector(state) &&
   itwCredentialsEidStatusSelector(state) !== "jwtExpired" &&
-  itwIsWalletEmptySelector(state) &&
-  !itwIsL3EnabledSelector(state);
+  itwIsWalletEmptySelector(state);
 
 /**
  * Selectors that returns if the wallet is available for offline access. It joins three
@@ -132,9 +131,9 @@ export const itwShouldHideEidLifecycleAlert = (state: GlobalState): boolean =>
  * - The IT Wallet feature flag is enabled
  * - The wallet is not offline
  * - The L3 feature flag is enabled
- * - The wallet is not valid (not yet active()
+ * - The wallet is not valid (not yet active)
  */
-export const itwShouldRenderActivationBannerSelector = (state: GlobalState) =>
+export const itwShouldRenderDiscoveryBannerSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
   !offlineAccessReasonSelector(state) &&
   itwIsL3EnabledSelector(state) &&
@@ -145,10 +144,10 @@ export const itwShouldRenderActivationBannerSelector = (state: GlobalState) =>
  * - The IT Wallet feature flag is enabled
  * - The wallet is not offline
  * - The L3 feature flag is enabled
- * - The user does not already have a valid IT Wallet
+ * - The wallet is active but not an IT Wallet istance
  */
 export const itwShouldRenderUpgradeBannerSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
   !offlineAccessReasonSelector(state) &&
   itwIsL3EnabledSelector(state) &&
-  !itwShouldRenderNewItWalletSelector(state);
+  !itwLifecycleIsITWalletValidSelector(state);

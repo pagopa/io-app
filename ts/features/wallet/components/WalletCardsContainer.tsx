@@ -5,10 +5,11 @@ import { StyleSheet, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
-import { ItwActivationBanner } from "../../itwallet/common/components/ItwActivationBanner";
 import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
+import { itwShouldRenderDiscoveryBannerSelector } from "../../itwallet/common/store/selectors";
+import { ItwDiscoveryBanner } from "../../itwallet/discovery/components/ItwDiscoveryBanner";
 import { ItwWalletCardsContainer } from "../../itwallet/wallet/components/ItwWalletCardsContainer";
 import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
 import {
@@ -39,6 +40,9 @@ const WalletCardsContainer = () => {
   const shouldRenderItwCardsContainer = useIOSelector(
     shouldRenderItwCardsContainerSelector
   );
+  const shoulwRenderItwDiscoveryBanner = useIOSelector(
+    itwShouldRenderDiscoveryBannerSelector
+  );
 
   useItwWalletInstanceRevocationAlert();
 
@@ -52,8 +56,6 @@ const WalletCardsContainer = () => {
     }
     return (
       <View testID="walletCardsContainerTestID" style={styles.content}>
-        <ItwActivationBanner />
-        <ItwWalletNotAvailableBanner />
         {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
         <OtherWalletCardsContainer />
       </View>
@@ -70,6 +72,10 @@ const WalletCardsContainer = () => {
       layout={LinearTransition.duration(200)}
     >
       <ItwEnvironmentAlert />
+      <ItwWalletNotAvailableBanner />
+      {shoulwRenderItwDiscoveryBanner && (
+        <ItwDiscoveryBanner style={{ marginVertical: 16 }} />
+      )}
       <ItwDiscoveryBannerStandalone />
       {walletContent}
     </Animated.View>

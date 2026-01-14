@@ -130,7 +130,6 @@ const ItwEngagementBannerSection = () => (
           onPress={() => Alert.alert("✅ Engagement Banner pressed")}
           onDismiss={() => Alert.alert("❌ Engagement Banner dismissed")}
           dismissable={true}
-          variant="link"
         />
       </DSComponentViewerBox>
     </VStack>

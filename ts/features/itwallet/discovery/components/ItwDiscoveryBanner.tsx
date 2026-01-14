@@ -1,24 +1,30 @@
 import I18n from "i18next";
+import { ComponentProps } from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
+import { ItwEngagementBanner } from "../../common/components/ItwEngagementBanner";
 import {
   itwIsMdlPresentSelector,
   itwIsWalletEmptySelector
 } from "../../credentials/store/selectors";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { itwShouldRenderUpgradeBannerSelector } from "../store/selectors";
-import { ItwEngagementBanner } from "./ItwEngagementBanner";
 
-export const ItwUpgradeBanner = () => {
+type Props = {
+  /** Custom styles applied to the underlying {@link ItwEngagementBanner} component */
+  style?: ComponentProps<typeof ItwEngagementBanner>["style"];
+};
+
+/**
+ * Disaplays a banner that prompts the user to activate or upgrade its wallet to the
+ * new IT-Wallet.
+ */
+export const ItwDiscoveryBanner = ({ style }: Props) => {
   const navigation = useIONavigation();
 
-  const isBannerVisible = useIOSelector(itwShouldRenderUpgradeBannerSelector);
+  const isWalletActive = useIOSelector(itwLifecycleIsValidSelector);
   const isWalletEmpty = useIOSelector(itwIsWalletEmptySelector);
   const hasMdl = useIOSelector(itwIsMdlPresentSelector);
-
-  if (!isBannerVisible) {
-    return null;
-  }
 
   const handleStartPress = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
@@ -27,9 +33,31 @@ export const ItwUpgradeBanner = () => {
     });
   };
 
+  const handleAddNewDocumentPress = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ONBOARDING
+    });
+  };
+
   const handleOnDismiss = () => {
     // TODO SIW-3564 implement banner dismissal logic
   };
+
+  if (!isWalletActive) {
+    return (
+      <ItwEngagementBanner
+        title={I18n.t("features.itWallet.engagementBanner.activation.title")}
+        description={I18n.t(
+          "features.itWallet.engagementBanner.activation.description"
+        )}
+        action={I18n.t("features.itWallet.engagementBanner.activation.action")}
+        onPress={handleAddNewDocumentPress}
+        onDismiss={handleOnDismiss}
+        dismissable={true}
+        style={style}
+      />
+    );
+  }
 
   if (isWalletEmpty) {
     return (
@@ -43,6 +71,7 @@ export const ItwUpgradeBanner = () => {
         )}
         onPress={handleStartPress}
         onDismiss={handleOnDismiss}
+        style={style}
       />
     );
   }
@@ -62,6 +91,7 @@ export const ItwUpgradeBanner = () => {
         onPress={handleStartPress}
         onDismiss={handleOnDismiss}
         dismissable={true}
+        style={style}
       />
     );
   }
@@ -76,6 +106,7 @@ export const ItwUpgradeBanner = () => {
       onPress={handleStartPress}
       onDismiss={handleOnDismiss}
       dismissable={true}
+      style={style}
     />
   );
 };
