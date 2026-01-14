@@ -1601,10 +1601,10 @@
         "cta": "Scopri di più"
       },
       "error": {
-        "title": "Si è verificato un errore",
-        "subtitle": "Riprova o contatta l'assistenza",
-        "primaryButton": "Chiudi",
-        "secondaryButton": "Riprova"
+        "title": "This payment method is not available.",
+        "subtitle": "Close the app and reopen it to update your wallet.",
+        "primaryButton": "Back",
+        "secondaryButton": "Retry"
       }
     },
     "wallet": "Wallet",
