@@ -5,6 +5,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { isPaymentMethodExpired } from "../../common/utils";
 import { useWalletOnboardingWebView } from "../../onboarding/hooks/useWalletOnboardingWebView";
 import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
+import { trackWalletPaymentMethodUpdateTap } from "../analytics";
 
 type PaymentsDetailsDeleteMethodButtonProps = {
   paymentMethod?: WalletInfo;
@@ -32,6 +33,9 @@ const PaymentsMethodDetailsUpdateDataButton = ({
 
   const handleUpdatePress = () => {
     if (paymentMethod?.paymentMethodId) {
+      trackWalletPaymentMethodUpdateTap({
+        payment_method_selected: paymentMethod.details?.type
+      });
       startOnboarding(paymentMethod.paymentMethodId);
     }
   };
