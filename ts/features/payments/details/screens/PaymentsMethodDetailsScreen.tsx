@@ -12,7 +12,6 @@ import { getPaymentCardPropsFromWalletInfo } from "../../common/utils";
 import { PaymentsMethodDetailsBaseScreenComponent } from "../components/PaymentsMethodDetailsBaseScreenComponent";
 import { PaymentsMethodDetailsDeleteButton } from "../components/PaymentsMethodDetailsDeleteButton";
 import { PaymentsMethodDetailsErrorContent } from "../components/PaymentsMethodDetailsErrorContent";
-import { PaymentsMethodDetailsUpdateDataButton } from "../components/PaymentsMethodDetailsUpdateDataButton";
 import { PaymentsMethodPspDetailsAlert } from "../components/PaymentsMethodPspDetailsAlert";
 import WalletDetailsPaymentMethodFeatures from "../components/WalletDetailsPaymentMethodFeatures";
 import { PaymentsMethodDetailsParamsList } from "../navigation/params";
@@ -90,7 +89,7 @@ const PaymentsMethodDetailsScreen = () => {
     );
   }
 
-  return <PaymentsMethodDetailsErrorContent walletId={walletId} />;
+  return <PaymentsMethodDetailsErrorContent />;
 };
 
 const getCardHeaderTitle = (details?: UIWalletInfoDetails) => {
