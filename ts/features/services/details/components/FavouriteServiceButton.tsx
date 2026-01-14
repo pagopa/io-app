@@ -50,7 +50,8 @@ const FavouriteServiceButton = ({ service }: FavouriteServiceButtonProps) => {
             addFavouriteServiceRequest({
               id: service.id,
               institution: service.organization,
-              name: service.name
+              name: service.name,
+              addedAt: Date.now()
             })
           ),
         testID: "favourite-service-add-button"

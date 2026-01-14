@@ -29,11 +29,11 @@ import { useItwRemoveCredentialWithConfirm } from "../hooks/useItwRemoveCredenti
 import { openWebUrl } from "../../../../../utils/url";
 import {
   CREDENTIAL_STATUS_MAP,
-  getMixPanelCredential,
   trackItwCredentialBottomSheet,
   trackItwCredentialBottomSheetAction,
   trackItwCredentialTapBanner
 } from "../../../analytics";
+import { getMixPanelCredential } from "../../../analytics/utils/analyticsUtils";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
