@@ -6,9 +6,9 @@ import { ItwCredentialStatus } from "../utils/itwTypesUtils.ts";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
 import {
   CREDENTIALS_MAP,
-  getMixPanelCredential,
   trackItwCredentialQualificationDetail
 } from "../../analytics";
+import { getMixPanelCredential } from "../../analytics/utils/analyticsUtils";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialClaim } from "./ItwCredentialClaim.tsx";

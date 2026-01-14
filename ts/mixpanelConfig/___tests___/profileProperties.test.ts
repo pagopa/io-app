@@ -29,15 +29,6 @@ const generateBaseProfileProperties = () => ({
   CDC_STATUS: 0,
   FONT_PREFERENCE: "comfortable",
   THEME_PREFERENCE: "light",
-  ITW_CED_V2: "not_available",
-  ITW_ID_V2: "not_available",
-  ITW_PID: "not_available",
-  ITW_PG_V2: "not_available",
-  ITW_STATUS_V2: "L2",
-  ITW_TS_V2: "not_available",
-  ITW_CED_V3: "not_available",
-  ITW_PG_V3: "not_available",
-  ITW_TS_V3: "not_available",
   LOGIN_METHOD: "not set",
   LOGIN_SESSION: "365",
   NOTIFICATION_CONFIGURATION: "not set",
@@ -121,9 +112,6 @@ describe("profileProperties", () => {
               .mockImplementation(() =>
                 Promise.resolve(notificationPermissionTuple[0] as boolean)
               );
-            jest
-              .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-              .mockReturnValue(false);
 
             await updateMixpanelProfileProperties(state);
 
@@ -295,14 +283,6 @@ const generateMockedGlobalState = (
       reason: "NOT_LOGGED_IN"
     },
     features: {
-      itWallet: {
-        credentials: {
-          credentials: {}
-        },
-        preferences: {
-          authLevel: "L2"
-        }
-      },
       loginFeatures: {
         fastLogin: {
           optIn: {

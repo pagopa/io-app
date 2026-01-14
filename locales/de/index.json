@@ -1385,12 +1385,6 @@
         "title": "Möchtest du in der App bezahlen?",
         "content": "Finde heraus, welche Zahlungsmethoden du in dein Konto aufnehmen kannst.",
         "cta": "Mehr erfahren"
-      },
-      "error": {
-        "title": "Es ist ein Fehler aufgetreten",
-        "subtitle": "Versuche es erneut oder kontaktiere den Support",
-        "primaryButton": "Schließen",
-        "secondaryButton": "Erneut versuchen"
       }
     },
     "wallet": "Konto",

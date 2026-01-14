@@ -1,6 +1,6 @@
 import { IOToast } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import { Alert } from "react-native";
+import { Alert, View } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
@@ -88,18 +88,25 @@ const IDPayPaymentCodeScan = () => {
 
   return (
     <>
-      <BarcodeScanBaseScreenComponent
-        barcodeFormats={barcodeFormats}
-        barcodeTypes={barcodeTypes}
-        onBarcodeSuccess={handleBarcodeSuccess}
-        onBarcodeError={handleBarcodeError}
-        onFileInputPressed={showFilePicker}
-        onManualInputPressed={navigateToCodeInputScreen}
-        contextualHelp={emptyContextualHelp}
-        barcodeAnalyticsFlow="idpay"
-        isDisabled={isFilePickerVisible || isFileReaderLoading}
-        isLoading={isFileReaderLoading}
-      />
+      <View
+        style={{ flex: 1 }}
+        importantForAccessibility={
+          isFilePickerVisible ? "no-hide-descendants" : "auto"
+        }
+      >
+        <BarcodeScanBaseScreenComponent
+          barcodeFormats={barcodeFormats}
+          barcodeTypes={barcodeTypes}
+          onBarcodeSuccess={handleBarcodeSuccess}
+          onBarcodeError={handleBarcodeError}
+          onFileInputPressed={showFilePicker}
+          onManualInputPressed={navigateToCodeInputScreen}
+          contextualHelp={emptyContextualHelp}
+          barcodeAnalyticsFlow="idpay"
+          isDisabled={isFilePickerVisible || isFileReaderLoading}
+          isLoading={isFileReaderLoading}
+        />
+      </View>
       {filePickerBottomSheet}
     </>
   );
