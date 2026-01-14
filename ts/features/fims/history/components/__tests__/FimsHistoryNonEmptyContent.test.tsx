@@ -89,7 +89,9 @@ describe("fimsHistoryNonEmptyContent", () => {
 
         const testString = `${+hasAccesses} accesses, historyLoading = ${historyLoading} and historyExporting = ${historyExporting}`;
 
-        it(`should fetch automatically to try and fill the list, and match snapshot for ${testString} `, () => {
+        it(`should ${
+          hasAccesses ? "" : "not "
+        }fetch automatically to try and fill the list, and match snapshot for ${testString} `, () => {
           const component = renderComponent(
             {
               accesses: hasAccesses ? mockAccesses : mockEmptyAccesses,
@@ -99,7 +101,7 @@ describe("fimsHistoryNonEmptyContent", () => {
           );
           expect(component).toBeTruthy();
           expect(component).toMatchSnapshot();
-          // expect(fetchMore).toHaveBeenCalledTimes(1);
+          expect(fetchMore).toHaveBeenCalledTimes(hasAccesses ? 1 : 0);
         });
 
         it(`should ${
@@ -140,9 +142,9 @@ describe("fimsHistoryNonEmptyContent", () => {
           it(`should ${
             isPageFooterLoading ? "not" : ""
           } dispatch the onPress if the user taps the primary action in case of ${testString}`, () => {
-            const mockFetchMore = jest.fn();
+            const mockHandleExportOnPress = jest.fn();
             jest.spyOn(HOOK, "useFimsHistoryExport").mockReturnValue({
-              handleExportOnPress: mockFetchMore
+              handleExportOnPress: mockHandleExportOnPress
             });
 
             const component = renderComponent(
@@ -158,7 +160,7 @@ describe("fimsHistoryNonEmptyContent", () => {
 
             fireEvent.press(renderedComponent);
 
-            expect(mockFetchMore).toHaveBeenCalledTimes(
+            expect(mockHandleExportOnPress).toHaveBeenCalledTimes(
               isPageFooterLoading ? 0 : 1
             );
           });
