@@ -13,13 +13,15 @@ import { ITW_ROUTES } from "../../navigation/routes";
 type Props = {
   /** Custom styles applied to the underlying {@link ItwEngagementBanner} component */
   style?: ComponentProps<typeof ItwEngagementBanner>["style"];
+  /** Dismiss handler */
+  onDismiss?: () => void;
 };
 
 /**
  * Disaplays a banner that prompts the user to activate or upgrade its wallet to the
  * new IT-Wallet.
  */
-export const ItwDiscoveryBanner = ({ style }: Props) => {
+export const ItwDiscoveryBanner = ({ style, onDismiss }: Props) => {
   const navigation = useIONavigation();
 
   const isWalletActive = useIOSelector(itwLifecycleIsValidSelector);
@@ -40,6 +42,7 @@ export const ItwDiscoveryBanner = ({ style }: Props) => {
   };
 
   const handleOnDismiss = () => {
+    onDismiss?.();
     // TODO SIW-3564 implement banner dismissal logic
   };
 
