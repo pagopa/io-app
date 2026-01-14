@@ -222,7 +222,7 @@ const ReceiptListScreen = () => {
       )}
       ListEmptyComponent={EmptyStateList}
       ListFooterComponent={renderLoadingFooter}
-      keyExtractor={item => `transaction_${item.eventId}`}
+      keyExtractor={(item, index) => `transaction_${item.eventId}${index}`}
       renderItem={({ item }) => (
         <ReceiptFadeInOutAnimationView>
           <ReceiptListItemTransaction
