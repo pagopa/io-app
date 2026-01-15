@@ -6,11 +6,12 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { FunctionComponent, memo, useCallback, useState } from "react";
-import { View, ViewProps } from "react-native";
+import { ViewProps } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
-import I18n from "i18next";
 import { NOTIFY_LINK_CLICK_SCRIPT } from "../../../../../components/ui/Markdown/script";
 import { WebViewMessage } from "../../../../../components/ui/Markdown/types";
 import { FlowType } from "../../../../../utils/analytics";
@@ -77,7 +78,8 @@ const TosWebviewComponent: FunctionComponent<Props> = ({
     <TosWebviewErrorComponent handleRetry={handleRetry} />
   ) : (
     <>
-      <View
+      <SafeAreaView
+        edges={["bottom"]}
         style={{
           flex: 1,
           paddingBottom: showFooter
@@ -103,7 +105,7 @@ const TosWebviewComponent: FunctionComponent<Props> = ({
             AVOID_ZOOM_JS + NOTIFY_LINK_CLICK_SCRIPT
           )}
         />
-      </View>
+      </SafeAreaView>
       {showFooter && (
         <FooterActions
           transparent
