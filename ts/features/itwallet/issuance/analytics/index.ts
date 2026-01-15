@@ -12,6 +12,7 @@ import {
   BackToWallet,
   CredentialUnexpectedFailure,
   IdRequestFailure,
+  IdRequestFederationFailure,
   IdUnexpectedFailure,
   ItwCredentialReissuingFailedProperties,
   ItwExit,
@@ -195,6 +196,15 @@ export const trackMrtdPoPChallengeInfoFailed = (
   void mixpanelTrack(
     ITW_ISSUANCE_ERRORS_EVENTS.ITW_GET_CHALLENGE_INFO_FAILED,
     buildEventProperties("KO", "screen_view", properties)
+  );
+};
+
+export const trackItwIdRequestFederationFailed = (
+  properties: IdRequestFederationFailure
+) => {
+  void mixpanelTrack(
+    ITW_ISSUANCE_ERRORS_EVENTS.ITW_ID_REQUEST_FEDERATION_FAILED,
+    buildEventProperties("KO", "error", properties)
   );
 };
 

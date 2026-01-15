@@ -59,3 +59,9 @@ export type TrackGetChallengeInfoFailure = {
   ITW_ID_method: ItwIdMethod;
   reason?: string;
 };
+
+export type IdRequestFederationFailure = {
+  credential: "ITW_ID" | "ITW_PID";
+  reason: unknown;
+  type: string;
+};
