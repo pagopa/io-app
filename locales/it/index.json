@@ -1601,9 +1601,9 @@
         "cta": "Scopri di più"
       },
       "error": {
-        "title": "Si è verificato un errore",
-        "subtitle": "Riprova o contatta l'assistenza",
-        "primaryButton": "Chiudi",
+        "title": "Questo metodo di pagamento non è disponibile",
+        "subtitle": "Chiudi l’app e riaprila per aggiornare il portafoglio",
+        "primaryButton": "Indietro",
         "secondaryButton": "Riprova"
       }
     },
@@ -3032,7 +3032,8 @@
       },
       "metadata": {
         "a11y": {
-          "website": "Visita il sito dell'ente"
+          "website": "Visita il sito dell'ente",
+          "copyToClipboard": "Copia negli appunti"
         },
         "title": "Contatti ed informazioni",
         "website": "Visita il sito",
@@ -3042,7 +3043,6 @@
         "email": "Invia un'email",
         "pec": "Invia una PEC",
         "fiscalCode": "Codice fiscale ente",
-        "fiscalCodeAccessibilityHint": "Copia negli appunti",
         "address": "Indirizzo",
         "serviceId": "ID servizio"
       },
