@@ -387,7 +387,11 @@ const reducer = (
     case getType(paymentClearWebViewFlow):
       return {
         ...state,
-        webViewPayload: undefined
+        webViewPayload: undefined,
+        contextualPayment: {
+          ...state.contextualPayment,
+          webViewPayload: undefined
+        }
       };
 
     // Contextual onboarding Webview on Android

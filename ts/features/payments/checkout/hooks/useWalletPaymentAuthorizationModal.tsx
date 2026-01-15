@@ -60,7 +60,6 @@ export const useWalletPaymentAuthorizationModal = ({
     (outcome: WalletPaymentOutcome) => {
       onAuthorizationOutcome(outcome);
       dispatch(storePaymentOutcomeToHistory(outcome));
-      dispatch(paymentClearWebViewFlow());
     },
     [onAuthorizationOutcome, dispatch]
   );
