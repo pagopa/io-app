@@ -11434,7 +11434,7 @@ __metadata:
     react-native-keychain: ^10.0.0
     react-native-linear-gradient: ^2.5.6
     react-native-notifications-utils: ^0.3.0
-    react-native-pager-view: ^8.0.0
+    react-native-pager-view: ^7.0.1
     react-native-pdf: 7.0.3
     react-native-pdf-thumbnail: ^1.3.1
     react-native-permissions: ^5.3.0
@@ -16300,13 +16300,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-pager-view@npm:^8.0.0":
-  version: 8.0.0
-  resolution: "react-native-pager-view@npm:8.0.0"
+"react-native-pager-view@npm:^7.0.1":
+  version: 7.0.2
+  resolution: "react-native-pager-view@npm:7.0.2"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: b2a9d5b6bebd84d46a8460a900ddd58da60dff1bdaa31f3f4c53ed9609d134d006064bdd522808464622950e7ad1256eae28641346c4617f2ddf3217c1dfd11e
+  checksum: b49b88548f33dcad1467cf696d622b54243eed4687150347401c3128c7b4eae71538bba35afc213d8804bcf0eab770a28ded891b9a9f8b5f810320414e4de893
   languageName: node
   linkType: hard
 
