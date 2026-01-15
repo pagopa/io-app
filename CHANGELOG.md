@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.22.0-rc.15](https://github.com/pagopa/io-app/compare/3.22.0-rc.14...3.22.0-rc.15) (2026-01-15)
+
+
+### Bug Fixes
+
+* [[IOBP-2485](https://pagopa.atlassian.net/browse/IOBP-2485)] clear webViewPayload state ([#7770](https://github.com/pagopa/io-app/issues/7770)) ([b9bfd11](https://github.com/pagopa/io-app/commit/b9bfd1106201d6d1f52889450289ef1ea3d37736))
+
 ## [3.22.0-rc.14](https://github.com/pagopa/io-app/compare/3.22.0-rc.13...3.22.0-rc.14) (2026-01-14)
 
 
