@@ -23,10 +23,7 @@ import {
 import { isPaymentsWebViewFlowEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
-import {
-  paymentClearWebViewFlow,
-  paymentStartWebViewFlow
-} from "../store/actions/orchestration";
+import { paymentStartWebViewFlow } from "../store/actions/orchestration";
 
 type Props = {
   onAuthorizationOutcome: (outcome: WalletPaymentOutcome) => void;
