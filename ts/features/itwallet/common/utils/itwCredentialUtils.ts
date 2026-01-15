@@ -3,6 +3,7 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { SdJwt, Mdoc } from "@pagopa/io-react-native-wallet";
 import I18n from "i18next";
+import { isBefore } from "date-fns";
 import { CredentialType } from "./itwMocksUtils";
 import {
   CredentialFormat,
@@ -127,8 +128,12 @@ export const validCredentialStatuses: Array<ItwCredentialStatus> = [
 
 /**
  * Extracts the verification claim from the SD-JWT,
- * checks whether the `assurance_level` field is equal to `"high"`,
- * and returns `true` only in that case.
+ * checks whether the `assurance_level` field is equal to `"high"` or the
+ * `trust_framework` field is equal to `"it_l2+document_proof"`,
+ * and returns `true` only if one of these conditions is met.
+ *
+ * `"it_l2+document_proof"` indicates that the credential has been issued with
+ * a substantial authentication (SPID, CieID) plus an MRTD PoP verification,
  *
  * @param sdJwt - The SD-JWT string to check
  * @returns boolean indicating if the credential is an ITW credential (L3)
@@ -147,7 +152,27 @@ export const isItwCredential = ({
   return pipe(
     O.tryCatch(getVerificationByFormat[format as CredentialFormat]),
     O.chain(O.fromNullable),
-    O.chainNullableK(({ assurance_level }) => assurance_level === "high"),
+    O.chainNullableK(
+      ({ assurance_level, trust_framework }) =>
+        assurance_level === "high" || trust_framework === "it_l2+document_proof"
+    ),
     O.getOrElse(() => false)
   );
+};
+
+/**
+ * Checks if the credential was issued before the PID.
+ * @param credentialIssuedAt - Credential issuance date
+ * @param pidIssuedAt - PID issuance date
+ * @returns true if credential was issued before PID, false otherwise
+ */
+export const isCredentialIssuedBeforePid = (
+  credentialIssuedAt?: string,
+  pidIssuedAt?: string
+): boolean => {
+  if (!credentialIssuedAt || !pidIssuedAt) {
+    return false;
+  }
+
+  return isBefore(new Date(credentialIssuedAt), new Date(pidIssuedAt));
 };

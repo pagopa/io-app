@@ -26,10 +26,7 @@ import {
   checkSession,
   watchCheckSessionSaga
 } from "../features/authentication/common/saga/watchCheckSessionSaga";
-import {
-  watchForceLogoutOnDifferentCF,
-  watchForceLogoutSaga
-} from "../features/authentication/common/saga/watchForceLogoutSaga";
+import { watchForceLogoutSaga } from "../features/authentication/common/saga/watchForceLogoutSaga";
 import { sessionExpired } from "../features/authentication/common/store/actions";
 import {
   sessionInfoSelector,
@@ -80,7 +77,6 @@ import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbort
 import { watchPaymentsSaga } from "../features/payments/common/saga";
 import { watchAarFlowSaga } from "../features/pn/aar/saga/watchAARFlowSaga";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
-import { maybeHandlePendingBackgroundActions } from "../features/pushNotifications/sagas/common";
 import { notificationPermissionsListener } from "../features/pushNotifications/sagas/notificationPermissionsListener";
 import { profileAndSystemNotificationsPermissions } from "../features/pushNotifications/sagas/profileAndSystemNotificationsPermissions";
 import { pushNotificationTokenUpload } from "../features/pushNotifications/sagas/pushNotificationTokenUpload";
@@ -97,8 +93,6 @@ import { watchUserDataProcessingSaga } from "../features/settings/common/sagas/u
 import { loadUserDataProcessing } from "../features/settings/common/store/actions/userDataProcessing";
 import { isProfileFirstOnBoarding } from "../features/settings/common/store/utils/guards";
 import { handleApplicationStartupTransientError } from "../features/startup/sagas";
-import { watchTrialSystemSaga } from "../features/trialSystem/store/sagas/watchTrialSystemSaga";
-import { watchWalletSaga } from "../features/wallet/saga";
 import {
   watchGetZendeskTokenSaga,
   watchZendeskGetSessionSaga
@@ -142,6 +136,8 @@ import { navigateToActiveSessionLogin } from "../features/authentication/activeS
 import { showSessionExpirationBlockingScreenSelector } from "../features/authentication/activeSessionLogin/store/selectors";
 import { watchCdcSaga } from "../features/bonus/cdc/common/saga";
 import { watchMessagesSaga } from "../features/messages/saga";
+import { watchWalletSaga } from "../features/wallet/saga";
+import { maybeHandlePendingBackgroundActions } from "./backgroundActions";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
@@ -305,7 +301,6 @@ export function* initializeApplicationSaga(
 
   // Watches for session expiration or corruption and resets the application state accordingly
   yield* fork(watchForceLogoutSaga);
-  yield* fork(watchForceLogoutOnDifferentCF);
   yield* fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel);
 
   // Instantiate a backend client from the session token
@@ -646,9 +641,6 @@ export function* initializeApplicationSaga(
     // Start watching for IDPay actions
     yield* fork(watchIDPaySaga, bpdToken);
   }
-
-  // Start watching for trial system saga
-  yield* fork(watchTrialSystemSaga, sessionToken);
 
   // Start watching for itw saga
   yield* fork(watchItwSaga);

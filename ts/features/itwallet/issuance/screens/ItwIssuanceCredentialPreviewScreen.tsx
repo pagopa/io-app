@@ -18,12 +18,12 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import {
-  getMixPanelCredential,
   trackCredentialPreview,
   trackIssuanceCredentialScrollToBottom,
   trackItwExit,
   trackSaveCredentialToWallet
 } from "../../analytics";
+import { getMixPanelCredential } from "../../analytics/utils/analyticsUtils";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
@@ -63,9 +63,7 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
       // to the Failure state.
       () => (
         <LoadingScreenContent
-          contentTitle={I18n.t(
-            "features.itWallet.issuance.credentialPreview.loading"
-          )}
+          title={I18n.t("features.itWallet.issuance.credentialPreview.loading")}
         />
       ),
       props => <ContentView {...props} />

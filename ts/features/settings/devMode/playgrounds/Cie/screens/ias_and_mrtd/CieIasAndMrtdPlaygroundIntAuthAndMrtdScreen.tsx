@@ -9,24 +9,32 @@ import {
   InternalAuthAndMrtdResponse,
   type NfcEvent
 } from "@pagopa/io-react-native-cie";
+import { useHeaderHeight } from "@react-navigation/elements";
 import { useEffect, useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
   StyleSheet,
   View
 } from "react-native";
-
-import { useHeaderHeight } from "@react-navigation/elements";
-import { SETTINGS_ROUTES } from "../../../../../common/navigation/routes";
-import { useIONavigation } from "../../../../../../../navigation/params/AppParamsList";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useDebugInfo } from "../../../../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../../../../hooks/useScreenEndMargin";
+import { useIONavigation } from "../../../../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../../../../store/hooks";
+import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../../../../store/reducers/backendStatus/remoteConfig";
+import { testAarCreateMandate } from "../../../../../../pn/aar/store/actions";
+import {
+  isRequestingSendMandateSelector,
+  sendMandateErrorSelector,
+  sendVerificationCodeSelector
+} from "../../../../../../pn/aar/store/reducers/tempAarMandate";
+import { SETTINGS_ROUTES } from "../../../../../common/navigation/routes";
 import { ReadStatusComponent } from "../../components/ReadStatusComponent";
-import { encodeChallenge } from "../../utils/encoding";
 import { ReadStatus } from "../../types/ReadStatus";
+import { encodeChallenge } from "../../utils/encoding";
 
 export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
   const navigation = useIONavigation();
@@ -39,6 +47,7 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
   const [can, setCan] = useState<string>("");
 
   const [isBase64Encoding, setIsBase64Encoding] = useState(false);
+  const [useSENDChallenge, setUseSENDChallenge] = useState(false);
   const toggleEncodingSwitch = () =>
     setIsBase64Encoding(previousState => !previousState);
 
@@ -48,6 +57,23 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
 
   const headerHeight = useHeaderHeight();
   const { screenEndMargin } = useScreenEndMargin();
+  const aarTempMandateEnabled = useIOSelector(
+    isAarInAppDelegationRemoteEnabledSelector
+  );
+  const isRequestingSENDMandate = useIOSelector(
+    isRequestingSendMandateSelector
+  );
+  const sendVerificationCode =
+    useIOSelector(sendVerificationCodeSelector) ?? "";
+  const dispatch = useIODispatch();
+
+  const selectedChallenge = useSENDChallenge ? sendVerificationCode : challenge;
+
+  const sendMandateError = useIOSelector(sendMandateErrorSelector);
+  const debugInfo = sendMandateError
+    ? { mandateRequest: sendMandateError }
+    : {};
+  useDebugInfo(debugInfo);
 
   useEffect(() => {
     const cleanup = [
@@ -78,21 +104,22 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
 
   useEffect(() => {
     if (status === "success" && successResult) {
+      setStatus("idle");
       navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
         screen:
           SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH_AND_MRTD_RESULTS,
         params: {
           result: successResult,
-          challenge,
+          challenge: selectedChallenge,
           encodedChallenge: encodeChallenge(
-            challenge,
+            selectedChallenge,
             isBase64Encoding ? "base64" : "hex"
           ),
           encoding: isBase64Encoding ? "base64" : "hex"
         }
       });
     }
-  }, [status, navigation, challenge, isBase64Encoding, successResult]);
+  }, [status, navigation, isBase64Encoding, selectedChallenge, successResult]);
 
   const handleStartReading = async () => {
     setEvent(undefined);
@@ -101,8 +128,8 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
     try {
       await CieManager.startInternalAuthAndMRTDReading(
         can,
-        challenge,
-        isBase64Encoding ? "base64" : "hex"
+        selectedChallenge,
+        isBase64Encoding ? (useSENDChallenge ? "base64url" : "base64") : "hex"
       );
     } catch (e) {
       setStatus("error");
@@ -146,6 +173,15 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
             onSwitchValueChange={toggleEncodingSwitch}
             value={isBase64Encoding}
           />
+          {aarTempMandateEnabled && (
+            <ListItemSwitch
+              label="Use SEND challenge"
+              onSwitchValueChange={() =>
+                setUseSENDChallenge(prevValue => !prevValue)
+              }
+              value={useSENDChallenge}
+            />
+          )}
           <TextInput
             accessibilityLabel="CAN text input field"
             value={can}
@@ -155,7 +191,8 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
           <VSpacer size={8} />
           <TextInput
             accessibilityLabel="Challenge text input field"
-            value={challenge}
+            disabled={useSENDChallenge}
+            value={useSENDChallenge ? sendVerificationCode : challenge}
             placeholder={"Challenge"}
             onChangeText={setChallenge}
           />
@@ -163,11 +200,25 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
         <IOButton
           variant="solid"
           label={status === "reading" ? "Stop" : "Start sign and reading"}
-          disabled={challenge.length === 0 || can.length < 6}
+          disabled={
+            !selectedChallenge ||
+            selectedChallenge.length === 0 ||
+            can.length < 6
+          }
           onPress={() =>
             status === "reading" ? handleStopReading() : handleStartReading()
           }
         />
+        {useSENDChallenge && (
+          <>
+            <VSpacer size={8} />
+            <IOButton
+              loading={isRequestingSENDMandate}
+              label="Request SEND Challenge"
+              onPress={() => dispatch(testAarCreateMandate.request())}
+            />
+          </>
+        )}
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

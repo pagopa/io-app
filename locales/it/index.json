@@ -1601,9 +1601,9 @@
         "cta": "Scopri di più"
       },
       "error": {
-        "title": "Si è verificato un errore",
-        "subtitle": "Riprova o contatta l'assistenza",
-        "primaryButton": "Chiudi",
+        "title": "Questo metodo di pagamento non è disponibile",
+        "subtitle": "Chiudi l’app e riaprila per aggiornare il portafoglio",
+        "primaryButton": "Indietro",
         "secondaryButton": "Riprova"
       }
     },
@@ -2559,12 +2559,6 @@
           "title": "Abilita il metodo per effettuare pagamenti in app",
           "subtitle": "Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”."
         },
-        "PAYMENT_METHODS_NOT_AVAILABLE": {
-          "title": "Vuoi pagare con carta? Aggiungila ora!",
-          "subtitle": "Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.",
-          "primaryAction": "Aggiungi carta",
-          "secondaryAction": "Usa altri metodi"
-        },
         "PAYMENT_METHODS_EXPIRED": {
           "title": "La tua carta è scaduta!",
           "subtitle": "Rimuovi la carta e aggiungine una nuova.\nVerrà salvata nel Portafoglio, così la prossima volta potrai pagare più facilmente.",
@@ -2986,7 +2980,8 @@
           }
         }
       },
-      "searchLink": "Cerca tra tutti i servizi locali disponibili"
+      "searchLink": "Cerca tra tutti i servizi locali disponibili",
+      "favourites": "Servizi preferiti"
     },
     "institution": {
       "failure": {
@@ -3037,7 +3032,8 @@
       },
       "metadata": {
         "a11y": {
-          "website": "Visita il sito dell'ente"
+          "website": "Visita il sito dell'ente",
+          "copyToClipboard": "Copia negli appunti"
         },
         "title": "Contatti ed informazioni",
         "website": "Visita il sito",
@@ -3047,7 +3043,6 @@
         "email": "Invia un'email",
         "pec": "Invia una PEC",
         "fiscalCode": "Codice fiscale ente",
-        "fiscalCodeAccessibilityHint": "Copia negli appunti",
         "address": "Indirizzo",
         "serviceId": "ID servizio"
       },
@@ -3055,6 +3050,35 @@
         "title": "Termini e Privacy",
         "tosLink": "Termini e condizioni d'uso",
         "privacyLink": "Informativa sulla privacy"
+      }
+    },
+    "favouriteServices": {
+      "title": "I miei preferiti",
+      "add": "Aggiungi ai preferiti",
+      "remove": "Rimuovi dai preferiti",
+      "sortButton": "Ordina",
+      "toasts": {
+        "added": "Aggiunto ai preferiti!",
+        "removed": "Rimosso dai preferiti!",
+        "limitReached": "Hai raggiunto il limite massimo di preferiti"
+      },
+      "emptyList": {
+        "title": "Crea la tua lista di preferiti",
+        "subtitle": "Salva i servizi che usi di più per averli sempre a portata di mano",
+        "searchAction": "Inizia la ricerca"
+      },
+      "removeAlert": {
+        "title": "Vuoi rimuovere il servizio dai preferiti?",
+        "confirm": "Sì, rimuovi"
+      },
+      "bottomSheet": {
+        "title": "Ordina per",
+        "a11y": "Ordina i servizi preferiti",
+        "content": {
+          "addedAt_desc": "Dal più recente",
+          "name_asc": "Per nome (A-Z)",
+          "addedAt_asc": "Dal meno recente"
+        }
       }
     }
   },
@@ -3587,6 +3611,7 @@
         "navigationTitle": "Agevolazioni",
         "screenTitle": "Scopri le opportunità",
         "merchantsAll": "Tutti i partner",
+        "a11yTitle": "Categoria: {{categoryName}}",
         "tabs": {
           "perInitiative": "Per categoria",
           "perMerchant": "Per partner",
@@ -3949,10 +3974,51 @@
             "paragraph1": "Conserva il codice QR, ti servirà per rileggere la notifica in app",
             "paragraph2": "Puoi inquadrarlo oppure caricare una sua foto su IO",
             "paragraph3": "Tutte le tue notifiche sono disponibili sul sito di SEND - Notifiche Digitali",
-            "paragraphDelegate3": "Tutte le tue notifiche e quelle per cui hai una delega sono disponibili sul sito di SEND - Notifiche Digitali",
             "link": "Vai sul sito di SEND",
             "primaryAction": "Torna alla notifica",
             "secondaryAction": "Chiudi la notifica"
+          },
+          "cieCanInsertion": {
+            "title": "Inserisci il codice a 6 cifre che trovi in basso a destra della CIE",
+            "description": "È il codice a 6 cifre (CAN) che trovi stampato sul fronte della Carta di Identità Elettronica, in basso a destra."
+          },
+          "cieScanningAdvisory": {
+            "title": "Posiziona la CIE su una superficie stabile per la lettura",
+            "description": "Dovrai poggiare il retro del telefono sulla carta e tenerlo fermo per la lettura.",
+            "primaryAction": "Inizia lettura CIE"
+          },
+          "androidNfcActivation": {
+            "title": "Attiva l’NFC per\ncontinuare",
+            "description": "Per consentire a IO di leggere la CIE, attiva l’NFC dalle Impostazioni del tuo dispositivo.",
+            "content": {
+              "listItemsHeader": "Come fare",
+              "listItems": {
+                "step1": {
+                  "label": "Step 1",
+                  "value": "Apri “Impostazioni”"
+                },
+                "step2": {
+                  "label": "Step 2",
+                  "value": "Cerca la funzionalità “NFC”"
+                },
+                "step3": {
+                  "label": "Step 3",
+                  "value": "Attiva la funzionalità"
+                }
+              }
+            },
+            "primaryAction": "Apri Impostazioni",
+            "secondaryAction": "Continua",
+            "alertOnClose": {
+              "title": "Vuoi interrompere l’apertura della notifica?",
+              "message": "Puoi aprire la notifica SEND in qualsiasi altro momento, dovrai però ripartire dal codice QR.",
+              "confirm": "Sì, interrompi",
+              "cancel": "No, continua"
+            },
+            "alertOnContinue": {
+              "title": "Attiva l’NFC per permettere a IO di leggere la CIE!",
+              "confirm": "Attiva NFC"
+            }
           },
           "cieScanning": {
             "idle": {
@@ -3973,6 +4039,16 @@
                 "title": "Hai rimosso il telefono troppo presto!",
                 "subtitle": "Riprova e tieni fermo il telefono per la lettura."
               }
+            }
+          },
+          "cieCanAdvisory": {
+            "title": "Prepara la Carta di Identità Elettronica (CIE) di {{denomination}}",
+            "description": "Dovrai usarla e inserire il suo codice a 6 cifre (CAN) che trovi stampato sul fronte in basso a destra.",
+            "alert": {
+              "title": "Vuoi interrompere l’apertura della notifica?",
+              "message": "Puoi aprire la notifica SEND in qualsiasi altro momento, dovrai però ripartire dal codice QR.",
+              "confirm": "Sì, interrompi",
+              "cancel": "No, continua"
             }
           },
           "validatingMandate": {
@@ -4000,6 +4076,13 @@
                 "È richiesto un sistema operativo Android 6.0 o iOS 13 o superiori."
               ],
               "cta": "Cosa posso fare?"
+            },
+            "cieContextualHelp": {
+              "title": "Come accedere a una notifica SEND destinata a un’altra persona",
+              "body": "Per visualizzare una notifica SEND destinata a un’altra persona hai bisogno della sua Carta di Identità Elettronica e di uno smartphone che ne supporti la lettura."
+            },
+            "createMandate": {
+              "loadingText": "Attendi qualche secondo"
             }
           }
         }
@@ -4325,8 +4408,14 @@
     },
     "wallet": {
       "home": {
-        "emptyMessage": "Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.",
-        "cta": "Aggiungi al Portafoglio",
+        "screen": {
+          "legacy": {
+            "emptyMessage": "Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.",
+            "cta": "Aggiungi al Portafoglio"
+          },
+          "emptyMessage": "La tua Patente di guida, la tua Tessera Sanitaria e altri documenti digitali appariranno qui!",
+          "cta": "Aggiungi un documento"
+        },
         "toast": {
           "newMethod": "Elemento aggiunto!"
         },
@@ -4615,7 +4704,7 @@
         "screen": {
           "legacy": {
             "title": "La versione digitale dei tuoi documenti, su IO",
-            "content": "Aggiungi la versione digitale dei tuoi documenti personali al Portafoglio dell'app! \n\n Hanno lo **stesso valore legale** di quelli fisici, in specifici contesti d'uso. \n\n ###### È facile e veloce \n Continua per attivare la nuova funzionalità in meno di 3 minuti: oltre **6 Milioni** di persone stanno già usando i **Documenti su IO**!",
+            "content": "Aggiungi la versione digitale dei tuoi documenti personali al Portafoglio dell'app! \n\n Hanno lo **stesso valore legale** di quelli fisici, in specifici contesti d'uso. \n\n ###### È facile e veloce \n Continua per attivare la nuova funzionalità in meno di 3 minuti: oltre **8 Milioni** di persone stanno già usando i **Documenti su IO**!",
             "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso]({{tos_url}}).",
             "actions": {
               "primary": "Continua"
@@ -4648,7 +4737,7 @@
             }
           },
           "itw": {
-            "title": "IO è il tuo portafoglio digitale di Stato: pubblico, sicuro, gratuito.",
+            "title": "IO è ora il tuo portafoglio digitale pubblico: sicuro, gratuito, tuo.",
             "features": {
               "1": "Usi la tua Patente su IO come documento di riconoscimento",
               "2": "Ti basta il tuo telefono per dimostrare la tua identità",
@@ -4718,6 +4807,12 @@
           }
         }
       },
+      "credentialsCatalogue": {
+        "failure": {
+          "content": "Non siamo riusciti a caricare la lista dei documenti disponibili",
+          "action": "Prova di nuovo"
+        }
+      },
       "identification": {
         "nfc": {
           "title": "Attiva l'NFC per continuare",
@@ -4749,27 +4844,24 @@
           "mode": {
             "ciePin": {
               "title": "Continua con CIE + PIN",
-              "subtitle": {
-                "default": "Dovrai usare la Carta di Identità Elettronica (CIE) e inserire il suo PIN di 8 cifre.",
-                "l3-next": "Ha una durata di 12 mesi"
-              },
+              "subtitle": "Ha una durata di 12 mesi",
               "badge": "scelta consigliata"
             },
             "cieId": {
               "title": "Continua con l’app CieID",
               "subtitle": {
                 "default": "Dovrai usare credenziali e app CieID",
-                "l3-next": "Ha una durata di 12 mesi"
+                "l3": "Ha una durata di 12 mesi"
               }
             },
             "spid": {
               "title": {
                 "default": "Continua con SPID",
-                "l3-next": "Continua con SPID + CIE"
+                "l3": "Continua con SPID + CIE"
               },
               "subtitle": {
                 "default": "Dovrai usare credenziali e app (o SMS)",
-                "l3-next": "Ha una durata di 90 giorni"
+                "l3": "Ha una durata di 90 giorni"
               }
             }
           }
@@ -5026,11 +5118,6 @@
           "body": "Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.",
           "primaryAction": "Ho capito"
         },
-        "asyncCredentialError": {
-          "title": "La Motorizzazione Civile ha preso in carico la tua richiesta",
-          "body": "Riceverai un messaggio in app per continuare appena La Motorizzazione Civile avrà elaborato la tua richiesta.",
-          "primaryAction": "Ho capito"
-        },
         "issuerNotTrustedCommonError": {
           "title": "Un problema non permette di continuare",
           "subtitle": "Si è verificato un errore tecnico che impedisce di ottenere {{credential}}. Riprova.\nSe il problema persiste, contatta l’assistenza.",
@@ -5074,6 +5161,16 @@
         "cieNotRegistered": {
           "title": "Registra la CIE in app CieID per continuare",
           "subtitle": "Per ottenere IT-Wallet, completa prima la registrazione della tua CIE in app CieID e poi riprova."
+        },
+        "mdlMessageExpired": {
+          "title": "Richiesta scaduta",
+          "subtitleStart": "Questa richiesta non è più valida ma puoi aggiungere di nuovo la tua ",
+          "subtitleBold": "Patente su IO.",
+          "primaryAction": "Aggiungi di nuovo"
+        },
+        "mrtdChallengeInitError": {
+          "title": "Un problema non permette di continuare",
+          "subtitle": "Si è verificato un errore che impedisce di procedere con la lettura della CIE. Riprova. Se il problema persiste, contatta l'assistenza."
         }
       },
       "notMatchingIdentityScreen": {
@@ -5099,8 +5196,8 @@
       },
       "reissuanceLandingScreen": {
         "notNecessary": {
-          "title": "Questo passaggio non è più necessario",
-          "subtitle": "È tutto pronto. Puoi gestire i tuoi documenti digitali nel Portafoglio.",
+          "title": "Hai già confermato la tua identità",
+          "subtitle": "Puoi gestire i tuoi documenti digitali nel Portafoglio.",
           "primaryAction": "Vai al Portafoglio"
         },
         "itWalletActivation": {
@@ -5139,13 +5236,6 @@
             },
             "action": "Inizia"
           }
-        },
-        "authSource": {
-          "anis": "ANIS - Anagrafe Nazionale dell'istruzione superiore",
-          "mdi": "Ministero dell'Interno",
-          "mef": "MEF - Ragioneria Generale dello Stato",
-          "inps": "Istituto Nazionale di Previdenza Sociale",
-          "mit": "MIT - Direzione Generale per la Motorizzazione"
         },
         "bottomSheets": {
           "eidInfo": {
@@ -5835,13 +5925,13 @@
       "resultScreen": {
         "success": {
           "header": "Ecco il codice sconto!",
-          "body": "Chiedi al venditore di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:",
+          "body": "Il codice ha durata limitata. Una volta scaduto, potrai generare un nuovo codice.",
           "validUpTo": "Vale fino a ",
-          "expiresIn": "Il codice scade tra ",
+          "expiresIn": "Il codice è valido per ",
           "copyCodeCta": "Copia codice",
           "expired": {
-            "header": "Il codice è scaduto",
-            "CTA": "Usa un nuovo codice"
+            "header": "Questo codice non è più valido",
+            "CTA": "Genera un nuovo codice"
           }
         },
         "error": {
@@ -5995,7 +6085,7 @@
                 "SUSPENDED": "Sospensione",
                 "READMITTED": "Riattivazione",
                 "CIE": "Abilitazione carta d’identità elettronica",
-                "UNSUBSCRIBED": "Recesso dall’iniziativa"
+                "UNSUBSCRIBED": "Scadenza iniziativa"
               }
             }
           }

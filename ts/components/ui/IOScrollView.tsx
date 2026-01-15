@@ -2,7 +2,6 @@
 import {
   HeaderSecondLevel,
   IOButton,
-  IOButtonBlockSpecificProps,
   IOButtonLinkSpecificProps,
   IOColors,
   IOSpacer,
@@ -47,11 +46,7 @@ import Animated, {
 import { WithTestID } from "../../types/WithTestID";
 import { useFooterActionsMargin } from "../../hooks/useFooterActionsMargin";
 import { useIOAlertVisible } from "../StatusMessages/IOAlertVisibleContext";
-
-type ButtonBlockProps = Omit<
-  IOButtonBlockSpecificProps,
-  "fullWidth" | "variant"
->;
+import { ButtonBlockProps } from "./utils/buttons";
 
 type ButtonLinkProps = Omit<IOButtonLinkSpecificProps, "color" | "variant">;
 

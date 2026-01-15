@@ -11,7 +11,6 @@ import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
-  Alert,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
@@ -25,6 +24,9 @@ import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { isCieLoginUatEnabledSelector } from "../../../../authentication/login/cie/store/selectors";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { selectIdentification } from "../../../machine/eid/selectors";
+import { trackItwIdEnterCan } from "../../../analytics";
 
 const CIE_CAN_LENGTH = 6;
 
@@ -32,8 +34,11 @@ export const ItwCieCanScreen = () => {
   usePreventScreenCapture();
 
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const identification =
+    ItwEidIssuanceMachineContext.useSelector(selectIdentification);
 
-  const [pin, setPin] = useState("");
+  const [can, setCan] = useState("");
   const canPadViewRef = useRef<View>(null);
 
   const headerHeight = useHeaderHeight();
@@ -42,7 +47,7 @@ export const ItwCieCanScreen = () => {
   useEffect(() => {
     // Reset the pin when the user leaves the screen.
     if (!isFocused) {
-      setPin("");
+      setCan("");
     }
   }, [isFocused]);
 
@@ -52,18 +57,23 @@ export const ItwCieCanScreen = () => {
     }, [])
   );
 
+  useFocusEffect(
+    useCallback(() => {
+      trackItwIdEnterCan({ ITW_ID_method: identification?.mode });
+    }, [identification])
+  );
+
   useHeaderSecondLevel({
     title: withTrailingPoliceCarLightEmojii("", useCieUat),
     supportRequest: true
   });
 
   const onCanChanged = (value: string) => {
-    setPin(value);
+    setCan(value);
 
     if (value.length === CIE_CAN_LENGTH) {
       Keyboard.dismiss();
-      // TODO[SIW-3045] continue with CAN authentication
-      Alert.alert(`Your CAN is: ${value}`);
+      machineRef.send({ type: "cie-can-entered", can: value });
     }
   };
 
@@ -92,7 +102,7 @@ export const ItwCieCanScreen = () => {
               <OTPInput
                 ref={canPadViewRef}
                 secret
-                value={pin}
+                value={can}
                 accessibilityLabel={I18n.t(
                   "authentication.cie.pin.accessibility.label"
                 )}

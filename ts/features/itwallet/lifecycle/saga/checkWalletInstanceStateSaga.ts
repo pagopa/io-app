@@ -4,11 +4,6 @@ import { ReduxSagaEffect } from "../../../../types/utils";
 import { assert } from "../../../../utils/assert";
 import { getNetworkError } from "../../../../utils/errors";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import {
-  trackItwStatusWalletAttestationFailure,
-  trackItwWalletBadState,
-  trackItwWalletInstanceRevocation
-} from "../../analytics";
 import { selectItwEnv } from "../../common/store/selectors/environment";
 import { getEnv } from "../../common/utils/environment";
 import { getWalletInstanceStatus } from "../../common/utils/itwAttestationUtils";
@@ -16,6 +11,11 @@ import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwUpdateWalletInstanceStatus } from "../../walletInstance/store/actions";
 import { itwLifecycleIsOperationalOrValid } from "../store/selectors";
+import {
+  trackItwWalletInstanceRevocation,
+  trackItwStatusWalletAttestationFailure,
+  trackItwWalletBadState
+} from "../../analytics";
 import { checkIntegrityServiceReadySaga } from "./checkIntegrityServiceReadySaga";
 import { handleWalletInstanceResetSaga } from "./handleWalletInstanceResetSaga";
 

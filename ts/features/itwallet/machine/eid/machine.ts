@@ -19,18 +19,20 @@ import { ItwTags } from "../tags";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine.ts";
 import {
   GetWalletAttestationActorParams,
+  InitMrtdPoPChallengeActorParams,
   type RequestEidActorParams,
-  StartAuthFlowActorParams
+  StartAuthFlowActorParams,
+  ValidateMrtdPoPChallengeActorParams
 } from "./actors";
 import {
   AuthenticationContext,
   CieContext,
   Context,
-  InitialContext
+  InitialContext,
+  MrtdPoPContext
 } from "./context";
 import { EidIssuanceEvents } from "./events";
 import { IssuanceFailureType, mapEventToFailure } from "./failure";
-import { isL3IssuanceFeaturesEnabled } from "./utils";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -59,13 +61,17 @@ export const itwEidIssuanceMachine = setup({
     navigateToFailureScreen: notImplemented,
     navigateToWallet: notImplemented,
     navigateToCredentialCatalog: notImplemented,
-    navigateToCiePreparationScreen: notImplemented,
+    navigateToCieNfcPreparationScreen: notImplemented,
     navigateToCiePinPreparationScreen: notImplemented,
+    navigateToCieCardPreparationScreen: notImplemented,
+    navigateToCieCanPreparationScreen: notImplemented,
     navigateToCiePinScreen: notImplemented,
-    navigateToCieReadCardScreen: notImplemented,
+    navigateToCieAuthenticationScreen: notImplemented,
     navigateToNfcInstructionsScreen: notImplemented,
     navigateToWalletRevocationScreen: notImplemented,
     navigateToCieWarningScreen: notImplemented,
+    navigateToCieCanScreen: notImplemented,
+    navigateToCieInternalAuthAndMrtdScreen: notImplemented,
     closeIssuance: notImplemented,
 
     /**
@@ -89,7 +95,8 @@ export const itwEidIssuanceMachine = setup({
     trackWalletInstanceCreation: notImplemented,
     trackWalletInstanceRevocation: notImplemented,
     trackIdentificationMethodSelected: notImplemented,
-
+    trackItwIdAuthenticationCompleted: notImplemented,
+    trackItwIdVerifiedDocument: notImplemented,
     /**
      * Context manipulation
      */
@@ -113,27 +120,71 @@ export const itwEidIssuanceMachine = setup({
         }
       };
     }),
-    trackIntroScreen: ({ context }) => {
-      trackItWalletIntroScreen(
-        isL3IssuanceFeaturesEnabled(context.level) ? "L3" : "L2"
+    completeMrtdPoP: assign(({ context, event }) => {
+      assertEvent(event, "mrtd-pop-verification-completed");
+      assert(
+        context.authenticationContext,
+        "authenticationContext must be defined when completing auth flow"
       );
+      return {
+        authenticationContext: {
+          ...context.authenticationContext,
+          callbackUrl: event.authRedirectUrl
+        }
+      };
+    }),
+    trackIntroScreen: ({ context }) => {
+      trackItWalletIntroScreen(context.level === "l3" ? "L3" : "L2");
     }
   },
   actors: {
-    verifyTrustFederation: fromPromise<void>(notImplemented),
     getCieStatus: fromPromise<CieContext>(notImplemented),
+    verifyTrustFederation: fromPromise<void>(notImplemented),
+
+    /**
+     * WI actors
+     */
+
     createWalletInstance: fromPromise<string>(notImplemented),
     revokeWalletInstance: fromPromise<void>(notImplemented),
     getWalletAttestation: fromPromise<
       WalletInstanceAttestations,
       GetWalletAttestationActorParams
     >(notImplemented),
-    requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
-      notImplemented
-    ),
+
+    /**
+     * Primary authentication actors
+     */
+
     startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
       notImplemented
     ),
+
+    /**
+     * MRTD PoP Challenge actors
+     */
+
+    initMrtdPoPChallenge: fromPromise<
+      MrtdPoPContext,
+      InitMrtdPoPChallengeActorParams
+    >(notImplemented),
+    validateMrtdPoPChallenge: fromPromise<
+      string,
+      ValidateMrtdPoPChallengeActorParams
+    >(notImplemented),
+
+    /**
+     * PID issuance actors
+     */
+
+    requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
+      notImplemented
+    ),
+
+    /**
+     * Credential upgrade actors
+     */
+
     credentialUpgradeMachine: itwCredentialUpgradeMachine
   },
   guards: {
@@ -147,9 +198,13 @@ export const itwEidIssuanceMachine = setup({
     isReissuance: ({ context }) => context.mode === "reissuance",
     isUpgrade: ({ context }) => context.mode === "upgrade",
     isL2Fallback: ({ context }) => context.level === "l2-fallback",
-    isL3FeaturesEnabled: ({ context }) =>
-      isL3IssuanceFeaturesEnabled(context.level),
-    isEligibleForItwSimplifiedActivation: notImplemented
+    isL3FeaturesEnabled: ({ context }) => context.level === "l3",
+    isEligibleForItwSimplifiedActivation: notImplemented,
+    requiresMrtdVerification: ({ context }) =>
+      // MRTD PoP verification is a step required for SPID and CieID identification modes
+      // when issuing an L3 PID
+      context.level === "l3" && context.identification?.mode !== "ciePin",
+    isWalletValid: notImplemented
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
@@ -191,7 +246,8 @@ export const itwEidIssuanceMachine = setup({
         start: {
           actions: assign(({ event }) => ({
             mode: event.mode,
-            level: event.level
+            level: event.level,
+            credentialType: event.credentialType
           })),
           target: "EvaluatingIssuanceMode"
         },
@@ -377,6 +433,11 @@ export const itwEidIssuanceMachine = setup({
             target: "#itwEidIssuanceMachine.TosAcceptance"
           },
           {
+            guard: "isWalletValid",
+            actions: "setFailure",
+            target: "#itwEidIssuanceMachine.Failure"
+          },
+          {
             actions: ["setFailure", "cleanupIntegrityKeyTag"],
             target: "#itwEidIssuanceMachine.Failure"
           }
@@ -404,7 +465,10 @@ export const itwEidIssuanceMachine = setup({
     },
     EvaluatingSimplifiedActivationFlow: {
       description: "State that manages the wallet's simplified activation flow",
-      entry: "clearSimplifiedActivationRequirements",
+      entry: [
+        "clearSimplifiedActivationRequirements",
+        "trackWalletInstanceCreation"
+      ],
       always: [
         {
           guard: "hasLegacyCredentials",
@@ -497,7 +561,8 @@ export const itwEidIssuanceMachine = setup({
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
-                  identification: context.identification
+                  identification: context.identification,
+                  withMRTDPoP: context.level === "l3"
                 }),
                 onDone: {
                   actions: assign(({ event }) => ({
@@ -573,7 +638,8 @@ export const itwEidIssuanceMachine = setup({
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
-                  identification: context.identification
+                  identification: context.identification,
+                  withMRTDPoP: context.level === "l3"
                 }),
                 onDone: {
                   actions: assign(({ event }) => ({
@@ -681,10 +747,9 @@ export const itwEidIssuanceMachine = setup({
             PreparationCie: {
               description:
                 "This state handles the CIE preparation screen, where the user is informed about the CIE card",
-              entry: "navigateToCiePreparationScreen",
+              entry: "navigateToCieNfcPreparationScreen",
               on: {
                 next: {
-                  actions: "navigateToCieReadCardScreen",
                   target: "StartingCieAuthFlow"
                 },
                 "go-to-cie-warning": {
@@ -702,13 +767,15 @@ export const itwEidIssuanceMachine = setup({
               description:
                 "Start the preliminary phase of the CIE identification flow.",
               tags: [ItwTags.Loading],
+              entry: "navigateToCieAuthenticationScreen",
+              actions: "navigateToCieAuthenticationScreen",
               invoke: {
                 src: "startAuthFlow",
-                // eslint-disable-next-line sonarjs/no-identical-functions
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
-                  identification: context.identification
+                  identification: context.identification,
+                  withMRTDPoP: false
                 }),
                 onDone: {
                   actions: assign(({ event }) => ({
@@ -778,6 +845,185 @@ export const itwEidIssuanceMachine = setup({
           },
           onDone: {
             target: "#itwEidIssuanceMachine.UserIdentification.Completed"
+          }
+        },
+        Completed: {
+          type: "final"
+        }
+      },
+      onDone: [
+        {
+          guard: "requiresMrtdVerification",
+          target: "MrtdPoP",
+          actions: "trackItwIdAuthenticationCompleted"
+        },
+        {
+          target: "Issuance"
+        }
+      ]
+    },
+    MrtdPoP: {
+      description: "State handling the MRTD verification process",
+      initial: "InitializingChallenge",
+      states: {
+        InitializingChallenge: {
+          description:
+            "Initializes the MRTD PoP challenge with the callbackUrl obtained from the primary authentication (SPID/CieID)",
+          tags: [ItwTags.Loading],
+          invoke: {
+            src: "initMrtdPoPChallenge",
+            input: ({ context }) => ({
+              authenticationContext: context.authenticationContext,
+              walletInstanceAttestation: context.walletInstanceAttestation?.jwt
+            }),
+            onDone: {
+              target: "DisplayingCanPreparationInstructions",
+              actions: assign(({ event }) => ({
+                mrtdContext: event.output
+              }))
+            },
+            onError: {
+              actions: "setFailure",
+              target: "#itwEidIssuanceMachine.Failure"
+            }
+          }
+        },
+        DisplayingCieCardPreparationInstructions: {
+          description:
+            "Displays informations to prepare the CIE for reading (currently not used for CAN flow).",
+          entry: "navigateToCieCardPreparationScreen",
+          on: {
+            back: {
+              target: "WaitingForCan"
+            },
+            next: {
+              target: "DisplayingCieNfcPreparationInstructions"
+            }
+          }
+        },
+        DisplayingCanPreparationInstructions: {
+          description:
+            "Once the challenge is initialized, we show NFC instructions with a dedicated screen.",
+          entry: "navigateToCieCanPreparationScreen",
+          on: {
+            next: {
+              target: "WaitingForCan"
+            }
+          }
+        },
+        WaitingForCan: {
+          description:
+            "Waits for the user to input the CAN read from the MRTD document",
+          entry: "navigateToCieCanScreen",
+          on: {
+            back: {
+              target: "DisplayingCanPreparationInstructions"
+            },
+            "cie-can-entered": {
+              target: "DisplayingCieNfcPreparationInstructions",
+              actions: assign(({ event, context }) => {
+                assert(context.mrtdContext, "mrtdContext must be defined");
+
+                return {
+                  mrtdContext: {
+                    ...context.mrtdContext,
+                    can: event.can
+                  }
+                };
+              })
+            }
+          }
+        },
+        DisplayingCieNfcPreparationInstructions: {
+          description:
+            "Displays instructions to read the CIE card using the device NFC.",
+          entry: "navigateToCieNfcPreparationScreen",
+          on: {
+            back: {
+              target: "DisplayingCieCardPreparationInstructions"
+            },
+            next: {
+              target: "#itwEidIssuanceMachine.MrtdPoP.SigningChallenge"
+            }
+          }
+        },
+        SigningChallenge: {
+          description:
+            "Once the CAN is entered, we proceed to sign the MRTD PoP challenge using the MRTD document",
+          entry: "navigateToCieInternalAuthAndMrtdScreen",
+          on: {
+            "mrtd-challenged-signed": {
+              target: "#itwEidIssuanceMachine.MrtdPoP.ChallengeValidation",
+              actions: assign(({ event, context }) => {
+                assert(context.mrtdContext, "mrtdContext must be defined");
+
+                return {
+                  mrtdContext: {
+                    ...context.mrtdContext,
+                    ias: {
+                      challenge_signed: event.data.nis_data.signedChallenge,
+                      ias_pk: event.data.nis_data.publicKey,
+                      sod_ias: event.data.nis_data.sod
+                    },
+                    mrtd: {
+                      dg1: event.data.mrtd_data.dg1,
+                      dg11: event.data.mrtd_data.dg11,
+                      sod_mrtd: event.data.mrtd_data.sod
+                    }
+                  }
+                };
+              })
+            },
+            close: {
+              target: "#itwEidIssuanceMachine.UserIdentification"
+            },
+            back: {
+              target: "DisplayingCieNfcPreparationInstructions"
+            }
+          }
+        },
+        ChallengeValidation: {
+          description:
+            "Validates the signed MRTD PoP challenge with the signed data from the MRTD document",
+          tags: [ItwTags.Loading],
+          invoke: {
+            id: "validateMrtdPoPChallenge",
+            src: "validateMrtdPoPChallenge",
+            input: ({ context }) => ({
+              authenticationContext: context.authenticationContext,
+              mrtdContext: context.mrtdContext,
+              walletInstanceAttestation: context.walletInstanceAttestation?.jwt
+            }),
+            onDone: {
+              target: "#itwEidIssuanceMachine.MrtdPoP.Authorization",
+              actions: assign(({ event, context }) => {
+                assert(context.mrtdContext, "mrtdContext must be defined");
+                return {
+                  mrtdContext: {
+                    ...context.mrtdContext,
+                    callbackUrl: event.output
+                  }
+                };
+              })
+            },
+            onError: {
+              actions: "setFailure",
+              target: "#itwEidIssuanceMachine.Failure"
+            }
+          }
+        },
+        Authorization: {
+          description:
+            "Wait for the user to complete the MRTD PoP authorization",
+          on: {
+            "mrtd-pop-verification-completed": {
+              target: "#itwEidIssuanceMachine.MrtdPoP.Completed",
+              actions: [
+                "completeMrtdPoP",
+                "storeAuthLevel",
+                "trackItwIdVerifiedDocument"
+              ]
+            }
           }
         },
         Completed: {

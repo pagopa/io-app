@@ -1,8 +1,6 @@
 import { IOPictograms } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { useEffect, useRef } from "react";
 import { View } from "react-native";
 import I18n from "i18next";
@@ -25,17 +23,13 @@ import {
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../../../utils/url";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import { usePagoPaPayment } from "../../checkout/hooks/usePagoPaPayment";
 import { usePaymentFailureSupportModal } from "../../checkout/hooks/usePaymentFailureSupportModal";
 import { PaymentsMethodDetailsRoutes } from "../../details/navigation/routes";
-import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
 import * as analytics from "../analytics";
 import { PaymentsOnboardingParamsList } from "../navigation/params";
-import { paymentsResetRptIdToResume } from "../store/actions";
 import {
   selectPaymentOnboardingMethods,
-  selectPaymentOnboardingRptIdToResume,
   selectPaymentOnboardingSelectedMethod
 } from "../store/selectors";
 import {
@@ -60,7 +54,7 @@ const pictogramByOutcome: Record<
 > = {
   [WalletOnboardingOutcomeEnum.SUCCESS]: "success",
   [WalletOnboardingOutcomeEnum.GENERIC_ERROR]: "umbrella",
-  [WalletOnboardingOutcomeEnum.AUTH_ERROR]: "error",
+  [WalletOnboardingOutcomeEnum.AUTH_ERROR]: "accessDenied",
   [WalletOnboardingOutcomeEnum.TIMEOUT]: "time",
   [WalletOnboardingOutcomeEnum.CANCELED_BY_USER]: "trash",
   [WalletOnboardingOutcomeEnum.INVALID_SESSION]: "umbrella",
@@ -84,11 +78,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
   const selectedPaymentMethodId = useIOSelector(
     selectPaymentOnboardingSelectedMethod
   );
-  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const availablePaymentMethods = pot.toUndefined(paymentMethodsPot);
-
-  const rptIdToResume = useIOSelector(selectPaymentOnboardingRptIdToResume);
-  const { startPaymentFlow } = usePagoPaPayment();
 
   const supportModal = usePaymentFailureSupportModal({
     outcome,
@@ -116,13 +106,6 @@ const PaymentsOnboardingFeedbackScreen = () => {
     }
   });
 
-  useEffect(
-    () => () => {
-      dispatch(paymentsResetRptIdToResume());
-    },
-    [dispatch]
-  );
-
   // Disables the hardware back button on Android devices
   useAvoidHardwareBackButton();
 
@@ -139,14 +122,6 @@ const PaymentsOnboardingFeedbackScreen = () => {
     navigation.popToTop();
     if (outcome === WalletOnboardingOutcomeEnum.SUCCESS && walletId) {
       dispatch(getPaymentsWalletUserMethods.request());
-      if (rptIdToResume) {
-        // Resume payment flow
-        // This implementation will be removed as soon as the backend will migrate totally to the NPG allowing the contextual onboarding. (https://pagopa.atlassian.net/browse/IOBP-632)
-        startPaymentFlow(rptIdToResume, {
-          startOrigin: paymentAnalyticsData?.startOrigin
-        });
-        return;
-      }
       navigation.reset({
         index: 1,
         routes: [
@@ -217,15 +192,6 @@ const PaymentsOnboardingFeedbackScreen = () => {
     return undefined;
   };
 
-  const actionButtonLabel = pipe(
-    rptIdToResume,
-    O.fromNullable,
-    O.fold(
-      () => I18n.t(`wallet.onboarding.outcome.${outcomeEnumKey}.primaryAction`),
-      () => I18n.t(`wallet.onboarding.outcome.SUCCESS.secondaryAction`)
-    )
-  );
-
   const hasAnimation = (value: IOPictograms | IOAnimatedPictograms): boolean =>
     value in IOAnimatedPictogramsAssets;
 
@@ -250,8 +216,12 @@ const PaymentsOnboardingFeedbackScreen = () => {
           `wallet.onboarding.outcome.${outcomeEnumKey}.subtitle`
         )}
         action={{
-          label: actionButtonLabel,
-          accessibilityLabel: actionButtonLabel,
+          label: I18n.t(
+            `wallet.onboarding.outcome.${outcomeEnumKey}.primaryAction`
+          ),
+          accessibilityLabel: I18n.t(
+            `wallet.onboarding.outcome.${outcomeEnumKey}.primaryAction`
+          ),
           onPress: handleContinueButton,
           testID: "wallet-onboarding-continue-button"
         }}

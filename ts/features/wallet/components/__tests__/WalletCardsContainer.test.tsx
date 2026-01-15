@@ -3,7 +3,7 @@ import _ from "lodash";
 
 import I18n from "i18next";
 import { ComponentType } from "react";
-import { Alert, Pressable } from "react-native";
+import { Alert } from "react-native";
 import configureMockStore from "redux-mock-store";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -113,14 +113,14 @@ describe("WalletCardsContainer", () => {
 
   it("should render the loading screen", () => {
     jest
-      .spyOn(walletSelectors, "selectIsWalletLoading")
+      .spyOn(walletSelectors, "shouldRenderWalletLoadingStateSelector")
+      .mockImplementation(() => true);
+    jest
+      .spyOn(walletSelectors, "shouldRenderWalletEmptyStateSelector")
       .mockImplementation(() => true);
     jest
       .spyOn(walletSelectors, "selectWalletCategoryFilter")
       .mockImplementation(() => undefined);
-    jest
-      .spyOn(walletSelectors, "shouldRenderWalletEmptyStateSelector")
-      .mockImplementation(() => true);
 
     const { queryByTestId } = renderComponent(WalletCardsContainer);
 
@@ -135,14 +135,14 @@ describe("WalletCardsContainer", () => {
 
   it("should render the empty screen", () => {
     jest
-      .spyOn(walletSelectors, "selectIsWalletLoading")
+      .spyOn(walletSelectors, "shouldRenderWalletLoadingStateSelector")
       .mockImplementation(() => false);
-    jest
-      .spyOn(walletSelectors, "selectWalletCategoryFilter")
-      .mockImplementation(() => undefined);
     jest
       .spyOn(walletSelectors, "shouldRenderWalletEmptyStateSelector")
       .mockImplementation(() => true);
+    jest
+      .spyOn(walletSelectors, "selectWalletOtherCards")
+      .mockImplementation(() => []);
 
     const { queryByTestId } = renderComponent(WalletCardsContainer);
 
@@ -197,31 +197,6 @@ describe("WalletCardsContainer", () => {
           queryByTestId(`${category}WalletCardsContainerTestID`)
         ).not.toBeNull();
       });
-    }
-  );
-
-  it.each([
-    { isLoading: true, isEmpty: false },
-    { isLoading: false, isEmpty: true }
-  ])(
-    "should render the ITW discovery banner if %p",
-    ({ isLoading, isEmpty }) => {
-      jest
-        .spyOn(itwSelectors, "isItwDiscoveryBannerRenderableSelector")
-        .mockImplementation(() => true);
-
-      jest
-        .spyOn(walletSelectors, "selectIsWalletLoading")
-        .mockImplementation(() => isLoading);
-      jest
-        .spyOn(walletSelectors, "shouldRenderWalletEmptyStateSelector")
-        .mockImplementation(() => isEmpty);
-
-      const { queryByTestId } = renderComponent(WalletCardsContainer);
-
-      expect(
-        queryByTestId("itwDiscoveryBannerStandaloneTestID")
-      ).not.toBeNull();
     }
   );
 });
@@ -494,6 +469,7 @@ describe("OtherWalletCardsContainer", () => {
         <ItwWalletCardsContainer />
       </AppFeedbackContext.Provider>
     ));
+
     expect(queryByTestId(`walletCardsCategoryItwHeaderTestID`)).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_itw_itw_4`)).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_itw_itw_5`)).not.toBeNull();
@@ -501,7 +477,9 @@ describe("OtherWalletCardsContainer", () => {
     const mDLCredential = queryByTestId(`walletCardTestID_itw_itw_4`);
 
     if (mDLCredential) {
-      const pressableComponent = mDLCredential.findByType(Pressable);
+      const pressableComponent = mDLCredential.findByProps({
+        accessibilityRole: "button"
+      });
       pressableComponent.props.onPress();
     }
 

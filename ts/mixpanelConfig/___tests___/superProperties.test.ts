@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { MixpanelProperties } from "mixpanel-react-native";
+import { Appearance } from "react-native";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
 import * as PUSHUTILS from "../../features/pushNotifications/utils";
@@ -8,16 +9,9 @@ import * as ACCESSIBILITY from "../../utils/accessibility";
 import * as APPVERSION from "../../utils/appVersion";
 import * as BIOMETRICS from "../../utils/biometrics";
 import * as DEVICE from "../../utils/device";
-import * as lifecycleSelectors from "../../features/itwallet/lifecycle/store/selectors";
 import { updateMixpanelSuperProperties } from "../superProperties";
 
 const mockColorScheme = "light";
-jest.mock("react-native", () => ({
-  ...jest.requireActual("react-native"),
-  Appearance: {
-    getColorScheme: jest.fn(() => mockColorScheme)
-  }
-}));
 
 // eslint-disable-next-line functional/no-let
 let mockIsMixpanelInitialized = true;
@@ -29,6 +23,14 @@ jest.mock("../../mixpanel", () => ({
 }));
 
 describe("superProperties", () => {
+  beforeEach(() => {
+    // Reset all mocks before each test
+    jest.clearAllMocks();
+
+    // Mock Appearance.getColorScheme using spyOn
+    jest.spyOn(Appearance, "getColorScheme").mockReturnValue(mockColorScheme);
+  });
+
   afterEach(() => {
     jest.restoreAllMocks();
     jest.clearAllMocks();
@@ -97,9 +99,6 @@ describe("superProperties", () => {
           jest
             .spyOn(ACCESSIBILITY, "isScreenReaderEnabled")
             .mockImplementation(() => Promise.resolve(true));
-          jest
-            .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-            .mockReturnValue(false);
 
           await updateMixpanelSuperProperties(state);
 
@@ -115,22 +114,12 @@ describe("superProperties", () => {
             isScreenReaderEnabled: true,
             CGN_STATUS: "not_active",
             CDC_STATUS: 0,
-            ITW_CED_V2: "not_available",
-            ITW_ID_V2: "not_available",
-            ITW_PID: "not_available",
-            ITW_PG_V2: "not_available",
-            ITW_STATUS_V2: "L2",
-            ITW_TS_V2: "not_available",
-            ITW_CED_V3: "not_available",
-            ITW_PG_V3: "not_available",
-            ITW_TS_V3: "not_available",
             LOGIN_SESSION: "365",
             NOTIFICATION_CONFIGURATION: pushContentReminderTuple[2],
             NOTIFICATION_PERMISSION: notificationPermissionTuple[1],
             SAVED_PAYMENT_METHOD: 0,
             SERVICE_CONFIGURATION: "AUTO",
-            WELFARE_STATUS: [],
-            OFFLINE_ACCESS_REASON: "not_available"
+            WELFARE_STATUS: []
           });
         });
       })
@@ -156,17 +145,6 @@ const generateMockedGlobalState = (
       reason: "NOT_LOGGED_IN"
     },
     features: {
-      itWallet: {
-        credentials: {
-          credentials: {}
-        },
-        preferences: {
-          authLevel: "L2"
-        }
-      },
-      ingress: {
-        offlineAccessReason: undefined
-      },
       loginFeatures: {
         fastLogin: {
           optIn: {

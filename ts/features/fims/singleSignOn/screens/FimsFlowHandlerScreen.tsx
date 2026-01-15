@@ -1,10 +1,9 @@
-import { Body } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constTrue, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
-import { useCallback, useEffect } from "react";
-import { View } from "react-native";
 import I18n from "i18next";
+import { useCallback, useEffect } from "react";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -24,11 +23,10 @@ import {
   fimsGetConsentsListAction
 } from "../store/actions/";
 import {
-  fimsConsentsDataSelector,
   fimsAuthenticationFailedSelector,
+  fimsConsentsDataSelector,
   fimsLoadingStateSelector
 } from "../store/selectors";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
 export type FimsFlowHandlerScreenRouteParams = {
   /* The label on the button that started the FIMS flow */
@@ -156,20 +154,16 @@ export const FimsFlowHandlerScreen = (
     const subtitle =
       loadingState === "in-app-browser-loading" ||
       loadingState === "abort" ||
-      loadingState === "idle" ? (
-        <View style={{ alignItems: "center" }}>
-          {/* TODO: Dark mode: Replace with theme values */}
-          <Body color="grey-650">{I18n.t(`FIMS.loadingScreen.subtitle`)}</Body>
-        </View>
-      ) : (
-        <></>
-      );
-    const title = I18n.t(`FIMS.loadingScreen.${loadingState}.title`);
+      loadingState === "idle"
+        ? I18n.t(`FIMS.loadingScreen.subtitle`)
+        : undefined;
 
     return (
-      <LoadingScreenContent headerVisible contentTitle={title}>
-        {subtitle}
-      </LoadingScreenContent>
+      <LoadingScreenContent
+        headerVisible
+        title={I18n.t(`FIMS.loadingScreen.${loadingState}.title`)}
+        subtitle={subtitle}
+      />
     );
   }
 

@@ -1,19 +1,32 @@
+import { IOButton, useIOToast } from "@pagopa/io-app-design-system";
+import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
+import Clipboard from "@react-native-clipboard/clipboard";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { useEffect } from "react";
 import {
-  ScrollView,
-  View,
-  StyleSheet,
-  Text,
-  Share,
   Alert,
   Platform,
-  SafeAreaView
+  ScrollView,
+  Share,
+  StyleSheet,
+  Text,
+  View
 } from "react-native";
-import Clipboard from "@react-native-clipboard/clipboard";
-import { IOButton } from "@pagopa/io-app-design-system";
-import { RouteProp, useRoute } from "@react-navigation/native";
-import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
-import { SettingsParamsList } from "../../../../../common/navigation/params/SettingsParamsList";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useDebugInfo } from "../../../../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../../../../hooks/useHeaderSecondLevel";
+import { useIODispatch, useIOSelector } from "../../../../../../../store/hooks";
+import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../../../../store/reducers/backendStatus/remoteConfig";
+import {
+  testAarAcceptMandate,
+  testAarClearData
+} from "../../../../../../pn/aar/store/actions";
+import {
+  hasSendMandateSelector,
+  sendValidationErrorSelector,
+  sendValidationStatusSelector
+} from "../../../../../../pn/aar/store/reducers/tempAarMandate";
+import { SettingsParamsList } from "../../../../../common/navigation/params/SettingsParamsList";
 
 export type CieIasAndMrtdResultNavParams = {
   result: InternalAuthAndMrtdResponse;
@@ -23,9 +36,44 @@ export type CieIasAndMrtdResultNavParams = {
 };
 
 export function CieIasAndMrtdPlaygroundIntAuthAndMrtdResultScreen() {
+  const dispatch = useIODispatch();
+  const toast = useIOToast();
+  const aarTempMandateEnabled = useIOSelector(
+    isAarInAppDelegationRemoteEnabledSelector
+  );
+  const hasSendMandate = useIOSelector(hasSendMandateSelector);
+  const sendMandateValidationStatus = useIOSelector(
+    sendValidationStatusSelector
+  );
+
+  const sendValidationError = useIOSelector(sendValidationErrorSelector);
+  const debugInfo = sendValidationError
+    ? { validationRequest: sendValidationError }
+    : {};
+  useDebugInfo(debugInfo);
+
   useHeaderSecondLevel({
     title: "MRTD Reading Result"
   });
+
+  useEffect(
+    () => () => {
+      if (aarTempMandateEnabled && hasSendMandate) {
+        dispatch(testAarClearData());
+      }
+    },
+    [aarTempMandateEnabled, dispatch, hasSendMandate]
+  );
+
+  useEffect(() => {
+    if (sendMandateValidationStatus != null) {
+      if (sendMandateValidationStatus === "failed") {
+        toast.error("SEND Validation failed. See Ladybug");
+      } else {
+        toast.success(`SEND Validation: ${sendMandateValidationStatus}`);
+      }
+    }
+  }, [sendMandateValidationStatus, toast]);
 
   const route =
     useRoute<
@@ -78,6 +126,13 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdResultScreen() {
       <View style={styles.buttonRow}>
         <IOButton variant="outline" label="Copy" onPress={handleCopy} />
         <IOButton variant="outline" label="Share" onPress={handleShare} />
+        {aarTempMandateEnabled && hasSendMandate && (
+          <IOButton
+            variant="outline"
+            label="SEND"
+            onPress={() => dispatch(testAarAcceptMandate.request(result))}
+          />
+        )}
       </View>
     </SafeAreaView>
   );

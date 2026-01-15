@@ -23,13 +23,13 @@ import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking
 import { IngressScreen } from "../features/ingress/screens/IngressScreen";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
+import { storeLinkingUrl } from "../features/linking/actions";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { SETTINGS_ROUTES } from "../features/settings/common/navigation/routes";
 import { processUtmLink } from "../features/utmLink";
 import { startApplicationInitialization } from "../store/actions/application";
 import { setDebugCurrentRouteName } from "../store/actions/debug";
-import { storeLinkingUrl } from "../features/linking/actions";
 import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import { isCGNEnabledAfterLoadSelector } from "../store/reducers/backendStatus/remoteConfig";
@@ -150,15 +150,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
         [ROUTES.PAGE_NOT_FOUND]: "*"
       }
     },
-    subscribe: linkingSubscription(dispatch, store),
-    getInitialURL: async () => {
-      const initialUrl = await Linking.getInitialURL();
-      // check if the url contains main/wallet to remap the url
-      if (initialUrl && /\/main\/wallet(?:[/?#]|$)/.test(initialUrl)) {
-        return initialUrl.replace(/\/main\/wallet(?=\/|[?#]|$)/, "");
-      }
-      return initialUrl;
-    }
+    subscribe: linkingSubscription(dispatch, store)
   };
 
   /**
@@ -175,7 +167,12 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
         /**
          *  We store the initialUrl in the redux store so that
          *  it can be processed in case we need any kind of data
-         *  that would be accessible after the app's startup for that
+         *  that would be accessible after the app's startup for that.
+         *
+         *  while in `linkingSubscription` we avoid storing certain
+         *  blacklisted deep links, here it is not necessary since
+         *  this handler is called on app wake and thus there
+         *  is no risk of overwriting any previously stored deep link
          */
         dispatch(storeLinkingUrl(initialUrl));
       }

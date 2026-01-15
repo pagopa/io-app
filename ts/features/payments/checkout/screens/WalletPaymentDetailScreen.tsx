@@ -19,9 +19,10 @@ import {
 } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { ComponentProps, useCallback, useLayoutEffect } from "react";
-import { AccessibilityInfo, SafeAreaView, StyleSheet } from "react-native";
 import I18n from "i18next";
+import { ComponentProps, useCallback, useLayoutEffect } from "react";
+import { AccessibilityInfo, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
@@ -43,13 +44,9 @@ import {
   centsToAmount,
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
-import {
-  formatPaymentNoticeNumber,
-  isPaymentMethodExpired
-} from "../../common/utils";
+import { formatPaymentNoticeNumber } from "../../common/utils";
 import { storeNewPaymentAttemptAction } from "../../history/store/actions";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
-import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
 import * as analytics from "../analytics";
 import { WalletPaymentFailureDetail } from "../components/WalletPaymentFailureDetail";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
@@ -62,7 +59,6 @@ import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 import { walletPaymentDetailsSelector } from "../store/selectors";
 import { walletPaymentEnabledUserWalletsSelector } from "../store/selectors/paymentMethods";
 import { WalletPaymentStepEnum } from "../types";
-import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import { FaultCodeCategoryEnum as FaultCodeSlowdownCategoryEnum } from "../types/PaymentSlowdownErrorProblemJson";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 import { formatAndValidateDueDate } from "../utils";
@@ -125,6 +121,8 @@ const WalletPaymentDetailScreen = () => {
   }
 
   return (
+    /* TODO: We should use a `LoadingScreenContent` component, to avoid
+    duplicates of the loading screen throughout the app */
     <SafeAreaView style={styles.loadingContainer}>
       <LoadingIndicator
         testID="wallet-payment-detail-loading-indicator"
@@ -150,7 +148,6 @@ const WalletPaymentDetailContent = ({
   const dispatch = useIODispatch();
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const userWalletsPots = useIOSelector(
     walletPaymentEnabledUserWalletsSelector
   );
@@ -197,42 +194,18 @@ const WalletPaymentDetailContent = ({
     dispatch(storeNewPaymentAttemptAction(rptId));
     dispatch(
       paymentsGetPaymentUserMethodsAction.request({
-        onResponse: wallets => {
-          const hasAllPaymentMethodsExpired =
-            wallets?.filter(wallet => !isPaymentMethodExpired(wallet.details))
-              .length === 0;
-          const isWalletEmpty = wallets && wallets.length === 0;
-          if (!isWalletEmpty && !hasAllPaymentMethodsExpired) {
-            dispatch(
-              walletPaymentSetCurrentStep(
-                WalletPaymentStepEnum.PICK_PAYMENT_METHOD
-              )
-            );
-            navigation.navigate(
-              PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR,
-              {
-                screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE
-              }
-            );
-          } else {
-            const paymentDetails = pot.toUndefined(paymentDetailsPot);
-            dispatch(
-              paymentsInitOnboardingWithRptIdToResume({
-                rptId: paymentDetails?.rptId
-              })
-            );
-            navigation.navigate(
-              PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR,
-              {
-                screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
-                params: {
-                  outcome: isWalletEmpty
-                    ? WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE
-                    : WalletPaymentOutcomeEnum.PAYMENT_METHODS_EXPIRED
-                }
-              }
-            );
-          }
+        onResponse: () => {
+          dispatch(
+            walletPaymentSetCurrentStep(
+              WalletPaymentStepEnum.PICK_PAYMENT_METHOD
+            )
+          );
+          navigation.navigate(
+            PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR,
+            {
+              screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE
+            }
+          );
         }
       })
     );
@@ -241,12 +214,12 @@ const WalletPaymentDetailContent = ({
   const amountInfoBottomSheet = useIOBottomSheetModal({
     title: I18n.t("wallet.firstTransactionSummary.amountInfo.title"),
     component: (
-      <SafeAreaView>
+      <>
         <IOMarkdown
           content={I18n.t("wallet.firstTransactionSummary.amountInfo.message")}
         />
-        <VSpacer size={24} />
-      </SafeAreaView>
+        <VSpacer size={16} />
+      </>
     )
   });
 

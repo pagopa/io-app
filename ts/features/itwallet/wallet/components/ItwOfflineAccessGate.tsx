@@ -4,8 +4,8 @@ import { PropsWithChildren, useState } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIOSelector } from "../../../../store/hooks";
 import {
-  trackItwOfflineAccessExpired,
-  trackItwOfflineAccessExpiring
+  trackItwOfflineAccessExpiring,
+  trackItwOfflineAccessExpired
 } from "../../analytics";
 import {
   itwIsOfflineAccessLimitReached,
@@ -59,8 +59,7 @@ const LimitWarningScreenContent = ({
 };
 
 const LimitReachedScreenContent = () => {
-  const handleAppRestart = useAppRestartAction("banner");
-
+  const handleAppRestart = useAppRestartAction("access_expired_screen");
   useFocusEffect(trackItwOfflineAccessExpired);
 
   return (

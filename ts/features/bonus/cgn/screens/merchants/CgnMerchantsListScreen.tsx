@@ -120,8 +120,6 @@ export const CgnMerchantsListScreen = () => {
         label: I18n.t("global.buttons.retry"),
         onPress: initLoadingLists
       }}
-      enableAnimatedPictogram
-      loop
     />
   );
 
