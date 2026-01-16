@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect } from "react";
+import { useCallback, useEffect, useLayoutEffect } from "react";
 import { Alert } from "react-native";
 import i18n from "i18next";
 import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
@@ -11,6 +11,7 @@ import { currentAARFlowData } from "../store/selectors";
 import { sendAARFlowStates } from "../utils/stateUtils";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { SendAarActivateNfcComponent } from "../components/SendAarActivateNfcComponent";
+import { useHardwareBackButtonWhenFocussed } from "../../../../hooks/useHardwareBackButton";
 
 export type SendAarActivateNfcScreenProps = IOStackNavigationRouteProps<
   PnParamsList,
@@ -37,6 +38,27 @@ export const SendAarActivateNfcScreen = ({
     }
   }, [currentAarData, navigation]);
 
+  const handleClose = useCallback(() => {
+    Alert.alert(
+      i18n.t("features.pn.aar.flow.androidNfcActivation.alertOnClose.title"),
+      i18n.t("features.pn.aar.flow.androidNfcActivation.alertOnClose.message"),
+      [
+        {
+          text: i18n.t(
+            "features.pn.aar.flow.androidNfcActivation.alertOnClose.confirm"
+          ),
+          style: "destructive",
+          onPress: terminateFlow
+        },
+        {
+          text: i18n.t(
+            "features.pn.aar.flow.androidNfcActivation.alertOnClose.cancel"
+          )
+        }
+      ]
+    );
+  }, [terminateFlow]);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       header: () => (
@@ -46,37 +68,19 @@ export const SendAarActivateNfcScreen = ({
           type="singleAction"
           firstAction={{
             icon: "closeLarge",
-            onPress: () => {
-              Alert.alert(
-                i18n.t(
-                  "features.pn.aar.flow.androidNfcActivation.alertOnClose.title"
-                ),
-                i18n.t(
-                  "features.pn.aar.flow.androidNfcActivation.alertOnClose.message"
-                ),
-                [
-                  {
-                    text: i18n.t(
-                      "features.pn.aar.flow.androidNfcActivation.alertOnClose.confirm"
-                    ),
-                    style: "destructive",
-                    onPress: terminateFlow
-                  },
-                  {
-                    text: i18n.t(
-                      "features.pn.aar.flow.androidNfcActivation.alertOnClose.cancel"
-                    )
-                  }
-                ]
-              );
-            },
+            onPress: handleClose,
             accessibilityLabel: i18n.t("global.buttons.close"),
             testID: "closeActionID"
           }}
         />
       )
     });
-  }, [navigation, terminateFlow]);
+  }, [navigation, handleClose]);
+
+  useHardwareBackButtonWhenFocussed(() => {
+    handleClose();
+    return true;
+  });
 
   return <SendAarActivateNfcComponent />;
 };

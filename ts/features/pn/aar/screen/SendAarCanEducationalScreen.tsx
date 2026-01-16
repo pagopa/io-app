@@ -13,7 +13,7 @@ import {
 } from "../store/selectors";
 import { setAarFlowState } from "../store/actions";
 import { sendAARFlowStates } from "../utils/stateUtils";
-import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
+import { useHardwareBackButtonWhenFocussed } from "../../../../hooks/useHardwareBackButton";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
@@ -76,7 +76,7 @@ export const SendAarCanEducationalScreen = ({
     }
   };
 
-  useHardwareBackButton(() => {
+  useHardwareBackButtonWhenFocussed(() => {
     handleGoBack();
     return true;
   });
