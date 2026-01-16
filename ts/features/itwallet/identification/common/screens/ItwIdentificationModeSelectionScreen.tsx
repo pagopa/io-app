@@ -2,6 +2,7 @@ import {
   Badge,
   ContentWrapper,
   IOButton,
+  ListItemHeader,
   ModuleNavigationAlt,
   VSpacer,
   VStack
@@ -29,7 +30,6 @@ import {
   selectIssuanceMode
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
-import { ItwIdentificationFrequencyRow } from "../components/ItwIdentificationFrequencyRow";
 
 export type ItwIdentificationNavigationParams = {
   eidReissuing?: boolean;
@@ -163,20 +163,44 @@ export const ItwIdentificationModeSelectionScreen = ({
       <ContentWrapper>
         <VSpacer size={8} />
         <VStack space={16}>
-          {isReissuanceMode && (!isCiePinDisabled || !isCieIdDisabled) && (
-            <ItwIdentificationFrequencyRow
-              label={I18n.t(`${i18nNs}.frequency.every12Months`)}
-              badge={{
-                text: I18n.t(`${i18nNs}.mode.ciePin.reissuanceBadge`),
-                variant: "highlight",
-                outline: false,
-                testID: "CiePinReissuanceBadgeTestID"
-              }}
-            />
+          {isReissuanceMode ? (
+            <>
+              {(!isCiePinDisabled || !isCieIdDisabled) && (
+                <VStack space={8}>
+                  <ListItemHeader
+                    label={I18n.t(`${i18nNs}.frequency.every12Months`)}
+                    endElement={{
+                      type: "badge",
+                      componentProps: {
+                        text: I18n.t(`${i18nNs}.mode.ciePin.reissuanceBadge`),
+                        variant: "highlight",
+                        outline: false,
+                        testID: "CiePinReissuanceBadgeTestID"
+                      }
+                    }}
+                  />
+                  <VStack space={16}>
+                    {!isCiePinDisabled && <CiePinMethodModule />}
+                    {!isCieIdDisabled && <CieIdMethodModule />}
+                  </VStack>
+                </VStack>
+              )}
+              {!isSpidDisabled && (
+                <VStack space={8}>
+                  <ListItemHeader
+                    label={I18n.t(`${i18nNs}.frequency.every90Days`)}
+                  />
+                  <SpidMethodModule />
+                </VStack>
+              )}
+            </>
+          ) : (
+            <>
+              {!isCiePinDisabled && <CiePinMethodModule />}
+              {!isCieIdDisabled && <CieIdMethodModule />}
+              {!isSpidDisabled && <SpidMethodModule />}
+            </>
           )}
-          {!isCiePinDisabled && <CiePinMethodModule />}
-          {!isCieIdDisabled && <CieIdMethodModule />}
-          {!isSpidDisabled && <SpidMethodModule />}
           {isL3 && !eidReissuing && (
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <IOButton
@@ -232,9 +256,6 @@ const CiePinMethodModule = () => {
 const SpidMethodModule = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
-  const mode = ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
-  const isReissuanceMode = mode === "reissuance";
-
   const handleOnPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "spid" });
   }, [machineRef]);
@@ -255,11 +276,6 @@ const SpidMethodModule = () => {
 
   return (
     <VStack space={16}>
-      {isReissuanceMode && (
-        <ItwIdentificationFrequencyRow
-          label={I18n.t(`${i18nNs}.frequency.every90Days`)}
-        />
-      )}
       <ModuleNavigationAlt
         title={title}
         subtitle={subtitle}
