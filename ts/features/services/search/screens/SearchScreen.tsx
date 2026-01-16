@@ -2,8 +2,13 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Platform, ViewStyle } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import {
+  FlashList,
+  ListRenderItemInfo,
+  useRecyclingState
+} from "@shopify/flash-list";
+import {
+  AvatarSearchProps,
   ContentWrapper,
   Divider,
   IOSpacingScale,
@@ -30,6 +35,42 @@ import * as analytics from "../../common/analytics";
 
 const INPUT_PADDING: IOSpacingScale = 16;
 const MIN_QUERY_LENGTH: number = 3;
+
+type InstitutionListItemComponentProps = {
+  item: Institution;
+  index: number;
+  totalCount: number;
+  onPress: (institution: Institution) => void;
+};
+
+const InstitutionListItemComponent = ({
+  item,
+  index,
+  totalCount,
+  onPress
+}: InstitutionListItemComponentProps) => {
+  const [source, setSource] = useRecyclingState<AvatarSearchProps["source"]>(
+    getLogoForInstitution(item.fiscal_code),
+    [item.id]
+  );
+  const accessibilityLabel = `${item.name}${getListItemAccessibilityLabelCount(
+    totalCount,
+    index
+  )}`;
+
+  return (
+    <ListItemSearchInstitution
+      accessibilityLabel={accessibilityLabel}
+      avatarProps={{
+        source,
+        onError: () => setSource(undefined)
+      }}
+      numberOfLines={2}
+      onPress={() => onPress(item)}
+      value={item.name}
+    />
+  );
+};
 
 export const SearchScreen = () => {
   const insets = useSafeAreaInsets();
@@ -111,23 +152,14 @@ export const SearchScreen = () => {
   );
 
   const renderItem = useCallback(
-    ({ item, index }: ListRenderItemInfo<Institution>) => {
-      const accessibilityLabel = `${
-        item.name
-      }${getListItemAccessibilityLabelCount(data?.count ?? 0, index)}`;
-
-      return (
-        <ListItemSearchInstitution
-          accessibilityLabel={accessibilityLabel}
-          avatarProps={{
-            source: getLogoForInstitution(item.fiscal_code)
-          }}
-          numberOfLines={2}
-          onPress={() => navigateToInstitution(item)}
-          value={item.name}
-        />
-      );
-    },
+    ({ item, index }: ListRenderItemInfo<Institution>) => (
+      <InstitutionListItemComponent
+        index={index}
+        item={item}
+        onPress={navigateToInstitution}
+        totalCount={data?.count ?? 0}
+      />
+    ),
     [data?.count, navigateToInstitution]
   );
 
