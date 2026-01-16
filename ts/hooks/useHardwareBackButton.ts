@@ -54,18 +54,24 @@ export const useHardwareBackButtonToDismiss = (onDismiss: () => void) => {
  * Extension of {@link useHardwareBackButton} that triggers only when the screen is in focus.
  */
 export const useHardwareBackButtonWhenFocused = (handler: () => boolean) => {
-  const [renderSafeHandler] = useState(() => handler);
+  const handlerRef = useRef(handler);
+
+  useEffect(() => {
+    handlerRef.current = handler;
+  }, [handler]);
+
+  const stableHandler = useCallback(() => handlerRef.current(), []);
 
   useFocusEffect(
     useCallback(() => {
       const subscription = BackHandler.addEventListener(
         "hardwareBackPress",
-        renderSafeHandler
+        stableHandler
       );
 
       return () => {
         subscription.remove();
       };
-    }, [renderSafeHandler])
+    }, [stableHandler])
   );
 };
