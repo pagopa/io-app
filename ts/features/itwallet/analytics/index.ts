@@ -21,7 +21,8 @@ import {
   ItwCopyListItem,
   ItwDismissalAction,
   ItwIdMethod,
-  CredentialStatusAssertionFailure
+  CredentialStatusAssertionFailure,
+  CredentialDetails
 } from "./utils/types";
 
 // Screen view events
@@ -42,10 +43,12 @@ export const trackItWalletIntroScreen = (itw_flow: ItwFlow) => {
   );
 };
 
-export const trackOpenWalletScreen = () => {
+export const trackOpenWalletScreen = (
+  credential_details: CredentialDetails
+) => {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.WALLET,
-    buildEventProperties("UX", "screen_view")
+    buildEventProperties("UX", "screen_view", { credential_details })
   );
 };
 
