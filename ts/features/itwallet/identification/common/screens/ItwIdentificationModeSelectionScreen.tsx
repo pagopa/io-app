@@ -275,15 +275,13 @@ const SpidMethodModule = () => {
   }, [level]);
 
   return (
-    <VStack space={16}>
-      <ModuleNavigationAlt
-        title={title}
-        subtitle={subtitle}
-        testID="SpidMethodModuleTestID"
-        icon="spid"
-        onPress={handleOnPress}
-      />
-    </VStack>
+    <ModuleNavigationAlt
+      title={title}
+      subtitle={subtitle}
+      testID="SpidMethodModuleTestID"
+      icon="spid"
+      onPress={handleOnPress}
+    />
   );
 };
 
