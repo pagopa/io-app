@@ -5,15 +5,7 @@ import {
   ITW_PROXIMITY_ERRORS_EVENTS,
   ITW_PROXIMITY_SCREENVIEW_EVENTS
 } from "./enum";
-
-type ItwProximityFailure = {
-  reason: unknown;
-  type: string;
-};
-
-type ItwProximityGenericFailure = ItwProximityFailure & {
-  proximity_sharing_status: "pre" | "post";
-};
+import { ItwProximityFailure, ItwProximityGenericFailure } from "./types";
 
 // Screen view events
 
@@ -73,12 +65,12 @@ export const trackItwProximityPresentationCompleted = () => {
   );
 };
 
-export function trackItwProximityUnofficialVerifierBottomSheet() {
+export const trackItwProximityUnofficialVerifierBottomSheet = () => {
   void mixpanelTrack(
     ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_UNOFFICIAL_VERIFIER_BOTTOMSHEET,
     buildEventProperties("UX", "screen_view")
   );
-}
+};
 
 // Actions events
 
@@ -131,12 +123,12 @@ export const trackItwProximityQrCodeLoadingRetry = () => {
   );
 };
 
-export function trackItwProximityContinuePresentation() {
+export const trackItwProximityContinuePresentation = () => {
   void mixpanelTrack(
     ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_UX_CONVERSION,
     buildEventProperties("UX", "action")
   );
-}
+};
 
 // Errors events
 
