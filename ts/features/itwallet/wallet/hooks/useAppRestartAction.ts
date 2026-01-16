@@ -8,10 +8,10 @@ import { StartupStatusEnum } from "../../../../store/reducers/startup";
 import { isConnectedSelector } from "../../../connectivity/store/selectors";
 import { resetOfflineAccessReason } from "../../../ingress/store/actions";
 import {
-  ItwOfflineRicaricaAppIOSource,
-  trackItwOfflineReloadFailure,
-  trackItwOfflineRicaricaAppIO
-} from "../../analytics";
+  trackItwOfflineRicaricaAppIO,
+  trackItwOfflineReloadFailure
+} from "../analytics";
+import { ItwOfflineRicaricaAppIOSource } from "../analytics/types";
 
 /**
  * Hook that creates and manages a function to restart the application.

@@ -6,8 +6,8 @@ import * as O from "fp-ts/lib/Option";
 import { useCallback } from "react";
 import { useWindowDimensions, View } from "react-native";
 import { useIOSelector } from "../../../../../store/hooks";
-import { trackCredentialDetail } from "../../../analytics";
-import { mapPIDStatusToMixpanel } from "../../../analytics/utils/analyticsUtils";
+import { trackCredentialDetail } from "../analytics";
+import { mapPIDStatusToMixpanel } from "../../../analytics/utils";
 import {
   ItwBrandedSkiaGradient,
   ItwSkiaBrandedGradientVariant
