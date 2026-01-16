@@ -17,7 +17,7 @@ const BLOB_COLOR = Skia.Color("#c8c3dc");
 // Blob configuration
 const NUM_BLOB_POINTS = 6;
 const BLOB_BASE_RADIUS = 80;
-const NOISE_AMPLITUDE = 18; // How much the blob wobbles (±pixels)
+const WOBBLE_AMPLITUDE = 25; // How much the blob wobbles (±pixels)
 
 // Elliptical motion path parameters (as fraction of canvas dimensions)
 const MOTION_PATH_RADIUS_X_RATIO = 0.35;
@@ -38,92 +38,32 @@ interface AnimatedBlobProps {
   canvasSize: { value: { width: number; height: number } };
 }
 
-// Pre-computed constants for simplex noise (computed once, not per frame)
-const F2 = 0.5 * (Math.sqrt(3) - 1);
-const G2 = (3 - Math.sqrt(3)) / 6;
-
 /**
- * Hash function for gradient selection.
- * Uses modulo arithmetic instead of bitwise ops where possible.
+ * Generate organic-looking deformation using overlapping sine/cosine waves.
+ * Uses prime-number frequency ratios and unique phase offsets per point
+ * to create pseudo-random movement that still loops seamlessly.
+ * Returns value in range approximately [-1, 1].
  */
-function gradDot(hash: number, x: number, y: number): number {
+function organicWobble(pointIndex: number, time: number, seed: number): number {
   "worklet";
-  // eslint-disable-next-line no-bitwise
-  const h = hash & 7;
-  // 8 unit gradient vectors pointing in different directions.
-  // Simplex noise works by computing dot products between these gradients
-  // and the vector from each simplex corner to the input point.
-  // This creates smooth, continuous pseudo-random values.
-  const gradients = [
-    [1, 1],
-    [-1, 1],
-    [1, -1],
-    [-1, -1],
-    [1, 0],
-    [-1, 0],
-    [0, 1],
-    [0, -1]
-  ];
-  const g = gradients[h];
-  return g[0] * x + g[1] * y;
+  const TWO_PI = Math.PI * 2;
+  // Unique phase offset for each point (based on golden ratio for good distribution)
+  const goldenAngle = 2.399963; // ~137.5 degrees in radians
+  const pointPhase = pointIndex * goldenAngle + seed;
+
+  // Layer multiple waves with prime-number time multipliers for complexity
+  // Using both sin and cos creates more varied movement patterns
+  const wave1 = Math.sin(time * TWO_PI + pointPhase);
+  const wave2 = Math.cos(time * TWO_PI * 2 + pointPhase * 1.7) * 0.6;
+  const wave3 = Math.sin(time * TWO_PI * 3 + pointPhase * 2.3) * 0.3;
+  const wave4 = Math.cos(time * TWO_PI * 5 + pointPhase * 3.1) * 0.15;
+
+  // Normalize (max sum ≈ 2.05)
+  return (wave1 + wave2 + wave3 + wave4) / 2.05;
 }
 
 /**
- * Permutation function for pseudo-random gradient selection.
- */
-function permute(x: number): number {
-  "worklet";
-  return ((x * 34 + 1) * x) % 289;
-}
-
-/**
- * Simplex noise 2D - optimized for worklets.
- * Returns value in range [-1, 1].
- */
-function simplexNoise2D(x: number, y: number): number {
-  "worklet";
-  // Skew input space
-  const s = (x + y) * F2;
-  const i = Math.floor(x + s);
-  const j = Math.floor(y + s);
-
-  // Unskew back
-  const t = (i + j) * G2;
-  const x0 = x - (i - t);
-  const y0 = y - (j - t);
-
-  // Simplex corner offsets
-  const i1 = x0 > y0 ? 1 : 0;
-  const j1 = 1 - i1;
-
-  const x1 = x0 - i1 + G2;
-  const y1 = y0 - j1 + G2;
-  const x2 = x0 - 1 + 2 * G2;
-  const y2 = y0 - 1 + 2 * G2;
-
-  // Hash coordinates
-  const ii = ((i % 289) + 289) % 289;
-  const jj = ((j % 289) + 289) % 289;
-
-  const gi0 = permute(permute(ii) + jj);
-  const gi1 = permute(permute(ii + i1) + jj + j1);
-  const gi2 = permute(permute(ii + 1) + jj + 1);
-
-  // Corner contributions
-  const t0 = Math.max(0, 0.5 - x0 * x0 - y0 * y0);
-  const t1 = Math.max(0, 0.5 - x1 * x1 - y1 * y1);
-  const t2 = Math.max(0, 0.5 - x2 * x2 - y2 * y2);
-
-  const n0 = t0 * t0 * t0 * t0 * gradDot(gi0, x0, y0);
-  const n1 = t1 * t1 * t1 * t1 * gradDot(gi1, x1, y1);
-  const n2 = t2 * t2 * t2 * t2 * gradDot(gi2, x2, y2);
-
-  // Scale to [-1, 1]
-  return 70 * (n0 + n1 + n2);
-}
-
-/**
- * Generate a smooth blob path using simplex noise for organic deformation.
+ * Generate a smooth blob path using sine-based organic deformation.
  * Uses continuous time input for seamless looping animation.
  */
 function generateBlobPath(
@@ -136,31 +76,18 @@ function generateBlobPath(
   "worklet";
   const path = Skia.Path.Make();
   const scaledRadius = BLOB_BASE_RADIUS * scale;
-  const scaledAmplitude = NOISE_AMPLITUDE * scale;
-
-  // Generate points using Array.from to avoid mutation
-  // For seamless looping: we sample noise on a circle in noise-space.
-  // As 'time' goes 0→1, we trace a circle, ending where we started.
-  const timeAngle = time * Math.PI * 2;
-  const noiseRadius = 2; // How far to travel in noise space (smaller = smoother)
+  const scaledAmplitude = WOBBLE_AMPLITUDE * scale;
 
   const points: Array<{ x: number; y: number }> = Array.from(
     { length: NUM_BLOB_POINTS },
     (_, i) => {
       const angle = (i / NUM_BLOB_POINTS) * Math.PI * 2;
 
-      // Each point samples noise at a unique location that moves in a circle over time
-      // seed offsets ensure each blob has different patterns
-      // The circular path in noise space (cos/sin of timeAngle) ensures seamless looping
-      // Each point has its own phase offset (angle) to create independent movement
-      const pointPhase = angle; // Use the point's position as its phase offset
-      const noiseX = seed * 50 + Math.cos(timeAngle + pointPhase) * noiseRadius;
-      const noiseY = seed * 50 + Math.sin(timeAngle + pointPhase) * noiseRadius;
+      // Each point gets unique wobble based on its index
+      const wobble = organicWobble(i, time, seed);
 
-      const noiseValue = simplexNoise2D(noiseX, noiseY);
-
-      // Map noise (-1 to 1) to radius variation
-      const radiusOffset = noiseValue * scaledAmplitude;
+      // Map wobble (-1 to 1) to radius variation
+      const radiusOffset = wobble * scaledAmplitude;
       const radius = scaledRadius + radiusOffset;
 
       return {
@@ -205,11 +132,12 @@ function generateBlobPath(
 function AnimatedBlob({ index, canvasSize }: AnimatedBlobProps) {
   // Derive properties from index using interpolation
   // This distributes blobs evenly and creates variety without repetitive config
-  const normalizedIndex = index / (NUM_BLOBS - 1); // 0 to 1
   const pathOffset = index / NUM_BLOBS; // Evenly distributed around ellipse
-  const seed = interpolate(normalizedIndex, [0, 1], SEED_RANGE);
-  const scale = interpolate(normalizedIndex, [0, 1], SCALE_RANGE);
-  const opacity = interpolate(normalizedIndex, [0, 1], OPACITY_RANGE);
+  // Interpolate properties directly from blob index (0 to NUM_BLOBS-1)
+  const blobIndexRange = [0, NUM_BLOBS - 1] as const;
+  const seed = interpolate(index, blobIndexRange, SEED_RANGE);
+  const scale = interpolate(index, blobIndexRange, SCALE_RANGE);
+  const opacity = interpolate(index, blobIndexRange, OPACITY_RANGE);
 
   // Single animation driver: 0 → 1 over one orbit, repeats infinitely
   const orbitProgress = useSharedValue(0);
@@ -257,9 +185,6 @@ export function CgnAnimatedBackground() {
   // Canvas size is provided via onSize callback and updated on the UI thread
   const canvasSize = useSharedValue({ width: 0, height: 0 });
 
-  // Generate blob indices array once
-  const blobIndices = Array.from({ length: NUM_BLOBS }, (_, i) => i);
-
   return (
     <Canvas
       style={[
@@ -269,7 +194,7 @@ export function CgnAnimatedBackground() {
       pointerEvents="none"
       onSize={canvasSize}
     >
-      {blobIndices.map(index => (
+      {Array.from({ length: NUM_BLOBS }, (_, index) => (
         <AnimatedBlob
           key={`blob-${index}`}
           index={index}
