@@ -25,10 +25,10 @@ import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScree
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import {
   trackIssuanceCredentialScrollToBottom,
-  trackItwExit,
-  trackOpenItwTos
-} from "../../analytics";
-import { getMixPanelCredential } from "../../analytics/utils/analyticsUtils";
+  trackItwExit
+} from "../analytics";
+import { trackOpenItwTos } from "../../analytics";
+import { getMixPanelCredential } from "../../analytics/utils";
 import { ItwDataExchangeIcons } from "../../common/components/ItwDataExchangeIcons";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";

@@ -13,7 +13,7 @@ import {
   trackWalletDataShare,
   trackWalletDataShareAccepted
 } from "../../analytics";
-import { getMixPanelCredential } from "../../analytics/utils/analyticsUtils";
+import { getMixPanelCredential } from "../../analytics/utils";
 import {
   itwCredentialsRemoveByType,
   itwCredentialsStore

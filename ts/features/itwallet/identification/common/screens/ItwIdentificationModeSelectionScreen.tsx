@@ -18,7 +18,7 @@ import {
   trackItWalletIDMethod,
   trackItwUserWithoutL3Bottomsheet,
   trackItwUserWithoutL3Requirements
-} from "../../../analytics";
+} from "../../analytics";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { itwDisabledIdentificationMethodsSelector } from "../../../common/store/selectors/remoteConfig";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
