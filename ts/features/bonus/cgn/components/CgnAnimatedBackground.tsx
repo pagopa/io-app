@@ -32,9 +32,7 @@ const OPACITY_RANGE = [0.4, 0.5] as const;
 const SEED_RANGE = [1.0, 7.0] as const;
 
 interface AnimatedBlobProps {
-  // Index of this blob (0 to NUM_BLOBS-1), used to derive other properties
   index: number;
-  // Canvas size shared value (updated by onSize callback)
   canvasSize: { value: { width: number; height: number } };
 }
 
@@ -44,7 +42,11 @@ interface AnimatedBlobProps {
  * to create pseudo-random movement that still loops seamlessly.
  * Returns value in range approximately [-1, 1].
  */
-function organicWobble(pointIndex: number, time: number, seed: number): number {
+const organicWobble = (
+  pointIndex: number,
+  time: number,
+  seed: number
+): number => {
   "worklet";
   const TWO_PI = Math.PI * 2;
   // Unique phase offset for each point (based on golden ratio for good distribution)
@@ -60,19 +62,19 @@ function organicWobble(pointIndex: number, time: number, seed: number): number {
 
   // Normalize (max sum ≈ 2.05)
   return (wave1 + wave2 + wave3 + wave4) / 2.05;
-}
+};
 
 /**
  * Generate a smooth blob path using sine-based organic deformation.
  * Uses continuous time input for seamless looping animation.
  */
-function generateBlobPath(
+const generateBlobPath = (
   seed: number,
   time: number,
   centerX: number,
   centerY: number,
   scale: number
-): ReturnType<typeof Skia.Path.Make> {
+): ReturnType<typeof Skia.Path.Make> => {
   "worklet";
   const path = Skia.Path.Make();
   const scaledRadius = BLOB_BASE_RADIUS * scale;
@@ -127,9 +129,9 @@ function generateBlobPath(
 
   path.close();
   return path;
-}
+};
 
-function AnimatedBlob({ index, canvasSize }: AnimatedBlobProps) {
+const AnimatedBlob = ({ index, canvasSize }: AnimatedBlobProps) => {
   // Derive properties from index using interpolation
   // This distributes blobs evenly and creates variety without repetitive config
   const pathOffset = index / NUM_BLOBS; // Evenly distributed around ellipse
@@ -179,9 +181,9 @@ function AnimatedBlob({ index, canvasSize }: AnimatedBlobProps) {
   }, [orbitProgress]);
 
   return <Path path={blobPath} color={BLOB_COLOR} opacity={opacity} />;
-}
+};
 
-export function CgnAnimatedBackground() {
+export const CgnAnimatedBackground = () => {
   // Canvas size is provided via onSize callback and updated on the UI thread
   const canvasSize = useSharedValue({ width: 0, height: 0 });
 
@@ -203,4 +205,4 @@ export function CgnAnimatedBackground() {
       ))}
     </Canvas>
   );
-}
+};
