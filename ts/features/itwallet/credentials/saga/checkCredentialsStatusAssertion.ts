@@ -18,7 +18,7 @@ import { itwCredentialsStore } from "../store/actions";
 import { selectItwEnv } from "../../common/store/selectors/environment";
 import { getEnv } from "../../common/utils/environment";
 import { syncItwAnalyticsProperties } from "../../analytics/saga";
-import { getMixPanelCredential } from "../../analytics/utils/analyticsUtils";
+import { getMixPanelCredential } from "../../analytics/utils";
 import { trackItwStatusCredentialAssertionFailure } from "../../analytics";
 import { itwUnverifiedCredentialsCounterLimitReached } from "../../common/store/selectors/securePreferences";
 import {

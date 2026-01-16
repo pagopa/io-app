@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import { trackItwIdCieCanTutorialCan } from "../../../analytics";
+import { trackItwIdCieCanTutorialCan } from "../../analytics";
 import { selectIdentification } from "../../../machine/eid/selectors";
 
 export const ItwCiePreparationCanScreen = () => {
