@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { StyleSheet, useWindowDimensions } from "react-native";
+import { StyleSheet } from "react-native";
 import { Canvas, Path, Skia } from "@shopify/react-native-skia";
 import {
   useSharedValue,
@@ -7,7 +7,8 @@ import {
   withRepeat,
   withTiming,
   Easing,
-  cancelAnimation
+  cancelAnimation,
+  interpolate
 } from "react-native-reanimated";
 
 const BACKGROUND_COLOR = "#f4f5f8";
@@ -18,101 +19,104 @@ const NUM_BLOB_POINTS = 6;
 const BLOB_BASE_RADIUS = 80;
 const NOISE_AMPLITUDE = 18; // How much the blob wobbles (±pixels)
 
-// Shared elliptical motion path parameters (relative to center)
-const MOTION_PATH_RADIUS_X = 120;
-const MOTION_PATH_RADIUS_Y = 180;
+// Elliptical motion path parameters (as fraction of canvas dimensions)
+const MOTION_PATH_RADIUS_X_RATIO = 0.35;
+const MOTION_PATH_RADIUS_Y_RATIO = 0.4;
+
+// Animation constants
+const NUM_BLOBS = 3;
+const ORBIT_DURATION = 30000; // 30 seconds per orbit
+const MORPH_SPEED = 1; // 1 wobble cycle per orbit
+const SCALE_RANGE = [0.95, 1.5] as const;
+const OPACITY_RANGE = [0.4, 0.5] as const;
+const SEED_RANGE = [1.0, 7.0] as const;
 
 interface AnimatedBlobProps {
-  // Starting position offset on the shared elliptical path (0 to 1)
-  pathOffset: number;
-  // How long to complete one orbit (ms)
-  orbitDuration: number;
-  // Speed multiplier for blob morphing
-  morphSpeed: number;
-  // Blob appearance
-  scale: number;
-  opacity: number;
-  // Unique seed for noise variation
-  seed: number;
-  // Ellipse center
-  ellipseCenterX: number;
-  ellipseCenterY: number;
+  // Index of this blob (0 to NUM_BLOBS-1), used to derive other properties
+  index: number;
+  // Canvas size shared value (updated by onSize callback)
+  canvasSize: { value: { width: number; height: number } };
 }
 
+// Pre-computed constants for simplex noise (computed once, not per frame)
+const F2 = 0.5 * (Math.sqrt(3) - 1);
+const G2 = (3 - Math.sqrt(3)) / 6;
+
 /**
- * Attempt a simplex-like 2D noise function optimized for worklets.
- * Uses gradient noise with smooth interpolation for organic movement.
+ * Hash function for gradient selection.
+ * Uses modulo arithmetic instead of bitwise ops where possible.
  */
-function grad(hash: number, x: number, y: number): number {
+function gradDot(hash: number, x: number, y: number): number {
   "worklet";
   // eslint-disable-next-line no-bitwise
   const h = hash & 7;
-  const u = h < 4 ? x : y;
-  const v = h < 4 ? y : x;
-  // eslint-disable-next-line no-bitwise
-  return ((h & 1) !== 0 ? -u : u) + ((h & 2) !== 0 ? -2 * v : 2 * v);
+  // 8 unit gradient vectors pointing in different directions.
+  // Simplex noise works by computing dot products between these gradients
+  // and the vector from each simplex corner to the input point.
+  // This creates smooth, continuous pseudo-random values.
+  const gradients = [
+    [1, 1],
+    [-1, 1],
+    [1, -1],
+    [-1, -1],
+    [1, 0],
+    [-1, 0],
+    [0, 1],
+    [0, -1]
+  ];
+  const g = gradients[h];
+  return g[0] * x + g[1] * y;
 }
 
+/**
+ * Permutation function for pseudo-random gradient selection.
+ */
 function permute(x: number): number {
   "worklet";
   return ((x * 34 + 1) * x) % 289;
 }
 
+/**
+ * Simplex noise 2D - optimized for worklets.
+ * Returns value in range [-1, 1].
+ */
 function simplexNoise2D(x: number, y: number): number {
   "worklet";
-  // Skew input space to determine which simplex cell we're in
-  const F2 = 0.5 * (Math.sqrt(3) - 1);
-  const G2 = (3 - Math.sqrt(3)) / 6;
-
+  // Skew input space
   const s = (x + y) * F2;
   const i = Math.floor(x + s);
   const j = Math.floor(y + s);
 
+  // Unskew back
   const t = (i + j) * G2;
-  const X0 = i - t;
-  const Y0 = j - t;
-  const x0 = x - X0;
-  const y0 = y - Y0;
+  const x0 = x - (i - t);
+  const y0 = y - (j - t);
 
-  // Determine which simplex we're in
+  // Simplex corner offsets
   const i1 = x0 > y0 ? 1 : 0;
-  const j1 = x0 > y0 ? 0 : 1;
+  const j1 = 1 - i1;
 
   const x1 = x0 - i1 + G2;
   const y1 = y0 - j1 + G2;
   const x2 = x0 - 1 + 2 * G2;
   const y2 = y0 - 1 + 2 * G2;
 
-  // Hashed gradient indices
-  const ii = ((i % 256) + 256) % 256;
-  const jj = ((j % 256) + 256) % 256;
+  // Hash coordinates
+  const ii = ((i % 289) + 289) % 289;
+  const jj = ((j % 289) + 289) % 289;
 
   const gi0 = permute(permute(ii) + jj);
   const gi1 = permute(permute(ii + i1) + jj + j1);
   const gi2 = permute(permute(ii + 1) + jj + 1);
 
-  // Calculate contribution from three corners using pure functions
-  const computeCorner = (
-    tVal: number,
-    gi: number,
-    px: number,
-    py: number
-  ): number => {
-    "worklet";
-    if (tVal < 0) {
-      return 0;
-    }
-    const tSquared = tVal * tVal;
-    return tSquared * tSquared * grad(gi, px, py);
-  };
+  // Corner contributions
+  const t0 = Math.max(0, 0.5 - x0 * x0 - y0 * y0);
+  const t1 = Math.max(0, 0.5 - x1 * x1 - y1 * y1);
+  const t2 = Math.max(0, 0.5 - x2 * x2 - y2 * y2);
 
-  const t0 = 0.5 - x0 * x0 - y0 * y0;
-  const t1 = 0.5 - x1 * x1 - y1 * y1;
-  const t2 = 0.5 - x2 * x2 - y2 * y2;
-
-  const n0 = computeCorner(t0, gi0, x0, y0);
-  const n1 = computeCorner(t1, gi1, x1, y1);
-  const n2 = computeCorner(t2, gi2, x2, y2);
+  const n0 = t0 * t0 * t0 * t0 * gradDot(gi0, x0, y0);
+  const n1 = t1 * t1 * t1 * t1 * gradDot(gi1, x1, y1);
+  const n2 = t2 * t2 * t2 * t2 * gradDot(gi2, x2, y2);
 
   // Scale to [-1, 1]
   return 70 * (n0 + n1 + n2);
@@ -138,7 +142,7 @@ function generateBlobPath(
   // For seamless looping: we sample noise on a circle in noise-space.
   // As 'time' goes 0→1, we trace a circle, ending where we started.
   const timeAngle = time * Math.PI * 2;
-  const noiseRadius = 1.5; // How far to travel in noise space (smaller = smoother)
+  const noiseRadius = 2; // How far to travel in noise space (smaller = smoother)
 
   const points: Array<{ x: number; y: number }> = Array.from(
     { length: NUM_BLOB_POINTS },
@@ -198,32 +202,34 @@ function generateBlobPath(
   return path;
 }
 
-function AnimatedBlob({
-  pathOffset,
-  orbitDuration,
-  morphSpeed,
-  scale,
-  opacity,
-  seed,
-  ellipseCenterX,
-  ellipseCenterY
-}: AnimatedBlobProps) {
+function AnimatedBlob({ index, canvasSize }: AnimatedBlobProps) {
+  // Derive properties from index using interpolation
+  // This distributes blobs evenly and creates variety without repetitive config
+  const normalizedIndex = index / (NUM_BLOBS - 1); // 0 to 1
+  const pathOffset = index / NUM_BLOBS; // Evenly distributed around ellipse
+  const seed = interpolate(normalizedIndex, [0, 1], SEED_RANGE);
+  const scale = interpolate(normalizedIndex, [0, 1], SCALE_RANGE);
+  const opacity = interpolate(normalizedIndex, [0, 1], OPACITY_RANGE);
+
   // Single animation driver: 0 → 1 over one orbit, repeats infinitely
   const orbitProgress = useSharedValue(0);
 
   // Generate morphing blob path at current orbit position
   const blobPath = useDerivedValue(() => {
-    // Calculate position on elliptical motion path
-    const angle = (pathOffset + orbitProgress.value) * Math.PI * 2;
-    const posX = ellipseCenterX + MOTION_PATH_RADIUS_X * Math.cos(angle);
-    const posY = ellipseCenterY + MOTION_PATH_RADIUS_Y * Math.sin(angle);
+    // Get center from canvas size (centered relative to the card)
+    const { width, height } = canvasSize.value;
+    const ellipseCenterX = width / 2;
+    const ellipseCenterY = height / 2;
 
-    // For seamless morphing, we use the orbit angle as the noise time input.
-    // The trick: morphSpeed creates multiple "wobble cycles" per orbit.
-    // Since we're sampling noise in a circle (using sin/cos in generateBlobPath),
-    // the noise pattern naturally tiles when morphTime completes a full cycle.
-    // morphSpeed > 1 means the blob wobbles faster than it orbits.
-    const morphTime = orbitProgress.value * morphSpeed;
+    // Calculate position on elliptical motion path (radii scale with canvas size)
+    const angle = (pathOffset + orbitProgress.value) * Math.PI * 2;
+    const motionRadiusX = width * MOTION_PATH_RADIUS_X_RATIO;
+    const motionRadiusY = height * MOTION_PATH_RADIUS_Y_RATIO;
+    const posX = ellipseCenterX + motionRadiusX * Math.cos(angle);
+    const posY = ellipseCenterY + motionRadiusY * Math.sin(angle);
+
+    // morphTime drives the blob shape deformation
+    const morphTime = orbitProgress.value * MORPH_SPEED;
 
     return generateBlobPath(seed, morphTime, posX, posY, scale);
   });
@@ -232,7 +238,7 @@ function AnimatedBlob({
     // eslint-disable-next-line functional/immutable-data
     orbitProgress.value = withRepeat(
       withTiming(1, {
-        duration: orbitDuration,
+        duration: ORBIT_DURATION,
         easing: Easing.linear
       }),
       -1,
@@ -242,62 +248,17 @@ function AnimatedBlob({
     return () => {
       cancelAnimation(orbitProgress);
     };
-  }, [orbitProgress, orbitDuration]);
+  }, [orbitProgress]);
 
   return <Path path={blobPath} color={BLOB_COLOR} opacity={opacity} />;
 }
 
 export function CgnAnimatedBackground() {
-  const { width, height } = useWindowDimensions();
-  const centerX = width / 2;
-  const centerY = height / 2;
+  // Canvas size is provided via onSize callback and updated on the UI thread
+  const canvasSize = useSharedValue({ width: 0, height: 0 });
 
-  // Four blobs distributed around the shared elliptical motion path
-  // Each blob has a different starting position (pathOffset) on the ellipse
-  // morphSpeed = number of complete wobble cycles per orbit
-  // Using integer values ensures seamless looping (blob returns to exact same shape)
-  const blobConfigs: Array<AnimatedBlobProps> = [
-    {
-      pathOffset: 0, // Starts at right of ellipse
-      orbitDuration: 30000, // 30 seconds per orbit
-      morphSpeed: 1, // 1 wobble cycle per orbit (slow, gentle)
-      scale: 1.3,
-      opacity: 0.5,
-      seed: 1.0,
-      ellipseCenterX: centerX,
-      ellipseCenterY: centerY
-    },
-    {
-      pathOffset: 0.25, // Starts at bottom of ellipse
-      orbitDuration: 30000,
-      morphSpeed: 1,
-      scale: 1.1,
-      opacity: 0.45,
-      seed: 2.7,
-      ellipseCenterX: centerX,
-      ellipseCenterY: centerY
-    },
-    {
-      pathOffset: 0.5, // Starts at left of ellipse
-      orbitDuration: 30000,
-      morphSpeed: 1,
-      scale: 0.95,
-      opacity: 0.4,
-      seed: 4.3,
-      ellipseCenterX: centerX,
-      ellipseCenterY: centerY
-    },
-    {
-      pathOffset: 0.75, // Starts at top of ellipse
-      orbitDuration: 30000,
-      morphSpeed: 1,
-      scale: 1.15,
-      opacity: 0.42,
-      seed: 6.1,
-      ellipseCenterX: centerX,
-      ellipseCenterY: centerY
-    }
-  ];
+  // Generate blob indices array once
+  const blobIndices = Array.from({ length: NUM_BLOBS }, (_, i) => i);
 
   return (
     <Canvas
@@ -306,9 +267,14 @@ export function CgnAnimatedBackground() {
         { backgroundColor: BACKGROUND_COLOR }
       ]}
       pointerEvents="none"
+      onSize={canvasSize}
     >
-      {blobConfigs.map((config, index) => (
-        <AnimatedBlob key={`blob-${index}`} {...config} />
+      {blobIndices.map(index => (
+        <AnimatedBlob
+          key={`blob-${index}`}
+          index={index}
+          canvasSize={canvasSize}
+        />
       ))}
     </Canvas>
   );
