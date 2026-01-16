@@ -18,7 +18,7 @@ describe("SendAARErrorScreen", () => {
     .spyOn(NOT_ADDRESSEE_COMPONENT, "SendAarNotAddresseeKoComponent")
     .mockImplementation();
   const errorComponentSpy = jest
-    .spyOn(ERROR_COMPONENT, "SendAARErrorComponent")
+    .spyOn(ERROR_COMPONENT, "SendAarGenericErrorComponent")
     .mockImplementation();
   const nfcNotSupportedComponentSpy = jest
     .spyOn(NFC_NOT_SUPPORTED_COMPONENT, "SendAarNfcNotSupportedComponent")
