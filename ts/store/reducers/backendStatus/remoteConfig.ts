@@ -816,6 +816,16 @@ export const sendAARDelegateUrlSelector = (state: GlobalState) =>
     O.getOrElse(() => fallbackSendAARDelegateUrl)
   );
 
+export const sendAarInAppDelegationUrlSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.chainNullableK(
+      config => config.pn.aar?.in_app_delegation?.helpCenter_url
+    ),
+    O.getOrElse(() => fallbackSendAARDelegateUrl)
+  );
+
 export const sendShowAbstractSelector = (state: GlobalState) => {
   const remoteConfigOption = remoteConfigSelector(state);
   if (O.isSome(remoteConfigOption)) {

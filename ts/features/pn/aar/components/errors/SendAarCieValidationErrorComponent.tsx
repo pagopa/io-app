@@ -1,9 +1,10 @@
-import { constNull } from "fp-ts/lib/function";
 import i18n from "i18next";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { sendAarInAppDelegationUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { openWebUrl } from "../../../../../utils/url";
 import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
 import { setAarFlowState } from "../../store/actions";
 import {
@@ -15,20 +16,24 @@ import { sendAarErrorSupportBottomSheetComponent } from "./SendAARErrorComponent
 
 export const CieExpiredComponent = () => {
   const { terminateFlow } = useSendAarFlowManager();
+  const helpCenterUrl = useIOSelector(sendAarInAppDelegationUrlSelector);
 
   return (
     <OperationResultScreenContent
       pictogram="cardIssue"
+      testID="CieExpiredErrorComponent"
       title={i18n.t("features.pn.aar.flow.ko.cieValidation.expired.title")}
       subtitle={i18n.t("features.pn.aar.flow.ko.cieValidation.expired.body")}
       action={{
+        testID: "CieExpiredHelpCenterButton",
         label: i18n.t(
           "features.pn.aar.flow.ko.cieValidation.expired.actions.primary"
         ),
-        onPress: constNull, // navigation to the correct helpCenter page to come
+        onPress: () => openWebUrl(helpCenterUrl),
         icon: "instruction"
       }}
       secondaryAction={{
+        testID: "CieExpiredCloseButton",
         label: i18n.t("global.buttons.close"),
         onPress: terminateFlow
       }}
@@ -65,13 +70,16 @@ export const UnrelatedCieComponent = () => {
   return (
     <OperationResultScreenContent
       pictogram="attention"
+      testID="UnrelatedCieErrorComponent"
       title={i18n.t("features.pn.aar.flow.ko.cieValidation.unrelated.title")}
       subtitle={i18n.t("features.pn.aar.flow.ko.cieValidation.unrelated.body")}
       action={{
+        testID: "UnrelatedCieRetryButton",
         label: i18n.t("global.buttons.retry"),
         onPress: handleRetry
       }}
       secondaryAction={{
+        testID: "UnrelatedCieCloseButton",
         label: i18n.t("global.buttons.close"),
         onPress: terminateFlow
       }}
@@ -100,14 +108,17 @@ export const GenericCieValidationErrorComponent = () => {
   return (
     <>
       <OperationResultScreenContent
+        testID="GenericCieValidationErrorComponent"
         pictogram="umbrella"
         title={i18n.t("features.pn.aar.flow.ko.cieValidation.generic.title")}
         subtitle={i18n.t("features.pn.aar.flow.ko.cieValidation.generic.body")}
         action={{
+          testID: "GenericCieValidationErrorCloseButton",
           label: i18n.t("global.buttons.close"),
           onPress: terminateFlow
         }}
         secondaryAction={{
+          testID: "GenericCieValidationErrorSupportButton",
           label: i18n.t(
             "features.pn.aar.flow.ko.cieValidation.generic.actions.secondary"
           ),
