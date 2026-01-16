@@ -11,6 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import I18n from "i18next";
 import { ReactElement } from "react";
+import { ColorValue } from "react-native";
 import { connect } from "react-redux";
 import { Card } from "../../../../../definitions/cgn/Card";
 import {
@@ -22,7 +23,10 @@ import { CardRevoked } from "../../../../../definitions/cgn/CardRevoked";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import eycaLogo from "../../../../../img/bonus/cgn/eyca_logo.png";
 import { isLoading } from "../../../../common/model/RemoteValue";
-import { BonusCardScreenComponent } from "../../../../components/BonusCard";
+import {
+  BonusCard,
+  BonusCardScreenComponent
+} from "../../../../components/BonusCard";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
@@ -81,6 +85,27 @@ function getLogoUris(card: Card | undefined, eycaDetails: EycaDetailsState) {
     ...(canDisplayEycaLogo ? [eycaLogo] : [])
   ];
 }
+
+const BACKGROUND_COLOR: Record<string, ColorValue> = {
+  light: "#f4f5f8",
+  dark: "#f4f5f8"
+};
+
+const SKELETON_COLOR: Record<string, ColorValue> = {
+  light: "#c8c3dc",
+  dark: "#c8c3dc"
+};
+
+const cardColors: BonusCard["colors"] = {
+  background: {
+    light: BACKGROUND_COLOR.light,
+    dark: BACKGROUND_COLOR.dark
+  },
+  skeleton: {
+    light: SKELETON_COLOR.light,
+    dark: SKELETON_COLOR.dark
+  }
+};
 
 /**
  * Screen to display all the information about the active CGN
@@ -142,7 +167,7 @@ const CgnDetailScreen = (props: Props): ReactElement => {
   }
 
   if (props.isCgnInfoLoading || isLoading(props.unsubscriptionStatus)) {
-    return <BonusCardScreenComponent isLoading />;
+    return <BonusCardScreenComponent isLoading colors={cardColors} />;
   }
 
   const showDiscoverCta =
@@ -221,6 +246,7 @@ const CgnDetailScreen = (props: Props): ReactElement => {
       status={
         props.cgnDetails ? <CgnCardStatus card={props.cgnDetails} /> : undefined
       }
+      colors={cardColors}
       cardFooter={
         <H4
           color="black"

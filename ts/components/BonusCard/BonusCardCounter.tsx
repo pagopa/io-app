@@ -35,7 +35,7 @@ type AmountWithProgressProps = {
 };
 
 type LoadingProps =
-  | { isLoading: true; label?: string }
+  | { isLoading: true; label?: string; skeletonColor: ColorValue }
   | ({ isLoading?: false; label: string } & (
       | AmountProps
       | AmountWithProgressProps
@@ -47,7 +47,12 @@ const BonusCardCounter = (props: BonusCardCounter) => {
   const isDark = useIOThemeContext().themeType === "dark";
 
   if (props.isLoading) {
-    return <BonusCardCounterSkeleton type={props.type} />;
+    return (
+      <BonusCardCounterSkeleton
+        type={props.type}
+        skeletonColor={props.skeletonColor}
+      />
+    );
   }
 
   return (
@@ -114,20 +119,19 @@ const BonusProgressBar = ({ progress }: BonusProgressBarProps) => {
   );
 };
 
-type BonusCardCounterSkeletonProps = {
+const BonusCardCounterSkeleton = ({
+  type,
+  skeletonColor
+}: {
   type: CounterType;
-};
-
-const BonusCardCounterSkeleton = ({ type }: BonusCardCounterSkeletonProps) => {
-  const placeholderColor = IOColors["blueItalia-100"];
-
-  return (
+  skeletonColor: ColorValue;
+}) => (
     <View
       style={[styles.container, { alignItems: "center" }]}
       testID="BonusCardCounterSkeletonTestID"
     >
       <IOSkeleton
-        color={placeholderColor}
+        color={skeletonColor}
         shape="rectangle"
         height={16}
         width={64}
@@ -135,7 +139,7 @@ const BonusCardCounterSkeleton = ({ type }: BonusCardCounterSkeletonProps) => {
       />
       <VSpacer size={8} />
       <IOSkeleton
-        color={placeholderColor}
+        color={skeletonColor}
         shape="rectangle"
         height={24}
         width={100}
@@ -145,7 +149,7 @@ const BonusCardCounterSkeleton = ({ type }: BonusCardCounterSkeletonProps) => {
         <>
           <VSpacer size={8} />
           <IOSkeleton
-            color={placeholderColor}
+            color={skeletonColor}
             shape="rectangle"
             height={6}
             width={110}
@@ -155,7 +159,6 @@ const BonusCardCounterSkeleton = ({ type }: BonusCardCounterSkeletonProps) => {
       )}
     </View>
   );
-};
 
 const styles = StyleSheet.create({
   container: {
