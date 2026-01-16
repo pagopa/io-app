@@ -126,39 +126,39 @@ const BonusCardCounterSkeleton = ({
   type: CounterType;
   skeletonColor: ColorValue;
 }) => (
-    <View
-      style={[styles.container, { alignItems: "center" }]}
-      testID="BonusCardCounterSkeletonTestID"
-    >
-      <IOSkeleton
-        color={skeletonColor}
-        shape="rectangle"
-        height={16}
-        width={64}
-        radius={16}
-      />
-      <VSpacer size={8} />
-      <IOSkeleton
-        color={skeletonColor}
-        shape="rectangle"
-        height={24}
-        width={100}
-        radius={24}
-      />
-      {type === "ValueWithProgress" && (
-        <>
-          <VSpacer size={8} />
-          <IOSkeleton
-            color={skeletonColor}
-            shape="rectangle"
-            height={6}
-            width={110}
-            radius={8}
-          />
-        </>
-      )}
-    </View>
-  );
+  <View
+    style={[styles.container, { alignItems: "center" }]}
+    testID="BonusCardCounterSkeletonTestID"
+  >
+    <IOSkeleton
+      color={skeletonColor}
+      shape="rectangle"
+      height={16}
+      width={64}
+      radius={16}
+    />
+    <VSpacer size={8} />
+    <IOSkeleton
+      color={skeletonColor}
+      shape="rectangle"
+      height={24}
+      width={100}
+      radius={24}
+    />
+    {type === "ValueWithProgress" && (
+      <>
+        <VSpacer size={8} />
+        <IOSkeleton
+          color={skeletonColor}
+          shape="rectangle"
+          height={6}
+          width={110}
+          radius={8}
+        />
+      </>
+    )}
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {
