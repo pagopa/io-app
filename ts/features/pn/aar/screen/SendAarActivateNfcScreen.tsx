@@ -11,7 +11,7 @@ import { currentAARFlowData } from "../store/selectors";
 import { sendAARFlowStates } from "../utils/stateUtils";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { SendAarActivateNfcComponent } from "../components/SendAarActivateNfcComponent";
-import { useHardwareBackButtonWhenFocussed } from "../../../../hooks/useHardwareBackButton";
+import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
 
 export type SendAarActivateNfcScreenProps = IOStackNavigationRouteProps<
   PnParamsList,
@@ -77,7 +77,7 @@ export const SendAarActivateNfcScreen = ({
     });
   }, [navigation, handleClose]);
 
-  useHardwareBackButtonWhenFocussed(() => {
+  useHardwareBackButtonWhenFocused(() => {
     handleClose();
     return true;
   });

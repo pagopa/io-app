@@ -12,7 +12,7 @@ import {
   type SendAARCieCardReadingComponentProps
 } from "../components/SendAARCieCardReadingComponent";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import { useHardwareBackButtonWhenFocussed } from "../../../../hooks/useHardwareBackButton";
+import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
 
 export type SendAARCieCardReadingScreenRouteParams =
   Readonly<SendAARCieCardReadingComponentProps>;
@@ -58,7 +58,7 @@ export const SendAARCieCardReadingScreen = ({
     }
   }, [currentFlow, navigation]);
 
-  useHardwareBackButtonWhenFocussed(() => true);
+  useHardwareBackButtonWhenFocused(() => true);
 
   switch (currentFlow.type) {
     case sendAARFlowStates.cieScanning:
