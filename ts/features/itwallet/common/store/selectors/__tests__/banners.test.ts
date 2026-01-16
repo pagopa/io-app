@@ -1,8 +1,8 @@
 import MockDate from "mockdate";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { itwIsDiscoveryBannerHiddenSelector } from "../banners";
+import { itwIsBannerHiddenSelector } from "../banners";
 
-describe("itwIsDiscoveryBannerHiddenSelector", () => {
+describe("itwIsBannerHiddenSelector", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
@@ -29,7 +29,7 @@ describe("itwIsDiscoveryBannerHiddenSelector", () => {
         }
       } as unknown as GlobalState;
 
-      expect(itwIsDiscoveryBannerHiddenSelector(state)).toBe(expected);
+      expect(itwIsBannerHiddenSelector("discovery")(state)).toBe(expected);
       MockDate.reset();
     }
   );

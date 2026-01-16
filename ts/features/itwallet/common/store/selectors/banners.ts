@@ -11,22 +11,41 @@ const itwBannersSelector = (state: GlobalState) =>
  */
 export const itwIsBannerHiddenSelector = (id: ItwBannerId) =>
   createSelector(itwBannersSelector, banners => {
-    const state = banners[id];
-    if (state === undefined) {
+    const bannerState = banners[id];
+
+    // Banner has no state, so it's visible
+    if (!bannerState) {
       return false;
     }
 
-    const { dismissedOn, dismissCount } = state;
-    if (!dismissedOn || dismissCount === undefined) {
-      // Banner was never dismissed, so it's not hidden
+    const { dismissedOn, dismissCount } = bannerState;
+
+    // Banner was never dismissed, so it's visible
+    if (!dismissedOn || !dismissCount || dismissCount <= 0) {
       return false;
     }
 
     const durations = bannerHideDurations[id];
+
+    // Safety check: ensure durations array is valid
+    if (!durations || durations.length === 0) {
+      return false;
+    }
+
     const durationIndex = Math.min(dismissCount - 1, durations.length - 1);
-    const duration = durations[durationIndex];
-    const hiddenUntilDate = addDays(new Date(dismissedOn), duration);
-    return !isNaN(hiddenUntilDate.getTime()) && !isPast(hiddenUntilDate);
+    const hideDurationInDays = durations[durationIndex];
+
+    const dismissedDate = new Date(dismissedOn);
+
+    // Invalid date, show the banner
+    if (isNaN(dismissedDate.getTime())) {
+      return false;
+    }
+
+    const hiddenUntilDate = addDays(dismissedDate, hideDurationInDays);
+
+    // Banner is hidden if the hide period has not yet passed
+    return !isPast(hiddenUntilDate);
   });
 
 /**
