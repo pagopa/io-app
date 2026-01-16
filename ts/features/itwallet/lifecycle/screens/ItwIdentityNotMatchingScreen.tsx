@@ -10,7 +10,7 @@ import {
 import { logoutRequest } from "../../../authentication/common/store/actions";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useIODispatch } from "../../../../store/hooks";
-import { trackItwIdNotMatch, trackWalletNewIdReset } from "../../analytics";
+import { trackItwIdNotMatch, trackWalletNewIdReset } from "../analytics";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import IOMarkdown from "../../../../components/IOMarkdown";
