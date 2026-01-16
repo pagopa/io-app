@@ -2,16 +2,9 @@ import { useIOToast } from "@pagopa/io-app-design-system";
 import { Alert } from "react-native";
 import I18n from "i18next";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import {
-  useIODispatch,
-  useIOSelector,
-  useIOStore
-} from "../../../../../store/hooks";
-import {
-  trackCredentialDeleteProperties,
-  trackItwCredentialDelete,
-  getMixPanelCredential
-} from "../../../analytics";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { trackItwCredentialDelete } from "../../../analytics";
+import { getMixPanelCredential } from "../../../analytics/utils/analyticsUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { itwCredentialsRemoveByType } from "../../../credentials/store/actions";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
@@ -23,7 +16,6 @@ export const useItwRemoveCredentialWithConfirm = (
   credential: StoredCredential
 ) => {
   const dispatch = useIODispatch();
-  const store = useIOStore();
   const toast = useIOToast();
   const navigation = useIONavigation();
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
@@ -37,8 +29,6 @@ export const useItwRemoveCredentialWithConfirm = (
     toast.success(
       I18n.t("features.itWallet.presentation.credentialDetails.toast.removed")
     );
-    void trackCredentialDeleteProperties(mixpanelCredential, store.getState());
-
     navigation.pop();
   };
 
