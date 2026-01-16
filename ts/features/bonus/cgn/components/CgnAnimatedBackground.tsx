@@ -135,18 +135,25 @@ function generateBlobPath(
   const scaledAmplitude = NOISE_AMPLITUDE * scale;
 
   // Generate points using Array.from to avoid mutation
+  // For seamless looping: we sample noise on a circle in noise-space.
+  // As 'time' goes 0→1, we trace a circle, ending where we started.
+  const timeAngle = time * Math.PI * 2;
+  const noiseRadius = 1.5; // How far to travel in noise space (smaller = smoother)
+
   const points: Array<{ x: number; y: number }> = Array.from(
     { length: NUM_BLOB_POINTS },
     (_, i) => {
       const angle = (i / NUM_BLOB_POINTS) * Math.PI * 2;
 
-      // Each point has unique noise coordinates that evolve over time
-      // Using different offsets ensures each point moves independently
-      const noiseX = seed * 100 + Math.cos(angle) * 2;
-      const noiseY = seed * 100 + Math.sin(angle) * 2;
+      // Each point samples noise at a unique location that moves in a circle over time
+      // seed offsets ensure each blob has different patterns
+      // The circular path in noise space (cos/sin of timeAngle) ensures seamless looping
+      // Each point has its own phase offset (angle) to create independent movement
+      const pointPhase = angle; // Use the point's position as its phase offset
+      const noiseX = seed * 50 + Math.cos(timeAngle + pointPhase) * noiseRadius;
+      const noiseY = seed * 50 + Math.sin(timeAngle + pointPhase) * noiseRadius;
 
-      // Sample noise at current time position - continuous time for smooth morphing
-      const noiseValue = simplexNoise2D(noiseX + time, noiseY + time);
+      const noiseValue = simplexNoise2D(noiseX, noiseY);
 
       // Map noise (-1 to 1) to radius variation
       const radiusOffset = noiseValue * scaledAmplitude;
@@ -201,31 +208,27 @@ function AnimatedBlob({
   ellipseCenterX,
   ellipseCenterY
 }: AnimatedBlobProps) {
-  // Single animation driver for orbit - runs continuously 0 to 1
+  // Single animation driver: 0 → 1 over one orbit, repeats infinitely
   const orbitProgress = useSharedValue(0);
-  // Separate continuous time for morphing - never resets abruptly
-  const morphTime = useSharedValue(0);
 
   // Generate morphing blob path at current orbit position
   const blobPath = useDerivedValue(() => {
     // Calculate position on elliptical motion path
-    // pathOffset staggers the blobs around the ellipse
     const angle = (pathOffset + orbitProgress.value) * Math.PI * 2;
     const posX = ellipseCenterX + MOTION_PATH_RADIUS_X * Math.cos(angle);
     const posY = ellipseCenterY + MOTION_PATH_RADIUS_Y * Math.sin(angle);
 
-    // Use continuous morphTime for seamless blob deformation
-    return generateBlobPath(
-      seed,
-      morphTime.value * morphSpeed,
-      posX,
-      posY,
-      scale
-    );
+    // For seamless morphing, we use the orbit angle as the noise time input.
+    // The trick: morphSpeed creates multiple "wobble cycles" per orbit.
+    // Since we're sampling noise in a circle (using sin/cos in generateBlobPath),
+    // the noise pattern naturally tiles when morphTime completes a full cycle.
+    // morphSpeed > 1 means the blob wobbles faster than it orbits.
+    const morphTime = orbitProgress.value * morphSpeed;
+
+    return generateBlobPath(seed, morphTime, posX, posY, scale);
   });
 
   useEffect(() => {
-    // Orbit animation - blobs travel around the shared elliptical path
     // eslint-disable-next-line functional/immutable-data
     orbitProgress.value = withRepeat(
       withTiming(1, {
@@ -236,23 +239,10 @@ function AnimatedBlob({
       false
     );
 
-    // Morph animation - continuous time progression for blob shape changes
-    // Uses a very long duration so time just keeps incrementing smoothly
-    // eslint-disable-next-line functional/immutable-data
-    morphTime.value = withRepeat(
-      withTiming(1000, {
-        duration: 1000000, // ~16 minutes before reset, practically continuous
-        easing: Easing.linear
-      }),
-      -1,
-      false
-    );
-
     return () => {
       cancelAnimation(orbitProgress);
-      cancelAnimation(morphTime);
     };
-  }, [orbitProgress, morphTime, orbitDuration]);
+  }, [orbitProgress, orbitDuration]);
 
   return <Path path={blobPath} color={BLOB_COLOR} opacity={opacity} />;
 }
@@ -264,11 +254,13 @@ export function CgnAnimatedBackground() {
 
   // Four blobs distributed around the shared elliptical motion path
   // Each blob has a different starting position (pathOffset) on the ellipse
+  // morphSpeed = number of complete wobble cycles per orbit
+  // Using integer values ensures seamless looping (blob returns to exact same shape)
   const blobConfigs: Array<AnimatedBlobProps> = [
     {
       pathOffset: 0, // Starts at right of ellipse
-      orbitDuration: 25000,
-      morphSpeed: 0.15,
+      orbitDuration: 30000, // 30 seconds per orbit
+      morphSpeed: 1, // 1 wobble cycle per orbit (slow, gentle)
       scale: 1.3,
       opacity: 0.5,
       seed: 1.0,
@@ -277,8 +269,8 @@ export function CgnAnimatedBackground() {
     },
     {
       pathOffset: 0.25, // Starts at bottom of ellipse
-      orbitDuration: 25000,
-      morphSpeed: 0.12,
+      orbitDuration: 30000,
+      morphSpeed: 1,
       scale: 1.1,
       opacity: 0.45,
       seed: 2.7,
@@ -287,8 +279,8 @@ export function CgnAnimatedBackground() {
     },
     {
       pathOffset: 0.5, // Starts at left of ellipse
-      orbitDuration: 25000,
-      morphSpeed: 0.18,
+      orbitDuration: 30000,
+      morphSpeed: 1,
       scale: 0.95,
       opacity: 0.4,
       seed: 4.3,
@@ -297,8 +289,8 @@ export function CgnAnimatedBackground() {
     },
     {
       pathOffset: 0.75, // Starts at top of ellipse
-      orbitDuration: 25000,
-      morphSpeed: 0.14,
+      orbitDuration: 30000,
+      morphSpeed: 1,
       scale: 1.15,
       opacity: 0.42,
       seed: 6.1,
