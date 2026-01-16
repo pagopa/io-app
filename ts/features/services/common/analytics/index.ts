@@ -321,12 +321,6 @@ export const trackServicesFavouritesSortStart = () =>
     buildEventProperties("UX", "action")
   );
 
-export const trackServicesFavouritesSortCancel = () =>
-  void mixpanelTrack(
-    "SERVICES_FAVOURITES_SORT_CANCEL",
-    buildEventProperties("UX", "action")
-  );
-
 export const trackServicesFavouritesSortSelected = (
   sortType: FavouriteServicesSortType
 ) =>

@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { AccessibilityInfo } from "react-native";
 import { RadioGroup, RadioItem } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
@@ -11,7 +10,6 @@ import * as analytics from "../../common/analytics";
 
 const useSortFavouriteServicesBottomSheet = () => {
   const dispatch = useIODispatch();
-  const skipCancelEvent = useRef(false);
 
   const sortType = useIOSelector(favouriteServicesSortTypeSelector);
 
@@ -35,8 +33,6 @@ const useSortFavouriteServicesBottomSheet = () => {
   ];
 
   const handlePress = (changedSortType: FavouriteServicesSortType) => {
-    // eslint-disable-next-line functional/immutable-data
-    skipCancelEvent.current = true;
     modal.dismiss();
     analytics.trackServicesFavouritesSortSelected(changedSortType);
     dispatch(setFavouriteServicesSortType(changedSortType));
@@ -58,14 +54,7 @@ const useSortFavouriteServicesBottomSheet = () => {
         onPress={handlePress}
       />
     ),
-    title: I18n.t("services.favouriteServices.bottomSheet.title"),
-    onDismiss: () => {
-      if (!skipCancelEvent.current) {
-        analytics.trackServicesFavouritesSortCancel();
-      }
-      // eslint-disable-next-line functional/immutable-data
-      skipCancelEvent.current = false;
-    }
+    title: I18n.t("services.favouriteServices.bottomSheet.title")
   });
 
   return { ...modal, present };
