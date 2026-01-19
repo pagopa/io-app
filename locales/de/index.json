@@ -3296,6 +3296,11 @@
             "label": "Das Laden der Zahlungsmethoden ist fehlgeschlagen.",
             "retryButton": "Erneut versuchen"
           }
+        },
+        "banner": {
+          "title": "Wie möchten Sie bezahlen?",
+          "content": "Entdecken Sie, welche Zahlungsmethoden Sie in der IO-App nutzen können, um pagoPA-Zahlungsaufforderungen zu bezahlen.",
+          "action": "Verfügbare Zahlungsmethoden entdecken"
         }
       },
       "transactions": {
