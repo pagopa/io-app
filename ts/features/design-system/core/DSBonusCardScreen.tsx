@@ -6,7 +6,10 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Alert } from "react-native";
 import I18n from "i18next";
-import { BonusCardScreenComponent } from "../../../components/BonusCard";
+import {
+  BonusCardScreenComponent,
+  defaultBonusCardColors
+} from "../../../components/BonusCard";
 
 const DSBonusCardScreen = () => (
   <BonusCardScreenComponent
@@ -18,6 +21,7 @@ const DSBonusCardScreen = () => (
     name="18app"
     organizationName="Ministero della Cultura"
     status={<Tag variant="info" text={I18n.t("bonusCard.paused")} />}
+    cardColors={defaultBonusCardColors}
     counters={[
       {
         type: "ValueWithProgress",

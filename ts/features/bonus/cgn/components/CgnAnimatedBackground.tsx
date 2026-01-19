@@ -1,18 +1,17 @@
+import { useIOThemeContext } from "@pagopa/io-app-design-system";
+import { Canvas, Path, Skia } from "@shopify/react-native-skia";
 import { useEffect } from "react";
 import { StyleSheet } from "react-native";
-import { Canvas, Path, Skia } from "@shopify/react-native-skia";
 import {
-  useSharedValue,
-  useDerivedValue,
-  withRepeat,
-  withTiming,
   Easing,
   cancelAnimation,
-  interpolate
+  interpolate,
+  useDerivedValue,
+  useSharedValue,
+  withRepeat,
+  withTiming
 } from "react-native-reanimated";
-
-const BACKGROUND_COLOR = "#f4f5f8";
-const BLOB_COLOR = Skia.Color("#c8c3dc");
+import { BonusScreenComponentProps } from "../../../../components/BonusCard/BonusCardScreenComponent";
 
 // Blob configuration
 const NUM_BLOB_POINTS = 6;
@@ -34,6 +33,7 @@ const SEED_RANGE = [1.0, 7.0] as const;
 interface AnimatedBlobProps {
   index: number;
   canvasSize: { value: { width: number; height: number } };
+  color: string;
 }
 
 /**
@@ -131,7 +131,7 @@ const generateBlobPath = (
   return path;
 };
 
-const AnimatedBlob = ({ index, canvasSize }: AnimatedBlobProps) => {
+const AnimatedBlob = ({ index, canvasSize, color }: AnimatedBlobProps) => {
   // Derive properties from index using interpolation
   // This distributes blobs evenly and creates variety without repetitive config
   const pathOffset = index / NUM_BLOBS; // Evenly distributed around ellipse
@@ -140,6 +140,8 @@ const AnimatedBlob = ({ index, canvasSize }: AnimatedBlobProps) => {
   const seed = interpolate(index, blobIndexRange, SEED_RANGE);
   const scale = interpolate(index, blobIndexRange, SCALE_RANGE);
   const opacity = interpolate(index, blobIndexRange, OPACITY_RANGE);
+
+  const foregroundColor = Skia.Color(color);
 
   // Single animation driver: 0 → 1 over one orbit, repeats infinitely
   const orbitProgress = useSharedValue(0);
@@ -180,25 +182,37 @@ const AnimatedBlob = ({ index, canvasSize }: AnimatedBlobProps) => {
     };
   }, [orbitProgress]);
 
-  return <Path path={blobPath} color={BLOB_COLOR} opacity={opacity} />;
+  return <Path path={blobPath} color={foregroundColor} opacity={opacity} />;
 };
 
-export const CgnAnimatedBackground = () => {
+export const CgnAnimatedBackground = ({
+  colors
+}: {
+  colors: NonNullable<BonusScreenComponentProps["cardColors"]>;
+}) => {
   // Canvas size is provided via onSize callback and updated on the UI thread
   const canvasSize = useSharedValue({ width: 0, height: 0 });
+  const { themeType } = useIOThemeContext();
+
+  const isDark = themeType === "dark";
+
+  const backgroundColor = isDark
+    ? colors.dark.background
+    : colors.light.background;
+  const foregroundColor = isDark
+    ? colors.dark.foreground
+    : colors.light.foreground;
 
   return (
     <Canvas
-      style={[
-        StyleSheet.absoluteFillObject,
-        { backgroundColor: BACKGROUND_COLOR }
-      ]}
+      style={[StyleSheet.absoluteFillObject, { backgroundColor }]}
       pointerEvents="none"
       onSize={canvasSize}
     >
       {Array.from({ length: NUM_BLOBS }, (_, index) => (
         <AnimatedBlob
           key={`blob-${index}`}
+          color={foregroundColor}
           index={index}
           canvasSize={canvasSize}
         />

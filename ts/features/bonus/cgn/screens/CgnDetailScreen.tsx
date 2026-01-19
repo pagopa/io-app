@@ -2,6 +2,7 @@ import {
   Alert,
   ContentWrapper,
   H4,
+  IOColors,
   IOToast,
   VSpacer,
   VStack
@@ -11,7 +12,6 @@ import { useNavigation } from "@react-navigation/native";
 
 import I18n from "i18next";
 import { ReactElement } from "react";
-import { ColorValue } from "react-native";
 import { connect } from "react-redux";
 import { Card } from "../../../../../definitions/cgn/Card";
 import {
@@ -24,8 +24,8 @@ import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import eycaLogo from "../../../../../img/bonus/cgn/eyca_logo.png";
 import { isLoading } from "../../../../common/model/RemoteValue";
 import {
-  BonusCard,
-  BonusCardScreenComponent
+  BonusCardScreenComponent,
+  BonusScreenComponentProps
 } from "../../../../components/BonusCard";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import SectionStatusComponent from "../../../../components/SectionStatus";
@@ -86,24 +86,16 @@ function getLogoUris(card: Card | undefined, eycaDetails: EycaDetailsState) {
   ];
 }
 
-const BACKGROUND_COLOR: Record<string, ColorValue> = {
-  light: "#f4f5f8",
-  dark: "#f4f5f8"
-};
-
-const SKELETON_COLOR: Record<string, ColorValue> = {
-  light: "#c8c3dc",
-  dark: "#c8c3dc"
-};
-
-const cardColors: BonusCard["colors"] = {
-  background: {
-    light: BACKGROUND_COLOR.light,
-    dark: BACKGROUND_COLOR.dark
+export const cgnCardColors: BonusScreenComponentProps["cardColors"] = {
+  light: {
+    background: "#f4f5f8",
+    foreground: "#c8c3dc",
+    text: "blueItalia-850"
   },
-  skeleton: {
-    light: SKELETON_COLOR.light,
-    dark: SKELETON_COLOR.dark
+  dark: {
+    background: IOColors["grey-850"],
+    foreground: "#c8c3dc",
+    text: "blueIO-50"
   }
 };
 
@@ -167,7 +159,7 @@ const CgnDetailScreen = (props: Props): ReactElement => {
   }
 
   if (props.isCgnInfoLoading || isLoading(props.unsubscriptionStatus)) {
-    return <BonusCardScreenComponent isLoading colors={cardColors} />;
+    return <BonusCardScreenComponent isLoading cardColors={cgnCardColors} />;
   }
 
   const showDiscoverCta =
@@ -241,12 +233,12 @@ const CgnDetailScreen = (props: Props): ReactElement => {
       name={I18n.t("bonus.cgn.name")}
       title={I18n.t("bonus.cgn.name")}
       organizationName={I18n.t("bonus.cgn.departmentName")}
-      cardBackground={<CgnAnimatedBackground />}
+      cardBackground={<CgnAnimatedBackground colors={cgnCardColors} />}
       actions={footerActions}
       status={
         props.cgnDetails ? <CgnCardStatus card={props.cgnDetails} /> : undefined
       }
-      colors={cardColors}
+      cardColors={cgnCardColors}
       cardFooter={
         <H4
           color="black"
