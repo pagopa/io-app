@@ -114,12 +114,17 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     dispatch(walletUpdate());
   });
 
+  useFocusEffect(
+    useCallback(() => {
+      trackOpenWalletScreen(mixPanelCredentialDetails);
+    }, [mixPanelCredentialDetails])
+  );
+
   /**
    * Handles the "New element added" toast display once the user returns to this screen
    */
   useFocusEffect(
     useCallback(() => {
-      trackOpenWalletScreen(mixPanelCredentialDetails);
       if (isNewElementAdded.current) {
         IOToast.success(I18n.t("features.wallet.home.toast.newMethod"));
         // eslint-disable-next-line functional/immutable-data
@@ -135,7 +140,6 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
         isRequiredEidFeedback.current = false;
       }
     }, [
-      mixPanelCredentialDetails,
       isNewElementAdded,
       isRequiredEidFeedback,
       itwFeedbackBottomSheet,
