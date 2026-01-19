@@ -45,6 +45,7 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
   const [event, setEvent] = useState<NfcEvent>();
   const [challenge, setChallenge] = useState<string>("");
   const [can, setCan] = useState<string>("");
+  const [aar, setAAR] = useState<string>("");
 
   const [isBase64Encoding, setIsBase64Encoding] = useState(false);
   const [useSENDChallenge, setUseSENDChallenge] = useState(false);
@@ -188,6 +189,18 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
             placeholder={"CAN"}
             onChangeText={setCan}
           />
+          {useSENDChallenge && (
+            <>
+              <VSpacer size={8} />
+              <TextInput
+                accessibilityLabel="AAR"
+                disabled={false}
+                value={aar}
+                placeholder={"AAR"}
+                onChangeText={setAAR}
+              />
+            </>
+          )}
           <VSpacer size={8} />
           <TextInput
             accessibilityLabel="Challenge text input field"
@@ -213,9 +226,10 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
           <>
             <VSpacer size={8} />
             <IOButton
+              disabled={aar.trim().length === 0}
               loading={isRequestingSENDMandate}
               label="Request SEND Challenge"
-              onPress={() => dispatch(testAarCreateMandate.request())}
+              onPress={() => dispatch(testAarCreateMandate.request(aar))}
             />
           </>
         )}
