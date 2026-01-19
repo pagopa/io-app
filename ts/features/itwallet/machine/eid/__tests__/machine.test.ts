@@ -1787,10 +1787,11 @@ describe("itwEidIssuanceMachine", () => {
     expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
   });
 
-  it("Should handle credentials upgrade", (onDone: jest.DoneCallback) => {
+  it("Should handle credentials upgrade", (done: jest.DoneCallback) => {
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
+
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: { Issuance: "DisplayingPreview" },
       context: {
@@ -1808,9 +1809,17 @@ describe("itwEidIssuanceMachine", () => {
     const actor = createActor(mockedMachine, { snapshot });
     actor.start();
 
-    actor.subscribe(snap => {
-      if (snap.matches("CredentialsUpgrade")) {
-        onDone();
+    const subIntro = actor.subscribe(snap => {
+      if (_.isEqual(snap.value, { CredentialsUpgrade: "Intro" })) {
+        subIntro.unsubscribe();
+        actor.send({ type: "next" });
+      }
+    });
+
+    const subUpgrading = actor.subscribe(snap => {
+      if (_.isEqual(snap.value, { CredentialsUpgrade: "Upgrading" })) {
+        subUpgrading.unsubscribe();
+        done();
       }
     });
 
