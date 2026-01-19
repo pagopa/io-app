@@ -6,9 +6,11 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { favouriteServicesSortTypeSelector } from "../store/selectors";
 import { setFavouriteServicesSortType } from "../store/actions";
 import type { FavouriteServicesSortType } from "../types";
+import * as analytics from "../../common/analytics";
 
 const useSortFavouriteServicesBottomSheet = () => {
   const dispatch = useIODispatch();
+
   const sortType = useIOSelector(favouriteServicesSortTypeSelector);
 
   const sortTypeOptions: Array<RadioItem<FavouriteServicesSortType>> = [
@@ -32,6 +34,7 @@ const useSortFavouriteServicesBottomSheet = () => {
 
   const handlePress = (changedSortType: FavouriteServicesSortType) => {
     modal.dismiss();
+    analytics.trackServicesFavouritesSortSelected(changedSortType);
     dispatch(setFavouriteServicesSortType(changedSortType));
   };
 
