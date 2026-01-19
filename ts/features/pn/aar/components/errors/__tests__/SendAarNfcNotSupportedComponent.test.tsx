@@ -7,6 +7,7 @@ import PN_ROUTES from "../../../../navigation/routes";
 import { SendAarNfcNotSupportedComponent } from "../SendAarNfcNotSupportedComponent";
 import * as FLOW_MANAGER from "../../../hooks/useSendAarFlowManager";
 import * as IO_NAV from "../../../../../../navigation/params/AppParamsList";
+import * as URL_UTILS from "../../../../../../utils/url";
 
 const terminateFlowMock = jest.fn();
 const setOptionsMock = jest.fn();
@@ -44,6 +45,14 @@ describe("SendAarNfcNotSupportedComponent", () => {
     expect(terminateFlowMock).toHaveBeenCalledTimes(0);
     fireEvent.press(closeButton);
     expect(terminateFlowMock).toHaveBeenCalledTimes(1);
+  });
+  it("opens help center url when help center cta is pressed", () => {
+    const webUrlSpy = jest.spyOn(URL_UTILS, "openWebUrl");
+    const { getByTestId } = renderComponent();
+    const helpCenterCta = getByTestId("help-center-cta");
+    expect(webUrlSpy).toHaveBeenCalledTimes(0);
+    fireEvent.press(helpCenterCta);
+    expect(webUrlSpy).toHaveBeenCalledTimes(1);
   });
 });
 

@@ -815,6 +815,7 @@ exports[`SendAarNfcNotSupportedComponent should match the snapshot 1`] = `
                                 "flexShrink": 0,
                               }
                             }
+                            testID="help-center-cta"
                           >
                             <View
                               style={

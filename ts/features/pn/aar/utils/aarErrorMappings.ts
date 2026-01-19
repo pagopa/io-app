@@ -6,6 +6,7 @@ import {
   GenericCieValidationErrorComponent,
   UnrelatedCieComponent
 } from "../components/errors/SendAarCieValidationErrorComponent";
+import { isTestEnv } from "../../../../utils/environment";
 
 const cieErrors = [
   "PN_MANDATE_BADREQUEST",
@@ -21,7 +22,7 @@ const cieErrors = [
 ] as const;
 type SendAarErrorCodes = (typeof cieErrors)[number];
 
-const cieErrorMap: Map<SendAarErrorCodes, ComponentType> = new Map([
+const aarErrorMap: Map<SendAarErrorCodes, ComponentType> = new Map([
   ...cieErrors.map(code => [code, GenericCieValidationErrorComponent] as const),
   ["CIE_EXPIRED_ERROR", CieExpiredComponent],
   ["CIE_NOT_RELATED_TO_DELEGATOR_ERROR", UnrelatedCieComponent]
@@ -37,12 +38,14 @@ export const getSendAarErrorComponent = (
 
   // Find the first error that matches a mapped error code
   const maybeErrorKey = errorCodes.find(error =>
-    cieErrorMap.has(error as SendAarErrorCodes)
+    aarErrorMap.has(error as SendAarErrorCodes)
   );
 
   // if none found, return the generic error component
   return (
-    cieErrorMap.get(maybeErrorKey as SendAarErrorCodes) ??
+    aarErrorMap.get(maybeErrorKey as SendAarErrorCodes) ??
     SendAarGenericErrorComponent
   );
 };
+
+export const testable = isTestEnv ? { aarErrorMap } : {};

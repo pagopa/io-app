@@ -33,6 +33,7 @@ export const SendAarNfcNotSupportedComponent = () => {
         type: "SingleButton",
         primary: {
           icon: "instruction",
+          testID: "help-center-cta",
           onPress: () => openWebUrl(helpCenterUrl),
           label: i18n.t("features.pn.aar.flow.delegated.nfcNotSupported.cta")
         }
