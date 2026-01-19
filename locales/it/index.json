@@ -4480,8 +4480,9 @@
         "title": "Metodi di pagamento",
         "button": "Aggiungi",
         "banner": {
-          "content": "Aggiungi al portafoglio un metodo di pagamento, così non dovrai inserire ogni volta i dati.",
-          "action": "Aggiungi un metodo"
+          "content": "Scopri quali metodi di pagamento puoi usare su IO per pagare gli avvisi pagoPA.",
+          "action": "Scopri i metodi disponibili",
+          "title": "Come puoi pagare?"
         },
         "status": {
           "expired": "Scaduta"
