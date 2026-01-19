@@ -1601,10 +1601,10 @@
         "cta": "Scopri di più"
       },
       "error": {
-        "title": "Si è verificato un errore",
-        "subtitle": "Riprova o contatta l'assistenza",
-        "primaryButton": "Chiudi",
-        "secondaryButton": "Riprova"
+        "title": "This payment method is not available.",
+        "subtitle": "Close the app and reopen it to update your wallet.",
+        "primaryButton": "Back",
+        "secondaryButton": "Retry"
       }
     },
     "wallet": "Wallet",
@@ -3032,7 +3032,8 @@
       },
       "metadata": {
         "a11y": {
-          "website": "Browse the institution's website"
+          "website": "Browse the institution's website",
+          "copyToClipboard": "Copy to clipboard"
         },
         "title": "Contacts and info",
         "website": "Browse Website",
@@ -3042,7 +3043,6 @@
         "email": "Send email",
         "pec": "Send PEC",
         "fiscalCode": "Institution's fiscal code",
-        "fiscalCodeAccessibilityHint": "Copy to clipboard",
         "address": "Address",
         "serviceId": "Service ID"
       },

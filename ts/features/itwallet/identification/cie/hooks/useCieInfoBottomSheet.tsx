@@ -9,11 +9,11 @@ import { renderActionButtons } from "../../../../../components/ui/IOScrollView";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import {
-  ItwFlow,
   trackItwCieInfoBottomSheet,
   trackItwPinInfoBottomSheet,
   trackItwUserWithoutL3Requirements
-} from "../../../analytics";
+} from "../../analytics";
+import { ItwFlow } from "../../../analytics/utils/types";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { CieWarningType } from "../utils/types";

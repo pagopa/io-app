@@ -1,8 +1,6 @@
 import { useCallback } from "react";
-import {
-  getMixPanelCredential,
-  trackWalletCredentialSupport
-} from "../../../analytics";
+import { trackWalletCredentialSupport } from "../analytics";
+import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
 import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
 import { useStartSupportRequest } from "../../../../../hooks/useStartSupportRequest.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
