@@ -13,8 +13,8 @@ import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUt
 export const itwMixPanelCredentialDetailsSelector = createSelector(
   itwCredentialsSelector,
   itwLifecycleIsITWalletValidSelector,
-  (credentials, isItwL3): ItwCredentialDetails =>
-    Object.values(credentials).reduce(
+  (credentials, isItwL3) =>
+    Object.values(credentials).reduce<ItwCredentialDetails>(
       (acc, c) => ({
         ...acc,
         [getMixPanelCredential(c.credentialType, isItwL3)]:
