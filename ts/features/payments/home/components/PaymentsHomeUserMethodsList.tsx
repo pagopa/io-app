@@ -152,7 +152,8 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
       <View style={{ paddingVertical: IOVisualCostants.appMarginDefault }}>
         <Banner
           testID="PaymentsHomeUserMethodsListTestID-banner"
-          pictogramName="cardAdd"
+          pictogramName="payments"
+          title={I18n.t("features.payments.methods.banner.title")}
           content={I18n.t("features.payments.methods.banner.content")}
           action={I18n.t("features.payments.methods.banner.action")}
           onPress={handleOnAddMethodPress}
