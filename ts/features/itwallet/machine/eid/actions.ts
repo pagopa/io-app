@@ -14,6 +14,7 @@ import {
   trackItwIdVerifiedDocument,
   trackSaveCredentialSuccess
 } from "../../analytics";
+import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import {
   itwSetAuthLevel,
   itwFreezeSimplifiedActivationRequirements,
@@ -319,9 +320,11 @@ export const createEidIssuanceActionsImplementation = (
   trackWalletInstanceCreation: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    trackSaveCredentialSuccess(
-      context.level === "l3" ? "ITW_PID" : "ITW_ID_V2"
-    );
+    trackSaveCredentialSuccess({
+      credential: context.level === "l3" ? "ITW_PID" : "ITW_ID_V2",
+      ITW_ID_method: context.identification?.mode,
+      credential_details: itwMixPanelCredentialDetailsSelector(store.getState())
+    });
   },
 
   trackWalletInstanceRevocation: () => {

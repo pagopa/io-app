@@ -2,7 +2,7 @@ import { createSelector } from "reselect";
 import { itwCredentialsSelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { getMixPanelCredential } from "../../utils";
-import { CREDENTIAL_STATUS_MAP } from "../../utils/types";
+import { CREDENTIAL_STATUS_MAP, ItwCredentialDetails } from "../../utils/types";
 import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils";
 
 /**
@@ -13,7 +13,7 @@ import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUt
 export const itwMixPanelCredentialDetailsSelector = createSelector(
   itwCredentialsSelector,
   itwLifecycleIsITWalletValidSelector,
-  (credentials, isItwL3) =>
+  (credentials, isItwL3): ItwCredentialDetails =>
     Object.values(credentials).reduce(
       (acc, c) => ({
         ...acc,

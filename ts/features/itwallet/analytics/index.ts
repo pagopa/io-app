@@ -22,7 +22,8 @@ import {
   ItwDismissalAction,
   ItwIdMethod,
   CredentialStatusAssertionFailure,
-  CredentialDetails
+  ItwCredentialDetails,
+  TrackSaveCredentialSuccess
 } from "./utils/types";
 
 // Screen view events
@@ -44,7 +45,7 @@ export const trackItWalletIntroScreen = (itw_flow: ItwFlow) => {
 };
 
 export const trackOpenWalletScreen = (
-  credential_details: CredentialDetails
+  credential_details: ItwCredentialDetails
 ) => {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.WALLET,
@@ -291,10 +292,12 @@ export const trackItwTrustmarkRenewFailure = (
 
 // Confirm events
 
-export const trackSaveCredentialSuccess = (credential: MixPanelCredential) => {
+export const trackSaveCredentialSuccess = (
+  properties: TrackSaveCredentialSuccess
+) => {
   void mixpanelTrack(
     ITW_CONFIRM_EVENTS.ITW_UX_SUCCESS,
-    buildEventProperties("UX", "confirm", { credential })
+    buildEventProperties("UX", "confirm", properties)
   );
 };
 
