@@ -1,9 +1,13 @@
 import { createSelector } from "reselect";
-import { itwCredentialsSelector } from "../../../credentials/store/selectors";
+import {
+  itwCredentialsEidIssuedAtSelector,
+  itwCredentialsSelector
+} from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { getMixPanelCredential } from "../../utils";
 import { CREDENTIAL_STATUS_MAP, ItwCredentialDetails } from "../../utils/types";
 import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils";
+import { isCredentialIssuedBeforePid } from "../../../common/utils/itwCredentialUtils";
 
 /**
  * Map all the credentials in the Wallet and their status to the corresponding MixPanel format.
@@ -13,13 +17,15 @@ import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUt
 export const itwMixPanelCredentialDetailsSelector = createSelector(
   itwCredentialsSelector,
   itwLifecycleIsITWalletValidSelector,
-  (credentials, isItwL3) =>
-    Object.values(credentials).reduce<ItwCredentialDetails>(
-      (acc, c) => ({
+  itwCredentialsEidIssuedAtSelector,
+  (credentials, isItwPid, pidIssuedAt) =>
+    Object.values(credentials).reduce<ItwCredentialDetails>((acc, c) => {
+      const isItwCredential =
+        isItwPid && !isCredentialIssuedBeforePid(c.jwt.issuedAt, pidIssuedAt);
+      return {
         ...acc,
-        [getMixPanelCredential(c.credentialType, isItwL3)]:
+        [getMixPanelCredential(c.credentialType, isItwCredential)]:
           CREDENTIAL_STATUS_MAP[getCredentialStatus(c)]
-      }),
-      {}
-    )
+      };
+    }, {})
 );
