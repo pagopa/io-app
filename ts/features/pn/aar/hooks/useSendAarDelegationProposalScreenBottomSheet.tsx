@@ -29,7 +29,7 @@ const BsFooterButton = ({
     dispatch(
       identificationRequest(
         true,
-        false,
+        true,
         undefined,
         {
           label: i18n.t("global.buttons.cancel"),
