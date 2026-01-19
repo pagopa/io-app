@@ -7,14 +7,13 @@ import { checkCurrentSession } from "../../../authentication/common/store/action
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import {
-  getMixPanelCredential,
-  trackAddCredentialProfileAndSuperProperties,
   trackSaveCredentialSuccess,
   trackStartAddNewCredential,
   trackStartCredentialUpgrade,
   trackWalletDataShare,
   trackWalletDataShareAccepted
 } from "../../analytics";
+import { getMixPanelCredential } from "../../analytics/utils";
 import {
   itwCredentialsRemoveByType,
   itwCredentialsStore
@@ -159,7 +158,6 @@ export const createCredentialIssuanceActionsImplementation = (
       const isItwL3 = itwLifecycleIsITWalletValidSelector(store.getState());
       const credential = getMixPanelCredential(context.credentialType, isItwL3);
       trackSaveCredentialSuccess(credential);
-      trackAddCredentialProfileAndSuperProperties(store.getState(), credential);
     }
   },
 

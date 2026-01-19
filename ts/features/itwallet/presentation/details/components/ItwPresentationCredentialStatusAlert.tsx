@@ -28,12 +28,12 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { useItwRemoveCredentialWithConfirm } from "../hooks/useItwRemoveCredentialWithConfirm";
 import { openWebUrl } from "../../../../../utils/url";
 import {
-  CREDENTIAL_STATUS_MAP,
-  getMixPanelCredential,
+  trackItwCredentialTapBanner,
   trackItwCredentialBottomSheet,
-  trackItwCredentialBottomSheetAction,
-  trackItwCredentialTapBanner
-} from "../../../analytics";
+  trackItwCredentialBottomSheetAction
+} from "../analytics";
+import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
+import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";

@@ -466,7 +466,10 @@ export const itwEidIssuanceMachine = setup({
     },
     EvaluatingSimplifiedActivationFlow: {
       description: "State that manages the wallet's simplified activation flow",
-      entry: "clearSimplifiedActivationRequirements",
+      entry: [
+        "clearSimplifiedActivationRequirements",
+        "trackWalletInstanceCreation"
+      ],
       always: [
         {
           guard: "hasLegacyCredentials",
@@ -840,6 +843,28 @@ export const itwEidIssuanceMachine = setup({
                 }
               }
             }
+          },
+          on: {
+            "select-identification-mode": [
+              {
+                guard: ({ event }) => event.mode === "spid",
+                actions: "trackIdentificationMethodSelected",
+                target: "#itwEidIssuanceMachine.UserIdentification.Spid"
+              },
+              {
+                guard: ({ event }) => event.mode === "cieId",
+                actions: [
+                  "trackIdentificationMethodSelected",
+                  assign(() => ({
+                    identification: {
+                      mode: "cieId",
+                      level: "L3"
+                    }
+                  }))
+                ],
+                target: "#itwEidIssuanceMachine.UserIdentification.CieID"
+              }
+            ]
           },
           onDone: {
             target: "#itwEidIssuanceMachine.UserIdentification.Completed"

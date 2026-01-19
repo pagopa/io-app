@@ -26,7 +26,7 @@ import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { isCieLoginUatEnabledSelector } from "../../../../authentication/login/cie/store/selectors";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { selectIdentification } from "../../../machine/eid/selectors";
-import { trackItwIdEnterCan } from "../../../analytics";
+import { trackItwIdEnterCan } from "../../analytics";
 
 const CIE_CAN_LENGTH = 6;
 
