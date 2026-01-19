@@ -1,30 +1,32 @@
 import {
   Banner,
   BannerErrorState,
+  IOToast,
   IOVisualCostants,
   ListItemHeader,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { createRef, useMemo, useEffect, useCallback } from "react";
-import { View } from "react-native";
 import I18n from "i18next";
-import * as analytics from "../analytics";
+import { createRef, useCallback, useEffect, useMemo } from "react";
+import { View } from "react-native";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { openWebUrl } from "../../../../utils/url";
 import { PaymentCardSmallProps } from "../../common/components/PaymentCardSmall";
+import { usePaymentsBackoffRetry } from "../../common/hooks/usePaymentsBackoffRetry";
+import { clearPaymentsBackoffRetry } from "../../common/store/actions";
 import { getPaymentCardPropsFromWalletInfo } from "../../common/utils";
 import { PaymentsMethodDetailsRoutes } from "../../details/navigation/routes";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
 import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
 import { paymentsWalletUserMethodsSelector } from "../../wallet/store/selectors";
+import * as analytics from "../analytics";
 import { paymentsSetAddMethodsBannerVisible } from "../store/actions";
 import { isAddMethodsBannerVisibleSelector } from "../store/selectors";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
-import { usePaymentsBackoffRetry } from "../../common/hooks/usePaymentsBackoffRetry";
-import { clearPaymentsBackoffRetry } from "../../common/store/actions";
 import {
   PaymentCardsCarousel,
   PaymentCardsCarouselSkeleton
@@ -35,6 +37,8 @@ type Props = {
 };
 
 const PAYMENTS_HOME_USER_METHODS_BACKOFF = "PAYMENTS_HOME_USER_METHODS_BACKOFF";
+const AVAILABLE_PAYMENT_METHODS_URL =
+  "https://assistenza.ioapp.it/hc/it/articles/34432172440977-Con-quali-metodi-puoi-pagare";
 
 const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
   const bannerRef = createRef<View>();
@@ -156,7 +160,11 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
           title={I18n.t("features.payments.methods.banner.title")}
           content={I18n.t("features.payments.methods.banner.content")}
           action={I18n.t("features.payments.methods.banner.action")}
-          onPress={handleOnAddMethodPress}
+          onPress={() =>
+            openWebUrl(AVAILABLE_PAYMENT_METHODS_URL, () =>
+              IOToast.error(I18n.t("global.jserror.title"))
+            )
+          }
           color="neutral"
           ref={bannerRef}
           labelClose={I18n.t("global.buttons.close")}
