@@ -2,17 +2,18 @@ import { VStack } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useMemo } from "react";
-import { StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import { AnimatedImage } from "../../../../../components/AnimatedImage";
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { renderActionButtons } from "../../../../../components/ui/IOScrollView";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import {
-  ItwFlow,
   trackItwCieInfoBottomSheet,
   trackItwPinInfoBottomSheet,
   trackItwUserWithoutL3Requirements
-} from "../../../analytics";
+} from "../../analytics";
+import { ItwFlow } from "../../../analytics/utils/types";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { CieWarningType } from "../utils/types";
@@ -50,11 +51,57 @@ export const useCieInfoBottomSheet = ({
   showSecondaryAction = true
 }: Props) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const navigation = useIONavigation();
   const { name: routeName } = useRoute();
   const reason = type === "card" ? "user_without_cie" : "user_without_pin";
   const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
+  const showPinNotFoundAlert = () =>
+    Alert.alert(
+      I18n.t(
+        "features.itWallet.identification.cie.bottomSheet.pin.dialog.title"
+      ),
+      I18n.t(
+        "features.itWallet.identification.cie.bottomSheet.pin.dialog.body"
+      ),
+      [
+        {
+          text: I18n.t(
+            "features.itWallet.identification.cie.bottomSheet.pin.dialog.back"
+          ),
+          onPress: () => {
+            navigation.goBack();
+          },
+          style: "destructive"
+        },
+        {
+          text: I18n.t(
+            "features.itWallet.identification.cie.bottomSheet.pin.dialog.cieIdAction"
+          ),
+          onPress: () => {
+            machineRef.send({
+              type: "select-identification-mode",
+              mode: "cieId"
+            });
+          },
+          style: "default"
+        },
+        {
+          text: I18n.t(
+            "features.itWallet.identification.cie.bottomSheet.pin.dialog.spidCieAction"
+          ),
+          onPress: () => {
+            machineRef.send({
+              type: "select-identification-mode",
+              mode: "spid"
+            });
+          },
+          style: "default"
+        }
+      ]
+    );
+
   const itw_flow = isL3FeaturesEnabled ? "L3" : "L2";
 
   const imageSrc = useMemo(() => {
@@ -104,10 +151,7 @@ export const useCieInfoBottomSheet = ({
                         reason,
                         position: "bottom_sheet"
                       });
-                      machineRef.send({
-                        type: "go-to-cie-warning",
-                        warning: type
-                      });
+                      showPinNotFoundAlert();
                       bottomSheet.dismiss();
                     }
                   }

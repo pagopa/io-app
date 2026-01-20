@@ -32,10 +32,7 @@ const reducer = (
         ...state,
         dataById: {
           ...state.dataById,
-          [action.payload.id]: {
-            ...action.payload,
-            addedAt: Date.now()
-          }
+          [action.payload.id]: action.payload
         }
       };
     }

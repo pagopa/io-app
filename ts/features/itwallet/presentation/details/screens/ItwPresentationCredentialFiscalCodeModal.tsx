@@ -19,7 +19,7 @@ import {
   selectFiscalCodeFromEid,
   selectNameSurnameFromEid
 } from "../../../credentials/store/selectors";
-import { trackCredentialCardModal } from "../../../analytics";
+import { trackCredentialCardModal } from "../analytics";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 
 /**
