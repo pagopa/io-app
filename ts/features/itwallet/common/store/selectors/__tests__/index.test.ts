@@ -12,6 +12,7 @@ import * as credentialsSelectors from "../../../../credentials/store/selectors";
 import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
 import * as walletInstanceSelectors from "../../../../walletInstance/store/selectors";
 import * as preferencesSelectors from "../preferences";
+import * as bannersSelectors from "../banners";
 import * as remoteConfigSelectors from "../remoteConfig";
 
 describe("isItwDiscoveryBannerRenderableSelector", () => {
@@ -192,7 +193,7 @@ describe("itwShouldRenderWalletUpgradeMDLDetailsBannerSelector", () => {
         .mockReturnValue(isEidL3);
       jest
         .spyOn(
-          preferencesSelectors,
+          bannersSelectors,
           "itwIsWalletUpgradeMDLDetailsBannerHiddenSelector"
         )
         .mockReturnValue(isBannerHidden);
