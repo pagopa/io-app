@@ -1,14 +1,11 @@
-import { addMonths } from "date-fns";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import {
-  itwCloseDiscoveryBanner,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
   itwSetFiscalCodeWhitelisted,
   itwSetReviewPending,
   itwSetWalletInstanceRemotelyActive,
-  itwSetWalletUpgradeMDLDetailsBannerHidden,
   itwFreezeSimplifiedActivationRequirements,
   itwClearSimplifiedActivationRequirements,
   itwSetPidReissuingSurveyHidden
@@ -17,8 +14,6 @@ import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
 
 export type ItwPreferencesState = {
-  // Date until which the discovery banner should be hidden
-  hideDiscoveryBannerUntilDate?: string;
   // Indicates whether the user should see the modal to review the app.
   isPendingReview?: boolean;
   // Indicates the SPID/CIE authentication level used to obtain the eid
@@ -30,8 +25,6 @@ export type ItwPreferencesState = {
   isWalletInstanceRemotelyActive?: boolean;
   // Indicates whether the fiscal code is whitelisted for L3 features
   isFiscalCodeWhitelisted?: boolean;
-  // Indicates whether the IT-wallet upgrade banner in MDL details should be hidden
-  walletUpgradeMDLDetailsBannerHidden?: boolean;
   // Indicates whether the user should activate IT-Wallet with the simplified flow,
   // even if he/she already has a valid L3 PID (obtained outside the whitelist)
   isItwSimplifiedActivationRequired?: boolean;
@@ -47,13 +40,6 @@ const reducer = (
   action: Action
 ): ItwPreferencesState => {
   switch (action.type) {
-    case getType(itwCloseDiscoveryBanner): {
-      return {
-        ...state,
-        hideDiscoveryBannerUntilDate: addMonths(new Date(), 6).toISOString()
-      };
-    }
-
     case getType(itwSetReviewPending): {
       return {
         ...state,
@@ -103,13 +89,6 @@ const reducer = (
       return {
         ...state,
         isFiscalCodeWhitelisted: action.payload
-      };
-    }
-
-    case getType(itwSetWalletUpgradeMDLDetailsBannerHidden): {
-      return {
-        ...state,
-        walletUpgradeMDLDetailsBannerHidden: action.payload
       };
     }
 
