@@ -1,9 +1,17 @@
-import { H6, IOColors, BodySmall, Tag } from "@pagopa/io-app-design-system";
+import {
+  H6,
+  IOColors,
+  BodySmall,
+  Tag,
+  useIOThemeContext
+} from "@pagopa/io-app-design-system";
 import { Image, StyleSheet, View } from "react-native";
 import I18n from "i18next";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import eycaLogo from "../../../../../img/bonus/cgn/eyca_logo.png";
-import CgnCardShape from "../../../../../img/features/cgn/cgn-card.svg";
+import CgnCardShapeLightMode from "../../../../../img/features/cgn/cgn-card.svg";
+import CgnCardShapeDarkMode from "../../../../../img/features/cgn/cgn-card-dark.svg";
+
 import { format } from "../../../../utils/dates";
 
 export type CgnCardProps = {
@@ -12,6 +20,11 @@ export type CgnCardProps = {
 };
 
 export const CgnCard = ({ expireDate, withEycaLogo }: CgnCardProps) => {
+  const { themeType } = useIOThemeContext();
+  const isDark = themeType === "dark";
+
+  const textColor: IOColors = isDark ? "grey-50" : "blueItalia-850";
+
   const isExpired = expireDate === undefined;
 
   const eycaLogoComponent = (
@@ -60,26 +73,19 @@ export const CgnCard = ({ expireDate, withEycaLogo }: CgnCardProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.card}>
-        <CgnCardShape />
+        {isDark ? <CgnCardShapeDarkMode /> : <CgnCardShapeLightMode />}
       </View>
       <View style={styles.content}>
         <View style={styles.header}>
-          <H6
-            color="blueItalia-850"
-            style={{ flexShrink: 1 }}
-            numberOfLines={1}
-          >
+          <H6 color={textColor} style={{ flexShrink: 1 }} numberOfLines={1}>
             {I18n.t("bonus.cgn.name")}
           </H6>
           {isExpired && expiredTag}
         </View>
-        <BodySmall color="blueItalia-850" style={{ width: "70%" }}>
+        <BodySmall color={textColor} style={{ width: "70%" }}>
           {I18n.t("bonus.cgn.departmentName")}
         </BodySmall>
-        <BodySmall
-          color="blueItalia-850"
-          accessibilityLabel={accessibleExpireDate}
-        >
+        <BodySmall color={textColor} accessibilityLabel={accessibleExpireDate}>
           {expireDate &&
             I18n.t("bonusCard.validUntil", {
               endDate: format(expireDate, "MM/YY")
