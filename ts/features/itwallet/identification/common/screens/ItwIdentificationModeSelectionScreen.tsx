@@ -220,9 +220,7 @@ const CiePinMethodModule = () => {
         icon="cieCard"
         onPress={() => {
           if (level === "l3") {
-            ciePinBottomSheet.present({
-              skipTracking: false
-            });
+            ciePinBottomSheet.present();
           } else {
             handleOnPress();
           }
@@ -270,9 +268,7 @@ const SpidMethodModule = () => {
         icon="spid"
         onPress={() => {
           if (level === "l3") {
-            spidBottomSheet.present({
-              skipTracking: false
-            });
+            spidBottomSheet.present();
           } else {
             handleOnPress();
           }
@@ -319,9 +315,7 @@ const CieIdMethodModule = () => {
         testID="CieIDMethodModuleTestID"
         onPress={() => {
           if (level === "l3") {
-            cieIdBottomSheet.present({
-              skipTracking: false
-            });
+            cieIdBottomSheet.present();
           } else {
             handleOnPress();
           }
