@@ -14,7 +14,7 @@ import {
 import { BonusScreenComponentProps } from "../../../../components/BonusCard/BonusCardScreenComponent";
 
 // Blob configuration
-const NUM_BLOB_POINTS = 6;
+const NUM_BLOB_POINTS = 7;
 const BLOB_BASE_RADIUS = 80;
 const WOBBLE_AMPLITUDE = 25; // How much the blob wobbles (±pixels)
 
@@ -23,7 +23,7 @@ const MOTION_PATH_RADIUS_X_RATIO = 0.35;
 const MOTION_PATH_RADIUS_Y_RATIO = 0.4;
 
 // Animation constants
-const NUM_BLOBS = 3;
+const NUM_BLOBS = 4;
 const ORBIT_DURATION = 30000; // 30 seconds per orbit
 const MORPH_SPEED = 1; // 1 wobble cycle per orbit
 const SCALE_RANGE = [0.95, 1.5] as const;

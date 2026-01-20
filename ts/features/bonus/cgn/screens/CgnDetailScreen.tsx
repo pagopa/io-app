@@ -2,8 +2,10 @@ import {
   Alert,
   ContentWrapper,
   H4,
+  hexToRgba,
   IOColors,
   IOToast,
+  useIOTheme,
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
@@ -72,6 +74,7 @@ import {
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
 import { EYCA_WEBSITE_DISCOUNTS_PAGE_URL } from "../utils/constants";
 import { canEycaCardBeShown } from "../utils/eyca";
+import { hexToRgb } from "../../../../utils/color";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -94,7 +97,7 @@ export const cgnCardColors: BonusScreenComponentProps["cardColors"] = {
   },
   dark: {
     background: IOColors["grey-850"],
-    foreground: "#c8c3dc",
+    foreground: hexToRgba("#A58DFF", 0.4),
     text: "blueIO-50"
   }
 };
@@ -132,6 +135,8 @@ const CgnDetailScreen = (props: Props): ReactElement => {
   const logoUris = getLogoUris(props.cgnDetails, eycaDetails);
 
   const currentProfile = useIOSelector(profileSelector);
+
+  const theme = useIOTheme();
 
   const startCgnActiviation = () => {
     dispatch(loadAvailableBonuses.request());
@@ -241,7 +246,7 @@ const CgnDetailScreen = (props: Props): ReactElement => {
       cardColors={cgnCardColors}
       cardFooter={
         <H4
-          color="black"
+          color={theme["textHeading-default"]}
           style={{
             textAlign: "center",
             marginHorizontal: 16,
