@@ -6,7 +6,11 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import PN_ROUTES from "../../../navigation/routes";
 import * as ERROR_COMPONENT from "../../components/errors/SendAARErrorComponent";
 import * as NOT_ADDRESSEE_COMPONENT from "../../components/errors/SendAarNotAddresseeKoComponent";
-import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
+import {
+  AARFlowState,
+  AARFlowStateName,
+  sendAARFlowStates
+} from "../../utils/stateUtils";
 import { SendAARErrorScreen } from "../SendAARErrorScreen";
 import { sendAarMockStates } from "../../utils/testUtils";
 import * as SELECTORS from "../../store/selectors";
@@ -14,7 +18,9 @@ import * as ANALYTICS from "../../analytics";
 import * as NFC_NOT_SUPPORTED_COMPONENT from "../../components/errors/SendAarNfcNotSupportedComponent";
 import * as ERROR_MAPPINGS from "../../utils/aarErrorMappings";
 
-const handledRetryStates = [sendAARFlowStates.cieCanAdvisory];
+const handledRetryStates: Array<AARFlowStateName> = [
+  sendAARFlowStates.cieCanAdvisory
+];
 const mockReplace = jest.fn();
 jest.mock("../../../../../navigation/params/AppParamsList", () => {
   const actualNav = jest.requireActual(
@@ -109,7 +115,7 @@ describe("SendAARErrorScreen", () => {
         expect(errorComponentSpy).toHaveBeenCalled();
       }
     });
-    const shouldNavigateToRetry = mockState.type in handledRetryStates;
+    const shouldNavigateToRetry = handledRetryStates.includes(mockState.type);
     it(`${
       shouldNavigateToRetry ? "should" : "should not"
     } navigate to retry screen when the AAR state is ${mockState.type}`, () => {
@@ -121,6 +127,8 @@ describe("SendAARErrorScreen", () => {
 
       if (shouldNavigateToRetry) {
         expect(mockReplace).toHaveBeenCalledTimes(1);
+      } else {
+        expect(mockReplace).not.toHaveBeenCalled();
       }
     });
   });
