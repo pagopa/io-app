@@ -11,7 +11,7 @@ import { AUTHENTICATION_ROUTES } from "../features/authentication/common/navigat
 import { isConnectedSelector } from "../features/connectivity/store/selectors";
 import { OfflineAccessReasonEnum } from "../features/ingress/store/reducer";
 import { offlineAccessReasonSelector } from "../features/ingress/store/selectors";
-import { trackItwOfflineBottomSheet } from "../features/itwallet/analytics";
+import { trackItwOfflineBottomSheet } from "../features/itwallet/wallet/analytics";
 import { useOfflineAlertDetailModal } from "../features/itwallet/common/hooks/useOfflineAlertDetailModal";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import { useAppRestartAction } from "../features/itwallet/wallet/hooks/useAppRestartAction";

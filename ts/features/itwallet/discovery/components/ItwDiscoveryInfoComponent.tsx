@@ -38,11 +38,11 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import { tosConfigSelector } from "../../../tos/store/selectors/index.ts";
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum.ts";
 import {
-  trackItWalletActivationStart,
-  trackItwDiscoveryPlus,
   trackItwIntroBack,
-  trackOpenItwTos
-} from "../../analytics/index.ts";
+  trackItWalletActivationStart,
+  trackItwDiscoveryPlus
+} from "../analytics";
+import { trackOpenItwTos } from "../../analytics";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog.tsx";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
 import { generateItwIOMarkdownRules } from "../../common/utils/markdown.tsx";

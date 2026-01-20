@@ -3032,7 +3032,8 @@
       },
       "metadata": {
         "a11y": {
-          "website": "Browse the institution's website"
+          "website": "Browse the institution's website",
+          "copyToClipboard": "Copy to clipboard"
         },
         "title": "Contacts and info",
         "website": "Browse Website",
@@ -3042,7 +3043,6 @@
         "email": "Send email",
         "pec": "Send PEC",
         "fiscalCode": "Institution's fiscal code",
-        "fiscalCodeAccessibilityHint": "Copy to clipboard",
         "address": "Address",
         "serviceId": "Service ID"
       },
@@ -4617,7 +4617,7 @@
         },
         "ipzsPrivacy": {
           "title": "I tuoi Documenti su IO sono al sicuro",
-          "titleL3": "I tuoi Documenti sono al sicuro",
+          "titleL3": "IT-Wallet: Informativa Privacy e Termini e Condizioni d’uso",
           "warning": "Premendo **Continua** dichiari di aver letto e compreso l’**Informativa Privacy**.",
           "button": {
             "label": "Continua"

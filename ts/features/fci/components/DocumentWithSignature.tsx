@@ -14,7 +14,7 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback, useRef, useState } from "react";
 import { StyleSheet } from "react-native";
-import Pdf from "react-native-pdf";
+import Pdf, { PdfRef } from "react-native-pdf";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ExistingSignatureFieldAttrs } from "../../../../definitions/fci/ExistingSignatureFieldAttrs";
 import { SignatureFieldToBeCreatedAttrs } from "../../../../definitions/fci/SignatureFieldToBeCreatedAttrs";
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
 });
 
 const DocumentWithSignature = (props: Props) => {
-  const pdfRef = useRef<Pdf>(null);
+  const pdfRef = useRef<PdfRef>(null);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const documents = useIOSelector(fciSignatureDetailDocumentsSelector);
