@@ -4137,63 +4137,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sd-jwt/core@npm:^0.18.0":
-  version: 0.18.1
-  resolution: "@sd-jwt/core@npm:0.18.1"
-  dependencies:
-    "@sd-jwt/decode": 0.18.1
-    "@sd-jwt/present": 0.18.1
-    "@sd-jwt/types": 0.18.1
-    "@sd-jwt/utils": 0.18.1
-  checksum: addd8ba7a381baa4cd7065807e58fcb433684db2d834f585c299ddeabb2b840b61082cbb2b26c088ad0b1134b07b05e8ad88fe6e9da19ea63d008d6d12f48fce
-  languageName: node
-  linkType: hard
-
-"@sd-jwt/crypto-nodejs@npm:^0.18.0":
-  version: 0.18.0
-  resolution: "@sd-jwt/crypto-nodejs@npm:0.18.0"
-  checksum: 32a98e411751b02540caa93ebd280a63d000d4581ca0084f3590c83b29db1de0c3ba1a6ac5f194c386cb0947bf6cff961559290e197384ca455b993d82394b85
-  languageName: node
-  linkType: hard
-
-"@sd-jwt/decode@npm:0.18.1":
-  version: 0.18.1
-  resolution: "@sd-jwt/decode@npm:0.18.1"
-  dependencies:
-    "@sd-jwt/types": 0.18.1
-    "@sd-jwt/utils": 0.18.1
-  checksum: f63169b425e82b45965ea20f55856c73bce8f2a7b593b998ed6906d6ebde10d1f46139bf0db6ccf23a3b708130ed611752f657c203a24b8726c03b0a72df9903
-  languageName: node
-  linkType: hard
-
-"@sd-jwt/present@npm:0.18.1":
-  version: 0.18.1
-  resolution: "@sd-jwt/present@npm:0.18.1"
-  dependencies:
-    "@sd-jwt/decode": 0.18.1
-    "@sd-jwt/types": 0.18.1
-    "@sd-jwt/utils": 0.18.1
-  checksum: b936794502611b54a441b8508ec985784d36f4fc379181a0c7b45b1b8cfd3d56e5898b58c2c2037b6f10d42faea421b5f3c2539c2808fc06bbc6ff18a9af1cf8
-  languageName: node
-  linkType: hard
-
-"@sd-jwt/types@npm:0.18.1, @sd-jwt/types@npm:^0.18.0":
-  version: 0.18.1
-  resolution: "@sd-jwt/types@npm:0.18.1"
-  checksum: 54bcc604546f3d59c006e845a14865aaffc8bfe92622de5c82ee912822037e2a32f9d19de5fc084a90caa9a5c15a273e8ab2807511bf2fa0a97e40c910985263
-  languageName: node
-  linkType: hard
-
-"@sd-jwt/utils@npm:0.18.1":
-  version: 0.18.1
-  resolution: "@sd-jwt/utils@npm:0.18.1"
-  dependencies:
-    "@sd-jwt/types": 0.18.1
-    js-base64: ^3.7.8
-  checksum: 3412eea03b2c27badc3bbb5d88c3becad82dd49818691b135908d54498fb460d8d56fa8e8d83486b9b3ffaaac1342289aa3a80621adcca9365ece9a3f41b6bab
-  languageName: node
-  linkType: hard
-
 "@sentry-internal/browser-utils@npm:10.20.0":
   version: 10.20.0
   resolution: "@sentry-internal/browser-utils@npm:10.20.0"
@@ -11467,9 +11410,6 @@ __metadata:
     "@react-navigation/native-stack": ^6.11.0
     "@react-navigation/stack": ^6.3.21
     "@redux-saga/testing-utils": ^1.1.3
-    "@sd-jwt/core": ^0.18.0
-    "@sd-jwt/crypto-nodejs": ^0.18.0
-    "@sd-jwt/types": ^0.18.0
     "@sentry/react-native": ^7.4.0
     "@shopify/flash-list": 1.8.3
     "@shopify/react-native-skia": 2.2.16
@@ -12812,13 +12752,6 @@ __metadata:
   version: 3.7.7
   resolution: "js-base64@npm:3.7.7"
   checksum: d1b02971db9dc0fd35baecfaf6ba499731fb44fe3373e7e1d6681fbd3ba665f29e8d9d17910254ef8104e2cb8b44117fe4202d3dc54c7cafe9ba300fe5433358
-  languageName: node
-  linkType: hard
-
-"js-base64@npm:^3.7.8":
-  version: 3.7.8
-  resolution: "js-base64@npm:3.7.8"
-  checksum: 891746b0f23aea7dd466c5ef2d349b093944a25eca6093c09b2cbb99bc47a94237c63b91623bbc203306b7c72aab5112e90378544bceef3fd0eb9ab86d7af496
   languageName: node
   linkType: hard
 
