@@ -1,4 +1,4 @@
-name: Mark stale issues and pull requests
+name: Stale
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   stale:
-
+    name: Mark stale issues and PRs
     runs-on: ubuntu-latest
     permissions:
       issues: write

@@ -1,4 +1,4 @@
-name: Start a new release cycle on stores
+name: Release new cycle
 on:
   workflow_dispatch:
     inputs:
@@ -15,6 +15,7 @@ jobs:
   run-static-checks:
     uses: ./.github/workflows/staticcheck.yaml
   bump-app-version:
+    name: Bump app version
     needs: run-static-checks
     runs-on: ubuntu-latest
     environment: prod
@@ -69,6 +70,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-android:
+    name: Release Android app on Play Store
     needs: bump-app-version
     environment: prod
     runs-on: ubuntu-latest
@@ -175,6 +177,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-ios:
+    name: Release iOS app on App Store
     needs: bump-app-version
     environment: prod
     runs-on: macos-15-xlarge

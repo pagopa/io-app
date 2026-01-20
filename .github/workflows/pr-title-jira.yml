@@ -1,4 +1,4 @@
-name: "Lint and Link PR title"
+name: PR title Jira
 
 on:
   pull_request:
@@ -7,10 +7,10 @@ on:
       - edited
       - reopened
       - synchronize
-
+      
 jobs:
   lint:
-    name: Validate PR Title And Link Jira Issue
+    name: Check for Jira issue in PR title
     runs-on: ubuntu-22.04
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
