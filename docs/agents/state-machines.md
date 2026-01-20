@@ -39,6 +39,9 @@ ts/features/<feature>/machine/<machine-name>/
 
 ## Reference Examples
 
+- [idPayConfigurationMachine](./../ts/features/idpay/configuration/machine/) - IDPay Configuration with `fromCallback` actors
+- [idPayOnboardingMachine](./../ts/features/idpay/onboarding/machine/) - IDPay Onboarding 
+- [idPayPaymentMachine](./../ts/features/idpay/payment/machine/) - IDPay payment
 - [itwCredentialIssuanceMachine](../../ts/features/itwallet/machine/credential/) - Credential issuance with nested states
 - [itwEidIssuanceMachine](../../ts/features/itwallet/machine/eid/) - Complex flow with child machines
 - [itwPresentationRemoteMachine](../../ts/features/itwallet/machine/presentation/remote/) - Remote presentation flow
