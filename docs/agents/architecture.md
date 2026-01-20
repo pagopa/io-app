@@ -30,7 +30,7 @@ Complex features may have sub-features (e.g., `itwallet/issuance/`, `itwallet/pr
 
 ## XState for Complex Flows
 
-IT Wallet (`itwallet/`) uses XState v5 for credential issuance flows:
+IT Wallet (`itwallet/`) and IDPay (`idpay/`) use XState v5 for the flows:
 
 - Machines in `machine/<name>/machine.ts`
 - Actions/actors/guards in dedicated files
