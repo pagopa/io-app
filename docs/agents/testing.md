@@ -15,6 +15,8 @@ jest -t "test name pattern"      # Tests matching pattern
 - Use `renderScreenWithNavigationStoreContext` for screens
 - Use `withStore` HOC for components needing store
 - Use `expectSaga` for saga integration tests, `testSaga` for unit tests
+- Use `test.each` to avoid repeating similar tests across multiple scenarios
+- Define scenario arrays with descriptive names and use `$name` interpolation in test titles
 
 ## Common Utilities
 
@@ -22,3 +24,5 @@ jest -t "test name pattern"      # Tests matching pattern
 import { renderScreenWithNavigationStoreContext } from "../../utils/testWrapper";
 import { withStore } from "../../utils/jest/withStore";
 ```
+
+
