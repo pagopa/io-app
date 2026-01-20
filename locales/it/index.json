@@ -5042,6 +5042,11 @@
             "subtitle": "Autorizza l'accesso nell'app CieID per continuare oppure annulla la connessione",
             "cancel": "Annulla connessione"
           }
+        },
+        "updateCredential": {
+          "title": "I tuoi documenti saranno aggiornati",
+          "description": "Continuando, otterrai una versione digitale aggiornata dei tuoi documenti presenti nel Portafoglio di IO",
+          "button": "Continua"
         }
       },
       "issuance": {
