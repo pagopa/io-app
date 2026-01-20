@@ -10,7 +10,7 @@ import {
   removeFavouriteService,
   setFavouriteServicesSortType
 } from "../../../favouriteServices/store/actions";
-import createSecureStorage from "../../../common/storages/secureStorage";
+import createSecureStorage from "../../../../../store/storages/secureStorage";
 import { clearCurrentSession } from "../../../../authentication/common/store/actions";
 import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
 

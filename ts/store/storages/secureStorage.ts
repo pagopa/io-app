@@ -1,4 +1,4 @@
-import * as SecureStorage from "@pagopa/io-react-native-secure-storage";
+import SecureStorage from "@pagopa/io-react-native-secure-storage";
 import { type Storage } from "redux-persist";
 import * as Sentry from "@sentry/react-native";
 
@@ -12,7 +12,7 @@ export const isValueNotFoundError = (e: unknown): boolean => {
   );
 };
 
-export default function itwCreateSecureStorage(): Storage {
+export default function createSecureStorage(): Storage {
   return {
     getItem: async key => {
       try {
@@ -27,7 +27,7 @@ export default function itwCreateSecureStorage(): Storage {
             }
           });
           Sentry.captureMessage(
-            `itwCreateSecureStorage.getItem: SecureStorage.get threw an exception on ${key} key`
+            `createSecureStorage.getItem: SecureStorage.get threw an exception on ${key} key`
           );
         }
         return undefined;
@@ -44,7 +44,7 @@ export default function itwCreateSecureStorage(): Storage {
           }
         });
         Sentry.captureMessage(
-          `itwCreateSecureStorage.setItem: SecureStorage.put threw an exception on ${key} key`
+          `createSecureStorage.setItem: SecureStorage.put threw an exception on ${key} key`
         );
       }
     },
@@ -59,7 +59,7 @@ export default function itwCreateSecureStorage(): Storage {
           }
         });
         Sentry.captureMessage(
-          `itwCreateSecureStorage.removeItem: SecureStorage.remove threw an exception on ${key} key`
+          `createSecureStorage.removeItem: SecureStorage.remove threw an exception on ${key} key`
         );
       }
     }

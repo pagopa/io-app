@@ -1,6 +1,6 @@
-import { isValueNotFoundError } from "../itwSecureStorage";
+import { isValueNotFoundError } from "../secureStorage";
 
-describe("itwSecureStorage", () => {
+describe("SecureStorage", () => {
   describe("isValueNotFoundError", () => {
     test.each([
       [{ message: "VALUE_NOT_FOUND", userInfo: {} }, true],
