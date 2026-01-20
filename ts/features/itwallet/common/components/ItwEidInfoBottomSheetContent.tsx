@@ -14,11 +14,9 @@ import { View } from "react-native";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import {
-  mapPIDStatusToMixpanel,
-  trackCredentialDetail,
-  trackWalletStartDeactivation
-} from "../../analytics";
+import { trackWalletStartDeactivation } from "../../analytics";
+import { trackCredentialDetail } from "../../presentation/details/analytics";
+import { mapPIDStatusToMixpanel } from "../../analytics/utils";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import {
   itwCredentialsEidSelector,

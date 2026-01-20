@@ -10,12 +10,12 @@ import { Alert } from "react-native";
 import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import * as cieUtils from "../../../../authentication/login/cie/utils/cie";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import {
   trackItWalletCieNfcActivation,
   trackItWalletCieNfcGoToSettings
-} from "../../../analytics";
-import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
+} from "../../analytics";
 
 export const ItwActivateNfcScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();

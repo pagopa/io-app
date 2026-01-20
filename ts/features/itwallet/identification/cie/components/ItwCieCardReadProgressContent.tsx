@@ -5,9 +5,12 @@ import { Platform } from "react-native";
 import {
   trackItWalletCardReadingClose,
   trackItWalletCieCardReadingSuccess
-} from "../../../analytics";
+} from "../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
+import {
+  isL3FeaturesEnabledSelector,
+  selectIdentification
+} from "../../../machine/eid/selectors";
 import { CieManagerState } from "../hooks/useCieManager";
 import { CieCardReadContent } from "../../../../common/components/cie/CieCardReadContent";
 
@@ -26,13 +29,20 @@ export const ItwCieCardReadProgressContent = (
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
+  const identification =
+    ItwEidIssuanceMachineContext.useSelector(selectIdentification);
+
+  const itw_flow = isL3 ? "L3" : "L2";
 
   // Track success
   useEffect(() => {
     if (props.state === "success") {
-      trackItWalletCieCardReadingSuccess(isL3 ? "L3" : "L2");
+      trackItWalletCieCardReadingSuccess({
+        itw_flow,
+        ITW_ID_method: identification?.mode
+      });
     }
-  }, [props.state, isL3]);
+  }, [props.state, itw_flow, identification?.mode]);
 
   const platform = Platform.select({
     ios: "ios" as const,
@@ -50,7 +60,11 @@ export const ItwCieCardReadProgressContent = (
           const progress = props.state === "reading" ? props.progress : 0;
           // progress is a number between 0 and 1, mixpanel needs a number between 0 and 100
           const percentage = Number((progress * 100).toFixed(0));
-          return trackItWalletCardReadingClose(percentage);
+          return trackItWalletCardReadingClose({
+            cie_reading_progress: percentage,
+            itw_flow,
+            ITW_ID_method: identification?.mode
+          });
         }
       })?.();
       issuanceActor.send({ type: "close" });

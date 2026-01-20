@@ -13,6 +13,7 @@ import {
   IssuanceFailureType
 } from "../../machine/eid/failure";
 import {
+  isL3FeaturesEnabledSelector,
   selectFailureOption,
   selectIdentification,
   selectIssuanceLevel
@@ -24,7 +25,8 @@ import {
   useItwFailureSupportModal,
   ZendeskSubcategoryValue
 } from "../../common/hooks/useItwFailureSupportModal";
-import { KoState, trackItwKoStateAction } from "../../analytics";
+import { KoState } from "../../analytics/utils/types";
+import { trackItwKoStateAction } from "../../analytics";
 import { openWebUrl } from "../../../../utils/url";
 import { useEidEventsTracking } from "../hooks/useEidEventsTracking";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
@@ -60,6 +62,11 @@ const ContentView = ({ failure }: ContentViewProps) => {
     ItwEidIssuanceMachineContext.useSelector(selectIdentification);
   const issuanceLevel =
     ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
+  const isL3Issuance = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
+  const credential = isL3Issuance ? "ITW_PID" : "ITW_ID";
+
   const toast = useIOToast();
 
   const FAQ_URL = useIOSelector(state =>
@@ -252,10 +259,30 @@ const ContentView = ({ failure }: ContentViewProps) => {
               }
             }
           };
+        case IssuanceFailureType.MRTD_CHALLENGE_INIT_ERROR:
+          return {
+            title: I18n.t(
+              "features.itWallet.issuance.mrtdChallengeInitError.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.issuance.mrtdChallengeInitError.subtitle"
+            ),
+            pictogram: "umbrella",
+            action: {
+              label: I18n.t("global.buttons.close"),
+              onPress: () => machineRef.send({ type: "retry" }) // Retry event goes to UserIdentification
+            },
+            secondaryAction: {
+              label: I18n.t("features.itWallet.support.button"),
+              onPress: () => {
+                supportModal.present();
+              }
+            }
+          };
       }
     };
 
-  useEidEventsTracking({ failure, identification, issuanceLevel });
+  useEidEventsTracking({ failure, identification, issuanceLevel, credential });
 
   const resultScreenProps = getOperationResultScreenContentProps();
 

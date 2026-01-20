@@ -28,7 +28,7 @@ import { isCieLoginUatEnabledSelector } from "../../../../authentication/login/c
 import {
   trackItWalletCiePinEnter,
   trackItWalletCiePinInfo
-} from "../../../analytics";
+} from "../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";

@@ -9,24 +9,20 @@ import {
   InternalAuthAndMrtdResponse,
   type NfcEvent
 } from "@pagopa/io-react-native-cie";
+import { useHeaderHeight } from "@react-navigation/elements";
 import { useEffect, useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
   StyleSheet,
   View
 } from "react-native";
-
-import { useHeaderHeight } from "@react-navigation/elements";
-import { SETTINGS_ROUTES } from "../../../../../common/navigation/routes";
-import { useIONavigation } from "../../../../../../../navigation/params/AppParamsList";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useDebugInfo } from "../../../../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../../../../hooks/useScreenEndMargin";
-import { ReadStatusComponent } from "../../components/ReadStatusComponent";
-import { encodeChallenge } from "../../utils/encoding";
-import { ReadStatus } from "../../types/ReadStatus";
+import { useIONavigation } from "../../../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../../../store/hooks";
 import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../../../../store/reducers/backendStatus/remoteConfig";
 import { testAarCreateMandate } from "../../../../../../pn/aar/store/actions";
@@ -35,7 +31,10 @@ import {
   sendMandateErrorSelector,
   sendVerificationCodeSelector
 } from "../../../../../../pn/aar/store/reducers/tempAarMandate";
-import { useDebugInfo } from "../../../../../../../hooks/useDebugInfo";
+import { SETTINGS_ROUTES } from "../../../../../common/navigation/routes";
+import { ReadStatusComponent } from "../../components/ReadStatusComponent";
+import { ReadStatus } from "../../types/ReadStatus";
+import { encodeChallenge } from "../../utils/encoding";
 
 export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
   const navigation = useIONavigation();
@@ -46,6 +45,7 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
   const [event, setEvent] = useState<NfcEvent>();
   const [challenge, setChallenge] = useState<string>("");
   const [can, setCan] = useState<string>("");
+  const [aar, setAAR] = useState<string>("");
 
   const [isBase64Encoding, setIsBase64Encoding] = useState(false);
   const [useSENDChallenge, setUseSENDChallenge] = useState(false);
@@ -189,6 +189,18 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
             placeholder={"CAN"}
             onChangeText={setCan}
           />
+          {useSENDChallenge && (
+            <>
+              <VSpacer size={8} />
+              <TextInput
+                accessibilityLabel="AAR"
+                disabled={false}
+                value={aar}
+                placeholder={"AAR"}
+                onChangeText={setAAR}
+              />
+            </>
+          )}
           <VSpacer size={8} />
           <TextInput
             accessibilityLabel="Challenge text input field"
@@ -214,9 +226,10 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
           <>
             <VSpacer size={8} />
             <IOButton
+              disabled={aar.trim().length === 0}
               loading={isRequestingSENDMandate}
               label="Request SEND Challenge"
-              onPress={() => dispatch(testAarCreateMandate.request())}
+              onPress={() => dispatch(testAarCreateMandate.request(aar))}
             />
           </>
         )}

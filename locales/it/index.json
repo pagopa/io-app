@@ -1601,9 +1601,9 @@
         "cta": "Scopri di più"
       },
       "error": {
-        "title": "Si è verificato un errore",
-        "subtitle": "Riprova o contatta l'assistenza",
-        "primaryButton": "Chiudi",
+        "title": "Questo metodo di pagamento non è disponibile",
+        "subtitle": "Chiudi l’app e riaprila per aggiornare il portafoglio",
+        "primaryButton": "Indietro",
         "secondaryButton": "Riprova"
       }
     },
@@ -3032,7 +3032,8 @@
       },
       "metadata": {
         "a11y": {
-          "website": "Visita il sito dell'ente"
+          "website": "Visita il sito dell'ente",
+          "copyToClipboard": "Copia negli appunti"
         },
         "title": "Contatti ed informazioni",
         "website": "Visita il sito",
@@ -3042,7 +3043,6 @@
         "email": "Invia un'email",
         "pec": "Invia una PEC",
         "fiscalCode": "Codice fiscale ente",
-        "fiscalCodeAccessibilityHint": "Copia negli appunti",
         "address": "Indirizzo",
         "serviceId": "ID servizio"
       },
@@ -4737,7 +4737,7 @@
             }
           },
           "itw": {
-            "title": "IO è il tuo portafoglio digitale di Stato: pubblico, sicuro, gratuito.",
+            "title": "IO è ora il tuo portafoglio digitale pubblico: sicuro, gratuito, tuo.",
             "features": {
               "1": "Usi la tua Patente su IO come documento di riconoscimento",
               "2": "Ti basta il tuo telefono per dimostrare la tua identità",
@@ -4800,7 +4800,7 @@
         },
         "ipzsPrivacy": {
           "title": "I tuoi Documenti su IO sono al sicuro",
-          "titleL3": "I tuoi Documenti sono al sicuro",
+          "titleL3": "IT-Wallet: Informativa Privacy e Termini e Condizioni d’uso",
           "warning": "Premendo **Continua** dichiari di aver letto e compreso l’**Informativa Privacy**.",
           "button": {
             "label": "Continua"
@@ -4845,13 +4845,25 @@
             "ciePin": {
               "title": "Continua con CIE + PIN",
               "subtitle": "Ha una durata di 12 mesi",
-              "badge": "scelta consigliata"
+              "badge": "consigliato",
+              "bottomSheet": {
+                "title": "Continua con CIE + PIN",
+                "subtitle": "Hai bisogno di:",
+                "entry-1": "La tua Carta di Identità Elettronica (CIE)",
+                "entry-2": "Il PIN a 8 cifre della CIE"
+              }
             },
             "cieId": {
               "title": "Continua con l’app CieID",
               "subtitle": {
                 "default": "Dovrai usare credenziali e app CieID",
                 "l3": "Ha una durata di 12 mesi"
+              },
+              "bottomSheet": {
+                "title": "Continua con l’app CieID",
+                "subtitle": "Hai bisogno di:",
+                "entry-1": "La tua Carta di Identità Elettronica (CIE)",
+                "entry-2": "L’app CieID certificata sul tuo dispositivo"
               }
             },
             "spid": {
@@ -4862,6 +4874,13 @@
               "subtitle": {
                 "default": "Dovrai usare credenziali e app (o SMS)",
                 "l3": "Ha una durata di 90 giorni"
+              },
+              "bottomSheet": {
+                "title": "Continua con SPID + CIE",
+                "subtitle": "Hai bisogno di:",
+                "entry-1": "Un’identità SPID",
+                "entry-2": "La tua Carta di Identità Elettronica (CIE)",
+                "warning": "Se scegli questo metodo dovrai ripetere il passaggio di sicurezza ogni 90 giorni."
               }
             }
           }
@@ -4973,7 +4992,14 @@
               "title": "PIN della CIE",
               "content": "Il PIN della CIE è un codice di 8 cifre che ti è stato comunicato in due momenti:\n * le prime 4 cifre le hai ricevute al momento della richiesta della CIE\n * le ultime 4 cifre le hai ricevute insieme alla CIE.",
               "primaryAction": "Ho capito",
-              "secondaryAction": "Non trovo il PIN della CIE"
+              "secondaryAction": "Non trovo il PIN della CIE",
+              "dialog": {
+                "title": "Usa SPID o CieID",
+                "body": "Se non trovi il PIN della CIE, puoi usare SPID o CieID per attivare IT-Wallet.",
+                "spidCieAction": "Continua con spid + CIE",
+                "cieIdAction": "Continua con app cieID",
+                "back": "Torna indietro"
+              }
             }
           },
           "failure": {
@@ -5031,8 +5057,9 @@
         },
         "eidPreview": {
           "title": "Identità verificata",
+          "titleL3": "Ci siamo quasi!",
           "subtitle": "Stai attivando **Documenti su IO** come:",
-          "subtitleL3": "Ci siamo quasi! Stai per ottenere **IT-Wallet** come:",
+          "subtitleL3": "Hai verificato la tua identità. \nIl tuo portafoglio IT-Wallet sarà associato a questi dati:",
           "actions": {
             "primary": "Continua",
             "secondary": "Annulla"
@@ -5167,6 +5194,10 @@
           "subtitleStart": "Questa richiesta non è più valida ma puoi aggiungere di nuovo la tua ",
           "subtitleBold": "Patente su IO.",
           "primaryAction": "Aggiungi di nuovo"
+        },
+        "mrtdChallengeInitError": {
+          "title": "Un problema non permette di continuare",
+          "subtitle": "Si è verificato un errore che impedisce di procedere con la lettura della CIE. Riprova. Se il problema persiste, contatta l'assistenza."
         }
       },
       "notMatchingIdentityScreen": {
