@@ -189,7 +189,7 @@ describe("ItwDiscoveryBanner", () => {
     );
 
     test.each(dismissableScenarios)(
-      "should dispatch itwCloseBanner action when close button is pressed ($name)",
+      "should dispatch itwCloseBanner action with 'discovery_wallet' when close button is pressed with default flow ($name)",
       scenario => {
         setupMocks(scenario);
         const { getByTestId, store } = renderComponent();
@@ -201,10 +201,32 @@ describe("ItwDiscoveryBanner", () => {
         expect(actions).toContainEqual(itwCloseBanner("discovery_wallet"));
       }
     );
+
+    test.each(dismissableScenarios)(
+      "should dispatch itwCloseBanner action with 'discovery_messages_inbox' when close button is pressed with messages_inbox flow ($name)",
+      scenario => {
+        setupMocks(scenario);
+        const { getByTestId, store } = renderComponent({
+          flow: "messages_inbox"
+        });
+        const closeButton = getByTestId("itwEngagementBannerCloseButtonTestID");
+
+        fireEvent.press(closeButton);
+
+        const actions = store.getActions();
+        expect(actions).toContainEqual(
+          itwCloseBanner("discovery_messages_inbox")
+        );
+      }
+    );
   });
 });
 
-const renderComponent = () => {
+type RenderComponentProps = {
+  flow?: "messages_inbox" | "wallet";
+};
+
+const renderComponent = (props: RenderComponentProps = {}) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
@@ -212,7 +234,7 @@ const renderComponent = () => {
 
   return {
     ...renderScreenWithNavigationStoreContext<GlobalState>(
-      ItwDiscoveryBanner,
+      () => <ItwDiscoveryBanner {...props} />,
       ROUTES.WALLET_HOME,
       {},
       store

@@ -5,7 +5,7 @@ import { showSessionExpirationBannerRenderableSelector } from "../../authenticat
 import { ItwDiscoveryBannerLegacy } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBanner";
 import {
   isItwPersistedDiscoveryBannerRenderableSelector,
-  itwShouldRenderDiscoveryBannerSelector
+  itwShouldRenderInboxDiscoveryBannerSelector
 } from "../../itwallet/common/store/selectors";
 import { ItwDiscoveryBanner } from "../../itwallet/discovery/components/ItwDiscoveryBanner";
 import { PNActivationReminderBanner } from "../../pn/reminderBanner/components/PNActivationReminderBanner";
@@ -43,11 +43,12 @@ export const landingScreenBannerMap: BannerMapById = {
   IT_WALLET_DISCOVERY: {
     component: closeHandler => (
       <ItwDiscoveryBanner
+        flow="messages_inbox"
         style={{ marginHorizontal: 24, marginVertical: 16 }}
         onDismiss={closeHandler}
       />
     ),
-    isRenderableSelector: itwShouldRenderDiscoveryBannerSelector
+    isRenderableSelector: itwShouldRenderInboxDiscoveryBannerSelector
   },
   ITW_DISCOVERY: {
     component: closeHandler => (
