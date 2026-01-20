@@ -252,6 +252,7 @@ const WalletPaymentConfirmScreen = () => {
               key={getTxtNodeKey(param)}
               weight="Semibold"
               onPress={() => onLinkPress(param.url)}
+              avoidPressable
               accessibilityRole="link"
             >
               {param.children.map(child => renderer(child))}
