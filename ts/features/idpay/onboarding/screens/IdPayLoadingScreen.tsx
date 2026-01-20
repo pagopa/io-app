@@ -16,12 +16,6 @@ const IdPayLoadingScreen = () => {
 
   const initiative = useSelector(selectInitiative);
 
-  const initiativeName = pipe(
-    initiative,
-    O.map(i => i.initiativeName),
-    O.toUndefined
-  );
-
   const initiativeId = pipe(
     initiative,
     O.map(i => i.initiativeId),
@@ -36,8 +30,7 @@ const IdPayLoadingScreen = () => {
 
   useOnFirstRender(() =>
     trackIDPayOnboardingConversionRate({
-      initiativeId,
-      initiativeName
+      initiativeId
     })
   );
 
