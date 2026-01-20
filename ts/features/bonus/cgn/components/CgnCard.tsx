@@ -3,7 +3,7 @@ import { Image, StyleSheet, View } from "react-native";
 import I18n from "i18next";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import eycaLogo from "../../../../../img/bonus/cgn/eyca_logo.png";
-import CgnCardShape from "../../../../../img/features/cgn/cgn_card.svg";
+import CgnCardShape from "../../../../../img/features/cgn/cgn-card.svg";
 import { format } from "../../../../utils/dates";
 
 export type CgnCardProps = {
@@ -41,9 +41,9 @@ export const CgnCard = ({ expireDate, withEycaLogo }: CgnCardProps) => {
   );
 
   const expiredTag = (
-    <View>
+    <View style={{ top: 6 }}>
+      {/* Offset to avoid overlap with the card cutted area */}
       <Tag
-        forceLightMode
         testID="cgnExpiredTagTestID"
         variant="error"
         text={I18n.t("bonus.cgn.detail.status.badge.expired")}
@@ -73,15 +73,10 @@ export const CgnCard = ({ expireDate, withEycaLogo }: CgnCardProps) => {
           </H6>
           {isExpired && expiredTag}
         </View>
-        <BodySmall
-          weight="Semibold"
-          color="blueItalia-850"
-          style={{ width: "70%" }}
-        >
+        <BodySmall color="blueItalia-850" style={{ width: "70%" }}>
           {I18n.t("bonus.cgn.departmentName")}
         </BodySmall>
         <BodySmall
-          weight="Semibold"
           color="blueItalia-850"
           accessibilityLabel={accessibleExpireDate}
         >
@@ -103,7 +98,6 @@ const styles = StyleSheet.create({
   },
   card: {
     position: "absolute",
-    transform: [{ rotateX: "180deg" }],
     top: 0,
     bottom: 0,
     left: 0,
