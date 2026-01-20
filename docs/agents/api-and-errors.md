@@ -11,6 +11,7 @@
 - Use Sentry only for unexpected failures, not expected flows
 - Reuse utilities from `ts/utils/errors.ts`: `getError`, `getNetworkError`, `convertUnknownToError`
 - For complex UI, wrap in `Sentry.ErrorBoundary` with fallback
+- For validation errors (e.g., io-ts decode failures), use `readablePrivacyReport` from `ts/utils/reporters.ts` to convert errors to readable messages for logging or error reporting.
 
 ## Analytics
 
