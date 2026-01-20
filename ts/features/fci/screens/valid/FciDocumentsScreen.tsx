@@ -12,7 +12,7 @@ import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as S from "fp-ts/lib/string";
 import { useRef, useState, useEffect, ComponentProps } from "react";
 import { StyleSheet, View } from "react-native";
-import Pdf from "react-native-pdf";
+import Pdf, { PdfRef } from "react-native-pdf";
 import I18n from "i18next";
 import { TypeEnum as ClauseType } from "../../../../../definitions/fci/Clause";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
@@ -53,7 +53,7 @@ export type FciDocumentsScreenNavigationParams = Readonly<{
 }>;
 
 const FciDocumentsScreen = () => {
-  const pdfRef = useRef<Pdf>(null);
+  const pdfRef = useRef<PdfRef>(null);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const route = useRoute<RouteProp<FciParamsList, "FCI_DOCUMENTS">>();

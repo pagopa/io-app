@@ -1,28 +1,7 @@
-import { isPast } from "date-fns";
-import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { ItwPreferencesState } from "../reducers/preferences";
-
-const isPastDate = (date?: string) => {
-  if (!date) {
-    return false;
-  }
-  const hideUntilDate = new Date(date);
-  return !isNaN(hideUntilDate.getTime()) && !isPast(hideUntilDate);
-};
 
 export const itwPreferencesSelector = (state: GlobalState) =>
   state.features.itWallet.preferences;
-
-/**
- * Returns if the discovery banner should be displayed or not based on the user's preferences.
- * The banner should be visible only if the user closed it more than six months ago.
- */
-export const itwIsDiscoveryBannerHiddenSelector = createSelector(
-  itwPreferencesSelector,
-  ({ hideDiscoveryBannerUntilDate }: ItwPreferencesState) =>
-    isPastDate(hideDiscoveryBannerUntilDate)
-);
 
 /**
  * Returns whether the app review modal should be shown.
@@ -55,15 +34,6 @@ export const itwIsWalletInstanceRemotelyActiveSelector = (state: GlobalState) =>
  */
 export const itwIsL3EnabledSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.isFiscalCodeWhitelisted ?? false;
-
-/**
- * Returns whether the IT-wallet upgrade banner in MDL details is hidden. Defaults to false.
- */
-export const itwIsWalletUpgradeMDLDetailsBannerHiddenSelector = (
-  state: GlobalState
-) =>
-  state.features.itWallet.preferences.walletUpgradeMDLDetailsBannerHidden ??
-  false;
 
 /**
  * Returns whether the user has the requirements for IT-Wallet simplified activation.
