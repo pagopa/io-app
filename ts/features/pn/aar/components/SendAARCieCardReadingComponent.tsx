@@ -1,7 +1,15 @@
-import { useCallback, useEffect, useMemo } from "react";
-import i18n from "i18next";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
+import i18n from "i18next";
+import { useCallback, useEffect, useMemo } from "react";
+import { Platform } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useIODispatch } from "../../../../store/hooks";
+import { isDefined } from "../../../../utils/guards";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import {
+  CieCardReadContent,
+  CieCardReadContentProps
+} from "../../../common/components/cie/CieCardReadContent";
 import {
   isErrorState,
   isReadingState,
@@ -9,15 +17,9 @@ import {
   ReadStatus,
   useCieInternalAuthAndMrtdReading
 } from "../hooks/useCieInternalAuthAndMrtdReading";
-import {
-  CieCardReadContent,
-  CieCardReadContentProps
-} from "../../../common/components/cie/CieCardReadContent";
-import { useIODispatch } from "../../../../store/hooks";
-import { RecipientInfo, sendAARFlowStates } from "../utils/stateUtils";
 import { setAarFlowState } from "../store/actions";
-import { isDefined } from "../../../../utils/guards";
-import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
+import { RecipientInfo, sendAARFlowStates } from "../utils/stateUtils";
+import { sendAarErrorBottomSheetComponent } from "./errors/SendAARErrorComponent";
 
 type ScreenContentProps = Omit<CieCardReadContentProps, "progress">;
 
@@ -38,7 +40,6 @@ export const SendAARCieCardReadingComponent = ({
 }: SendAARCieCardReadingComponentProps) => {
   const dispatch = useIODispatch();
   const theme = useIOTheme();
-  const { terminateFlow } = useSendAarFlowManager();
   const { startReading, stopReading, readState } =
     useCieInternalAuthAndMrtdReading();
 
@@ -47,6 +48,16 @@ export const SendAARCieCardReadingComponent = ({
   const errorName = isError ? readState.error.name : undefined;
   const progress = isReadingState(readState) ? readState.progress : 0;
 
+  const handleBottomSheetHelpCta = () => {
+    dismiss();
+  };
+  const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
+    component: sendAarErrorBottomSheetComponent(
+      handleBottomSheetHelpCta,
+      errorName
+    ),
+    title: ""
+  });
   const handleStartReading = useCallback(() => {
     void startReading(can, verificationCode, "base64url");
   }, [can, startReading, verificationCode]);
@@ -73,16 +84,18 @@ export const SendAARCieCardReadingComponent = ({
     handleStartReading();
   }, [handleStartReading]);
 
+  const handleCancel = useCallback(() => {
+    stopReading();
+    // TODO: handle navigate back
+  }, [stopReading]);
+
   const cancelAction = useMemo<ScreenContentProps["secondaryAction"]>(
     () => ({
       variant: "link",
       label: i18n.t("global.buttons.close"),
-      onPress: () => {
-        stopReading();
-        // TODO: navigate back
-      }
+      onPress: handleCancel
     }),
-    [stopReading]
+    [handleCancel]
   );
 
   const contentMap: {
@@ -105,16 +118,45 @@ export const SendAARCieCardReadingComponent = ({
             },
             secondaryAction: cancelAction
           };
-        default:
-          // TODO: [IOCOM-2752] Handle errors
+        case "WRONG_CAN":
+          const platformizedSubtitle = Platform.select({
+            ios: i18n.t(
+              "features.pn.aar.flow.cieScanning.error.WRONG_CAN.subtitleIos"
+            ),
+            default: i18n.t(
+              "features.pn.aar.flow.cieScanning.error.WRONG_CAN.subtitleAndroid"
+            )
+          });
           return {
             pictogram: "attention",
-            title: "Qualcosa è andato storto.",
+            title: i18n.t(
+              "features.pn.aar.flow.cieScanning.error.WRONG_CAN.title"
+            ),
+            subtitle: platformizedSubtitle,
+            primaryAction: {
+              label: i18n.t("global.buttons.retry"),
+              onPress: handleStartReading
+            },
+            secondaryAction: cancelAction
+          };
+        default:
+          return {
+            pictogram: "umbrella",
+            title: i18n.t(
+              "features.pn.aar.flow.cieScanning.error.GENERIC.title"
+            ),
+            subtitle: i18n.t(
+              "features.pn.aar.flow.cieScanning.error.GENERIC.subtitle"
+            ),
+            primaryAction: {
+              label: i18n.t("global.buttons.cancel"),
+              onPress: handleCancel
+            },
             secondaryAction: {
-              label: i18n.t("global.buttons.close"),
-              onPress: () => {
-                terminateFlow();
-              }
+              onPress: present,
+              label: i18n.t(
+                "features.pn.aar.flow.cieScanning.error.GENERIC.secondaryAction"
+              )
             }
           };
       }
@@ -138,7 +180,7 @@ export const SendAARCieCardReadingComponent = ({
       },
       [ReadStatus.ERROR]: generateErrorContent()
     };
-  }, [cancelAction, errorName, terminateFlow, handleStartReading]);
+  }, [cancelAction, errorName, handleStartReading, handleCancel, present]);
 
   return (
     <SafeAreaView
@@ -152,6 +194,7 @@ export const SendAARCieCardReadingComponent = ({
         hiddenProgressBar={isError}
         {...contentMap[readState.status]}
       />
+      {bottomSheet}
     </SafeAreaView>
   );
 };

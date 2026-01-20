@@ -36,7 +36,7 @@ import {
   trackSendAarErrorScreenDetailsHelp
 } from "../../analytics";
 
-const bottomComponent = (
+export const sendAarErrorBottomSheetComponent = (
   onAssistancePress: () => void,
   assistanceErrorCode?: string
 ) => (
@@ -115,7 +115,7 @@ export const SendAARErrorComponent = () => {
   };
 
   const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
-    component: bottomComponent(
+    component: sendAarErrorBottomSheetComponent(
       zendeskAssistanceLogAndStart,
       assistanceErrorCode
     ),
@@ -155,4 +155,6 @@ export const SendAARErrorComponent = () => {
   );
 };
 
-export const testable = isTestEnv ? { bottomComponent } : undefined;
+export const testable = isTestEnv
+  ? { sendAarErrorBottomSheetComponent }
+  : undefined;
