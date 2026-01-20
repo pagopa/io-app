@@ -38,7 +38,7 @@
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>13</string>
+    <string>15</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
     <key>LSApplicationQueriesSchemes</key>
@@ -99,7 +99,7 @@
     <key>NSSpeechRecognitionUsageDescription</key>
     <string>The app needs NSSpeechRecognitionUsageDescription permission</string>
     <key>RCTNewArchEnabled</key>
-    <false/>
+    <true/>
     <key>UIAppFonts</key>
     <array>
       <string>TitilliumSansPro-Black.otf</string>

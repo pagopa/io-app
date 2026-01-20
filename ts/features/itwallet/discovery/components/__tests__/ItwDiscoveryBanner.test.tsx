@@ -5,6 +5,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { itwCloseBanner } from "../../../common/store/actions/banners";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
@@ -59,13 +60,6 @@ describe("ItwDiscoveryBanner", () => {
         screen: ITW_ROUTES.ONBOARDING
       });
     });
-
-    it("should render close button (dismissable)", () => {
-      const { getByTestId } = renderComponent();
-      expect(
-        getByTestId("itwEngagementBannerCloseButtonTestID")
-      ).not.toBeNull();
-    });
   });
 
   describe("when wallet is active and empty", () => {
@@ -105,7 +99,7 @@ describe("ItwDiscoveryBanner", () => {
   });
 
   describe("when wallet is active, not empty, and has MDL", () => {
-    it("should match snapshot for MDL upgrade banner", () => {
+    beforeEach(() => {
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
         .mockReturnValue(true);
@@ -115,14 +109,16 @@ describe("ItwDiscoveryBanner", () => {
       jest
         .spyOn(credentialsSelectors, "itwIsMdlPresentSelector")
         .mockReturnValue(true);
+    });
 
+    it("should match snapshot for MDL upgrade banner", () => {
       const component = renderComponent();
       expect(component).toMatchSnapshot();
     });
   });
 
   describe("when wallet is active, not empty, and does not have MDL", () => {
-    it("should match snapshot for default upgrade banner", () => {
+    beforeEach(() => {
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
         .mockReturnValue(true);
@@ -132,10 +128,79 @@ describe("ItwDiscoveryBanner", () => {
       jest
         .spyOn(credentialsSelectors, "itwIsMdlPresentSelector")
         .mockReturnValue(false);
+    });
 
+    it("should match snapshot for default upgrade banner", () => {
       const component = renderComponent();
       expect(component).toMatchSnapshot();
     });
+  });
+
+  describe("dismissal behavior", () => {
+    type DismissableScenario = {
+      name: string;
+      isWalletActive: boolean;
+      isWalletEmpty: boolean;
+      hasMdl: boolean;
+    };
+
+    const dismissableScenarios: Array<DismissableScenario> = [
+      {
+        name: "wallet not active",
+        isWalletActive: false,
+        isWalletEmpty: true,
+        hasMdl: false
+      },
+      {
+        name: "wallet active with MDL",
+        isWalletActive: true,
+        isWalletEmpty: false,
+        hasMdl: true
+      },
+      {
+        name: "wallet active without MDL",
+        isWalletActive: true,
+        isWalletEmpty: false,
+        hasMdl: false
+      }
+    ];
+
+    const setupMocks = (scenario: DismissableScenario) => {
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
+        .mockReturnValue(scenario.isWalletActive);
+      jest
+        .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
+        .mockReturnValue(scenario.isWalletEmpty);
+      jest
+        .spyOn(credentialsSelectors, "itwIsMdlPresentSelector")
+        .mockReturnValue(scenario.hasMdl);
+    };
+
+    test.each(dismissableScenarios)(
+      "should render close button when $name",
+      scenario => {
+        setupMocks(scenario);
+        const { getByTestId } = renderComponent();
+        expect(
+          getByTestId("itwEngagementBannerCloseButtonTestID")
+        ).not.toBeNull();
+      }
+    );
+
+    test.each(dismissableScenarios)(
+      "should dispatch itwCloseBanner action when close button is pressed ($name)",
+      scenario => {
+        setupMocks(scenario);
+        const { getByTestId, store } = renderComponent();
+        const closeButton = getByTestId("itwEngagementBannerCloseButtonTestID");
+
+        fireEvent.press(closeButton);
+
+        const actions = store.getActions();
+        expect(actions).toContainEqual(itwCloseBanner("discovery_wallet"));
+      }
+    );
   });
 });
 
@@ -145,10 +210,13 @@ const renderComponent = () => {
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
-  return renderScreenWithNavigationStoreContext<GlobalState>(
-    ItwDiscoveryBanner,
-    ROUTES.WALLET_HOME,
-    {},
+  return {
+    ...renderScreenWithNavigationStoreContext<GlobalState>(
+      ItwDiscoveryBanner,
+      ROUTES.WALLET_HOME,
+      {},
+      store
+    ),
     store
-  );
+  };
 };

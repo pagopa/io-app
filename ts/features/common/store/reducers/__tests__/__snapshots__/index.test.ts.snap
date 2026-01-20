@@ -142,6 +142,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "isBlockingScreen": false,
   },
   "itWallet": {
+    "banners": {},
     "credentials": {
       "credentials": {},
     },

@@ -1,8 +1,9 @@
 import I18n from "i18next";
 import { ComponentProps } from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { ItwEngagementBanner } from "../../common/components/ItwEngagementBanner";
+import { itwCloseBanner } from "../../common/store/actions/banners";
 import {
   itwIsMdlPresentSelector,
   itwIsWalletEmptySelector
@@ -23,6 +24,7 @@ type Props = {
  */
 export const ItwDiscoveryBanner = ({ style, onDismiss }: Props) => {
   const navigation = useIONavigation();
+  const dispatch = useIODispatch();
 
   const isWalletActive = useIOSelector(itwLifecycleIsValidSelector);
   const isWalletEmpty = useIOSelector(itwIsWalletEmptySelector);
@@ -43,7 +45,7 @@ export const ItwDiscoveryBanner = ({ style, onDismiss }: Props) => {
 
   const handleOnDismiss = () => {
     onDismiss?.();
-    // TODO SIW-3564 implement banner dismissal logic
+    dispatch(itwCloseBanner("discovery_wallet"));
   };
 
   if (!isWalletActive) {

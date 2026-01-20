@@ -40,7 +40,7 @@ const WalletCardsContainer = () => {
   const shouldRenderItwCardsContainer = useIOSelector(
     shouldRenderItwCardsContainerSelector
   );
-  const shoulwRenderItwDiscoveryBanner = useIOSelector(
+  const shouldRenderItwDiscoveryBanner = useIOSelector(
     itwShouldRenderDiscoveryBannerSelector
   );
 
@@ -73,7 +73,7 @@ const WalletCardsContainer = () => {
     >
       <ItwEnvironmentAlert />
       <ItwWalletNotAvailableBanner />
-      {shoulwRenderItwDiscoveryBanner && (
+      {shouldRenderItwDiscoveryBanner && (
         <ItwDiscoveryBanner style={{ marginVertical: 16 }} />
       )}
       <ItwDiscoveryBannerStandalone />
