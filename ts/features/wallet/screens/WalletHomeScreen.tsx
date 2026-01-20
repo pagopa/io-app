@@ -59,6 +59,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
       dispatch(itwSetPidReissuingSurveyHidden(true));
     }
   });
+
   // We need to use a local state to separate the UI state from the redux state
   // This prevents to display the refresh indicator when the refresh is triggered by other components
   // For example, the payments section
