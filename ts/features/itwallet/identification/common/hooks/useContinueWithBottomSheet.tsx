@@ -37,6 +37,7 @@ const secondIconMap: Record<ModeType, IOIcons> = {
 
 type Props = {
   type: "ciePin" | "cieId" | "spid";
+  isL3: boolean;
   onPrimaryAction: () => void;
 };
 
@@ -48,13 +49,14 @@ type Props = {
  */
 export const useContinueWithBottomSheet = ({
   type,
+  isL3,
   onPrimaryAction
 }: Props) => {
   // Skip the close event when the bottom sheet is closed after the primary action
   const skipCloseEvent = useRef(false);
   const trackingProps: TrackIdMethodBottomsheetProperties = {
     ITW_ID_method: type,
-    itw_flow: "L3"
+    itw_flow: isL3 ? "L3" : "L2"
   };
 
   const bottomSheet = useIOBottomSheetModal({
