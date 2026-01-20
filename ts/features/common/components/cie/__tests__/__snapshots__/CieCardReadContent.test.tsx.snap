@@ -966,13 +966,13 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
     }
   >
     <View
-      accessibilityLabel="1000%"
+      accessibilityLabel="100%"
       accessibilityRole="progressbar"
       accessibilityValue={
         {
           "max": 100,
           "min": 0,
-          "now": 1,
+          "now": 100,
         }
       }
       accessible={true}
@@ -2153,13 +2153,13 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
     }
   >
     <View
-      accessibilityLabel="1000%"
+      accessibilityLabel="100%"
       accessibilityRole="progressbar"
       accessibilityValue={
         {
           "max": 100,
           "min": 0,
-          "now": 1,
+          "now": 100,
         }
       }
       accessible={true}

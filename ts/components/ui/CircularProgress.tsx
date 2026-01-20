@@ -1,6 +1,6 @@
 import { ReactNode, useEffect } from "react";
 
-import { StyleSheet, View, ColorValue } from "react-native";
+import { ColorValue, StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedProps,
   useSharedValue
@@ -28,17 +28,19 @@ export const CircularProgress = ({
   strokeBgColor,
   children
 }: CircularProgressProps) => {
-  const progressSharedValue = useSharedValue(0);
+  const progressLength = useSharedValue(0);
 
   const CIRCLE_LENGTH = 2 * Math.PI * radius;
 
   useEffect(() => {
+    // Transforms progress 0-100 into 0-1
+    const progressValue = Math.max(Math.min(progress / 100, 1), 0);
     // eslint-disable-next-line functional/immutable-data
-    progressSharedValue.value = progress / 100;
-  }, [progress, progressSharedValue]);
+    progressLength.value = Math.round(CIRCLE_LENGTH * (1 - progressValue));
+  }, [progressLength, CIRCLE_LENGTH, progress]);
 
   const animatedProps = useAnimatedProps(() => ({
-    strokeDashoffset: CIRCLE_LENGTH * (1 - progressSharedValue.value)
+    strokeDashoffset: progressLength.value
   }));
 
   return (
