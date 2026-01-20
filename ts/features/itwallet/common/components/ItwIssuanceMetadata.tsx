@@ -8,7 +8,7 @@ import {
   trackWalletCredentialShowAuthSource,
   trackWalletCredentialShowIssuer
 } from "../../analytics";
-import { getMixPanelCredential } from "../../analytics/utils/analyticsUtils";
+import { getMixPanelCredential } from "../../analytics/utils/index.ts";
 import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors/index.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
