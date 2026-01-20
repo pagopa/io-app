@@ -3338,15 +3338,17 @@ __metadata:
 
 "@pagopa/io-react-native-wallet@github:pagopa/io-react-native-wallet#SIW-3648-sd-jwt-library-migration":
   version: 2.4.2
-  resolution: "@pagopa/io-react-native-wallet@https://github.com/pagopa/io-react-native-wallet.git#commit=7040d9e24d879fdc8c3003cc9ae1f397688e0ff4"
+  resolution: "@pagopa/io-react-native-wallet@https://github.com/pagopa/io-react-native-wallet.git#commit=f2338914b189d002eb2af6f44775e5a16d3fb4c5"
   dependencies:
+    "@sd-jwt/core": ^0.18.0
+    "@sd-jwt/crypto-nodejs": ^0.18.0
+    "@sd-jwt/types": ^0.18.0
     dcql: ^0.2.21
     js-base64: ^3.7.7
     js-sha256: ^0.9.0
     jsonpath-plus: ^10.2.0
     jsrsasign: ^11.1.0
     parse-url: ^9.2.0
-    react-native-quick-crypto: ^0.7.17
     react-native-url-polyfill: ^2.0.0
     react-native-uuid: ^2.0.1
     uuid: ^11.0.3
@@ -3355,12 +3357,10 @@ __metadata:
     "@pagopa/io-react-native-crypto": "*"
     "@pagopa/io-react-native-iso18013": "*"
     "@pagopa/io-react-native-jwt": "*"
-    "@sd-jwt/core": ^0.18.0
-    "@sd-jwt/types": ^0.18.0
     react: "*"
     react-native: "*"
     react-native-quick-crypto: "*"
-  checksum: 62b82e34a7fe08a9fcb60e2d5f8cdabdc162be281e5e23056d4173b65495e5c7de052f041870a5555531dc99231eb37abec1e75f236726c24da7e9b7ed4b1fd9
+  checksum: 4a8fa209ddacde572eec8f4460f4a38b819ec74e25b1e081f195cf286b6319de18a70c28cb29106404260dfb45fcb47037c720b5f5b972c3aed65ae91d1db003
   languageName: node
   linkType: hard
 
@@ -4134,6 +4134,63 @@ __metadata:
   version: 1.1.0
   resolution: "@redux-saga/types@npm:1.1.0"
   checksum: e75a6ddc896007e76bd505dee1b3f8401464036ce9db2f4c4ac469215437d61013c17a54b9c342574bac27f2cb6ae628fe24419d17d9f85cb922181d81ec2321
+  languageName: node
+  linkType: hard
+
+"@sd-jwt/core@npm:^0.18.0":
+  version: 0.18.1
+  resolution: "@sd-jwt/core@npm:0.18.1"
+  dependencies:
+    "@sd-jwt/decode": 0.18.1
+    "@sd-jwt/present": 0.18.1
+    "@sd-jwt/types": 0.18.1
+    "@sd-jwt/utils": 0.18.1
+  checksum: addd8ba7a381baa4cd7065807e58fcb433684db2d834f585c299ddeabb2b840b61082cbb2b26c088ad0b1134b07b05e8ad88fe6e9da19ea63d008d6d12f48fce
+  languageName: node
+  linkType: hard
+
+"@sd-jwt/crypto-nodejs@npm:^0.18.0":
+  version: 0.18.0
+  resolution: "@sd-jwt/crypto-nodejs@npm:0.18.0"
+  checksum: 32a98e411751b02540caa93ebd280a63d000d4581ca0084f3590c83b29db1de0c3ba1a6ac5f194c386cb0947bf6cff961559290e197384ca455b993d82394b85
+  languageName: node
+  linkType: hard
+
+"@sd-jwt/decode@npm:0.18.1":
+  version: 0.18.1
+  resolution: "@sd-jwt/decode@npm:0.18.1"
+  dependencies:
+    "@sd-jwt/types": 0.18.1
+    "@sd-jwt/utils": 0.18.1
+  checksum: f63169b425e82b45965ea20f55856c73bce8f2a7b593b998ed6906d6ebde10d1f46139bf0db6ccf23a3b708130ed611752f657c203a24b8726c03b0a72df9903
+  languageName: node
+  linkType: hard
+
+"@sd-jwt/present@npm:0.18.1":
+  version: 0.18.1
+  resolution: "@sd-jwt/present@npm:0.18.1"
+  dependencies:
+    "@sd-jwt/decode": 0.18.1
+    "@sd-jwt/types": 0.18.1
+    "@sd-jwt/utils": 0.18.1
+  checksum: b936794502611b54a441b8508ec985784d36f4fc379181a0c7b45b1b8cfd3d56e5898b58c2c2037b6f10d42faea421b5f3c2539c2808fc06bbc6ff18a9af1cf8
+  languageName: node
+  linkType: hard
+
+"@sd-jwt/types@npm:0.18.1, @sd-jwt/types@npm:^0.18.0":
+  version: 0.18.1
+  resolution: "@sd-jwt/types@npm:0.18.1"
+  checksum: 54bcc604546f3d59c006e845a14865aaffc8bfe92622de5c82ee912822037e2a32f9d19de5fc084a90caa9a5c15a273e8ab2807511bf2fa0a97e40c910985263
+  languageName: node
+  linkType: hard
+
+"@sd-jwt/utils@npm:0.18.1":
+  version: 0.18.1
+  resolution: "@sd-jwt/utils@npm:0.18.1"
+  dependencies:
+    "@sd-jwt/types": 0.18.1
+    js-base64: ^3.7.8
+  checksum: 3412eea03b2c27badc3bbb5d88c3becad82dd49818691b135908d54498fb460d8d56fa8e8d83486b9b3ffaaac1342289aa3a80621adcca9365ece9a3f41b6bab
   languageName: node
   linkType: hard
 
@@ -12749,6 +12806,13 @@ __metadata:
   version: 3.7.7
   resolution: "js-base64@npm:3.7.7"
   checksum: d1b02971db9dc0fd35baecfaf6ba499731fb44fe3373e7e1d6681fbd3ba665f29e8d9d17910254ef8104e2cb8b44117fe4202d3dc54c7cafe9ba300fe5433358
+  languageName: node
+  linkType: hard
+
+"js-base64@npm:^3.7.8":
+  version: 3.7.8
+  resolution: "js-base64@npm:3.7.8"
+  checksum: 891746b0f23aea7dd466c5ef2d349b093944a25eca6093c09b2cbb99bc47a94237c63b91623bbc203306b7c72aab5112e90378544bceef3fd0eb9ab86d7af496
   languageName: node
   linkType: hard
 
