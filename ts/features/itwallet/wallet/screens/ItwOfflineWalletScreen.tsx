@@ -4,9 +4,9 @@ import I18n from "i18next";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { trackItwOfflineWallet } from "../../analytics";
 import { ItwOfflineAccessGate } from "../components/ItwOfflineAccessGate.tsx";
 import { ItwWalletCardsContainer } from "../components/ItwWalletCardsContainer";
+import { trackItwOfflineWallet } from "../analytics";
 
 const OfflineWalletScreenContent = () => {
   const navigation = useIONavigation();
