@@ -3,7 +3,7 @@ import {
   trackITWalletBannerVisualized,
   trackItWalletBannerTap
 } from "../../analytics";
-import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
+import { ITW_IDENTIFICATION_SCREENVIEW_EVENTS } from "../../identification/analytics/enum";
 import { ItwJwtCredentialStatus } from "../utils/itwTypesUtils";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
@@ -61,7 +61,7 @@ export const useItwEidLifecycleAlertTracking = ({
       banner_page: currentScreenName ?? "not_available",
       banner_landing: isOffline
         ? "not_available"
-        : ITW_SCREENVIEW_EVENTS.ITW_ID_METHOD
+        : ITW_IDENTIFICATION_SCREENVIEW_EVENTS.ITW_ID_METHOD
     }),
     [maybeEidStatus, currentScreenName, isOffline]
   );

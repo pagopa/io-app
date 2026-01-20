@@ -10,8 +10,8 @@ import { useIOSelector } from "../../../../store/hooks";
 import {
   trackItwCredentialIntro,
   trackItwCredentialStartIssuing
-} from "../../analytics";
-import { getMixPanelCredential } from "../../analytics/utils/analyticsUtils";
+} from "../analytics";
+import { getMixPanelCredential } from "../../analytics/utils";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";

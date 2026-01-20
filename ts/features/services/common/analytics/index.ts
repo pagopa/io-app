@@ -11,6 +11,7 @@ import {
 } from "../../home/store/actions";
 import { paginatedServicesGet } from "../../institution/store/actions";
 import { searchPaginatedInstitutionsGet } from "../../search/store/actions";
+import { FavouriteServicesSortType } from "../../favouriteServices/types";
 
 type ServiceBaseType = {
   service_id: string;
@@ -64,7 +65,7 @@ type InstitutionDetailsType = {
 } & InstitutionBaseType;
 
 type ServiceSelectedType = {
-  source: "featured_services" | "organization_detail";
+  source: "favourites" | "featured_services" | "organization_detail";
 } & ServiceBaseType;
 
 type InstitutionSelectedType = {
@@ -77,7 +78,7 @@ type InstitutionSelectedType = {
 } & InstitutionBaseType;
 
 type SearchStartType = {
-  source: "bottom_link" | "header_icon" | "search_bar";
+  source: "bottom_link" | "header_icon" | "favourites" | "search_bar";
 };
 
 export type CtaCategoryType = "custom_1" | "custom_2";
@@ -267,6 +268,65 @@ export const trackServiceDetailsCtaTapped = (
   void mixpanelTrack(
     "SERVICES_DETAIL_CTA_TAPPED",
     buildEventProperties("UX", "action", props)
+  );
+
+export const trackServicesFavouritesAdd = (service_id: string) =>
+  void mixpanelTrack(
+    "SERVICES_FAVOURITES_ADD",
+    buildEventProperties("UX", "action", { service_id })
+  );
+
+export const trackServicesFavouritesLimitReached = (service_id: string) =>
+  void mixpanelTrack(
+    "SERVICES_FAVOURITES_LIMIT_REACHED",
+    buildEventProperties("KO", "error", { service_id })
+  );
+
+export const trackServicesFavouritesRemove = (
+  service_id: string,
+  source: "favourites_list" | "service_detail"
+) =>
+  void mixpanelTrack(
+    "SERVICES_FAVOURITES_REMOVE",
+    buildEventProperties("UX", "action", { service_id, source })
+  );
+
+export const trackServicesFavouritesShow = () =>
+  void mixpanelTrack(
+    "SERVICES_FAVOURITES_SHOW",
+    buildEventProperties("UX", "action")
+  );
+
+export const trackServicesFavouritesList = (favourites_count: number) =>
+  void mixpanelTrack(
+    "SERVICES_FAVOURITES_LIST",
+    buildEventProperties("UX", "screen_view", { favourites_count })
+  );
+
+export const trackServicesFavouritesSwipeToRemove = (service_id: string) =>
+  void mixpanelTrack(
+    "SERVICES_FAVOURITES_SWIPE_TO_REMOVE",
+    buildEventProperties("UX", "action", { service_id })
+  );
+
+export const trackServicesFavouritesRemoveCancel = (service_id: string) =>
+  void mixpanelTrack(
+    "SERVICES_FAVOURITES_REMOVE_CANCEL",
+    buildEventProperties("UX", "action", { service_id })
+  );
+
+export const trackServicesFavouritesSortStart = () =>
+  void mixpanelTrack(
+    "SERVICES_FAVOURITES_SORT_START",
+    buildEventProperties("UX", "action")
+  );
+
+export const trackServicesFavouritesSortSelected = (
+  sortType: FavouriteServicesSortType
+) =>
+  void mixpanelTrack(
+    "SERVICES_FAVOURITES_SORT_SELECTED",
+    buildEventProperties("UX", "action", { sortType })
   );
 
 /**

@@ -13,9 +13,9 @@ import {
 import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/selectors";
 import {
   itwIsDiscoveryBannerHiddenSelector,
-  itwIsL3EnabledSelector,
   itwIsWalletUpgradeMDLDetailsBannerHiddenSelector
-} from "./preferences";
+} from "./banners";
+import { itwIsL3EnabledSelector } from "./preferences";
 import { isItwEnabledSelector } from "./remoteConfig";
 
 /**
@@ -48,7 +48,7 @@ export const isItwPersistedDiscoveryBannerRenderableSelector = (
  * - The user has online access (not available in the mini-app)
  * - The Wallet has valid Wallet Instance with a known status, and a valid eID
  * - The Wallet Instance is not in a failure status
- * - The eID is not expired
+ * - The eID is not expired or expiring
  * - The Wallet is empty
  * - Fiscal code is not whitelisted for IT-Wallet L3
  * @param state the application global state
@@ -59,6 +59,7 @@ export const itwShouldRenderWalletReadyBannerSelector = (state: GlobalState) =>
   itwLifecycleIsValidSelector(state) &&
   !itwIsWalletInstanceStatusFailureSelector(state) &&
   itwCredentialsEidStatusSelector(state) !== "jwtExpired" &&
+  itwCredentialsEidStatusSelector(state) !== "jwtExpiring" &&
   itwIsWalletEmptySelector(state);
 
 /**
