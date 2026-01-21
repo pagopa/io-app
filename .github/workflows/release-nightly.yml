@@ -9,7 +9,7 @@ concurrency:
 jobs:
   detect-changes:
     name: Detect changes since last tag
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       has_changes: ${{ steps.detect.outputs.HAS_CHANGES }}
     steps:
@@ -63,7 +63,7 @@ jobs:
     uses: ./.github/workflows/staticcheck.yaml
   bump-app-version:
     needs: [detect-changes, run-static-checks]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment: prod
     outputs:
       currentAppVersion: ${{ steps.github-release-creation.outputs.CURRENT_APP_VERSION }}
@@ -105,7 +105,7 @@ jobs:
   release-android:
     needs: bump-app-version
     environment: prod
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2

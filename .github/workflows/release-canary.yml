@@ -6,7 +6,7 @@ jobs:
     uses: ./.github/workflows/staticcheck.yaml
   prepare-canary-release:
     needs: run-static-checks
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       canaryVersion: ${{ steps.github-release-creation.outputs.CANARY_VERSION }}
     steps:
@@ -54,7 +54,7 @@ jobs:
   release-android:
     needs: prepare-canary-release
     environment: canary
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
@@ -244,7 +244,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   notify-new-version:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment: dev
     needs:
         - prepare-canary-release
