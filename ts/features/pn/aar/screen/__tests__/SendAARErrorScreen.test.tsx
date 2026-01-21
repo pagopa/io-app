@@ -17,6 +17,7 @@ import * as SELECTORS from "../../store/selectors";
 import * as ANALYTICS from "../../analytics";
 import * as NFC_NOT_SUPPORTED_COMPONENT from "../../components/errors/SendAarNfcNotSupportedComponent";
 import * as ERROR_MAPPINGS from "../../utils/aarErrorMappings";
+import * as LOADING_SCREEN from "../../../../../components/screens/LoadingScreenContent";
 
 const handledRetryStates: Array<AARFlowStateName> = [
   sendAARFlowStates.cieCanAdvisory
@@ -44,6 +45,9 @@ describe("SendAARErrorScreen", () => {
   const nfcNotSupportedComponentSpy = jest
     .spyOn(NFC_NOT_SUPPORTED_COMPONENT, "SendAarNfcNotSupportedComponent")
     .mockImplementation();
+  const loadingScreenSpy = jest
+    .spyOn(LOADING_SCREEN, "default")
+    .mockImplementation(() => <></>);
   jest
     .spyOn(ERROR_MAPPINGS, "getSendAarErrorComponent")
     .mockImplementation(() => mockKoComponent);
@@ -56,6 +60,8 @@ describe("SendAARErrorScreen", () => {
         return nfcNotSupportedComponentSpy;
       case sendAARFlowStates.ko:
         return mockKoComponent;
+      case sendAARFlowStates.cieCanAdvisory:
+        return loadingScreenSpy;
       default:
         return undefined;
     }

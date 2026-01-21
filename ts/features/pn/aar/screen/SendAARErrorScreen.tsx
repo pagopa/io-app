@@ -10,6 +10,7 @@ import { sendAARFlowStates } from "../utils/stateUtils";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import PN_ROUTES from "../../navigation/routes";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 
 export const SendAARErrorScreen = () => {
   const flowData = useIOSelector(currentAARFlowData);
@@ -44,6 +45,11 @@ export const SendAARErrorScreen = () => {
     case sendAARFlowStates.ko: {
       const ErrorComponent = getSendAarErrorComponent(flowData.error?.errors);
       return <ErrorComponent />;
+    }
+    case sendAARFlowStates.cieCanAdvisory: {
+      // navigation handled in useEffect,
+      // this is to avoid rendering the default error component while redirecting
+      return <LoadingScreenContent title="" />;
     }
     default: {
       return <SendAarGenericErrorComponent />;
