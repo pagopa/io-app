@@ -82,7 +82,7 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
   it("should dispatch the right state update action and navigate back when the hardware back button is pressed", () => {
     const spyOnUseHardwareBackButton = jest.spyOn(
       USE_HARDWARE_BACK_BUTTON,
-      "useHardwareBackButton"
+      "useHardwareBackButtonWhenFocused"
     );
 
     renderComponent();
@@ -167,7 +167,7 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
         .mockReturnValue(currentAarState);
       const spyOnUseHardwareBackButton = jest.spyOn(
         USE_HARDWARE_BACK_BUTTON,
-        "useHardwareBackButton"
+        "useHardwareBackButtonWhenFocused"
       );
 
       renderComponent();

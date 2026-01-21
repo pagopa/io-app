@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.23.0-rc.0](https://github.com/pagopa/io-app/compare/3.22.0-rc.15...3.23.0-rc.0) (2026-01-20)
+
+
+### Features
+
+* **IT-wallet:** [[SIW-3659](https://pagopa.atlassian.net/browse/SIW-3659)] Add middle screen for updating documents in L2+ flow ([#7781](https://github.com/pagopa/io-app/issues/7781)) ([8a14e3f](https://github.com/pagopa/io-app/commit/8a14e3fea00b7383a62481adf8d51b7cdc076fac))
+* [[IOPLT-1383](https://pagopa.atlassian.net/browse/IOPLT-1383)] Enables Fabric React Native architecture  ([#7728](https://github.com/pagopa/io-app/issues/7728)) ([494b05b](https://github.com/pagopa/io-app/commit/494b05b8a7894123b9978470c572cdd318d493ec))
+* **IT-wallet:** [[SIW-3539](https://pagopa.atlassian.net/browse/SIW-3539)] Add missing screens in L2+ flow ([#7731](https://github.com/pagopa/io-app/issues/7731)) ([7e64e86](https://github.com/pagopa/io-app/commit/7e64e861b973199851be557b82e6b163bf2a699f))
+* [[IOCOM-2865](https://pagopa.atlassian.net/browse/IOCOM-2865)] Add AAR field to CIE+SEND playground ([#7754](https://github.com/pagopa/io-app/issues/7754)) ([249ebce](https://github.com/pagopa/io-app/commit/249ebce78a167a54a2adc3344a757b195cfde9f6))
+* [[IOPAE-2304](https://pagopa.atlassian.net/browse/IOPAE-2304)] Add tracking for favourites services ([#7736](https://github.com/pagopa/io-app/issues/7736)) ([052f8e0](https://github.com/pagopa/io-app/commit/052f8e0634c41b4eb0e727a98432001ad639a882))
+
+
+### Bug Fixes
+
+* [[IOBP-2413](https://pagopa.atlassian.net/browse/IOBP-2413)] Accessibility Labels with values ([#7773](https://github.com/pagopa/io-app/issues/7773)) ([3f569af](https://github.com/pagopa/io-app/commit/3f569affdf930fcf62e8ad2371602dcd6f855b8d))
+* [[IOBP-2451](https://pagopa.atlassian.net/browse/IOBP-2451)] prevent content selection with bottomSheet Open ([#7776](https://github.com/pagopa/io-app/issues/7776)) ([9182911](https://github.com/pagopa/io-app/commit/91829118242b1ac51445ec41025dbc1a2d8999ae))
+
+
+### Chores
+
+* [[IOBP-2401](https://pagopa.atlassian.net/browse/IOBP-2401)] Removed `initiativeName` from analytics ([#7786](https://github.com/pagopa/io-app/issues/7786)) ([0023d38](https://github.com/pagopa/io-app/commit/0023d388dc9671f0831d8eb8e2ca80a3ed7b6b94))
+* [[IOBP-2482](https://pagopa.atlassian.net/browse/IOBP-2482)] Update wallet card onboarded success toast locales ([#7768](https://github.com/pagopa/io-app/issues/7768)) ([dcde1c6](https://github.com/pagopa/io-app/commit/dcde1c66830ae6e4965abbab4807393c667441b2))
+* **IT-Wallet:** [[SIW-3452](https://pagopa.atlassian.net/browse/SIW-3452)] Add eID status check on ready banner selector ([#7771](https://github.com/pagopa/io-app/issues/7771)) ([897c79d](https://github.com/pagopa/io-app/commit/897c79dd87e307f875b22d7bd600af85f97c74e5))
+* **IT-Wallet:** [[SIW-3680](https://pagopa.atlassian.net/browse/SIW-3680)] Updates `io-react-native-cie` to `v1.3.2` ([#7782](https://github.com/pagopa/io-app/issues/7782)) ([e62abe0](https://github.com/pagopa/io-app/commit/e62abe05f5b06a0c41fceee7190052632aebec87))
+* [[IOBP-2522](https://pagopa.atlassian.net/browse/IOBP-2522)] Add missing `is_onboarded` Mixpanel prop at  `WalletPaymentOutcomeScreen` ([#7778](https://github.com/pagopa/io-app/issues/7778)) ([3abc150](https://github.com/pagopa/io-app/commit/3abc150533336469866c51b820f63ea100322b75))
+* **IT-Wallet:** [[SIW-3563](https://pagopa.atlassian.net/browse/SIW-3563)] Refactor IT-Wallet analytics tracking by domain ([#7741](https://github.com/pagopa/io-app/issues/7741)) ([7311f78](https://github.com/pagopa/io-app/commit/7311f78ef28c12bd607ec7e32168bf5d06463a4c))
+
 ## [3.22.0-rc.15](https://github.com/pagopa/io-app/compare/3.22.0-rc.14...3.22.0-rc.15) (2026-01-15)
 
 

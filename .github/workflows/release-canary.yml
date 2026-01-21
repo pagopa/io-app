@@ -6,7 +6,7 @@ jobs:
     uses: ./.github/workflows/staticcheck.yaml
   prepare-canary-release:
     needs: run-static-checks
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       canaryVersion: ${{ steps.github-release-creation.outputs.CANARY_VERSION }}
     steps:
@@ -54,7 +54,7 @@ jobs:
   release-android:
     needs: prepare-canary-release
     environment: canary
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
@@ -95,14 +95,6 @@ jobs:
         with:
           name: api-client
           path: definitions/
-      - id: setup-jdk-17
-        uses: actions/setup-java@5ffc13f4174014e2d4d4572b3d74c3fa61aeb2c2 #v3.11.0
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: gradle
-      - id: setup-android-sdk
-        uses: android-actions/setup-android@00854ea68c109d98c75d956347303bf7c45b0277 #v3.2.1
       - id: setup-ruby
         uses: ruby/setup-ruby@a4effe49ee8ee5b8b5091268c473a4628afb5651 #v1.245.0
         with:
@@ -252,7 +244,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   notify-new-version:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment: dev
     needs:
         - prepare-canary-release

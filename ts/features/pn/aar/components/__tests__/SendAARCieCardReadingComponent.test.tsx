@@ -204,7 +204,9 @@ describe("SendAARCieCardReadingComponent", () => {
           recipientInfo: cieCardReadingComponentProps.recipientInfo,
           nisData: omit(successDataMock.nis_data, ["signedChallenge"]),
           mrtdData: successDataMock.mrtd_data,
-          signedVerificationCode: successDataMock.nis_data.signedChallenge
+          signedVerificationCode: successDataMock.nis_data.signedChallenge,
+          unsignedVerificationCode:
+            cieCardReadingComponentProps.verificationCode
         })
       );
     });
