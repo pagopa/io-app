@@ -3,7 +3,6 @@ on:
   schedule:
     - cron: '59 21 * * *'
   workflow_dispatch:
-  pull_request:
 concurrency:
   group: nightly-release-master
   cancel-in-progress: false
