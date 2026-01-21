@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.23.0-rc.1](https://github.com/pagopa/io-app/compare/3.23.0-rc.0...3.23.0-rc.1) (2026-01-21)
+
+
+### Features
+
+* [[IOBP-2472](https://pagopa.atlassian.net/browse/IOBP-2472),[IOBP-2483](https://pagopa.atlassian.net/browse/IOBP-2483)] Update expired payment method from payment method details screen ([#7757](https://github.com/pagopa/io-app/issues/7757)) ([f3347ae](https://github.com/pagopa/io-app/commit/f3347ae3d29f031ccb52959f535153c6f9a61cf5))
+
+
+### Bug Fixes
+
+* [[IOCOM-2856](https://pagopa.atlassian.net/browse/IOCOM-2856)] Adjust `terminateFlow` behavior ([#7772](https://github.com/pagopa/io-app/issues/7772)) ([44850ab](https://github.com/pagopa/io-app/commit/44850ab017904ad226795c69a074995a2ca8b51e))
+
+
+### Chores
+
+* [[IOPLT-1526](https://pagopa.atlassian.net/browse/IOPLT-1526)] Remove not necessary jobs on android release ([#7788](https://github.com/pagopa/io-app/issues/7788)) ([f9f1590](https://github.com/pagopa/io-app/commit/f9f1590160f810e040cc21eab81d30ba2f8c4087))
+
 ## [3.23.0-rc.0](https://github.com/pagopa/io-app/compare/3.22.0-rc.15...3.23.0-rc.0) (2026-01-20)
 
 
