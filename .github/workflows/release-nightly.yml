@@ -158,6 +158,7 @@ jobs:
           bundler-cache: true
       - id: export-android-vars
         run: |
+          echo "SDK Path: $ANDROID_HOME"
           echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
           echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
         env:
