@@ -1605,6 +1605,9 @@
         "subtitle": "Chiudi l’app e riaprila per aggiornare il portafoglio",
         "primaryButton": "Indietro",
         "secondaryButton": "Riprova"
+      },
+      "update": {
+        "primaryButton": "Aggiorna i dati"
       }
     },
     "wallet": "Portafoglio",
