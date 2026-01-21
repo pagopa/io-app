@@ -147,6 +147,8 @@ jobs:
         with:
           name: api-client
           path: definitions/
+      - id: setup-android-sdk
+        uses: android-actions/setup-android@9fc6c4e9069bf8d3d10b2204b1fb8f6ef7065407 #v3.2.2
       - id: setup-ruby
         uses: ruby/setup-ruby@a4effe49ee8ee5b8b5091268c473a4628afb5651 #v1.245.0
         with:
