@@ -48,12 +48,12 @@ export const SendAARCieCardReadingComponent = ({
   const errorName = isError ? readState.error.name : undefined;
   const progress = isReadingState(readState) ? readState.progress : 0;
 
-  const handleBottomSheetHelpCta = () => {
+  const handleZendeskAssistance = () => {
     dismiss();
   };
   const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
     component: sendAarErrorSupportBottomSheetComponent(
-      handleBottomSheetHelpCta,
+      handleZendeskAssistance,
       errorName
     ),
     title: ""
