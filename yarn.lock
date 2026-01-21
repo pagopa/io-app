@@ -3338,7 +3338,7 @@ __metadata:
 
 "@pagopa/io-react-native-wallet@github:pagopa/io-react-native-wallet#SIW-3648-sd-jwt-library-migration":
   version: 2.4.2
-  resolution: "@pagopa/io-react-native-wallet@https://github.com/pagopa/io-react-native-wallet.git#commit=f2338914b189d002eb2af6f44775e5a16d3fb4c5"
+  resolution: "@pagopa/io-react-native-wallet@https://github.com/pagopa/io-react-native-wallet.git#commit=a9367e27adff3b24692087a780bfb3b96ce200da"
   dependencies:
     "@sd-jwt/core": ^0.18.0
     "@sd-jwt/crypto-nodejs": ^0.18.0
@@ -3360,7 +3360,7 @@ __metadata:
     react: "*"
     react-native: "*"
     react-native-quick-crypto: "*"
-  checksum: 4a8fa209ddacde572eec8f4460f4a38b819ec74e25b1e081f195cf286b6319de18a70c28cb29106404260dfb45fcb47037c720b5f5b972c3aed65ae91d1db003
+  checksum: d7a526991f629422c03084019ab0aa13863e0fb1df92c3c980246d18497376d5e22e9de48494cfda835837b6e7f3cdec13ddf3e007331de5c6e33d3906990a93
   languageName: node
   linkType: hard
 
