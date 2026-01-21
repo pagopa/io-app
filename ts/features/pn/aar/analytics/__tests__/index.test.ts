@@ -23,7 +23,10 @@ import {
   trackSendAarNotificationOpeningMandateDisclaimerClosure,
   trackSendAarNotificationOpeningMandateBottomSheet,
   trackSendAarNotificationOpeningMandateBottomSheetAccepted,
-  trackSendAarNotificationOpeningMandateBottomSheetClosure
+  trackSendAarNotificationOpeningMandateBottomSheetClosure,
+  trackSendAarNotificationOpeningNfcNotSupported,
+  trackSendAarNotificationOpeningNfcNotSupportedInfo,
+  trackSendAarNotificationOpeningNfcNotSupportedClosure
 } from "..";
 import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
 import * as mixpanel from "../../../../../mixpanel";
@@ -671,6 +674,51 @@ describe("index", () => {
       expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
         event_category: "UX",
         event_type: "action"
+      });
+    });
+  });
+  describe("trackSendAarNotificationOpeningNfcNotSupported", () => {
+    it("should call 'mixpanelTrack' with proper event name and parameters", () => {
+      trackSendAarNotificationOpeningNfcNotSupported();
+
+      expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+        "SEND_NOTIFICATION_OPENING_NFC_NOT_SUPPORTED"
+      );
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "UX",
+        event_type: "screen_view"
+      });
+    });
+  });
+  describe("trackSendAarNotificationOpeningNfcNotSupportedInfo", () => {
+    it("should call 'mixpanelTrack' with proper event name and parameters", () => {
+      trackSendAarNotificationOpeningNfcNotSupportedInfo();
+
+      expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+        "SEND_NOTIFICATION_OPENING_NFC_NOT_SUPPORTED_INFO"
+      );
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "UX",
+        event_type: "action"
+      });
+    });
+  });
+  describe("trackSendAarNotificationOpeningNfcNotSupportedClosure", () => {
+    it("should call 'mixpanelTrack' with proper event name and parameters", () => {
+      trackSendAarNotificationOpeningNfcNotSupportedClosure();
+
+      expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+        "SEND_NOTIFICATION_OPENING_NFC_NOT_SUPPORTED_CLOSURE"
+      );
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "UX",
+        event_type: "exit"
       });
     });
   });
