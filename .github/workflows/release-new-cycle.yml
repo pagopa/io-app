@@ -84,7 +84,6 @@ jobs:
           df -h
           sudo rm -rf /usr/share/dotnet || true
           sudo rm -rf /opt/ghc || true
-          sudo rm -rf /usr/local/lib/android || true
           docker system prune -af || true
           sudo apt-get clean || true
           echo "After cleanup:"
