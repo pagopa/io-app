@@ -63,11 +63,12 @@ export const SendAARCieCardReadingComponent = ({
           mandateId,
           mrtdData: data.mrtd_data,
           nisData,
+          unsignedVerificationCode: verificationCode,
           signedVerificationCode: signedChallenge
         })
       );
     }
-  }, [data, iun, recipientInfo, mandateId, dispatch]);
+  }, [data, iun, recipientInfo, mandateId, dispatch, verificationCode]);
 
   useEffect(() => {
     handleStartReading();

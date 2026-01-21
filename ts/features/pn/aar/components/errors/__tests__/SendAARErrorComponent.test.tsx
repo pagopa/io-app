@@ -17,13 +17,11 @@ import * as FLOW_MANAGER from "../../../hooks/useSendAarFlowManager";
 import * as SELECTORS from "../../../store/selectors";
 import { sendAarMockStateFactory } from "../../../utils/testUtils";
 import {
-  SendAARErrorComponent,
-  testable
+  SendAarGenericErrorComponent,
+  sendAarErrorSupportBottomSheetComponent
 } from "../../errors/SendAARErrorComponent";
 import * as debugHooks from "../../../../../../hooks/useDebugInfo";
 import * as ANALYTICS from "../../../analytics";
-
-const { bottomComponent } = testable!;
 
 const managerSpy = jest.spyOn(FLOW_MANAGER, "useSendAarFlowManager");
 
@@ -99,7 +97,7 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
   });
 
   it("calls the primary callback on assistance button press", () => {
-    const renderedBottomComponent = bottomComponent(
+    const renderedBottomComponent = sendAarErrorSupportBottomSheetComponent(
       mockAssistance,
       assistanceErrorCode
     );
@@ -294,7 +292,7 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
 const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => <SendAARErrorComponent />,
+    () => <SendAarGenericErrorComponent />,
     PN_ROUTES.QR_SCAN_FLOW,
     {},
     createStore(appReducer, globalState as any)

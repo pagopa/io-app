@@ -1,4 +1,5 @@
 import { act, renderHook } from "@testing-library/react-native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import * as ANALYTICS from "../../analytics";
 import { terminateAarFlow } from "../../store/actions";
@@ -11,16 +12,16 @@ import {
 import { useSendAarFlowManager } from "../useSendAarFlowManager";
 
 const mockPopToTop = jest.fn();
-const mockReset = jest.fn();
-const mockNavigate = jest.fn();
+const mockGetParent = jest.fn();
+const mockParentPopToTop = jest.fn();
 const mockDispatch = jest.fn();
 const mockSelector = jest.fn();
 
-jest.mock("../../../../../navigation/params/AppParamsList", () => ({
-  useIONavigation: () => ({
+jest.mock("@react-navigation/native", () => ({
+  ...jest.requireActual("@react-navigation/native"),
+  useNavigation: () => ({
     popToTop: mockPopToTop,
-    reset: mockReset,
-    navigate: mockNavigate
+    getParent: mockGetParent
   })
 }));
 jest.mock("../../../../../store/hooks", () => ({
@@ -28,24 +29,48 @@ jest.mock("../../../../../store/hooks", () => ({
   useIOSelector: (selector: any) => mockSelector(selector)
 }));
 
+const mockParentNavigationObject: Partial<StackNavigationProp<any>> = {
+  popToTop: mockParentPopToTop
+};
+
 describe("useSendAarFlowManager", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should dispatch "terminateAarFlow" and popToTop when calling the flow termination handle', () => {
-    mockSelector.mockReturnValue(() => ({ type: "test" }));
-    const { result } = renderHook(useSendAarFlowManager);
-    expect(mockPopToTop).toHaveBeenCalledTimes(0);
-    expect(mockDispatch).toHaveBeenCalledTimes(0);
-    act(() => {
-      result.current.terminateFlow();
+  [mockParentNavigationObject, undefined].forEach(parentNavObj => {
+    const isParentNavDefined = parentNavObj !== undefined;
+
+    const parentNavStatus = isParentNavDefined
+      ? "is defined"
+      : "is not defined";
+    const popTopTarget = isParentNavDefined ? "parent's" : "";
+
+    it(`should dispatch "terminateAarFlow" and${popTopTarget} popToTop when calling the flow termination handle if the parent's navigation stack ${parentNavStatus}`, () => {
+      mockSelector.mockReturnValue(() => ({ type: "test" }));
+      mockGetParent.mockReturnValue(parentNavObj);
+
+      const { result } = renderHook(useSendAarFlowManager);
+      expect(mockPopToTop).toHaveBeenCalledTimes(0);
+      expect(mockParentPopToTop).toHaveBeenCalledTimes(0);
+      expect(mockDispatch).toHaveBeenCalledTimes(0);
+
+      act(() => {
+        result.current.terminateFlow();
+      });
+
+      if (isParentNavDefined) {
+        expect(mockParentPopToTop).toHaveBeenCalledTimes(1);
+        expect(mockPopToTop).not.toHaveBeenCalled();
+      } else {
+        expect(mockPopToTop).toHaveBeenCalledTimes(1);
+        expect(mockParentPopToTop).not.toHaveBeenCalled();
+      }
+      expect(mockDispatch).toHaveBeenCalledTimes(1);
+      expect(mockDispatch).toHaveBeenCalledWith(
+        terminateAarFlow({ messageId: undefined })
+      );
     });
-    expect(mockPopToTop).toHaveBeenCalledTimes(1);
-    expect(mockDispatch).toHaveBeenCalledTimes(1);
-    expect(mockDispatch).toHaveBeenCalledWith(
-      terminateAarFlow({ messageId: undefined })
-    );
   });
   Object.values(sendAARFlowStates).forEach(stateKind => {
     it(`should navigate to a valid state when calling "goToNextState" when the state type is ${stateKind} and ${

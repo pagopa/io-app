@@ -130,13 +130,14 @@ type CieScanning = {
   can: string;
 };
 
-type ValidateMandate = {
+type ValidatingMandate = {
   type: SendAARFlowStatesType["validatingMandate"];
   recipientInfo: RecipientInfo;
   iun: string;
   mandateId: string;
   mrtdData: MrtdData;
   nisData: NisData;
+  unsignedVerificationCode: string;
   signedVerificationCode: string;
 };
 
@@ -215,7 +216,8 @@ export const validAARStatusTransitions = new Map<
     sendAARFlowStates.ko,
     new Set([
       sendAARFlowStates.fetchingQRData,
-      sendAARFlowStates.fetchingNotificationData
+      sendAARFlowStates.fetchingNotificationData,
+      sendAARFlowStates.cieCanAdvisory
     ])
   ],
   [
@@ -302,7 +304,7 @@ type AARFlowDelegatedState =
   | CieScanningAdvisory
   | AndroidNFCActivation
   | CieScanning
-  | ValidateMandate;
+  | ValidatingMandate;
 type AarErrorStates = FinalNotAddressee | NfcNotSupportedFinal | ErrorState;
 
 export type AARFlowState =
