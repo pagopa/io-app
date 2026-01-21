@@ -118,7 +118,6 @@ jobs:
           df -h
           sudo rm -rf /usr/share/dotnet || true
           sudo rm -rf /opt/ghc || true
-          sudo rm -rf /usr/local/lib/android || true
           docker system prune -af || true
           sudo apt-get clean || true
           echo "After cleanup:"
@@ -147,23 +146,10 @@ jobs:
         with:
           name: api-client
           path: definitions/
-      - id: setup-java
-        uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e # v5.1.0
-        with:
-          distribution: 'temurin'
-          java-version: '17'
       - id: setup-ruby
         uses: ruby/setup-ruby@a4effe49ee8ee5b8b5091268c473a4628afb5651 #v1.245.0
         with:
           bundler-cache: true
-      - id: export-android-vars
-        run: |
-          echo "SDK Path: $ANDROID_HOME"
-          echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
-          echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
-        env:
-          ANDROID_HOME: ${{ env.ANDROID_HOME }}
-          ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
       - id: build-release-android
         run: |
           ./scripts/android-release.sh ./android/app
@@ -179,8 +165,6 @@ jobs:
           IO_APP_RELEASE_STORE_PASSWORD: ${{secrets.IO_APP_RELEASE_STORE_PASSWORD}}
           IO_APP_RELEASE_KEY_ALIAS: ${{secrets.IO_APP_RELEASE_KEY_ALIAS}}
           IO_APP_RELEASE_KEY_PASSWORD: ${{secrets.IO_APP_RELEASE_KEY_PASSWORD}}
-          ANDROID_HOME: ${{ env.ANDROID_HOME }}
-          ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
       # - id: download-universal-apk-from-store
       #   # We don't want to fail whole job if the universal APK is not downloaded from the play store
       #   continue-on-error: true
