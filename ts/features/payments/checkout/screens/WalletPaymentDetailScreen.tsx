@@ -19,9 +19,10 @@ import {
 } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { ComponentProps, useCallback, useLayoutEffect } from "react";
-import { AccessibilityInfo, SafeAreaView, StyleSheet } from "react-native";
 import I18n from "i18next";
+import { ComponentProps, useCallback, useLayoutEffect, useState } from "react";
+import { AccessibilityInfo, StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
@@ -120,6 +121,8 @@ const WalletPaymentDetailScreen = () => {
   }
 
   return (
+    /* TODO: We should use a `LoadingScreenContent` component, to avoid
+    duplicates of the loading screen throughout the app */
     <SafeAreaView style={styles.loadingContainer}>
       <LoadingIndicator
         testID="wallet-payment-detail-loading-indicator"
@@ -149,6 +152,8 @@ const WalletPaymentDetailContent = ({
     walletPaymentEnabledUserWalletsSelector
   );
 
+  const [isAmountInfoVisible, setAmountInfoVisible] = useState(false);
+
   useOnFirstRender(() => {
     analytics.trackPaymentSummaryInfoScreen({
       amount: paymentAnalyticsData?.formattedAmount,
@@ -173,7 +178,8 @@ const WalletPaymentDetailContent = ({
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
-    contextualHelp: emptyContextualHelp
+    contextualHelp: emptyContextualHelp,
+    ignoreAccessibilityCheck: isAmountInfoVisible
   });
 
   const navigateToMakePaymentScreen = () => {
@@ -211,13 +217,14 @@ const WalletPaymentDetailContent = ({
   const amountInfoBottomSheet = useIOBottomSheetModal({
     title: I18n.t("wallet.firstTransactionSummary.amountInfo.title"),
     component: (
-      <SafeAreaView>
+      <>
         <IOMarkdown
           content={I18n.t("wallet.firstTransactionSummary.amountInfo.message")}
         />
-        <VSpacer size={24} />
-      </SafeAreaView>
-    )
+        <VSpacer size={16} />
+      </>
+    ),
+    onDismiss: () => setAmountInfoVisible(false)
   });
 
   const description = pipe(
@@ -265,6 +272,7 @@ const WalletPaymentDetailContent = ({
       accessibilityLabel: "info",
       onPress: () => {
         amountInfoBottomSheet.present();
+        setAmountInfoVisible(true);
         analytics.trackPaymentSummaryAmountInfo({
           amount,
           organization_name: payment.paName,
@@ -287,67 +295,74 @@ const WalletPaymentDetailContent = ({
   };
 
   return (
-    <IOScrollView
-      actions={{
-        type: "SingleButton",
-        primary: {
-          label: "Vai al pagamento",
-          onPress: navigateToMakePaymentScreen,
-          loading: pot.isLoading(userWalletsPots),
-          disabled: pot.isLoading(userWalletsPots),
-          testID: "wallet-payment-detail-make-payment-button"
-        }
-      }}
+    <View
+      style={{ flex: 1 }}
+      importantForAccessibility={
+        isAmountInfoVisible ? "no-hide-descendants" : "auto"
+      }
     >
-      <ListItemInfo
-        testID="wallet-payment-detail-recipient"
-        icon={"institution"}
-        label={I18n.t("wallet.firstTransactionSummary.recipient")}
-        value={payment.paName}
-      />
-      <Divider />
-      <ListItemInfo
-        testID="wallet-payment-detail-object"
-        icon={"notes"}
-        label={I18n.t("wallet.firstTransactionSummary.object")}
-        value={description}
-        numberOfLines={0}
-      />
-      <Divider />
-      <ListItemInfo
-        testID="wallet-payment-detail-amount"
-        icon={"psp"}
-        label={I18n.t("wallet.firstTransactionSummary.amount")}
-        value={amount}
-        endElement={amountEndElement}
-      />
-      <Divider />
-      {dueDate && (
-        <>
-          <ListItemInfo
-            icon="calendar"
-            label={I18n.t("wallet.firstTransactionSummary.dueDate")}
-            value={dueDate}
-          />
-          <Divider />
-        </>
-      )}
-      <ListItemInfoCopy
-        testID="payment-notice-copy-button"
-        icon="docPaymentCode"
-        label={I18n.t("payment.noticeCode")}
-        value={formattedPaymentNoticeNumber}
-        onPress={() => handleOnCopy(formattedPaymentNoticeNumber)}
-      />
-      <Divider />
-      <ListItemInfoCopy
-        icon="entityCode"
-        label={I18n.t("wallet.firstTransactionSummary.entityCode")}
-        value={orgFiscalCode}
-        onPress={() => handleOnCopy(orgFiscalCode)}
-      />
+      <IOScrollView
+        actions={{
+          type: "SingleButton",
+          primary: {
+            label: "Vai al pagamento",
+            onPress: navigateToMakePaymentScreen,
+            loading: pot.isLoading(userWalletsPots),
+            disabled: pot.isLoading(userWalletsPots),
+            testID: "wallet-payment-detail-make-payment-button"
+          }
+        }}
+      >
+        <ListItemInfo
+          testID="wallet-payment-detail-recipient"
+          icon={"institution"}
+          label={I18n.t("wallet.firstTransactionSummary.recipient")}
+          value={payment.paName}
+        />
+        <Divider />
+        <ListItemInfo
+          testID="wallet-payment-detail-object"
+          icon={"notes"}
+          label={I18n.t("wallet.firstTransactionSummary.object")}
+          value={description}
+          numberOfLines={0}
+        />
+        <Divider />
+        <ListItemInfo
+          testID="wallet-payment-detail-amount"
+          icon={"psp"}
+          label={I18n.t("wallet.firstTransactionSummary.amount")}
+          value={amount}
+          endElement={amountEndElement}
+        />
+        <Divider />
+        {dueDate && (
+          <>
+            <ListItemInfo
+              icon="calendar"
+              label={I18n.t("wallet.firstTransactionSummary.dueDate")}
+              value={dueDate}
+            />
+            <Divider />
+          </>
+        )}
+        <ListItemInfoCopy
+          testID="payment-notice-copy-button"
+          icon="docPaymentCode"
+          label={I18n.t("payment.noticeCode")}
+          value={formattedPaymentNoticeNumber}
+          onPress={() => handleOnCopy(formattedPaymentNoticeNumber)}
+        />
+        <Divider />
+        <ListItemInfoCopy
+          icon="entityCode"
+          label={I18n.t("wallet.firstTransactionSummary.entityCode")}
+          value={orgFiscalCode}
+          onPress={() => handleOnCopy(orgFiscalCode)}
+        />
+      </IOScrollView>
       {amountInfoBottomSheet.bottomSheet}
-    </IOScrollView>
+    </View>
   );
 };
 

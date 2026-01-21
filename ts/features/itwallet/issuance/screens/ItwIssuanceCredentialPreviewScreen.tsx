@@ -17,12 +17,12 @@ import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScree
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { identificationRequest } from "../../../identification/store/actions";
 import {
-  getMixPanelCredential,
   trackCredentialPreview,
   trackIssuanceCredentialScrollToBottom,
   trackItwExit,
   trackSaveCredentialToWallet
-} from "../../analytics";
+} from "../analytics";
+import { getMixPanelCredential } from "../../analytics/utils";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";

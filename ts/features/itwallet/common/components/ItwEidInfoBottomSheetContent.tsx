@@ -14,17 +14,15 @@ import { View } from "react-native";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import {
-  mapPIDStatusToMixpanel,
-  trackCredentialDetail,
-  trackWalletStartDeactivation
-} from "../../analytics";
+import { trackWalletStartDeactivation } from "../../analytics";
+import { mapPIDStatusToMixpanel } from "../../analytics/utils";
 import {
   itwCredentialsEidSelector,
   itwCredentialsEidStatusSelector
 } from "../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { trackCredentialDetail } from "../../presentation/details/analytics";
 import { useItwStatusIconColor } from "../hooks/useItwStatusIconColor";
 import { parseClaims, WellKnownClaim } from "../utils/itwClaimsUtils";
 import { CredentialMetadata } from "../utils/itwTypesUtils";

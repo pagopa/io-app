@@ -10,8 +10,9 @@ import { checkCurrentSession } from "../../../authentication/common/store/action
 import {
   trackItWalletIDMethodSelected,
   trackItwDeactivated,
-  trackSaveCredentialSuccess,
-  updateITWStatusAndPIDProperties
+  trackItwIdAuthenticationCompleted,
+  trackItwIdVerifiedDocument,
+  trackSaveCredentialSuccess
 } from "../../analytics";
 import {
   itwSetAuthLevel,
@@ -224,6 +225,12 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
+  navigateToUpgradeCredentialsScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ISSUANCE.UPGRADE_CREDENTIALS
+    });
+  },
+
   closeIssuance: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
@@ -321,12 +328,11 @@ export const createEidIssuanceActionsImplementation = (
     trackSaveCredentialSuccess(
       context.level === "l3" ? "ITW_PID" : "ITW_ID_V2"
     );
-    updateITWStatusAndPIDProperties(store.getState());
   },
 
   trackWalletInstanceRevocation: () => {
     const isItwL3 = itwLifecycleIsITWalletValidSelector(store.getState());
-    trackItwDeactivated(store.getState(), isItwL3 ? "ITW_PID" : "ITW_ID_V2");
+    trackItwDeactivated(isItwL3 ? "ITW_PID" : "ITW_ID_V2");
   },
 
   trackIdentificationMethodSelected: ({
@@ -339,5 +345,31 @@ export const createEidIssuanceActionsImplementation = (
       ITW_ID_method: event.mode,
       itw_flow: context.level === "l3" ? "L3" : "L2"
     });
+  },
+
+  // Track SPID+CIE first phase
+  trackItwIdAuthenticationCompleted: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assert(context.identification, "identification context is undefined");
+    assert(
+      context.identification.mode !== "ciePin",
+      "identification mode can not be ciePin"
+    );
+
+    trackItwIdAuthenticationCompleted(context.identification.mode);
+  },
+
+  // Track SPID+CIE final phase
+  trackItwIdVerifiedDocument: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assert(context.identification, "identification context is undefined");
+    assert(
+      context.identification.mode !== "ciePin",
+      "identification mode can not be ciePin"
+    );
+
+    trackItwIdVerifiedDocument(context.identification.mode);
   }
 });

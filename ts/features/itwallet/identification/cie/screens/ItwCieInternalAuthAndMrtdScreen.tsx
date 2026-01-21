@@ -4,9 +4,12 @@ import { useCallback } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import { trackItWalletCieCardReading } from "../../../analytics";
+import { trackItWalletCieCardReading } from "../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import { selectMrtdCallbackUrl } from "../../../machine/eid/selectors";
+import {
+  selectIdentification,
+  selectMrtdCallbackUrl
+} from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { ItwCieCardReadFailureContent } from "../components/ItwCieCardReadFailureContent";
 import { ItwCieCardReadProgressContent } from "../components/ItwCieCardReadProgressContent";
@@ -36,8 +39,17 @@ export const ItwCieInternalAuthAndMrtdScreen = ({ route }: Props) => {
   const callbackUrl = ItwEidIssuanceMachineContext.useSelector(
     selectMrtdCallbackUrl
   );
+  const identification =
+    ItwEidIssuanceMachineContext.useSelector(selectIdentification);
 
-  useFocusEffect(useCallback(() => trackItWalletCieCardReading("L3"), []));
+  useFocusEffect(
+    useCallback(() => {
+      trackItWalletCieCardReading({
+        itw_flow: "L3",
+        ITW_ID_method: identification?.mode
+      });
+    }, [identification])
+  );
 
   /**
    * Handles the challenge signed event sending to the

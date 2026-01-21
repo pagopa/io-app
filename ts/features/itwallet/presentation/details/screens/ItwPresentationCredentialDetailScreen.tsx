@@ -8,6 +8,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
 import I18n from "i18next";
 import React, { useCallback, useMemo } from "react";
+import { View } from "react-native";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import {
@@ -17,13 +18,13 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { identificationRequest } from "../../../../identification/store/actions/index.ts";
+import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
 import {
-  CREDENTIAL_STATUS_MAP,
-  getMixPanelCredential,
   trackCredentialDetail,
-  trackWalletCredentialShowFAC_SIMILE,
-  trackWalletCredentialShowTrustmark
-} from "../../../analytics";
+  trackWalletCredentialShowTrustmark,
+  trackWalletCredentialShowFAC_SIMILE
+} from "../analytics";
+import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
 import ItwCredentialNotFound from "../../../common/components/ItwCredentialNotFound.tsx";
 import { PoweredByItWalletText } from "../../../common/components/PoweredByItWalletText.tsx";
 import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
@@ -310,7 +311,11 @@ export const ItwPresentationCredentialDetail = ({
             />
           )}
           <ItwPresentationDetailsFooter credential={credential} />
-          {isL3Credential && <PoweredByItWalletText />}
+          {isL3Credential && (
+            <View style={{ alignItems: "center" }}>
+              <PoweredByItWalletText />
+            </View>
+          )}
         </VStack>
       </ContentWrapper>
     </ItwPresentationDetailsScreenBase>

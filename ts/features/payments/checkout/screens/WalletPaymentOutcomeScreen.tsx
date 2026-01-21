@@ -208,7 +208,8 @@ const WalletPaymentOutcomeScreen = () => {
           paymentAnalyticsData?.savedPaymentMethods?.length || 0,
         selected_psp_flag: paymentAnalyticsData?.selectedPspFlag,
         data_entry: paymentAnalyticsData?.startOrigin,
-        browser_type: paymentAnalyticsData?.browserType
+        browser_type: paymentAnalyticsData?.browserType,
+        is_onboarded: paymentAnalyticsData?.is_onboarded
       });
       return;
     }
@@ -223,7 +224,8 @@ const WalletPaymentOutcomeScreen = () => {
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
       psp_selected: paymentAnalyticsData?.selectedPsp,
       browser_type: paymentAnalyticsData?.browserType,
-      payment_phase: getPaymentPhaseFromStep(currentStep)
+      payment_phase: getPaymentPhaseFromStep(currentStep),
+      is_onboarded: paymentAnalyticsData?.is_onboarded
     });
   };
 

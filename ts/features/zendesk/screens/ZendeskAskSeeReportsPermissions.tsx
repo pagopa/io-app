@@ -12,7 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { ComponentProps } from "react";
-import { FlatList, ListRenderItemInfo } from "react-native";
+import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 import { zendeskPrivacyUrl } from "../../../config";
@@ -122,8 +122,8 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
       }}
       testID={"ZendeskAskPermissions"}
       description={I18n.t("support.askPermissions.listBody")}
+      ignoreSafeAreaMargin={Platform.OS === "ios" ? true : false}
       actions={buttonConf}
-      ignoreSafeAreaMargin={true}
     >
       <ContentWrapper>
         <IOButton

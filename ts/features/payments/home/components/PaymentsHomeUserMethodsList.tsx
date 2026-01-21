@@ -78,7 +78,8 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
     () => {
       analytics.trackPaymentWalletMethodDetail({
         payment_method_selected,
-        payment_method_status: isExpired ? "invalid" : "valid"
+        payment_method_status: isExpired ? "invalid" : "valid",
+        source: "payments"
       });
 
       navigation.navigate(

@@ -20,12 +20,6 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { identificationRequest } from "../../../identification/store/actions";
-import {
-  trackCredentialPreview,
-  trackItwExit,
-  trackItwRequestSuccess,
-  trackSaveCredentialToWallet
-} from "../../analytics";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { isItwCredential } from "../../common/utils/itwCredentialUtils";
@@ -36,6 +30,12 @@ import {
   selectEidOption,
   selectIdentification
 } from "../../machine/eid/selectors";
+import {
+  trackCredentialPreview,
+  trackItwExit,
+  trackItwRequestSuccess,
+  trackSaveCredentialToWallet
+} from "../analytics";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 
 export const ItwIssuanceEidPreviewScreen = () => {
@@ -118,7 +118,10 @@ const ContentView = ({ eid }: ContentViewProps) => {
           onCancel: () => undefined
         },
         {
-          onSuccess: () => machineRef.send({ type: "add-to-wallet" })
+          onSuccess: () =>
+            machineRef.send({
+              type: "add-to-wallet"
+            })
         }
       )
     );
@@ -168,8 +171,19 @@ const ContentView = ({ eid }: ContentViewProps) => {
       <ContentWrapper style={{ flexGrow: 1 }}>
         <VStack space={24}>
           <HStack space={8} style={{ alignItems: "center" }}>
-            <Icon name="legalValue" color={theme["interactiveElem-default"]} />
-            <H2>{I18n.t("features.itWallet.issuance.eidPreview.title")}</H2>
+            {!isL3 && (
+              <Icon
+                name="legalValue"
+                color={theme["interactiveElem-default"]}
+              />
+            )}
+            <H2>
+              {I18n.t(
+                `features.itWallet.issuance.eidPreview.${
+                  isL3 ? "titleL3" : "title"
+                }`
+              )}
+            </H2>
           </HStack>
           <IOMarkdown
             content={I18n.t(
