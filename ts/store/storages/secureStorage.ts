@@ -1,16 +1,40 @@
-import SecureStorage from "@pagopa/io-react-native-secure-storage";
+import SecureStorage, {
+  SecureStorageError
+} from "@pagopa/io-react-native-secure-storage";
 import { type Storage } from "redux-persist";
 import * as Sentry from "@sentry/react-native";
 
-export const isValueNotFoundError = (e: unknown): boolean => {
-  if (!e || typeof e !== "object") {
-    return false;
-  }
-  const error = e as { message?: unknown };
-  return (
-    typeof error.message === "string" && error.message === "VALUE_NOT_FOUND"
+type SentryContext =
+  | "SECURE_STORAGE_GET_ITEM_FAILURE"
+  | "SECURE_STORAGE_SET_ITEM_FAILURE"
+  | "SECURE_STORAGE_REMOVE_ITEM_FAILURE";
+
+const trackExceptionOnSentry = (
+  context: SentryContext,
+  error: unknown,
+  key: string
+) => {
+  Sentry.captureException(error, {
+    tags: {
+      isRequired: true
+    }
+  });
+  Sentry.captureMessage(
+    `${context}: SecureStorage threw an exception on ${key} key`
   );
 };
+
+const isSecureStorageError = (e: unknown): e is SecureStorageError => {
+  const error = e as { message?: unknown };
+  return (
+    error !== null &&
+    typeof error === "object" &&
+    typeof error.message === "string"
+  );
+};
+
+export const isValueNotFoundError = (e: unknown): boolean =>
+  isSecureStorageError(e) && e.message === "VALUE_NOT_FOUND";
 
 export default function createSecureStorage(): Storage {
   return {
@@ -21,14 +45,7 @@ export default function createSecureStorage(): Storage {
         if (!isValueNotFoundError(e)) {
           // VALUE_NOT_FOUND it's a normal case when we try to get a value that is not set
           // We should send to Sentry only unwanted exceptions
-          Sentry.captureException(e, {
-            tags: {
-              isRequired: true
-            }
-          });
-          Sentry.captureMessage(
-            `createSecureStorage.getItem: SecureStorage.get threw an exception on ${key} key`
-          );
+          trackExceptionOnSentry("SECURE_STORAGE_GET_ITEM_FAILURE", e, key);
         }
         return undefined;
       }
@@ -38,14 +55,7 @@ export default function createSecureStorage(): Storage {
       try {
         await SecureStorage.put(key, value);
       } catch (e) {
-        Sentry.captureException(e, {
-          tags: {
-            isRequired: true
-          }
-        });
-        Sentry.captureMessage(
-          `createSecureStorage.setItem: SecureStorage.put threw an exception on ${key} key`
-        );
+        trackExceptionOnSentry("SECURE_STORAGE_SET_ITEM_FAILURE", e, key);
       }
     },
 
@@ -53,14 +63,7 @@ export default function createSecureStorage(): Storage {
       try {
         await SecureStorage.remove(key);
       } catch (e) {
-        Sentry.captureException(e, {
-          tags: {
-            isRequired: true
-          }
-        });
-        Sentry.captureMessage(
-          `createSecureStorage.removeItem: SecureStorage.remove threw an exception on ${key} key`
-        );
+        trackExceptionOnSentry("SECURE_STORAGE_REMOVE_ITEM_FAILURE", e, key);
       }
     }
   };
