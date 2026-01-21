@@ -13,9 +13,9 @@ import {
 import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/selectors";
 import {
   itwIsDiscoveryBannerHiddenSelector,
-  itwIsL3EnabledSelector,
   itwIsWalletUpgradeMDLDetailsBannerHiddenSelector
-} from "./preferences";
+} from "./banners";
+import { itwIsL3EnabledSelector } from "./preferences";
 import { isItwEnabledSelector } from "./remoteConfig";
 
 /**

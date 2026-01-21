@@ -15,6 +15,7 @@ import {
   paymentsStartOnboardingAction
 } from "../store/actions";
 import { selectPaymentOnboardingRequestResult } from "../store/selectors";
+import { storePaymentIsOnboardedAction } from "../../history/store/actions";
 import {
   WalletOnboardingOutcome,
   WalletOnboardingOutcomeEnum
@@ -88,8 +89,12 @@ export const useWalletOnboardingWebView = ({
         )
       );
 
+      const is_onboarded = !!url.query.transactionId;
+
+      dispatch(storePaymentIsOnboardedAction(is_onboarded));
+
       analytics.trackPaymentOnboardingContextualCard({
-        is_onboarded: !!url.query.transactionId
+        is_onboarded
       });
 
       onOnboardingOutcome({
@@ -99,7 +104,7 @@ export const useWalletOnboardingWebView = ({
         transactionId: url.query.transactionId
       });
     },
-    [onOnboardingOutcome]
+    [onOnboardingOutcome, dispatch]
   );
 
   const openBrowserSessionOnboarding = useCallback(

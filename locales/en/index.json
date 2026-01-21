@@ -4317,7 +4317,7 @@
     "wallet": {
       "home": {
         "toast": {
-          "newMethod": "Elemento aggiunto!"
+          "newMethod": "Metodo aggiunto!"
         },
         "paymentsBanner": {
           "title": "Vuoi pagare un avviso?",
@@ -4618,7 +4618,7 @@
         },
         "ipzsPrivacy": {
           "title": "I tuoi Documenti su IO sono al sicuro",
-          "titleL3": "I tuoi Documenti sono al sicuro",
+          "titleL3": "IT-Wallet: Informativa Privacy e Termini e Condizioni d’uso",
           "warning": "Premendo **Continua** dichiari di aver letto e compreso l’**Informativa Privacy**.",
           "button": {
             "label": "Continua"
