@@ -103,7 +103,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-android:
-    needs: run-static-checks
+    needs: bump-app-version
     environment: prod
     runs-on: ubuntu-latest
     steps:
