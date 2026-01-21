@@ -816,6 +816,21 @@ export const sendAARDelegateUrlSelector = (state: GlobalState) =>
     O.getOrElse(() => fallbackSendAARDelegateUrl)
   );
 
+export const sendAarInAppDelegationUrlSelector = (state: GlobalState) => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isSome(remoteConfigOption)) {
+    const inAppDelegationUrlOrUndefined =
+      remoteConfigOption.value.pn?.aar?.in_app_delegation?.helpCenter_url;
+    if (
+      inAppDelegationUrlOrUndefined != null &&
+      inAppDelegationUrlOrUndefined.trim().length > 0
+    ) {
+      return inAppDelegationUrlOrUndefined;
+    }
+  }
+  return fallbackSendAARDelegateUrl;
+};
+
 export const sendShowAbstractSelector = (state: GlobalState) => {
   const remoteConfigOption = remoteConfigSelector(state);
   if (O.isSome(remoteConfigOption)) {

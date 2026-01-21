@@ -3,11 +3,15 @@ import i18n from "i18next";
 import { useEffect } from "react";
 import { IOScrollViewCentredContent } from "../../../../../components/ui/IOScrollViewCentredContent";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { openWebUrl } from "../../../../../utils/url";
 import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
+import { useIOSelector } from "../../../../../store/hooks";
+import { sendAarInAppDelegationUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 
 export const SendAarNfcNotSupportedComponent = () => {
   const { terminateFlow } = useSendAarFlowManager();
   const { setOptions } = useIONavigation();
+  const helpCenterUrl = useIOSelector(sendAarInAppDelegationUrlSelector);
 
   useEffect(() => {
     setOptions({ headerShown: true });
@@ -29,7 +33,8 @@ export const SendAarNfcNotSupportedComponent = () => {
         type: "SingleButton",
         primary: {
           icon: "instruction",
-          onPress: () => undefined,
+          testID: "help-center-cta",
+          onPress: () => openWebUrl(helpCenterUrl),
           label: i18n.t("features.pn.aar.flow.delegated.nfcNotSupported.cta")
         }
       }}
