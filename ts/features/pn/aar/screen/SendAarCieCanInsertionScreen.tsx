@@ -16,6 +16,7 @@ import { PnParamsList } from "../../navigation/params";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import PN_ROUTES from "../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
 
 export const CIE_CAN_LENGTH = 6;
 
@@ -97,6 +98,11 @@ export const SendAarCieCanInsertionScreen = ({
       );
     }
   }, [currentAarState, dispatch]);
+
+  useHardwareBackButtonWhenFocused(() => {
+    handleGoBack();
+    return true;
+  });
 
   return (
     <SafeAreaView style={{ flex: 1 }} edges={["bottom"]}>

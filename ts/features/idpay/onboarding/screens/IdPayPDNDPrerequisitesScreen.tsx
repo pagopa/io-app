@@ -65,8 +65,7 @@ const IdPayPDNDPrerequisitesScreen = () => {
 
   useOnFirstRender(() =>
     trackIDPayOnboardingPDNDAcceptance({
-      initiativeId,
-      initiativeName
+      initiativeId
     })
   );
 
