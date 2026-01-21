@@ -147,6 +147,11 @@ jobs:
         with:
           name: api-client
           path: definitions/
+      - id: setup-java
+        uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e # v5.1.0
+        with:
+          distribution: 'temurin'
+          java-version: '17'
       - id: setup-ruby
         uses: ruby/setup-ruby@a4effe49ee8ee5b8b5091268c473a4628afb5651 #v1.245.0
         with:
