@@ -19,7 +19,7 @@
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
-    <string>3.22.0</string>
+    <string>3.23.0</string>
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleURLTypes</key>
@@ -38,7 +38,7 @@
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>15</string>
+    <string>0</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
     <key>LSApplicationQueriesSchemes</key>
@@ -99,7 +99,7 @@
     <key>NSSpeechRecognitionUsageDescription</key>
     <string>The app needs NSSpeechRecognitionUsageDescription permission</string>
     <key>RCTNewArchEnabled</key>
-    <false/>
+    <true/>
     <key>UIAppFonts</key>
     <array>
       <string>TitilliumSansPro-Black.otf</string>

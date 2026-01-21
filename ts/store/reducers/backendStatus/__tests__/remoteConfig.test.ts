@@ -20,6 +20,7 @@ import {
   pnMessagingServiceIdSelector,
   pnPrivacyUrlsSelector,
   sendAARDelegateUrlSelector,
+  sendAarInAppDelegationUrlSelector,
   sendCustomServiceCenterUrlSelector,
   sendEstimateTimelinesUrlSelector,
   sendShowAbstractSelector,
@@ -959,6 +960,58 @@ describe("sendAARDelegateUrlSelector", () => {
       expect(output).toEqual(result);
     });
   }
+});
+describe("sendAarInAppDelegationUrlSelector", () => {
+  const fallbackUrl =
+    "https://assistenza.notifichedigitali.it/hc/it/articles/32453819931537-Delegare-qualcuno-a-visualizzare-le-tue-notifiche";
+  const cdnUrl = "https://custom.url/toCheck";
+  it.each([
+    {
+      title: "remoteConfig is none",
+      state: { remoteConfig: O.none },
+      expected: fallbackUrl
+    },
+    {
+      title: "remoteConfig is an empty object",
+      state: {
+        remoteConfig: O.some({
+          pn: {}
+        })
+      },
+      expected: fallbackUrl
+    },
+    {
+      title: "in_app_delegation is an empty object",
+      state: {
+        remoteConfig: O.some({
+          pn: {
+            aar: {
+              in_app_delegation: {}
+            }
+          }
+        })
+      },
+      expected: fallbackUrl
+    },
+    {
+      title: "helpCenter_url is defined",
+      state: {
+        remoteConfig: O.some({
+          pn: {
+            aar: {
+              in_app_delegation: {
+                helpCenter_url: cdnUrl
+              }
+            }
+          }
+        })
+      },
+      expected: cdnUrl
+    }
+  ])(`should return the correct url when $title`, ({ state, expected }) => {
+    const output = sendAarInAppDelegationUrlSelector(state as GlobalState);
+    expect(output).toBe(expected);
+  });
 });
 
 describe("sendShowAbstractSelector", () => {

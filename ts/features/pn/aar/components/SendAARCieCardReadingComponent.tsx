@@ -19,7 +19,7 @@ import {
 } from "../hooks/useCieInternalAuthAndMrtdReading";
 import { setAarFlowState } from "../store/actions";
 import { RecipientInfo, sendAARFlowStates } from "../utils/stateUtils";
-import { sendAarErrorBottomSheetComponent } from "./errors/SendAARErrorComponent";
+import { sendAarErrorSupportBottomSheetComponent } from "./errors/SendAARErrorComponent";
 
 type ScreenContentProps = Omit<CieCardReadContentProps, "progress">;
 
@@ -52,7 +52,7 @@ export const SendAARCieCardReadingComponent = ({
     dismiss();
   };
   const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
-    component: sendAarErrorBottomSheetComponent(
+    component: sendAarErrorSupportBottomSheetComponent(
       handleBottomSheetHelpCta,
       errorName
     ),
@@ -74,11 +74,12 @@ export const SendAARCieCardReadingComponent = ({
           mandateId,
           mrtdData: data.mrtd_data,
           nisData,
+          unsignedVerificationCode: verificationCode,
           signedVerificationCode: signedChallenge
         })
       );
     }
-  }, [data, iun, recipientInfo, mandateId, dispatch]);
+  }, [data, iun, recipientInfo, mandateId, dispatch, verificationCode]);
 
   useEffect(() => {
     handleStartReading();

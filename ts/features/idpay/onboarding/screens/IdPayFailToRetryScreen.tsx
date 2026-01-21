@@ -40,11 +40,6 @@ export const IdPayFailToRetryScreen = () => {
   const machine = useActorRef();
 
   const initiative = useSelector(state => state.context.initiative);
-  const initiativeName = pipe(
-    initiative,
-    O.map(i => i.initiativeName),
-    O.toUndefined
-  );
 
   const initiativeId = pipe(
     initiative,
@@ -97,8 +92,7 @@ export const IdPayFailToRetryScreen = () => {
 
   useOnFirstRender(() =>
     trackIDPayIngressScreenLoading({
-      initiativeId,
-      initiativeName
+      initiativeId
     })
   );
 
@@ -139,20 +133,13 @@ const IngressScreenBlockingError = memo(() => {
     O.toUndefined
   );
 
-  const initiativeName = pipe(
-    initiative,
-    O.map(i => i.initiativeName),
-    O.toUndefined
-  );
-
   useEffect(() => {
     setAccessibilityFocus(operationRef);
   }, []);
 
   useOnFirstRender(() =>
     trackIDPayIngressScreenTimeout({
-      initiativeId,
-      initiativeName
+      initiativeId
     })
   );
 
@@ -166,8 +153,7 @@ const IngressScreenBlockingError = memo(() => {
 
   const handleNavigateToWebsite = () => {
     trackIDPayIngressScreenCTA({
-      initiativeId,
-      initiativeName
+      initiativeId
     });
 
     openWebUrl(websiteUrl, () => IOToast.error(I18n.t("genericError")));
