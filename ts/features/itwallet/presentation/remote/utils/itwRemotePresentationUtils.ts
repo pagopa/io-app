@@ -4,11 +4,11 @@ import {
   WellKnownClaim,
   parseClaims
 } from "../../../common/utils/itwClaimsUtils";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils";
 import { validCredentialStatuses } from "../../../common/utils/itwCredentialUtils";
 import { isDefined } from "../../../../../utils/guards";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import {
   EnrichedPresentationDetails,
   ItwRemoteQrRawPayload,
@@ -69,7 +69,7 @@ export const validateItwPresentationQrCodeParams = (
  */
 export const enrichPresentationDetails = (
   presentationDetails: PresentationDetails,
-  credentialsByType: Record<string, StoredCredential | undefined>
+  credentialsByType: Record<string, CredentialMetadata | undefined>
 ): EnrichedPresentationDetails =>
   presentationDetails.map(details => {
     const credentialType = getCredentialTypeByVct(details.vct);
@@ -139,7 +139,7 @@ export const groupCredentialsByPurpose = (
  */
 export const getInvalidCredentials = (
   presentationDetails: PresentationDetails,
-  credentialsByType: Record<string, StoredCredential | undefined>
+  credentialsByType: Record<string, CredentialMetadata | undefined>
 ) =>
   presentationDetails
     // Retries the type from the VCT map

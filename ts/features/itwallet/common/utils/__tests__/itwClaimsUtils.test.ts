@@ -14,7 +14,7 @@ import {
   SimpleDateClaim,
   SimpleListClaim
 } from "../itwClaimsUtils";
-import { StoredCredential } from "../itwTypesUtils";
+import { CredentialMetadata } from "../itwTypesUtils";
 import { ItwStoredCredentialsMocks } from "../itwMocksUtils";
 
 describe("getCredentialExpireDate", () => {
@@ -150,7 +150,7 @@ describe("getFiscalCodeFromCredential", () => {
   });
 
   it("should return empty string when no tax code is found in the credential", () => {
-    const mockCredential: StoredCredential = {
+    const mockCredential: CredentialMetadata = {
       ...ItwStoredCredentialsMocks.eid,
       parsedCredential: {
         family_name: {
@@ -163,7 +163,7 @@ describe("getFiscalCodeFromCredential", () => {
   });
 
   it("should return empty string when the tax code uses an unexpected format", () => {
-    const mockCredential: StoredCredential = {
+    const mockCredential: CredentialMetadata = {
       ...ItwStoredCredentialsMocks.eid,
       parsedCredential: {
         tax_id_code: {
@@ -176,7 +176,7 @@ describe("getFiscalCodeFromCredential", () => {
   });
 
   it("should return the tax code when the credential is valid", () => {
-    const mockCredential: StoredCredential = {
+    const mockCredential: CredentialMetadata = {
       ...ItwStoredCredentialsMocks.eid,
       parsedCredential: {
         tax_id_code: {

@@ -1,5 +1,5 @@
 import {
-  StoredCredential,
+  CredentialMetadata,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import { TrustmarkFailure } from "./failure";
@@ -16,7 +16,7 @@ export type Context = {
   /**
    * The credential to get the trustmark for
    */
-  credential?: StoredCredential;
+  credential?: CredentialMetadata;
   /**
    * The expiration date of the trustmark
    */
