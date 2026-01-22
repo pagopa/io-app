@@ -188,6 +188,7 @@ const CiePinMethodModule = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
   const mode = ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
+  const isL3 = level === "l3";
 
   const handleOnPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "ciePin" });
@@ -195,7 +196,8 @@ const CiePinMethodModule = () => {
 
   const ciePinBottomSheet = useContinueWithBottomSheet({
     type: "ciePin",
-    onPrimaryAction: handleOnPress
+    onPrimaryAction: handleOnPress,
+    isL3
   });
 
   const badgeProps: Badge | undefined = useMemo(() => {
@@ -220,17 +222,15 @@ const CiePinMethodModule = () => {
         testID="CiePinMethodModuleTestID"
         icon="cieCard"
         onPress={() => {
-          if (level === "l3") {
-            ciePinBottomSheet.present({
-              skipTracking: false
-            });
+          if (isL3) {
+            ciePinBottomSheet.present();
           } else {
             handleOnPress();
           }
         }}
         badge={badgeProps}
       />
-      {level === "l3" && ciePinBottomSheet.bottomSheet}
+      {isL3 && ciePinBottomSheet.bottomSheet}
     </>
   );
 };
@@ -238,6 +238,7 @@ const CiePinMethodModule = () => {
 const SpidMethodModule = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
+  const isL3 = level === "l3";
 
   const handleOnPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "spid" });
@@ -245,11 +246,12 @@ const SpidMethodModule = () => {
 
   const spidBottomSheet = useContinueWithBottomSheet({
     type: "spid",
-    onPrimaryAction: handleOnPress
+    onPrimaryAction: handleOnPress,
+    isL3
   });
 
   const { title, subtitle } = useMemo(() => {
-    if (level === "l3") {
+    if (isL3) {
       return {
         title: I18n.t(`${i18nNs}.mode.spid.title.l3`),
         subtitle: I18n.t(`${i18nNs}.mode.spid.subtitle.l3`)
@@ -260,7 +262,7 @@ const SpidMethodModule = () => {
       title: I18n.t(`${i18nNs}.mode.spid.title.default`),
       subtitle: I18n.t(`${i18nNs}.mode.spid.subtitle.default`)
     };
-  }, [level]);
+  }, [isL3]);
 
   return (
     <>
@@ -270,16 +272,14 @@ const SpidMethodModule = () => {
         testID="SpidMethodModuleTestID"
         icon="spid"
         onPress={() => {
-          if (level === "l3") {
-            spidBottomSheet.present({
-              skipTracking: false
-            });
+          if (isL3) {
+            spidBottomSheet.present();
           } else {
             handleOnPress();
           }
         }}
       />
-      {level === "l3" && spidBottomSheet.bottomSheet}
+      {isL3 && spidBottomSheet.bottomSheet}
     </>
   );
 };
@@ -287,6 +287,7 @@ const SpidMethodModule = () => {
 const CieIdMethodModule = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
+  const isL3 = level === "l3";
 
   const handleOnPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "cieId" });
@@ -294,11 +295,12 @@ const CieIdMethodModule = () => {
 
   const cieIdBottomSheet = useContinueWithBottomSheet({
     type: "cieId",
-    onPrimaryAction: handleOnPress
+    onPrimaryAction: handleOnPress,
+    isL3
   });
 
   const { title, subtitle } = useMemo(() => {
-    if (level === "l3") {
+    if (isL3) {
       return {
         title: I18n.t(`${i18nNs}.mode.cieId.title`),
         subtitle: I18n.t(`${i18nNs}.mode.cieId.subtitle.l3`)
@@ -309,7 +311,7 @@ const CieIdMethodModule = () => {
       title: I18n.t(`${i18nNs}.mode.cieId.title`),
       subtitle: I18n.t(`${i18nNs}.mode.cieId.subtitle.default`)
     };
-  }, [level]);
+  }, [isL3]);
 
   return (
     <>
@@ -319,16 +321,14 @@ const CieIdMethodModule = () => {
         icon={"cie"}
         testID="CieIDMethodModuleTestID"
         onPress={() => {
-          if (level === "l3") {
-            cieIdBottomSheet.present({
-              skipTracking: false
-            });
+          if (isL3) {
+            cieIdBottomSheet.present();
           } else {
             handleOnPress();
           }
         }}
       />
-      {level === "l3" && cieIdBottomSheet.bottomSheet}
+      {isL3 && cieIdBottomSheet.bottomSheet}
     </>
   );
 };
