@@ -162,3 +162,13 @@ export type TrackQualtricsSurvey = {
   survey_id: QualtricsSurveyId;
   survey_page: string;
 };
+
+export type ItwCredentialDetails = {
+  [K in MixPanelCredential]?: ItwCredentialMixpanelStatus;
+};
+
+export type TrackSaveCredentialSuccess = {
+  credential: MixPanelCredential;
+  credential_details: ItwCredentialDetails;
+  ITW_ID_method?: ItwIdMethod;
+};
