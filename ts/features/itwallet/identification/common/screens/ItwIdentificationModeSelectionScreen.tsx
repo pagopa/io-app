@@ -137,6 +137,7 @@ export const ItwIdentificationModeSelectionScreen = ({
   }, [mode, machineRef, routeName]);
 
   const dismissalDialog = useItwDismissalDialog({
+    enabled: eidReissuing,
     customLabels: {
       body: ""
     },
