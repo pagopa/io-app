@@ -12,10 +12,7 @@ import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
-import {
-  IOStackNavigationRouteProps,
-  useIONavigation
-} from "../../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
 import {
   trackItWalletIDMethod,
@@ -52,7 +49,6 @@ export const ItwIdentificationModeSelectionScreen = ({
 }: ItwIdentificationModeSelectionScreenProps) => {
   const { name: routeName, params } = route;
   const { eidReissuing } = params;
-  const navigation = useIONavigation();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
@@ -149,17 +145,6 @@ export const ItwIdentificationModeSelectionScreen = ({
     }
   });
 
-  const handleBack = useCallback(() => {
-    if (eidReissuing) {
-      dismissalDialog.show();
-    } else {
-      navigation.goBack();
-    }
-    return true;
-  }, [eidReissuing, dismissalDialog, navigation]);
-
-  useHardwareBackButton(handleBack);
-
   if (isLoading) {
     return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
   }
@@ -172,7 +157,7 @@ export const ItwIdentificationModeSelectionScreen = ({
       }}
       description={description}
       headerActionsProp={{ showHelp: true }}
-      goBack={handleBack}
+      goBack={eidReissuing ? dismissalDialog.show : undefined}
     >
       <ContentWrapper>
         <VSpacer size={8} />

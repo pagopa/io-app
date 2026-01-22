@@ -9,8 +9,6 @@ import {
 } from "../../../machine/eid/selectors";
 import { ItwCiePreparationScreenContent } from "../components/ItwCiePreparationScreenContent";
 import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
-import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
-import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 
 export const ItwCiePreparationNfcScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -36,20 +34,8 @@ export const ItwCiePreparationNfcScreen = () => {
     showSecondaryAction: isL3FeaturesEnabled
   });
 
-  const dismissalDialog = useItwDismissalDialog({
-    customLabels: {
-      body: ""
-    }
-  });
-
-  useHardwareBackButton(() => {
-    dismissalDialog.show();
-    return true;
-  });
-
   return (
     <ItwCiePreparationScreenContent
-      goBack={dismissalDialog.show}
       title={I18n.t(`features.itWallet.identification.cie.prepare.nfc.title`)}
       description={I18n.t(
         `features.itWallet.identification.cie.prepare.nfc.description`

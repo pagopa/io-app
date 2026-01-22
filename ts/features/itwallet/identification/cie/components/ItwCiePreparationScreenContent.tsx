@@ -9,14 +9,12 @@ import {
 } from "react-native";
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
-import { BackProps } from "../../../../../hooks/useHeaderProps";
 
 type Props = {
   title: string;
   description: string;
   imageSrc: ImageSourcePropType;
   actions?: IOScrollViewActions;
-  goBack?: BackProps["goBack"];
 };
 
 export const ItwCiePreparationScreenContent = ({
@@ -24,15 +22,13 @@ export const ItwCiePreparationScreenContent = ({
   description,
   imageSrc,
   actions,
-  children,
-  goBack
+  children
 }: PropsWithChildren<Props>) => (
   <IOScrollViewWithLargeHeader
     title={{ label: title }}
     description={description}
     headerActionsProp={{ showHelp: true }}
     actions={actions}
-    goBack={goBack}
   >
     <ContentWrapper>
       <VStack space={16}>
