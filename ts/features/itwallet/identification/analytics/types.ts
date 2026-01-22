@@ -49,6 +49,11 @@ export type TrackItWalletCieCardReadingUnexpectedFailure = {
   ITW_ID_method?: ItwIdMethod;
 };
 
+export type TrackIdMethodBottomsheetProperties = {
+  itw_flow: ItwFlow;
+  ITW_ID_method?: ItwIdMethod;
+};
+
 export enum CieCardReadingFailureReason {
   KO = "KO",
   ON_TAG_DISCOVERED_NOT_CIE = "ON_TAG_DISCOVERED_NOT_CIE",

@@ -97,7 +97,6 @@ exports[`ItwHighlightBanner should match the snapshot for large variant 1`] = `
                     "MakeVertices": [MockFunction],
                   },
                   "__typename__": "Point",
-                  "dispose": [Function],
                   "ref": Float32Array [
                     0,
                     0,
@@ -131,7 +130,6 @@ exports[`ItwHighlightBanner should match the snapshot for large variant 1`] = `
                     "MakeVertices": [MockFunction],
                   },
                   "__typename__": "Point",
-                  "dispose": [Function],
                   "ref": Float32Array [
                     0,
                     0,
@@ -181,7 +179,6 @@ exports[`ItwHighlightBanner should match the snapshot for large variant 1`] = `
                     "MakeVertices": [MockFunction],
                   },
                   "__typename__": "Point",
-                  "dispose": [Function],
                   "ref": Float32Array [
                     0,
                     0,
@@ -215,7 +212,6 @@ exports[`ItwHighlightBanner should match the snapshot for large variant 1`] = `
                     "MakeVertices": [MockFunction],
                   },
                   "__typename__": "Point",
-                  "dispose": [Function],
                   "ref": Float32Array [
                     0,
                     0,
@@ -642,7 +638,6 @@ exports[`ItwHighlightBanner should match the snapshot for small variant 1`] = `
                       "MakeVertices": [MockFunction],
                     },
                     "__typename__": "Point",
-                    "dispose": [Function],
                     "ref": Float32Array [
                       0,
                       0,
@@ -676,7 +671,6 @@ exports[`ItwHighlightBanner should match the snapshot for small variant 1`] = `
                       "MakeVertices": [MockFunction],
                     },
                     "__typename__": "Point",
-                    "dispose": [Function],
                     "ref": Float32Array [
                       0,
                       0,
@@ -726,7 +720,6 @@ exports[`ItwHighlightBanner should match the snapshot for small variant 1`] = `
                       "MakeVertices": [MockFunction],
                     },
                     "__typename__": "Point",
-                    "dispose": [Function],
                     "ref": Float32Array [
                       0,
                       0,
@@ -760,7 +753,6 @@ exports[`ItwHighlightBanner should match the snapshot for small variant 1`] = `
                       "MakeVertices": [MockFunction],
                     },
                     "__typename__": "Point",
-                    "dispose": [Function],
                     "ref": Float32Array [
                       0,
                       0,
