@@ -4,9 +4,9 @@ import { PropsWithChildren, useState } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIOSelector } from "../../../../store/hooks";
 import {
-  trackItwOfflineAccessExpiring,
-  trackItwOfflineAccessExpired
-} from "../../analytics";
+  trackItwOfflineAccessExpired,
+  trackItwOfflineAccessExpiring
+} from "../analytics";
 import {
   itwIsOfflineAccessLimitReached,
   itwShouldDisplayOfflineAccessLimitWarning

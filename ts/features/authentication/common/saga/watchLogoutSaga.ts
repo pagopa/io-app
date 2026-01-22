@@ -22,6 +22,7 @@ import {
   trackUndefinedBearerToken,
   UndefinedBearerTokenPhase
 } from "../../../messages/analytics";
+import { setMainNavigatorReady } from "../../../../navigation/NavigationService";
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export function* logoutSaga({ payload }: ActionType<typeof logoutRequest>) {
@@ -85,6 +86,7 @@ export function* logoutSaga({ payload }: ActionType<typeof logoutRequest>) {
     // within the componentDidMount of IngressScreen
     yield* put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
     yield* put(startApplicationInitialization());
+    setMainNavigatorReady(false);
   }
 }
 

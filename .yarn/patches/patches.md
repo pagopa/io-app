@@ -89,3 +89,11 @@ Created on **24/11/2025**
 #### Reason:
 
 - Patch to make the library ready for react-native new architecture
+
+### react-native-npm-0.81.5-d8232ef145.patch
+
+Created on **15/01/2026**
+
+#### Reason:
+
+- Patch to fix RefreshControl issues on Fabric enablement

@@ -4,7 +4,6 @@ import { buildEventProperties } from "../../../../utils/analytics";
 import { OnboardingFailureEnum } from "../types/OnboardingFailure";
 
 type DefaultOnboardingEventProperties = {
-  initiativeName?: string;
   initiativeId?: string;
 };
 

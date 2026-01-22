@@ -10,7 +10,7 @@ import {
   trackItWalletBannerTap
 } from "../../../analytics";
 import { ITW_SCREENVIEW_EVENTS } from "../../../analytics/enum";
-import { itwSetWalletUpgradeMDLDetailsBannerHidden } from "../../../common/store/actions/preferences";
+import { itwCloseBanner } from "../../../common/store/actions/banners";
 import { ITW_ROUTES } from "../../../navigation/routes";
 
 /**
@@ -50,7 +50,7 @@ export const ItwPresentationWalletUpgradeMDLDetailsBanner = () => {
 
   const handleOnClose = () => {
     trackItWalletBannerClosure(trackBannerProperties);
-    dispatch(itwSetWalletUpgradeMDLDetailsBannerHidden(true));
+    dispatch(itwCloseBanner("upgradeMDLDetails"));
   };
 
   return (

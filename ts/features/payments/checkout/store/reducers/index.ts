@@ -38,7 +38,8 @@ import {
   paymentStartWebViewFlow,
   selectPaymentMethodAction,
   selectPaymentPspAction,
-  walletPaymentSetCurrentStep
+  walletPaymentSetCurrentStep,
+  paymentClearWebViewFlow
 } from "../actions/orchestration";
 import {
   contextualOnboardingStartWebViewFlow,
@@ -381,6 +382,16 @@ const reducer = (
       return {
         ...state,
         webViewPayload: action.payload
+      };
+
+    case getType(paymentClearWebViewFlow):
+      return {
+        ...state,
+        webViewPayload: undefined,
+        contextualPayment: {
+          ...state.contextualPayment,
+          webViewPayload: undefined
+        }
       };
 
     // Contextual onboarding Webview on Android
