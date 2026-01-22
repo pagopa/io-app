@@ -29,6 +29,7 @@ import {
   storeNewPaymentAttemptAction,
   storePaymentOutcomeToHistory,
   storePaymentsBrowserTypeAction,
+  storePaymentIsOnboardedAction,
   removeExpiredPaymentsOngoingFailedAction
 } from "../actions";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
@@ -303,6 +304,14 @@ const reducer = (
         analyticsData: {
           ...state.analyticsData,
           browserType: action.payload
+        }
+      };
+    case getType(storePaymentIsOnboardedAction):
+      return {
+        ...state,
+        analyticsData: {
+          ...state.analyticsData,
+          is_onboarded: action.payload
         }
       };
     case getType(removeExpiredPaymentsOngoingFailedAction):

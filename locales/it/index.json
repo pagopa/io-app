@@ -1601,10 +1601,13 @@
         "cta": "Scopri di più"
       },
       "error": {
-        "title": "Si è verificato un errore",
-        "subtitle": "Riprova o contatta l'assistenza",
-        "primaryButton": "Chiudi",
+        "title": "Questo metodo di pagamento non è disponibile",
+        "subtitle": "Chiudi l’app e riaprila per aggiornare il portafoglio",
+        "primaryButton": "Indietro",
         "secondaryButton": "Riprova"
+      },
+      "update": {
+        "primaryButton": "Aggiorna i dati"
       }
     },
     "wallet": "Portafoglio",
@@ -3032,7 +3035,8 @@
       },
       "metadata": {
         "a11y": {
-          "website": "Visita il sito dell'ente"
+          "website": "Visita il sito dell'ente",
+          "copyToClipboard": "Copia negli appunti"
         },
         "title": "Contatti ed informazioni",
         "website": "Visita il sito",
@@ -3042,7 +3046,6 @@
         "email": "Invia un'email",
         "pec": "Invia una PEC",
         "fiscalCode": "Codice fiscale ente",
-        "fiscalCodeAccessibilityHint": "Copia negli appunti",
         "address": "Indirizzo",
         "serviceId": "ID servizio"
       },
@@ -3951,6 +3954,26 @@
                 "additionalDataTitle": "Dati aggiuntivi",
                 "errorCode": "Codice errore"
               }
+            },
+            "cieValidation": {
+              "expired": {
+                "title": "La CIE risulta scaduta",
+                "body": "Consulta le altre modalità per accedere a questa notifica SEND.",
+                "actions": {
+                  "primary": "Cosa posso fare?"
+                }
+              },
+              "unrelated": {
+                "title": "La CIE non corrisponde alla persona destinataria",
+                "body": "Per consultare una notifica SEND per conto di un’altra persona devi utilizzare la sua Carta di Identità Elettronica."
+              },
+              "generic": {
+                "title": "Non siamo riusciti a verificare i dati dalla carta",
+                "body": "Attendi qualche minuto e riprova.",
+                "actions": {
+                  "secondary": "Mostra dettagli"
+                }
+              }
             }
           },
           "displayingNotificationData": {
@@ -4417,7 +4440,7 @@
           "cta": "Aggiungi un documento"
         },
         "toast": {
-          "newMethod": "Elemento aggiunto!"
+          "newMethod": "Metodo aggiunto!"
         },
         "paymentsBanner": {
           "title": "Vuoi pagare un avviso?",
@@ -4800,7 +4823,7 @@
         },
         "ipzsPrivacy": {
           "title": "I tuoi Documenti su IO sono al sicuro",
-          "titleL3": "I tuoi Documenti sono al sicuro",
+          "titleL3": "IT-Wallet: Informativa Privacy e Termini e Condizioni d’uso",
           "warning": "Premendo **Continua** dichiari di aver letto e compreso l’**Informativa Privacy**.",
           "button": {
             "label": "Continua"
@@ -4845,13 +4868,25 @@
             "ciePin": {
               "title": "Continua con CIE + PIN",
               "subtitle": "Ha una durata di 12 mesi",
-              "badge": "scelta consigliata"
+              "badge": "consigliato",
+              "bottomSheet": {
+                "title": "Continua con CIE + PIN",
+                "subtitle": "Hai bisogno di:",
+                "entry-1": "La tua Carta di Identità Elettronica (CIE)",
+                "entry-2": "Il PIN a 8 cifre della CIE"
+              }
             },
             "cieId": {
               "title": "Continua con l’app CieID",
               "subtitle": {
                 "default": "Dovrai usare credenziali e app CieID",
                 "l3": "Ha una durata di 12 mesi"
+              },
+              "bottomSheet": {
+                "title": "Continua con l’app CieID",
+                "subtitle": "Hai bisogno di:",
+                "entry-1": "La tua Carta di Identità Elettronica (CIE)",
+                "entry-2": "L’app CieID certificata sul tuo dispositivo"
               }
             },
             "spid": {
@@ -4862,6 +4897,13 @@
               "subtitle": {
                 "default": "Dovrai usare credenziali e app (o SMS)",
                 "l3": "Ha una durata di 90 giorni"
+              },
+              "bottomSheet": {
+                "title": "Continua con SPID + CIE",
+                "subtitle": "Hai bisogno di:",
+                "entry-1": "Un’identità SPID",
+                "entry-2": "La tua Carta di Identità Elettronica (CIE)",
+                "warning": "Se scegli questo metodo dovrai ripetere il passaggio di sicurezza ogni 90 giorni."
               }
             }
           }
@@ -4973,7 +5015,14 @@
               "title": "PIN della CIE",
               "content": "Il PIN della CIE è un codice di 8 cifre che ti è stato comunicato in due momenti:\n * le prime 4 cifre le hai ricevute al momento della richiesta della CIE\n * le ultime 4 cifre le hai ricevute insieme alla CIE.",
               "primaryAction": "Ho capito",
-              "secondaryAction": "Non trovo il PIN della CIE"
+              "secondaryAction": "Non trovo il PIN della CIE",
+              "dialog": {
+                "title": "Usa SPID o CieID",
+                "body": "Se non trovi il PIN della CIE, puoi usare SPID o CieID per attivare IT-Wallet.",
+                "spidCieAction": "Continua con spid + CIE",
+                "cieIdAction": "Continua con app cieID",
+                "back": "Torna indietro"
+              }
             }
           },
           "failure": {
@@ -5016,6 +5065,11 @@
             "subtitle": "Autorizza l'accesso nell'app CieID per continuare oppure annulla la connessione",
             "cancel": "Annulla connessione"
           }
+        },
+        "updateCredential": {
+          "title": "I tuoi documenti saranno aggiornati",
+          "description": "Continuando, otterrai una versione digitale aggiornata dei tuoi documenti presenti nel Portafoglio di IO",
+          "button": "Continua"
         }
       },
       "issuance": {
@@ -5031,8 +5085,9 @@
         },
         "eidPreview": {
           "title": "Identità verificata",
+          "titleL3": "Ci siamo quasi!",
           "subtitle": "Stai attivando **Documenti su IO** come:",
-          "subtitleL3": "Ci siamo quasi! Stai per ottenere **IT-Wallet** come:",
+          "subtitleL3": "Hai verificato la tua identità. \nIl tuo portafoglio IT-Wallet sarà associato a questi dati:",
           "actions": {
             "primary": "Continua",
             "secondary": "Annulla"

@@ -2,7 +2,7 @@ import { IOButton } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback } from "react";
-import { trackItwCiePinTutorialPin } from "../../../analytics";
+import { trackItwCiePinTutorialPin } from "../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { ItwCiePreparationScreenContent } from "../components/ItwCiePreparationScreenContent";

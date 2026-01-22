@@ -12,8 +12,7 @@ import {
   trackItwDeactivated,
   trackItwIdAuthenticationCompleted,
   trackItwIdVerifiedDocument,
-  trackSaveCredentialSuccess,
-  updateITWStatusAndPIDProperties
+  trackSaveCredentialSuccess
 } from "../../analytics";
 import {
   itwSetAuthLevel,
@@ -226,6 +225,12 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
+  navigateToUpgradeCredentialsScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ISSUANCE.UPGRADE_CREDENTIALS
+    });
+  },
+
   closeIssuance: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
@@ -323,12 +328,11 @@ export const createEidIssuanceActionsImplementation = (
     trackSaveCredentialSuccess(
       context.level === "l3" ? "ITW_PID" : "ITW_ID_V2"
     );
-    updateITWStatusAndPIDProperties(store.getState());
   },
 
   trackWalletInstanceRevocation: () => {
     const isItwL3 = itwLifecycleIsITWalletValidSelector(store.getState());
-    trackItwDeactivated(store.getState(), isItwL3 ? "ITW_PID" : "ITW_ID_V2");
+    trackItwDeactivated(isItwL3 ? "ITW_PID" : "ITW_ID_V2");
   },
 
   trackIdentificationMethodSelected: ({

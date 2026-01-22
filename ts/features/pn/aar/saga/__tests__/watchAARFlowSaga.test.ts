@@ -112,6 +112,7 @@ describe("watchAarFlowSaga", () => {
         iun: "123",
         mandateId: "mandate_id",
         signedVerificationCode: "signed_nonce",
+        unsignedVerificationCode: "nonce",
         mrtdData: {
           dg1: "",
           dg11: "",

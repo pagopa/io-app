@@ -1,11 +1,11 @@
+import I18n from "i18next";
 import { FunctionComponent } from "react";
 import { connect } from "react-redux";
-import I18n from "i18next";
 import { isError, isLoading } from "../../../../../../common/model/RemoteValue";
+import LoadingScreenContent from "../../../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../../../components/screens/OperationResultScreenContent";
 import { Dispatch } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import LoadingComponent from "../../../../../fci/components/LoadingComponent";
 import {
   cgnEycaActivation,
   cgnEycaActivationCancel
@@ -17,9 +17,9 @@ type Props = ReturnType<typeof mapStateToProps> &
 
 const EycaActivationLoading: FunctionComponent<Props> = (props: Props) =>
   props.isLoading ? (
-    <LoadingComponent
-      captionTitle={I18n.t("bonus.cgn.activation.eyca.loading.caption")}
-      captionSubtitle={I18n.t("bonus.cgn.activation.eyca.loading.subCaption")}
+    <LoadingScreenContent
+      title={I18n.t("bonus.cgn.activation.eyca.loading.caption")}
+      subtitle={I18n.t("bonus.cgn.activation.eyca.loading.subCaption")}
       testID="eyca-activation-loading"
     />
   ) : (
