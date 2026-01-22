@@ -11,6 +11,7 @@ import { MessageGreenPassScreen } from "../screens/MessageGreenPassScreen";
 import { MessagesParamsList } from "./params";
 import { MESSAGES_ROUTES } from "./routes";
 
+export const MESSAGES_STACK_NAVIGATOR_ID = "messagesStackNavigator";
 const Stack = createStackNavigator<MessagesParamsList>();
 
 export const MessagesStackNavigator = () => {
@@ -18,6 +19,7 @@ export const MessagesStackNavigator = () => {
 
   return (
     <Stack.Navigator
+      id={MESSAGES_STACK_NAVIGATOR_ID}
       initialRouteName={MESSAGES_ROUTES.MESSAGE_ROUTER}
       screenOptions={{
         gestureEnabled: false,

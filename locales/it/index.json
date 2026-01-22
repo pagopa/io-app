@@ -1605,6 +1605,9 @@
         "subtitle": "Chiudi l’app e riaprila per aggiornare il portafoglio",
         "primaryButton": "Indietro",
         "secondaryButton": "Riprova"
+      },
+      "update": {
+        "primaryButton": "Aggiorna i dati"
       }
     },
     "wallet": "Portafoglio",
@@ -3950,6 +3953,26 @@
                 "chat": "Chiedi aiuto in chat",
                 "additionalDataTitle": "Dati aggiuntivi",
                 "errorCode": "Codice errore"
+              }
+            },
+            "cieValidation": {
+              "expired": {
+                "title": "La CIE risulta scaduta",
+                "body": "Consulta le altre modalità per accedere a questa notifica SEND.",
+                "actions": {
+                  "primary": "Cosa posso fare?"
+                }
+              },
+              "unrelated": {
+                "title": "La CIE non corrisponde alla persona destinataria",
+                "body": "Per consultare una notifica SEND per conto di un’altra persona devi utilizzare la sua Carta di Identità Elettronica."
+              },
+              "generic": {
+                "title": "Non siamo riusciti a verificare i dati dalla carta",
+                "body": "Attendi qualche minuto e riprova.",
+                "actions": {
+                  "secondary": "Mostra dettagli"
+                }
               }
             }
           },
