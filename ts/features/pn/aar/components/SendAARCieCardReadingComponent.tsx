@@ -85,19 +85,10 @@ export const SendAARCieCardReadingComponent = ({
     handleStartReading();
   }, [handleStartReading]);
 
-  const handleCancel = useCallback(() => {
+  const handleClose = useCallback(() => {
     stopReading();
     // TODO: handle navigate back
   }, [stopReading]);
-
-  const cancelAction = useMemo<ScreenContentProps["secondaryAction"]>(
-    () => ({
-      variant: "link",
-      label: i18n.t("global.buttons.close"),
-      onPress: handleCancel
-    }),
-    [handleCancel]
-  );
 
   const contentMap: {
     [K in ReadStatus]: ScreenContentProps;
@@ -117,7 +108,11 @@ export const SendAARCieCardReadingComponent = ({
               label: i18n.t("global.buttons.retry"),
               onPress: handleStartReading
             },
-            secondaryAction: cancelAction
+            secondaryAction: {
+              testID: "tagLostCloseButton",
+              label: i18n.t("global.buttons.close"),
+              onPress: handleClose
+            }
           };
         case "WRONG_CAN":
           const platformizedSubtitle = Platform.select({
@@ -135,10 +130,15 @@ export const SendAARCieCardReadingComponent = ({
             ),
             subtitle: platformizedSubtitle,
             primaryAction: {
+              testID: "wrongCanRetryButton",
               label: i18n.t("global.buttons.retry"),
               onPress: handleStartReading
             },
-            secondaryAction: cancelAction
+            secondaryAction: {
+              testID: "wrongCanCloseButton",
+              label: i18n.t("global.buttons.close"),
+              onPress: handleClose
+            }
           };
         default:
           return {
@@ -150,10 +150,12 @@ export const SendAARCieCardReadingComponent = ({
               "features.pn.aar.flow.cieScanning.error.GENERIC.subtitle"
             ),
             primaryAction: {
-              label: i18n.t("global.buttons.cancel"),
-              onPress: handleCancel
+              testID: "genericErrorPrimaryAction",
+              label: i18n.t("global.buttons.close"),
+              onPress: handleClose
             },
             secondaryAction: {
+              testID: "genericErrorSecondaryAction",
               onPress: present,
               label: i18n.t(
                 "features.pn.aar.flow.cieScanning.error.GENERIC.secondaryAction"
@@ -167,13 +169,19 @@ export const SendAARCieCardReadingComponent = ({
       [ReadStatus.IDLE]: {
         title: i18n.t("features.pn.aar.flow.cieScanning.idle.title"),
         pictogram: "nfcScanAndroid",
-        secondaryAction: cancelAction
+        secondaryAction: {
+          label: i18n.t("global.buttons.close"),
+          onPress: handleClose
+        }
       },
       [ReadStatus.READING]: {
         title: i18n.t("features.pn.aar.flow.cieScanning.reading.title"),
         subtitle: i18n.t("features.pn.aar.flow.cieScanning.reading.subtitle"),
         pictogram: "nfcScanAndroid",
-        secondaryAction: cancelAction
+        secondaryAction: {
+          label: i18n.t("global.buttons.close"),
+          onPress: handleClose
+        }
       },
       [ReadStatus.SUCCESS]: {
         title: i18n.t("features.pn.aar.flow.cieScanning.success.title"),
@@ -181,7 +189,7 @@ export const SendAARCieCardReadingComponent = ({
       },
       [ReadStatus.ERROR]: generateErrorContent()
     };
-  }, [cancelAction, errorName, handleStartReading, handleCancel, present]);
+  }, [errorName, handleStartReading, handleClose, present]);
 
   return (
     <SafeAreaView
