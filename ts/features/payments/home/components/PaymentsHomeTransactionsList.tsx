@@ -69,7 +69,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
   }, [dispatch, latestTransactionsPot]);
 
   const handleNavigateToTransactionDetails = useCallback(
-    ({ eventId, isPayer, isCart }: NoticeListItem) => {
+    ({ eventId, isPayer }: NoticeListItem) => {
       if (eventId === undefined) {
         return;
       }
@@ -77,8 +77,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
         screen: PaymentsReceiptRoutes.PAYMENT_RECEIPT_DETAILS,
         params: {
           transactionId: eventId,
-          isPayer,
-          isCart
+          isPayer
         }
       });
     },
