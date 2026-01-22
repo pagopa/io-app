@@ -11,10 +11,6 @@ import { ItwScreenFlowContext } from "../../analytics/utils/types";
 type ItwDismissalDialogProps = {
   handleDismiss?: () => void;
   dismissalContext?: ItwScreenFlowContext;
-  /**
-   * When false, the hardware back handler is disabled and the event is allowed
-   * to bubble to other handlers (e.g. navigation back).
-   */
   enabled?: boolean;
   customLabels?: {
     title?: string;
