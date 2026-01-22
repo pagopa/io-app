@@ -43,29 +43,30 @@ export const SendAARMessageDetailBottomSheet = ({
         iconName="navScan"
       />
       <VSpacer size={24} />
-      <FeatureInfo
-        body={
-          <>
-            <BodySmall testID={isDelegate ? "body_mandate" : "body_nomandate"}>
-              {I18n.t(
-                isDelegate
-                  ? "features.pn.aar.flow.closeNotification.paragraphDelegate3"
-                  : "features.pn.aar.flow.closeNotification.paragraph3"
-              )}
-            </BodySmall>
-            <BodySmall
-              asLink
-              onPress={onLinkPress}
-              weight="Semibold"
-              testID="link"
-            >
-              {I18n.t("features.pn.aar.flow.closeNotification.link")}
-            </BodySmall>
-          </>
-        }
-        iconName="website"
-      />
-      <VSpacer size={24} />
+
+      {!isDelegate && (
+        <>
+          <FeatureInfo
+            body={
+              <>
+                <BodySmall testID={"body_nomandate"}>
+                  {I18n.t("features.pn.aar.flow.closeNotification.paragraph3")}
+                </BodySmall>
+                <BodySmall
+                  asLink
+                  onPress={onLinkPress}
+                  weight="Semibold"
+                  testID="link"
+                >
+                  {I18n.t("features.pn.aar.flow.closeNotification.link")}
+                </BodySmall>
+              </>
+            }
+            iconName="website"
+          />
+          <VSpacer size={24} />
+        </>
+      )}
       <IOButton
         label={I18n.t("features.pn.aar.flow.closeNotification.primaryAction")}
         onPress={onPrimaryActionPress}

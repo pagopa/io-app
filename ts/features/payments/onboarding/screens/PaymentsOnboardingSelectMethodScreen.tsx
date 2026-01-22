@@ -25,7 +25,7 @@ const PaymentsOnboardingSelectMethodScreen = () => {
 
   const { startOnboarding, isLoading, isPendingOnboarding } =
     useWalletOnboardingWebView({
-      onOnboardingOutcome: (outcome, walletId) => {
+      onOnboardingOutcome: ({ outcome, walletId }) => {
         navigation.replace(
           PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR,
           {
@@ -60,8 +60,6 @@ const PaymentsOnboardingSelectMethodScreen = () => {
           accessibilityLabel: I18n.t("global.genericRetry"),
           onPress: () => dispatch(paymentsOnboardingGetMethodsAction.request())
         }}
-        enableAnimatedPictogram
-        loop
       />
     );
   }

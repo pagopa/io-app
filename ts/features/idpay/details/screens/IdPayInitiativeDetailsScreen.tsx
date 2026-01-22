@@ -169,7 +169,6 @@ const IdPayInitiativeDetailsScreenComponent = () => {
     return (
       <OperationResultScreenContent
         pictogram="umbrella"
-        enableAnimatedPictogram
         title={I18n.t(
           "idpay.initiative.details.initiativeDetailsScreen.error.title"
         )}
@@ -222,7 +221,7 @@ const IdPayInitiativeDetailsScreenComponent = () => {
     return pipe(
       initiative.initiativeRewardType,
       O.fromNullable,
-      O.alt(() => O.some(InitiativeRewardTypeEnum.REFUND)),
+      O.altW(() => O.some(InitiativeRewardTypeEnum.REFUND)),
       O.fold(
         () => [],
         (type): ReadonlyArray<BonusCardCounter> => {
@@ -286,7 +285,7 @@ const IdPayInitiativeDetailsScreenComponent = () => {
     pipe(
       initiative.initiativeRewardType,
       O.fromNullable,
-      O.alt(() => O.some(InitiativeRewardTypeEnum.REFUND)),
+      O.altW(() => O.some(InitiativeRewardTypeEnum.REFUND)),
       O.fold(
         () => undefined,
         rewardType => {

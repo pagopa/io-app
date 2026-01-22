@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { OTPInput, VSpacer } from "@pagopa/io-app-design-system";
 import { Keyboard, KeyboardAvoidingView, Platform, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,6 +15,8 @@ import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { PnParamsList } from "../../navigation/params";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import PN_ROUTES from "../../navigation/routes";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
 
 export const CIE_CAN_LENGTH = 6;
 
@@ -32,6 +34,26 @@ export const SendAarCieCanInsertionScreen = ({
   const currentAarState = useIOSelector(currentAARFlowData);
   const headerHeight = useHeaderHeight();
   const isFocused = useIsFocused();
+
+  useEffect(() => {
+    switch (currentAarState.type) {
+      case sendAARFlowStates.cieScanningAdvisory: {
+        navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          screen: PN_ROUTES.MAIN,
+          params: {
+            screen: PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL
+          }
+        });
+        break;
+      }
+      case sendAARFlowStates.cieCanAdvisory: {
+        navigation.goBack();
+        break;
+      }
+      default:
+        break;
+    }
+  }, [currentAarState.type, navigation]);
 
   useFocusEffect(
     useCallback(() => {
@@ -61,8 +83,6 @@ export const SendAarCieCanInsertionScreen = ({
             can: value
           })
         );
-
-        // TODO: [IOCOM-2749] navigate into CIE scanning educational screen
       }
     },
     [currentAarState, dispatch]
@@ -76,9 +96,13 @@ export const SendAarCieCanInsertionScreen = ({
           type: sendAARFlowStates.cieCanAdvisory
         })
       );
-      navigation.goBack();
     }
-  }, [currentAarState, dispatch, navigation]);
+  }, [currentAarState, dispatch]);
+
+  useHardwareBackButtonWhenFocused(() => {
+    handleGoBack();
+    return true;
+  });
 
   return (
     <SafeAreaView style={{ flex: 1 }} edges={["bottom"]}>

@@ -44,6 +44,7 @@ Map {
   "ko" => Set {
     "fetchingQRData",
     "fetchingNotificationData",
+    "cieCanAdvisory",
   },
   "notAddressee" => Set {
     "creatingMandate",
@@ -74,7 +75,7 @@ Map {
   },
   "validatingMandate" => Set {
     "ko",
-    "displayingNotificationData",
+    "fetchingNotificationData",
   },
 }
 `;

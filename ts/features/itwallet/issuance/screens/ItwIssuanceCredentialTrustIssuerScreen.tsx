@@ -24,11 +24,11 @@ import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import {
-  getMixPanelCredential,
   trackIssuanceCredentialScrollToBottom,
-  trackItwExit,
-  trackOpenItwTos
-} from "../../analytics";
+  trackItwExit
+} from "../analytics";
+import { trackOpenItwTos } from "../../analytics";
+import { getMixPanelCredential } from "../../analytics/utils";
 import { ItwDataExchangeIcons } from "../../common/components/ItwDataExchangeIcons";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
@@ -57,7 +57,6 @@ import { ItwRequestedClaimsList } from "../components/ItwRequestedClaimsList";
 
 export type ItwIssuanceCredentialTrustIssuerNavigationParams = {
   credentialType?: string;
-  asyncContinuation?: boolean; // TODO to be removed in [SIW-2839]
   isUpgrade?: boolean;
 };
 
@@ -71,7 +70,7 @@ type ScreenProps =
   | ItwIssuanceCredentialTrustIssuerNavigationParams;
 
 const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
-  const { credentialType, asyncContinuation, isUpgrade } =
+  const { credentialType, isUpgrade } =
     ("route" in props ? props.route.params : props) ?? {};
 
   const eidOption = useIOSelector(itwCredentialsEidSelector);
@@ -98,17 +97,14 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
         machineRef.send({
           type: "select-credential",
           credentialType,
-          mode: isUpgrade ? "upgrade" : "issuance",
-          isAsyncContinuation: asyncContinuation // TODO to be removed in [SIW-2839]
+          mode: isUpgrade ? "upgrade" : "issuance"
         });
       }
-    }, [credentialType, asyncContinuation, machineRef, isUpgrade])
+    }, [credentialType, machineRef, isUpgrade])
   );
 
   if (isLoading) {
-    return (
-      <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
-    );
+    return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
   }
 
   return pipe(
