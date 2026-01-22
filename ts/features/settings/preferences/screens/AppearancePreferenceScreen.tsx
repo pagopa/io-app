@@ -67,7 +67,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
   const { setTheme } = useIOThemeContext();
   const systemColorScheme = useColorScheme();
   const [selectedColorMode, setSelectedColorMode] =
-    useState<ColorModeChoice>("light");
+    useState<ColorModeChoice>("auto");
 
   useFocusEffect(() => {
     trackAppearancePreferenceScreenView();

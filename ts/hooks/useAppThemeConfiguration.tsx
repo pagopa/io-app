@@ -17,9 +17,9 @@ export const useAppThemeConfiguration = () => {
     AsyncStorage.getItem(THEME_PERSISTENCE_KEY)
       .then(value => {
         if (value === undefined || value === null) {
-          Appearance.setColorScheme("light");
-          setTheme("light");
-          updateNavigationBarColor("light");
+          Appearance.setColorScheme(undefined);
+          setTheme(systemColorScheme);
+          updateNavigationBarColor(systemColorScheme);
           return;
         }
         const themeValue =
