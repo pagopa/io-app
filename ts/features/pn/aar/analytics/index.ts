@@ -149,7 +149,6 @@ export const trackSendAarErrorScreenDetailsCode = () => {
   void mixpanelTrack(eventName, eventProps);
 };
 
-// #region Delegation Proposal
 export const trackSendAarNotificationOpeningMandateDisclaimer = () => {
   const eventName = "SEND_NOTIFICATION_OPENING_MANDATE_DISCLAIMER";
   const eventProps = buildEventProperties("UX", "screen_view");
@@ -185,9 +184,7 @@ export const trackSendAarNotificationOpeningMandateBottomSheetClosure = () => {
   const eventProps = buildEventProperties("UX", "action");
   void mixpanelTrack(eventName, eventProps);
 };
-// #endregion
 
-// #region NFC not supported
 export const trackSendAarNotificationOpeningNfcNotSupported = () => {
   const eventName = "SEND_NOTIFICATION_OPENING_NFC_NOT_SUPPORTED";
   const eventProps = buildEventProperties("UX", "screen_view");
@@ -205,4 +202,3 @@ export const trackSendAarNotificationOpeningNfcNotSupportedClosure = () => {
   const eventProps = buildEventProperties("UX", "exit");
   void mixpanelTrack(eventName, eventProps);
 };
-// #endregion
