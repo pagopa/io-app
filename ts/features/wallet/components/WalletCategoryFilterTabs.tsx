@@ -3,9 +3,10 @@ import {
   TabItem,
   TabNavigation
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-import I18n from "i18next";
+import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { trackWalletCategoryFilter } from "../../itwallet/analytics";
 import { walletSetCategoryFilter } from "../store/actions/preferences";
@@ -14,7 +15,6 @@ import {
   selectWalletCategoryFilter
 } from "../store/selectors";
 import { walletCardCategoryFilters } from "../types";
-import { useDebugInfo } from "../../../hooks/useDebugInfo";
 
 /**
  * Renders filter tabs to categorize cards on the wallet home screen.
@@ -89,6 +89,7 @@ const WalletCategoryFilterTabs = () => {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 8,
+    paddingBottom: 16,
     marginHorizontal: -IOVisualCostants.appMarginDefault * 2,
     paddingHorizontal: IOVisualCostants.appMarginDefault
   }
