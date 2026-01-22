@@ -16,8 +16,6 @@ import { hasGivenConsentSelector } from "../machine/selectors";
 type Params = {
   failure: ProximityFailure;
 };
-// Define a constant origin for mixpanel tracking purposes
-const origin = "ITW_PROXIMITY_EVENTS_TRACKING";
 
 /**
  * Track errors occurred during the proximity presentation flow for analytics.
@@ -28,7 +26,10 @@ export const useItwProximityEventsTracking = ({ failure }: Params) => {
     hasGivenConsentSelector
   );
   useEffect(() => {
-    const serializedFailure = serializeFailureReason(failure, origin);
+    const serializedFailure = serializeFailureReason(
+      failure,
+      "ITW_PROXIMITY_EVENTS_TRACKING"
+    );
     switch (failure.type) {
       case ProximityFailureType.RELYING_PARTY_GENERIC:
         return trackItwProximityRPGenericFailure({

@@ -30,13 +30,15 @@ const extractTrackingData = (credentials: Array<string>) => ({
   count: credentials.length
 });
 
-const origin = "ITW_REMOTE_EVENTS_TRACKING";
 /**
  * Track errors occurred during the remote presentation flow for analytics.
  */
 export const useItwRemoteEventsTracking = ({ failure }: Params) => {
   useEffect(() => {
-    const serializedFailure = serializeFailureReason(failure, origin);
+    const serializedFailure = serializeFailureReason(
+      failure,
+      "ITW_REMOTE_EVENTS_TRACKING"
+    );
     switch (failure.type) {
       case RemoteFailureType.WALLET_INACTIVE:
         return trackItwUpgradeL3Mandatory(ItwL3UpgradeTrigger.REMOTE_QR_CODE);
