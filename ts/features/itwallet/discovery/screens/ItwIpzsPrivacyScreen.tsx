@@ -19,6 +19,7 @@ const ItwIpzsPrivacyScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoadingMachine =
     ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
+
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
@@ -39,6 +40,7 @@ const ItwIpzsPrivacyScreen = () => {
     onLoadEnd();
     machineRef.send({ type: "error", scope: "ipzs-privacy" });
   };
+
   useHeaderSecondLevel({
     title: "",
     canGoBack: true,

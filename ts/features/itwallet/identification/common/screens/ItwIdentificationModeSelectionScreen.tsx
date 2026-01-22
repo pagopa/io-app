@@ -49,6 +49,7 @@ export const ItwIdentificationModeSelectionScreen = ({
 }: ItwIdentificationModeSelectionScreenProps) => {
   const { name: routeName, params } = route;
   const { eidReissuing } = params;
+
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
