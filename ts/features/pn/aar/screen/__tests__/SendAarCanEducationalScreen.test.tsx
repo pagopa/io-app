@@ -13,13 +13,22 @@ import {
 import { setAarFlowState } from "../../store/actions";
 import * as AAR_SELECTORS from "../../store/selectors";
 import { sendAARFlowStates } from "../../utils/stateUtils";
-import { sendAarMockStateFactory } from "../../utils/testUtils";
+import { sendAarMockStates } from "../../utils/testUtils";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import {
+  trackSendAarMandateCiePreparation,
+  trackSendAarMandateCiePreparationContinue
+} from "../../analytics";
 
 const mockNavigate = jest.fn();
 
 const mockTerminateFlow = jest.fn();
 const mockDispatch = jest.fn();
+
+jest.mock("../../analytics", () => ({
+  trackSendAarMandateCiePreparation: jest.fn(),
+  trackSendAarMandateCiePreparationContinue: jest.fn()
+}));
 
 jest.mock("../../../../../store/hooks", () => ({
   ...jest.requireActual("../../../../../store/hooks"),
@@ -41,6 +50,13 @@ describe("SendAarCanEducationalScreen", () => {
     const component = renderComponent();
 
     expect(component.toJSON()).toMatchSnapshot();
+  });
+
+  it('should track "trackSendAarMandateCiePreparation" on component mount', () => {
+    renderComponent();
+
+    expect(trackSendAarMandateCiePreparation).toHaveBeenCalledTimes(1);
+    expect(trackSendAarMandateCiePreparationContinue).not.toHaveBeenCalled();
   });
 
   it("should prompt the system Alert when the back button is pressed", () => {
@@ -109,19 +125,21 @@ describe("SendAarCanEducationalScreen", () => {
     expect(mockDispatch).not.toHaveBeenCalled();
   });
 
-  Object.values(sendAarMockStateFactory).forEach(getAarState => {
-    const aarState = getAarState();
+  describe.each(sendAarMockStates)('AAR state: "$type"', aarState => {
+    beforeEach(() => {
+      jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
+    });
+
     const isCieCanAdvisory = aarState.type === sendAARFlowStates.cieCanAdvisory;
     const isCieCanInsertion =
       aarState.type === sendAARFlowStates.cieCanInsertion;
 
     it(`${
       isCieCanAdvisory ? "should" : "should not"
-    } dispatch the "setAarFlowState" action when type is: "${
-      aarState.type
-    }"`, () => {
-      jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
+    } dispatch the "setAarFlowState" action`, () => {
       const { getByTestId } = renderComponent();
+
+      expect(trackSendAarMandateCiePreparationContinue).not.toHaveBeenCalled();
 
       const continueCTA = getByTestId("primaryActionID");
 
@@ -138,13 +156,16 @@ describe("SendAarCanEducationalScreen", () => {
       } else {
         expect(mockDispatch).not.toHaveBeenCalled();
       }
+
+      expect(trackSendAarMandateCiePreparationContinue).toHaveBeenCalledTimes(
+        1
+      );
       expect(mockTerminateFlow).not.toHaveBeenCalled();
     });
 
     it(`${
       isCieCanInsertion ? "should" : "should not"
     } navigate into the "SendAARCieCanInsertionScreen"`, () => {
-      jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
       renderComponent();
 
       if (isCieCanInsertion) {
