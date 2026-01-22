@@ -19,8 +19,8 @@ export type UpgradeCredentialOutput = {
 export const createCredentialUpgradeActorsImplementation = (env: Env) => ({
   /**
    * Handles both upgrading and reissuing credentials depending on issuanceMode.
-   * - upgrade → performs credential upgrade (skipMdocIssuance = false, operationType = "reissuing")
-   * - reissuance → performs credential reissuing (skipMdocIssuance = true, operationType = "undefined")
+   * - upgrade → performs credential upgrade (skipMdocIssuance = false)
+   * - reissuance → performs credential reissuing (skipMdocIssuance = true)
    */
   upgradeCredential: fromPromise<
     UpgradeCredentialOutput,
