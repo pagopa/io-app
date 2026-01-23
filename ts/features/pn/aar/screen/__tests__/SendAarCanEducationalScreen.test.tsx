@@ -74,7 +74,9 @@ describe("SendAarCanEducationalScreen", () => {
     expect(trackSendAarMandateCieReadingClosureAlert).not.toHaveBeenCalled();
     expect(spyOnSystemAlert).not.toHaveBeenCalled();
 
-    fireEvent.press(backButton);
+    act(() => {
+      fireEvent.press(backButton);
+    });
 
     expect(trackSendAarMandateCieReadingClosureAlert).toHaveBeenCalledTimes(1);
     expect(trackSendAarMandateCieReadingClosureAlert).toHaveBeenCalledWith(
@@ -107,7 +109,9 @@ describe("SendAarCanEducationalScreen", () => {
 
     const backButton = getByLabelText("global.buttons.back");
 
-    fireEvent.press(backButton);
+    act(() => {
+      fireEvent.press(backButton);
+    });
 
     expect(mockTerminateFlow).not.toHaveBeenCalled();
     expect(
@@ -139,7 +143,9 @@ describe("SendAarCanEducationalScreen", () => {
 
     const backButton = getByLabelText("global.buttons.back");
 
-    fireEvent.press(backButton);
+    act(() => {
+      fireEvent.press(backButton);
+    });
 
     expect(
       trackSendAarMandateCieReadingClosureAlertContinue
@@ -170,7 +176,9 @@ describe("SendAarCanEducationalScreen", () => {
 
     const backButton = getByLabelText("global.buttons.back");
 
-    fireEvent.press(backButton);
+    act(() => {
+      fireEvent.press(backButton);
+    });
 
     const cancelAction = spyOnSystemAlert.mock.calls[0][2]?.[1];
 
@@ -200,7 +208,9 @@ describe("SendAarCanEducationalScreen", () => {
 
       const continueCTA = getByTestId("primaryActionID");
 
-      fireEvent.press(continueCTA);
+      act(() => {
+        fireEvent.press(continueCTA);
+      });
 
       if (isCieCanAdvisory) {
         expect(mockDispatch).toHaveBeenCalledTimes(1);
