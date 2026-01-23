@@ -10,10 +10,10 @@ import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { truncate } from "lodash";
 import I18n from "i18next";
+import { addPadding } from "@pagopa/io-react-native-jwt";
 import { Locales } from "../../../../../locales/locales";
 import { JsonFromString } from "./ItwCodecUtils";
 import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
-import { addPadding } from "@pagopa/io-react-native-jwt";
 
 /**
  *
@@ -773,8 +773,8 @@ export const drivingPrivilegeToClaims = (
 
 /**
  * Get the display value of a claim without being coupled to a specific UI component
- * @param claim The claim in {@link ClaimDisplayFormat}
- * @returns The display value as a string or an array of strings
+ * @param claim - The claim to resolve, in {@link ClaimDisplayFormat}.
+ * @returns A {@link ClaimDisplayValue} describing how the claim should be displayed.
  */
 export const getClaimDisplayValue = (
   claim: ClaimDisplayFormat
@@ -790,7 +790,6 @@ export const getClaimDisplayValue = (
         )
       }),
       decoded => {
-        console.log("getClaimDisplayValue - decoded claim", decoded);
         if (PlaceOfBirthClaim.is(decoded)) {
           return {
             renderAs: "text",

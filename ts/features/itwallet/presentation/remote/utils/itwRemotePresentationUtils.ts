@@ -91,8 +91,6 @@ export const enrichPresentationDetails = (
       exclude: [WellKnownClaim.unique_id]
     });
 
-    console.log("Parsed claims for credential", details.id, parsedClaims);
-
     return {
       ...details,
       // Only include claims that are part of the parsed credential

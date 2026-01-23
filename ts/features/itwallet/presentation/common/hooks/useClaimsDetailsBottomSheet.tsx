@@ -11,16 +11,21 @@ type ClaimsDetails = {
   title?: string;
 } | null;
 
-
+/*
+ * Hook that manages the presentation of claim details in a bottom sheet.
+ * It exposes a `present` function to open the sheet with a given set of claims
+ * and handles the internal state and rendering of the sheet content.
+ */
 export const useClaimsDetailsBottomSheet = () => {
-  const [claimsDetails, setClaimsDetails] =
-  useState<ClaimsDetails>(null);
+  const [claimsDetails, setClaimsDetails] = useState<ClaimsDetails>(null);
 
   const component = useMemo(() => {
-    if (!claimsDetails) return null;
-  
+    if (!claimsDetails) {
+      return null;
+    }
+
     const { claims } = claimsDetails;
-  
+
     return (
       <View>
         {claims.map((claim, index) => (
@@ -35,7 +40,7 @@ export const useClaimsDetailsBottomSheet = () => {
 
   const sheet = useIOBottomSheetModal({
     title:
-    claimsDetails?.title ??
+      claimsDetails?.title ??
       I18n.t(
         "features.itWallet.presentation.selectiveDisclosure.bottomsheetTitle"
       ),

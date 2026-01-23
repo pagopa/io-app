@@ -10,6 +10,10 @@ import {
 } from "../../../common/utils/itwClaimsUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 
+/**
+ * Defines gradient color schemes for different credential types
+ * to be used in the header of the ClaimsSelector component.
+ */
 export const claimsSelectorHeaderGradientsByCredentialType: {
   [type: string]: Array<string>;
 } = {
@@ -24,12 +28,23 @@ export const claimsSelectorHeaderGradientsByCredentialType: {
 
 type PresentFn = (claims: Array<ClaimDisplayFormat>, title?: string) => void;
 
+/**
+ *  Builds the optional endElement action shown at the end of a ClaimsSelector item.
+ * When triggered, it opens the claim details bottom sheet managed by
+ * `useClaimsDetailsBottomSheet`.
+ * @param present - Function to present the bottom sheet with claim details.
+ * @param claims - Array of claims to display in the bottom sheet.
+ * @param title - Optional title for the bottom sheet.
+ * @return A ListItemInfo endElement configuration or undefined if no present function is provided.
+ */
 const buildInfoEndElement = (
   present: PresentFn | undefined,
   claims: Array<ClaimDisplayFormat>,
   title?: string
 ): ListItemInfo["endElement"] => {
-  if (!present) return undefined;
+  if (!present) {
+    return undefined;
+  }
 
   return {
     type: "iconButton",
@@ -41,6 +56,14 @@ const buildInfoEndElement = (
   };
 };
 
+/**
+ * Maps a list of claims into `ClaimsSelector` items, handling the different
+ * display formats supported by the component.
+ * @param claims - Array of claims to be mapped.
+ * @param present - Optional function used to present claim details
+ * in a bottom sheet.
+ * @returns An array of items formatted for the `ClaimsSelector` component.
+ */
 export const mapClaimsToClaimsSelectorItems = (
   claims: Array<ClaimDisplayFormat>,
   present?: PresentFn
@@ -62,9 +85,12 @@ export const mapClaimsToClaimsSelectorItems = (
           endElement: buildInfoEndElement(
             present,
             drivingPrivilegeToClaims(p),
-            I18n.t("features.itWallet.verifiableCredentials.claims.mdl.category", {
-              category: p.driving_privilege
-            })
+            I18n.t(
+              "features.itWallet.verifiableCredentials.claims.mdl.category",
+              {
+                category: p.driving_privilege
+              }
+            )
           )
         }));
 
@@ -85,7 +111,7 @@ export const mapClaimsToClaimsSelectorItems = (
           );
 
           const itemId = `${id}[${index}]`;
-          //TODO: verify fallback
+          // TODO: verify fallback
           const summaryDesc = getSafeText(summaryLabel ?? "");
           const summaryVal = getSafeText(summaryValue ?? "");
 
