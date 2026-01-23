@@ -16407,7 +16407,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-reanimated@npm:3.19.5":
+"react-native-reanimated@npm:3.19.5, react-native-reanimated@npm:^3.19.5":
   version: 3.19.5
   resolution: "react-native-reanimated@npm:3.19.5"
   dependencies:
@@ -16428,30 +16428,6 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: d3e5e38c23bd0f86e19110c1e16353a3b58166cb3a13ec1b600b5bbe287d8c57ab199023231b7960fd11b5c605f2a78428d7b80f28818e74eaecde1360dec4f6
-  languageName: node
-  linkType: hard
-
-"react-native-reanimated@npm:^3.19.3":
-  version: 3.19.3
-  resolution: "react-native-reanimated@npm:3.19.3"
-  dependencies:
-    "@babel/plugin-transform-arrow-functions": ^7.0.0-0
-    "@babel/plugin-transform-class-properties": ^7.0.0-0
-    "@babel/plugin-transform-classes": ^7.0.0-0
-    "@babel/plugin-transform-nullish-coalescing-operator": ^7.0.0-0
-    "@babel/plugin-transform-optional-chaining": ^7.0.0-0
-    "@babel/plugin-transform-shorthand-properties": ^7.0.0-0
-    "@babel/plugin-transform-template-literals": ^7.0.0-0
-    "@babel/plugin-transform-unicode-regex": ^7.0.0-0
-    "@babel/preset-typescript": ^7.16.7
-    convert-source-map: ^2.0.0
-    invariant: ^2.2.4
-    react-native-is-edge-to-edge: 1.1.7
-  peerDependencies:
-    "@babel/core": ^7.0.0-0
-    react: "*"
-    react-native: "*"
-  checksum: 6b88d75be9eb5c7c33e52534faff4ce69d3a3ce0d285006b801c31dffc5569c6dbefbfcd085f4eaa546b8687cb1d955701b41a30f5e5d20de8d6581a23b023d9
   languageName: node
   linkType: hard
 
