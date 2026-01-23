@@ -2,7 +2,7 @@
 
 exports[`useSendAarDelegationProposalScreenBottomSheet should call useIOBottomSheetModal with valid props 1`] = `"Cosa ti serve?"`;
 
-exports[`useSendAarDelegationProposalScreenBottomSheet should render the correct BS body component and dispatch identificationRequest on footer button press 1`] = `
+exports[`useSendAarDelegationProposalScreenBottomSheet should render the correct BS body component, dispatch identificationRequest and track the bottom-sheet accepted event on footer button press 1`] = `
 <View
   style={
     {

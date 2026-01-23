@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
@@ -11,6 +10,9 @@ import {
   removeFavouriteService,
   setFavouriteServicesSortType
 } from "../../../favouriteServices/store/actions";
+import createSecureStorage from "../../../../../store/storages/secureStorage";
+import { clearCurrentSession } from "../../../../authentication/common/store/actions";
+import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
 
 export type FavouriteServicesState = {
   dataById: Record<string, FavouriteServiceType>;
@@ -49,6 +51,10 @@ const reducer = (
         sortType: action.payload
       };
     }
+    case getType(clearCurrentSession):
+    case getType(differentProfileLoggedIn): {
+      return INITIAL_STATE;
+    }
     default:
       return state;
   }
@@ -58,7 +64,7 @@ const CURRENT_REDUX_FAVOURITE_SERVICES_STORE_VERSION = -1;
 
 const favouriteServicesPersistConfig: PersistConfig = {
   key: "favouriteServicesPersistConfig",
-  storage: AsyncStorage,
+  storage: createSecureStorage(),
   version: CURRENT_REDUX_FAVOURITE_SERVICES_STORE_VERSION
 };
 

@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.23.0-rc.2](https://github.com/pagopa/io-app/compare/3.23.0-rc.1...3.23.0-rc.2) (2026-01-22)
+
+
+### Features
+
+* [[IOCOM-2880](https://pagopa.atlassian.net/browse/IOCOM-2880),[IOCOM-2892](https://pagopa.atlassian.net/browse/IOCOM-2892)] Add SEND notification opening tracking strategy ([#7780](https://github.com/pagopa/io-app/issues/7780)) ([07aab8f](https://github.com/pagopa/io-app/commit/07aab8fb219c53c75ad35d22359daadc3e013bfc))
+
+
+### Bug Fixes
+
+* [[IOPLT-1530](https://pagopa.atlassian.net/browse/IOPLT-1530)] Fix the wrong bounded box of the `AnimatedPictogram` components ([#7793](https://github.com/pagopa/io-app/issues/7793)) ([f61c3dc](https://github.com/pagopa/io-app/commit/f61c3dcd74035a17a8753fc10babe4a87dd4b4b8))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-3039](https://pagopa.atlassian.net/browse/SIW-3039)] Remove operationType from credential issuance and upgrade flows ([#7767](https://github.com/pagopa/io-app/issues/7767)) ([41bc910](https://github.com/pagopa/io-app/commit/41bc910401932dfbaa588292051648779338123d))
+* **IT-Wallet:** [[SIW-3546](https://pagopa.atlassian.net/browse/SIW-3546)] Add/update MixPanel issuance-related events ([#7785](https://github.com/pagopa/io-app/issues/7785)) ([2006bae](https://github.com/pagopa/io-app/commit/2006bae4522cc46900fe993ef6e93f2ca8fd5835))
+
 ## [3.23.0-rc.1](https://github.com/pagopa/io-app/compare/3.23.0-rc.0...3.23.0-rc.1) (2026-01-21)
 
 
