@@ -12,6 +12,11 @@ import { sendAARFlowStates } from "../utils/stateUtils";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { SendAarActivateNfcComponent } from "../components/SendAarActivateNfcComponent";
 import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
+import {
+  trackSendAarMandateCieReadingClosureAlert,
+  trackSendAarMandateCieReadingClosureAlertAccepted,
+  trackSendAarMandateCieReadingClosureAlertContinue
+} from "../analytics";
 
 export type SendAarActivateNfcScreenProps = IOStackNavigationRouteProps<
   PnParamsList,
@@ -39,6 +44,7 @@ export const SendAarActivateNfcScreen = ({
   }, [currentAarData, navigation]);
 
   const handleClose = useCallback(() => {
+    trackSendAarMandateCieReadingClosureAlert("NFC_ACTIVATION");
     Alert.alert(
       i18n.t("features.pn.aar.flow.androidNfcActivation.alertOnClose.title"),
       i18n.t("features.pn.aar.flow.androidNfcActivation.alertOnClose.message"),
@@ -48,12 +54,18 @@ export const SendAarActivateNfcScreen = ({
             "features.pn.aar.flow.androidNfcActivation.alertOnClose.confirm"
           ),
           style: "destructive",
-          onPress: terminateFlow
+          onPress: () => {
+            trackSendAarMandateCieReadingClosureAlertAccepted("NFC_ACTIVATION");
+            terminateFlow();
+          }
         },
         {
           text: i18n.t(
             "features.pn.aar.flow.androidNfcActivation.alertOnClose.cancel"
-          )
+          ),
+          onPress: () => {
+            trackSendAarMandateCieReadingClosureAlertContinue("NFC_ACTIVATION");
+          }
         }
       ]
     );
