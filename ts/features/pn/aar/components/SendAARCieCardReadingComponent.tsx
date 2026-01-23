@@ -1,7 +1,15 @@
-import { useCallback, useEffect, useMemo } from "react";
-import i18n from "i18next";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
+import i18n from "i18next";
+import { useCallback, useEffect, useMemo } from "react";
+import { Platform } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useIODispatch } from "../../../../store/hooks";
+import { isDefined } from "../../../../utils/guards";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import {
+  CieCardReadContent,
+  CieCardReadContentProps
+} from "../../../common/components/cie/CieCardReadContent";
 import {
   isErrorState,
   isReadingState,
@@ -9,15 +17,9 @@ import {
   ReadStatus,
   useCieInternalAuthAndMrtdReading
 } from "../hooks/useCieInternalAuthAndMrtdReading";
-import {
-  CieCardReadContent,
-  CieCardReadContentProps
-} from "../../../common/components/cie/CieCardReadContent";
-import { useIODispatch } from "../../../../store/hooks";
-import { RecipientInfo, sendAARFlowStates } from "../utils/stateUtils";
 import { setAarFlowState } from "../store/actions";
-import { isDefined } from "../../../../utils/guards";
-import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
+import { RecipientInfo, sendAARFlowStates } from "../utils/stateUtils";
+import { sendAarErrorSupportBottomSheetComponent } from "./errors/SendAARErrorComponent";
 
 type ScreenContentProps = Omit<CieCardReadContentProps, "progress">;
 
@@ -38,7 +40,6 @@ export const SendAARCieCardReadingComponent = ({
 }: SendAARCieCardReadingComponentProps) => {
   const dispatch = useIODispatch();
   const theme = useIOTheme();
-  const { terminateFlow } = useSendAarFlowManager();
   const { startReading, stopReading, readState } =
     useCieInternalAuthAndMrtdReading();
 
@@ -47,6 +48,16 @@ export const SendAARCieCardReadingComponent = ({
   const errorName = isError ? readState.error.name : undefined;
   const progress = isReadingState(readState) ? readState.progress : 0;
 
+  const handleZendeskAssistance = () => {
+    dismiss();
+  };
+  const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
+    component: sendAarErrorSupportBottomSheetComponent(
+      handleZendeskAssistance,
+      errorName
+    ),
+    title: ""
+  });
   const handleStartReading = useCallback(() => {
     void startReading(can, verificationCode, "base64url");
   }, [can, startReading, verificationCode]);
@@ -63,27 +74,21 @@ export const SendAARCieCardReadingComponent = ({
           mandateId,
           mrtdData: data.mrtd_data,
           nisData,
+          unsignedVerificationCode: verificationCode,
           signedVerificationCode: signedChallenge
         })
       );
     }
-  }, [data, iun, recipientInfo, mandateId, dispatch]);
+  }, [data, iun, recipientInfo, mandateId, dispatch, verificationCode]);
 
   useEffect(() => {
     handleStartReading();
   }, [handleStartReading]);
 
-  const cancelAction = useMemo<ScreenContentProps["secondaryAction"]>(
-    () => ({
-      variant: "link",
-      label: i18n.t("global.buttons.close"),
-      onPress: () => {
-        stopReading();
-        // TODO: navigate back
-      }
-    }),
-    [stopReading]
-  );
+  const handleClose = useCallback(() => {
+    stopReading();
+    // TODO: handle navigate back
+  }, [stopReading]);
 
   const contentMap: {
     [K in ReadStatus]: ScreenContentProps;
@@ -103,18 +108,58 @@ export const SendAARCieCardReadingComponent = ({
               label: i18n.t("global.buttons.retry"),
               onPress: handleStartReading
             },
-            secondaryAction: cancelAction
+            secondaryAction: {
+              testID: "tagLostCloseButton",
+              label: i18n.t("global.buttons.close"),
+              onPress: handleClose
+            }
           };
-        default:
-          // TODO: [IOCOM-2752] Handle errors
+        case "WRONG_CAN":
+          const platformizedSubtitle = Platform.select({
+            ios: i18n.t(
+              "features.pn.aar.flow.cieScanning.error.WRONG_CAN.subtitleIos"
+            ),
+            default: i18n.t(
+              "features.pn.aar.flow.cieScanning.error.WRONG_CAN.subtitleAndroid"
+            )
+          });
           return {
             pictogram: "attention",
-            title: "Qualcosa è andato storto.",
+            title: i18n.t(
+              "features.pn.aar.flow.cieScanning.error.WRONG_CAN.title"
+            ),
+            subtitle: platformizedSubtitle,
+            primaryAction: {
+              testID: "wrongCanRetryButton",
+              label: i18n.t("global.buttons.retry"),
+              onPress: handleStartReading
+            },
             secondaryAction: {
+              testID: "wrongCanCloseButton",
               label: i18n.t("global.buttons.close"),
-              onPress: () => {
-                terminateFlow();
-              }
+              onPress: handleClose
+            }
+          };
+        default:
+          return {
+            pictogram: "umbrella",
+            title: i18n.t(
+              "features.pn.aar.flow.cieScanning.error.GENERIC.title"
+            ),
+            subtitle: i18n.t(
+              "features.pn.aar.flow.cieScanning.error.GENERIC.subtitle"
+            ),
+            primaryAction: {
+              testID: "genericErrorPrimaryAction",
+              label: i18n.t("global.buttons.close"),
+              onPress: handleClose
+            },
+            secondaryAction: {
+              testID: "genericErrorSecondaryAction",
+              onPress: present,
+              label: i18n.t(
+                "features.pn.aar.flow.cieScanning.error.GENERIC.secondaryAction"
+              )
             }
           };
       }
@@ -124,13 +169,19 @@ export const SendAARCieCardReadingComponent = ({
       [ReadStatus.IDLE]: {
         title: i18n.t("features.pn.aar.flow.cieScanning.idle.title"),
         pictogram: "nfcScanAndroid",
-        secondaryAction: cancelAction
+        secondaryAction: {
+          label: i18n.t("global.buttons.close"),
+          onPress: handleClose
+        }
       },
       [ReadStatus.READING]: {
         title: i18n.t("features.pn.aar.flow.cieScanning.reading.title"),
         subtitle: i18n.t("features.pn.aar.flow.cieScanning.reading.subtitle"),
         pictogram: "nfcScanAndroid",
-        secondaryAction: cancelAction
+        secondaryAction: {
+          label: i18n.t("global.buttons.close"),
+          onPress: handleClose
+        }
       },
       [ReadStatus.SUCCESS]: {
         title: i18n.t("features.pn.aar.flow.cieScanning.success.title"),
@@ -138,7 +189,7 @@ export const SendAARCieCardReadingComponent = ({
       },
       [ReadStatus.ERROR]: generateErrorContent()
     };
-  }, [cancelAction, errorName, terminateFlow, handleStartReading]);
+  }, [errorName, handleStartReading, handleClose, present]);
 
   return (
     <SafeAreaView
@@ -152,6 +203,7 @@ export const SendAARCieCardReadingComponent = ({
         hiddenProgressBar={isError}
         {...contentMap[readState.status]}
       />
+      {bottomSheet}
     </SafeAreaView>
   );
 };

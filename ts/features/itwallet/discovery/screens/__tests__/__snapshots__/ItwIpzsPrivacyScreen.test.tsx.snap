@@ -1766,7 +1766,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                   }
                                   testID="screen-content-header-title"
                                 >
-                                  I tuoi Documenti sono al sicuro
+                                  IT-Wallet: Informativa Privacy e Termini e Condizioni d’uso
                                 </Text>
                                 <View
                                   style={

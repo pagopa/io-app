@@ -2,6 +2,7 @@ import {
   isItwDiscoveryBannerRenderableSelector,
   itwOfflineAccessAvailableSelector,
   itwShouldRenderL3UpgradeBannerSelector,
+  itwShouldRenderWalletReadyBannerSelector,
   itwShouldRenderWalletUpgradeMDLDetailsBannerSelector
 } from "..";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -9,7 +10,9 @@ import { OfflineAccessReasonEnum } from "../../../../../ingress/store/reducer";
 import * as ingressSelectors from "../../../../../ingress/store/selectors";
 import * as credentialsSelectors from "../../../../credentials/store/selectors";
 import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
+import * as walletInstanceSelectors from "../../../../walletInstance/store/selectors";
 import * as preferencesSelectors from "../preferences";
+import * as bannersSelectors from "../banners";
 import * as remoteConfigSelectors from "../remoteConfig";
 
 describe("isItwDiscoveryBannerRenderableSelector", () => {
@@ -112,6 +115,46 @@ describe("itwShouldRenderL3UpgradeBannerSelector", () => {
   );
 });
 
+describe("itwShouldRenderWalletReadyBannerSelector", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    jest.clearAllMocks();
+  });
+
+  it.each`
+    eidStatus        | isWalletEmpty | expected
+    ${"valid"}       | ${true}       | ${true}
+    ${"jwtExpiring"} | ${true}       | ${false}
+    ${"jwtExpired"}  | ${true}       | ${false}
+  `(
+    "should return $expected when eidStatus is $eidStatus and isWalletEmpty is $isWalletEmpty",
+    ({ eidStatus, isWalletEmpty, expected }) => {
+      jest
+        .spyOn(ingressSelectors, "offlineAccessReasonSelector")
+        .mockReturnValue(undefined);
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
+        .mockReturnValue(true);
+      jest
+        .spyOn(
+          walletInstanceSelectors,
+          "itwIsWalletInstanceStatusFailureSelector"
+        )
+        .mockReturnValue(false);
+      jest
+        .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
+        .mockReturnValue(eidStatus);
+      jest
+        .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
+        .mockReturnValue(isWalletEmpty);
+
+      expect(
+        itwShouldRenderWalletReadyBannerSelector({} as unknown as GlobalState)
+      ).toBe(expected);
+    }
+  );
+});
+
 describe("itwShouldRenderWalletUpgradeMDLDetailsBannerSelector", () => {
   beforeEach(() => {
     jest.resetAllMocks();
@@ -150,7 +193,7 @@ describe("itwShouldRenderWalletUpgradeMDLDetailsBannerSelector", () => {
         .mockReturnValue(isEidL3);
       jest
         .spyOn(
-          preferencesSelectors,
+          bannersSelectors,
           "itwIsWalletUpgradeMDLDetailsBannerHiddenSelector"
         )
         .mockReturnValue(isBannerHidden);

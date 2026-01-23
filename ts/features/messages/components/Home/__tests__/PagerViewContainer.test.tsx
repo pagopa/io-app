@@ -2,7 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RefObject } from "react";
 import { NativeSyntheticEvent } from "react-native";
 import PagerView from "react-native-pager-view";
-import { OnPageSelectedEventData } from "react-native-pager-view/lib/typescript/specs/PagerViewNativeComponent";
+import { OnPageSelectedEventData } from "react-native-pager-view/lib/typescript/PagerViewNativeComponent";
 import { createStore } from "redux";
 import { pageSize } from "../../../../../config";
 import { applicationChangeState } from "../../../../../store/actions/application";

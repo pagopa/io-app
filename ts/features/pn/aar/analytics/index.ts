@@ -148,3 +148,39 @@ export const trackSendAarErrorScreenDetailsCode = () => {
   const eventProps = buildEventProperties("UX", "action");
   void mixpanelTrack(eventName, eventProps);
 };
+
+export const trackSendAarNotificationOpeningMandateDisclaimer = () => {
+  const eventName = "SEND_NOTIFICATION_OPENING_MANDATE_DISCLAIMER";
+  const eventProps = buildEventProperties("UX", "screen_view");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarNotificationOpeningMandateDisclaimerAccepted = () => {
+  const eventName = "SEND_NOTIFICATION_OPENING_MANDATE_DISCLAIMER_ACCEPTED";
+  const eventProps = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarNotificationOpeningMandateDisclaimerClosure = () => {
+  const eventName = "SEND_NOTIFICATION_OPENING_MANDATE_DISCLAIMER_CLOSURE";
+  const eventProps = buildEventProperties("UX", "exit");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarNotificationOpeningMandateBottomSheet = () => {
+  const eventName = "SEND_NOTIFICATION_OPENING_MANDATE_BOTTOMSHEET";
+  const eventProps = buildEventProperties("UX", "screen_view");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarNotificationOpeningMandateBottomSheetAccepted = () => {
+  const eventName = "SEND_NOTIFICATION_OPENING_MANDATE_BOTTOMSHEET_ACCEPTED";
+  const eventProps = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarNotificationOpeningMandateBottomSheetClosure = () => {
+  const eventName = "SEND_NOTIFICATION_OPENING_MANDATE_BOTTOMSHEET_CLOSURE";
+  const eventProps = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, eventProps);
+};
