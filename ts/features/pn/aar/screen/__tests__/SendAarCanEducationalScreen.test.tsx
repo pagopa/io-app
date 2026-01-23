@@ -17,7 +17,10 @@ import { sendAarMockStates } from "../../utils/testUtils";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import {
   trackSendAarMandateCiePreparation,
-  trackSendAarMandateCiePreparationContinue
+  trackSendAarMandateCiePreparationContinue,
+  trackSendAarMandateCieReadingClosureAlert,
+  trackSendAarMandateCieReadingClosureAlertAccepted,
+  trackSendAarMandateCieReadingClosureAlertContinue
 } from "../../analytics";
 
 const mockNavigate = jest.fn();
@@ -27,7 +30,10 @@ const mockDispatch = jest.fn();
 
 jest.mock("../../analytics", () => ({
   trackSendAarMandateCiePreparation: jest.fn(),
-  trackSendAarMandateCiePreparationContinue: jest.fn()
+  trackSendAarMandateCiePreparationContinue: jest.fn(),
+  trackSendAarMandateCieReadingClosureAlert: jest.fn(),
+  trackSendAarMandateCieReadingClosureAlertAccepted: jest.fn(),
+  trackSendAarMandateCieReadingClosureAlertContinue: jest.fn()
 }));
 
 jest.mock("../../../../../store/hooks", () => ({
@@ -59,14 +65,21 @@ describe("SendAarCanEducationalScreen", () => {
     expect(trackSendAarMandateCiePreparationContinue).not.toHaveBeenCalled();
   });
 
-  it("should prompt the system Alert when the back button is pressed", () => {
+  it('should prompt the system Alert and invoke "trackSendAarMandateCieReadingClosureAlert" when the back button is pressed', () => {
     const spyOnSystemAlert = jest.spyOn(Alert, "alert");
     const { getByLabelText } = renderComponent();
 
     const backButton = getByLabelText("global.buttons.back");
 
+    expect(trackSendAarMandateCieReadingClosureAlert).not.toHaveBeenCalled();
+    expect(spyOnSystemAlert).not.toHaveBeenCalled();
+
     fireEvent.press(backButton);
 
+    expect(trackSendAarMandateCieReadingClosureAlert).toHaveBeenCalledTimes(1);
+    expect(trackSendAarMandateCieReadingClosureAlert).toHaveBeenCalledWith(
+      "CIE_PREPARATION"
+    );
     expect(spyOnSystemAlert).toHaveBeenCalledTimes(1);
     expect(spyOnSystemAlert).toHaveBeenCalledWith(
       "features.pn.aar.flow.cieCanAdvisory.alert.title",
@@ -78,7 +91,8 @@ describe("SendAarCanEducationalScreen", () => {
           onPress: expect.any(Function)
         },
         {
-          text: "features.pn.aar.flow.cieCanAdvisory.alert.cancel"
+          text: "features.pn.aar.flow.cieCanAdvisory.alert.cancel",
+          onPress: expect.any(Function)
         }
       ]
     );
@@ -87,7 +101,7 @@ describe("SendAarCanEducationalScreen", () => {
     expect(mockDispatch).not.toHaveBeenCalled();
   });
 
-  it('should invoke "terminateFlow" when the Alert confirm button is pressed', () => {
+  it('should invoke "terminateFlow" and "trackSendAarMandateCieReadingClosureAlertAccepted" when the Alert confirm button is pressed', () => {
     const spyOnSystemAlert = jest.spyOn(Alert, "alert");
     const { getByLabelText } = renderComponent();
 
@@ -96,6 +110,9 @@ describe("SendAarCanEducationalScreen", () => {
     fireEvent.press(backButton);
 
     expect(mockTerminateFlow).not.toHaveBeenCalled();
+    expect(
+      trackSendAarMandateCieReadingClosureAlertAccepted
+    ).not.toHaveBeenCalled();
 
     const confirmAction = spyOnSystemAlert.mock.calls[0][2]?.[0];
 
@@ -104,7 +121,47 @@ describe("SendAarCanEducationalScreen", () => {
     });
 
     expect(mockTerminateFlow).toHaveBeenCalledTimes(1);
+    expect(
+      trackSendAarMandateCieReadingClosureAlertAccepted
+    ).toHaveBeenCalledTimes(1);
+    expect(
+      trackSendAarMandateCieReadingClosureAlertAccepted
+    ).toHaveBeenCalledWith("CIE_PREPARATION");
+    expect(
+      trackSendAarMandateCieReadingClosureAlertContinue
+    ).not.toHaveBeenCalled();
     expect(mockDispatch).not.toHaveBeenCalled();
+  });
+
+  it('should invoke "trackSendAarMandateCieReadingClosureAlertContinue" when the Alert cancel button is pressed', () => {
+    const spyOnSystemAlert = jest.spyOn(Alert, "alert");
+    const { getByLabelText } = renderComponent();
+
+    const backButton = getByLabelText("global.buttons.back");
+
+    fireEvent.press(backButton);
+
+    expect(
+      trackSendAarMandateCieReadingClosureAlertContinue
+    ).not.toHaveBeenCalled();
+
+    const cancelAction = spyOnSystemAlert.mock.calls[0][2]?.[1];
+
+    act(() => {
+      cancelAction?.onPress?.();
+    });
+
+    expect(
+      trackSendAarMandateCieReadingClosureAlertContinue
+    ).toHaveBeenCalledTimes(1);
+    expect(
+      trackSendAarMandateCieReadingClosureAlertContinue
+    ).toHaveBeenCalledWith("CIE_PREPARATION");
+    expect(
+      trackSendAarMandateCieReadingClosureAlertAccepted
+    ).not.toHaveBeenCalled();
+    expect(mockDispatch).not.toHaveBeenCalled();
+    expect(mockTerminateFlow).not.toHaveBeenCalled();
   });
 
   it('should not invoke "terminateFlow" when the Alert cancel button is pressed', () => {
