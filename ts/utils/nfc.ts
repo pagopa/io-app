@@ -31,15 +31,15 @@ export type AvailableNfcAntenna = z.infer<typeof AvailableNfcAntennaSchema>;
  * in millimeters from the top-left corner of the device.
  *
  * @returns {Promise<NfcAntennaInfo | undefined>} NFC antenna information or undefined if not available.
+ * @throws {Error} If the platform is not Android or if the native module fails to provide valid data.
  */
 export const getNfcAntennaInfo = Platform.select({
   android: async () => {
-    try {
-      const raw = await NfcAntennaInfoNativeModule.getNfcAntennaInfo();
-      return NfcAntennaInfoSchema.parse(raw);
-    } catch (e) {
-      return undefined;
-    }
+    const raw = await NfcAntennaInfoNativeModule.getNfcAntennaInfo();
+    return NfcAntennaInfoSchema.parse(raw);
   },
-  default: async () => undefined
+  default: () =>
+    Promise.reject(
+      new Error("NFC antenna info is only available on Android devices.")
+    )
 });
