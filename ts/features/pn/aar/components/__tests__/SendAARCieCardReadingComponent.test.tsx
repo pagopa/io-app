@@ -1,16 +1,23 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import { omit } from "lodash";
-import {
-  SendAARCieCardReadingComponent,
-  SendAARCieCardReadingComponentProps
-} from "../SendAARCieCardReadingComponent";
+import * as RN from "react-native";
+import { createStore } from "redux";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { renderComponentWithStoreAndNavigationContextForFocus } from "../../../../messages/utils/__tests__/testUtils.test";
+import PN_ROUTES from "../../../navigation/routes";
 import {
   ReadStatus,
   useCieInternalAuthAndMrtdReading
 } from "../../hooks/useCieInternalAuthAndMrtdReading";
 import { setAarFlowState } from "../../store/actions";
 import { sendAARFlowStates } from "../../utils/stateUtils";
-
+import {
+  SendAARCieCardReadingComponent,
+  SendAARCieCardReadingComponentProps
+} from "../SendAARCieCardReadingComponent";
 type ReadState = ReturnType<
   typeof useCieInternalAuthAndMrtdReading
 >["readState"];
@@ -20,13 +27,20 @@ const mockStartReading = jest.fn();
 const mockStopReading = jest.fn();
 const mockDispatch = jest.fn();
 const mockTerminateFlow = jest.fn();
+const mockPresentBottomSheet = jest.fn();
+const mockDismissBottomSheet = jest.fn();
 
 jest.mock("react-redux", () => ({
+  ...jest.requireActual("react-redux"),
   useDispatch: () => mockDispatch
 }));
-jest.mock("@react-navigation/native");
-jest.mock("@react-navigation/stack", () => ({
-  createStackNavigator: jest.fn()
+jest.mock("../../../../../utils/hooks/bottomSheet");
+
+const mockedUseIOBottomSheetModal = useIOBottomSheetModal as jest.Mock;
+mockedUseIOBottomSheetModal.mockImplementation(() => ({
+  present: mockPresentBottomSheet,
+  dismiss: mockDismissBottomSheet,
+  bottomSheet: null
 }));
 jest.mock("i18next", () => ({
   t: (path: string) => path
@@ -110,9 +124,19 @@ describe("SendAARCieCardReadingComponent", () => {
     });
 
     it('should invoke "startReading" only once', () => {
-      const { rerender } = renderComponent();
+      expect(mockStartReading).toHaveBeenCalledTimes(0);
+      const { rerender } = renderComponentWithStoreAndNavigationContextForFocus(
+        Component,
+        true
+      );
+      expect(mockStartReading).toHaveBeenCalledTimes(1);
 
-      rerender(<Component />);
+      rerender(Component);
+      rerender(Component);
+      rerender(Component);
+      rerender(Component);
+      rerender(Component);
+      rerender(Component);
 
       expect(mockStartReading).toHaveBeenCalledTimes(1);
       expect(mockStartReading).toHaveBeenCalledWith(
@@ -133,11 +157,14 @@ describe("SendAARCieCardReadingComponent", () => {
       testCancelAction
     );
     it('should invoke "startReading" only once despite transition from IDLE state to READING state', () => {
-      const { rerender } = renderComponent();
+      const { rerender } = renderComponentWithStoreAndNavigationContextForFocus(
+        Component,
+        true
+      );
 
       mockReadState({ status: ReadStatus.READING, progress: 0.2 });
 
-      rerender(<Component />);
+      rerender(Component);
 
       expect(mockStartReading).toHaveBeenCalledTimes(1);
     });
@@ -161,20 +188,32 @@ describe("SendAARCieCardReadingComponent", () => {
       testCancelAction
     );
     it('should invoke "startReading" only once despite transition from READING state to SUCCESS state', () => {
-      const { rerender } = renderComponent();
+      expect(mockStartReading).toHaveBeenCalledTimes(0);
+      const { rerender } = renderComponentWithStoreAndNavigationContextForFocus(
+        Component,
+        true
+      );
+      expect(mockStartReading).toHaveBeenCalledTimes(1);
 
       mockReadState({ status: ReadStatus.SUCCESS, data: successDataMock });
+      expect(mockStartReading).toHaveBeenCalledTimes(1);
 
-      rerender(<Component />);
+      rerender(Component);
 
       expect(mockStartReading).toHaveBeenCalledTimes(1);
     });
     it('should invoke "startReading" only once despite transition from READING state to ERROR state', () => {
-      const { rerender } = renderComponent();
+      expect(mockStartReading).toHaveBeenCalledTimes(0);
+      const { rerender } = renderComponentWithStoreAndNavigationContextForFocus(
+        Component,
+        true
+      );
+      expect(mockStartReading).toHaveBeenCalledTimes(1);
 
       mockReadState({ status: ReadStatus.ERROR, error: errorsMock[0] });
+      expect(mockStartReading).toHaveBeenCalledTimes(1);
 
-      rerender(<Component />);
+      rerender(Component);
 
       expect(mockStartReading).toHaveBeenCalledTimes(1);
     });
@@ -223,7 +262,7 @@ describe("SendAARCieCardReadingComponent", () => {
       mockReadState({ status: ReadStatus.ERROR, error });
 
     describe("TAG_LOST error", () => {
-      beforeAll(() => {
+      beforeEach(() => {
         mockErrorState({ name: "TAG_LOST" });
       });
       it("should output the right title and subtitle", () => {
@@ -259,7 +298,58 @@ describe("SendAARCieCardReadingComponent", () => {
         testCancelAction
       );
     });
-    // TODO: [IOCOM-2752] Handle errors
+    describe("WRONG_CAN error", () => {
+      beforeEach(() => {
+        mockErrorState({ name: "WRONG_CAN" });
+      });
+      it('should invoke "stopReading" when the cancel action is triggered', () => {
+        const { getByTestId } = renderComponent();
+        const closeButton = getByTestId("wrongCanCloseButton");
+
+        expect(closeButton).toBeTruthy();
+        expect(mockStopReading).not.toHaveBeenCalled();
+        fireEvent.press(closeButton);
+
+        expect(mockStopReading).toHaveBeenCalledTimes(1);
+      });
+      it('should invoke "startReading" on retry CTA press', () => {
+        const { getByTestId } = renderComponent();
+
+        const retryButton = getByTestId("wrongCanRetryButton");
+        expect(retryButton).toBeTruthy();
+
+        // reset the mock triggered on component mount
+        mockStartReading.mockClear();
+
+        expect(mockStartReading).not.toHaveBeenCalled();
+
+        fireEvent.press(retryButton);
+
+        expect(mockStartReading).toHaveBeenCalledTimes(1);
+        expect(mockStopReading).not.toHaveBeenCalled();
+      });
+      test.each(["ios", "android"] as const)(
+        "should output the right subtitle for platform %s",
+        platform => {
+          jest
+            .spyOn(RN.Platform, "select")
+            .mockImplementation(
+              options =>
+                options[platform] ??
+                options["default" as unknown as keyof typeof options]
+            );
+
+          const { queryByText } = renderComponent();
+
+          const platformizedSubtitleKey =
+            platform === "ios"
+              ? "features.pn.aar.flow.cieScanning.error.WRONG_CAN.subtitleIos"
+              : "features.pn.aar.flow.cieScanning.error.WRONG_CAN.subtitleAndroid";
+
+          expect(queryByText(platformizedSubtitleKey)).toBeTruthy();
+        }
+      );
+    });
     describe.each(unmappedErrors)("$name error", error => {
       beforeAll(() => {
         mockErrorState(error);
@@ -267,23 +357,63 @@ describe("SendAARCieCardReadingComponent", () => {
       it("should output the right title", () => {
         const { queryByText } = renderComponent();
 
-        expect(queryByText("Qualcosa è andato storto.")).toBeTruthy();
+        expect(
+          queryByText("features.pn.aar.flow.cieScanning.error.GENERIC.title")
+        ).toBeTruthy();
       });
-      it('should invoke "terminateFlow" when close action in tapped', () => {
-        const { queryByText } = renderComponent();
+      it('should invoke "stopReading" when the primary action is triggered', () => {
+        const { getByTestId } = renderComponent();
+        const closeButton = getByTestId("genericErrorPrimaryAction");
 
-        // reset the mock triggered on component mount
-        mockStartReading.mockClear();
-
-        const closeAction = queryByText("global.buttons.close");
-        expect(closeAction).toBeTruthy();
-
-        // If passes the previous check we can assume it exists
-        fireEvent.press(closeAction!);
-
-        expect(mockTerminateFlow).toHaveBeenCalledTimes(1);
-        expect(mockStartReading).not.toHaveBeenCalled();
+        expect(closeButton).toBeTruthy();
         expect(mockStopReading).not.toHaveBeenCalled();
+        fireEvent.press(closeButton);
+
+        expect(mockStopReading).toHaveBeenCalledTimes(1);
+      });
+      it("should present the bottom sheet when the secondary action is triggered", () => {
+        const { getByTestId } = renderComponent();
+        const secondaryActionButton = getByTestId(
+          "genericErrorSecondaryAction"
+        );
+
+        expect(secondaryActionButton).toBeTruthy();
+        expect(mockPresentBottomSheet).not.toHaveBeenCalled();
+        fireEvent.press(secondaryActionButton);
+
+        expect(mockPresentBottomSheet).toHaveBeenCalledTimes(1);
+      });
+    });
+    describe("generic error bottomSheet", () => {
+      beforeAll(() => {
+        mockErrorState({
+          name: "NON_MAPPED_ERROR"
+        } as unknown as (typeof unmappedErrors)[number]);
+      });
+      it("should match snapshot", () => {
+        expect(mockedUseIOBottomSheetModal).toHaveBeenCalledTimes(0);
+        renderComponent();
+        expect(mockedUseIOBottomSheetModal).toHaveBeenCalledTimes(1);
+
+        const bottomSheetComponent =
+          mockedUseIOBottomSheetModal.mock.calls[0][0].component;
+        expect(bottomSheetComponent).toBeDefined();
+        const { toJSON } = render(bottomSheetComponent);
+        expect(toJSON()).toMatchSnapshot();
+      });
+      it('should invoke "dismiss" on assistance press', () => {
+        renderComponent();
+
+        const bottomSheetComponent =
+          mockedUseIOBottomSheetModal.mock.calls[0][0].component;
+        expect(bottomSheetComponent).toBeDefined();
+        const { getByTestId } = render(bottomSheetComponent);
+        const assistanceButton = getByTestId("button_assistance");
+        expect(assistanceButton).toBeTruthy();
+        expect(mockDismissBottomSheet).not.toHaveBeenCalled();
+        fireEvent.press(assistanceButton);
+
+        expect(mockDismissBottomSheet).toHaveBeenCalledTimes(1);
       });
     });
   });
@@ -315,10 +445,18 @@ function testCancelAction() {
   expect(mockStartReading).not.toHaveBeenCalled();
 }
 
-function Component() {
-  return <SendAARCieCardReadingComponent {...cieCardReadingComponentProps} />;
-}
+const Component = (
+  <SendAARCieCardReadingComponent {...cieCardReadingComponentProps} />
+);
 
 function renderComponent() {
-  return render(<Component />);
+  const initialState = appReducer(undefined, applicationChangeState("active"));
+  const store = createStore(appReducer, initialState as any);
+
+  return renderScreenWithNavigationStoreContext(
+    () => Component,
+    PN_ROUTES.SEND_AAR_CIE_CARD_READING,
+    {},
+    store
+  );
 }
