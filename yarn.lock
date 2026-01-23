@@ -3167,9 +3167,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-app-design-system@github:pagopa/io-app-design-system#SIW-3348-remote-presentation-new-credentials":
-  version: 5.12.1
-  resolution: "@pagopa/io-app-design-system@https://github.com/pagopa/io-app-design-system.git#commit=4ff0374144f0028a17b15f8dd46464f7047b82fb"
+"@pagopa/io-app-design-system@npm:^5.12.2":
+  version: 5.12.2
+  resolution: "@pagopa/io-app-design-system@npm:5.12.2"
   dependencies:
     auto-changelog: ^2.4.0
     lodash: ^4.17.21
@@ -3190,7 +3190,7 @@ __metadata:
     react-native-reanimated: "*"
     react-native-safe-area-context: "*"
     react-native-svg: "*"
-  checksum: 04b6402803d5e3e00edf2ea073a23e9af6a6ce0d9eaa4a01887cf77115b442c240cee15b629f608551ec974149c3adf18af58a39493322340e5c77f1ed6c66f4
+  checksum: ce33f91aba1fc327ee3bb499073d9eccef9360f186215fad476201c4c73ad62f3ac17128baaed40e2f2b25cdb259f5ec31d8b6a89ac377c8300b4d635292fecc
   languageName: node
   linkType: hard
 
@@ -11302,7 +11302,7 @@ __metadata:
     "@babel/runtime": ^7.25.0
     "@gorhom/bottom-sheet": ^5.1.2
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
-    "@pagopa/io-app-design-system": "github:pagopa/io-app-design-system#SIW-3348-remote-presentation-new-credentials"
+    "@pagopa/io-app-design-system": ^5.12.2
     "@pagopa/io-pagopa-commons": ^3.1.0
     "@pagopa/io-react-native-cie": 1.3.0
     "@pagopa/io-react-native-cieid": 0.4.0
