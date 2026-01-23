@@ -5382,7 +5382,8 @@
           "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}}).",
           "alert": {
             "message": "Non potrai completare l'accesso ai servizi online."
-          }
+          },
+          "bottomsheetTitle": "Dettaglio dati"
         },
         "remote": {
           "loadingScreen": {

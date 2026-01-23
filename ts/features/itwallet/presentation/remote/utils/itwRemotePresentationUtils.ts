@@ -24,7 +24,10 @@ const credentialTypesByVct: { [vct: string]: CredentialType } = {
   personidentificationdata: CredentialType.PID,
   mdl: CredentialType.DRIVING_LICENSE,
   europeandisabilitycard: CredentialType.EUROPEAN_DISABILITY_CARD,
-  europeanhealthinsurancecard: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+  europeanhealthinsurancecard: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+  education_degree: CredentialType.EDUCATION_DEGREE,
+  education_enrollment: CredentialType.EDUCATION_ENROLLMENT,
+  residency: CredentialType.RESIDENCY
 };
 
 /**
@@ -87,6 +90,8 @@ export const enrichPresentationDetails = (
     const parsedClaims = parseClaims(credential.parsedCredential, {
       exclude: [WellKnownClaim.unique_id]
     });
+
+    console.log("Parsed claims for credential", details.id, parsedClaims);
 
     return {
       ...details,
