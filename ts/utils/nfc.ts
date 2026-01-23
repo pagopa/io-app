@@ -27,7 +27,10 @@ export type AvailableNfcAntenna = z.infer<typeof AvailableNfcAntennaSchema>;
 
 /**
  * Retrieves NFC antenna information on Android devices with API level 34+.
- * Returns undefined for unsupported Android devices or iOS devices.
+ * The information includes the device dimensions and the locations of available NFC antennas
+ * in millimeters from the top-left corner of the device.
+ *
+ * @returns {NfcAntennaInfo | undefined} NFC antenna information or undefined if not available.
  */
 export const getNfcAntennaInfo = Platform.select({
   android: () => {
