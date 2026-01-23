@@ -1,12 +1,8 @@
 package it.pagopa.io.app.modules
 
-import android.app.Activity
-import android.nfc.AvailableNfcAntenna
 import android.nfc.NfcAdapter
-import android.nfc.NfcAntennaInfo
 import android.os.Build
 import com.facebook.react.bridge.*
-import java.lang.ref.WeakReference
 
 
 class NfcAntennaInfoModule(reactContext: ReactApplicationContext) :
@@ -17,12 +13,15 @@ class NfcAntennaInfoModule(reactContext: ReactApplicationContext) :
   }
 
   @ReactMethod
-  fun getNfcAntennaInfo(): WritableNativeMap? {
+  fun getNfcAntennaInfo(promise: Promise) {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-      return null;
+      promise.reject("UNSUPPORTED_DEVICE", "This Android version is not supported");
+      return
     }
+
     val adapter = NfcAdapter.getDefaultAdapter(reactApplicationContext)
-    return adapter.nfcAntennaInfo?.let { info ->
+    promise.resolve(
+      adapter.nfcAntennaInfo?.let { info ->
         WritableNativeMap().apply {
           putInt("deviceWidth", info.deviceWidth)
           putInt("deviceHeight", info.deviceHeight)
@@ -37,6 +36,7 @@ class NfcAntennaInfoModule(reactContext: ReactApplicationContext) :
           })
         }
       }
+    )
   }
 
 }

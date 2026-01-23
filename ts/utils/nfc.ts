@@ -30,16 +30,16 @@ export type AvailableNfcAntenna = z.infer<typeof AvailableNfcAntennaSchema>;
  * The information includes the device dimensions and the locations of available NFC antennas
  * in millimeters from the top-left corner of the device.
  *
- * @returns {NfcAntennaInfo | undefined} NFC antenna information or undefined if not available.
+ * @returns {Promise<NfcAntennaInfo | undefined>} NFC antenna information or undefined if not available.
  */
 export const getNfcAntennaInfo = Platform.select({
-  android: () => {
+  android: async () => {
     try {
-      const raw = NfcAntennaInfoNativeModule.getNfcAntennaInfo();
+      const raw = await NfcAntennaInfoNativeModule.getNfcAntennaInfo();
       return NfcAntennaInfoSchema.parse(raw);
     } catch (e) {
       return undefined;
     }
   },
-  default: () => undefined
+  default: async () => undefined
 });

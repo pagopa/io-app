@@ -4,6 +4,7 @@ import {
   ListItemInfo,
   Pictogram
 } from "@pagopa/io-app-design-system";
+import { constNull } from "fp-ts/lib/function";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -22,8 +23,11 @@ export const NfcPlayground = () => {
   });
 
   useOnFirstRender(() => {
-    const info = getNfcAntennaInfo();
-    setNfcAntennaInfo(info);
+    getNfcAntennaInfo()
+      .then(info => {
+        setNfcAntennaInfo(info);
+      })
+      .catch(constNull);
   });
 
   if (!nfcAntennaInfo) {
