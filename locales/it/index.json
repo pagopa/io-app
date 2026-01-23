@@ -4061,6 +4061,16 @@
               "TAG_LOST": {
                 "title": "Hai rimosso il telefono troppo presto!",
                 "subtitle": "Riprova e tieni fermo il telefono per la lettura."
+              },
+              "WRONG_CAN": {
+                "title": "Il codice inserito non è corretto",
+                "subtitleAndroid": "Controllalo e riprova. È il codice a 6 cifre (CAN) stampato sul fronte della Carta di Identità Elettronica, in basso a destra.",
+                "subtitleIos": "Controllalo e riprova."
+              },
+              "GENERIC": {
+                "title": "Non siamo riusciti a recuperare i dati dalla carta",
+                "subtitle": "Attendi qualche minuto e riprova.",
+                "secondaryAction": "Mostra dettagli"
               }
             }
           },
