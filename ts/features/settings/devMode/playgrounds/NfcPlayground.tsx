@@ -4,16 +4,18 @@ import {
   ListItemInfo,
   Pictogram
 } from "@pagopa/io-app-design-system";
-import { constNull } from "fp-ts/lib/function";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { getNfcAntennaInfo, NfcAntennaInfo } from "../../../../utils/nfc";
 
 export const NfcPlayground = () => {
+  const [failure, setFailure] = useState<Error>();
   const [nfcAntennaInfo, setNfcAntennaInfo] = useState<
     NfcAntennaInfo | undefined
   >(undefined);
@@ -22,15 +24,21 @@ export const NfcPlayground = () => {
     title: "NFC Playground"
   });
 
-  useOnFirstRender(() => {
-    getNfcAntennaInfo()
-      .then(info => {
-        setNfcAntennaInfo(info);
-      })
-      .catch(constNull);
+  useOnFirstRender(async () => {
+    try {
+      const info = await getNfcAntennaInfo();
+      setNfcAntennaInfo(info);
+    } catch (e) {
+      setFailure(e instanceof Error ? e : new Error(String(e)));
+    }
   });
 
-  if (!nfcAntennaInfo) {
+  useDebugInfo({
+    nfcAntennaInfo,
+    failure
+  });
+
+  if (failure !== undefined) {
     return (
       <OperationResultScreenContent
         isHeaderVisible={true}
@@ -38,6 +46,10 @@ export const NfcPlayground = () => {
         title="NFC Antenna Info not available on this device."
       />
     );
+  }
+
+  if (!nfcAntennaInfo) {
+    return <LoadingScreenContent title="Getting NFC info" />;
   }
 
   return (
