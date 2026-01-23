@@ -12,7 +12,7 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils";
 
 /**
  * Defines gradient color schemes for different credential types
- * to be used in the header of the ClaimsSelector component.
+ * to be used in the header of the {@link ClaimsSelector} component.
  */
 export const claimsSelectorHeaderGradientsByCredentialType: {
   [type: string]: Array<string>;
@@ -29,7 +29,7 @@ export const claimsSelectorHeaderGradientsByCredentialType: {
 type PresentFn = (claims: Array<ClaimDisplayFormat>, title?: string) => void;
 
 /**
- *  Builds the optional endElement action shown at the end of a ClaimsSelector item.
+ *  Builds the optional endElement action shown at the end of a {@link ClaimsSelector} item.
  * When triggered, it opens the claim details bottom sheet managed by
  * `useClaimsDetailsBottomSheet`.
  * @param present - Function to present the bottom sheet with claim details.
@@ -57,28 +57,28 @@ const buildInfoEndElement = (
 };
 
 /**
- * Maps a list of claims into `ClaimsSelector` items, handling the different
+ * Maps a list of claims into {@link ClaimsSelector} items, handling the different
  * display formats supported by the component.
  * @param claims - Array of claims to be mapped.
  * @param present - Optional function used to present claim details
  * in a bottom sheet.
- * @returns An array of items formatted for the `ClaimsSelector` component.
+ * @returns An array of items formatted for the {@link ClaimsSelector} component.
  */
 export const mapClaimsToClaimsSelectorItems = (
   claims: Array<ClaimDisplayFormat>,
   present?: PresentFn
 ): ComponentProps<typeof ClaimsSelector>["items"] =>
   claims.flatMap(c => {
-    const display = getClaimDisplayValue(c);
+    const { renderAs, value } = getClaimDisplayValue(c);
     const description = c.label;
     const id = c.id;
 
-    switch (display.renderAs) {
+    switch (renderAs) {
       case "image":
-        return [{ id, value: display.value, description, type: "image" }];
+        return [{ id, value, description, type: "image" }];
 
       case "drivingPrivileges":
-        return display.value.map((p, idx) => ({
+        return value.map((p, idx) => ({
           id: `${id}_${idx}_${p.driving_privilege}`,
           description,
           value: p.driving_privilege,
@@ -95,10 +95,10 @@ export const mapClaimsToClaimsSelectorItems = (
         }));
 
       case "nestedObject":
-        return mapClaimsToClaimsSelectorItems(display.value);
+        return mapClaimsToClaimsSelectorItems(value);
 
-      case "nestedArrayObject": {
-        const nestedClaimItems = display.value;
+      case "nestedObjectArray": {
+        const nestedClaimItems = value;
 
         if (nestedClaimItems.length === 1) {
           return mapClaimsToClaimsSelectorItems(nestedClaimItems[0]);
@@ -129,12 +129,12 @@ export const mapClaimsToClaimsSelectorItems = (
           {
             id,
             description,
-            value: display.value.map(getSafeText).join(", ")
+            value: value.map(getSafeText).join(", ")
           }
         ];
 
       case "text":
       default:
-        return [{ id, value: getSafeText(display.value), description }];
+        return [{ id, value: getSafeText(value), description }];
     }
   });

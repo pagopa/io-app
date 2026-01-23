@@ -724,7 +724,7 @@ export const getFamilyNameFromCredential = (
     O.getOrElse(() => "")
   );
 
-export type ClaimDisplayValue =
+type ClaimDisplayValue =
   | { renderAs: "text"; value: string }
   | { renderAs: "list"; value: Array<string> }
   | { renderAs: "image"; value: string }
@@ -737,35 +737,41 @@ export type ClaimDisplayValue =
       value: Array<ClaimDisplayFormat>;
     }
   | {
-      renderAs: "nestedArrayObject";
+      renderAs: "nestedObjectArray";
       value: Array<Array<ClaimDisplayFormat>>;
     };
 
+/**
+ * Converts a driving privilege claim into a list of displayable claims.
+ * This is used to present detailed information in the claim details bottom sheet.
+ * @param p - The driving privilege claim to convert.
+ * @returns A list of claims formatted for display purposes.
+ */
 export const drivingPrivilegeToClaims = (
-  p: DrivingPrivilegeClaimType
+  drivingPrivilege: DrivingPrivilegeClaimType
 ): Array<ClaimDisplayFormat> => [
   {
     id: "issue_date",
     label: I18n.t(
       "features.itWallet.verifiableCredentials.claims.mdl.issuedDate"
     ),
-    value: p.issue_date.toString("DD/MM/YYYY")
+    value: drivingPrivilege.issue_date.toString("DD/MM/YYYY")
   },
   {
     id: "expiry_date",
     label: I18n.t(
       "features.itWallet.verifiableCredentials.claims.mdl.expirationDate"
     ),
-    value: p.expiry_date.toString("DD/MM/YYYY")
+    value: drivingPrivilege.expiry_date.toString("DD/MM/YYYY")
   },
-  ...(p.restrictions_conditions
+  ...(drivingPrivilege.restrictions_conditions
     ? [
         {
           id: "restrictions_conditions",
           label: I18n.t(
             "features.itWallet.verifiableCredentials.claims.mdl.restrictionConditions"
           ),
-          value: p.restrictions_conditions
+          value: drivingPrivilege.restrictions_conditions
         }
       ]
     : [])
@@ -832,8 +838,8 @@ export const getClaimDisplayValue = (
           return { renderAs: "nestedObject", value: nestedClaims };
         }
         if (NestedArrayClaim.is(decoded)) {
-          const nestedArrayClaim = decoded.map(obj => parseClaims(obj));
-          return { renderAs: "nestedArrayObject", value: nestedArrayClaim };
+          const nestedObjects = decoded.map(obj => parseClaims(obj));
+          return { renderAs: "nestedObjectArray", value: nestedObjects };
         }
         if (BoolClaim.is(decoded)) {
           return {
