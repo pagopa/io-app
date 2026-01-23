@@ -27,6 +27,8 @@ import {
   itwSetFiscalCodeWhitelisted
 } from "../store/actions/preferences.ts";
 import { isItwCredential } from "../utils/itwCredentialUtils.ts";
+import { mixpanelTrack } from "../../../../mixpanel.ts";
+import { getNfcAntennaInfo } from "../../../../utils/nfc.ts";
 import { watchItwEnvironment } from "./environment";
 import { watchItwOfflineAccess } from "./offlineAccess.ts";
 
@@ -76,6 +78,9 @@ export function* watchItwOfflineSaga(): SagaIterator {
   yield* fork(watchItwOfflineAccess);
   // Sync ITW analytics properties
   yield* fork(syncItwAnalyticsProperties);
+
+  // TODO remove this fork when NFC antenna info tracking is not needed anymore
+  yield* fork(handleNfcAntennaInfoTracking);
 }
 
 /**
@@ -114,3 +119,23 @@ const handleAuthLevelSanitizationSaga = function* (
   yield* put(itwSetAuthLevel("L3"));
   yield* put(itwFreezeSimplifiedActivationRequirements());
 };
+
+/**
+ * Tracks NFC antenna information for discovery and debugging purposes.
+ * TODO remove this fork when NFC antenna info tracking is not needed anymore
+ */
+export function* handleNfcAntennaInfoTracking() {
+  try {
+    const { deviceHeight, deviceWidth, availableNfcAntennas } = yield* call(
+      getNfcAntennaInfo
+    );
+    void mixpanelTrack("ITW_DEVICE_NFC_ANTENNA_INFO", {
+      hasDeviceInfo: deviceHeight !== 0 && deviceWidth !== 0,
+      availableAntennas: availableNfcAntennas.length
+    });
+  } catch (failure) {
+    void mixpanelTrack("ITW_DEVICE_NFC_ANTENNA_INFO", {
+      failure
+    });
+  }
+}
