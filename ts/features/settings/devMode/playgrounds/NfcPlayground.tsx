@@ -47,7 +47,7 @@ export const NfcPlayground = () => {
           endElement={{
             type: "badge",
             componentProps: {
-              text: nfcAntennaInfo.deviceWidthMm.toString(),
+              text: nfcAntennaInfo.deviceWidth.toString(),
               variant: "default"
             }
           }}
@@ -58,7 +58,7 @@ export const NfcPlayground = () => {
           endElement={{
             type: "badge",
             componentProps: {
-              text: nfcAntennaInfo.deviceHeightMm.toString(),
+              text: nfcAntennaInfo.deviceHeight.toString(),
               variant: "default"
             }
           }}

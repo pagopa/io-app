@@ -13,12 +13,12 @@ const AvailableNfcAntennaSchema = z.object({
 
 /**
  * Information about the NFC antennas available on the device.
- * Includes the dimensions of the device to determine antenna placement.
+ * Includes the dimensions (in millimeters) of the device to determine antenna placement.
  */
 const NfcAntennaInfoSchema = z.object({
   availableNfcAntennas: z.array(AvailableNfcAntennaSchema),
-  deviceWidthMm: z.number(),
-  deviceHeightMm: z.number(),
+  deviceWidth: z.number(),
+  deviceHeight: z.number(),
   isDeviceFoldable: z.boolean()
 });
 
