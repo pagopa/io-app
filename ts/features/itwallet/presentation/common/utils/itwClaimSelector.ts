@@ -95,12 +95,15 @@ export const mapClaimsToClaimsSelectorItems = (
         }));
 
       case "nestedObject":
+        // Nested objects are rendered inline at the same level as other claims,
+        // without additional detail actions (no bottom sheet)
         return mapClaimsToClaimsSelectorItems(value);
 
       case "nestedObjectArray": {
         const nestedClaimItems = value;
 
         if (nestedClaimItems.length === 1) {
+          // Same of nestedObject, render inline without detail action
           return mapClaimsToClaimsSelectorItems(nestedClaimItems[0]);
         }
 
