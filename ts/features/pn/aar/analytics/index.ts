@@ -184,3 +184,21 @@ export const trackSendAarNotificationOpeningMandateBottomSheetClosure = () => {
   const eventProps = buildEventProperties("UX", "action");
   void mixpanelTrack(eventName, eventProps);
 };
+
+export const trackSendAarNotificationOpeningNfcNotSupported = () => {
+  const eventName = "SEND_NOTIFICATION_OPENING_NFC_NOT_SUPPORTED";
+  const eventProps = buildEventProperties("UX", "screen_view");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarNotificationOpeningNfcNotSupportedInfo = () => {
+  const eventName = "SEND_NOTIFICATION_OPENING_NFC_NOT_SUPPORTED_INFO";
+  const eventProps = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarNotificationOpeningNfcNotSupportedClosure = () => {
+  const eventName = "SEND_NOTIFICATION_OPENING_NFC_NOT_SUPPORTED_CLOSURE";
+  const eventProps = buildEventProperties("UX", "exit");
+  void mixpanelTrack(eventName, eventProps);
+};
