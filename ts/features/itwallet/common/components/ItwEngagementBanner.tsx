@@ -81,9 +81,7 @@ export const ItwEngagementBanner = ({
         <ItWalletDeck width={105} height={145} style={styles.deck} />
         <VStack space={8}>
           <View style={styles.header}>
-            <H4 color="black" style={styles.content}>
-              {title}
-            </H4>
+            <H4 style={styles.content}>{title}</H4>
             {dismissable && (
               <IconButton
                 testID="itwEngagementBannerCloseButtonTestID"

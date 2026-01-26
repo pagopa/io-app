@@ -97,7 +97,6 @@ export type ObtainCredentialParams = {
   clientId: string;
   codeVerifier: string;
   issuerConf: IssuerConfiguration;
-  operationType?: "reissuing";
 };
 
 /**
@@ -110,7 +109,6 @@ export type ObtainCredentialParams = {
  * @param clientId - The client ID
  * @param codeVerifier - The code verifier
  * @param issuerConf - The issuer configuration
- * @param operationType - The operation type, e.g., "reissuing"
  * @returns The obtained credential
  */
 export const obtainCredential = async ({
@@ -121,8 +119,7 @@ export const obtainCredential = async ({
   walletInstanceAttestation,
   clientId,
   codeVerifier,
-  issuerConf,
-  operationType
+  issuerConf
 }: ObtainCredentialParams) => {
   // Get WIA crypto context
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
@@ -161,8 +158,7 @@ export const obtainCredential = async ({
     credentialType,
     env,
     dPopCryptoContext,
-    issuerConf,
-    operationType
+    issuerConf
   };
 
   if (SEQUENTIAL_ISSUANCE_CREDENTIALS.includes(credentialType)) {
@@ -221,7 +217,6 @@ type RequestAndParseCredentialParams = {
   clientId: string;
   env: Env;
   dPopCryptoContext: CryptoContext;
-  operationType?: "reissuing";
 };
 
 const requestAndParseCredential = async ({
@@ -231,8 +226,7 @@ const requestAndParseCredential = async ({
   authDetails,
   clientId,
   dPopCryptoContext,
-  env,
-  operationType
+  env
 }: RequestAndParseCredentialParams) => {
   const { credential_configuration_id, credential_identifiers } = authDetails;
   const credentialKeyTag = uuidv4().toString();
@@ -251,8 +245,7 @@ const requestAndParseCredential = async ({
     {
       dPopCryptoContext,
       credentialCryptoContext
-    },
-    operationType
+    }
   ).catch(
     enrichErrorWithMetadata({
       credentialId: credential_configuration_id
