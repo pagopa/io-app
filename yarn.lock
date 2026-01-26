@@ -3336,9 +3336,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-wallet@github:pagopa/io-react-native-wallet#SIW-3648-sd-jwt-library-migration":
-  version: 2.4.2
-  resolution: "@pagopa/io-react-native-wallet@https://github.com/pagopa/io-react-native-wallet.git#commit=a9367e27adff3b24692087a780bfb3b96ce200da"
+"@pagopa/io-react-native-wallet@npm:2.5.0":
+  version: 2.5.0
+  resolution: "@pagopa/io-react-native-wallet@npm:2.5.0"
   dependencies:
     "@sd-jwt/core": ^0.18.0
     "@sd-jwt/crypto-nodejs": ^0.18.0
@@ -3360,7 +3360,7 @@ __metadata:
     react: "*"
     react-native: "*"
     react-native-quick-crypto: "*"
-  checksum: d7a526991f629422c03084019ab0aa13863e0fb1df92c3c980246d18497376d5e22e9de48494cfda835837b6e7f3cdec13ddf3e007331de5c6e33d3906990a93
+  checksum: 14e0a32bb91422f447065c2d497284a13c1aa01e97e1e0cc7c84a378e29dd4475ef628f8fe8a21259ccd3fccf238d423db9e362e74633b7528d24082e7e6556a
   languageName: node
   linkType: hard
 
@@ -11440,7 +11440,7 @@ __metadata:
     "@pagopa/io-react-native-jwt": ^2.1.0
     "@pagopa/io-react-native-login-utils": 1.2.0
     "@pagopa/io-react-native-secure-storage": ^0.2.1
-    "@pagopa/io-react-native-wallet": "github:pagopa/io-react-native-wallet#SIW-3648-sd-jwt-library-migration"
+    "@pagopa/io-react-native-wallet": 2.5.0
     "@pagopa/io-react-native-wallet-legacy": "npm:@pagopa/io-react-native-wallet@0.30.0"
     "@pagopa/io-react-native-zendesk": ^0.3.30
     "@pagopa/openapi-codegen-ts": ^14.2.0
