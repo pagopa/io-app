@@ -2,7 +2,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { Alert, Image } from "react-native";
 import i18n from "i18next";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import cieCanEducationalSource from "../../../../../img/features/pn/cieCanEducational.png";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
@@ -18,6 +19,10 @@ import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppPa
 import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import {
+  trackSendAarMandateCiePreparation,
+  trackSendAarMandateCiePreparationContinue
+} from "../analytics";
 
 const { width, height, uri } = Image.resolveAssetSource(
   cieCanEducationalSource
@@ -48,6 +53,12 @@ export const SendAarCanEducationalScreen = ({
     }
   }, [currentAarState.type, navigation]);
 
+  useFocusEffect(
+    useCallback(() => {
+      trackSendAarMandateCiePreparation();
+    }, [])
+  );
+
   const handleGoBack = () => {
     Alert.alert(
       i18n.t("features.pn.aar.flow.cieCanAdvisory.alert.title"),
@@ -66,6 +77,8 @@ export const SendAarCanEducationalScreen = ({
   };
 
   const handleGoNext = () => {
+    trackSendAarMandateCiePreparationContinue();
+
     if (currentAarState.type === sendAARFlowStates.cieCanAdvisory) {
       dispatch(
         setAarFlowState({

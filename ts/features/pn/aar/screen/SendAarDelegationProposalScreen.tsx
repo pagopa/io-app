@@ -13,6 +13,12 @@ import { useSendAarDelegationProposalScreenBottomSheet } from "../hooks/useSendA
 import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
 import { setAarFlowState } from "../store/actions";
 import { AarStatesByName, sendAARFlowStates } from "../utils/stateUtils";
+import {
+  trackSendAarNotificationOpeningMandateBottomSheet,
+  trackSendAarNotificationOpeningMandateDisclaimer,
+  trackSendAarNotificationOpeningMandateDisclaimerAccepted,
+  trackSendAarNotificationOpeningMandateDisclaimerClosure
+} from "../analytics";
 
 export const SendAarDelegationProposalScreen = () => {
   const { terminateFlow, currentFlowData } = useSendAarFlowManager();
@@ -84,6 +90,10 @@ const DelegationProposalContent = ({
 
   const { denomination } = notAdresseeData.recipientInfo;
 
+  useEffect(() => {
+    trackSendAarNotificationOpeningMandateDisclaimer();
+  }, []);
+
   const handleIdentificationSuccess = useCallback(() => {
     dispatch(
       setAarFlowState({
@@ -101,7 +111,10 @@ const DelegationProposalContent = ({
       onIdentificationSuccess: handleIdentificationSuccess
     });
   const handleContinuePress = useCallback(() => {
+    trackSendAarNotificationOpeningMandateDisclaimerAccepted();
+
     if (isNfcAvailable) {
+      trackSendAarNotificationOpeningMandateBottomSheet();
       present();
     } else {
       dispatch(
@@ -112,6 +125,11 @@ const DelegationProposalContent = ({
       );
     }
   }, [isNfcAvailable, present, dispatch, notAdresseeData]);
+
+  const handleClose = useCallback(() => {
+    trackSendAarNotificationOpeningMandateDisclaimerClosure();
+    terminateFlow();
+  }, [terminateFlow]);
 
   return (
     <>
@@ -131,7 +149,7 @@ const DelegationProposalContent = ({
         }}
         secondaryAction={{
           label: i18n.t("global.buttons.close"),
-          onPress: terminateFlow,
+          onPress: handleClose,
           testID: "close-button"
         }}
       />
