@@ -7,6 +7,11 @@ import { openWebUrl } from "../../../../../utils/url";
 import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
 import { useIOSelector } from "../../../../../store/hooks";
 import { sendAarInAppDelegationUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import {
+  trackSendAarNotificationOpeningNfcNotSupported,
+  trackSendAarNotificationOpeningNfcNotSupportedClosure,
+  trackSendAarNotificationOpeningNfcNotSupportedInfo
+} from "../../analytics";
 
 export const SendAarNfcNotSupportedComponent = () => {
   const { terminateFlow } = useSendAarFlowManager();
@@ -16,6 +21,10 @@ export const SendAarNfcNotSupportedComponent = () => {
   useEffect(() => {
     setOptions({ headerShown: true });
   }, [setOptions]);
+
+  useEffect(() => {
+    trackSendAarNotificationOpeningNfcNotSupported();
+  }, []);
 
   const featureInfoText = i18n.t(
     "features.pn.aar.flow.delegated.nfcNotSupported.featureInfoText",
@@ -34,7 +43,10 @@ export const SendAarNfcNotSupportedComponent = () => {
         primary: {
           icon: "instruction",
           testID: "help-center-cta",
-          onPress: () => openWebUrl(helpCenterUrl),
+          onPress: () => {
+            trackSendAarNotificationOpeningNfcNotSupportedInfo();
+            openWebUrl(helpCenterUrl);
+          },
           label: i18n.t("features.pn.aar.flow.delegated.nfcNotSupported.cta")
         }
       }}
@@ -44,7 +56,10 @@ export const SendAarNfcNotSupportedComponent = () => {
         type: "singleAction",
         firstAction: {
           icon: "closeLarge",
-          onPress: terminateFlow,
+          onPress: () => {
+            trackSendAarNotificationOpeningNfcNotSupportedClosure();
+            terminateFlow();
+          },
           accessibilityLabel: i18n.t(
             "global.accessibility.contextualHelp.close"
           ),

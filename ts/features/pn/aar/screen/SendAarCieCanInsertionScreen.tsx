@@ -17,6 +17,7 @@ import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppPa
 import PN_ROUTES from "../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
+import { trackSendAarMandateCieCanEnter } from "../analytics";
 
 export const CIE_CAN_LENGTH = 6;
 
@@ -57,6 +58,7 @@ export const SendAarCieCanInsertionScreen = ({
 
   useFocusEffect(
     useCallback(() => {
+      trackSendAarMandateCieCanEnter();
       setAccessibilityFocus(canPadViewRef, 300 as Millisecond);
 
       return () => {
