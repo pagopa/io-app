@@ -5,7 +5,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { memo, MutableRefObject, useMemo } from "react";
+import { memo, RefObject, useMemo } from "react";
 import { Alert } from "react-native";
 import I18n from "i18next";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
@@ -27,7 +27,7 @@ import { formatAmountText } from "../utils";
 type Props = {
   transaction: NoticeListItem;
   onPress?: () => void;
-  openedItemRef?: MutableRefObject<(() => void) | null>;
+  openedItemRef?: RefObject<(() => void) | null>;
 };
 
 const ReceiptListItemTransaction = memo(
@@ -90,8 +90,16 @@ const ReceiptListItemTransaction = memo(
         analyticsHideReceiptAction(paymentAnalyticsData, "swipe");
 
         Alert.alert(
-          I18n.t("features.payments.transactions.receipt.hideBanner.title"),
-          I18n.t("features.payments.transactions.receipt.hideBanner.content"),
+          I18n.t(
+            transaction.isCart
+              ? "features.payments.transactions.receipt.hideBanner.isCart.title"
+              : "features.payments.transactions.receipt.hideBanner.title"
+          ),
+          I18n.t(
+            transaction.isCart
+              ? "features.payments.transactions.receipt.hideBanner.isCart.content"
+              : "features.payments.transactions.receipt.hideBanner.content"
+          ),
           [
             {
               text: I18n.t("global.buttons.cancel"),
