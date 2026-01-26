@@ -4,7 +4,6 @@ import { constVoid } from "fp-ts/lib/function";
 import { useEffect } from "react";
 import { Appearance, ColorSchemeName, useColorScheme } from "react-native";
 import { updateNavigationBarColor } from "../features/settings/preferences/screens/AppearancePreferenceScreen";
-import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
 
 export const THEME_PERSISTENCE_KEY = "selectedAppThemeConfiguration";
 export type ColorModeChoice = "auto" | "dark" | "light";
@@ -13,7 +12,7 @@ export const useAppThemeConfiguration = () => {
   const { setTheme } = useIOThemeContext();
   const systemColorScheme = useColorScheme();
 
-  useOnFirstRender(() => {
+  useEffect(() => {
     AsyncStorage.getItem(THEME_PERSISTENCE_KEY)
       .then(value => {
         if (value === undefined || value === null) {
@@ -35,16 +34,22 @@ export const useAppThemeConfiguration = () => {
         setTheme("light");
         updateNavigationBarColor("light");
       });
-  });
 
-  useEffect(() => {
-    AsyncStorage.getItem(THEME_PERSISTENCE_KEY)
-      .then(value => {
-        if (value === "auto") {
-          setTheme(systemColorScheme);
-          updateNavigationBarColor(systemColorScheme);
-        }
-      })
-      .catch(constVoid);
-  }, [systemColorScheme, setTheme]);
+    // Listen for system theme changes
+    const subscription = Appearance.addChangeListener(({ colorScheme }) => {
+      AsyncStorage.getItem(THEME_PERSISTENCE_KEY)
+        .then(value => {
+          if (value === "auto" || value === null || value === undefined) {
+            const resolvedScheme = colorScheme;
+            setTheme(resolvedScheme);
+            updateNavigationBarColor(resolvedScheme);
+          }
+        })
+        .catch(constVoid);
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, [setTheme, systemColorScheme]);
 };
