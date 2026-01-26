@@ -66,7 +66,8 @@ const ReceiptListScreen = () => {
       screen: PaymentsReceiptRoutes.PAYMENT_RECEIPT_DETAILS,
       params: {
         transactionId: transaction.eventId,
-        isPayer: transaction.isPayer
+        isPayer: transaction.isPayer,
+        isCart: transaction.isCart
       }
     });
   };
