@@ -62,9 +62,51 @@ describe("SecureStorage", () => {
 
         const result = await storage.getItem(myKey);
         expect(result).toBeUndefined();
-        expect(Sentry.captureException).toHaveBeenCalledWith(error, {
-          tags: { isRequired: true }
-        });
+        expect(Sentry.captureException).toHaveBeenCalledWith(
+          error,
+          expect.objectContaining({
+            tags: expect.objectContaining({
+              isRequired: true,
+              secureStorageErrorCode: "Decryption failed"
+            }),
+            contexts: expect.objectContaining({
+              secureStorage: expect.objectContaining({
+                operation: "SECURE_STORAGE_GET_ITEM_FAILURE",
+                key: myKey
+              })
+            }),
+            fingerprint: expect.arrayContaining([
+              "secure-storage-failure",
+              "SECURE_STORAGE_GET_ITEM_FAILURE"
+            ])
+          })
+        );
+      });
+
+      it("should capture SecureStorageError with userInfo in Sentry context", async () => {
+        const secureStorageError = {
+          message: "GET_FAILED",
+          userInfo: { nativeError: "KeyStore exception", platform: "android" }
+        };
+        (SecureStorage.get as jest.Mock).mockRejectedValue(secureStorageError);
+
+        await storage.getItem(myKey);
+
+        expect(Sentry.captureException).toHaveBeenCalledWith(
+          expect.any(Error),
+          expect.objectContaining({
+            tags: expect.objectContaining({
+              secureStorageErrorCode: "GET_FAILED"
+            }),
+            contexts: expect.objectContaining({
+              secureStorage: expect.objectContaining({
+                errorCode: "GET_FAILED",
+                nativeError: "KeyStore exception",
+                platform: "android"
+              })
+            })
+          })
+        );
       });
     });
 
@@ -82,9 +124,14 @@ describe("SecureStorage", () => {
         (SecureStorage.put as jest.Mock).mockRejectedValue(error);
 
         await storage.setItem(myKey, myValue);
-        expect(Sentry.captureException).toHaveBeenCalledWith(error, {
-          tags: { isRequired: true }
-        });
+        expect(Sentry.captureException).toHaveBeenCalledWith(
+          error,
+          expect.objectContaining({
+            tags: expect.objectContaining({
+              isRequired: true
+            })
+          })
+        );
       });
     });
 
@@ -102,9 +149,14 @@ describe("SecureStorage", () => {
         (SecureStorage.remove as jest.Mock).mockRejectedValue(error);
 
         await storage.removeItem(myKey);
-        expect(Sentry.captureException).toHaveBeenCalledWith(error, {
-          tags: { isRequired: true }
-        });
+        expect(Sentry.captureException).toHaveBeenCalledWith(
+          error,
+          expect.objectContaining({
+            tags: expect.objectContaining({
+              isRequired: true
+            })
+          })
+        );
       });
     });
   });

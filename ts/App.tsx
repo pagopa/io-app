@@ -5,15 +5,17 @@ import {
   IOThemeContextProvider,
   ToastProvider
 } from "@pagopa/io-app-design-system";
+import { ErrorEvent, TransactionEvent } from "@sentry/core";
+import * as Sentry from "@sentry/react-native";
+import { JSX } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import * as Sentry from "@sentry/react-native";
-import { ErrorEvent, TransactionEvent } from "@sentry/core";
-import { JSX } from "react";
 import RootContainer from "./RootContainer";
 import { persistor, store } from "./boot/configureStoreAndPersistor";
+import { IOAlertVisibleContextProvider } from "./components/StatusMessages/IOAlertVisibleContext";
+import { StatusMessages } from "./components/StatusMessages/StatusMessages";
 import { LightModalProvider } from "./components/ui/LightModal";
 import {
   apiLoginUrlPrefix,
@@ -27,11 +29,9 @@ import {
   walletApiBaseUrl,
   walletApiUatBaseUrl
 } from "./config";
-import { isDevEnv } from "./utils/environment";
-import { StatusMessages } from "./components/StatusMessages/StatusMessages";
 import { AppFeedbackProvider } from "./features/appReviews/components/AppFeedbackProvider";
-import { IOAlertVisibleContextProvider } from "./components/StatusMessages/IOAlertVisibleContext";
 import { getEnv } from "./features/itwallet/common/utils/environment";
+import { isDevEnv } from "./utils/environment";
 
 export type ReactNavigationInstrumentation = ReturnType<
   typeof Sentry.reactNavigationIntegration
@@ -104,6 +104,7 @@ const beforeSendHandler = <T extends ErrorEvent | TransactionEvent>(
 Sentry.setUser(null);
 
 Sentry.init({
+  debug: isDevEnv,
   dsn: sentryDsn,
   beforeSend(event) {
     return beforeSendHandler(event);
