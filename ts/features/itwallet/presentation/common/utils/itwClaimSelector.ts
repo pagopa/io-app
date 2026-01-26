@@ -79,7 +79,7 @@ export const mapClaimsToClaimsSelectorItems = (
 
       case "drivingPrivileges":
         return value.map((p, idx) => ({
-          id: `${id}_${idx}_${p.driving_privilege}`,
+          id: `${idx}_${description}_${p.driving_privilege}`,
           description,
           value: p.driving_privilege,
           endElement: buildInfoEndElement(
@@ -110,8 +110,8 @@ export const mapClaimsToClaimsSelectorItems = (
             singleItemClaims
           );
 
-          const itemId = `${id}[${index}]`;
-          // TODO: verify fallback
+          const itemId = `${index}_${id}_${description}`;
+          // For education degrees and education enrollments credentials, summaryLabel and summaryValue are mandatory.
           const summaryDesc = getSafeText(summaryLabel ?? "");
           const summaryVal = getSafeText(summaryValue ?? "");
 
