@@ -17,7 +17,13 @@ import {
   trackSendAarErrorScreenClosure,
   trackSendAarErrorScreenDetails,
   trackSendAarErrorScreenDetailsHelp,
-  trackSendAarErrorScreenDetailsCode
+  trackSendAarErrorScreenDetailsCode,
+  trackSendAarNotificationOpeningMandateDisclaimer,
+  trackSendAarNotificationOpeningMandateDisclaimerAccepted,
+  trackSendAarNotificationOpeningMandateDisclaimerClosure,
+  trackSendAarNotificationOpeningMandateBottomSheet,
+  trackSendAarNotificationOpeningMandateBottomSheetAccepted,
+  trackSendAarNotificationOpeningMandateBottomSheetClosure
 } from "..";
 import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
 import * as mixpanel from "../../../../../mixpanel";
@@ -571,6 +577,96 @@ describe("index", () => {
       expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
       expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
         "SEND_AAR_ERROR_DETAIL_CODE"
+      );
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "UX",
+        event_type: "action"
+      });
+    });
+  });
+  describe("trackSendAarNotificationOpeningMandateDisclaimer", () => {
+    it("should call 'mixpanelTrack' with proper event name and parameters", () => {
+      trackSendAarNotificationOpeningMandateDisclaimer();
+
+      expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+        "SEND_NOTIFICATION_OPENING_MANDATE_DISCLAIMER"
+      );
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "UX",
+        event_type: "screen_view"
+      });
+    });
+  });
+  describe("trackSendAarNotificationOpeningMandateDisclaimerAccepted", () => {
+    it("should call 'mixpanelTrack' with proper event name and parameters", () => {
+      trackSendAarNotificationOpeningMandateDisclaimerAccepted();
+
+      expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+        "SEND_NOTIFICATION_OPENING_MANDATE_DISCLAIMER_ACCEPTED"
+      );
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "UX",
+        event_type: "action"
+      });
+    });
+  });
+  describe("trackSendAarNotificationOpeningMandateDisclaimerClosure", () => {
+    it("should call 'mixpanelTrack' with proper event name and parameters", () => {
+      trackSendAarNotificationOpeningMandateDisclaimerClosure();
+
+      expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+        "SEND_NOTIFICATION_OPENING_MANDATE_DISCLAIMER_CLOSURE"
+      );
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "UX",
+        event_type: "exit"
+      });
+    });
+  });
+  describe("trackSendAarNotificationOpeningMandateBottomSheet", () => {
+    it("should call 'mixpanelTrack' with proper event name and parameters", () => {
+      trackSendAarNotificationOpeningMandateBottomSheet();
+
+      expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+        "SEND_NOTIFICATION_OPENING_MANDATE_BOTTOMSHEET"
+      );
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "UX",
+        event_type: "screen_view"
+      });
+    });
+  });
+  describe("trackSendAarNotificationOpeningMandateBottomSheetAccepted", () => {
+    it("should call 'mixpanelTrack' with proper event name and parameters", () => {
+      trackSendAarNotificationOpeningMandateBottomSheetAccepted();
+
+      expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+        "SEND_NOTIFICATION_OPENING_MANDATE_BOTTOMSHEET_ACCEPTED"
+      );
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "UX",
+        event_type: "action"
+      });
+    });
+  });
+  describe("trackSendAarNotificationOpeningMandateBottomSheetClosure", () => {
+    it("should call 'mixpanelTrack' with proper event name and parameters", () => {
+      trackSendAarNotificationOpeningMandateBottomSheetClosure();
+
+      expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+        "SEND_NOTIFICATION_OPENING_MANDATE_BOTTOMSHEET_CLOSURE"
       );
       expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
         event_category: "UX",
