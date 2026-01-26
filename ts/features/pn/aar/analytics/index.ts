@@ -240,3 +240,21 @@ export const trackSendAarMandateCieReadingClosureAlertContinue = (
   const eventProps = buildEventProperties("UX", "action", { screen });
   void mixpanelTrack(eventName, eventProps);
 };
+
+export const trackSendAarMandateCieCanEnter = () => {
+  const eventName = "SEND_MANDATE_CIE_CAN_ENTER";
+  const eventProps = buildEventProperties("UX", "screen_view");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarMandateCieCardReadingDisclaimer = () => {
+  const eventName = "SEND_MANDATE_CIE_CARD_READING_DISCLAIMER";
+  const eventProps = buildEventProperties("UX", "screen_view");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarMandateCieCardReadingDisclaimerContinue = () => {
+  const eventName = "SEND_MANDATE_CIE_CARD_READING_DISCLAIMER_CONTINUE";
+  const eventProps = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, eventProps);
+};

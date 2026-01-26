@@ -32,6 +32,9 @@ import {
   trackSendAarMandateCieReadingClosureAlert,
   trackSendAarMandateCieReadingClosureAlertAccepted,
   trackSendAarMandateCieReadingClosureAlertContinue,
+  trackSendAarMandateCieCanEnter,
+  trackSendAarMandateCieCardReadingDisclaimer,
+  trackSendAarMandateCieCardReadingDisclaimerContinue,
   type SendAarScreen
 } from "..";
 import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
@@ -208,6 +211,24 @@ const simpleTrackingTests: ReadonlyArray<TrackingTestBase> = [
     name: "trackSendAarMandateCiePreparationContinue",
     fn: trackSendAarMandateCiePreparationContinue,
     eventName: "SEND_MANDATE_CIE_PREPARATION_CONTINUE",
+    eventProps: { event_category: "UX", event_type: "action" }
+  },
+  {
+    name: "trackSendAarMandateCieCanEnter",
+    fn: trackSendAarMandateCieCanEnter,
+    eventName: "SEND_MANDATE_CIE_CAN_ENTER",
+    eventProps: { event_category: "UX", event_type: "screen_view" }
+  },
+  {
+    name: "trackSendAarMandateCieCardReadingDisclaimer",
+    fn: trackSendAarMandateCieCardReadingDisclaimer,
+    eventName: "SEND_MANDATE_CIE_CARD_READING_DISCLAIMER",
+    eventProps: { event_category: "UX", event_type: "screen_view" }
+  },
+  {
+    name: "trackSendAarMandateCieCardReadingDisclaimerContinue",
+    fn: trackSendAarMandateCieCardReadingDisclaimerContinue,
+    eventName: "SEND_MANDATE_CIE_CARD_READING_DISCLAIMER_CONTINUE",
     eventProps: { event_category: "UX", event_type: "action" }
   }
 ];
