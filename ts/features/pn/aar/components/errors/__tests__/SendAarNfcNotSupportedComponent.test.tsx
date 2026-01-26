@@ -52,7 +52,7 @@ describe("SendAarNfcNotSupportedComponent", () => {
     ).toHaveBeenCalledTimes(1);
   });
 
-  it("calls terminateFlow when close icon is pressed", () => {
+  it('calls terminateFlow and "trackSendAarNotificationOpeningNfcNotSupportedClosure" when close icon is pressed', () => {
     jest.spyOn(FLOW_MANAGER, "useSendAarFlowManager").mockImplementation(
       () =>
         ({
@@ -74,7 +74,7 @@ describe("SendAarNfcNotSupportedComponent", () => {
       trackSendAarNotificationOpeningNfcNotSupportedClosure
     ).toHaveBeenCalledTimes(1);
   });
-  it("opens help center url when help center cta is pressed", () => {
+  it('opens help center url and calls "trackSendAarNotificationOpeningNfcNotSupportedInfo" when help center cta is pressed', () => {
     const webUrlSpy = jest.spyOn(URL_UTILS, "openWebUrl");
     const { getByTestId } = renderComponent();
     const helpCenterCta = getByTestId("help-center-cta");
