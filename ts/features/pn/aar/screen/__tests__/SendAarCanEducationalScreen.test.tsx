@@ -201,7 +201,7 @@ describe("SendAarCanEducationalScreen", () => {
 
     it(`${
       isCieCanAdvisory ? "should" : "should not"
-    } dispatch the "setAarFlowState" action`, () => {
+    } dispatch the "setAarFlowState" action and call the "trackSendAarMandateCiePreparationContinue" analytic function`, () => {
       const { getByTestId } = renderComponent();
 
       expect(trackSendAarMandateCiePreparationContinue).not.toHaveBeenCalled();
