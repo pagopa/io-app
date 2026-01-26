@@ -18,6 +18,7 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
 import { servicePreferenceResponseSuccessByIdSelector } from "../../../services/details/store/selectors";
+import { IdPayEnabledSubFeatureGuard } from "../../common/components/IdPayEnabledFeatureFlagGuard";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import {
   trackIDPayOnboardingAppUpdateConfirm,
@@ -31,7 +32,6 @@ import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { selectInitiative } from "../machine/selectors";
 import { IdPayOnboardingParamsList } from "../navigation/params";
 import { generateSmallTosMarkdownRules } from "../utils/markdown";
-import { IdPayEnabledSubFeatureGuard } from "../../common/components/IdPayEnabledFeatureFlagGuard";
 
 export type InitiativeDetailsScreenParams = {
   serviceId?: string;
@@ -77,7 +77,7 @@ const IdPayInitiativeDetailsScreenComponent = () => {
 
   const handleGoBackPress = () => machine.send({ type: "close" });
   const handleContinuePress = () => {
-    trackIDPayOnboardingStart({ initiativeName, initiativeId });
+    trackIDPayOnboardingStart({ initiativeId });
     machine.send({ type: "next" });
   };
 
@@ -110,12 +110,6 @@ const IdPayInitiativeDetailsScreenComponent = () => {
         />
       )
     )
-  );
-
-  const initiativeName = pipe(
-    initiative,
-    O.map(i => i.initiativeName),
-    O.toUndefined
   );
 
   const initiativeId = pipe(
@@ -161,12 +155,6 @@ export const IdPayInitiativeDetailsScreen = () => {
   const { useSelector } = IdPayOnboardingMachineContext;
   const initiative = useSelector(selectInitiative);
 
-  const initiativeName = pipe(
-    initiative,
-    O.map(i => i.initiativeName),
-    O.toUndefined
-  );
-
   const initiativeId = pipe(
     initiative,
     O.map(i => i.initiativeId),
@@ -180,7 +168,7 @@ export const IdPayInitiativeDetailsScreen = () => {
   );
 
   useOnFirstRender(
-    () => trackIDPayOnboardingIntro({ initiativeName, initiativeId }),
+    () => trackIDPayOnboardingIntro({ initiativeId }),
     () => O.isSome(initiative)
   );
 
@@ -190,12 +178,10 @@ export const IdPayInitiativeDetailsScreen = () => {
     {
       onConfirm: () =>
         trackIDPayOnboardingAppUpdateConfirm({
-          initiativeName,
           initiativeId
         }),
       onLanding: () =>
         trackIDPayOnboardingAppUpdateRequired({
-          initiativeName,
           initiativeId
         })
     }

@@ -17,6 +17,7 @@ import WalletDetailsPaymentMethodFeatures from "../components/WalletDetailsPayme
 import { PaymentsMethodDetailsParamsList } from "../navigation/params";
 import { paymentsGetMethodDetailsAction } from "../store/actions";
 import { selectPaymentMethodDetails } from "../store/selectors";
+import { PaymentsMethodDetailsUpdateDataButton } from "../components/PaymentsMethodDetailsUpdateDataButton";
 
 export type PaymentsMethodDetailsScreenNavigationParams = Readonly<{
   walletId: string;
@@ -70,19 +71,22 @@ const PaymentsMethodDetailsScreen = () => {
     const paymentMethodDetails = paymentMethod.details as UIWalletInfoDetails;
 
     return (
-      <PaymentsMethodDetailsBaseScreenComponent
-        card={{ ...cardProps, isExpired: false }}
-        headerTitle={headerTitle}
-      >
-        {paymentMethodDetails.pspBusinessName && (
-          <PaymentsMethodPspDetailsAlert
-            pspBusinessName={paymentMethodDetails.pspBusinessName}
-          />
-        )}
-        <WalletDetailsPaymentMethodFeatures paymentMethod={paymentMethod} />
-        <VSpacer size={24} />
-        <PaymentsMethodDetailsDeleteButton paymentMethod={paymentMethod} />
-      </PaymentsMethodDetailsBaseScreenComponent>
+      <>
+        <PaymentsMethodDetailsBaseScreenComponent
+          card={{ ...cardProps, isExpired: false }}
+          headerTitle={headerTitle}
+        >
+          {paymentMethodDetails.pspBusinessName && (
+            <PaymentsMethodPspDetailsAlert
+              pspBusinessName={paymentMethodDetails.pspBusinessName}
+            />
+          )}
+          <WalletDetailsPaymentMethodFeatures paymentMethod={paymentMethod} />
+          <VSpacer size={24} />
+          <PaymentsMethodDetailsDeleteButton paymentMethod={paymentMethod} />
+        </PaymentsMethodDetailsBaseScreenComponent>
+        <PaymentsMethodDetailsUpdateDataButton paymentMethod={paymentMethod} />
+      </>
     );
   }
 
