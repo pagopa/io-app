@@ -1,13 +1,13 @@
 name: Release locales on CDN
 
 on:
-  # push:
-  #   branches:
-  #     - master
-  #   paths-ignore:
-  #     - "CODEOWNERS"
-  #     - "**.md"
-  #     - ".**"
+  push:
+    branches:
+      - IOPLT-1318-GHA-release-locales # to be switched to master
+    paths-ignore:
+      - "CODEOWNERS"
+      - "**.md"
+      - ".**"
 
   workflow_dispatch:
 
