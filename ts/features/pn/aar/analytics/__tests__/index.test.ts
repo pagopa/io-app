@@ -26,7 +26,9 @@ import {
   trackSendAarNotificationOpeningMandateBottomSheetClosure,
   trackSendAarNotificationOpeningNfcNotSupported,
   trackSendAarNotificationOpeningNfcNotSupportedInfo,
-  trackSendAarNotificationOpeningNfcNotSupportedClosure
+  trackSendAarNotificationOpeningNfcNotSupportedClosure,
+  trackSendAarMandateCiePreparation,
+  trackSendAarMandateCiePreparationContinue
 } from "..";
 import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
 import * as mixpanel from "../../../../../mixpanel";
@@ -186,6 +188,18 @@ const simpleTrackingTests: ReadonlyArray<TrackingTestBase> = [
     fn: trackSendAarNotificationOpeningNfcNotSupportedClosure,
     eventName: "SEND_NOTIFICATION_OPENING_NFC_NOT_SUPPORTED_CLOSURE",
     eventProps: { event_category: "UX", event_type: "exit" }
+  },
+  {
+    name: "trackSendAarMandateCiePreparation",
+    fn: trackSendAarMandateCiePreparation,
+    eventName: "SEND_MANDATE_CIE_PREPARATION",
+    eventProps: { event_category: "UX", event_type: "screen_view" }
+  },
+  {
+    name: "trackSendAarMandateCiePreparationContinue",
+    fn: trackSendAarMandateCiePreparationContinue,
+    eventName: "SEND_MANDATE_CIE_PREPARATION_CONTINUE",
+    eventProps: { event_category: "UX", event_type: "action" }
   }
 ];
 

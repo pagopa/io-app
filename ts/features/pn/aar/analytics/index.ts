@@ -202,3 +202,15 @@ export const trackSendAarNotificationOpeningNfcNotSupportedClosure = () => {
   const eventProps = buildEventProperties("UX", "exit");
   void mixpanelTrack(eventName, eventProps);
 };
+
+export const trackSendAarMandateCiePreparation = () => {
+  const eventName = "SEND_MANDATE_CIE_PREPARATION";
+  const eventProps = buildEventProperties("UX", "screen_view");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarMandateCiePreparationContinue = () => {
+  const eventName = "SEND_MANDATE_CIE_PREPARATION_CONTINUE";
+  const eventProps = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, eventProps);
+};
