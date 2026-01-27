@@ -4560,7 +4560,8 @@
             "title": "Vuoi nascondere questa ricevuta dalla tua lista?",
             "content": "L’operazione è irreversibile. La ricevuta non verrà più mostrata nell’elenco delle tue ricevute.",
             "accept": "Sì, nascondi"
-          }
+          },
+          "debtorCartBanner": "Questo avviso è stato pagato insieme ad altri in un'unica transazione. Per informazioni sui costi di commissione, consulta il documento ricevuto in fase di pagamento."
         },
         "details": {
           "totalFeeUnknown": "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}",
