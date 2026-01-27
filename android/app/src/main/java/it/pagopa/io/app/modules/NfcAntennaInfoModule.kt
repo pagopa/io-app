@@ -20,6 +20,11 @@ class NfcAntennaInfoModule(reactContext: ReactApplicationContext) :
     }
 
     val adapter = NfcAdapter.getDefaultAdapter(reactApplicationContext)
+    if (adapter == null) {
+      // NFC is not available on this device
+      promise.resolve(null)
+      return
+    }
     promise.resolve(
       adapter.nfcAntennaInfo?.let { info ->
         WritableNativeMap().apply {
