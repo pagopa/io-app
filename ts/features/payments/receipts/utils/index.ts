@@ -104,46 +104,97 @@ export const calculateTotalAmount = (
 };
 
 /**
- * Filters transactions by a given transaction ID and returns the filtered transactions along with the index of the removed transaction.
+ * Filters transactions by a given transaction ID and returns the filtered transactions along with indices of removed transactions.
+ *
+ * For cart transactions:
+ * - Payer carts (eventId ends with _CART_): removes all transactions with that prefix
+ * - Debtor carts (eventId contains _CART_<id-biz>): removes only the exact match
  *
  * @param transactions - A potential array of NoticeListItem objects wrapped in a Pot, which may contain a NetworkError.
  * @param transactionId - The ID of the transaction to filter out.
  * @returns An object containing:
- *   - `filteredTransactions`: An array of NoticeListItem objects excluding the transaction with the given ID.
- *   - `removedIndex`: The index of the removed transaction in the original array, or -1 if the transaction was not found.
+ *   - `filteredTransactions`: An array of NoticeListItem objects excluding the transaction(s) with the given ID.
+ *   - `removedIndices`: Array of indices of removed transactions in the original array.
  */
 export const filterTransactionsByIdAndGetIndex = (
   transactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>,
   transactionId: string
 ): {
   filteredTransactions: Array<NoticeListItem>;
-  removedIndex: number;
+  removedIndices: Array<number>;
 } => {
   const transactionList = pot.getOrElse(transactions, []);
-  const removedIndex = transactionList.findIndex(
-    transaction => transaction.eventId === transactionId
+  const isPayerCart = transactionId.endsWith("_CART_");
+
+  const { filtered, removed } = transactionList.reduce(
+    (acc, transaction, index) => {
+      const shouldRemove = isPayerCart
+        ? transaction.eventId.startsWith(transactionId)
+        : transaction.eventId === transactionId;
+
+      if (shouldRemove) {
+        return {
+          filtered: acc.filtered,
+          removed: [...acc.removed, index]
+        };
+      }
+      return {
+        filtered: [...acc.filtered, transaction],
+        removed: acc.removed
+      };
+    },
+    { filtered: [] as Array<NoticeListItem>, removed: [] as Array<number> }
   );
-  const filteredTransactions = transactionList.filter(
-    transaction => transaction.eventId !== transactionId
-  );
-  return { filteredTransactions, removedIndex };
+
+  return { filteredTransactions: filtered, removedIndices: removed };
 };
 
-export const getTransactionByIndex = (
-  transactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>,
-  index: number
-): NoticeListItem => pot.getOrElse(transactions, [])[index];
+/**
+ * Restores multiple transactions at their original indices.
+ * Rebuilds the complete array by placing removed items at their original positions.
+ *
+ * @param filteredTransactions - The current filtered array (without removed items).
+ * @param removedIndices - Array of original indices where items were removed.
+ * @param removedItems - Array of items that were removed.
+ * @returns The restored array with all items in their original positions.
+ */
+export const restoreTransactionsToOriginalOrder = (
+  filteredTransactions: ReadonlyArray<NoticeListItem>,
+  removedIndices: Array<number>,
+  removedItems: Array<NoticeListItem>
+): Array<NoticeListItem> => {
+  // Create a map of removed indices to items
+  const removedMap = new Map<number, NoticeListItem>();
+  removedIndices.forEach((index, i) => {
+    removedMap.set(index, removedItems[i]);
+  });
 
-export const restoreTransactionAtIndex = (
-  transactionPot: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>,
-  restoreItem: NoticeListItem,
-  index: number
-) =>
-  pot.map(transactionPot, transactions => [
-    ...transactions.slice(0, index),
-    restoreItem,
-    ...transactions.slice(index)
-  ]);
+  // Rebuild array with correct order
+  const totalLength = filteredTransactions.length + removedIndices.length;
+
+  return Array.from({ length: totalLength }).reduce<{
+    result: Array<NoticeListItem>;
+    filteredIdx: number;
+  }>(
+    (acc, _, i) => {
+      if (removedMap.has(i)) {
+        const item = removedMap.get(i);
+        return {
+          result: item ? [...acc.result, item] : acc.result,
+          filteredIdx: acc.filteredIdx
+        };
+      }
+      if (acc.filteredIdx < filteredTransactions.length) {
+        return {
+          result: [...acc.result, filteredTransactions[acc.filteredIdx]],
+          filteredIdx: acc.filteredIdx + 1
+        };
+      }
+      return acc;
+    },
+    { result: [] as Array<NoticeListItem>, filteredIdx: 0 }
+  ).result;
+};
 
 export const removeAsterisks = (text: string): string =>
   text.replace(/\*/g, "");
