@@ -73,7 +73,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
     trackAppearancePreferenceScreenView();
     AsyncStorage.getItem(THEME_PERSISTENCE_KEY)
       .then(value => {
-        if (value !== null && value !== undefined) {
+        if (value !== null) {
           setSelectedColorMode(value as ColorModeChoice);
         }
       })
