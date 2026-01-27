@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import {
+  trackSendAarMandateCieCanCodeError,
   trackSendAarMandateCieCardReading,
   trackSendAarMandateCieCardReadingError,
+  trackSendAarMandateCieCardReadingFailure,
   trackSendAarMandateCieCardReadingSuccess
 } from "../analytics";
 import {
@@ -29,10 +31,17 @@ export const useTrackCieReadingEvents = (readState: CieReadState) => {
       case ReadStatus.SUCCESS:
         trackSendAarMandateCieCardReadingSuccess();
         break;
+      case ReadStatus.READING:
+        // No events should be tracked
+        break;
       case "TAG_LOST":
         trackSendAarMandateCieCardReadingError();
         break;
+      case "WRONG_CAN":
+        trackSendAarMandateCieCanCodeError();
+        break;
       default:
+        trackSendAarMandateCieCardReadingFailure();
         break;
     }
   }, [statusCode]);
