@@ -14,8 +14,8 @@ export const useAppThemeConfiguration = () => {
   useEffect(() => {
     AsyncStorage.getItem(THEME_PERSISTENCE_KEY)
       .then(value => {
-        if (value === undefined || value === null || value === "auto") {
-          Appearance.setColorScheme(undefined);
+        if (value === null || value === "auto") {
+          Appearance.setColorScheme(null);
           setTheme(systemColorScheme);
           return;
         }
