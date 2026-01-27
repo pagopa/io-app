@@ -5,7 +5,7 @@ import { ITW_ROUTES } from "./routes";
 
 /**
  * Hook which returns the linking options for internal navigation routes for the IT Wallet.
- * They are disabled if the IT Wallet is not enabled or the lifecycle is valid.
+ * This hook only defines the static linking configuration and does not conditionally enable or disable routes based on wallet status or lifecycle.
  */
 export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => ({
   [ITW_ROUTES.MAIN]: {
