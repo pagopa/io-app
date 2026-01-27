@@ -19,6 +19,10 @@ import {
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import * as USE_HARDWARE_BACK_BUTTON from "../../../../../hooks/useHardwareBackButton";
 import * as NFC_HOOK from "../../hooks/useIsNfcFeatureEnabled";
+import {
+  trackSendAarMandateCieCardReadingDisclaimer,
+  trackSendAarMandateCieCardReadingDisclaimerContinue
+} from "../../analytics";
 
 const mockNavigate = jest.fn();
 const mockReplace = jest.fn();
@@ -31,6 +35,10 @@ const sendAarStatesWithoutCieScanningAdvisory = sendAarMockStates.filter(
   ({ type }) => type !== mockCieScanningAdvisoryState.type
 );
 
+jest.mock("../../analytics", () => ({
+  trackSendAarMandateCieCardReadingDisclaimer: jest.fn(),
+  trackSendAarMandateCieCardReadingDisclaimerContinue: jest.fn()
+}));
 jest.mock("../../../../../store/hooks", () => ({
   ...jest.requireActual("../../../../../store/hooks"),
   useIODispatch: () => mockDispatch
@@ -55,6 +63,16 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
     const component = renderComponent();
 
     expect(component.toJSON()).toMatchSnapshot();
+  });
+
+  it('should invoke "trackSendAarMandateCieCardReadingDisclaimer" when component is focused', async () => {
+    renderComponent();
+
+    await waitFor(() => {
+      expect(trackSendAarMandateCieCardReadingDisclaimer).toHaveBeenCalledTimes(
+        1
+      );
+    });
   });
 
   it("should dispatch the right state update action and navigate back when the back button is pressed", () => {
@@ -107,7 +125,7 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
   });
 
   it.each([true, false])(
-    "should dispatch the right state update action when the primary action is clicked",
+    'should invoke "trackSendAarMandateCieCardReadingDisclaimerContinue" and dispatch the right state update action when the primary action is clicked (NFC enabled -> "%s")',
     async nfcEnabled => {
       jest.spyOn(NFC_HOOK, "useIsNfcFeatureEnabled").mockReturnValue({
         isChecking: false,
@@ -120,11 +138,17 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
 
       expect(mockDispatch).not.toHaveBeenCalled();
       expect(mockNavigate).not.toHaveBeenCalled();
+      expect(
+        trackSendAarMandateCieCardReadingDisclaimerContinue
+      ).not.toHaveBeenCalled();
 
       act(() => {
         fireEvent.press(primaryAction);
       });
 
+      expect(
+        trackSendAarMandateCieCardReadingDisclaimerContinue
+      ).toHaveBeenCalledTimes(1);
       await waitFor(() => {
         expect(mockDispatch).toHaveBeenCalledTimes(1);
         expect(mockDispatch).toHaveBeenCalledWith(

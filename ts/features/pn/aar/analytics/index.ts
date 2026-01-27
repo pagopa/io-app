@@ -4,6 +4,8 @@ import { buildEventProperties } from "../../../../utils/analytics";
 import { SendUserType } from "../../../pushNotifications/analytics";
 import { SendAARFailurePhase } from "../utils/stateUtils";
 
+export type SendAarScreen = "CIE_PREPARATION" | "NFC_ACTIVATION";
+
 export const trackSendQRCodeScanRedirect = () => {
   const eventName = "SEND_QRCODE_SCAN_REDIRECT";
   const properties = buildEventProperties("UX", "screen_view");
@@ -181,6 +183,78 @@ export const trackSendAarNotificationOpeningMandateBottomSheetAccepted = () => {
 
 export const trackSendAarNotificationOpeningMandateBottomSheetClosure = () => {
   const eventName = "SEND_NOTIFICATION_OPENING_MANDATE_BOTTOMSHEET_CLOSURE";
+  const eventProps = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarNotificationOpeningNfcNotSupported = () => {
+  const eventName = "SEND_NOTIFICATION_OPENING_NFC_NOT_SUPPORTED";
+  const eventProps = buildEventProperties("UX", "screen_view");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarNotificationOpeningNfcNotSupportedInfo = () => {
+  const eventName = "SEND_NOTIFICATION_OPENING_NFC_NOT_SUPPORTED_INFO";
+  const eventProps = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarNotificationOpeningNfcNotSupportedClosure = () => {
+  const eventName = "SEND_NOTIFICATION_OPENING_NFC_NOT_SUPPORTED_CLOSURE";
+  const eventProps = buildEventProperties("UX", "exit");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarMandateCiePreparation = () => {
+  const eventName = "SEND_MANDATE_CIE_PREPARATION";
+  const eventProps = buildEventProperties("UX", "screen_view");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarMandateCiePreparationContinue = () => {
+  const eventName = "SEND_MANDATE_CIE_PREPARATION_CONTINUE";
+  const eventProps = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarMandateCieReadingClosureAlert = (
+  screen: SendAarScreen
+) => {
+  const eventName = "SEND_MANDATE_CIE_READING_CLOSURE_ALERT";
+  const eventProps = buildEventProperties("UX", "screen_view", { screen });
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarMandateCieReadingClosureAlertAccepted = (
+  screen: SendAarScreen
+) => {
+  const eventName = "SEND_MANDATE_CIE_READING_CLOSURE_ALERT_ACCEPTED";
+  const eventProps = buildEventProperties("UX", "exit", { screen });
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarMandateCieReadingClosureAlertContinue = (
+  screen: SendAarScreen
+) => {
+  const eventName = "SEND_MANDATE_CIE_READING_CLOSURE_ALERT_CONTINUE";
+  const eventProps = buildEventProperties("UX", "action", { screen });
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarMandateCieCanEnter = () => {
+  const eventName = "SEND_MANDATE_CIE_CAN_ENTER";
+  const eventProps = buildEventProperties("UX", "screen_view");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarMandateCieCardReadingDisclaimer = () => {
+  const eventName = "SEND_MANDATE_CIE_CARD_READING_DISCLAIMER";
+  const eventProps = buildEventProperties("UX", "screen_view");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarMandateCieCardReadingDisclaimerContinue = () => {
+  const eventName = "SEND_MANDATE_CIE_CARD_READING_DISCLAIMER_CONTINUE";
   const eventProps = buildEventProperties("UX", "action");
   void mixpanelTrack(eventName, eventProps);
 };
