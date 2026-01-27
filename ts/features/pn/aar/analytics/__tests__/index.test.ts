@@ -296,7 +296,7 @@ const simpleTrackingTests: ReadonlyArray<TrackingTestBase> = [
     name: "trackSendAarMandateCieNfcGoToSettings",
     fn: trackSendAarMandateCieNfcGoToSettings,
     eventName: "SEND_MANDATE_CIE_NFC_GO_TO_SETTINGS",
-    eventProps: { event_category: "UX", event_type: "action" }
+    eventProps: { event_category: "UX", event_type: "exit" }
   },
   {
     name: "trackSendAarMandateCieCanCodeError",
