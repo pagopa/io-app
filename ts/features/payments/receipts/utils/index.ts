@@ -127,20 +127,18 @@ export const filterTransactionsByIdAndGetIndex = (
   const isPayerCart = transactionId.endsWith("_CART_");
   const removedIndices: Array<number> = [];
 
-  const filteredTransactions = transactionList.filter(
-    (transaction, index) => {
-      const shouldRemove = isPayerCart
-        ? transaction.eventId.startsWith(transactionId)
-        : transaction.eventId === transactionId;
+  const filteredTransactions = transactionList.filter((transaction, index) => {
+    const shouldRemove = isPayerCart
+      ? transaction.eventId.startsWith(transactionId)
+      : transaction.eventId === transactionId;
 
-      if (shouldRemove) {
-        // eslint-disable-next-line functional/immutable-data
-        removedIndices.push(index);
-        return false;
-      }
-      return true;
+    if (shouldRemove) {
+      // eslint-disable-next-line functional/immutable-data
+      removedIndices.push(index);
+      return false;
     }
-  );
+    return true;
+  });
 
   return { filteredTransactions, removedIndices };
 };
@@ -168,7 +166,7 @@ export const restoreTransactionsToOriginalOrder = (
   const result: Array<NoticeListItem> = [];
   // eslint-disable-next-line functional/no-let
   let filteredIdx = 0;
-  
+
   Array.from({ length: totalLength }, (_, i) => {
     const removedItem = removedMap.get(i);
     if (removedItem !== undefined) {
