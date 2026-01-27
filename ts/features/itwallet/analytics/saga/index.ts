@@ -52,6 +52,10 @@ export function* handleNfcAntennaInfoTracking() {
       NFC_AVAILABLE_ANTENNAS: availableNfcAntennas?.length || 0
     });
   } catch (failure) {
-    registerSuperProperties({ NFC_ANTENNA_READ_FAILURE: failure });
+    const nfcAntennaReadFailure =
+      failure instanceof Error
+        ? `${failure.name}: ${failure.message}`
+        : String(failure);
+    registerSuperProperties({ NFC_ANTENNA_READ_FAILURE: nfcAntennaReadFailure });
   }
 }
