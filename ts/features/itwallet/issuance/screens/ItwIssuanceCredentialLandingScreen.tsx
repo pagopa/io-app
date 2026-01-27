@@ -10,7 +10,7 @@ import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 
-export type ItwIssuanceCredentialLandingScreennNavigationParams = {
+export type ItwIssuanceCredentialLandingScreenNavigationParams = {
   credentialType?: string;
 };
 
