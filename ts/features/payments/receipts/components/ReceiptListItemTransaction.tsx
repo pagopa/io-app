@@ -32,9 +32,7 @@ type Props = {
 
 const ReceiptListItemTransaction = memo(
   ({ transaction, onPress, openedItemRef }: Props) => {
-    const recipient = transaction.isCart
-      ? I18n.t("features.payments.transactions.multiplePayment")
-      : transaction.payeeName ?? "";
+    const recipient = transaction.payeeName ?? "";
 
     const amountText = pipe(
       transaction.amount,
@@ -133,29 +131,6 @@ const ReceiptListItemTransaction = memo(
         );
       }
     };
-
-    if (transaction.isCart) {
-      return (
-        <ListItemSwipeAction
-          color="contrast"
-          {...swipeActionProps}
-          openedItemRef={openedItemRef}
-        >
-          <ListItemTransaction
-            paymentLogoIcon={TransactionEmptyIcon}
-            onPress={onPress}
-            accessible
-            accessibilityLabel={accessibilityLabel}
-            title={I18n.t("features.payments.transactions.multiplePayment")}
-            subtitle={datetime}
-            transaction={{
-              amount: amountText,
-              amountAccessibilityLabel: accessibleAmountText
-            }}
-          />
-        </ListItemSwipeAction>
-      );
-    }
 
     return (
       <ListItemSwipeAction
