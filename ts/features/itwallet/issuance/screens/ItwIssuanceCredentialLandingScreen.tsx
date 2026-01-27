@@ -21,7 +21,7 @@ export type ItwIssuanceCredentialLandingScreenProps =
   >;
 
 /**
- * anding screen to route credential issuance deeplink based on the ITW activation status and level
+ * Landing screen to route credential issuance deeplink based on the ITW activation status and level
  */
 export const ItwIssuanceCredentialLandingScreen = ({
   route
