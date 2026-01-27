@@ -28,7 +28,14 @@ import {
   trackSendAarNotificationOpeningNfcNotSupportedInfo,
   trackSendAarNotificationOpeningNfcNotSupportedClosure,
   trackSendAarMandateCiePreparation,
-  trackSendAarMandateCiePreparationContinue
+  trackSendAarMandateCiePreparationContinue,
+  trackSendAarMandateCieReadingClosureAlert,
+  trackSendAarMandateCieReadingClosureAlertAccepted,
+  trackSendAarMandateCieReadingClosureAlertContinue,
+  trackSendAarMandateCieCanEnter,
+  trackSendAarMandateCieCardReadingDisclaimer,
+  trackSendAarMandateCieCardReadingDisclaimerContinue,
+  type SendAarScreen
 } from "..";
 import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
 import * as mixpanel from "../../../../../mixpanel";
@@ -53,6 +60,11 @@ const sendUserTypes: ReadonlyArray<SendUserType> = [
   "mandatory",
   "not_set",
   "recipient"
+];
+
+const sendAarScreens: ReadonlyArray<SendAarScreen> = [
+  "CIE_PREPARATION",
+  "NFC_ACTIVATION"
 ];
 
 // Configuration for simple tracking tests
@@ -199,6 +211,24 @@ const simpleTrackingTests: ReadonlyArray<TrackingTestBase> = [
     name: "trackSendAarMandateCiePreparationContinue",
     fn: trackSendAarMandateCiePreparationContinue,
     eventName: "SEND_MANDATE_CIE_PREPARATION_CONTINUE",
+    eventProps: { event_category: "UX", event_type: "action" }
+  },
+  {
+    name: "trackSendAarMandateCieCanEnter",
+    fn: trackSendAarMandateCieCanEnter,
+    eventName: "SEND_MANDATE_CIE_CAN_ENTER",
+    eventProps: { event_category: "UX", event_type: "screen_view" }
+  },
+  {
+    name: "trackSendAarMandateCieCardReadingDisclaimer",
+    fn: trackSendAarMandateCieCardReadingDisclaimer,
+    eventName: "SEND_MANDATE_CIE_CARD_READING_DISCLAIMER",
+    eventProps: { event_category: "UX", event_type: "screen_view" }
+  },
+  {
+    name: "trackSendAarMandateCieCardReadingDisclaimerContinue",
+    fn: trackSendAarMandateCieCardReadingDisclaimerContinue,
+    eventName: "SEND_MANDATE_CIE_CARD_READING_DISCLAIMER_CONTINUE",
     eventProps: { event_category: "UX", event_type: "action" }
   }
 ];
@@ -530,4 +560,61 @@ describe("index", () => {
       });
     }
   );
+  describe("trackSendAarMandateCieReadingClosureAlert", () => {
+    it.each(sendAarScreens)(
+      "should call 'mixpanelTrack' with proper event name and properties (screen: \"%s\")",
+      screen => {
+        trackSendAarMandateCieReadingClosureAlert(screen);
+
+        expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+        expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+        expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+          "SEND_MANDATE_CIE_READING_CLOSURE_ALERT"
+        );
+        expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+          event_category: "UX",
+          event_type: "screen_view",
+          screen
+        });
+      }
+    );
+  });
+  describe("trackSendAarMandateCieReadingClosureAlertAccepted", () => {
+    it.each(sendAarScreens)(
+      "should call 'mixpanelTrack' with proper event name and properties (screen: \"%s\")",
+      screen => {
+        trackSendAarMandateCieReadingClosureAlertAccepted(screen);
+
+        expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+        expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+        expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+          "SEND_MANDATE_CIE_READING_CLOSURE_ALERT_ACCEPTED"
+        );
+        expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+          event_category: "UX",
+          event_type: "exit",
+          screen
+        });
+      }
+    );
+  });
+  describe("trackSendAarMandateCieReadingClosureAlertContinue", () => {
+    it.each(sendAarScreens)(
+      "should call 'mixpanelTrack' with proper event name and properties (screen: \"%s\")",
+      screen => {
+        trackSendAarMandateCieReadingClosureAlertContinue(screen);
+
+        expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+        expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+        expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+          "SEND_MANDATE_CIE_READING_CLOSURE_ALERT_CONTINUE"
+        );
+        expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+          event_category: "UX",
+          event_type: "action",
+          screen
+        });
+      }
+    );
+  });
 });

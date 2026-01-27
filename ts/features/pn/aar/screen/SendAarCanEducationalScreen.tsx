@@ -21,7 +21,10 @@ import PN_ROUTES from "../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import {
   trackSendAarMandateCiePreparation,
-  trackSendAarMandateCiePreparationContinue
+  trackSendAarMandateCiePreparationContinue,
+  trackSendAarMandateCieReadingClosureAlert,
+  trackSendAarMandateCieReadingClosureAlertAccepted,
+  trackSendAarMandateCieReadingClosureAlertContinue
 } from "../analytics";
 
 const { width, height, uri } = Image.resolveAssetSource(
@@ -60,6 +63,7 @@ export const SendAarCanEducationalScreen = ({
   );
 
   const handleGoBack = () => {
+    trackSendAarMandateCieReadingClosureAlert("CIE_PREPARATION");
     Alert.alert(
       i18n.t("features.pn.aar.flow.cieCanAdvisory.alert.title"),
       i18n.t("features.pn.aar.flow.cieCanAdvisory.alert.message"),
@@ -67,10 +71,20 @@ export const SendAarCanEducationalScreen = ({
         {
           text: i18n.t("features.pn.aar.flow.cieCanAdvisory.alert.confirm"),
           style: "destructive",
-          onPress: terminateFlow
+          onPress: () => {
+            trackSendAarMandateCieReadingClosureAlertAccepted(
+              "CIE_PREPARATION"
+            );
+            terminateFlow();
+          }
         },
         {
-          text: i18n.t("features.pn.aar.flow.cieCanAdvisory.alert.cancel")
+          text: i18n.t("features.pn.aar.flow.cieCanAdvisory.alert.cancel"),
+          onPress: () => {
+            trackSendAarMandateCieReadingClosureAlertContinue(
+              "CIE_PREPARATION"
+            );
+          }
         }
       ]
     );
