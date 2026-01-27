@@ -142,13 +142,11 @@ const reducer = (
         receiptDocument: pot.none
       };
     case getType(hidePaymentsReceiptAction.request): {
-      const {
-        filteredTransactions,
-        removedIndices: transactionIndices
-      } = filterTransactionsByIdAndGetIndex(
-        state.transactions,
-        action.payload.transactionId
-      );
+      const { filteredTransactions, removedIndices: transactionIndices } =
+        filterTransactionsByIdAndGetIndex(
+          state.transactions,
+          action.payload.transactionId
+        );
 
       const {
         filteredTransactions: filteredLatestTransactions,
@@ -159,18 +157,17 @@ const reducer = (
       );
 
       const hasTransactionRemovals = transactionIndices.length > 0;
-      const cancelType: "transactions" | "latestTransactions" = hasTransactionRemovals
-        ? "transactions"
-        : "latestTransactions";
+      const cancelType: "transactions" | "latestTransactions" =
+        hasTransactionRemovals ? "transactions" : "latestTransactions";
       const removedIndices = hasTransactionRemovals
         ? transactionIndices
         : latestTransactionIndices;
       const removedItems = hasTransactionRemovals
-        ? removedIndices.map(index =>
-            pot.getOrElse(state.transactions, [])[index]
+        ? removedIndices.map(
+            index => pot.getOrElse(state.transactions, [])[index]
           )
-        : removedIndices.map(index =>
-            pot.getOrElse(state.latestTransactions, [])[index]
+        : removedIndices.map(
+            index => pot.getOrElse(state.latestTransactions, [])[index]
           );
 
       return {
