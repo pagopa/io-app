@@ -39,7 +39,7 @@ export function* watchItwCredentialsAnalyticsSaga(): SagaIterator {
  * Tracks NFC antenna information for discovery and debugging purposes.
  * TODO remove this function when NFC antenna info tracking is not needed anymore
  */
-export function* updateNfcAntennaInfoTrackingProprties() {
+export function* updateNfcAntennaInfoTrackingProperties() {
   try {
     const { deviceHeight, deviceWidth, availableNfcAntennas } = yield* call(
       getNfcAntennaInfo
