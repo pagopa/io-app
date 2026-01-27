@@ -399,7 +399,6 @@ Inizia"
                                     "MakeVertices": [MockFunction],
                                   },
                                   "__typename__": "Point",
-                                  "dispose": [Function],
                                   "ref": Float32Array [
                                     0,
                                     0,
@@ -449,7 +448,6 @@ Inizia"
                                         "MakeVertices": [MockFunction],
                                       },
                                       "__typename__": "Point",
-                                      "dispose": [Function],
                                       "ref": Float32Array [
                                         0,
                                         0,
@@ -563,7 +561,6 @@ Inizia"
                                               "MakeVertices": [MockFunction],
                                             },
                                             "__typename__": "Point",
-                                            "dispose": [Function],
                                             "ref": Float32Array [
                                               0,
                                               0,
@@ -594,7 +591,6 @@ Inizia"
                                               "MakeVertices": [MockFunction],
                                             },
                                             "__typename__": "Point",
-                                            "dispose": [Function],
                                             "ref": Float32Array [
                                               0,
                                               0,
@@ -1366,7 +1362,6 @@ Inizia"
                                     "MakeVertices": [MockFunction],
                                   },
                                   "__typename__": "Point",
-                                  "dispose": [Function],
                                   "ref": Float32Array [
                                     0,
                                     0,
@@ -1416,7 +1411,6 @@ Inizia"
                                         "MakeVertices": [MockFunction],
                                       },
                                       "__typename__": "Point",
-                                      "dispose": [Function],
                                       "ref": Float32Array [
                                         0,
                                         0,
@@ -1530,7 +1524,6 @@ Inizia"
                                               "MakeVertices": [MockFunction],
                                             },
                                             "__typename__": "Point",
-                                            "dispose": [Function],
                                             "ref": Float32Array [
                                               0,
                                               0,
@@ -1561,7 +1554,6 @@ Inizia"
                                               "MakeVertices": [MockFunction],
                                             },
                                             "__typename__": "Point",
-                                            "dispose": [Function],
                                             "ref": Float32Array [
                                               0,
                                               0,
@@ -2447,7 +2439,6 @@ Inizia"
                                     "MakeVertices": [MockFunction],
                                   },
                                   "__typename__": "Point",
-                                  "dispose": [Function],
                                   "ref": Float32Array [
                                     0,
                                     0,
@@ -2497,7 +2488,6 @@ Inizia"
                                         "MakeVertices": [MockFunction],
                                       },
                                       "__typename__": "Point",
-                                      "dispose": [Function],
                                       "ref": Float32Array [
                                         0,
                                         0,
@@ -2611,7 +2601,6 @@ Inizia"
                                               "MakeVertices": [MockFunction],
                                             },
                                             "__typename__": "Point",
-                                            "dispose": [Function],
                                             "ref": Float32Array [
                                               0,
                                               0,
@@ -2642,7 +2631,6 @@ Inizia"
                                               "MakeVertices": [MockFunction],
                                             },
                                             "__typename__": "Point",
-                                            "dispose": [Function],
                                             "ref": Float32Array [
                                               0,
                                               0,
@@ -3528,7 +3516,6 @@ Aggiungi un documento"
                                     "MakeVertices": [MockFunction],
                                   },
                                   "__typename__": "Point",
-                                  "dispose": [Function],
                                   "ref": Float32Array [
                                     0,
                                     0,
@@ -3578,7 +3565,6 @@ Aggiungi un documento"
                                         "MakeVertices": [MockFunction],
                                       },
                                       "__typename__": "Point",
-                                      "dispose": [Function],
                                       "ref": Float32Array [
                                         0,
                                         0,
@@ -3692,7 +3678,6 @@ Aggiungi un documento"
                                               "MakeVertices": [MockFunction],
                                             },
                                             "__typename__": "Point",
-                                            "dispose": [Function],
                                             "ref": Float32Array [
                                               0,
                                               0,
@@ -3723,7 +3708,6 @@ Aggiungi un documento"
                                               "MakeVertices": [MockFunction],
                                             },
                                             "__typename__": "Point",
-                                            "dispose": [Function],
                                             "ref": Float32Array [
                                               0,
                                               0,
