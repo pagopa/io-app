@@ -1,18 +1,18 @@
+import { useFocusEffect } from "@react-navigation/native";
 import i18n from "i18next";
-import { useEffect } from "react";
-import { useIOSelector } from "../../../../store/hooks";
-import { currentAARFlowData } from "../store/selectors";
-import { sendAARFlowStates } from "../utils/stateUtils";
-import type { PnParamsList } from "../../navigation/params";
+import { useCallback } from "react";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
 import type { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../store/hooks";
+import type { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
 import {
   SendAARCieCardReadingComponent,
   type SendAARCieCardReadingComponentProps
 } from "../components/SendAARCieCardReadingComponent";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
+import { currentAARFlowData } from "../store/selectors";
+import { sendAARFlowStates } from "../utils/stateUtils";
 
 export type SendAARCieCardReadingScreenRouteParams =
   Readonly<SendAARCieCardReadingComponentProps>;
@@ -28,35 +28,32 @@ export const SendAARCieCardReadingScreen = ({
 }: SendAARCieCardReadingScreenProps) => {
   const currentFlow = useIOSelector(currentAARFlowData);
 
-  useEffect(() => {
-    switch (currentFlow.type) {
-      case sendAARFlowStates.displayingNotificationData: {
-        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-          screen: PN_ROUTES.MAIN,
-          params: {
-            screen: PN_ROUTES.MESSAGE_DETAILS,
-            params: {
-              messageId: currentFlow.iun,
-              firstTimeOpening: undefined,
-              serviceId: currentFlow.pnServiceId,
-              sendOpeningSource: "aar",
-              sendUserType: "mandatory"
-            }
-          }
-        });
-        break;
+  useFocusEffect(
+    useCallback(() => {
+      switch (currentFlow.type) {
+        case sendAARFlowStates.cieScanningAdvisory:
+          navigation.navigate(PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL);
+          break;
+        case sendAARFlowStates.cieCanAdvisory:
+          navigation.navigate(PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL);
+          break;
+        case sendAARFlowStates.displayingNotificationData: {
+          navigation.replace(PN_ROUTES.MESSAGE_DETAILS, {
+            messageId: currentFlow.iun,
+            firstTimeOpening: undefined,
+            serviceId: currentFlow.pnServiceId,
+            sendOpeningSource: "aar",
+            sendUserType: "mandatory"
+          });
+          break;
+        }
+        case sendAARFlowStates.ko: {
+          navigation.replace(PN_ROUTES.SEND_AAR_ERROR);
+          break;
+        }
       }
-      case sendAARFlowStates.ko: {
-        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-          screen: PN_ROUTES.MAIN,
-          params: {
-            screen: PN_ROUTES.SEND_AAR_ERROR
-          }
-        });
-        break;
-      }
-    }
-  }, [currentFlow, navigation]);
+    }, [currentFlow, navigation])
+  );
 
   useHardwareBackButtonWhenFocused(() => true);
 

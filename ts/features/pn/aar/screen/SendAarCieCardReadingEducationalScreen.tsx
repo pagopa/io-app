@@ -1,28 +1,27 @@
-import { SafeAreaView } from "react-native-safe-area-context";
 import { VSpacer } from "@pagopa/io-app-design-system";
-import { Image } from "react-native";
-import i18n from "i18next";
-import { useCallback, useEffect } from "react";
 import { useFocusEffect } from "@react-navigation/native";
+import i18n from "i18next";
+import { useCallback } from "react";
+import { Image } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import cieScanningEducationalSource from "../../../../../img/features/itWallet/identification/itw_cie_nfc.gif";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import {
-  aarAdresseeDenominationSelector,
-  currentAARFlowData
-} from "../store/selectors";
-import { setAarFlowState } from "../store/actions";
-import { sendAARFlowStates } from "../utils/stateUtils";
 import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import { useIsNfcFeatureEnabled } from "../hooks/useIsNfcFeatureEnabled";
 import {
   trackSendAarMandateCieCardReadingDisclaimer,
   trackSendAarMandateCieCardReadingDisclaimerContinue
 } from "../analytics";
+import { useIsNfcFeatureEnabled } from "../hooks/useIsNfcFeatureEnabled";
+import { setAarFlowState } from "../store/actions";
+import {
+  aarAdresseeDenominationSelector,
+  currentAARFlowData
+} from "../store/selectors";
+import { sendAARFlowStates } from "../utils/stateUtils";
 
 const { width, height, uri } = Image.resolveAssetSource(
   cieScanningEducationalSource
@@ -43,37 +42,28 @@ export const SendAarCieCardReadingEducationalScreen = ({
   const denomination = useIOSelector(aarAdresseeDenominationSelector);
   const { isChecking, isNfcEnabled } = useIsNfcFeatureEnabled();
 
-  useEffect(() => {
-    switch (currentAarState.type) {
-      case sendAARFlowStates.cieScanning: {
-        const { type: _, ...params } = currentAarState;
+  useFocusEffect(
+    useCallback(() => {
+      switch (currentAarState.type) {
+        case sendAARFlowStates.cieScanning: {
+          const { type: _, ...params } = currentAarState;
 
-        navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-          screen: PN_ROUTES.MAIN,
-          params: {
-            screen: PN_ROUTES.SEND_AAR_CIE_CARD_READING,
-            params
-          }
-        });
-        break;
+          navigation.navigate(PN_ROUTES.SEND_AAR_CIE_CARD_READING, params);
+          break;
+        }
+        case sendAARFlowStates.cieCanInsertion: {
+          navigation.goBack();
+          break;
+        }
+        case sendAARFlowStates.androidNFCActivation: {
+          navigation.replace(PN_ROUTES.SEND_AAR_NFC_ACTIVATION);
+          break;
+        }
+        default:
+          break;
       }
-      case sendAARFlowStates.cieCanInsertion: {
-        navigation.goBack();
-        break;
-      }
-      case sendAARFlowStates.androidNFCActivation: {
-        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-          screen: PN_ROUTES.MAIN,
-          params: {
-            screen: PN_ROUTES.SEND_AAR_NFC_ACTIVATION
-          }
-        });
-        break;
-      }
-      default:
-        break;
-    }
-  }, [currentAarState, navigation]);
+    }, [currentAarState, navigation])
+  );
 
   useFocusEffect(
     useCallback(() => {

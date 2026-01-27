@@ -1,24 +1,16 @@
-import { SafeAreaView } from "react-native-safe-area-context";
 import { VSpacer } from "@pagopa/io-app-design-system";
-import { Alert, Image } from "react-native";
-import i18n from "i18next";
-import { useCallback, useEffect } from "react";
 import { useFocusEffect } from "@react-navigation/native";
+import i18n from "i18next";
+import { useCallback } from "react";
+import { Alert, Image } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import cieCanEducationalSource from "../../../../../img/features/pn/cieCanEducational.png";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import {
-  aarAdresseeDenominationSelector,
-  currentAARFlowData
-} from "../store/selectors";
-import { setAarFlowState } from "../store/actions";
-import { sendAARFlowStates } from "../utils/stateUtils";
 import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import {
   trackSendAarMandateCiePreparation,
   trackSendAarMandateCiePreparationContinue,
@@ -26,6 +18,13 @@ import {
   trackSendAarMandateCieReadingClosureAlertAccepted,
   trackSendAarMandateCieReadingClosureAlertContinue
 } from "../analytics";
+import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
+import { setAarFlowState } from "../store/actions";
+import {
+  aarAdresseeDenominationSelector,
+  currentAARFlowData
+} from "../store/selectors";
+import { sendAARFlowStates } from "../utils/stateUtils";
 
 const { width, height, uri } = Image.resolveAssetSource(
   cieCanEducationalSource
@@ -45,16 +44,13 @@ export const SendAarCanEducationalScreen = ({
   const { terminateFlow } = useSendAarFlowManager();
   const denomination = useIOSelector(aarAdresseeDenominationSelector);
 
-  useEffect(() => {
-    if (currentAarState.type === sendAARFlowStates.cieCanInsertion) {
-      navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-        screen: PN_ROUTES.MAIN,
-        params: {
-          screen: PN_ROUTES.SEND_AAR_CIE_CAN_INSERTION
-        }
-      });
-    }
-  }, [currentAarState.type, navigation]);
+  useFocusEffect(
+    useCallback(() => {
+      if (currentAarState.type === sendAARFlowStates.cieCanInsertion) {
+        navigation.navigate(PN_ROUTES.SEND_AAR_CIE_CAN_INSERTION);
+      }
+    }, [currentAarState.type, navigation])
+  );
 
   useFocusEffect(
     useCallback(() => {
