@@ -125,28 +125,24 @@ export const filterTransactionsByIdAndGetIndex = (
 } => {
   const transactionList = pot.getOrElse(transactions, []);
   const isPayerCart = transactionId.endsWith("_CART_");
+  const removedIndices: Array<number> = [];
 
-  const { filtered, removed } = transactionList.reduce(
-    (acc, transaction, index) => {
+  const filteredTransactions = transactionList.filter(
+    (transaction, index) => {
       const shouldRemove = isPayerCart
         ? transaction.eventId.startsWith(transactionId)
         : transaction.eventId === transactionId;
 
       if (shouldRemove) {
-        return {
-          filtered: acc.filtered,
-          removed: [...acc.removed, index]
-        };
+        // eslint-disable-next-line functional/immutable-data
+        removedIndices.push(index);
+        return false;
       }
-      return {
-        filtered: [...acc.filtered, transaction],
-        removed: acc.removed
-      };
-    },
-    { filtered: [] as Array<NoticeListItem>, removed: [] as Array<number> }
+      return true;
+    }
   );
 
-  return { filteredTransactions: filtered, removedIndices: removed };
+  return { filteredTransactions, removedIndices };
 };
 
 /**
@@ -163,37 +159,29 @@ export const restoreTransactionsToOriginalOrder = (
   removedIndices: Array<number>,
   removedItems: Array<NoticeListItem>
 ): Array<NoticeListItem> => {
-  // Create a map of removed indices to items
+  // Create a map of removed indices to items for lookup
   const removedMap = new Map<number, NoticeListItem>();
   removedIndices.forEach((index, i) => {
     removedMap.set(index, removedItems[i]);
   });
-
-  // Rebuild array with correct order
   const totalLength = filteredTransactions.length + removedIndices.length;
+  const result: Array<NoticeListItem> = [];
+  // eslint-disable-next-line functional/no-let
+  let filteredIdx = 0;
+  
+  Array.from({ length: totalLength }, (_, i) => {
+    const removedItem = removedMap.get(i);
+    if (removedItem !== undefined) {
+      // eslint-disable-next-line functional/immutable-data
+      result.push(removedItem);
+    } else if (filteredIdx < filteredTransactions.length) {
+      // eslint-disable-next-line functional/immutable-data
+      result.push(filteredTransactions[filteredIdx]);
+      filteredIdx += 1;
+    }
+  });
 
-  return Array.from({ length: totalLength }).reduce<{
-    result: Array<NoticeListItem>;
-    filteredIdx: number;
-  }>(
-    (acc, _, i) => {
-      if (removedMap.has(i)) {
-        const item = removedMap.get(i);
-        return {
-          result: item ? [...acc.result, item] : acc.result,
-          filteredIdx: acc.filteredIdx
-        };
-      }
-      if (acc.filteredIdx < filteredTransactions.length) {
-        return {
-          result: [...acc.result, filteredTransactions[acc.filteredIdx]],
-          filteredIdx: acc.filteredIdx + 1
-        };
-      }
-      return acc;
-    },
-    { result: [] as Array<NoticeListItem>, filteredIdx: 0 }
-  ).result;
+  return result;
 };
 
 export const removeAsterisks = (text: string): string =>
