@@ -12,6 +12,7 @@ import { LoadingScreenContent } from "../../../../components/screens/LoadingScre
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { convertUnknownToError } from "../../../../utils/errors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { getNfcAntennaInfo, NfcAntennaInfo } from "../../../../utils/nfc";
 
@@ -28,7 +29,7 @@ export const NfcPlayground = () => {
       const info = await getNfcAntennaInfo();
       setNfcAntennaInfo(info);
     } catch (e) {
-      setFailure(e instanceof Error ? e : new Error(String(e)));
+      setFailure(convertUnknownToError(e));
     }
   });
 

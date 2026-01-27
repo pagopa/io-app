@@ -45,13 +45,17 @@ export function* updateNfcAntennaInfoTrackingProperties() {
       getNfcAntennaInfo
     );
 
+    const hasDeviceInfo = deviceHeight !== 0 && deviceWidth !== 0;
+    const antennaCount = availableNfcAntennas.length;
+
     registerSuperProperties({
-      NFC_ANTENNA_HAS_DEVICE_INFO: deviceHeight !== 0 && deviceWidth !== 0,
-      NFC_AVAILABLE_ANTENNAS: availableNfcAntennas?.length || 0
+      NFC_ANTENNA_HAS_DEVICE_INFO: hasDeviceInfo,
+      NFC_AVAILABLE_ANTENNAS: antennaCount
     });
   } catch (e) {
+    const errorName = e instanceof Error ? e.name : String(e);
     registerSuperProperties({
-      NFC_ANTENNA_READ_FAILURE: e instanceof Error ? `${e.name}` : String(e)
+      NFC_ANTENNA_READ_FAILURE: errorName
     });
   }
 }
