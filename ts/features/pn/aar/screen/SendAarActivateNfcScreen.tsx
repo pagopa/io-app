@@ -2,6 +2,7 @@ import { useCallback, useEffect, useLayoutEffect } from "react";
 import { Alert } from "react-native";
 import i18n from "i18next";
 import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
@@ -13,6 +14,7 @@ import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { SendAarActivateNfcComponent } from "../components/SendAarActivateNfcComponent";
 import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
 import {
+  trackSendAarMandateCieNfcActivation,
   trackSendAarMandateCieReadingClosureAlert,
   trackSendAarMandateCieReadingClosureAlertAccepted,
   trackSendAarMandateCieReadingClosureAlertContinue
@@ -42,6 +44,12 @@ export const SendAarActivateNfcScreen = ({
       });
     }
   }, [currentAarData, navigation]);
+
+  useFocusEffect(
+    useCallback(() => {
+      trackSendAarMandateCieNfcActivation();
+    }, [])
+  );
 
   const handleClose = useCallback(() => {
     trackSendAarMandateCieReadingClosureAlert("NFC_ACTIVATION");
