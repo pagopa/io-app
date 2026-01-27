@@ -41,7 +41,7 @@ export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => ({
       /**
        * Handles https://continua.io.pagopa.it/itw/credential/issuance
        *
-       * @deprecated async flow is in maintenance mode and will be discotinued
+       * @deprecated async flow is in maintenance mode and will be discontinued
        */
       [ITW_ROUTES.LANDING.CREDENTIAL_ASYNC_FLOW_CONTINUATION]: {
         path: "credential/issuance"
