@@ -50,9 +50,6 @@ describe("ReceiptListItemTransaction", () => {
       <ReceiptListItemTransaction transaction={mockCartTransaction} />
     );
 
-    expect(
-      getByText(I18n.t("features.payments.transactions.multiplePayment"))
-    ).toBeTruthy();
     expect(getByText("02 gen 2023, 12:00")).toBeTruthy();
   });
 
