@@ -25,23 +25,32 @@ class NfcAntennaInfoModule(reactContext: ReactApplicationContext) :
       promise.resolve(null)
       return
     }
-    promise.resolve(
-      adapter.nfcAntennaInfo?.let { info ->
-        WritableNativeMap().apply {
-          putInt("deviceWidth", info.deviceWidth)
-          putInt("deviceHeight", info.deviceHeight)
-          putBoolean("isDeviceFoldable", info.isDeviceFoldable)
-          putArray("availableNfcAntennas", Arguments.createArray().apply {
-            info.availableNfcAntennas.forEach { antenna ->
-              pushMap(WritableNativeMap().apply {
-                putInt("locationX", antenna.locationX)
-                putInt("locationY", antenna.locationY)
-              })
-            }
+    if (adapter == null) {
+      promise.reject("NFC_UNAVAILABLE", "NFC adapter not available")
+      return
+    }
+
+    val info = adapter.nfcAntennaInfo
+    if (info == null) {
+      promise.reject("ANTENNA_INFO_UNAVAILABLE", "NFC antenna info not available")
+      return
+    }
+
+    val result = WritableNativeMap().apply {
+      putInt("deviceWidth", info.deviceWidth)
+      putInt("deviceHeight", info.deviceHeight)
+      putBoolean("isDeviceFoldable", info.isDeviceFoldable)
+      putArray("availableNfcAntennas", Arguments.createArray().apply {
+        info.availableNfcAntennas.forEach { antenna ->
+          pushMap(WritableNativeMap().apply {
+            putInt("locationX", antenna.locationX)
+            putInt("locationY", antenna.locationY)
           })
         }
-      }
-    )
+      })
+    }
+
+    promise.resolve(result)
   }
 
 }
