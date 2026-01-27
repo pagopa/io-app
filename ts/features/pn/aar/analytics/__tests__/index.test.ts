@@ -44,6 +44,10 @@ import {
   trackSendAarMandateCieNfcActivationControlAlertClosure,
   trackSendAarMandateCieNfcActivationControlAlertGoToSettings,
   trackSendAarMandateCieNfcGoToSettings,
+  trackSendAarMandateCieCanCodeError,
+  trackSendAarMandateCieCardReadingFailure,
+  trackSendAarMandateCieExpiredError,
+  trackSendAarMandateCieNotRelatedToDelegatorError,
   type SendAarScreen
 } from "..";
 import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
@@ -293,6 +297,30 @@ const simpleTrackingTests: ReadonlyArray<TrackingTestBase> = [
     fn: trackSendAarMandateCieNfcGoToSettings,
     eventName: "SEND_MANDATE_CIE_NFC_GO_TO_SETTINGS",
     eventProps: { event_category: "UX", event_type: "action" }
+  },
+  {
+    name: "trackSendAarMandateCieCanCodeError",
+    fn: trackSendAarMandateCieCanCodeError,
+    eventName: "SEND_MANDATE_CIE_CAN_ERROR",
+    eventProps: { event_category: "KO", event_type: undefined }
+  },
+  {
+    name: "trackSendAarMandateCieCardReadingFailure",
+    fn: trackSendAarMandateCieCardReadingFailure,
+    eventName: "SEND_MANDATE_CIE_CARD_READING_FAILURE",
+    eventProps: { event_category: "KO", event_type: undefined }
+  },
+  {
+    name: "trackSendAarMandateCieExpiredError",
+    fn: trackSendAarMandateCieExpiredError,
+    eventName: "SEND_MANDATE_CIE_EXPIRED_ERROR",
+    eventProps: { event_category: "KO", event_type: undefined }
+  },
+  {
+    name: "trackSendAarMandateCieNotRelatedToDelegatorError",
+    fn: trackSendAarMandateCieNotRelatedToDelegatorError,
+    eventName: "SEND_MANDATE_CIE_NOT_RELATED_TO_DELEGATOR_ERROR",
+    eventProps: { event_category: "KO", event_type: undefined }
   }
 ];
 
