@@ -1,16 +1,16 @@
-import { call, fork, select, takeEvery } from "typed-redux-saga/macro";
 import { SagaIterator } from "redux-saga";
+import { call, fork, select, takeEvery } from "typed-redux-saga/macro";
+import { registerSuperProperties } from "../../../../mixpanel.ts";
 import { GlobalState } from "../../../../store/reducers/types";
+import { getNfcAntennaInfo } from "../../../../utils/nfc";
+import {
+  itwCredentialsRemove,
+  itwCredentialsStore
+} from "../../credentials/store/actions";
 import { updateItwAnalyticsProperties } from "../properties/propertyUpdaters";
 import {
-  itwCredentialsStore,
-  itwCredentialsRemove
-} from "../../credentials/store/actions";
-import { registerSuperProperties } from "../../../../mixpanel.ts";
-import { getNfcAntennaInfo } from "../../../../utils/nfc.ts";
-import {
-  handleCredentialStoredAnalytics,
-  handleCredentialRemovedAnalytics
+  handleCredentialRemovedAnalytics,
+  handleCredentialStoredAnalytics
 } from "./credentialAnalyticsHandlers";
 
 export function* watchItwAnalyticsSaga(): SagaIterator {
@@ -28,9 +28,6 @@ export function* watchItwAnalyticsSaga(): SagaIterator {
 export function* syncItwAnalyticsProperties() {
   const state: GlobalState = yield* select();
   updateItwAnalyticsProperties(state);
-
-  // TODO remove this fork when NFC antenna info tracking is not needed anymore
-  yield* fork(handleNfcAntennaInfoTracking);
 }
 
 export function* watchItwCredentialsAnalyticsSaga(): SagaIterator {
@@ -42,20 +39,19 @@ export function* watchItwCredentialsAnalyticsSaga(): SagaIterator {
  * Tracks NFC antenna information for discovery and debugging purposes.
  * TODO remove this function when NFC antenna info tracking is not needed anymore
  */
-export function* handleNfcAntennaInfoTracking() {
+export function* updateNfcAntennaInfoTrackingProprties() {
   try {
-    const info = yield* call(getNfcAntennaInfo);
-    const { deviceHeight, deviceWidth, availableNfcAntennas } = info || {};
+    const { deviceHeight, deviceWidth, availableNfcAntennas } = yield* call(
+      getNfcAntennaInfo
+    );
 
     registerSuperProperties({
       NFC_ANTENNA_HAS_DEVICE_INFO: deviceHeight !== 0 && deviceWidth !== 0,
       NFC_AVAILABLE_ANTENNAS: availableNfcAntennas?.length || 0
     });
-  } catch (failure) {
-    const nfcAntennaReadFailure =
-      failure instanceof Error
-        ? `${failure.name}: ${failure.message}`
-        : String(failure);
-    registerSuperProperties({ NFC_ANTENNA_READ_FAILURE: nfcAntennaReadFailure });
+  } catch (e) {
+    registerSuperProperties({
+      NFC_ANTENNA_READ_FAILURE: e instanceof Error ? `${e.name}` : String(e)
+    });
   }
 }

@@ -1,6 +1,7 @@
 import {
   Body,
   Divider,
+  IOText,
   ListItemInfo,
   Pictogram
 } from "@pagopa/io-app-design-system";
@@ -16,9 +17,7 @@ import { getNfcAntennaInfo, NfcAntennaInfo } from "../../../../utils/nfc";
 
 export const NfcPlayground = () => {
   const [failure, setFailure] = useState<Error>();
-  const [nfcAntennaInfo, setNfcAntennaInfo] = useState<
-    NfcAntennaInfo | undefined
-  >(undefined);
+  const [nfcAntennaInfo, setNfcAntennaInfo] = useState<NfcAntennaInfo>();
 
   useHeaderSecondLevel({
     title: "NFC Playground"
@@ -44,7 +43,17 @@ export const NfcPlayground = () => {
         isHeaderVisible={true}
         pictogram="attention"
         title="NFC Antenna Info not available on this device."
-      />
+      >
+        <IOText
+          font="FiraCode"
+          size={12}
+          lineHeight={18}
+          color={"grey-700"}
+          weight="Medium"
+        >
+          {JSON.stringify(failure, null, 2)}
+        </IOText>
+      </OperationResultScreenContent>
     );
   }
 

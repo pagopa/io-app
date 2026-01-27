@@ -21,11 +21,6 @@ class NfcAntennaInfoModule(reactContext: ReactApplicationContext) :
 
     val adapter = NfcAdapter.getDefaultAdapter(reactApplicationContext)
     if (adapter == null) {
-      // NFC is not available on this device
-      promise.resolve(null)
-      return
-    }
-    if (adapter == null) {
       promise.reject("NFC_UNAVAILABLE", "NFC adapter not available")
       return
     }
