@@ -291,7 +291,7 @@ export const trackSendAarMandateCieNfcActivationContinue = () => {
 
 export const trackSendAarMandateCieNfcGoToSettings = () => {
   const eventName = "SEND_MANDATE_CIE_NFC_GO_TO_SETTINGS";
-  const eventProps = buildEventProperties("UX", "action");
+  const eventProps = buildEventProperties("UX", "exit");
   void mixpanelTrack(eventName, eventProps);
 };
 
