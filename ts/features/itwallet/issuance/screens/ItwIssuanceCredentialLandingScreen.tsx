@@ -1,17 +1,20 @@
 import { useNavigation } from "@react-navigation/native";
+import I18n from "i18next";
 import { useEffect } from "react";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import {
   IOStackNavigationProp,
   IOStackNavigationRouteProps
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { itwCredentialStatusSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 
 export type ItwIssuanceCredentialLandingScreenNavigationParams = {
-  credentialType?: string;
+  credentialType: string;
 };
 
 export type ItwIssuanceCredentialLandingScreenProps =
@@ -31,22 +34,60 @@ export const ItwIssuanceCredentialLandingScreen = ({
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isWhitelisted = useIOSelector(itwIsL3EnabledSelector);
+  const { status: credentialStatus } = useIOSelector(state =>
+    itwCredentialStatusSelector(state, credentialType)
+  );
 
   useEffect(() => {
-    if (isItwValid) {
-      navigation.replace(ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER, {
+    if (credentialStatus === "valid") {
+      // Credential already present and valid, no need to issue it again
+      return;
+    }
+
+    if (!isItwValid) {
+      // ITW not active, redirect to discovery info screen
+      navigation.replace(ITW_ROUTES.DISCOVERY.INFO, {
         animationEnabled: false,
+        level: isWhitelisted ? "l3" : "l2",
         credentialType
       });
       return;
     }
 
-    navigation.replace(ITW_ROUTES.DISCOVERY.INFO, {
+    // ITW active, proceed to credential issuance
+    navigation.replace(ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER, {
       animationEnabled: false,
-      level: isWhitelisted ? "l3" : "l2",
       credentialType
     });
-  }, [navigation, isItwValid, isWhitelisted, credentialType]);
+  }, [navigation, isItwValid, isWhitelisted, credentialType, credentialStatus]);
+
+  if (credentialStatus === "valid") {
+    return (
+      <OperationResultScreenContent
+        title={I18n.t(
+          `features.itWallet.issuance.credentialAlreadyAdded.title`
+        )}
+        subtitle={I18n.t(
+          `features.itWallet.issuance.credentialAlreadyAdded.body`
+        )}
+        pictogram="itWallet"
+        action={{
+          label: I18n.t(
+            `features.itWallet.issuance.credentialAlreadyAdded.primaryAction`
+          ),
+          onPress: () =>
+            navigation.replace(ITW_ROUTES.MAIN, {
+              screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
+              params: { credentialType }
+            })
+        }}
+        secondaryAction={{
+          label: I18n.t("global.buttons.close"),
+          onPress: () => navigation.popToTop()
+        }}
+      />
+    );
+  }
 
   return null;
 };

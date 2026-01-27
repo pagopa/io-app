@@ -26,7 +26,7 @@ import ItwSpidIdpLoginScreen from "../identification/spid/screens/ItwSpidIdpLogi
 import { ItwIssuanceCredentialAsyncContinuationScreen } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
 import { ItwIssuanceCredentialFailureScreen } from "../issuance/screens/ItwIssuanceCredentialFailureScreen";
 import { ItwIssuanceCredentialIntroductionScreen } from "../issuance/screens/ItwIssuanceCredentialIntroductionScreen";
-import { ItwIssuanceCredentialLandingScreen } from "../issuance/screens/ItwIssuanceCredentialLandingScreen.tsx";
+import { ItwIssuanceCredentialLandingScreen } from "../issuance/screens/ItwIssuanceCredentialLandingScreen";
 import { ItwIssuanceCredentialPreviewScreen } from "../issuance/screens/ItwIssuanceCredentialPreviewScreen";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "../issuance/screens/ItwIssuanceCredentialTrustIssuerScreen";
 import { ItwIssuanceEidFailureScreen } from "../issuance/screens/ItwIssuanceEidFailureScreen";
