@@ -44,12 +44,12 @@ export function* watchItwCredentialsAnalyticsSaga(): SagaIterator {
  */
 export function* handleNfcAntennaInfoTracking() {
   try {
-    const { deviceHeight, deviceWidth, availableNfcAntennas } = yield* call(
-      getNfcAntennaInfo
-    );
+    const info = yield* call(getNfcAntennaInfo);
+    const { deviceHeight, deviceWidth, availableNfcAntennas } = info || {};
+
     registerSuperProperties({
       NFC_ANTENNA_HAS_DEVICE_INFO: deviceHeight !== 0 && deviceWidth !== 0,
-      NFC_AVAILABLE_ANTENNAS: availableNfcAntennas.length
+      NFC_AVAILABLE_ANTENNAS: availableNfcAntennas?.length || 0
     });
   } catch (failure) {
     registerSuperProperties({ NFC_ANTENNA_READ_FAILURE: failure });
