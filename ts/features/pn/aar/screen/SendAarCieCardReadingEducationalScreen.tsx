@@ -2,7 +2,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { Image } from "react-native";
 import i18n from "i18next";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import cieScanningEducationalSource from "../../../../../img/features/itWallet/identification/itw_cie_nfc.gif";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -12,12 +13,16 @@ import {
 } from "../store/selectors";
 import { setAarFlowState } from "../store/actions";
 import { sendAARFlowStates } from "../utils/stateUtils";
-import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
+import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { useIsNfcFeatureEnabled } from "../hooks/useIsNfcFeatureEnabled";
+import {
+  trackSendAarMandateCieCardReadingDisclaimer,
+  trackSendAarMandateCieCardReadingDisclaimerContinue
+} from "../analytics";
 
 const { width, height, uri } = Image.resolveAssetSource(
   cieScanningEducationalSource
@@ -70,6 +75,12 @@ export const SendAarCieCardReadingEducationalScreen = ({
     }
   }, [currentAarState, navigation]);
 
+  useFocusEffect(
+    useCallback(() => {
+      trackSendAarMandateCieCardReadingDisclaimer();
+    }, [])
+  );
+
   const handleGoBack = () => {
     if (currentAarState.type === sendAARFlowStates.cieScanningAdvisory) {
       dispatch(
@@ -82,6 +93,7 @@ export const SendAarCieCardReadingEducationalScreen = ({
   };
 
   const handleGoNext = async () => {
+    trackSendAarMandateCieCardReadingDisclaimerContinue();
     if (currentAarState.type === sendAARFlowStates.cieScanningAdvisory) {
       const isNfcActive = await isNfcEnabled();
 
@@ -96,7 +108,7 @@ export const SendAarCieCardReadingEducationalScreen = ({
     }
   };
 
-  useHardwareBackButton(() => {
+  useHardwareBackButtonWhenFocused(() => {
     handleGoBack();
     return true;
   });

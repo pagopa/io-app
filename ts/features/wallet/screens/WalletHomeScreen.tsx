@@ -27,6 +27,7 @@ import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs
 import { walletUpdate } from "../store/actions";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
 import { isWalletScreenRefreshingSelector } from "../store/selectors";
+import { itwMixPanelCredentialDetailsSelector } from "../../itwallet/analytics/store/selectors/index.ts";
 
 export type WalletHomeNavigationParams = Readonly<{
   // Triggers the "New element added" toast display once the user returns to this screen
@@ -44,6 +45,9 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const isRefreshingContent = useIOSelector(isWalletScreenRefreshingSelector);
+  const mixPanelCredentialDetails = useIOSelector(
+    itwMixPanelCredentialDetailsSelector
+  );
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
   const isRequiredEidFeedback = useRef(
@@ -111,12 +115,17 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     dispatch(walletUpdate());
   });
 
+  useFocusEffect(
+    useCallback(() => {
+      trackOpenWalletScreen(mixPanelCredentialDetails);
+    }, [mixPanelCredentialDetails])
+  );
+
   /**
    * Handles the "New element added" toast display once the user returns to this screen
    */
   useFocusEffect(
     useCallback(() => {
-      trackOpenWalletScreen();
       if (isNewElementAdded.current) {
         IOToast.success(I18n.t("features.wallet.home.toast.newMethod"));
         // eslint-disable-next-line functional/immutable-data

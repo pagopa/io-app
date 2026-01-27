@@ -2308,7 +2308,7 @@ PODS:
     - Yoga
   - react-native-screen-brightness (2.0.0-alpha):
     - React
-  - react-native-skia (2.2.16):
+  - react-native-skia (2.4.14):
     - boost
     - DoubleConversion
     - fast_float
@@ -3920,7 +3920,7 @@ SPEC CHECKSUMS:
   react-native-pdf-thumbnail: 89dd3532effd7733a33229ce666fd02068dac985
   react-native-safe-area-context: c6e2edd1c1da07bdce287fa9d9e60c5f7b514616
   react-native-screen-brightness: 16a7b26d12d89654fc6a2e9ff1e55c1a4a10afcb
-  react-native-skia: b67c4c18cba320ef0419c1e6869536e8f89687e5
+  react-native-skia: b60d0b9d9aea330baef956b7f015d0af2b42076d
   react-native-splash-screen: a43276f9cf4b2e65d7ce30efe372ffc528064293
   react-native-webview: 654f794a7686b47491cf43aa67f7f428bea00eed
   React-NativeModulesApple: ebf2ce72b35870036900d6498b33724386540a71

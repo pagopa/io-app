@@ -1,15 +1,18 @@
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
-import { ItwFlow } from "../../analytics/utils/types";
+import { ItwCredentialDetails, ItwFlow } from "../../analytics/utils/types";
 import {
   ITW_DISCOVERY_ACTIONS_EVENTS,
   ITW_DISCOVERY_ERRORS_EVENTS
 } from "./enum";
 
-export const trackItWalletActivationStart = (itw_flow: ItwFlow) => {
+export const trackItWalletActivationStart = (
+  itw_flow: ItwFlow,
+  credential_details: ItwCredentialDetails
+) => {
   void mixpanelTrack(
     ITW_DISCOVERY_ACTIONS_EVENTS.ITW_ID_START,
-    buildEventProperties("UX", "action", { itw_flow })
+    buildEventProperties("UX", "action", { itw_flow, credential_details })
   );
 };
 
