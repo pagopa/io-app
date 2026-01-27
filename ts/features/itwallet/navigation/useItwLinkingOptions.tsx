@@ -23,7 +23,7 @@ export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => ({
       /**
        * Handles https://continua.io.pagopa.it/itw/credential/issuance/:credentialType
        *
-       * Redirect to the credential issuance flow for the given credential type.
+       * Redirects to the credential issuance flow for the given credential type.
        */
       [ITW_ROUTES.LANDING.CREDENTIAL_ISSUANCE]: {
         path: "credential/issuance/:credentialType"
