@@ -1,6 +1,5 @@
-import SecureStorage, {
-  SecureStorageError
-} from "@pagopa/io-react-native-secure-storage";
+import * as SecureStorage from "@pagopa/io-react-native-secure-storage";
+import { type SecureStorageError } from "@pagopa/io-react-native-secure-storage";
 import { type Storage } from "redux-persist";
 import * as Sentry from "@sentry/react-native";
 
