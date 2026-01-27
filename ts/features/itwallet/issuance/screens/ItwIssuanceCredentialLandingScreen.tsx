@@ -35,6 +35,7 @@ export const ItwIssuanceCredentialLandingScreen = ({
   useEffect(() => {
     if (isItwValid) {
       navigation.replace(ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER, {
+        animationEnabled: false,
         credentialType
       });
       return;

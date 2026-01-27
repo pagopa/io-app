@@ -232,7 +232,10 @@ const InnerNavigator = memo(() => {
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER}
         component={ItwIssuanceCredentialTrustIssuerScreen}
-        options={hiddenHeader}
+        options={({ route }) => ({
+          ...hiddenHeader,
+          animationEnabled: route.params?.animationEnabled
+        })}
       />
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW}
