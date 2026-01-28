@@ -32,6 +32,7 @@ import {
   AppLocale,
   preferredLanguageSaveSuccess
 } from "../../../../store/actions/persistedPreferences";
+
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { sectionStatusByKeySelector } from "../../../../store/reducers/backendStatus/sectionStatus";
 import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
@@ -53,6 +54,8 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 /**
  * Allows the user to select one of the available Languages as preferred
  */
+
+type AppLocaleId = `app-locale-${AppLocale}`;
 
 const LanguagesPreferencesScreen = () => {
   const viewRef = createRef<View>();
@@ -119,24 +122,24 @@ const LanguagesPreferencesScreen = () => {
 
   const [selectedItem, setSelectedItem] = useState(initialSelectedItem);
 
-  const appLocaleOptions: Array<RadioItem<AppLocale>> = useMemo(
+  const appLocaleOptions: Array<RadioItem<AppLocaleId>> = useMemo(
     () =>
       (["it", "en", "de", "fr", "sl"] as const).map(locale => ({
         value: I18n.t(`locales.${locale}`, {
           defaultValue: locale
         }),
-        id: locale,
-        key: `${locale}-app-language`
+        id: `app-locale-${locale}` as AppLocaleId
       })),
     []
   );
 
-  const [selectedAppLocale, setSelectedAppLocale] = useState<AppLocale>(
-    I18n.language as AppLocale
+  const [selectedAppLocale, setSelectedAppLocale] = useState<AppLocaleId>(
+    `app-locale-${I18n.language as AppLocale}` as AppLocaleId
   );
 
-  const handleAppLocaleChange = useCallback((locale: AppLocale) => {
-    setSelectedAppLocale(locale);
+  const handleAppLocaleChange = useCallback((localeId: AppLocaleId) => {
+    const locale = localeId.replace("app-locale-", "") as AppLocale;
+    setSelectedAppLocale(localeId);
     Alert.alert("Language selected", locale);
   }, []);
 
@@ -257,7 +260,7 @@ const LanguagesPreferencesScreen = () => {
                 "profile.preferences.list.preferred_language.headers.app"
               )}
             />
-            <RadioGroup<AppLocale>
+            <RadioGroup<AppLocaleId>
               type="radioListItem"
               items={appLocaleOptions}
               selectedItem={selectedAppLocale}
