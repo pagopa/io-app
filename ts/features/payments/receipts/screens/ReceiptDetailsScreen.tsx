@@ -1,4 +1,11 @@
-import { IOColors, useIOTheme, useIOToast } from "@pagopa/io-app-design-system";
+import {
+  Alert,
+  ContentWrapper,
+  IOColors,
+  useIOTheme,
+  useIOToast,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { Dimensions, StyleSheet, View } from "react-native";
@@ -153,7 +160,7 @@ const ReceiptDetailsScreen = () => {
   }
 
   const showGenerateReceiptButton =
-    transactionDetails?.infoNotice?.origin !== OriginEnum.PM && !isCart;
+    transactionDetails?.infoNotice?.origin !== OriginEnum.PM;
 
   return (
     <IOScrollView
@@ -187,7 +194,18 @@ const ReceiptDetailsScreen = () => {
           showUnavailableReceiptBanner={!showGenerateReceiptButton}
           loading={isLoading}
         />
-        <HideReceiptButton transactionId={transactionId} />
+        {isCart && !isPayer && (
+          <ContentWrapper>
+            <Alert
+              content={I18n.t(
+                "features.payments.transactions.receipt.debtorCartBanner"
+              )}
+              variant="info"
+            />
+            <VSpacer size={16} />
+          </ContentWrapper>
+        )}
+        <HideReceiptButton transactionId={transactionId} isCart={isCart} />
       </View>
     </IOScrollView>
   );
