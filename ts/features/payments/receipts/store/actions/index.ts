@@ -78,6 +78,7 @@ export const getPaymentsReceiptDownloadAction = createAsyncAction(
 type PaymentsTransactionReceiptDeletePayload = {
   transactionId: string;
   trigger: HideReceiptTrigger;
+  isFromPaymentsHome?: boolean;
 };
 
 export const hidePaymentsReceiptAction = createAsyncAction(
