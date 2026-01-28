@@ -90,7 +90,8 @@ const reducer = (
         ...state,
         transactions: !action.payload.appendElements
           ? pot.some([...previousTransactions, ...maybeTransactions])
-          : pot.some(maybeTransactions)
+          : pot.some(maybeTransactions),
+        needsHomeListRefresh: false
       };
     case getType(getPaymentsReceiptAction.failure):
       return {
