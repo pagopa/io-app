@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import {
   IOStackNavigationProp,
@@ -34,12 +34,21 @@ export const ItwIssuanceCredentialLandingScreen = ({
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isWhitelisted = useIOSelector(itwIsL3EnabledSelector);
-  const { status: credentialStatus } = useIOSelector(state =>
+  const { status } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credentialType)
   );
 
+  /**
+   * Determines if the credential is still valid (JWT not expired nor expiring soon)
+   * and thus does not need to be issued again.
+   */
+  const isCredentialValid = useMemo(
+    () => (status ? !["jwtExpired", "jwtExpiring"].includes(status) : false),
+    [status]
+  );
+
   useEffect(() => {
-    if (credentialStatus === "valid") {
+    if (isCredentialValid) {
       // Credential already present and valid, no need to issue it again
       return;
     }
@@ -59,9 +68,15 @@ export const ItwIssuanceCredentialLandingScreen = ({
       animationEnabled: false,
       credentialType
     });
-  }, [navigation, isItwValid, isWhitelisted, credentialType, credentialStatus]);
+  }, [
+    navigation,
+    isItwValid,
+    isWhitelisted,
+    credentialType,
+    isCredentialValid
+  ]);
 
-  if (credentialStatus === "valid") {
+  if (isCredentialValid) {
     return (
       <OperationResultScreenContent
         title={I18n.t(
