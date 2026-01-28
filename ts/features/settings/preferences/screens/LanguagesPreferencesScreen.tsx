@@ -45,6 +45,7 @@ import {
 import { openWebUrl } from "../../../../utils/url";
 import { profileUpsert } from "../../common/store/actions";
 import { profileSelector } from "../../common/store/selectors";
+import { isAppLocaleSelectionEnabled } from "../../../../config";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.language.contextualHelpTitle",
@@ -240,33 +241,20 @@ const LanguagesPreferencesScreen = () => {
       >
         <VStack space={24}>
           <View>
-            <ListItemHeader
-              iconName="institution"
-              label={I18n.t(
-                "profile.preferences.list.preferred_language.headers.services"
-              )}
-            />
+            {isAppLocaleSelectionEnabled && (
+              <ListItemHeader
+                iconName="institution"
+                label={I18n.t(
+                  "profile.preferences.list.preferred_language.headers.services"
+                )}
+              />
+            )}
             <RadioGroup<string>
               type="radioListItem"
               items={renderedItem}
               selectedItem={selectedItem}
               onPress={onLanguageSelected}
             />
-          </View>
-          <View>
-            <ListItemHeader
-              iconName="device"
-              label={I18n.t(
-                "profile.preferences.list.preferred_language.headers.app"
-              )}
-            />
-            <RadioGroup<AppLocaleId>
-              type="radioListItem"
-              items={appLocaleOptions}
-              selectedItem={selectedAppLocale}
-              onPress={handleAppLocaleChange}
-            />
-
             {isBannerVisible && (
               <>
                 <VSpacer />
@@ -287,6 +275,22 @@ const LanguagesPreferencesScreen = () => {
               </>
             )}
           </View>
+          {isAppLocaleSelectionEnabled && (
+            <View>
+              <ListItemHeader
+                iconName="device"
+                label={I18n.t(
+                  "profile.preferences.list.preferred_language.headers.app"
+                )}
+              />
+              <RadioGroup<AppLocaleId>
+                type="radioListItem"
+                items={appLocaleOptions}
+                selectedItem={selectedAppLocale}
+                onPress={handleAppLocaleChange}
+              />
+            </View>
+          )}
         </VStack>
       </IOScrollViewWithLargeHeader>
     </LoadingSpinnerOverlay>
