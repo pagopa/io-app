@@ -8,7 +8,7 @@ import {
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { MutableRefObject, ReactNode, useCallback, useRef } from "react";
+import { RefObject, ReactNode, useCallback, useRef } from "react";
 import { StyleSheet, useWindowDimensions, View } from "react-native";
 import {
   Gesture,
@@ -91,7 +91,7 @@ type ListItemSwipeActionProps = {
   color: IconButton["color"];
   accessibilityLabel?: string;
   onRightActionPressed: (controls: SwipeControls) => void;
-  openedItemRef?: MutableRefObject<(() => void) | null>;
+  openedItemRef?: RefObject<(() => void) | null>;
 };
 
 const ListItemSwipeAction = ({
