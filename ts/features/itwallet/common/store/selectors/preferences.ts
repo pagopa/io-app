@@ -49,3 +49,12 @@ export const itwIsSimplifiedActivationRequired = (state: GlobalState) =>
  */
 export const itwIsPidReissuingSurveyHiddenSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.isPidReissuingSurveyHidden;
+
+/**
+ * Returns whether the credential upgrade failed for the given type.
+ */
+export const itwCredentialUpgradeFailedSelector =
+  (credentialType: string) => (state: GlobalState) =>
+    state.features.itWallet.preferences.credentialUpgradeFailedByType?.[
+      credentialType
+    ] ?? false;

@@ -12,6 +12,7 @@ import {
   itwCredentialsRemoveByType,
   itwCredentialsStore
 } from "../../../credentials/store/actions";
+import { itwSetCredentialUpgradeFailed } from "../../../common/store/actions/preferences";
 
 describe("itwCredentialUpgradeMachine actions", () => {
   describe("storeCredential", () => {
@@ -41,6 +42,12 @@ describe("itwCredentialUpgradeMachine actions", () => {
       );
       expect(mockDispatch).toHaveBeenCalledWith(
         itwCredentialsStore([ItwStoredCredentialsMocks.L3.mdl])
+      );
+      expect(mockDispatch).toHaveBeenCalledWith(
+        itwSetCredentialUpgradeFailed({
+          credentialType: "MDL",
+          failed: false
+        })
       );
     });
   });

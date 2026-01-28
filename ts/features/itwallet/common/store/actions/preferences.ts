@@ -33,6 +33,10 @@ export const itwSetPidReissuingSurveyHidden = createStandardAction(
   "ITW_SET_PID_REISSUING_SURVEY_HIDDEN"
 )<boolean>();
 
+export const itwSetCredentialUpgradeFailed = createStandardAction(
+  "ITW_SET_CREDENTIAL_UPGRADE_FAILED"
+)<{ credentialType: string; failed: boolean }>();
+
 export type ItwPreferencesActions =
   | ActionType<typeof itwSetReviewPending>
   | ActionType<typeof itwSetAuthLevel>
@@ -41,4 +45,5 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetFiscalCodeWhitelisted>
   | ActionType<typeof itwFreezeSimplifiedActivationRequirements>
   | ActionType<typeof itwClearSimplifiedActivationRequirements>
-  | ActionType<typeof itwSetPidReissuingSurveyHidden>;
+  | ActionType<typeof itwSetPidReissuingSurveyHidden>
+  | ActionType<typeof itwSetCredentialUpgradeFailed>;
