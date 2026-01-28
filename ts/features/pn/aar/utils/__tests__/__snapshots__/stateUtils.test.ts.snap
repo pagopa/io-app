@@ -44,6 +44,7 @@ Map {
   "ko" => Set {
     "fetchingQRData",
     "fetchingNotificationData",
+    "cieCanAdvisory",
   },
   "notAddressee" => Set {
     "creatingMandate",
