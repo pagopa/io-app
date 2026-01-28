@@ -1,12 +1,13 @@
 import { useIOToast } from "@pagopa/io-app-design-system";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import i18n from "i18next";
 import { useCallback, useEffect } from "react";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
 import { useIsNfcFeatureAvailable } from "../hooks/useIsNfcFeatureAvailable";
 import { useSendAarDelegationProposalScreenBottomSheet } from "../hooks/useSendAarDelegationProposalScreenBottomSheet";
@@ -23,7 +24,10 @@ import {
 export const SendAarDelegationProposalScreen = () => {
   const { terminateFlow, currentFlowData } = useSendAarFlowManager();
   const { type } = currentFlowData;
-  const navigation = useIONavigation();
+  const navigation =
+    useNavigation<
+      StackNavigationProp<PnParamsList, "SEND_AAR_DELEGATION_PROPOSAL">
+    >();
   const { warning, hideAll } = useIOToast();
 
   useOnFirstRender(() => {
@@ -35,22 +39,12 @@ export const SendAarDelegationProposalScreen = () => {
       case sendAARFlowStates.ko:
       case sendAARFlowStates.nfcNotSupportedFinal: {
         hideAll();
-        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-          screen: PN_ROUTES.MAIN,
-          params: {
-            screen: PN_ROUTES.SEND_AAR_ERROR
-          }
-        });
+        navigation.replace(PN_ROUTES.SEND_AAR_ERROR);
         break;
       }
       case sendAARFlowStates.cieCanAdvisory: {
         hideAll();
-        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-          screen: PN_ROUTES.MAIN,
-          params: {
-            screen: PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL
-          }
-        });
+        navigation.replace(PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL);
         break;
       }
     }
