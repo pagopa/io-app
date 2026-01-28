@@ -5746,16 +5746,16 @@
           "closeButton": "Chiudi",
           "closeButtonAlt": "Ho capito",
           "revokedByWalletProvider": {
-            "title": "Documenti su IO è stata disattivata",
+            "title": "La funzionalità Documenti è stata disattivata",
             "content": "Per verificare i requisiti richiesti per continuare a usare la funzionalità sul tuo dispositivo, premi \"Scopri di più\"."
           },
           "newWalletInstanceCreated": {
-            "title": "Documenti su IO è stata disattivata su questo dispositivo",
-            "content": "Puoi usare i tuoi documenti su IO su un solo dispositivo alla volta per ragioni di sicurezza."
+            "title": "La funzionalità Documenti è stata disattivata su questo dispositivo",
+            "content": "Puoi usare i documenti digitali su un solo dispositivo alla volta per ragioni di sicurezza."
           },
           "revokedByUser": {
-            "title": "Hai disattivato Documenti su IO",
-            "content": "Se cambi idea, potrai riattivare Documenti su IO in futuro."
+            "title": "Hai rimosso i tuoi documenti digitali da IO",
+            "content": "Se cambi idea, potrai riattivare la funzionalità in futuro."
           }
         }
       },
