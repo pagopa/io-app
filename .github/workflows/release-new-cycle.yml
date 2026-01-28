@@ -168,7 +168,7 @@ jobs:
   release-ios:
     needs: bump-app-version
     environment: prod
-    runs-on: macos-15-xlarge
+    runs-on: macos-26-xlarge
     steps:
       - id: set-xcode-version
         run: sudo xcode-select -s '/Applications/Xcode_26.2.0.app/Contents/Developer'
