@@ -1,10 +1,11 @@
-import { IOColors, IOSkeleton } from "@pagopa/io-app-design-system";
+import { IOSkeleton } from "@pagopa/io-app-design-system";
 
 import { ReactNode } from "react";
-import { StyleSheet, View } from "react-native";
+import { ColorValue, StyleSheet, View } from "react-native";
 
 type LoadingProps = {
   isLoading: true;
+  skeletonColor: ColorValue;
 };
 
 type BaseProps = {
@@ -16,7 +17,7 @@ export type BonusCardStatus = LoadingProps | BaseProps;
 
 export const BonusCardStatus = (props: BonusCardStatus) =>
   props.isLoading ? (
-    <BonusCardStatusSkeleton />
+    <BonusCardStatusSkeleton skeletonColor={props.skeletonColor} />
   ) : (
     <BonusCardStatusContent {...props} />
   );
@@ -27,21 +28,19 @@ export const BonusCardStatusContent = ({ children }: BaseProps) => (
   </View>
 );
 
-const BonusCardStatusSkeleton = () => {
-  const placeholderColor = IOColors["blueItalia-100"];
-
-  return (
-    <View style={styles.container} testID="BonusCardStatusSkeletonTestID">
-      <IOSkeleton
-        color={placeholderColor}
-        shape="rectangle"
-        height={16}
-        width={278}
-        radius={16}
-      />
-    </View>
-  );
-};
+const BonusCardStatusSkeleton = ({
+  skeletonColor
+}: Pick<LoadingProps, "skeletonColor">) => (
+  <View style={styles.container} testID="BonusCardStatusSkeletonTestID">
+    <IOSkeleton
+      color={skeletonColor}
+      shape="rectangle"
+      height={16}
+      width={278}
+      radius={16}
+    />
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {
