@@ -111,7 +111,6 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
                 }
                 transaction={latestTransaction}
                 openedItemRef={openedItemRef}
-                isFromPaymentsHome={true}
               />
               {index < latestTransactionsPot.value.length - 1 && <Divider />}
             </Fragment>
