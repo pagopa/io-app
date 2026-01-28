@@ -30,7 +30,10 @@ import { ReceiptLoadingList } from "../components/ReceiptLoadingList";
 import { ReceiptSectionListHeader } from "../components/ReceiptSectionListHeader";
 import { PaymentsReceiptRoutes } from "../navigation/routes";
 import { getPaymentsReceiptAction } from "../store/actions";
-import { walletReceiptListPotSelector, continuationTokenSelector } from "../store/selectors";
+import {
+  walletReceiptListPotSelector,
+  continuationTokenSelector
+} from "../store/selectors";
 import { ReceiptsCategoryFilter } from "../types";
 import { groupTransactionsByMonth } from "../utils";
 

@@ -84,7 +84,9 @@ const reducer = (
       return {
         ...state,
         transactions,
-        continuationToken: action.payload.firstLoad ? undefined : state.continuationToken
+        continuationToken: action.payload.firstLoad
+          ? undefined
+          : state.continuationToken
       };
     case getType(getPaymentsReceiptAction.success):
       const previousTransactions = pot.getOrElse(state.transactions, []);
