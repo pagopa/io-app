@@ -28,11 +28,10 @@ type Props = {
   transaction: NoticeListItem;
   onPress?: () => void;
   openedItemRef?: RefObject<(() => void) | null>;
-  isFromPaymentsHome?: boolean;
 };
 
 const ReceiptListItemTransaction = memo(
-  ({ transaction, onPress, openedItemRef, isFromPaymentsHome }: Props) => {
+  ({ transaction, onPress, openedItemRef }: Props) => {
     const recipient = transaction.payeeName ?? "";
 
     const amountText = pipe(
@@ -123,8 +122,7 @@ const ReceiptListItemTransaction = memo(
                 dispatch(
                   hidePaymentsReceiptAction.request({
                     transactionId: transaction.eventId,
-                    trigger: "swipe",
-                    isFromPaymentsHome
+                    trigger: "swipe"
                   })
                 );
               }
