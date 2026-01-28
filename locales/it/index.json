@@ -4529,7 +4529,7 @@
       "transactions": {
         "multiplePayment": "Pagamento multiplo",
         "title": "Ricevute pagoPA",
-        "button": "Vedi tutte",
+        "button": "Mostra tutte",
         "empty": {
           "title": "Qui vedrai le tue ricevute pagoPA",
           "content": "Paga un avviso in app o presso un qualsiasi canale abilitato a pagoPA."
@@ -4553,10 +4553,15 @@
             "failed": "C’è stato un errore, riprova"
           },
           "hideBanner": {
+            "isCart": {
+              "title": "Vuoi nascondere queste ricevute dalla tua lista?",
+              "content": "Stai per nascondere definitivamente tutte le ricevute collegate a questa transazione. Non compariranno più nell’elenco."
+            },
             "title": "Vuoi nascondere questa ricevuta dalla tua lista?",
             "content": "L’operazione è irreversibile. La ricevuta non verrà più mostrata nell’elenco delle tue ricevute.",
             "accept": "Sì, nascondi"
-          }
+          },
+          "debtorCartBanner": "Questo avviso è stato pagato insieme ad altri in un'unica transazione. Per informazioni sui costi di commissione, consulta il documento ricevuto in fase di pagamento."
         },
         "details": {
           "totalFeeUnknown": "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}",
