@@ -60,3 +60,8 @@ export const itwIsDiscoveryBannerHiddenSelector =
  */
 export const itwIsWalletUpgradeMDLDetailsBannerHiddenSelector =
   itwIsBannerHiddenSelector("upgradeMDLDetails");
+
+/** * Returns whether the IT-wallet discovery banner in wallet screen is hidden. Defaults to false.
+ */
+export const itwIsWalletDiscoveryBannerHiddenSelector =
+  itwIsBannerHiddenSelector("discovery_wallet");

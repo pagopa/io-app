@@ -38,8 +38,9 @@ export type ItwDiscoveryBannerProps = {
 /**
  * Discovery banner used in flows where we want to handle the banner's visibility logic externally
  *  (see MultiBanner feature for the landing screen)
+ * @deprecated this banners is for the legacy Documenti su IO flow.
  */
-export const ItwDiscoveryBanner = ({
+export const ItwDiscoveryBannerLegacy = ({
   withTitle = true,
   ignoreMargins = false,
   closable,

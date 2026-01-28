@@ -1,7 +1,8 @@
 import { Alert, Body, IOButton, VStack } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { View } from "react-native";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks.ts";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
 import { itwResetEnv } from "../store/actions/environment.ts";
 import { selectItwEnv } from "../store/selectors/environment.ts";
 
@@ -46,17 +47,19 @@ export const ItwEnvironmentAlert = () => {
 
   return (
     <>
-      <Alert
-        testID="itwEnvironmentAlertTestID"
-        variant="warning"
-        content={I18n.t(
-          "features.itWallet.playgrounds.environment.banner.content"
-        )}
-        action={I18n.t(
-          "features.itWallet.playgrounds.environment.banner.action"
-        )}
-        onPress={infoModal.present}
-      />
+      <View style={{ marginVertical: 8 }}>
+        <Alert
+          testID="itwEnvironmentAlertTestID"
+          variant="warning"
+          content={I18n.t(
+            "features.itWallet.playgrounds.environment.banner.content"
+          )}
+          action={I18n.t(
+            "features.itWallet.playgrounds.environment.banner.action"
+          )}
+          onPress={infoModal.present}
+        />
+      </View>
       {infoModal.bottomSheet}
     </>
   );

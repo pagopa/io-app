@@ -14,14 +14,18 @@ const FOREVER = 100 * 365; // approx. 100 years
  * Identifiers for IT Wallet banners
  * To add a new banner add a new id to this type
  */
-export type ItwBannerId = "discovery" | "upgradeMDLDetails";
+export type ItwBannerId =
+  | "discovery" // (Legacy) Discovery banner for Documenti su IO
+  | "discovery_wallet" // Discovery banner for IT Wallet placed in the wallet screen
+  | "upgradeMDLDetails"; // Upgrade to IT Wallet banner placed in MDL details screen
 
 /**
  * Mapping between banner identifiers and the duration (expressed in days) for which they should be hidden
  * after each dismissal.
  */
 export const bannerHideDurations: Record<ItwBannerId, NonEmptyArray<number>> = {
-  discovery: [6 * 30 /* approx. 6 months */],
+  discovery: [6 * 30], // approx. 6 months
+  discovery_wallet: [30, 60, 120], // approx. 1 month, 2 months, 4 months
   upgradeMDLDetails: [FOREVER]
 };
 
