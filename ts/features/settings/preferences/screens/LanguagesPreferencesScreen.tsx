@@ -1,9 +1,11 @@
 import {
   Banner,
+  ListItemHeader,
   RadioGroup,
   RadioItem,
   useIOToast,
-  VSpacer
+  VSpacer,
+  VStack
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
@@ -26,7 +28,10 @@ import { AlertModal } from "../../../../components/ui/AlertModal";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import { availableTranslations } from "../../../../i18n";
-import { preferredLanguageSaveSuccess } from "../../../../store/actions/persistedPreferences";
+import {
+  AppLocale,
+  preferredLanguageSaveSuccess
+} from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { sectionStatusByKeySelector } from "../../../../store/reducers/backendStatus/sectionStatus";
 import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
@@ -113,6 +118,27 @@ const LanguagesPreferencesScreen = () => {
   );
 
   const [selectedItem, setSelectedItem] = useState(initialSelectedItem);
+
+  const appLocaleOptions: Array<RadioItem<AppLocale>> = useMemo(
+    () =>
+      (["it", "en", "de", "fr", "sl"] as const).map(locale => ({
+        value: I18n.t(`locales.${locale}`, {
+          defaultValue: locale
+        }),
+        id: locale,
+        key: `${locale}-app-language`
+      })),
+    []
+  );
+
+  const [selectedAppLocale, setSelectedAppLocale] = useState<AppLocale>(
+    I18n.language as AppLocale
+  );
+
+  const handleAppLocaleChange = useCallback((locale: AppLocale) => {
+    setSelectedAppLocale(locale);
+    Alert.alert("Language selected", locale);
+  }, []);
 
   useEffect(() => {
     // start updating
@@ -209,28 +235,56 @@ const LanguagesPreferencesScreen = () => {
         headerActionsProp={{ showHelp: true }}
         contextualHelpMarkdown={contextualHelpMarkdown}
       >
-        <VSpacer size={16} />
-        <RadioGroup<string>
-          type="radioListItem"
-          items={renderedItem}
-          selectedItem={selectedItem}
-          onPress={onLanguageSelected}
-        />
-        <VSpacer size={16} />
-        {isBannerVisible && (
-          <Banner
-            ref={viewRef}
-            color="neutral"
-            content={bannerInfoSelector.message[getFullLocale()]}
-            pictogramName="charity"
-            action={I18n.t(
-              "profile.preferences.list.preferred_language.banner.button"
+        <VStack space={24}>
+          <View>
+            <ListItemHeader
+              iconName="institution"
+              label={I18n.t(
+                "profile.preferences.list.preferred_language.headers.services"
+              )}
+            />
+            <RadioGroup<string>
+              type="radioListItem"
+              items={renderedItem}
+              selectedItem={selectedItem}
+              onPress={onLanguageSelected}
+            />
+          </View>
+          <View>
+            <ListItemHeader
+              iconName="device"
+              label={I18n.t(
+                "profile.preferences.list.preferred_language.headers.app"
+              )}
+            />
+            <RadioGroup<AppLocale>
+              type="radioListItem"
+              items={appLocaleOptions}
+              selectedItem={selectedAppLocale}
+              onPress={handleAppLocaleChange}
+            />
+
+            {isBannerVisible && (
+              <>
+                <VSpacer />
+                <Banner
+                  ref={viewRef}
+                  color="neutral"
+                  content={bannerInfoSelector.message[getFullLocale()]}
+                  pictogramName="charity"
+                  action={I18n.t(
+                    "profile.preferences.list.preferred_language.banner.button"
+                  )}
+                  onPress={() =>
+                    openWebUrl(
+                      bannerInfoSelector.web_url?.[getFullLocale()] || ""
+                    )
+                  }
+                />
+              </>
             )}
-            onPress={() =>
-              openWebUrl(bannerInfoSelector.web_url?.[getFullLocale()] || "")
-            }
-          />
-        )}
+          </View>
+        </VStack>
       </IOScrollViewWithLargeHeader>
     </LoadingSpinnerOverlay>
   );

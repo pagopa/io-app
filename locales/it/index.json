@@ -24,7 +24,15 @@
       "venerdì",
       "sabato"
     ],
-    "abbr_day_names": ["dom", "lun", "mar", "mer", "gio", "ven", "sab"],
+    "abbr_day_names": [
+      "dom",
+      "lun",
+      "mar",
+      "mer",
+      "gio",
+      "ven",
+      "sab"
+    ],
     "month_names": [
       " ",
       "gennaio",
@@ -55,7 +63,10 @@
       "nov",
       "dic"
     ],
-    "meridian": ["am", "pm"],
+    "meridian": [
+      "am",
+      "pm"
+    ],
     "time": {
       "minutes_zero": "0 minuti",
       "minutes_one": "1 minuto",
@@ -304,7 +315,9 @@
   "locales": {
     "it": "Italiano",
     "en": "Inglese",
-    "de": "Tedesco"
+    "de": "Tedesco",
+    "fr": "Francese",
+    "sl": "Sloveno"
   },
   "clipboard": {
     "copyIntoClipboard": "copia negli appunti",
@@ -740,6 +753,10 @@
         "preferred_language": {
           "title": "Lingua preferita",
           "subtitle": "In quale lingua vuoi usare l'applicazione?",
+          "headers": {
+            "services": "Servizi",
+            "app": "Applicazione"
+          },
           "alert": {
             "title": "Vuoi cambiare la lingua in",
             "subtitle": "Dovrai riavviare l'applicazione per applicare il cambiamento"

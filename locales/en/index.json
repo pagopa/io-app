@@ -24,7 +24,15 @@
       "Friday",
       "Saturday"
     ],
-    "abbr_day_names": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "abbr_day_names": [
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat"
+    ],
     "month_names": [
       " ",
       "January",
@@ -55,7 +63,10 @@
       "Nov",
       "Dec"
     ],
-    "meridian": ["am", "pm"],
+    "meridian": [
+      "am",
+      "pm"
+    ],
     "time": {
       "minutes_zero": "0 minutes",
       "minutes_one": "1 minute",
@@ -740,6 +751,10 @@
         "preferred_language": {
           "title": "Favourite language",
           "subtitle": "In which language do you want to use the application?",
+          "headers": {
+            "services": "Services",
+            "app": "Application"
+          },
           "alert": {
             "title": "Do you want to change the language to",
             "subtitle": "You'll need to restart the application to make this happen"
