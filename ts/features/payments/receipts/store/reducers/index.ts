@@ -13,6 +13,7 @@ import {
   getPaymentsReceiptAction,
   getPaymentsLatestReceiptAction,
   hidePaymentsReceiptAction,
+  setNeedsHomeListRefreshAction,
   PaymentsTransactionReceiptInfoPayload
 } from "../actions";
 import {
@@ -32,6 +33,7 @@ export type ReceiptTransactionState = {
   details: pot.Pot<NoticeDetailResponse, NetworkError>;
   receiptDocument: pot.Pot<PaymentsTransactionReceiptInfoPayload, NetworkError>;
   cancelTransactionRecord: pot.Pot<CancelTransactionRecord, NetworkError>;
+  needsHomeListRefresh: boolean;
 };
 
 const INITIAL_STATE: ReceiptTransactionState = {
@@ -39,7 +41,8 @@ const INITIAL_STATE: ReceiptTransactionState = {
   latestTransactions: pot.none,
   details: pot.noneLoading,
   receiptDocument: pot.none,
-  cancelTransactionRecord: pot.none
+  cancelTransactionRecord: pot.none,
+  needsHomeListRefresh: false
 };
 
 const reducer = (
@@ -217,6 +220,12 @@ const reducer = (
         transactions: pot.some(restoredTransactions),
         latestTransactions: pot.some(restoredLatestTransactions),
         cancelTransactionRecord: pot.none
+      };
+    }
+    case getType(setNeedsHomeListRefreshAction): {
+      return {
+        ...state,
+        needsHomeListRefresh: action.payload
       };
     }
   }
