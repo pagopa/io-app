@@ -2,7 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import _ from "lodash";
-import { getType } from "typesafe-actions";
+import { getType, isActionOf } from "typesafe-actions";
 import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
 import { PaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodResponse";
 import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
@@ -22,6 +22,7 @@ import {
   paymentsCalculatePaymentFeesAction,
   paymentsCreateTransactionAction,
   paymentsDeleteTransactionAction,
+  paymentsGetContextualOnboardingUrlAction,
   paymentsGetPaymentDetailsAction,
   paymentsGetPaymentMethodsAction,
   paymentsGetPaymentTransactionInfoAction,
@@ -37,9 +38,21 @@ import {
   paymentStartWebViewFlow,
   selectPaymentMethodAction,
   selectPaymentPspAction,
-  walletPaymentSetCurrentStep
+  walletPaymentSetCurrentStep,
+  paymentClearWebViewFlow
 } from "../actions/orchestration";
+import {
+  contextualOnboardingStartWebViewFlow,
+  ContextualOnboardingWebViewPayload
+} from "../../../onboarding/store/actions";
 export const WALLET_PAYMENT_STEP_MAX = 4;
+
+type ContextualPayment = {
+  orderId?: string;
+  onboardingUrl: pot.Pot<string, NetworkError>;
+  onboardedWalletId?: string;
+  webViewPayload?: ContextualOnboardingWebViewPayload;
+};
 
 export type PaymentsCheckoutState = {
   currentStep: WalletPaymentStepEnum;
@@ -60,6 +73,7 @@ export type PaymentsCheckoutState = {
   onSuccess?: OnPaymentSuccessAction;
   pspBannerClosed: Set<string>;
   webViewPayload?: PaymentStartWebViewPayload;
+  contextualPayment: ContextualPayment;
 };
 
 const INITIAL_STATE: PaymentsCheckoutState = {
@@ -75,7 +89,13 @@ const INITIAL_STATE: PaymentsCheckoutState = {
   transaction: pot.none,
   authorizationUrl: pot.none,
   pspBannerClosed: new Set(),
-  webViewPayload: undefined
+  webViewPayload: undefined,
+  contextualPayment: {
+    onboardingUrl: pot.none,
+    onboardedWalletId: undefined,
+    orderId: undefined,
+    webViewPayload: undefined
+  }
 };
 
 // eslint-disable-next-line complexity
@@ -83,6 +103,7 @@ const reducer = (
   state: PaymentsCheckoutState = INITIAL_STATE,
   action: Action
 ): PaymentsCheckoutState => {
+  // eslint-disable-next-line sonarjs/max-switch-cases
   switch (action.type) {
     case getType(initPaymentStateAction):
       return {
@@ -184,7 +205,12 @@ const reducer = (
         selectedPaymentMethod: O.fromNullable(action.payload.paymentMethod),
         // If payment method changes, reset PSP list
         selectedPsp: O.none,
-        pspList: pot.none
+        pspList: pot.none,
+        contextualPayment: {
+          ...state.contextualPayment,
+          orderId: undefined,
+          onboardedWalletId: undefined
+        }
       };
 
     // PSP list
@@ -221,6 +247,10 @@ const reducer = (
         ...state,
         pspList: pot.some(sortedBundles),
         currentStep,
+        contextualPayment: {
+          ...state.contextualPayment,
+          orderId: action.payload.orderId
+        },
         selectedPsp
       };
     case getType(paymentsCalculatePaymentFeesAction.cancel):
@@ -255,11 +285,29 @@ const reducer = (
 
     // Transaction
     case getType(paymentsCreateTransactionAction.request):
-    case getType(paymentsGetPaymentTransactionInfoAction.request):
-    case getType(paymentsDeleteTransactionAction.request):
       return {
         ...state,
-        transaction: pot.toLoading(state.transaction)
+        contextualPayment: {
+          ...state.contextualPayment,
+          orderId: action.payload.orderId
+        }
+      };
+    case getType(paymentsGetPaymentTransactionInfoAction.request):
+    case getType(paymentsDeleteTransactionAction.request):
+      const onboardedWalletId = isActionOf(
+        paymentsGetPaymentTransactionInfoAction.request,
+        action
+      )
+        ? action.payload.walletId
+        : undefined;
+      return {
+        ...state,
+        transaction: pot.toLoading(state.transaction),
+        contextualPayment: {
+          ...state.contextualPayment,
+          orderId: undefined,
+          onboardedWalletId
+        }
       };
     case getType(paymentsCreateTransactionAction.success):
     case getType(paymentsGetPaymentTransactionInfoAction.success):
@@ -300,10 +348,60 @@ const reducer = (
         ...state,
         authorizationUrl: pot.none
       };
+    // Contextual onboarding
+    case getType(paymentsGetContextualOnboardingUrlAction.request):
+      return {
+        ...state,
+        contextualPayment: {
+          ...state.contextualPayment,
+          onboardingUrl: pot.toLoading(state.contextualPayment?.onboardingUrl)
+        }
+      };
+    case getType(paymentsGetContextualOnboardingUrlAction.success):
+      return {
+        ...state,
+        contextualPayment: {
+          ...state.contextualPayment,
+          onboardingUrl: action.payload.redirectUrl
+            ? pot.some(action.payload.redirectUrl)
+            : pot.none
+        }
+      };
+    case getType(paymentsGetContextualOnboardingUrlAction.failure):
+      return {
+        ...state,
+        contextualPayment: {
+          ...state.contextualPayment,
+          onboardingUrl: pot.toError(
+            state.contextualPayment?.onboardingUrl,
+            action.payload
+          )
+        }
+      };
     case getType(paymentStartWebViewFlow):
       return {
         ...state,
         webViewPayload: action.payload
+      };
+
+    case getType(paymentClearWebViewFlow):
+      return {
+        ...state,
+        webViewPayload: undefined,
+        contextualPayment: {
+          ...state.contextualPayment,
+          webViewPayload: undefined
+        }
+      };
+
+    // Contextual onboarding Webview on Android
+    case getType(contextualOnboardingStartWebViewFlow):
+      return {
+        ...state,
+        contextualPayment: {
+          ...state.contextualPayment,
+          webViewPayload: action.payload
+        }
       };
   }
   return state;

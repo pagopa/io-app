@@ -50,7 +50,8 @@ describe("stateUtils", () => {
         sendAARFlowStates.ko,
         [
           sendAARFlowStates.fetchingQRData,
-          sendAARFlowStates.fetchingNotificationData
+          sendAARFlowStates.fetchingNotificationData,
+          sendAARFlowStates.cieCanAdvisory
         ]
       ],
       [
@@ -90,7 +91,7 @@ describe("stateUtils", () => {
       ],
       [
         sendAARFlowStates.validatingMandate,
-        [sendAARFlowStates.displayingNotificationData, sendAARFlowStates.ko]
+        [sendAARFlowStates.fetchingNotificationData, sendAARFlowStates.ko]
       ]
     ];
 

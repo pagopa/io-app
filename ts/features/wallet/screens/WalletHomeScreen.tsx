@@ -15,6 +15,7 @@ import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
+  trackItwSurveyRequest,
   trackOpenWalletScreen,
   trackWalletAdd
 } from "../../itwallet/analytics";
@@ -26,6 +27,7 @@ import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs
 import { walletUpdate } from "../store/actions";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
 import { isWalletScreenRefreshingSelector } from "../store/selectors";
+import { itwMixPanelCredentialDetailsSelector } from "../../itwallet/analytics/store/selectors/index.ts";
 
 export type WalletHomeNavigationParams = Readonly<{
   // Triggers the "New element added" toast display once the user returns to this screen
@@ -43,6 +45,9 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const isRefreshingContent = useIOSelector(isWalletScreenRefreshingSelector);
+  const mixPanelCredentialDetails = useIOSelector(
+    itwMixPanelCredentialDetailsSelector
+  );
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
   const isRequiredEidFeedback = useRef(
@@ -82,7 +87,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
       animatedRef: scrollViewContentRef,
       actions: [
         {
-          accessibilityLabel: I18n.t("features.wallet.home.cta"),
+          accessibilityLabel: I18n.t("features.wallet.home.screen.legacy.cta"),
           icon: "add",
           onPress: handleAddToWalletButtonPress
         }
@@ -110,23 +115,37 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     dispatch(walletUpdate());
   });
 
+  useFocusEffect(
+    useCallback(() => {
+      trackOpenWalletScreen(mixPanelCredentialDetails);
+    }, [mixPanelCredentialDetails])
+  );
+
   /**
    * Handles the "New element added" toast display once the user returns to this screen
    */
   useFocusEffect(
     useCallback(() => {
-      trackOpenWalletScreen();
       if (isNewElementAdded.current) {
         IOToast.success(I18n.t("features.wallet.home.toast.newMethod"));
         // eslint-disable-next-line functional/immutable-data
         isNewElementAdded.current = false;
       }
       if (isRequiredEidFeedback.current) {
+        trackItwSurveyRequest({
+          survey_id: "confirm_eid_flow_exit",
+          survey_page: route.name
+        });
         itwFeedbackBottomSheet.present();
         // eslint-disable-next-line functional/immutable-data
         isRequiredEidFeedback.current = false;
       }
-    }, [isNewElementAdded, isRequiredEidFeedback, itwFeedbackBottomSheet])
+    }, [
+      isNewElementAdded,
+      isRequiredEidFeedback,
+      itwFeedbackBottomSheet,
+      route.name
+    ])
   );
 
   const handleRefreshWallet = useCallback(() => {

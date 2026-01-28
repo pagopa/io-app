@@ -1,4 +1,4 @@
-import { H2, VSpacer } from "@pagopa/io-app-design-system";
+import { H2, IOToast, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import { sequenceT } from "fp-ts/lib/Apply";
@@ -20,23 +20,27 @@ import {
   CheckoutPaymentMethodsList,
   CheckoutPaymentMethodsListSkeleton
 } from "../components/CheckoutPaymentMethodsList";
-import { useOnTransactionActivationEffect } from "../hooks/useOnTransactionActivationEffect";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import {
   paymentsCalculatePaymentFeesAction,
   paymentsCreateTransactionAction,
+  paymentsGetContextualOnboardingUrlAction,
   paymentsGetPaymentMethodsAction,
+  paymentsGetPaymentTransactionInfoAction,
   paymentsGetRecentPaymentMethodUsedAction
 } from "../store/actions/networking";
 import {
+  selectPaymentsOrderId,
   selectWalletPaymentCurrentStep,
   walletPaymentAmountSelector,
   walletPaymentDetailsSelector
 } from "../store/selectors";
 import {
   walletPaymentAllMethodsSelector,
+  walletPaymentContextualOnboardingUrlSelector,
   walletPaymentEnabledUserWalletsSelector,
   walletPaymentSelectedPaymentMethodIdOptionSelector,
+  walletPaymentSelectedPaymentMethodOptionSelector,
   walletPaymentSelectedWalletIdOptionSelector
 } from "../store/selectors/paymentMethods";
 import { walletPaymentPspListSelector } from "../store/selectors/psps";
@@ -48,6 +52,14 @@ import { FaultCodeCategoryEnum } from "../../../../../definitions/pagopa/ecommer
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { WalletPaymentStepEnum } from "../types";
 import { PAYMENT_STEPS_TOTAL_PAGES } from "../utils";
+import { AmountEuroCents } from "../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
+import {
+  useWalletOnboardingWebView,
+  WalletOnboardingOutcomeParams
+} from "../../onboarding/hooks/useWalletOnboardingWebView";
+import { WalletOnboardingOutcomeEnum } from "../../onboarding/types/OnboardingOutcomeEnum";
+import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
+import { paymentClearWebViewFlow } from "../store/actions/orchestration.ts";
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
@@ -60,6 +72,7 @@ const WalletPaymentPickMethodScreen = () => {
   const userWalletsPots = useIOSelector(
     walletPaymentEnabledUserWalletsSelector
   );
+  const contextualPaymentOrderId = useIOSelector(selectPaymentsOrderId);
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
   const isTransactionAlreadyActivated = useIOSelector(
     walletPaymentIsTransactionActivatedSelector
@@ -72,6 +85,12 @@ const WalletPaymentPickMethodScreen = () => {
   );
   const selectedPaymentMethodIdOption = useIOSelector(
     walletPaymentSelectedPaymentMethodIdOptionSelector
+  );
+  const selectedPaymentMethodOption = useIOSelector(
+    walletPaymentSelectedPaymentMethodOptionSelector
+  );
+  const contextualOnboardingUrlPot = useIOSelector(
+    walletPaymentContextualOnboardingUrlSelector
   );
   const currentStep = useIOSelector(selectWalletPaymentCurrentStep);
   const [waitingTransactionActivation, setWaitingTransactionActivation] =
@@ -102,6 +121,42 @@ const WalletPaymentPickMethodScreen = () => {
       setAccessibilityFocus(titleRef, 200 as Millisecond);
     }
   }, [currentStep]);
+
+  const handleOnboardingOutcome = ({
+    outcome,
+    walletId,
+    orderId,
+    transactionId
+  }: WalletOnboardingOutcomeParams) => {
+    dispatch(paymentClearWebViewFlow());
+    if (outcome === WalletOnboardingOutcomeEnum.SUCCESS) {
+      if (walletId && transactionId) {
+        dispatch(
+          paymentsGetPaymentTransactionInfoAction.request({
+            transactionId,
+            walletId
+          })
+        );
+      } else {
+        createTransaction(orderId);
+      }
+    } else if (outcome !== WalletOnboardingOutcomeEnum.CANCELED_BY_USER) {
+      navigation.replace(
+        PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR,
+        {
+          screen: PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_RESULT_FEEDBACK,
+          params: {
+            outcome
+          }
+        }
+      );
+    }
+  };
+
+  const { startContextualOnboarding, isLoading: isOnboardingLoading } =
+    useWalletOnboardingWebView({
+      onOnboardingOutcome: handleOnboardingOutcome
+    });
 
   const calculateFeesForSelectedPaymentMethod = useCallback(() => {
     pipe(
@@ -141,6 +196,7 @@ const WalletPaymentPickMethodScreen = () => {
             paymentToken,
             paymentMethodId,
             walletId,
+            orderId: contextualPaymentOrderId,
             paymentAmount,
             transferList,
             isAllCCP,
@@ -157,12 +213,9 @@ const WalletPaymentPickMethodScreen = () => {
     transactionPot,
     userWalletsPots,
     selectedPaymentMethodIdOption,
+    contextualPaymentOrderId,
     selectedWalletIdOption
   ]);
-
-  // When a new transaction is created it comes with ACTIVATION_REQUESTED status, we can continue the payment flow
-  // only when the transaction status becomes ACTIVATED.
-  useOnTransactionActivationEffect(calculateFeesForSelectedPaymentMethod);
 
   const isLoading =
     pot.isLoading(paymentMethodsPot) || pot.isLoading(userWalletsPots);
@@ -170,7 +223,9 @@ const WalletPaymentPickMethodScreen = () => {
   const isLoadingTransaction =
     pot.isLoading(transactionPot) ||
     waitingTransactionActivation ||
-    pot.isLoading(pspListPot);
+    pot.isLoading(pspListPot) ||
+    pot.isLoading(contextualOnboardingUrlPot) ||
+    isOnboardingLoading;
 
   const isError =
     pot.isError(transactionPot) ||
@@ -244,6 +299,10 @@ const WalletPaymentPickMethodScreen = () => {
     setWaitingTransactionActivation(false);
   };
 
+  const handleStartContextualOnboarding = (redirectUrl: string) => {
+    startContextualOnboarding(redirectUrl);
+  };
+
   const handleContinue = () => {
     analytics.trackPaymentMethodSelected({
       attempt: paymentAnalyticsData?.attempt,
@@ -256,29 +315,65 @@ const WalletPaymentPickMethodScreen = () => {
       payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
       payment_method_selected_flag: getSelectedPaymentMethodFlag()
     });
-    if (isTransactionAlreadyActivated) {
-      // If transacion is already activated (for example, when the user returns to this screen to edit the selected
-      // method) we can go directly to the next step.
-      calculateFeesForSelectedPaymentMethod();
-    } else {
-      pipe(
-        pot.toOption(paymentDetailsPot),
-        O.map(paymentDetails => {
+    pipe(
+      pot.toOption(paymentDetailsPot),
+      O.map(paymentDetails => {
+        const selectedPaymentMethod = O.toUndefined(
+          selectedPaymentMethodOption
+        );
+        if (selectedPaymentMethod?.name === "CARDS") {
           dispatch(
-            paymentsCreateTransactionAction.request({
-              data: {
-                paymentNotices: [
-                  { rptId: paymentDetails.rptId, amount: paymentDetails.amount }
-                ]
-              },
-              onError: handleOnCreateTransactionError
+            paymentsGetContextualOnboardingUrlAction.request({
+              paymentMethodId: selectedPaymentMethod.id,
+              rptId: paymentDetails.rptId,
+              amount: paymentDetails.amount as AmountEuroCents,
+              onSuccess: handleStartContextualOnboarding
             })
           );
-          setWaitingTransactionActivation(true);
-        })
-      );
-    }
+          return;
+        }
+        if (isTransactionAlreadyActivated) {
+          // If transacion is already activated (for example, when the user returns to this screen to edit the selected
+          // method) we can go directly to the next step.
+          calculateFeesForSelectedPaymentMethod();
+          return;
+        }
+        createTransaction();
+      })
+    );
   };
+
+  const createTransaction = (orderId?: string) => {
+    const paymentDetails = pot.toUndefined(paymentDetailsPot);
+    if (!paymentDetails) {
+      IOToast.error(I18n.t("global.genericError"));
+      return;
+    }
+    dispatch(
+      paymentsCreateTransactionAction.request({
+        orderId,
+        data: {
+          paymentNotices: [
+            {
+              rptId: paymentDetails.rptId,
+              amount: paymentDetails.amount as AmountEuroCents
+            }
+          ]
+        },
+        onError: handleOnCreateTransactionError
+      })
+    );
+    setWaitingTransactionActivation(true);
+  };
+
+  useEffect(() => {
+    if (pot.isSome(transactionPot) && !pot.isLoading(transactionPot)) {
+      calculateFeesForSelectedPaymentMethod();
+    }
+    // This effect is needed to calculate the fees for the selected payment method ..
+    // .. and must be executed only when the transaction details are changing
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transactionPot]);
 
   return (
     <IOScrollView

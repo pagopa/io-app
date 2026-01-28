@@ -24,6 +24,7 @@ import Animated, {
   withSpring
 } from "react-native-reanimated";
 import { CircularProgress } from "../../../../components/ui/CircularProgress";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { isDevEnv } from "../../../../utils/environment";
 import { platformSelect } from "../../utils";
@@ -138,13 +139,18 @@ const LinearProgressBar = (
   const backgroundColor = IOColors["grey-200"];
   const foregroundColor = IOColors["turquoise-500"];
 
+  // Convert progress to 0-100 scale and round to avoid floating-point precision issues
+  const progressPercent = Math.round(
+    Math.max(Math.min(progress, 1.0), 0) * 100
+  );
+
   useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
     progressWidth.value = withSpring(
-      progress * width,
+      Math.round((progressPercent * width) / 100),
       IOSpringValues.accordion
     );
-  }, [progressWidth, progress, width]);
+  }, [progressWidth, progressPercent, width]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     width: progressWidth.value
@@ -163,13 +169,13 @@ const LinearProgressBar = (
       }}
       onLayout={e => setWidth(e.nativeEvent.layout.width)}
       importantForAccessibility="yes"
-      accessibilityLabel={`${progress * 1000}%`}
+      accessibilityLabel={`${progressPercent}%`}
       accessible={true}
       accessibilityRole="progressbar"
       accessibilityValue={{
         min: 0,
         max: 100,
-        now: progress
+        now: progressPercent
       }}
     >
       <Animated.View
@@ -205,7 +211,7 @@ const ContentIos = (props: CieCardReadContentProps) => (
 );
 
 const ContentAndroid = (props: CieCardReadContentProps) => (
-  <View style={{ flex: 1, justifyContent: "center" }}>
+  <IOScrollView centerContent>
     <ContentWrapper>
       <VStack space={24}>
         <CircularProgress
@@ -228,7 +234,7 @@ const ContentAndroid = (props: CieCardReadContentProps) => (
         />
       </VStack>
     </ContentWrapper>
-  </View>
+  </IOScrollView>
 );
 
 /**

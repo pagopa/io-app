@@ -8,8 +8,10 @@ export type SendAARFailurePhase =
   | "Entry Point"
   | "Fetch Notification"
   | "Fetch QRCode"
+  | "Validate Mandate"
   | "Playground"
-  | "Show Notification";
+  | "Show Notification"
+  | "Create Mandate";
 
 export type RecipientInfo = {
   denomination: string;
@@ -128,13 +130,14 @@ type CieScanning = {
   can: string;
 };
 
-type ValidateMandate = {
+type ValidatingMandate = {
   type: SendAARFlowStatesType["validatingMandate"];
   recipientInfo: RecipientInfo;
   iun: string;
   mandateId: string;
   mrtdData: MrtdData;
   nisData: NisData;
+  unsignedVerificationCode: string;
   signedVerificationCode: string;
 };
 
@@ -213,7 +216,8 @@ export const validAARStatusTransitions = new Map<
     sendAARFlowStates.ko,
     new Set([
       sendAARFlowStates.fetchingQRData,
-      sendAARFlowStates.fetchingNotificationData
+      sendAARFlowStates.fetchingNotificationData,
+      sendAARFlowStates.cieCanAdvisory
     ])
   ],
   [
@@ -259,10 +263,7 @@ export const validAARStatusTransitions = new Map<
   ],
   [
     sendAARFlowStates.validatingMandate,
-    new Set([
-      sendAARFlowStates.ko,
-      sendAARFlowStates.displayingNotificationData
-    ])
+    new Set([sendAARFlowStates.ko, sendAARFlowStates.fetchingNotificationData])
   ]
 ]);
 
@@ -303,10 +304,14 @@ type AARFlowDelegatedState =
   | CieScanningAdvisory
   | AndroidNFCActivation
   | CieScanning
-  | ValidateMandate;
+  | ValidatingMandate;
 type AarErrorStates = FinalNotAddressee | NfcNotSupportedFinal | ErrorState;
 
 export type AARFlowState =
   | AARFlowDefaultState
   | AARFlowDelegatedState
   | AarErrorStates;
+
+export type AarStatesByName = {
+  [K in AARFlowStateName]: Extract<AARFlowState, { type: K }>;
+};

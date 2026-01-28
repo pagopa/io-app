@@ -1,84 +1,140 @@
 import { useIOToast } from "@pagopa/io-app-design-system";
 import i18n from "i18next";
 import { useCallback, useEffect } from "react";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import {
-  IOStackNavigationRouteProps,
-  useIONavigation
-} from "../../../../navigation/params/AppParamsList";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
 import { useIsNfcFeatureAvailable } from "../hooks/useIsNfcFeatureAvailable";
 import { useSendAarDelegationProposalScreenBottomSheet } from "../hooks/useSendAarDelegationProposalScreenBottomSheet";
 import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
 import { setAarFlowState } from "../store/actions";
+import { AarStatesByName, sendAARFlowStates } from "../utils/stateUtils";
 import {
-  AARFlowState,
-  SendAARFlowStatesType,
-  sendAARFlowStates
-} from "../utils/stateUtils";
+  trackSendAarNotificationOpeningMandateBottomSheet,
+  trackSendAarNotificationOpeningMandateDisclaimer,
+  trackSendAarNotificationOpeningMandateDisclaimerAccepted,
+  trackSendAarNotificationOpeningMandateDisclaimerClosure
+} from "../analytics";
 
-export type SendAarDelegationProposalNavigationParams = Readonly<
-  Exclude<
-    Extract<AARFlowState, { type: SendAARFlowStatesType["notAddressee"] }>,
-    "type"
-  >
->;
-type SendAarDelegationProposalScreenProps = IOStackNavigationRouteProps<
-  PnParamsList,
-  typeof PN_ROUTES.SEND_AAR_DELEGATION_PROPOSAL
->;
-
-export const SendAarDelegationProposalScreen = ({
-  route
-}: SendAarDelegationProposalScreenProps) => {
-  const navigation = useIONavigation();
-  const isNfcAvailable = useIsNfcFeatureAvailable();
-  const dispatch = useIODispatch();
-
+export const SendAarDelegationProposalScreen = () => {
   const { terminateFlow, currentFlowData } = useSendAarFlowManager();
   const { type } = currentFlowData;
-  const { warning } = useIOToast();
-  const { params } = route;
-  const { denomination } = params.recipientInfo;
-
-  const { bottomSheet, present } =
-    useSendAarDelegationProposalScreenBottomSheet(denomination);
+  const navigation = useIONavigation();
+  const { warning, hideAll } = useIOToast();
 
   useOnFirstRender(() => {
     warning(i18n.t("features.pn.aar.flow.delegated.notAdressee.warningAlert"));
   });
 
+  useEffect(() => {
+    switch (type) {
+      case sendAARFlowStates.ko:
+      case sendAARFlowStates.nfcNotSupportedFinal: {
+        hideAll();
+        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          screen: PN_ROUTES.MAIN,
+          params: {
+            screen: PN_ROUTES.SEND_AAR_ERROR
+          }
+        });
+        break;
+      }
+      case sendAARFlowStates.cieCanAdvisory: {
+        hideAll();
+        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          screen: PN_ROUTES.MAIN,
+          params: {
+            screen: PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL
+          }
+        });
+        break;
+      }
+    }
+  }, [hideAll, navigation, type]);
+
+  switch (type) {
+    case sendAARFlowStates.notAddressee:
+      return (
+        <DelegationProposalContent
+          terminateFlow={terminateFlow}
+          notAdresseeData={currentFlowData}
+        />
+      );
+    default:
+      return (
+        <LoadingScreenContent
+          testID="delegationLoading"
+          title={i18n.t(
+            "features.pn.aar.flow.delegated.createMandate.loadingText"
+          )}
+          headerVisible={false}
+        />
+      );
+  }
+};
+
+type DelegationProposalContentProps = {
+  notAdresseeData: AarStatesByName["notAddressee"];
+  terminateFlow: () => void;
+};
+const DelegationProposalContent = ({
+  notAdresseeData,
+  terminateFlow
+}: DelegationProposalContentProps) => {
+  const isNfcAvailable = useIsNfcFeatureAvailable();
+  const dispatch = useIODispatch();
+
+  const { denomination } = notAdresseeData.recipientInfo;
+
+  useEffect(() => {
+    trackSendAarNotificationOpeningMandateDisclaimer();
+  }, []);
+
+  const handleIdentificationSuccess = useCallback(() => {
+    dispatch(
+      setAarFlowState({
+        type: sendAARFlowStates.creatingMandate,
+        iun: notAdresseeData.iun,
+        recipientInfo: notAdresseeData.recipientInfo,
+        qrCode: notAdresseeData.qrCode
+      })
+    );
+  }, [dispatch, notAdresseeData]);
+
+  const { bottomSheet, present } =
+    useSendAarDelegationProposalScreenBottomSheet({
+      citizenName: denomination,
+      onIdentificationSuccess: handleIdentificationSuccess
+    });
   const handleContinuePress = useCallback(() => {
+    trackSendAarNotificationOpeningMandateDisclaimerAccepted();
+
     if (isNfcAvailable) {
+      trackSendAarNotificationOpeningMandateBottomSheet();
       present();
     } else {
       dispatch(
         setAarFlowState({
-          ...params,
+          ...notAdresseeData,
           type: sendAARFlowStates.nfcNotSupportedFinal
         })
       );
     }
-  }, [isNfcAvailable, present, dispatch, params]);
+  }, [isNfcAvailable, present, dispatch, notAdresseeData]);
 
-  useEffect(() => {
-    if (type === sendAARFlowStates.nfcNotSupportedFinal) {
-      navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-        screen: PN_ROUTES.MAIN,
-        params: {
-          screen: PN_ROUTES.SEND_AAR_ERROR
-        }
-      });
-    }
-  }, [navigation, type]);
+  const handleClose = useCallback(() => {
+    trackSendAarNotificationOpeningMandateDisclaimerClosure();
+    terminateFlow();
+  }, [terminateFlow]);
 
   return (
     <>
       <OperationResultScreenContent
+        testID="delegationProposal"
         title={i18n.t("features.pn.aar.flow.delegated.notAdressee.title", {
           name: denomination
         })}
@@ -93,7 +149,7 @@ export const SendAarDelegationProposalScreen = ({
         }}
         secondaryAction={{
           label: i18n.t("global.buttons.close"),
-          onPress: terminateFlow,
+          onPress: handleClose,
           testID: "close-button"
         }}
       />

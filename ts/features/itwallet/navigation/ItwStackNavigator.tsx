@@ -30,7 +30,6 @@ import { ItwIssuanceEidFailureScreen } from "../issuance/screens/ItwIssuanceEidF
 import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidPreviewScreen";
 import { ItwIssuanceEidReissuanceLandingScreen } from "../issuance/screens/ItwIssuanceEidReissuanceLandingScreen";
 import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
-import { ItwIssuanceInactiveITWalletScreen } from "../issuance/screens/ItwIssuanceInactiveITWalletScreen.tsx";
 import { ItwIssuanceUpcomingCredentialScreen } from "../issuance/screens/ItwIssuanceUpcomingCredentialScreen";
 import { ItwIssuanceCredentialIntroductionScreen } from "../issuance/screens/ItwIssuanceCredentialIntroductionScreen";
 import { ItwIdentityNotMatchingScreen } from "../lifecycle/screens/ItwIdentityNotMatchingScreen.tsx";
@@ -64,6 +63,7 @@ import { ItwProximitySendDocumentsResponseScreen } from "../presentation/proximi
 import { ItwSettingsScreen } from "../settings/screens/ItwSettingsScreen.tsx";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
+import { ItwIssuanceUpgradeCredentialsScreen } from "../issuance/screens/ItwIssuanceUpdateCredentialsScreen.tsx";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -240,8 +240,8 @@ const InnerNavigator = memo(() => {
         options={hiddenHeader}
       />
       <Stack.Screen
-        name={ITW_ROUTES.ISSUANCE.IT_WALLET_INACTIVE}
-        component={ItwIssuanceInactiveITWalletScreen}
+        name={ITW_ROUTES.ISSUANCE.UPGRADE_CREDENTIALS}
+        component={ItwIssuanceUpgradeCredentialsScreen}
         options={hiddenHeader}
       />
       {/* CREDENTIAL PRESENTATION */}

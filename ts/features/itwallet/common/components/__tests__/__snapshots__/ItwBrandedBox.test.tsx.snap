@@ -7,20 +7,17 @@ exports[`ItwBrandedBox should render correctly for variant default 1`] = `
     [
       {
         "borderCurve": "continuous",
-        "borderRadius": 16,
         "gap": 6,
         "overflow": "hidden",
         "padding": 16,
       },
       {
         "backgroundColor": "#F2F9FF",
+        "borderRadius": 16,
       },
     ]
   }
 >
-  <Text>
-    Test Content
-  </Text>
   <View
     style={
       {
@@ -31,7 +28,7 @@ exports[`ItwBrandedBox should render correctly for variant default 1`] = `
     }
   >
     <skGroup
-      opacity={0.4}
+      opacity={0.05}
       origin={
         JsiSkPoint {
           "CanvasKit": {
@@ -55,7 +52,6 @@ exports[`ItwBrandedBox should render correctly for variant default 1`] = `
             "MakeVertices": [MockFunction],
           },
           "__typename__": "Point",
-          "dispose": [Function],
           "ref": Float32Array [
             0,
             0,
@@ -105,7 +101,6 @@ exports[`ItwBrandedBox should render correctly for variant default 1`] = `
                 "MakeVertices": [MockFunction],
               },
               "__typename__": "Point",
-              "dispose": [Function],
               "ref": Float32Array [
                 0,
                 0,
@@ -166,7 +161,7 @@ exports[`ItwBrandedBox should render correctly for variant default 1`] = `
         <skGroup>
           <skGroup
             blendMode="colorDodge"
-            opacity={1}
+            opacity={0.8}
           >
             <skRect
               height={0}
@@ -219,7 +214,6 @@ exports[`ItwBrandedBox should render correctly for variant default 1`] = `
                       "MakeVertices": [MockFunction],
                     },
                     "__typename__": "Point",
-                    "dispose": [Function],
                     "ref": Float32Array [
                       0,
                       0,
@@ -250,7 +244,6 @@ exports[`ItwBrandedBox should render correctly for variant default 1`] = `
                       "MakeVertices": [MockFunction],
                     },
                     "__typename__": "Point",
-                    "dispose": [Function],
                     "ref": Float32Array [
                       0,
                       0,
@@ -288,7 +281,7 @@ exports[`ItwBrandedBox should render correctly for variant default 1`] = `
                         0,
                         0,
                         0,
-                        1,
+                        0.8,
                         0,
                       ]
                     }
@@ -337,7 +330,7 @@ exports[`ItwBrandedBox should render correctly for variant default 1`] = `
                   0,
                   0,
                   0,
-                  1,
+                  0.8,
                   0,
                 ]
               }
@@ -359,6 +352,9 @@ exports[`ItwBrandedBox should render correctly for variant default 1`] = `
       </skGroup>
     </skGroup>
   </View>
+  <Text>
+    Test Content
+  </Text>
 </View>
 `;
 
@@ -369,20 +365,17 @@ exports[`ItwBrandedBox should render correctly for variant error 1`] = `
     [
       {
         "borderCurve": "continuous",
-        "borderRadius": 16,
         "gap": 6,
         "overflow": "hidden",
         "padding": 16,
       },
       {
         "backgroundColor": "#F2F9FF",
+        "borderRadius": 16,
       },
     ]
   }
 >
-  <Text>
-    Test Content
-  </Text>
   <View
     style={
       {
@@ -393,7 +386,7 @@ exports[`ItwBrandedBox should render correctly for variant error 1`] = `
     }
   >
     <skGroup
-      opacity={0.4}
+      opacity={0.05}
       origin={
         JsiSkPoint {
           "CanvasKit": {
@@ -417,7 +410,6 @@ exports[`ItwBrandedBox should render correctly for variant error 1`] = `
             "MakeVertices": [MockFunction],
           },
           "__typename__": "Point",
-          "dispose": [Function],
           "ref": Float32Array [
             0,
             0,
@@ -467,7 +459,6 @@ exports[`ItwBrandedBox should render correctly for variant error 1`] = `
                 "MakeVertices": [MockFunction],
               },
               "__typename__": "Point",
-              "dispose": [Function],
               "ref": Float32Array [
                 0,
                 0,
@@ -528,7 +519,7 @@ exports[`ItwBrandedBox should render correctly for variant error 1`] = `
         <skGroup>
           <skGroup
             blendMode="colorDodge"
-            opacity={1}
+            opacity={0.8}
           >
             <skRect
               height={0}
@@ -581,7 +572,6 @@ exports[`ItwBrandedBox should render correctly for variant error 1`] = `
                       "MakeVertices": [MockFunction],
                     },
                     "__typename__": "Point",
-                    "dispose": [Function],
                     "ref": Float32Array [
                       0,
                       0,
@@ -612,7 +602,6 @@ exports[`ItwBrandedBox should render correctly for variant error 1`] = `
                       "MakeVertices": [MockFunction],
                     },
                     "__typename__": "Point",
-                    "dispose": [Function],
                     "ref": Float32Array [
                       0,
                       0,
@@ -650,7 +639,7 @@ exports[`ItwBrandedBox should render correctly for variant error 1`] = `
                         0,
                         0,
                         0,
-                        1,
+                        0.8,
                         0,
                       ]
                     }
@@ -699,7 +688,7 @@ exports[`ItwBrandedBox should render correctly for variant error 1`] = `
                   0,
                   0,
                   0,
-                  1,
+                  0.8,
                   0,
                 ]
               }
@@ -721,6 +710,9 @@ exports[`ItwBrandedBox should render correctly for variant error 1`] = `
       </skGroup>
     </skGroup>
   </View>
+  <Text>
+    Test Content
+  </Text>
 </View>
 `;
 
@@ -731,20 +723,17 @@ exports[`ItwBrandedBox should render correctly for variant warning 1`] = `
     [
       {
         "borderCurve": "continuous",
-        "borderRadius": 16,
         "gap": 6,
         "overflow": "hidden",
         "padding": 16,
       },
       {
         "backgroundColor": "#F2F9FF",
+        "borderRadius": 16,
       },
     ]
   }
 >
-  <Text>
-    Test Content
-  </Text>
   <View
     style={
       {
@@ -755,7 +744,7 @@ exports[`ItwBrandedBox should render correctly for variant warning 1`] = `
     }
   >
     <skGroup
-      opacity={0.4}
+      opacity={0.05}
       origin={
         JsiSkPoint {
           "CanvasKit": {
@@ -779,7 +768,6 @@ exports[`ItwBrandedBox should render correctly for variant warning 1`] = `
             "MakeVertices": [MockFunction],
           },
           "__typename__": "Point",
-          "dispose": [Function],
           "ref": Float32Array [
             0,
             0,
@@ -829,7 +817,6 @@ exports[`ItwBrandedBox should render correctly for variant warning 1`] = `
                 "MakeVertices": [MockFunction],
               },
               "__typename__": "Point",
-              "dispose": [Function],
               "ref": Float32Array [
                 0,
                 0,
@@ -890,7 +877,7 @@ exports[`ItwBrandedBox should render correctly for variant warning 1`] = `
         <skGroup>
           <skGroup
             blendMode="colorDodge"
-            opacity={1}
+            opacity={0.8}
           >
             <skRect
               height={0}
@@ -943,7 +930,6 @@ exports[`ItwBrandedBox should render correctly for variant warning 1`] = `
                       "MakeVertices": [MockFunction],
                     },
                     "__typename__": "Point",
-                    "dispose": [Function],
                     "ref": Float32Array [
                       0,
                       0,
@@ -974,7 +960,6 @@ exports[`ItwBrandedBox should render correctly for variant warning 1`] = `
                       "MakeVertices": [MockFunction],
                     },
                     "__typename__": "Point",
-                    "dispose": [Function],
                     "ref": Float32Array [
                       0,
                       0,
@@ -1012,7 +997,7 @@ exports[`ItwBrandedBox should render correctly for variant warning 1`] = `
                         0,
                         0,
                         0,
-                        1,
+                        0.8,
                         0,
                       ]
                     }
@@ -1061,7 +1046,7 @@ exports[`ItwBrandedBox should render correctly for variant warning 1`] = `
                   0,
                   0,
                   0,
-                  1,
+                  0.8,
                   0,
                 ]
               }
@@ -1083,5 +1068,8 @@ exports[`ItwBrandedBox should render correctly for variant warning 1`] = `
       </skGroup>
     </skGroup>
   </View>
+  <Text>
+    Test Content
+  </Text>
 </View>
 `;

@@ -1,6 +1,5 @@
 import { Banner, ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
 import { ReactElement, useCallback, useMemo } from "react";
-import { SafeAreaView } from "react-native";
 import I18n from "i18next";
 import { setMixpanelEnabled } from "../../../store/actions/mixpanel";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
@@ -93,24 +92,22 @@ const OnboardingShareDataScreen = (): ReactElement => {
       actions={actions}
       testID="OnboardingShareDataScreen"
     >
-      <SafeAreaView style={{ flex: 1 }}>
-        <ContentWrapper style={{ flexGrow: 1 }}>
-          <ShareDataComponent trackAction={handleTrackingAction} />
-          <VSpacer size={32} />
-          <Banner
-            content={I18n.t(
-              "profile.main.privacy.shareData.screen.profileSettings"
-            )}
-            accessibilityLabel={I18n.t(
-              "profile.main.privacy.shareData.screen.profileSettings"
-            )}
-            color="neutral"
-            pictogramName="settings"
-          />
-        </ContentWrapper>
-        <VSpacer size={16} />
-        {bottomSheet}
-      </SafeAreaView>
+      <ContentWrapper style={{ flexGrow: 1 }}>
+        <ShareDataComponent trackAction={handleTrackingAction} />
+        <VSpacer size={32} />
+        <Banner
+          content={I18n.t(
+            "profile.main.privacy.shareData.screen.profileSettings"
+          )}
+          accessibilityLabel={I18n.t(
+            "profile.main.privacy.shareData.screen.profileSettings"
+          )}
+          color="neutral"
+          pictogramName="settings"
+        />
+      </ContentWrapper>
+      <VSpacer size={16} />
+      {bottomSheet}
     </IOScrollViewWithLargeHeader>
   );
 };

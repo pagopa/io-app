@@ -14,8 +14,9 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -128,15 +129,13 @@ const FailureContent = ({
 
   return (
     <OperationResultScreenContent
+      pictogram="umbrella"
       title={I18n.t("idpay.barCode.resultScreen.error.generic.body")}
       action={{
         label: I18n.t("global.buttons.close"),
         accessibilityLabel: I18n.t("global.buttons.close"),
         onPress: navigateToInitiativeDetails
       }}
-      pictogram="umbrella"
-      enableAnimatedPictogram
-      loop
     />
   );
 };
@@ -263,6 +262,8 @@ const BarcodeExpiredContent = ({
 };
 
 const LoadingScreen = () => (
+  /* TODO: We should use a `LoadingScreenContent` component, to avoid
+    duplicates of the loading screen throughout the app */
   <SafeAreaView style={styles.loadingWrapper}>
     <LoadingIndicator />
     <VSpacer size={24} />

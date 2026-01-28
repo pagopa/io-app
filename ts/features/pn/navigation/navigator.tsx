@@ -12,6 +12,8 @@ import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
 import { PaidPaymentScreen } from "../screens/PaidPaymentScreen";
 import { SendAarCieCanInsertionScreen } from "../aar/screen/SendAarCieCanInsertionScreen";
 import { SendAarCanEducationalScreen } from "../aar/screen/SendAarCanEducationalScreen";
+import { SendAarCieCardReadingEducationalScreen } from "../aar/screen/SendAarCieCardReadingEducationalScreen";
+import { SendAarActivateNfcScreen } from "../aar/screen/SendAarActivateNfcScreen";
 import { PnParamsList } from "./params";
 import PN_ROUTES from "./routes";
 
@@ -21,7 +23,12 @@ const hiddenHeader = {
 };
 
 export const PnStackNavigator = () => (
-  <Stack.Navigator initialRouteName={PN_ROUTES.MESSAGE_DETAILS}>
+  <Stack.Navigator
+    initialRouteName={PN_ROUTES.MESSAGE_DETAILS}
+    screenOptions={{
+      gestureEnabled: false
+    }}
+  >
     <Stack.Screen
       name={PN_ROUTES.MESSAGE_DETAILS}
       component={MessageDetailsScreen}
@@ -68,12 +75,21 @@ export const PnStackNavigator = () => (
       options={hiddenHeader}
     />
     <Stack.Screen
+      name={PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL}
+      component={SendAarCanEducationalScreen}
+    />
+    <Stack.Screen
       name={PN_ROUTES.SEND_AAR_CIE_CAN_INSERTION}
       component={SendAarCieCanInsertionScreen}
     />
     <Stack.Screen
-      name={PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL}
-      component={SendAarCanEducationalScreen}
+      name={PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL}
+      component={SendAarCieCardReadingEducationalScreen}
+    />
+    <Stack.Screen
+      name={PN_ROUTES.SEND_AAR_NFC_ACTIVATION}
+      component={SendAarActivateNfcScreen}
+      options={{ presentation: "modal" }}
     />
     <Stack.Screen
       name={PN_ROUTES.SEND_AAR_CIE_CARD_READING}

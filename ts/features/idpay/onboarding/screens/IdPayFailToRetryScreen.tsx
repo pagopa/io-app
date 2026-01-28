@@ -1,5 +1,5 @@
 /* eslint-disable functional/immutable-data */
-import { Body, IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -40,11 +40,6 @@ export const IdPayFailToRetryScreen = () => {
   const machine = useActorRef();
 
   const initiative = useSelector(state => state.context.initiative);
-  const initiativeName = pipe(
-    initiative,
-    O.map(i => i.initiativeName),
-    O.toUndefined
-  );
 
   const initiativeId = pipe(
     initiative,
@@ -97,8 +92,7 @@ export const IdPayFailToRetryScreen = () => {
 
   useOnFirstRender(() =>
     trackIDPayIngressScreenLoading({
-      initiativeId,
-      initiativeName
+      initiativeId
     })
   );
 
@@ -115,17 +109,14 @@ export const IdPayFailToRetryScreen = () => {
       />
       <LoadingScreenContent
         testID="ingress-screen-loader-id"
-        contentTitle={contentTitle}
+        title={contentTitle}
+        subtitle={
+          showSubtitle
+            ? I18n.t("idpay.onboarding.failToRetry.slowDownSubtitle")
+            : undefined
+        }
         animatedPictogramSource="waiting"
-      >
-        {showSubtitle && (
-          <View style={{ alignItems: "center" }}>
-            <Body style={{ textAlign: "center" }}>
-              {I18n.t("idpay.onboarding.failToRetry.slowDownSubtitle")}
-            </Body>
-          </View>
-        )}
-      </LoadingScreenContent>
+      />
     </>
   );
 };
@@ -142,20 +133,13 @@ const IngressScreenBlockingError = memo(() => {
     O.toUndefined
   );
 
-  const initiativeName = pipe(
-    initiative,
-    O.map(i => i.initiativeName),
-    O.toUndefined
-  );
-
   useEffect(() => {
     setAccessibilityFocus(operationRef);
   }, []);
 
   useOnFirstRender(() =>
     trackIDPayIngressScreenTimeout({
-      initiativeId,
-      initiativeName
+      initiativeId
     })
   );
 
@@ -169,8 +153,7 @@ const IngressScreenBlockingError = memo(() => {
 
   const handleNavigateToWebsite = () => {
     trackIDPayIngressScreenCTA({
-      initiativeId,
-      initiativeName
+      initiativeId
     });
 
     openWebUrl(websiteUrl, () => IOToast.error(I18n.t("genericError")));

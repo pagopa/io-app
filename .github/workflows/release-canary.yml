@@ -6,7 +6,7 @@ jobs:
     uses: ./.github/workflows/staticcheck.yaml
   prepare-canary-release:
     needs: run-static-checks
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       canaryVersion: ${{ steps.github-release-creation.outputs.CANARY_VERSION }}
     steps:
@@ -54,13 +54,23 @@ jobs:
   release-android:
     needs: prepare-canary-release
     environment: canary
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
           ref: ${{ needs.prepare-canary-release.outputs.canaryVersion }}
+      - id: free-up-disk-space
+        run: |
+          echo "Before cleanup:"
+          df -h
+          sudo rm -rf /usr/share/dotnet || true
+          sudo rm -rf /opt/ghc || true
+          docker system prune -af || true
+          sudo apt-get clean || true
+          echo "After cleanup:"
+          df -h
       - id: setup-node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
@@ -85,14 +95,6 @@ jobs:
         with:
           name: api-client
           path: definitions/
-      - id: setup-jdk-17
-        uses: actions/setup-java@5ffc13f4174014e2d4d4572b3d74c3fa61aeb2c2 #v3.11.0
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: gradle
-      - id: setup-android-sdk
-        uses: android-actions/setup-android@00854ea68c109d98c75d956347303bf7c45b0277 #v3.2.1
       - id: setup-ruby
         uses: ruby/setup-ruby@a4effe49ee8ee5b8b5091268c473a4628afb5651 #v1.245.0
         with:
@@ -242,17 +244,37 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   notify-new-version:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    environment: dev
     needs:
         - prepare-canary-release
         - release-android
         - release-ios
     steps:
-      - id: checkout
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
-      - id: comment-process-end
-        if: github.event.issue.number
-        run: |
-          gh issue comment ${{ github.event.issue.number }} -b "Release correctly created, [${{ needs.prepare-canary-release.outputs.canaryVersion }}](https://github.com/pagopa/io-app/releases/tag/${{ needs.prepare-canary-release.outputs.canaryVersion }})"
+      - name: Send Slack Notification on Success
+        continue-on-error: true
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          IO_APP_SLACK_HELPER_BOT_TOKEN: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
+          APP_VERSION_TAG: ${{ needs.prepare-canary-release.outputs.canaryVersion }}
+        run: |
+          echo "APP_VERSION_TAG=$APP_VERSION_TAG"
+          STATUS_ICON=":white_check_mark:"
+
+          # Use jq to safely construct the JSON payload for Slack          
+          slack_payload=$(jq -n \
+            --arg channel "io_app_core" \
+            --arg text ":gear: *L'ultima versione della canary è disponibile*
+            
+            - *App Version Tag:* \`$APP_VERSION_TAG\`
+            '{
+              "channel": $channel,
+              "text": $text,
+              "unfurl_links": false,
+              "unfurl_media": false
+            }')
+
+          # Post the message to Slack using curl
+          curl -X POST https://slack.com/api/chat.postMessage \
+            -H "Authorization: Bearer $IO_APP_SLACK_HELPER_BOT_TOKEN" \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -d "$slack_payload"

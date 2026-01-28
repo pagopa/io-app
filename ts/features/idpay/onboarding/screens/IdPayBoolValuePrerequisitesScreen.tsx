@@ -35,12 +35,6 @@ const IdPayBoolValuePrerequisitesScreen = () => {
 
   const initiative = useSelector(selectInitiative);
 
-  const initiativeName = pipe(
-    initiative,
-    O.map(i => i.initiativeName),
-    O.toUndefined
-  );
-
   const initiativeId = pipe(
     initiative,
     O.map(i => i.initiativeId),
@@ -62,8 +56,7 @@ const IdPayBoolValuePrerequisitesScreen = () => {
       );
       trackIDPayOnboardingAlert({
         screen: "intent_declaration",
-        initiativeId,
-        initiativeName
+        initiativeId
       });
       return;
     }
@@ -95,8 +88,7 @@ const IdPayBoolValuePrerequisitesScreen = () => {
 
   useOnFirstRender(() =>
     trackIDPayOnboardingSelfDeclaration({
-      initiativeId,
-      initiativeName
+      initiativeId
     })
   );
 

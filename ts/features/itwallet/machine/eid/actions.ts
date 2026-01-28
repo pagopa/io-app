@@ -10,9 +10,11 @@ import { checkCurrentSession } from "../../../authentication/common/store/action
 import {
   trackItWalletIDMethodSelected,
   trackItwDeactivated,
-  trackSaveCredentialSuccess,
-  updateITWStatusAndPIDProperties
+  trackItwIdAuthenticationCompleted,
+  trackItwIdVerifiedDocument,
+  trackSaveCredentialSuccess
 } from "../../analytics";
+import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import {
   itwSetAuthLevel,
   itwFreezeSimplifiedActivationRequirements,
@@ -224,6 +226,12 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
+  navigateToUpgradeCredentialsScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ISSUANCE.UPGRADE_CREDENTIALS
+    });
+  },
+
   closeIssuance: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
@@ -293,8 +301,7 @@ export const createEidIssuanceActionsImplementation = (
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     // Save the auth level in the preferences
-    const authLevel = context.level === "l3" ? "L3" : "L2";
-    store.dispatch(itwSetAuthLevel(authLevel));
+    store.dispatch(itwSetAuthLevel(context.identification?.level));
   },
 
   freezeSimplifiedActivationRequirements: () => {
@@ -319,15 +326,16 @@ export const createEidIssuanceActionsImplementation = (
   trackWalletInstanceCreation: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    trackSaveCredentialSuccess(
-      context.level === "l3" ? "ITW_PID" : "ITW_ID_V2"
-    );
-    updateITWStatusAndPIDProperties(store.getState());
+    trackSaveCredentialSuccess({
+      credential: context.level === "l3" ? "ITW_PID" : "ITW_ID_V2",
+      ITW_ID_method: context.identification?.mode,
+      credential_details: itwMixPanelCredentialDetailsSelector(store.getState())
+    });
   },
 
   trackWalletInstanceRevocation: () => {
     const isItwL3 = itwLifecycleIsITWalletValidSelector(store.getState());
-    trackItwDeactivated(store.getState(), isItwL3 ? "ITW_PID" : "ITW_ID_V2");
+    trackItwDeactivated(isItwL3 ? "ITW_PID" : "ITW_ID_V2");
   },
 
   trackIdentificationMethodSelected: ({
@@ -340,5 +348,31 @@ export const createEidIssuanceActionsImplementation = (
       ITW_ID_method: event.mode,
       itw_flow: context.level === "l3" ? "L3" : "L2"
     });
+  },
+
+  // Track SPID+CIE first phase
+  trackItwIdAuthenticationCompleted: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assert(context.identification, "identification context is undefined");
+    assert(
+      context.identification.mode !== "ciePin",
+      "identification mode can not be ciePin"
+    );
+
+    trackItwIdAuthenticationCompleted(context.identification.mode);
+  },
+
+  // Track SPID+CIE final phase
+  trackItwIdVerifiedDocument: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assert(context.identification, "identification context is undefined");
+    assert(
+      context.identification.mode !== "ciePin",
+      "identification mode can not be ciePin"
+    );
+
+    trackItwIdVerifiedDocument(context.identification.mode);
   }
 });

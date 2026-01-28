@@ -72,6 +72,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToCieWarningScreen: notImplemented,
     navigateToCieCanScreen: notImplemented,
     navigateToCieInternalAuthAndMrtdScreen: notImplemented,
+    navigateToUpgradeCredentialsScreen: notImplemented,
     closeIssuance: notImplemented,
 
     /**
@@ -95,7 +96,8 @@ export const itwEidIssuanceMachine = setup({
     trackWalletInstanceCreation: notImplemented,
     trackWalletInstanceRevocation: notImplemented,
     trackIdentificationMethodSelected: notImplemented,
-
+    trackItwIdAuthenticationCompleted: notImplemented,
+    trackItwIdVerifiedDocument: notImplemented,
     /**
      * Context manipulation
      */
@@ -245,7 +247,8 @@ export const itwEidIssuanceMachine = setup({
         start: {
           actions: assign(({ event }) => ({
             mode: event.mode,
-            level: event.level
+            level: event.level,
+            credentialType: event.credentialType
           })),
           target: "EvaluatingIssuanceMode"
         },
@@ -463,7 +466,10 @@ export const itwEidIssuanceMachine = setup({
     },
     EvaluatingSimplifiedActivationFlow: {
       description: "State that manages the wallet's simplified activation flow",
-      entry: "clearSimplifiedActivationRequirements",
+      entry: [
+        "clearSimplifiedActivationRequirements",
+        "trackWalletInstanceCreation"
+      ],
       always: [
         {
           guard: "hasLegacyCredentials",
@@ -838,6 +844,28 @@ export const itwEidIssuanceMachine = setup({
               }
             }
           },
+          on: {
+            "select-identification-mode": [
+              {
+                guard: ({ event }) => event.mode === "spid",
+                actions: "trackIdentificationMethodSelected",
+                target: "#itwEidIssuanceMachine.UserIdentification.Spid"
+              },
+              {
+                guard: ({ event }) => event.mode === "cieId",
+                actions: [
+                  "trackIdentificationMethodSelected",
+                  assign(() => ({
+                    identification: {
+                      mode: "cieId",
+                      level: "L3"
+                    }
+                  }))
+                ],
+                target: "#itwEidIssuanceMachine.UserIdentification.CieID"
+              }
+            ]
+          },
           onDone: {
             target: "#itwEidIssuanceMachine.UserIdentification.Completed"
           }
@@ -849,7 +877,8 @@ export const itwEidIssuanceMachine = setup({
       onDone: [
         {
           guard: "requiresMrtdVerification",
-          target: "MrtdPoP"
+          target: "MrtdPoP",
+          actions: "trackItwIdAuthenticationCompleted"
         },
         {
           target: "Issuance"
@@ -967,6 +996,12 @@ export const itwEidIssuanceMachine = setup({
                   }
                 };
               })
+            },
+            close: {
+              target: "#itwEidIssuanceMachine.UserIdentification"
+            },
+            back: {
+              target: "DisplayingCieNfcPreparationInstructions"
             }
           }
         },
@@ -1006,7 +1041,11 @@ export const itwEidIssuanceMachine = setup({
           on: {
             "mrtd-pop-verification-completed": {
               target: "#itwEidIssuanceMachine.MrtdPoP.Completed",
-              actions: ["completeMrtdPoP", "storeAuthLevel"]
+              actions: [
+                "completeMrtdPoP",
+                "storeAuthLevel",
+                "trackItwIdVerifiedDocument"
+              ]
             }
           }
         },
@@ -1097,39 +1136,53 @@ export const itwEidIssuanceMachine = setup({
       ]
     },
     CredentialsUpgrade: {
-      tags: [ItwTags.Loading],
-      entry: "navigateToSuccessScreen",
       description:
         "This state handles the upgrade of credentials in the wallet",
-      invoke: {
-        src: "credentialUpgradeMachine",
-        input: ({ context }) => {
-          assert(context.eid, "PID must be defined for credential upgrade");
-          assert(
-            context.walletInstanceAttestation,
-            "Wallet instance attestation must be defined"
-          );
-          assert(context.mode, "Issuance mode must be defined");
+      initial: "Intro",
+      states: {
+        Intro: {
+          entry: "navigateToUpgradeCredentialsScreen",
+          on: {
+            next: {
+              target: "Upgrading"
+            }
+          }
+        },
+        Upgrading: {
+          entry: "navigateToSuccessScreen",
+          tags: [ItwTags.Loading],
+          invoke: {
+            src: "credentialUpgradeMachine",
+            input: ({ context }) => {
+              assert(context.eid, "PID must be defined for credential upgrade");
+              assert(
+                context.walletInstanceAttestation,
+                "Wallet instance attestation must be defined"
+              );
+              assert(context.mode, "Issuance mode must be defined");
 
-          return {
-            pid: context.eid,
-            walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
-            credentials: context.legacyCredentials,
-            issuanceMode: context.mode
-          };
-        },
-        onDone: {
-          description: "Credentials upgrade completed successfully",
-          actions: assign(({ event }) => ({
-            failedCredentials: event.output.failedCredentials
-          })),
-          target: "#itwEidIssuanceMachine.Success"
-        },
-        onError: {
-          description:
-            "An unexpected error occurred during the credentials upgrade",
-          actions: "setFailure",
-          target: "#itwEidIssuanceMachine.Failure"
+              return {
+                pid: context.eid,
+                walletInstanceAttestation:
+                  context.walletInstanceAttestation?.jwt,
+                credentials: context.legacyCredentials,
+                issuanceMode: context.mode
+              };
+            },
+            onDone: {
+              description: "Credentials upgrade completed successfully",
+              actions: assign(({ event }) => ({
+                failedCredentials: event.output.failedCredentials
+              })),
+              target: "#itwEidIssuanceMachine.Success"
+            },
+            onError: {
+              description:
+                "An unexpected error occurred during the credentials upgrade",
+              actions: "setFailure",
+              target: "#itwEidIssuanceMachine.Failure"
+            }
+          }
         }
       }
     },

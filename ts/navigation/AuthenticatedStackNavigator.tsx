@@ -42,6 +42,7 @@ import CheckEmailNavigator from "../features/mailCheck/navigation/CheckEmailNavi
 import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { MessagesSearchScreen } from "../features/messages/screens/MessagesSearchScreen";
+import OnboardingNavigator from "../features/onboarding/navigation/OnboardingNavigator.tsx";
 import { PageNotFound } from "../features/pageNotFound/screens/index.tsx";
 import { WalletBarcodeNavigator } from "../features/payments/barcode/navigation/navigator";
 import { PaymentsBarcodeRoutes } from "../features/payments/barcode/navigation/routes";
@@ -54,6 +55,7 @@ import { PaymentsOnboardingRoutes } from "../features/payments/onboarding/naviga
 import { PaymentsReceiptNavigator } from "../features/payments/receipts/navigation/navigator";
 import { PaymentsReceiptRoutes } from "../features/payments/receipts/navigation/routes";
 import { NOTIFICATIONS_ROUTES } from "../features/pushNotifications/navigation/routes";
+import { PushNotificationEngagementScreen } from "../features/pushNotifications/screens/PushNotificationEngagementScreen.tsx";
 import { SystemNotificationPermissionsScreen } from "../features/pushNotifications/screens/SystemNotificationPermissionsScreen";
 import ServicesNavigator from "../features/services/common/navigation/navigator";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
@@ -69,8 +71,6 @@ import {
   isFciEnabledSelector
 } from "../store/reducers/backendStatus/remoteConfig";
 import { isGestureEnabled } from "../utils/navigation";
-import OnboardingNavigator from "../features/onboarding/navigation/OnboardingNavigator.tsx";
-import { PushNotificationEngagementScreen } from "../features/pushNotifications/screens/PushNotificationEngagementScreen.tsx";
 import { AppParamsList } from "./params/AppParamsList";
 import ROUTES from "./routes";
 import { MainTabNavigator } from "./TabNavigator";
@@ -240,7 +240,8 @@ const AuthenticatedStackNavigator = () => {
       <Stack.Group
         screenOptions={{
           headerShown: false,
-          presentation: "modal"
+          /* Avoid buggy modal behavior on Android */
+          presentation: Platform.OS === "ios" ? "modal" : "card"
         }}
       >
         <Stack.Screen

@@ -38,11 +38,12 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import { tosConfigSelector } from "../../../tos/store/selectors/index.ts";
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum.ts";
 import {
-  trackItWalletActivationStart,
-  trackItwDiscoveryPlus,
   trackItwIntroBack,
-  trackOpenItwTos
-} from "../../analytics/index.ts";
+  trackItWalletActivationStart,
+  trackItwDiscoveryPlus
+} from "../analytics";
+import { trackOpenItwTos } from "../../analytics";
+import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog.tsx";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
 import { generateItwIOMarkdownRules } from "../../common/utils/markdown.tsx";
@@ -55,16 +56,23 @@ const scrollOffset: number = 12;
 // Percentage of the visible block after which the anchor link is hidden
 const intersectionRatio: number = 0.3;
 
+type Props = {
+  credentialType?: string;
+};
+
 /**
  * This is the component that shows the information about the activation of
  * IT-Wallet. Must be used only for L3 activations.
  */
-export const ItwDiscoveryInfoComponent = () => {
+export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
   const { tos_url } = useIOSelector(tosConfigSelector);
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
+  const mixPanelCredentialDetails = useIOSelector(
+    itwMixPanelCredentialDetailsSelector
+  );
   const toast = useIOToast();
 
   useOnFirstRender(
@@ -72,9 +80,10 @@ export const ItwDiscoveryInfoComponent = () => {
       machineRef.send({
         type: "start",
         mode: isWalletValid ? "upgrade" : "issuance",
-        level: "l3"
+        level: "l3",
+        credentialType
       });
-    }, [machineRef, isWalletValid])
+    }, [machineRef, isWalletValid, credentialType])
   );
 
   const dismissalDialog = useItwDismissalDialog({
@@ -113,9 +122,9 @@ export const ItwDiscoveryInfoComponent = () => {
   });
 
   const handleContinuePress = useCallback(() => {
-    trackItWalletActivationStart("L3");
+    trackItWalletActivationStart("L3", mixPanelCredentialDetails);
     machineRef.send({ type: "accept-tos" });
-  }, [machineRef]);
+  }, [machineRef, mixPanelCredentialDetails]);
 
   const [productHighlightsLayout, setProductHighlightsLayout] = useState({
     y: 0,

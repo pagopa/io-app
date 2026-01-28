@@ -18,7 +18,9 @@ import { initiateAarFlowSaga } from "../initiateAarFlowSaga";
 import { fetchAarDataSaga } from "../fetchNotificationDataSaga";
 import { fetchAARQrCodeSaga } from "../fetchQrCodeSaga";
 import { testable, watchAarFlowSaga } from "../watchAARFlowSaga";
+import { validateMandateSaga } from "../validateMandateSaga";
 import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { createAarMandateSaga } from "../createAarMandateSaga";
 const { aarFlowMasterSaga, raceWithTerminateFlow } = testable as NonNullable<
   typeof testable
 >;
@@ -30,7 +32,7 @@ const mockSendAARClient: SendAARClient = {
   aarQRCodeCheck: jest.fn(),
   getAARNotification: jest.fn(),
   getNotificationAttachment: jest.fn(),
-  acceptIOMandate: jest.fn(),
+  acceptAARMandate: jest.fn(),
   createAARMandate: jest.fn()
 };
 
@@ -100,12 +102,68 @@ describe("watchAarFlowSaga", () => {
         .isDone();
     });
 
+    it('should call the validateMandateSaga when an updateState action has "validatingMandate" as type', () => {
+      const action = setAarFlowState({
+        type: sendAARFlowStates.validatingMandate,
+        recipientInfo: {
+          denomination: "Mario Rossi",
+          taxId: "RSSMRA74D22A001Q"
+        },
+        iun: "123",
+        mandateId: "mandate_id",
+        signedVerificationCode: "signed_nonce",
+        unsignedVerificationCode: "nonce",
+        mrtdData: {
+          dg1: "",
+          dg11: "",
+          sod: ""
+        },
+        nisData: {
+          nis: "",
+          publicKey: "",
+          sod: ""
+        }
+      });
+
+      testSaga(aarFlowMasterSaga, mockSendAARClient, mockSessionToken, action)
+        .next()
+        .call(
+          validateMandateSaga,
+          mockSendAARClient.acceptAARMandate,
+          mockSessionToken,
+          action
+        )
+        .next()
+        .isDone();
+    });
+
     it("should do nothing when called with an unknown flow state", () => {
       const action = setAarFlowState({
         type: "unknownState" as any
       });
 
       testSaga(aarFlowMasterSaga, mockSendAARClient, mockSessionToken, action)
+        .next()
+        .isDone();
+    });
+    it("should call createAarMandateSaga when an updateState action has creatingMandate as payload", () => {
+      const action = setAarFlowState({
+        type: sendAARFlowStates.creatingMandate,
+        recipientInfo: {
+          denomination: "Mario Rossi",
+          taxId: "RSSMRA74D22A001Q"
+        },
+        iun: "123",
+        qrCode: "TESTETST"
+      });
+      testSaga(aarFlowMasterSaga, mockSendAARClient, mockSessionToken, action)
+        .next()
+        .call(
+          createAarMandateSaga,
+          mockSendAARClient.createAARMandate,
+          mockSessionToken,
+          action
+        )
         .next()
         .isDone();
     });

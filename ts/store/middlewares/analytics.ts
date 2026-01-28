@@ -47,8 +47,12 @@ import { buildEventProperties } from "../../utils/analytics";
 import { trackServicesAction } from "../../features/services/common/analytics";
 import { trackMessagesActionsPostDispatch } from "../../features/messages/analytics";
 import { trackIdentificationAction } from "../../features/identification/analytics";
-import { trackOfflineAccessReason } from "../../features/itwallet/analytics";
-import { trackLoginFailure } from "../../features/authentication/common/analytics";
+import { updateOfflineAccessReason } from "../../features/itwallet/analytics/properties/propertyUpdaters";
+import {
+  trackLoginFailure,
+  trackLogoutFailure,
+  trackLogoutSuccess
+} from "../../features/authentication/common/analytics";
 import { trackSessionCorrupted } from "../../features/authentication/activeSessionLogin/analytics";
 import { trackContentAction } from "./contentAnalytics";
 
@@ -80,9 +84,9 @@ const trackAction =
       // dispatch to mixpanel when the email is validated
       case getType(profileEmailValidationChanged):
         return mixpanelTrack(action.type, { isEmailValidated: action.payload });
-
-      case getType(upsertUserDataProcessing.failure):
       case getType(logoutFailure):
+        return trackLogoutFailure(action.payload.error.message);
+      case getType(upsertUserDataProcessing.failure):
         return mixpanelTrack(action.type, {
           reason: action.payload.error.message
         });
@@ -138,12 +142,14 @@ const trackAction =
             flow: action.payload
           })
         );
+      case getType(logoutSuccess):
+        return trackLogoutSuccess();
       case getType(sessionCorrupted):
         return trackSessionCorrupted();
       case getType(sessionInformationLoadSuccess):
       case getType(sessionExpired):
       case getType(sessionInvalid):
-      case getType(logoutSuccess):
+
       // profile
       case getType(profileUpsert.success):
       case getType(profileLoadRequest):
@@ -190,7 +196,7 @@ export const actionTracking =
       void trackIdentificationAction(action);
 
       // Define MP super property that indicates the reason for offline access
-      void trackOfflineAccessReason(action, middleware.getState());
+      void updateOfflineAccessReason(action);
 
       const fciEnvironment = fciEnvironmentSelector(middleware.getState());
       void trackFciAction(fciEnvironment)(action);

@@ -1,6 +1,6 @@
 import { createStore } from "redux";
 import { act, fireEvent } from "@testing-library/react-native";
-import { Alert, BackHandler, BackHandlerStatic } from "react-native";
+import { Alert } from "react-native";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -13,19 +13,28 @@ import {
 import { setAarFlowState } from "../../store/actions";
 import * as AAR_SELECTORS from "../../store/selectors";
 import { sendAARFlowStates } from "../../utils/stateUtils";
-import { sendAarMockStateFactory } from "../../utils/testUtils";
+import { sendAarMockStates } from "../../utils/testUtils";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import {
+  trackSendAarMandateCiePreparation,
+  trackSendAarMandateCiePreparationContinue,
+  trackSendAarMandateCieReadingClosureAlert,
+  trackSendAarMandateCieReadingClosureAlertAccepted,
+  trackSendAarMandateCieReadingClosureAlertContinue
+} from "../../analytics";
 
 const mockNavigate = jest.fn();
 
-// `mockPressBack` is available only in the test environment,
-// provided by the project's Jest setup (`jestSetup.js`).
-export const MockBackHandler = BackHandler as BackHandlerStatic & {
-  mockPressBack: () => void;
-};
-
 const mockTerminateFlow = jest.fn();
 const mockDispatch = jest.fn();
+
+jest.mock("../../analytics", () => ({
+  trackSendAarMandateCiePreparation: jest.fn(),
+  trackSendAarMandateCiePreparationContinue: jest.fn(),
+  trackSendAarMandateCieReadingClosureAlert: jest.fn(),
+  trackSendAarMandateCieReadingClosureAlertAccepted: jest.fn(),
+  trackSendAarMandateCieReadingClosureAlertContinue: jest.fn()
+}));
 
 jest.mock("../../../../../store/hooks", () => ({
   ...jest.requireActual("../../../../../store/hooks"),
@@ -49,42 +58,30 @@ describe("SendAarCanEducationalScreen", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
 
-  it("should prompt the system Alert when the back button is pressed", () => {
-    const spyOnSystemAlert = jest.spyOn(Alert, "alert");
-    const { getByLabelText } = renderComponent();
-
-    const backButton = getByLabelText("global.buttons.back");
-
-    fireEvent.press(backButton);
-
-    expect(spyOnSystemAlert).toHaveBeenCalledTimes(1);
-    expect(spyOnSystemAlert).toHaveBeenCalledWith(
-      "features.pn.aar.flow.cieCanAdvisory.alert.title",
-      "features.pn.aar.flow.cieCanAdvisory.alert.message",
-      [
-        {
-          text: "features.pn.aar.flow.cieCanAdvisory.alert.confirm",
-          style: "destructive",
-          onPress: expect.any(Function)
-        },
-        {
-          text: "features.pn.aar.flow.cieCanAdvisory.alert.cancel"
-        }
-      ]
-    );
-
-    expect(mockTerminateFlow).not.toHaveBeenCalled();
-    expect(mockDispatch).not.toHaveBeenCalled();
-  });
-
-  it("should prompt the system Alert when the hardware back button is pressed", () => {
-    const spyOnSystemAlert = jest.spyOn(Alert, "alert");
+  it('should track "trackSendAarMandateCiePreparation" on component mount', () => {
     renderComponent();
 
+    expect(trackSendAarMandateCiePreparation).toHaveBeenCalledTimes(1);
+    expect(trackSendAarMandateCiePreparationContinue).not.toHaveBeenCalled();
+  });
+
+  it('should prompt the system Alert and invoke "trackSendAarMandateCieReadingClosureAlert" when the back button is pressed', () => {
+    const spyOnSystemAlert = jest.spyOn(Alert, "alert");
+    const { getByLabelText } = renderComponent();
+
+    const backButton = getByLabelText("global.buttons.back");
+
+    expect(trackSendAarMandateCieReadingClosureAlert).not.toHaveBeenCalled();
+    expect(spyOnSystemAlert).not.toHaveBeenCalled();
+
     act(() => {
-      MockBackHandler.mockPressBack();
+      fireEvent.press(backButton);
     });
 
+    expect(trackSendAarMandateCieReadingClosureAlert).toHaveBeenCalledTimes(1);
+    expect(trackSendAarMandateCieReadingClosureAlert).toHaveBeenCalledWith(
+      "CIE_PREPARATION"
+    );
     expect(spyOnSystemAlert).toHaveBeenCalledTimes(1);
     expect(spyOnSystemAlert).toHaveBeenCalledWith(
       "features.pn.aar.flow.cieCanAdvisory.alert.title",
@@ -96,7 +93,8 @@ describe("SendAarCanEducationalScreen", () => {
           onPress: expect.any(Function)
         },
         {
-          text: "features.pn.aar.flow.cieCanAdvisory.alert.cancel"
+          text: "features.pn.aar.flow.cieCanAdvisory.alert.cancel",
+          onPress: expect.any(Function)
         }
       ]
     );
@@ -105,15 +103,20 @@ describe("SendAarCanEducationalScreen", () => {
     expect(mockDispatch).not.toHaveBeenCalled();
   });
 
-  it('should invoke "terminateFlow" when the Alert confirm button is pressed', () => {
+  it('should invoke "terminateFlow" and "trackSendAarMandateCieReadingClosureAlertAccepted" when the Alert confirm button is pressed', () => {
     const spyOnSystemAlert = jest.spyOn(Alert, "alert");
     const { getByLabelText } = renderComponent();
 
     const backButton = getByLabelText("global.buttons.back");
 
-    fireEvent.press(backButton);
+    act(() => {
+      fireEvent.press(backButton);
+    });
 
     expect(mockTerminateFlow).not.toHaveBeenCalled();
+    expect(
+      trackSendAarMandateCieReadingClosureAlertAccepted
+    ).not.toHaveBeenCalled();
 
     const confirmAction = spyOnSystemAlert.mock.calls[0][2]?.[0];
 
@@ -122,7 +125,49 @@ describe("SendAarCanEducationalScreen", () => {
     });
 
     expect(mockTerminateFlow).toHaveBeenCalledTimes(1);
+    expect(
+      trackSendAarMandateCieReadingClosureAlertAccepted
+    ).toHaveBeenCalledTimes(1);
+    expect(
+      trackSendAarMandateCieReadingClosureAlertAccepted
+    ).toHaveBeenCalledWith("CIE_PREPARATION");
+    expect(
+      trackSendAarMandateCieReadingClosureAlertContinue
+    ).not.toHaveBeenCalled();
     expect(mockDispatch).not.toHaveBeenCalled();
+  });
+
+  it('should invoke "trackSendAarMandateCieReadingClosureAlertContinue" when the Alert cancel button is pressed', () => {
+    const spyOnSystemAlert = jest.spyOn(Alert, "alert");
+    const { getByLabelText } = renderComponent();
+
+    const backButton = getByLabelText("global.buttons.back");
+
+    act(() => {
+      fireEvent.press(backButton);
+    });
+
+    expect(
+      trackSendAarMandateCieReadingClosureAlertContinue
+    ).not.toHaveBeenCalled();
+
+    const cancelAction = spyOnSystemAlert.mock.calls[0][2]?.[1];
+
+    act(() => {
+      cancelAction?.onPress?.();
+    });
+
+    expect(
+      trackSendAarMandateCieReadingClosureAlertContinue
+    ).toHaveBeenCalledTimes(1);
+    expect(
+      trackSendAarMandateCieReadingClosureAlertContinue
+    ).toHaveBeenCalledWith("CIE_PREPARATION");
+    expect(
+      trackSendAarMandateCieReadingClosureAlertAccepted
+    ).not.toHaveBeenCalled();
+    expect(mockDispatch).not.toHaveBeenCalled();
+    expect(mockTerminateFlow).not.toHaveBeenCalled();
   });
 
   it('should not invoke "terminateFlow" when the Alert cancel button is pressed', () => {
@@ -131,7 +176,9 @@ describe("SendAarCanEducationalScreen", () => {
 
     const backButton = getByLabelText("global.buttons.back");
 
-    fireEvent.press(backButton);
+    act(() => {
+      fireEvent.press(backButton);
+    });
 
     const cancelAction = spyOnSystemAlert.mock.calls[0][2]?.[1];
 
@@ -143,23 +190,27 @@ describe("SendAarCanEducationalScreen", () => {
     expect(mockDispatch).not.toHaveBeenCalled();
   });
 
-  Object.values(sendAarMockStateFactory).forEach(getAarState => {
-    const aarState = getAarState();
+  describe.each(sendAarMockStates)('AAR state: "$type"', aarState => {
+    beforeEach(() => {
+      jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
+    });
+
     const isCieCanAdvisory = aarState.type === sendAARFlowStates.cieCanAdvisory;
     const isCieCanInsertion =
       aarState.type === sendAARFlowStates.cieCanInsertion;
 
     it(`${
       isCieCanAdvisory ? "should" : "should not"
-    } dispatch the "setAarFlowState" action when type is: "${
-      aarState.type
-    }"`, () => {
-      jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
+    } dispatch the "setAarFlowState" action and call the "trackSendAarMandateCiePreparationContinue" analytic function`, () => {
       const { getByTestId } = renderComponent();
+
+      expect(trackSendAarMandateCiePreparationContinue).not.toHaveBeenCalled();
 
       const continueCTA = getByTestId("primaryActionID");
 
-      fireEvent.press(continueCTA);
+      act(() => {
+        fireEvent.press(continueCTA);
+      });
 
       if (isCieCanAdvisory) {
         expect(mockDispatch).toHaveBeenCalledTimes(1);
@@ -172,13 +223,16 @@ describe("SendAarCanEducationalScreen", () => {
       } else {
         expect(mockDispatch).not.toHaveBeenCalled();
       }
+
+      expect(trackSendAarMandateCiePreparationContinue).toHaveBeenCalledTimes(
+        1
+      );
       expect(mockTerminateFlow).not.toHaveBeenCalled();
     });
 
     it(`${
       isCieCanInsertion ? "should" : "should not"
     } navigate into the "SendAARCieCanInsertionScreen"`, () => {
-      jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
       renderComponent();
 
       if (isCieCanInsertion) {

@@ -15,14 +15,14 @@ import { sendMandateIdSelector } from "../store/reducers/tempAarMandate";
 
 export function* testAarCreateMandateSaga(
   sendAARClient: SendAARClient,
-  sessionToken: SessionToken
+  sessionToken: SessionToken,
+  action: ReturnType<typeof testAarCreateMandate.request>
 ) {
   try {
     const createAARMandateRequest = sendAARClient.createAARMandate({
       Bearer: `Bearer ${sessionToken}`,
       body: {
-        aarQrCodeValue:
-          "https://cittadini.uat.notifichedigitali.it/io/?aar=UldKRy1XSkFNLVdaTEgtMjAyNTEyLVYtMV9QRi0wZmNlMzc0Yy0wM2ViLTQwNmUtODM0NS01OGI4ZGYzMjk5MTdfNmFlNTZjZjAtMjhmYS00M2U1LTgyMWEtMjEwMjUxOTkzNTdh"
+        aarQrCodeValue: action.payload
       },
       isTest: true
     });
@@ -69,7 +69,7 @@ export function* testAarAcceptMandateSaga(
     if (mandateId == null) {
       throw Error(`Accept mandate: nullish mandateid (${mandateId})`);
     }
-    const acceptAarMandateRequest = sendAARClient.acceptIOMandate({
+    const acceptAarMandateRequest = sendAARClient.acceptAARMandate({
       Bearer: `Bearer ${sessionToken}`,
       mandateId,
       body: {
@@ -90,7 +90,7 @@ export function* testAarAcceptMandateSaga(
     const result = (yield* call(
       withRefreshApiCall,
       acceptAarMandateRequest
-    )) as unknown as SagaCallReturnType<typeof sendAARClient.acceptIOMandate>;
+    )) as unknown as SagaCallReturnType<typeof sendAARClient.acceptAARMandate>;
 
     if (E.isLeft(result)) {
       const reason = `Accept mandate decoding failure (${readableReportSimplified(
