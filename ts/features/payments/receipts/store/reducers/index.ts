@@ -34,6 +34,7 @@ export type ReceiptTransactionState = {
   receiptDocument: pot.Pot<PaymentsTransactionReceiptInfoPayload, NetworkError>;
   cancelTransactionRecord: pot.Pot<CancelTransactionRecord, NetworkError>;
   needsHomeListRefresh: boolean;
+  continuationToken: string | undefined;
 };
 
 const INITIAL_STATE: ReceiptTransactionState = {
@@ -42,7 +43,8 @@ const INITIAL_STATE: ReceiptTransactionState = {
   details: pot.noneLoading,
   receiptDocument: pot.none,
   cancelTransactionRecord: pot.none,
-  needsHomeListRefresh: false
+  needsHomeListRefresh: false,
+  continuationToken: undefined
 };
 
 const reducer = (
@@ -81,7 +83,8 @@ const reducer = (
         : pot.toLoading(state.transactions);
       return {
         ...state,
-        transactions
+        transactions,
+        continuationToken: action.payload.firstLoad ? undefined : state.continuationToken
       };
     case getType(getPaymentsReceiptAction.success):
       const previousTransactions = pot.getOrElse(state.transactions, []);
@@ -91,6 +94,7 @@ const reducer = (
         transactions: !action.payload.appendElements
           ? pot.some([...previousTransactions, ...maybeTransactions])
           : pot.some(maybeTransactions),
+        continuationToken: action.payload.continuationToken,
         needsHomeListRefresh: false
       };
     case getType(getPaymentsReceiptAction.failure):

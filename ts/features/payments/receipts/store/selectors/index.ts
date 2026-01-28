@@ -17,3 +17,6 @@ export const walletReceiptPotSelector = (state: GlobalState) =>
 
 export const needsHomeListRefreshSelector = (state: GlobalState) =>
   walletReceiptSelector(state).needsHomeListRefresh;
+
+export const continuationTokenSelector = (state: GlobalState) =>
+  walletReceiptSelector(state).continuationToken;

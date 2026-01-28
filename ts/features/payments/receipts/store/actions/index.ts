@@ -20,6 +20,7 @@ type PaymentsReceiptPayload = {
 type PaymentsReceiptSuccessPayload = {
   data: NoticeListWrapResponse["notices"];
   appendElements?: boolean;
+  continuationToken?: string;
 };
 
 export const getPaymentsReceiptAction = createAsyncAction(

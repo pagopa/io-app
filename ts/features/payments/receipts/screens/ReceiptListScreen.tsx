@@ -30,7 +30,7 @@ import { ReceiptLoadingList } from "../components/ReceiptLoadingList";
 import { ReceiptSectionListHeader } from "../components/ReceiptSectionListHeader";
 import { PaymentsReceiptRoutes } from "../navigation/routes";
 import { getPaymentsReceiptAction } from "../store/actions";
-import { walletReceiptListPotSelector } from "../store/selectors";
+import { walletReceiptListPotSelector, continuationTokenSelector } from "../store/selectors";
 import { ReceiptsCategoryFilter } from "../types";
 import { groupTransactionsByMonth } from "../utils";
 
@@ -45,9 +45,6 @@ const ReceiptListScreen = () => {
   const scrollTranslationY = useSharedValue(0);
   const [titleHeight, setTitleHeight] = useState(0);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [continuationToken, setContinuationToken] = useState<
-    string | undefined
-  >();
   const [noticeCategory, setNoticeCategory] =
     useState<ReceiptsCategoryFilter>("all");
   const [groupedTransactions, setGroupedTransactions] =
@@ -55,6 +52,7 @@ const ReceiptListScreen = () => {
   const insets = useSafeAreaInsets();
 
   const transactionsPot = useIOSelector(walletReceiptListPotSelector);
+  const continuationToken = useIOSelector(continuationTokenSelector);
   const isEmpty = useIOSelector(isPaymentsTransactionsEmptySelector);
   const isLoading = pot.isLoading(transactionsPot);
 
@@ -89,15 +87,9 @@ const ReceiptListScreen = () => {
     dispatch(
       getPaymentsReceiptAction.request({
         noticeCategory,
-        continuationToken,
-        onSuccess: handleOnSuccess
+        continuationToken
       })
     );
-  };
-
-  const handleOnSuccess = (paginationToken?: string) => {
-    setContinuationToken(paginationToken);
-    setIsRefreshing(false);
   };
 
   const handleOnRefreshTransactionsList = () => {
@@ -105,8 +97,7 @@ const ReceiptListScreen = () => {
     dispatch(
       getPaymentsReceiptAction.request({
         firstLoad: true,
-        noticeCategory,
-        onSuccess: handleOnSuccess
+        noticeCategory
       })
     );
   };
@@ -118,8 +109,7 @@ const ReceiptListScreen = () => {
       dispatch(
         getPaymentsReceiptAction.request({
           firstLoad: true,
-          noticeCategory: category,
-          onSuccess: handleOnSuccess
+          noticeCategory: category
         })
       );
     },
@@ -131,12 +121,18 @@ const ReceiptListScreen = () => {
       analytics.trackPaymentsReceiptListing();
       dispatch(
         getPaymentsReceiptAction.request({
-          firstLoad: true,
-          onSuccess: handleOnSuccess
+          firstLoad: true
         })
       );
     }, [dispatch])
   );
+
+  // Reset refreshing state when list finishes loading
+  useEffect(() => {
+    if (!isLoading) {
+      setIsRefreshing(false);
+    }
+  }, [isLoading]);
 
   useHeaderSecondLevel({
     title: I18n.t("features.payments.transactions.title"),
