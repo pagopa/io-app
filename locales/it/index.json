@@ -304,7 +304,8 @@
   "locales": {
     "it": "Italiano",
     "en": "Inglese",
-    "de": "Tedesco"
+    "de": "Tedesco",
+    "sl": "Sloveno"
   },
   "clipboard": {
     "copyIntoClipboard": "copia negli appunti",

@@ -1,0 +1,2530 @@
+{
+  "date": {
+    "formats": {
+      "default": "%d. %m. %Y",
+      "short": "%d. %B",
+      "long": "%d. %B %Y"
+    },
+    "day_names": [
+      "nedelja",
+      "ponedeljek",
+      "torek",
+      "sreda",
+      "četrtek",
+      "petek",
+      "sobota"
+    ],
+    "abbr_day_names": ["ned", "pon", "tor", "sre", "čet", "pet", "sob"],
+    "month_names": [
+      "",
+      "januar",
+      "februar",
+      "marec",
+      "april",
+      "maj",
+      "junij",
+      "julij",
+      "avgust",
+      "september",
+      "oktober",
+      "november",
+      "december"
+    ],
+    "abbr_month_names": [
+      "",
+      "jan",
+      "feb",
+      "mar",
+      "apr",
+      "maj",
+      "jun",
+      "jul",
+      "avg",
+      "sep",
+      "okt",
+      "nov",
+      "dec"
+    ],
+    "meridian": ["am", "pm"]
+  },
+  "global": {
+    "you": "TI",
+    "id": "ID",
+    "badges": {
+      "blocked": "Blokiran",
+      "onGoing": "V teku"
+    },
+    "password": "Geslo",
+    "username": "Uporabniško ime",
+    "disclaimer_beta": "Če imaš težave pri prijavi, nam prosim to sporoči!",
+    "unknown": "neznano",
+    "sectionStatus": {
+      "moreInfo": "več informacij"
+    },
+    "accessibility": {
+      "reload": "Ponovno naloži",
+      "switchLabel": "Izberi za aktiviranje",
+      "inputLabel": "{{header}}, glava",
+      "textField": "{{inputLabel}}, besedilno polje",
+      "description": "Opis",
+      "dateField": "Dve števki za mesec, dve za leto",
+      "threeDigits": "3 števke",
+      "fourDigits": "4 števke",
+      "dateFormat": "DD. MMMM YYYY",
+      "expanded": "Razširjen odstavek",
+      "collapsed": "Zaprt odstavek",
+      "active": "Aktivno stanje",
+      "inactive": "Neaktivno stanje",
+      "linkHint": "Z aktiviranjem tega elementa boš preusmerjen v brskalnik naprave",
+      "alert": "Obvestilo",
+      "activityIndicator": {
+        "label": "Nalaganje v teku",
+        "hint": "Počakaj, da se vsebina naloži"
+      },
+      "header": {
+        "label": "Glava aplikacije"
+      },
+      "contextualHelp": {
+        "close": "Zaprit kontekstualno pomoč",
+        "open": {
+          "label": "Kontekstualna pomoč",
+          "hint": "Dostop do informacij o vsebini trenutnega zaslona"
+        }
+      }
+    },
+    "symbols": {
+      "question": "?",
+      "asterisk": "*"
+    },
+    "localization": {
+      "delimiterSeparator": ".",
+      "decimalSeparator": ","
+    },
+    "date": {
+      "invalid": "neveljaven datum",
+      "today": "danes",
+      "tomorrow": "jutri"
+    },
+    "dateFormats": {
+      "shortFormat": "%d. %m. %Y",
+      "shortFormatWithTime": "%d. %m. %Y, %H:%M",
+      "fullFormatShortMonthLiteral": "%d. %b %Y",
+      "fullFormatShortMonthLiteralWithTime": "%d. %b %Y, %H:%M",
+      "fullFormatShortMonthLiteralWithoutTime": "%d. %b %Y",
+      "fullFormatFullMonthLiteral": "%d. %B %Y",
+      "fullMonthLiteral": "%B",
+      "fullMonthLiteralWithYear": "%B %Y",
+      "timeFormat": "%H:%M",
+      "timeFormatWithTimezone": "%H:%M:%S (%z)",
+      "dayMonthWithTime": "%d. %b, %H:%M",
+      "dayMonthWithoutTime": "%d. %b",
+      "dayFullMonth": "%d. %B",
+      "numericMonthYear": "%m. %Y",
+      "shortNumericMonthYear": "%m.%-y",
+      "monthYear": "MMMM YYYY",
+      "dayAndMonth": "dddd, D. MMMM",
+      "dayMonth": "DD.MM.",
+      "dayMonthYear": "D. MMMM YYYY",
+      "weekdayDayMonthYear": "dddd, D. MMMM YYYY",
+      "dateTimePicker": "dd. mm. llll"
+    },
+    "genericError": "Prišlo je do začasne težave, poskusi znova.",
+    "genericAlert": "Pozor!",
+    "genericWaiting": "Počakaj nekaj sekund …",
+    "genericThanks": "Hvala",
+    "genericShare": "Deli",
+    "genericSave": "Shrani",
+    "genericRetry": "Poskusi znova",
+    "jserror": {
+      "title": "Prišlo je do nepričakovane napake",
+      "message": "To smo prijavili naši ekipi! Zapri aplikacijo in začni znova!"
+    },
+    "markdown": {
+      "reference": "[demo]I am a custom demo tag at the beginning of the markdown[/demo]\n\n# Naslov h1: Lorem ipsum dolor sit amet, consectetur adipisici elit\n\nTesto semplice\n\n## Naslov h2: sed eiusmod tempor incidunt ut labore et dolore magna aliqua\n\ntesto semplice\n\n### Naslov h3: Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.\n\ngolo besedilo\n\nLorem **ipsum dolor** sit amet, *consectetur* adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Unam incolunt Belgae, aliam Aquitani, tertiam.\n\n\nLorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Magna pars studiorum, prodita quaerimus. Phasellus laoreet lorem vel dolor tempus vehicula. Fabio vel iudice vincam, sunt in culpa qui officia. Idque Caesaris facere voluntate liceret: sese habere. Tu quoque, Brute, fili mi, nihil timor populi, nihil!  \nNec dubitamus multa iter quae et nos invenerat. Cum sociis natoque penatibus et magnis dis parturient. Donec sed odio operae, eu vulputate felis rhoncus. Tityre, tu patulae recubans sub tegmine fagi dolor. At nos hinc posthac, sitientis piros Afros. Non equidem invideo, miror magis posuere velit aliquet.  \nHi omnes lingua, institutis, legibus inter se differunt. Quae vero auctorem tractata ab fiducia dicuntur. Plura mihi bona sunt, inclinet, amari petere vellent. Sed haec quis possit intrepidus aestimare tellus. Curabitur blandit tempus ardua ridiculus sed magna.\n\n[demo]I am a custom demo tag in the middle of the markdown[/demo]\n\nLorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Fabio vel iudice vincam, sunt in culpa qui officia.\n\n\n> Quote o indent\n\nSeznam:\n\n- ena\n- dva\n- tri\n\nO�tevilcen seznam:\n\n1. ena\n2. dva\n3. tri\n\n\nPovezava\n\n[primer povezave](https://io.italia.it)\n\n\nPrimer notranje povezave\n\n[home nastavitve](ioit://PREFERENCES_HOME),\n[seznam storitev](ioit://SERVICES_HOME),\n[profil](ioit://PROFILE_MAIN),\n[denarnica](ioit://WALLET_HOME),\n[zasebnost](ioit://PROFILE_PRIVACY_MAIN),\n[dolocila in pogoji uporabe](ioit://PROFILE_TOS),\n[pravilnik o zasebnosti](ioit://PROFILE_PRIVACY)\n[seznam sporocil](ioit://MESSAGES_LIST)\n\n\nhttps://help.github.com/articles/basic-writing-and-formatting-syntax/\n",
+      "decodeError": "Sporočila ni mogoče dešifrirati"
+    },
+    "buttons": {
+      "share": "Deli",
+      "delete": "Izbriši",
+      "cancel": "Prekliči",
+      "settings": "Nastavitve",
+      "ok": "V REDU",
+      "ok2": "V redu",
+      "continue": "Nadaljuj",
+      "retry": "Ponovno poskusi",
+      "back": "Nazaj",
+      "confirm": "Potrdi",
+      "close": "Zapri",
+      "exit": "Izhod",
+      "saveSelection": "Shrani izbiro",
+      "search": "Iskanje",
+      "skip": "Skoči",
+      "add": "Dodaj",
+      "edit": "Uredi",
+      "info": "Informacije",
+      "activate": "Aktiviraj",
+      "deactivate": "Deaktiviraj",
+      "show": "Prikaži",
+      "update": "Osveži",
+      "findOutMore": "Izvedi več",
+      "details": "Podrobnosti",
+      "choose": "Izberi"
+    },
+    "navigator": {
+      "messages": "sporočila",
+      "wallet": "denarnica",
+      "documents": "dokumenti",
+      "profile": "profil",
+      "services": "storitve"
+    },
+    "actions": {
+      "retry": "Prišlo je do napake, poskusi znova",
+      "search": "Iskanje besedila"
+    },
+    "remoteStates": {
+      "loading": "Nalaganje …",
+      "wait": "Počakaj nekaj sekund …",
+      "notAvailable": "Ni na voljo"
+    },
+    "notImplemented": "NI IZVEDENO",
+    "search": {
+      "invalidSearchBarText": "Vnesi vsaj {{minCharacter}} znake",
+      "noResultsFound": "Za to iskanje ni rezultatov: poskusi iskati nekaj drugega.",
+      "noResultsTitle": "Brez rezultata."
+    }
+  },
+  "tablet": {
+    "message": "Vmesnik IO je optimiziran za pametne telefone, vendar so vse funkcije, združljive s tvojo napravo, še vedno na voljo."
+  },
+  "rooted": {
+    "title": "Videti je, da je varnost tvoje naprave ogrožena!",
+    "bodyiOS": "Videti je, da je bil na tvoji napravi izveden **jailbreak** postopek.\n\nTo se zgodi, ko je operacijski sistem spremenjen ali ko je nameščen anormalno. Morda je bila ogrožena celovitost operacijskega sistema in morda aplikacija IO ne bo delovala pravilno.\n\nČe je mogoče, ne nadaljuj in namesti aplikacijo IO na drugo napravo, ki ima zdrav in posodobljen operacijski sistem.\n\nČe nadaljuješ, se strinjaš, da boš še naprej uporabljal/a ponujene storitve na lastno odgovornost, saj lahko pomanjkanje celovitosti vodi do kraje podatkov in/ali drugih goljufivih dejavnosti. Prav tako se strinjaš, da razvijalec aplikacije v nobenem primeru ni odgovoren za kakršno koli škodo, izgubo ali posledice, ki jih lahko utrpiš zaradi uporabe aplikacije IO v takšnem operacijskem sistemu.\n",
+    "bodyAndroid": "Videti je, da je **root** omogočen v tvoji napravi.\n\nTo se zgodi, ko je operacijski sistem spremenjen ali ko je nameščen anormalno. Morda je bila ogrožena celovitost operacijskega sistema in morda aplikacija IO ne bo delovala pravilno.\n\nČe je mogoče, ne nadaljuj in namesti aplikacijo IO na drugo napravo, ki ima zdrav in posodobljen operacijski sistem.\n\nČe nadaljuješ, se strinjaš, da boš še naprej uporabljal/a ponujene storitve na lastno odgovornost, saj lahko pomanjkanje celovitosti vodi do kraje podatkov in/ali drugih goljufivih dejavnosti. Prav tako se strinjaš, da razvijalec aplikacije v nobenem primeru ni odgovoren za kakršno koli škodo, izgubo ali posledice, ki jih lahko utrpiš zaradi uporabe aplikacije IO v takšnem operacijskem sistemu.\n",
+    "continueAlert": {
+      "title": "Nadaljuj"
+    },
+    "cancelAlert": {
+      "title": "Izhod"
+    }
+  },
+  "locales": {
+    "it": "Italijanščina",
+    "en": "Angleščina",
+    "de": "Nemščina",
+    "sl": "Slovenščina"
+  },
+  "clipboard": {
+    "copyFeedback": "Kopirano v odložišče",
+    "copyText": "kopiraj",
+    "copyFeedbackButton": "kopirano"
+  },
+  "errors": {
+    "loginError": "V fazi prijave je prišlo do napake, ponovi postopek.",
+    "profileUpdateError": "Med posodabljanjem tvojega profila je prišlo do napake."
+  },
+  "permissionRationale": {
+    "storage": {
+      "title": "Dovoli dostop do galerije",
+      "message": "Shranjeval/a boš lahko bonuse in potrdila, nalagal/a posnetke zaslona in obvestila o plačilih."
+    },
+    "camera": {
+      "title": "Dovoli dostop do kamere",
+      "message": "Prebiral/a boš lahko kode QR in plačeval/a obvestila pagoPA."
+    },
+    "calendar": {
+      "title": "Dovoli dostop do koledarja",
+      "message": "V svoj koledar boš lahko dodajal/a roke in nastavil/a opomnik."
+    }
+  },
+  "startup": {
+    "title": "Inicializacija",
+    "authentication": "Preverjen uporabnik",
+    "sessionInfo": "Atributi SPID so naloženi",
+    "profileInfo": "Uporabniški profil je naložen",
+    "profileEnabled": "Uporabniški profil omogočen",
+    "userDeletePendingAlert": {
+      "title": "Brisanje profila je v teku",
+      "message": "Če si si premislil/a, lahko zahtevo prekličeš v razdelku Zasebnost v tvojem profilu.",
+      "cta_1": "Pojdi na Zasebnost",
+      "cta_2": "Ignoriraj"
+    },
+    "contextualHelp": {
+      "title": "Težave z inicializacijo?"
+    }
+  },
+  "inbox": {
+    "enableButton": "Omogoči mapo Prejeto.",
+    "disableButton": "Onemogoči mapo Prejeto.",
+    "enableCallToActionDescription": "Omogoči mapo Prejeto za ogled sporočil"
+  },
+  "profile": {
+    "fiscalCode": {
+      "accessibility": {
+        "unavailable": "Ni na voljo"
+      },
+      "title": "Tvoji osebni dokumenti",
+      "fiscalCode": "Davčna številka",
+      "help": "**Tukaj je prikazan faksimile tvoje davčne številke.**\nFaksimile ne nadomesti fizičnega dokumenta, temveč omogoča branje podatkov in črtne kode na hrbtni strani.\nV primeru homokodije (ko imata dve osebi, po določenem izračunu, isto davčno številko) se podatki, ustvarjeni v faksimilu, morda ne ujemajo z osebnimi podatki.\n",
+      "facSimile": "FAKSIMILE"
+    },
+    "sections": {
+      "spid": "SPID PROFIL"
+    },
+    "unknown": "NEZNANO",
+    "logout": {
+      "menulabel": "Zapri aplikacijo IO",
+      "alertTitle": "Ali res želiš zapreti aplikacijo?",
+      "alertMessage": "Ko se boš naslednjič prijavil/a, se boš moral/a avtentikirati s CIE ali SPID-om.",
+      "loading": "Odjava v teku …",
+      "exit": "Izhod"
+    },
+    "errors": {
+      "load": "Napaka pri nalaganju profila",
+      "upsert": "Napaka pri ustvarjanju ali posodabljanju profila"
+    },
+    "main": {
+      "title": "Profil",
+      "logout": "Odjava / Izhod",
+      "forgetCurrentSession": "Pozabi trenutno sejo",
+      "clearAsyncStorage": "Izbriši vsebino AsyncStorage",
+      "dumpAsyncStorage": "Prenesi vsebino AsyncStorage",
+      "contextualHelpTitle": "Kaj lahko storiš v svojem profilu",
+      "contextualHelpContent": "**V razdelku Profil lahko upravlja� vse svoje nastavitve.**\nTu lahko upravlja� svoje nastavitve, svojo zasebnost in svoj racun. V tem razdelku lahko dostopa� tudi do svojih dokumentov v digitalni razlicici, tako da izbere� kartice, ki se prika�ejo na vrhu zaslona.\n",
+      "developerModeOn": "Aktiviran razvijalski način",
+      "cache": {
+        "alert": "Ali res želiš počistiti predpomnilnik?",
+        "clear": "Počisti predpomnilnik",
+        "cleared": "Predpomnilnik je počiščen."
+      },
+      "data": {
+        "title": "Tvoji podatki",
+        "description": "Preglej svoje podatke"
+      },
+      "preferences": {
+        "title": "Nastavitve",
+        "description": "Upravljaj nastavitve aplikacije"
+      },
+      "security": {
+        "title": "Varnost",
+        "description": "Upravljaj biometrični dostop in kodo za odklepanje"
+      },
+      "privacy": {
+        "title": "Zasebnost in pogoji uporabe",
+        "description": "Tvoje pravice in obveznosti pri uporabi IO",
+        "subtitle": "Tukaj boš našel/la informacije o svojih pravicah in obveznostih ter o obdelavi svojih osebnih podatkov.",
+        "loading": "Počakaj nekaj sekund, preverjamo tvoj profil …",
+        "removeAccount": {
+          "title": "Izbriši svoj račun",
+          "description": "Trajno izbriše tvoj račun in osebne podatke",
+          "alert": {
+            "activeBonusTitle": "Aktivni bonusi",
+            "activeBonusDescription": "Videti je, da imaš aktivne bonuse. Želimo te obvestiti, da brisanje tvojega profila ni isto kot preklic bonusov ali odjava od kakršnih koli pobud. Za upravljanje svojih bonusov pojdi v razdelek Denarnica, sicer izberi Nadaljuj.",
+            "oldRequest": "Si že zahteval/a preklic svojega računa.",
+            "oldRequestSubtitle": "Obdelujemo tvojo zahtevo.\nČe si si premislil/a ali si zahteval/a izbris pomotoma, klikni spodaj na »Prekliči izbris«.",
+            "cta": {
+              "manageBonus": "Upravljaj bonuse",
+              "continue": "Nadaljuj",
+              "return": "Nazaj",
+              "cancel": "Prekliči izbris"
+            }
+          },
+          "info": {
+            "cta": "Nadaljuj"
+          },
+          "details": {
+            "body": "Radi bi vedeli, zakaj brišeš svoj račun, da se bomo lahko v prihodnosti izboljšali. Prav tako lahko nadaljuješ neposredno z brisanjem s klikom na spodnji gumb.",
+            "question": "Kaj je razlog za odpoved?",
+            "answer_1": "Aplikacija IO mi ni več koristna",
+            "answer_2": "Na IO se ne počutim varno",
+            "answer_3": "Nikoli nisem uporabljal aplikacije",
+            "answer_4": "Nič od naštetega",
+            "labelOpenAnswer": "Povej nam več",
+            "cta": "Izbriši račun"
+          },
+          "success": {
+            "title": "Tvoja zahteva se obdeluje.",
+            "body": "Tvoja zahteva je bila sprejeta in v 30 dneh bomo nadaljevali s preklicem tvojega računa.\n\nNa aplikacijo IO se boš lahko kadar koli znova naročil/a z izvedbo novega postopka registracije potom SPID-a ali CIE.\n\nČe pritisneš »Izhod«, bo ta seja prekinjena.\n\nHvala, ker si uporabljal/a IO.",
+            "cta": "Izhod"
+          }
+        },
+        "exportData": {
+          "cta": "Zahtevaj kopijo svojih podatkov",
+          "title": "Dostop do tvojih podatkov",
+          "description": "Prejmi kopijo podatkov, povezanih s tvojim IO profilom",
+          "alert": {
+            "requestTitle": "Ali res želiš izvoziti vse svoje podatke?",
+            "oldRequest": "Eno zahtevo za izvoz podatkov smo že obdelali.",
+            "confirmSubtitle": "Ko je obdelava končana, boš prejel/a e-poštno sporočilo z vsemi informacijami, povezanimi s tvojim profilom."
+          },
+          "error": "Pri zahtevi za izvoz podatkov je prišlo do napake, poskusi znova."
+        },
+        "privacyPolicy": {
+          "title": "Informacije in pogoji uporabe",
+          "description": "Oglej si Politiko zasebnosti ter Pogoje in določila uporabe IO",
+          "header": "Informacije o obdelavi osebnih podatkov uporabnikov aplikacije IO",
+          "updated": "Posodobili smo naše Obvestilo ter Določila in pogoje uporabe",
+          "infobox": "Prebrati in sprejeti je treba Obvestilo ter Določila in pogoje uporabe",
+          "contextualHelpTitlePolicy": "Informacije o obdelavi osebnih podatkov in pogojih uporabe storitve",
+          "contextualHelpContentPolicy": "### Kaj sta Obvestilo in Pogoji uporabe?\n\nPo dolocbah 13. cl. Uredbe EU �t. 2016/679 (obicajno GDPR), v Obvestilih najde� podroben opis, kako aplikacija IO upravlja tvoje osebne podatke. Pogoji uporabe pa dolocajo tvoje pravice in obveznosti pri uporabi aplikacije in njenih storitev.<br/><br/><br/><br/>\n\n",
+          "contextualHelpTitle": "Tvoje nastavitve zasebnosti",
+          "contextualHelpContent": "**Tukaj najde� informacije v zvezi z zasebnostjo tvojega profila**: lahko si ogleda� informacije o obdelavi osebnih podatkov, izbri�e� svoj racun in izvozi� osebne podatke, povezane s tvojim profilom.\n"
+        },
+        "shareData": {
+          "title": "Zasebnost",
+          "listItem": {
+            "title": "Deli podatke o uporabi",
+            "description": "Pomagaj ekipi IO pri spremljanju delovanja aplikacije"
+          },
+          "screen": {
+            "title": "Tvoji podatki o uporabi",
+            "description": "Pomagaj ekipi IO spremljati delovanje aplikacije in ti v primeru težav zagotoviti ustrezno pomoč.",
+            "why": {
+              "description": {
+                "one": "IO samo zbira informacije ",
+                "two": "potrebne ",
+                "three": "za delovanje ponujenih storitev."
+              },
+              "cta": "Zakaj?"
+            },
+            "security": {
+              "description": {
+                "one": "Za zaščito tvojih podatkov izvajamo varnostne ukrepe."
+              },
+              "cta": "Izvej več"
+            },
+            "gdpr": {
+              "description": {
+                "one": "Ekipa IO sodeluje z dobavitelji v skladu s ",
+                "two": "pravili, ki jih določa GDPR."
+              },
+              "cta": "Oglej si seznam dobaviteljev"
+            },
+            "additionalInformation": {
+              "description": "Za več informacij preberi",
+              "cta": "Obvestilo o zasebnosti ter Določila in pogoje uporabe"
+            },
+            "profileSettings": "To izbiro lahko kadar koli spremeniš v Profil > Nastavitve",
+            "cta": {
+              "shareData": "Deli podatke",
+              "dontShareData": "Ne deli podatkov",
+              "dontShare": "Ne deli"
+            },
+            "confirmToast": "Nastavitve posodobljene!"
+          },
+          "alert": {
+            "title": "Aplikaciji IO ne dovoliš zbiranje tvojih podatkov o uporabi",
+            "body": "Če potrdiš to možnost, v primeru tehničnih težav skupina za podporo IO morda ne bo imela vseh potrebnih podatkov za njihovo rešitev."
+          },
+          "whyBottomSheet": {
+            "title": "Za kakšne namene zbiramo podatke?",
+            "body": "** IO ne zbira podatkov za namene trženja.**\nUporabljamo orodja, ki nam omogočajo beleženje podatkov v zvezi s tvojo uporabo aplikacije, da ti zagotovimo boljšo storitev in ti pomagamo v primeru težav."
+          },
+          "securityBottomSheet": {
+            "title": "Kaj je psevdonimizacija?",
+            "body": "Je obdelava osebnih podatkov na tak način, da osebnih podatkov ni več mogoče pripisati določenemu posamezniku, na katerega se nanašajo osebni podatki, brez uporabe dodatnih informacij, pod pogojem, da se te dodatne informacije hranijo ločeno in so predmet tehničnih in organizacijskih ukrepov, namenjenih zagotavljanju da taki osebni podatki niso pripisani določeni ali določljivi fizični osebi."
+          }
+        }
+      },
+      "appInfo": {
+        "title": "Informacije o IO",
+        "description": "Več o aplikaciji IO"
+      },
+      "developersSectionHeader": "Razvijalci",
+      "pagoPaEnvironment": {
+        "pagoPaEnv": "Testno okolje pagoPA",
+        "pagoPAEnvAlert": "Sprememba zahteva ponovni zagon aplikacije",
+        "alertConfirmTitle": "Ali želiš uporabiti testno okolje pagoPA?",
+        "alertConfirmMessage": "Če omogočiš testno okolje pagoPA, ne boš več videl/a zgodovine svojih transakcij in shranjenih načinov plačila in lahko uporabljaš samo plačilna sredstva, ki so izrecno ustvarjena za ta namen. Če ti ni jasno, kaj to pomeni, ne omogoči te funkcije.",
+        "alertMessage": "Aplikacijo je treba znova zagnati, da spremembe začnejo veljati."
+      },
+      "pnEnvironment": {
+        "pnEnv": "PN preskusno okolje"
+      },
+      "appVersion": "Različica aplikacije",
+      "backendVersion": "Različica zaledja (Backend)",
+      "debugMode": "Način odpravljanja napak"
+    },
+    "data": {
+      "title": "Tvoji podatki",
+      "subtitle": "Tukaj boš našel/a svoje osebne in kontaktne podatke, ki jih uporablja aplikacija IO",
+      "list": {
+        "email": "Naslov e-pošte",
+        "need_validate": "Za potrditev",
+        "nameSurname": "Ime in priimek"
+      }
+    },
+    "security": {
+      "title": "Varnost",
+      "subtitle": "Upravljaj metode preverjanja pristnosti v aplikaciji.",
+      "list": {
+        "biometric_recognition": {
+          "title": "Biometrično prepoznavanje",
+          "subtitle": "Uporabi prstni odtis ali obraz",
+          "needed_to_disable": "Za onemogočanje je potrebno prepoznavanje"
+        }
+      }
+    },
+    "preferences": {
+      "title": "Nastavitve",
+      "subtitle": "Te nastavitve ti omogočajo, da prilagodiš izkušnjo aplikacije IO.",
+      "contextualHelpTitle": "Tvoje nastavitve",
+      "contextualHelpContent": "**V Nastavitvah lahko preveri� in spremeni� nastavitve**, ki jih uporabljajo vse storitve na IO.\nTu si lahko ogleda� e-po�tni naslov, telefonsko �tevilko in jezik, povezan z racunom, ter omogoci� ali onemogoci� biometricno prepoznavanje.\n",
+      "list": {
+        "wip": "V obdelavi",
+        "digitalDomicile": "Digitalni domicil",
+        "preferred_calendar": {
+          "title": "Priljubljeni koledar"
+        },
+        "preferred_language": {
+          "title": "Priljubljeni jezik",
+          "subtitle": "V katerem jeziku želiš uporabljati aplikacijo?",
+          "alert": {
+            "title": "Ali želiš spremeniti jezik v",
+            "subtitle": "Za uveljavitev spremembe boš moral/a znova zagnati aplikacijo"
+          },
+          "not_selected": "Ni izbrano"
+        }
+      },
+      "unavailable": {
+        "title": "Ta nastavitev je nastavljena v tvojem profilu SPID"
+      },
+      "language": {
+        "contextualHelpTitle": "Kako upravljati jezik v IO",
+        "contextualHelpContent": "**Trenutno IO podeduje jezik iz operacijskega sistema tvoje naprave:**\njezik lahko spremeniš v nastavitvah telefona. Posledično se bo samodejno preklopil tudi v aplikaciji.\nJezik vsebine sporočila določi vsaka ustanova za vsako sporočilo posebej: po lastni presoji pošiljajo vsebine prevedene v različne jezike.\n"
+      },
+      "email": {
+        "forward": {
+          "contextualHelpTitle": "Kako upravljati posredovanje sporočil",
+          "contextualHelpContent": "**Tu lahko omogočiš ali onemogočiš posredovanje sporočil na pošto.**\nMožno je omogočiti ali onemogočiti posredovanje vseh sporočil, ki jih prejmeš prek IO. Lahko pa jih tudi omogočiš ali onemogočiš samostojno na ustrezni strani s podrobnostmi storitve.\n"
+        }
+      },
+      "calendar": {
+        "contextualHelpTitle": "Kaj je tvoj najljubši koledar?",
+        "contextualHelpContent": "**Tvoj prednostni koledar je privzeto tisti, ki je povezan s tvojo e-pošto**, če si se prijavil/a z Google računom. E-poštni naslov, povezan s tvojim koledarjem, lahko kadar koli spremeniš, da boš prejemal/a IO opomnike na koledar, ki ga največ uporabljaš.\n",
+        "local_calendar": "Lokalni koledar",
+        "birthday_calendar": "Rojstni dnevi"
+      }
+    }
+  },
+  "navigation": {
+    "messages": "Sporočila",
+    "profile": "Profil",
+    "accessibility": "Razdelek {{section}}, plošča, {{order}} od 4",
+    "accessibilityWithBadge": "Razdelek {{section}}, {{unread}} novi elementi, plošča, {{order}} od 4",
+    "selected": "Izbrano je"
+  },
+  "cie": {
+    "title": "Položi kartico",
+    "layCardMessageHeader": "Svojo elektronsko osebno izkaznico (CIE) za nekaj sekund položi na hrbtno stran telefona.",
+    "layCardMessageFooter": "Če ne veste točno, kje je antena NFC, premaknite kartico na druga mesta in počakajte nekaj sekund, da zaslišite zvok.",
+    "booking_url": "https://www.cartaidentita.interno.gov.it/cittadini/sistema-di-prenotazione-della-cie/"
+  },
+  "spid": {
+    "login": "PRIJAVA",
+    "loginButton": "PRIJAVI SE Z",
+    "selectIdp": "Za prijavo izberi svojega upravitelja identitet SPID",
+    "selectDemoIdp": "Če še nimaš lastne identitete SPID, lahko brskaš po aplikaciji v predstavitvenem načinu",
+    "loginErrorAlert": {
+      "title": "Napaka pri prijavi"
+    }
+  },
+  "authentication": {
+    "landing": {
+      "accessibility": {
+        "carousel": {
+          "label": "Predstavitev aplikacije IO",
+          "hint": "Vrtiljak, ki vsebuje uvodni vodnik po funkcijah IO. Izberi za ogled vsebine"
+        }
+      },
+      "session_expired": {
+        "title": "Tvoja seja je potekla",
+        "body": "Iz varnostnih razlogov te prosimo, da po 30 dneh od zadnjega dostopa s SPID-om ali CIE znova vneseš svoje poverilnice za uporabo IO."
+      },
+      "contentTitleCie": "Nimaš SPID ali CIE?",
+      "cie_information_request": "**CIE**, elektronska osebna izkaznica (Carta di Identità Elettronica), ti omogoča dostop do vseh storitev javne uprave. Uporabiš jo lahko za udoben dostop do IO na svojem pametnem telefonu. Potreboval/a boš tudi PIN, katerega polovico prejmeš v matičnem uradu in polovico po pošti, skupaj s kartico.\n\n## CIE je varna\n\nSkupaj s SPID-om je CIE edino orodje, ki ti omogoča, da svojo digitalno identiteto potrdiš z najvišjo stopnjo varnosti.\n\n## Kako do CIE\n\nZa CIE lahko zaprosiš na matičnem uradu tvoje občine stalnega ali začasnega prebivališča: če želiš izvedeti več, obišči spletno stran [https://www.cartaidentita.interno.gov.it](https://www.cartaidentita.interno.gov.it)\n",
+      "spid_or_cie": "Za uporabo IO se moraš opremiti z enim od teh digitalnih orodij, ki z gotovostjo potrjujejo tvojo identiteto.",
+      "request_cie": "Zahteva CIE",
+      "request_spid": "Pridobi SPID",
+      "contextualHelpTitle": "Kako dostopati do aplikacije IO",
+      "contextualHelpContent": "Za dostop do aplikacije IO se boš moral/a avtenticirati s svojo identiteto SPID (Sistema Pubblico di Identità Digitale - Sistem javne digitalne identitete) ali z uporabo CIE (Carta d'Identità Elettronica - Elektronska osebna izkaznica).\n**Zahvaljujoč tem registracijskim sistemom, bo tvoj dostop do aplikacije vedno varen.**\nČe želiš zahtevati digitalno identiteto SPID, lahko obiščeš [spid.gov.it](https://www.spid.gov.it) in med predlaganimi izberete ponudnika identitete.\nČe pa te zanima prijava s CIE, si lahko ogledaš več informacij na spletni strani svoje občine in si rezerviraš termin.\n",
+      "loginSpid": "Prijavi se s SPID-om",
+      "loginCie": "Prijavi se s CIE",
+      "loginSpidCie": "Prijavi se s SPID-om ali CIE",
+      "infoSpidCie": "Uvod v SPID in CIE",
+      "loginSpidCieContent": "Od danes naprej se lahko za prijavo poleg SPID-a prijaviš tudi z elektronsko osebno izkaznico (CIE)",
+      "nospid": "Nimaš SPID-a? Izvej več",
+      "nospid-nocie": "Nimaš SPID-a ali CIE? Izvej več",
+      "card1-title": "Vsa sporočila na enem mestu",
+      "card1-content": "Oglej si vsa sporočila, ki prihajajo iz Javne uprave",
+      "card2-title": "Uporabi želene načine plačila",
+      "card2-content": "Davek ali kazen lahko plačaš s svojim tekočim računom ali svojimi karticami",
+      "card3-title": "Hitro plačaj papirno obvestilo",
+      "card3-content": "S skeniranjem QR kode lahko hitro plačaš tudi papirnato obvestilo",
+      "card4-title": "Prijaviš se lahko samo s SPID-om",
+      "card4-content": "Naprava, ki jo uporabljaš, ne podpira dostopa z elektronsko osebno izkaznico (CIE)",
+      "expiredCardTitle": "Kartica je potekla ali ni več veljavna",
+      "expiredCardHeaderTitle": "Prijavi se s CIE",
+      "expiredCardContent": "Uporabljena kartica ni več veljavna ali ji je potekla veljavnost.\nČe se želiš avtentikirati in dostopati do IO, moraš uporabiti SPID.",
+      "expiredCardHelp": "Kako obnoviti elektronsko osebno izkaznico CIE?"
+    },
+    "cie": {
+      "genericTitle": "Prijavi se s CIE",
+      "cie": "CIE",
+      "noDataTitle": "Za uporabo IO je potrebno dovoliti pošiljanje podatkov",
+      "authToSendData": "IO obdeluje tvoje osebne podatke v skladu z varnostjo in tvojo zasebnostjo v skladu z navodili **Splo�ne uredbe o varstvu podatkov**, ki jo je izdala Evropska unija ([GDPR, uredba �t. 2016/679](https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=CELEX%3A32016R0679)).\n\nCe �eli�, se lahko poskusi� ponovno prijaviti.\n",
+      "nfc": {
+        "apduNotSupported": "Operacijski sistem ne podpira branja vaše elektronske osebne izkaznice. Za več informacij se obrni na proizvajalca tvoje naprave.",
+        "retry": "Ponovno poskusi",
+        "noNfcConnectionTitle": "Si naslonil/a kartico?",
+        "noNfcConnectionContent": "Zdi se, da tvoj pametni telefon ni zaznal veljavne kartice.\nPostavi ja na zadnjo stran naprave in poskusi znova. Ko telefon prepozna kartico, potrebuje še nekaj sekund, da prebere podatke.\nČe ne veš, kje je na tvoji napravi antena NFC, poskusi premikati kartico po zadnji strani naprave, dokler ti aplikacija ne pove, da jo drži, kjer je.\n"
+      },
+      "pin": {
+        "accessibility": {
+          "placeholderLabel": "PIN elektronske osebne izkaznice CIE",
+          "label": "Polje za vnos pina elektronske osebne izkaznice CIE",
+          "hint": "V to polje vnesi 8-mestni PIN tvoje elektronske osebne izkaznice"
+        },
+        "pinCardTitle": "Vnesite PIN tvoje osebne izkaznice",
+        "pinCardHeader": "Prijavi se s CIE",
+        "pinCardContent": "Koda PIN je sestavljena iz 8 števk. Štiri števke, ki so ti jih dostavili na matičnem uradu in še 4 števke soti skupaj s kartico poslali na dom. Sestavi jih skupaj v tem vrstnem redu in jih prosim vnesi sem.",
+
+        "incorrectCiePinContent1": "Zaradi tvoje varnosti lahko PIN kartice poskusiš vnesti največ trikrat. Nato boš moral/a kartico odkleniti z vnosom PUK-a.",
+        "incorrectCiePinContent2": "Ne pozabi, da je koda PIN vaše elektronske osebne izkaznice (CIE) sestavljena iz 8 števk. Štiri številke, ki so ti jih dali v matičnem uradu, in druge štiri številke, ki so ti jih skupaj s kartico poslali na dom.",
+        "alert": "Ali se res želiš vrniti nazaj?",
+        "subtitleHelp": "PIN je 8-mestna koda.",
+        "subtitleCTA": "Kje ga lahko najdem?",
+        "bottomSheetCTA": "Si pozabil/a kodo PIN?",
+        "contextualHelpTitle": "Kje najdem kodi PIN in PUK?",
+        "contextualHelpBody": "Koda **PIN** je sestavljena iz 8 števk:\n• prve 4 števke so ti bile dane v matičnem uradu;\n• zadnje 4 številke pa so ti bile poslane skupaj z elektronsko osebno izkaznico (CIE).\n\nSestavi jih skupaj in jih vpiši v tem vrstnem redu.\n\nKodo **PUK** pa potrebujemo za odpraviti blokado na kodi **PIN**, ker po treh napačnih poskusih, te ni več mogoče uporabiti. Sestavljena je iz 8 števk in jo dobiš skupaj s **PIN-om**.",
+        "contextualHelpCTA": "Si pozabil/a kodo PIN/PUK?"
+      },
+      "pinTempLocked": {
+        "title": "Kartica je začasno blokirana"
+      },
+      "card": {
+        "title": "Nasloni kartico",
+        "titleiOS": "Kartico drži pri miru",
+        "layCardMessageHeader": "Svojo elektronsko osebno izkaznico za nekaj sekund nasloni na hrbtno stran telefona.",
+        "layCardMessageHeaderiOS": "Senzor je nameščen na zgornjem delu naprave.",
+        "layCardMessageFooter": "Če ne veš točno, kje je antena NFC, premakni kartico na različne točke in počakaj nekaj sekund, dokler ne začutiš vibriranja.",
+        "cieCardValid": "V redu, tvoja kartica CIE je veljavna! Sedaj jo lahko odstraniš.",
+        "readerCardTitle": "Kartico drži pri miru nekaj sekund",
+        "readerCardHeader": "Beremo podatke tvoje osebne izkaznice in preverjamo njeno veljavnost.",
+        "readerCardFooter": "Zadrži kartico v tem položaju še nekaj sekund",
+        "iosAlert": {
+          "readingInstructions": "Svojo elektronsko osebno izkaznico nasloni na vrh telefona.",
+          "moreTags": "Identificiranih je bilo več kartic. Prisloni le eno kartico naenkrat.",
+          "readingInProgress": "BRANJE V TEKU\nNepremično drži kartico nekaj sekund …",
+          "readingSuccess": "Uspešno branje.\nKartico lahko odstraniš, medtem bo dokončano preverjanje podatkov.",
+          "invalidCard": "Zdi se, da uporabljena kartica ni elektronska osebna izkaznica (CIE).",
+          "tagLost": "Prehitro si odstranil/a kartico.",
+          "cardLocked": "CIE kartica je blokirana",
+          "wrongPin1AttemptLeft": "Napačen PIN, imaš še 1 poskus",
+          "wrongPin2AttemptLeft": "Napačen PIN, imaš še 2 poskusa"
+        },
+        "error": {
+          "readerCardLostTitle": "Ponovno približaj kartico",
+          "onTagLost": "Prehitro si odstranil/a kartico. Kartico drži na hrbtni strani pametnega telefona, dokler se na zaslonu ne prikaže potrditev. Trajalo bo nekaj sekund.",
+          "tryAgain": "Med preverjanjem kartice je prišlo do napake. To je verjetno trenutna napaka, poskusi znova!",
+          "generic": "Med preverjanjem kartice je prišlo do napake. Če težave ne moreš rešiti, nam jo prijavi z »?« zgoraj desno. Hvala!",
+          "unknownCardTitle": "Neznana kartica",
+          "unknownCardContent": "Zdi se, da uporabljena kartica ni elektronska osebna izkaznica (CIE).",
+          "unknownCardHelpLink": "Kaj je elektronska osebna izkaznica CIE?"
+        }
+      }
+    },
+    "spid": "SPID",
+    "spid_information_request": {
+      "headerTitle": "Nimaš SPID-a?",
+      "contentTitle": "Kaj je SPID?"
+    },
+    "spid_information": {
+      "spid": "**SPID**, sistem javne digitalne identitete (Sistema Pubblico di Identità Digitale), ti omogoča dostop do vseh storitev javne uprave z enotno digitalno identiteto (uporabniško ime in geslo). [Če želiš izvedeti več](https://www.spid.gov.it)\n\n## SPID je varen\n\nSPID ti omogoča, da na spletu počneš stvari, ki si jih prej lahko počel/a samo osebno: za registracijo na SPID boš torej moral/a **potrditi svojo identiteto** tako, da opraviš prepoznavanje pri ponudniku identitete. To je tisto, kar boš moral/a storiti:\n",
+      "headerTitle": "Nimaš SPID-a?",
+      "contentTitle": "Kaj je SPID?",
+      "subtitle": "SPID je varen"
+    },
+    "idp_selection": {
+      "headerTitle": "Domov",
+      "contentTitle": "Izberi svojega ponudnika identitete",
+      "contextualHelpTitle": "Kdo je tvoj ponudnik identitete",
+      "contextualHelpContent": "**Ponudnik identitete je upravitelj tvoje digitalne identitete.** Potek preverjanja pristnosti lahko začneš šele, ko izbereš ponudnika identitete (Identity Provider), ki je izdal tvojo identiteto SPID.\n"
+    },
+    "idp_login": {
+      "headerTitle": "Vpiši se",
+      "contextualHelpTitle": "Katero je tvoje geslo",
+      "contextualHelpContent": "Za prijavo moraš v ustrezna polja vnesti svojo davčno številko in geslo.\n**Geslo je alfanumerična koda, ki si jo nastavil/a pri ustvarjanju svoje digitalne identitete SPID.** Če se ga ne spomniš, lahko izbereš obnovitev gesla in začneš ustrezen postopek, ki ga upravlja neposredno ponudnik identitete.\nKo boš vnesel/la davčno št. in geslo, boš prejel/a OTP od svojega ponudnika identitete: potrdi zahtevo za dostop in se vrni v aplikacijo IO za nadaljevanje prijave. Na tej točki boš našel/la zaslon, ki pooblašča ponudnika identitete, da IO posreduje vrsto informacij, ki so potrebne za uporabo aplikacije, in različne storitve, ki jih ponujajo javni organi prek IO: pritisniti moraš »Odobri«, da privoliš in nadaljuješ s postopkom avtentikacije.\n",
+      "contextualHelpTitle2": "Potrebuješ pomoč pri prijavi s SPID-om?",
+      "openTicket": "Pošlji prijavo",
+      "recoverDescription": "Če si pozabil/a geslo, ti svetujemo, da nadaljuješ s klikom na spodnji gumb.",
+      "dualRecoverDescription": "Če si pozabil/a svoje poverilnice, ti svetujemo, da nadaljuješe s klikom na spodnje gumbe.",
+      "recoverUsername": "Pridobi nazaj uporabniško ime",
+      "recoverPassword": "Pridobi nazaj svoje geslo"
+    },
+    "errors": {
+      "notoken": "Seja ni pripravljena ali ni veljavna",
+      "logout": "Napaka pri odjavi",
+      "network": {
+        "title": "Težava s prijavo",
+        "body": "Ponudnik identitete, ki si ga izbral/a, trenutno ni na voljo: poskusiš lahko znova pozneje. Če imaš drugo identiteto SPID, izberi drugega ponudnika. Ali lahko prijaviš težavo z uporabo ikone »?« zgoraj desno."
+      },
+      "login": {
+        "title": "Napaka pri prijavi"
+      }
+    },
+    "expiredSessionBanner": {
+      "title": "Varnostno obvestilo"
+    }
+  },
+  "email": {
+    "read": {
+      "title": "Tvoj e-poštni naslov",
+      "info": "To je e-poštni naslov, ki si ga povezal/a z računom SPID. Če želiš, lahko v IO uporabiš drug e-poštni naslov. Da bo nov naslov deloval, ga boš moral/a potrditi s klikom na povezavo, ki jo boš prejel/a v svoj e-poštni predal.",
+      "alert": "Opozorilo: tvoj račun pagoPA je povezan s tvojim e-poštnim naslovom, tako da, če ga spremeniš, v aplikaciji ne boš več našel/la svojih transakcij in načinov plačila.",
+      "help": "Tvoj SPID profil prenese v IO tvoj e-poštni naslov. Če je naslov napačen ali ga ne uporabljš več, ga lahko spremeniš neposredno pri svojem ponudniku storitev SPID."
+    },
+    "insert": {
+      "header": "Aktivacija",
+      "title": "Vstavi svoj e-poštni naslov",
+      "subtitle": "Nekatere funkcije IO potrebujejo tvoj e-poštni naslov",
+      "label": "Osebni e-poštni naslov",
+      "alert": "Ta e-poštni naslov že uporabljaš",
+      "help": {
+        "title": "E-naslov",
+        "content": "Ta stran se uporablja za vnos ali spremembo naslova **e-po�te**. Vneseni e-po�tni naslov mora biti potrjen.\n"
+      }
+    },
+    "edit": {
+      "title": "Uredi svoj e-poštni naslov",
+      "subtitle": "E-poštni naslov, ki si ga vnesel/la prej, je",
+      "validated": "E-poštni naslov, ki si ga prej vnesel/la in potrdil/a, je",
+      "label": "Nov osebni e-poštni naslov",
+      "cta": "Spremeni e-pošto",
+      "upsert_ok": "Zahteva za spremembo elektronske pošte je bila uspešno poslana",
+      "upsert_ko": "Napaka v zahtevi za spremembo e-pošte, poskusi znova"
+    },
+    "validate": {
+      "title": "Ne pozabi potrditi svojega e-poštnega naslova!",
+      "header": "Preverjanje e-pošte",
+      "content1": "Poslali smo ti e-poštno sporočilo na <b>{{email}}</b>, s povezavo za potrditev e-pošte: preprosto klikni to povezavo.<br/>Dokler ne potrdiš svojega e-poštnega naslova, nekatere funkcije aplikacije (plačila, posredovanje sporočil po e-pošti, ipd.) ni mogoče uporabiti, lahko pa še vedno uporabljaš druge funkcije (npr. storitve, sporočila, ipd.).",
+      "content2": "Za uporabo nekaterih funkcij IO moraš potrditi svoj e-poštni naslov.<br/>Poslali smo ti e-poštno sporočilo na <b>{{email}}</b>: odpri e-poštni odjemalec in preprosto klikni na povezavo.",
+      "cta": "Pošlji novo potrditveno e-poštno sporočilo",
+      "sent": "E-pošta poslana",
+      "send_validation_ok": "Potrditveno e-poštno sporočilo je poslano",
+      "send_validation_ko": "Napaka pri pošiljanju potrditvenega e-poštnega sporočila. Poskusi znova.",
+      "help": "Tvoj SPID profil prenese v IO tvoj e-poštni naslov. Če je naslov napačen ali ga ne uporabljaš več, ga lahko spremeniš neposredno pri svojem ponudniku storitev SPID.",
+      "validation_ok": "E-pošta je bila potrjena. Zdaj lahko dostopaš do vseh funkcij IO.",
+      "validated": "E-pošta potrjena!",
+      "validated_ok": "Hvala, zdaj lahko uporabljaš funkcije, povezane s plačili, posredovanjem sporočil itd."
+    }
+  },
+  "onboarding": {
+    "contextualHelpTitle": "Kako deluje biometrično prepoznavanje",
+    "contextualHelpContent": "**Če želiš do aplikacije dostopati hitreje, ne da bi moral/a vsakič vnesti kodo za odklepanje, lahko to storiš** tako, da omogočiš biometrično prepoznavanje prek prstnega odtisa neposredno v nastavitvah operacijskega sistema.\nV razdelku profil, v aplikaciji IO, se lahko kadar koli odločiš, ali želiš obdržati ali onemogočiti biometrično prepoznavanje… poskusi in videl/a boš, da ne boš želel/a nikoli brez njega!\n",
+    "tos": {
+      "headerTitle": "Nastavi IO",
+      "accept": "Sprejmi",
+      "error": "Napaka pri nalaganju",
+      "alert": {
+        "title": "Pozor",
+        "message": "Za nadaljevanje moraš prebrati vso vsebino pogojev storitve in pravilnika o zasebnosti."
+      }
+    },
+    "unlockCode": {
+      "reset": "Spremeni kodo",
+      "contextualHelpTitle": "Kakšna je tvoja koda za odklepanje",
+      "contextualHelpContent": "**Koda za odklepanje je varnostna koda, ki ohranja tvoje podatke zaščitene v aplikaciji IO in jo nastaviš sam/a, ko se prvič prijaviš**.\nČe v aplikacijo vstopaš prvič, poljubno nastavi svojo številčno kodo in si jo zapomni, da jo boš lahko uporabljal/a pri vseh nadaljnjih dostopih.\nČe si jo že nastavil/a in se je ne spomniš, lahko izbereš »Pozabil/la sem kodo za odklepanje« in nastaviš novo kodo.\nKoda za odklepanje je povezana z napravo, na kateri jo nastaviš: če zamenjaš telefon, jo boš moral/a znova nastaviti, ko prvič dostopaš do aplikacije IO.\n"
+    },
+    "pin": {
+      "headerTitle": "Nastavi IO",
+      "title": "Koda za odklepanje",
+      "subTitle": "To je 6-mestna koda, ki jo potrebuješ za prijavo v IO in odobritev nekaterih operacij v aplikaciji.",
+      "pinLabel": "Ustvari kodo za odklepanje",
+      "pinConfirmationLabel": "Ponovi kodo za odklepanje",
+      "errors": {
+        "match": "Koda se ne ujema"
+      }
+    },
+    "alert": {
+      "title": "Si res želiš zapreti aplikacijo IO?",
+      "description": "Za nadaljnjo uporabo aplikacije se boš moral/a znova prijaviti"
+    },
+    "shareData": {
+      "title": "Nastavi IO"
+    },
+    "thankYouPage": {
+      "title": "Konfiguracija končana!"
+    }
+  },
+  "datetimes": {
+    "yesterday": "včeraj",
+    "todayAt": "danes, ob",
+    "notValid": "Neveljaven datum."
+  },
+  "payment": {
+    "alertNoPaymentMethods": {
+      "title": "Dodaj način za plačevanje v aplikaciji",
+      "message": "Metoda bo shranjena v Denarnici, tako da boš naslednjič lažje plačal/a.",
+      "buttons": {
+        "ok": "Nadaljuj",
+        "ko": "Prekliči"
+      }
+    },
+    "alertNoActivePaymentMethods": {
+      "title": "Za uporabo te funkcije omogoči plačila v aplikaciji",
+      "message": "Omogoči vsaj eno metodo v svoji Denarnici ali dodaj novo.",
+      "buttons": {
+        "ok": "Pojdi v Denarnico",
+        "ko": "Prekliči"
+      }
+    },
+    "abortWebView": {
+      "title": "Ali želiš ustaviti plačilo v teku?",
+      "confirm": "Prekliči plačilo",
+      "cancel": "Nadaljuj s plačilom",
+      "success": "Plačilo je bilo uspešno preklicano"
+    },
+    "errorDetails": "Podrobnosti",
+    "currentPsp": "Plačilo bo opravil",
+    "noPsp": "Nisi še izbral PSP-ja",
+    "changePsp": "Izberi upravitelja",
+    "IUV": "IUV",
+    "IUV_extended": "Edinstvena identifikacija plačila (Identificativo Univoco di Versamento)",
+    "notice": "Obvestilo",
+    "noticeCode": "Koda obvestila",
+    "recipientFiscalCode": "Davčna številka upravičenca",
+    "paidConfirm": "Plačal/a si {{amount}}",
+    "details": {
+      "state": {
+        "successful": "Zaključeno",
+        "incomplete": "Ni dokončano",
+        "failed": "Ni uspelo"
+      },
+      "info": {
+        "buttons": {
+          "copy": "kopiraj",
+          "help": "Obrnite se na podporo"
+        },
+        "title": "Podrobnosti plačila",
+        "enteCreditore": "Ustanova upnica",
+        "causaleVersamento": "Namen",
+        "dateAndTime": "Datum in čas",
+        "outcomeCode": "Koda rezultata",
+        "onlyDate": "Datum",
+        "paymentAmount": "Znesek plačila",
+        "transactionCosts": "Transakcijski stroški",
+        "transactionCode": "Identifikacijska koda transakcije",
+        "help": "Če si naletel/a na težave s tem plačilom, nam piši za več informacij in podrobnosti"
+      },
+      "list": {
+        "empty": {
+          "title": "Brez poskusa plačila",
+          "description": "IO ni zabeležil nobenega poskusa plačila. Tukaj boš našel/la zadnje poskuse plačila"
+        },
+        "title": "Poskusi plačila",
+        "iuv": "Koda IUV {{iuv}}"
+      }
+    }
+  },
+  "wallet": {
+    "wallet": "Denarnica",
+    "refreshWallet": "Posodobi Denarnico",
+    "favourite": {
+      "setFavoriteTitle": "Uporabi kot priljubljeno",
+      "setFavoriteSubtitle": "Ko plačaš v aplikaciji, IO samodejno prikaže to plačilno sredstvo"
+    },
+    "incoming": {
+      "title": "Prihajajoče",
+      "message": "Ena naslednjih različic IO bo omogočila tudi to plačilno sredstvo"
+    },
+    "featured": "V fokusu",
+    "creditCard": {
+      "onboardingAttempts": {
+        "title": "Poskusi dodajanja plačilnega sredstva",
+        "emptyTitle": "Ni nobenega poskusa dodajanja plačilnega sredstva",
+        "emptyBody": "IO ni zabeležil poskusov dodajanja plačilnega sredstva. Tukaj boš našel/la najnovejše poskuse",
+        "lastAttemptsTitle": "Zadnji poskusi",
+        "success": "Dodano",
+        "failure": "Ni uspelo",
+        "dateTime": "Datum in čas",
+        "detailTitle": "Podrobnosti",
+        "help": "Če si naletel/a na težave pri vnosu tega načina plačila, piši za več informacij in podrobnosti"
+      }
+    },
+    "searchAbi": {
+      "header": "Dodaj {{methodName}}",
+      "bancomat": {
+        "title": "Iskanje svojih kartic PagoBANCOMAT",
+        "description": {
+          "text1": "Če dodaš PagoBANCOMAT v svojo Denarnico, se boš lahko pridružil/a pobudam, ki so na voljo na IO.\nČe nadaljuješ sprejmeš ",
+          "text2": "informacije o obdelavi osebnih podatkov.",
+          "text3": "Če želiš, lahko izbereš banko, pri kateri imaš aktivno PagoBANCOMAT kartico, ",
+          "text4": "s tem da poiščeš med razpoložljivimi"
+        }
+      },
+      "bpay": {
+        "title": "Plačaj na IO z BANCOMAT Pay",
+        "description": {
+          "text1": "Združi BANCOMAT Pay za plačilo pagoPA obvestil in pridruži se pobudam, ki so na voljo na IO.\nČe nadaljuješ sprejmeš ",
+          "text2": "informacije o obdelavi osebnih podatkov.",
+          "text3": "Klikni »Nadaljuj«, da poiščeš račune vpisane na svoje ime. Druga možnost je, da poiščeš banko, pri kateri imaš aktiven račun BANCOMAT Pay, ",
+          "text4": "med razpoložljivimi."
+        }
+      },
+      "cobadge": {
+        "title": "Poišči svoje mednarodne kartice",
+        "description": {
+          "text1": "Če v svojo Denarnico dodaš vse kartice Maestro, Mastercard, V-Pay in Visa, povezane s tabo, se lahko pridružiš pobudam, ki so na voljo na IO.",
+          "text3": "Za več informacij glej ",
+          "text4": "informacije o obdelavi osebnih podatkov."
+        }
+      },
+      "bankName": "Ime banke",
+      "noName": "Ime ni na voljo",
+      "loading": "Nalogam seznam bank …"
+    },
+    "accessibility": {
+      "sectionCardLabel": "Posodobi načine plačila",
+      "sectionCardHint": "Posodobi seznam načinov plačila",
+      "folded": {
+        "creditCard": "Kartica {{brand}}, številka kartice se konča z {{blurredNumber}}",
+        "bancomat": "BANCOMAT {{bankName}}",
+        "coBadge": "Kartica {{brand}}, {{bankName}}",
+        "bancomatPay": "BANCOMATPay {{bankName}}",
+        "cta": "Oglej si podrobnosti metode",
+        "bankNotAvailable": "ime banke ni na voljo"
+      },
+      "addElement": "Dodaj predmet v Denarnico",
+      "cardsPreview": "Predogled načinov plačila. Aktiviraj za dostop do seznama svojih metod",
+      "cardHolder": "Naslovnik kartice"
+    },
+    "onboarding": {
+      "bancomat": {
+        "headerTitle": "Dodaj kartico PagoBANCOMAT",
+        "koTimeout": {
+          "title": "Tvojih kartic PagoBancomat nismo mogli obnoviti",
+          "body": "Prosim poskusi znova"
+        },
+        "koNotFound": {
+          "title": "Nismo našli nobene kartice",
+          "body": "Na tvoje ime ni kartice PagoBANCOMAT: za več informacij se obrni na svojo banko."
+        },
+        "add": {
+          "title": "Dodajte PagoBancomat",
+          "label": "PagoBancomat kartica {{current}} od {{length}}",
+          "screenTitle": "Ali želiš dodati to kartico?",
+          "bodySingular": "Našli smo 1 kartico, naslovjeno nate. Nadaljuj z dodajanjem te kartice s klikom na Dodaj ali kliknite Preskoči, da prekličeš operacijo.",
+          "bodyPlural": "Našli smo {{število}} kartici/e na tvoje ime. Nadaljuj z dodajanjem te kartice, tako da klikneš Dodaj ali klikni Preskoči, da se premakneš na naslednjo kartico.",
+          "loading": "Dodajamo tvojo kartico PagoBANCOMAT.\n\nProsimo, počakaj nekaj sekund …",
+          "warning": "Če ne najdeš vseh kartic, ki jih imaš, poskusi manjkajočo dodati pozneje, tako da izbereš banko, pri kateri imaš odprt račun.",
+          "blocked": "Ta kartica je blokirana in je zato ni mogoče aktivirati za pridružitev pobudam, ki so na voljo na IO. Obrni se na svojo banko."
+        }
+      },
+      "bPay": {
+        "headerTitle": "Dodaj BANCOMAT Pay",
+        "loadingSearch": "Obnavljamo tvoje podatke o BANCOMAT Pay.\n\nProsimo, počakaj nekaj sekund …",
+        "add": {
+          "label": "Račun BANCOMAT Pay {{current}} od {{length}}",
+          "screenTitle": "Ali želiš dodati ta račun?"
+        },
+        "loadingAdd": "Dodajamo tvoj račun BANCOMAT Pay.\n\nProsimo, počakaj nekaj sekund …",
+        "koTimeout": {
+          "title": "Tvojih podatkov ni mogoče obnoviti",
+          "body": "Prosimo, poskusi znova"
+        },
+        "koNotFound": {
+          "title": "Nismo našli nobenega aktivnega BANCOMAT Pay",
+          "body": "Obrni se na svojo banko, da aktiviraš BANCOMAT Pay!"
+        }
+      },
+      "paypal": {
+        "name": "PayPal",
+        "headerTitle": "Dodaj PayPal",
+        "emailNotAvailable": "ni na razpolago",
+        "start": {
+          "title": "Plačaj na IO s PayPal",
+          "body": "Združi svoj račun PayPal in preprosteje plačaj pagoPA opozorila: uporabiš lahko tudi svoj trenutni račun!"
+        },
+        "updatePsp": {
+          "headerTitle": "Izberi upravitelja",
+          "title": "S katerim ponudnikom želiš plačevati?",
+          "body": "Vsak upravitelj predlaga stroške transakcije.\nNa tem seznamu boš našel/la vse upravitelje, ki so združljivi s tvojo metodo, tudi če nisi njihova stranka.",
+          "leftColumnTitle": "Ponudnik",
+          "rightColumnTitle": "Strošek transakcije (€)"
+        },
+        "selectPsp": {
+          "title": "Pri katerem ponudniku želiš uporabljati svoj račun PayPal?",
+          "body": "Ko uporabljaš pagoPA, se sam/a odloči, kateri upravitelj transakcij ti najbolj ustreza.\nTo izbiro lahko spremeniš ob vsakem plačilu, glede na predlagano provizijo.",
+          "link": "Kaj je ponudnik transakcij?",
+          "leftColumnTitle": "Ponudnik",
+          "rightColumnTitle": "Informacije in stroški",
+          "infoBottomSheet": {
+            "title": "Kdo je {{pspName}}?",
+            "ctaTitle": "Razumem",
+            "row1Description": "Je ponudnik plačilnih storitev (PSP - Prestatore di Servizi di Pagamento), ki lahko upravlja tvoje transakcije prek PayPala.",
+            "row2Description1": "Ko plačaš obvestilo, je najvišji strošek do",
+            "row2Description2": ". Točen znesek boš videl/a pred potrditvijo.",
+            "row3Description1": "Veljajo določila in pogoji uporabe ter pravilnik o zasebnosti {{psp}}"
+          },
+          "whatIsPspBottomSheet": {
+            "title": "Kaj je ponudnik transakcij?",
+            "body": "Subjekt, znan tudi kot PSP (Prestatore di Servizi di Pagamento - ponudnik plačilnih storitev), je tisti, ki pobere znesek v imenu dajalca kredita in lahko uporabi stroške za ponujeno storitev.\nZa vsako plačilo lahko izbereš ponudnika, ki ti najbolj ustreza, ne glede na to, ali si stranka ali ne."
+          }
+        },
+        "paypalAlreadyAdded": {
+          "alert": {
+            "title": "V Denarnici že imaš račun PayPal",
+            "message": "Če nadaljuješ, bo nov račun nadomestil trenutnega."
+          }
+        },
+        "onBoardingCompleted": {
+          "title": "Končano!",
+          "body": "Zdaj si lahko ogledaš nastavitve svoje nove metode.",
+          "primaryButton": "Nadaljuj"
+        },
+        "onBoardingCompletedWhilePayment": {
+          "title": "Končano!",
+          "body": "Zdaj lahko nadaljuješ s plačilom.",
+          "primaryButton": "Nadaljuj"
+        },
+        "paymentCheckout": {
+          "transactionCost": "Stroški transakcije",
+          "pspHandler": "Upravlja {{pspName}}",
+          "privacyDisclaimer": "Če nadaljuješ, izjavljaš, da si prebral/a in razumel/a ",
+          "privacyTerms": "Obvestilo o zasebnosti ter Določila in pogoje uporabe"
+        }
+      },
+      "coBadge": {
+        "headerTitle": "Dodaj mednarodne kartice",
+        "start": {
+          "loading": "Nalagam nastavitve.\n\nProsim, počakaj nekaj sekund",
+          "koDisabled": {
+            "title": "Tvoja banka še ne ponuja te funkcije",
+            "body": "Prizadevamo si, da bi kmalu omogočili dodajanje mednarodnih kartic."
+          },
+          "koUnavailable": {
+            "title": "Ne moremo vzpostaviti stika s tvojo banko",
+            "body": "Delamo na rešitvi problema."
+          }
+        },
+        "search": {
+          "loading": "Pridobivamo tvoj seznam kartic.\n\nProsim, počakaj nekaj sekund",
+          "koTimeout": {
+            "title": "Tvojih kartic ne moremo dobiti nazaj",
+            "body": "Prosim, poskusi znova"
+          },
+          "koNotFound": {
+            "title": "Med bankami, ki sodelujejo v storitvi, nismo našli kartic",
+            "body": "Ni mednarodnih kartic na tvoje ime: za dodatne informacije se obrni na svojo banko."
+          },
+          "koSingleBankNotFound": {
+            "title": "V tej banki nismo našli nobene kartice",
+            "body": "Ni mednarodnih kartic na tvoje ime. Če želiš, lahko IO preišče vse sodelujoče banke."
+          },
+          "koServiceError": {
+            "title": "Tvojh kartic ne moremo dobiti nazaj",
+            "body": "Prosim, poskusi kasneje"
+          }
+        },
+        "add": {
+          "screenTitle": "Ali želiteš dodati to kartico?",
+          "label": "Mednarodna kartica {{current}} od {{length}}",
+          "blocked": "Ta kartica je blokirana in je zato ni mogoče aktivirati za pridružitev pobudam, ki so na voljo na IO. Obrni se na svojo banko.",
+          "warning1": "V nekaterih primerih se lahko prikazani podatki razlikujejo od tistih na fizični kartici: ",
+          "warning2": "če si v dvomu, se obrni na svojo banko.",
+          "loading": "Dodajamo tvojo mednarodno kartico.\n\nProsim, počakaj nekaj sekund …"
+        },
+        "chooseType": {
+          "title": "Ali tvoja kartica omogoča spletno nakupovanje?",
+          "description": "To vprašanje nam omogoča, da bolje razumemo, kakšna je tvoja kartica, in ti pomaga, da jo dodaš v svojo Denarnico.",
+          "path": {
+            "enabled": {
+              "title": "Da, omogočena je za spletne nakupe",
+              "description": "Podatke o tvoji kartici bomo preverili pri tvoji banki, običajno prek besedilnega sporočila ali potisnega obvestila"
+            },
+            "disabled": {
+              "title": "Ne, uporabljam jo samo v trgovinah",
+              "description": "V bankah, ki sodelujejo v storitvi, bomo poiskali vse kartice na tvoje ime "
+            },
+            "unknown": {
+              "title": "Ne vem",
+              "description": "V bankah, ki sodelujejo v storitvi, bomo poiskali vse kartice na tvoje ime "
+            }
+          }
+        }
+      }
+    },
+    "alert": {
+      "supportedCardPageLinkError": "Med odpiranjem referenčne strani za podprte kartice je prišlo do napake.",
+      "msgErrorUpdateApp": "Med odpiranjem trgovine z aplikacijami je prišlo do napake",
+      "titlePagoPaUpdateApp": "Zahtevana je posodobitev",
+      "messagePagoPaUpdateApp": "IO pogosto uvaja majhne izboljšave in nove funkcije: za nadaljnjo uporabo Denarnice je potrebno posodobiti aplikacijo na najnovejšo različico.",
+      "btnUpdateApp": "Posodobi aplikacijo IO",
+      "favorite": "Če želiš spremeniti to možnost, izberi drugo metodo v Denarnici, in jo nastavi kot privzeto.",
+      "amex": "Plačila z American Express karticami za zneske nad 1.000 € trenutno niso možna"
+    },
+    "contextualHelpTitle": "Kaj lahko storiš v svoji Denarnici",
+    "contextualHelpContent": "**Na strani Denarnica so navedeni tvoji nacini placila, bonusi in kartice s popusti ter zgodovina transakcij, izvedenih s pagoPA**, placilno platformo za javno upravo.\nTu lahko placa� tudi vsa papirnata obvestila o placilu z logotipom pagoPA: skeniraj QR kodoR, ki jo najde� v papirnatem obvestilu, in zakljuci placilo neposredno iz aplikacije. IO trenutno podpira samo placila s kreditno/debetno kartico, vendar bo kmalu dodanih vec nacinov placila.\n",
+    "creditcards": "Kreditne kartice",
+    "paymentMethods": "Načini plačila",
+    "paymentMethod": "Način plačila",
+    "paymentMethodDesc": "Kreditne, debetne, predplačniške kartice, PayPal in drugož",
+    "walletLoadMessage": "Nalagam načine plačila …",
+    "walletLoadFailure": "Plačilnih načinov ni bilo mogoče naložiti, poskusi znova.",
+    "transactionsLoadMessage": "Nalaganje zgodovine transakcij …",
+    "transactionsLoadFailure": "Zgodovine tvojih transakcij ni bilo mogoče naložiti, poskusi znova.",
+    "transactionHelpMessage": {
+      "text1": "Imaš težave s plačilom ali dodajanjem novega načina?",
+      "text2": "Oglej si pomoč v zgornjem desnem kotu te strani."
+    },
+    "transactionsLoadMore": "Naloži prejšnje",
+    "transacionsLoadingMore": "Nalaganje prejšnjih …",
+    "transactionsShow": "Prikaži operacije",
+    "add": "dodaj",
+    "delete": {
+      "successful": "Metoda je odstranjena iz tvoje Denarnice",
+      "failed": "Metode ni mogoče odstraniti iz tvoje Denarnice"
+    },
+    "newPaymentMethod": {
+      "add": "dodaj",
+      "show": "pokaži",
+      "refresh": "posodobi",
+      "addButton": "Dodaj metodo",
+      "addDescription": "Dodaj način plačila za plačilo prek IO v nekaj sekundah ali zahtevaj aktivacijo kartice za bonus ali popust.",
+      "walletAlert": "V tvoji denarnici so registrirani načini plačila, vendar nobeden od teh ni združljiv z IO",
+      "successful": "Kartica uspešno dodana",
+      "failed": "Kartice ni mogoče dodati",
+      "failedCardAlreadyExists": "Kartica, ki jo vstavljaš, je že prisotna",
+      "contextualHelpTitle": "Kako dodati način plačila",
+      "contextualHelpContent": "**Tukaj lahko dodaš nov način plačila**, ki bo nato prikazan med tvojimi shranjenimi načini v Denarnici.\nVneseno metodo lahko kadar koli pozneje spremeniš ali izbrišeš, tako da vstopiš v Denarnico in na seznamu izbereš način plačila, ki ga želiš spremeniti.\n"
+    },
+    "textMsg": {
+      "title": "Potrditvena koda",
+      "header": "SMS potrditvena koda",
+      "info": "Vnesi kodo, ki smo jo poslali prek SMS-a na tvojo telefonsko številko"
+    },
+    "transactionDetails": "Podrobnosti o transakciji",
+    "transactionFullReason": "Celoten namen",
+    "detailsTransaction": {
+      "contextualHelpContent": "**Tukaj si lahko ogledaš povzetek transakcije**.\nTa transakcija se nanaša na plačilo prek pagoPA, plačilne platforme za javno upravo. Če si pred aktivacijo računa v aplikaciji IO opravili plačila s pagoPA na spletnih mestih ali aplikacijah upnikov, boš tukaj našel/la celotno zgodovino vseh uspešnih transakcij. Seveda boš tukaj našel/la tudi povzetek vsake uspešne transakcije, ki si jo opravil/a prek aplikacija IO.\n"
+    },
+    "saveCard": {
+      "contextualHelpTitle": "Shrani kartico na IO",
+      "contextualHelpContent": "**Si v procesu shranjevanja novega načina plačila, ki bo prikazan med tvojimi shranjenimi načini na strani Denarnica.**\nVneseno metodo lahko kadar koli pozneje spremeniš ali izbrišeš, tako da vstopiš na stran Denarnica in na seznamu izbereš način plačila, ki ga želiš spremeniti ali izbrisati.\n",
+      "header": "Shrani kartico",
+      "title": "Je vse pravilno?",
+      "subtitle": "Če kartico dodaš v svojo Denarnico, lahko plačuješ v aplikaciji in se pridružiš pobudam, ki so na voljo na IO.",
+      "infoTitle": "Uporabi kot prednostno metodo",
+      "info": "Ko plačaš v aplikaciji, ti IO samodejno prikaže to plačilno sredstvo",
+      "notice": "Za preverjanje kartice začasno zadržimo 0,02 €. Ne skrbi: znesek ti bomo vrnili v najkrajšem možnem času.",
+      "temporaryError": "Pri shranjevanju te kartice je prišlo do napake",
+      "temporarySubError": "Od varnostnih sistemov nismo prejeli odgovora. Opravičujemo se ti za nevšečnosti.",
+      "loadWalletsErrorTitle": "Sistemi potrebujejo več časa, kot je bilo pričakovano",
+      "loadWalletsErrorBody": "Od varnostnih sistemov nismo prejeli odgovora, vendar je bila tvoja kartica morda dodana. Posodobi svojo Denarnico, preden poskusiš znova.",
+      "loadingAlert": "Preverjam podatke o tvoji kartici …"
+    },
+    "challenge3ds": {
+      "header": "Odobri plačilo",
+      "description": "Izdajatelj kartice potrebuje tvojo odobritev. Če imaš težave, se obrni na svojo banko."
+    },
+    "saveCardInPayment": {
+      "header": "Plačaj s to kartico",
+      "title": "Ali želiš plačati s to kartico?",
+      "save": "Plačaj s to kartico"
+    },
+    "thanks": "✓ Hvala!",
+    "endPayment": "Tvoje plačilo je zaključeno",
+    "pickPsp": {
+      "headerTitle": "Izberi ponudnika",
+      "title": "Pri katerem ponudniku želiš plačevati?",
+      "info": "Vsak ponudnik predlaga stroške transakcije.",
+      "info2": "Na tem seznamu boš našel/a vse ponudnike",
+      "info2Bold": "združljive s tvojo metodo, tudi če nisi njihova stranka.",
+      "provider": "Ponudnik",
+      "maxFee": "Strošek transakcije",
+      "loadingPsps": "Nalaganje ponudnikov …",
+      "onUpdateWalletPspFailure": "Operacija ni uspela, poskusi znova",
+      "contextualHelpTitle": "Izbira ponudnika",
+      "contextualHelpContent": "**Tu lahko izbereš s katerim ponudnikom plačilnih storitev (PSP - Prestatore di Servizi di Pagamento) želiš izvesti plačilo.**\npagoPA ti, kadar je to mogoče, samodejno prikaže upravitelja, ki je izdal tvojo kartico.\nDruga možnost je, da bo izbran upravitelj z najnižjimi stroški za transakcijo.\nČe želiš, izberi upravitelja, ki ti je najljubši: vsi so združljivi s tvojo kartico, tudi če nisi njihova stranka.\n"
+    },
+    "ConfirmPayment": {
+      "header": "Povzetek plačila",
+      "total": "Skupno",
+      "paymentInformations": "Podatki o plačilu",
+      "payWith": "Plačaj s/z",
+      "transactionCosts": "Stroški transakcije",
+      "edit": "Uredi",
+      "providedBy": "Ponudnik",
+      "pay": "Plačaj",
+      "cancelPayment": "Prekliči operacijo",
+      "fee": "Stroški transakcije",
+      "identificationMessage": "Operacijo potrdi z vnosom kode za odklepanje",
+      "transactionSuccess": "plačilo je zaključeno!",
+      "transactionFailure": "Med plačilom je prišlo do napake, poskusi znova!",
+      "transactionTimeout": "Rezultata plačila ni bilo mogoče pridobiti!",
+      "confirmCancelTitle": "Ali želiš preklicati plačilo?",
+      "confirmCancelPayment": "Prekliči plačilo",
+      "confirmContinuePayment": "Nadaljuj s plačilom",
+      "cancelPaymentSuccess": "Plačilo za to obvestilo je bilo preklicano, ponovno ga boš lahko plačal/a čez nekaj minut",
+      "accessibility": {
+        "edit": "tapnite za urejanje",
+        "transactionCosts": "{{cost}}, transakcija {{psp}}"
+      }
+    },
+    "payWith": {
+      "noWallets": {
+        "title": "Nobeno plačilno sredstvo ni shranjeno",
+        "text": "Če želiš nadaljevati s plačilom, dodaj način plačila"
+      },
+      "header": "Izbira načina plačila",
+      "title": "Plačaj s/z",
+      "text": "Iz svoje Denarnice izberi metodo ali pa dodaj novo.",
+      "fetchPspFailure": "Začasna napaka, poskusi znova",
+      "noPspsAvailable": "Tega načina plačila ni mogoče uporabiti",
+      "contextualHelpTitle": "Izbira načina plačila",
+      "contextualHelpContent": "**Tukaj lahko izbere� nacin placila.** IO trenutno podpira samo placila s kreditno/debetno kartico, kmalu pa bodo dodani tudi drugi nacini placila, kot so PayPal, Satispay in drugi.\r\n",
+      "pickPaymentMethod": {
+        "title": "S katerim načinom želiš plačati?",
+        "description": "{{firstElement}} · {{secondElement}}",
+        "disabled": {
+          "title": "Onemogočeni načini"
+        },
+        "notAvailable": {
+          "title": "Nezdružljivi načini",
+          "arriving": {
+            "bottomSheetTitle": "Prizadevamo si za podporo temu načinu",
+            "bottomSheetDescription": "Medtem poskusi plačati z drugim načinom. PagoPA lahko uporabiš tudi v svoji priljubljeni plačilni aplikaciji ali na spletnem mestu ustanove upnice."
+          },
+          "unaccepted": {
+            "bottomSheetTitle": "Zakaj ne morem plačati s to kartico?",
+            "bottomSheetDescription": "Vezje te kartice ti omogoča plačevanje na fizičnih prodajnih mestih, ne pa tudi na spletu. Če je tvoja kartica omogočena za spletna plačila, jo dodaj v svojo Denarnico kot »debetno ali kreditno kartico«."
+          },
+          "payment_disabled": {
+            "bottomSheetTitle": "Zakaj ne morem plačati s to metodo?",
+            "bottomSheetDescription": "Funkcija »Plačila v aplikaciji« je morda onemogočena.\nPred ponovnim poskusom plačila nadaljuj kot sledi:\n\n1. pojdi na razdelek »Denarnica«;\n2. izberi način plačila, ki ga želiš uporabiti;\n3. omogoči »Plačila v aplikaciji«."
+          }
+        }
+      }
+    },
+    "firstTransactionSummary": {
+      "title": "Podatki o plačilu",
+      "amount": "Znesek",
+      "total": "Skupaj plačano",
+      "expireDate": "Rok",
+      "tranche": "Obrok",
+      "info": "Za informacije:",
+      "tel": "Tel:",
+      "email": "E-naslov:",
+      "PEC": "CEP (PEC):",
+      "recipient": "Ustanova upnica",
+      "object": "Zadeva plačila",
+      "date": "Datum in čas",
+      "iuv": "Koda IUV",
+      "entityCode": "Davčna številka ustanove",
+      "updatedAmount": "Posodobljeni znesek",
+      "fee": "Stroški transakcije",
+      "idTransaction": "Identifikacijska koda transakcije",
+      "amountInfo": {
+        "title": "Ali vidiš drugačen znesek?",
+        "message": "pagoPA samodejno posodobi znesek, da zagotovi, da si plačal/a točno toliko, kot dolguješ, in se tako izogneš preplačilim ali drugim obrestim",
+        "cta": "V redu je, dobro"
+      },
+      "contextualHelpTitle": "Povzetek transakcije",
+      "contextualHelpContent": "**Tukaj si lahko ogledaš povzetek transakcije, ki jo nameravaš izvesti.** Povzetek transakcije je posodobljen v tem trenutku, ko lahko nadaljuješ s plačilom: zaradi tega je lahko cifra večja, glede na obresti, ki jih zaračuna ustanova upnica.\r\n",
+      "errorDetails": {
+        "title": "Podrobnosti o napaki",
+        "errorCode": "Napačna koda",
+        "messageId": "ID sporočila",
+        "copyToClipboard": "Kopiraj podatke za pomoč"
+      }
+    },
+    "errorTransaction": {
+      "submitBugText": "Če težave ne moreš rešiti, nam jo prijavi z »?«zgoraj desno. Hvala!"
+    },
+    "insertManually": {
+      "header": "Vnesi podatke o obvestilu",
+      "title": "Kaj moraš plačati?",
+      "info": "Vnesi podatke, kot so prikazani na obvestilu o plačilu.",
+      "link": "Kje najdem podatke?",
+      "noticeCode": "Koda obvestila",
+      "entityCode": "Davčna številka ustanove upnice",
+      "amount": "Znesek (€)",
+      "proceed": "Nadaljuj s plačilom",
+      "contextualHelpTitle": "Ročni vnos podatkov",
+      "contextualHelpContent": "**Tukaj lahko nadaljuje� s placilom opominov, tako da vpi�e� podatke, ki jih najde� v njem**: �ifra opomina in davcna �tevilka upnika.\nPrepricaj se, da obvestilo podpira placilo prek pagoPA, placilne platforme za javno upravo.\n"
+    },
+    "total": "Skupno",
+    "amount": "Znesek €",
+    "payAmount": "Dolgovani znesek",
+    "transactionFee": "Stroški operacije",
+    "why": "Zakaj?",
+    "paymentReason": "Namen",
+    "recipient": "Ustanova upnica",
+    "date": "Datum",
+    "time": "Ura",
+    "psp": "Ponudnik transakcije",
+    "receipt": "Račun za operacijo",
+    "seeReceipt": "Poglej račun",
+    "transactions": "Operacije",
+    "transaction": "Operacija",
+    "noTransactions": "Ni operacij.",
+    "noNewTransactions": "Ni novih operacij.",
+    "noneTransactions": "Brez operacij",
+    "noTransactionsInWalletHome": "Opravil/a nisi še nobene operacije.",
+    "noTransactionsInTransactionsScreen": "Tega načina plačila še nisi uporabil/a za plačilo prek IO ali pagoPA. Na tem seznamu boš videl/a samo operacije, izvedene s to metodo.",
+    "payNotice": "Plačaj obvestilo",
+    "latestTransactions": "Moje operacije",
+    "creditDebitCards": "Kreditne/debetne kartice",
+    "addPaymentMethodTitle": "Dodaj metodo",
+    "continue": "Pojdi na plačilo",
+    "backToPayments": "Nazaj na plačila",
+    "methods": {
+      "comingSoon": "prihajajoče",
+      "newCome": "Novosti",
+      "card": {
+        "name": "Kreditna, debetna ali predplačniška kartica",
+        "shortName": "Kartica",
+        "description": "Kartica, ki jo uporabljaš na spletu in v trgovinah",
+        "pagoPaCapability": {
+          "title": "Plačila v aplikaciji",
+          "description": "Plačilo obvestil z logotipom pagoPA",
+          "active": "Aktiven",
+          "arriving": "Prihajajoči",
+          "incompatible": "Ni združljivo",
+          "bottomSheetTitle": "Zakaj ne morem plačati v aplikaciji?",
+          "bottomSheetBody": "Ta metoda ni omogočena za izvajanje spletnih plačil.",
+          "bottomSheetCTA": "Ugotovi, katere metode so podprte"
+        }
+      },
+      "bonus": {
+        "name": "Popusti, bonusi in druge pobude",
+        "description": "Pobude javnih organov za podporo odhodkov ali storitev v zvezi s plačili"
+      },
+      "digital": {
+        "name": "Aplikacije in orodja za digitalno plačevanje",
+        "description": "Tvoja najljubša digitalna orodja na IO"
+      },
+      "pagobancomat": {
+        "name": "Kartica PagoBANCOMAT",
+        "description": "Kartica, ki jo uporabljaš za plačevanje v trgovinah"
+      },
+      "bank": {
+        "name": "Bancomat Pay"
+      },
+      "bancomatPay": {
+        "name": "BANCOMAT Pay",
+        "description": "Plačaj s povezano kartico ali bančnim računom"
+      },
+      "postepayApp": {
+        "name": "Postepay",
+        "description": "Tvoja aplikacija Postepay"
+      },
+      "postepay": {
+        "name": "Kartica BancoPosta ali Postepay",
+        "description": "Kartice, ki jih izdaja Poste Italiane"
+      },
+      "paypal": {
+        "name": "PayPal",
+        "description": "Plačaj s povezano kartico ali bančnim računom"
+      },
+      "bancomat": {
+        "name": "PagoBANCOMAT"
+      },
+      "cobadge": {
+        "name": "mednarodno sprejeto"
+      },
+      "notImplemented": "Prihaja kmalu"
+    },
+    "addCardTitle": "Podatki o kartici",
+    "dummyCard": {
+      "labels": {
+        "holder": {
+          "label": "Naslovnik kartice",
+          "description": {
+            "base": "Sledi vrstnemu redu, ki je prikazan na kartici",
+            "error": "Ne uporabljaj naglašenih črk ali simbolov"
+          }
+        },
+        "pan": "Številka kartice",
+        "expirationDate": "Datum veljavnosti",
+        "securityCode": "Varnostna koda",
+        "securityCode4D": "CID (4 števke)"
+      },
+      "values": {
+        "holder": "Mario Rossi",
+        "pan": "0000 0000 0000 0000",
+        "expirationDate": "mm/ll",
+        "securityCode": "•••",
+        "securityCode4D": "••••"
+      },
+      "accessibility": {
+        "holder": {
+          "base": "Naslovnik kartice, upoštevaj vrstni red, prikazan na kartici",
+          "error": "Naslovnik kartice, ne uporabljaj naglašenih črk ali simbolov"
+        },
+        "pan": {
+          "base": "Številka kartice",
+          "error": "Številka kartice. Vnesi vsaj {{minLength}} števk"
+        },
+        "expirationDate": {
+          "base": "Datum veljavnosti, dve števki za mesec, dve za leto",
+          "error": "Datum veljavnosti, dve števki za mesec, dve za leto. Vnesi veljaven datum"
+        },
+        "securityCode": {
+          "3D": {
+            "base": "Varnostna koda, 3 števke",
+            "error": "Varnostna koda. Vnesi 3 števke"
+          },
+          "4D": {
+            "base": "CID, 4 števke",
+            "error": "Koda CID. Vnesi 4 števke"
+          }
+        },
+        "button": {
+          "fieldError": "Da lahko nadaljuješ, popravi polje {{field}}",
+          "missingFields": "Da lahko nadaljuješ, izpolnite vsa polja"
+        }
+      }
+    },
+    "acceptedCards": "Sprejete kartice",
+    "openAcceptedCardsPageCTA": "Ugotovi, katere kartice so sprejete",
+    "missingDataText": {
+      "body": "Če ne najdeš varnostne kode, tvoja kartica morda ni omogočena za spletna plačila.",
+      "cta": "Preišči svoje kartice"
+    },
+    "chooseMethod": "Izberi način, ki ti je najljubši",
+    "QRtoPay": {
+      "chooser": "Naloži sliko iz galerije",
+      "wrongQrCode": "Neveljavna QR koda. Podatke vnesi ročno.",
+      "byCameraTitle": "Skeniraj QR kodo",
+      "cameraUsageInfo": "Skeniraj QR kodo, ki jo najdeš v obvestilu, ali podatke vnesi ročno (Številka obvestila in Davčna številka upnika).",
+      "setManually": "Vnesi ročno",
+      "enroll_cta": "Če želiš posneti QR kodo na opozorilu, moraš IO-ju najprej dovoliti uporabo kamere. To lahko storiš v meniju »Nastavitve« tvoje naprave.",
+      "readStorageDisclosure": {
+        "title": "Dovoli dostop do galerije",
+        "message": "Naložil/a boš lahko posnetke zaslona in obvestila o plačilu"
+      },
+      "settingsAlert": {
+        "title": "Videti je, da je bil dostop do fotografij zavrnjen",
+        "message": "IO potrebuje dostop do tvoje galerije za shranjevanje bonusov in potrdil ali nalaganje posnetkov zaslona in obvestil o plačilu",
+        "buttonText": {
+          "settings": "Omogoči dovoljenja",
+          "cancel": "Prekliči"
+        }
+      },
+      "contextualHelpTitle": "Kako lahko plačaš obvestilo",
+      "contextualHelpContent": "**Tukaj lahko nadaljuje� s spontanim placilom obvestila s pagoPA**, placilno platformo za javno upravo. Placa� lahko tako, da uokviri� QR kodo, ki jo najde� na papirnatem obvestilu, in nato nadaljuje� s placilom neposredno iz aplikacije. Lahko tudi nalo�i� QR kodo iz svoje galerije telefona ali nadaljuje� z rocnim zbiranjem podatkov za prepoznavanje opozorila (Koda obvestila - Codice Avviso).\r\n"
+    },
+    "whyAFee": {
+      "title": "Zakaj stroški transakcije?",
+      "text": "Vsaka operacija nakazila denarja (gotovine ali e-denarja) ima stroške, ki zagotavljajo, da bo to plačilo varno in uspešno izvedeno.\nVsak upravitelj (ali PSP, ponudnik plačilnih storitev) predlaga stroške transakcije v skladu s svojimi poslovnimi politikami in pogodbenimi pogoji.\nS pagoPA so ti stroški pregledni in državljani lahko svobodno izberejo najugodnejšo in priročno možnost. Preden nadaljuješ s plačilom, preveri znesek, ki ga izbrani PSP ponudnik zahteva za izvedbo plačila.\n"
+    },
+    "walletCardTransaction": {
+      "contextualHelpTitle": "Transakcije, opravljene s to metodo",
+      "contextualHelpContent": "**Tukaj si lahko ogleda� vse transakcije, opravljene s tem nacinom placila.**\nTransakcije so bile mogoce opravljene v tej aplikaciji ali prek pagoPa, placilne platforme za javno upravo, na drugi spletni strani.\nCe si opravil/a placila s pagoPA kot overjen uporabnik, bo� tukaj na�el/la vse uspe�no izvedene transakcije.\n"
+    },
+    "bancomat": {
+      "details": {
+        "debit": {
+          "title": "Ali ima tvoja kartica več kot en logotip?",
+          "body": "Če so na tvoji kartici PagoBANCOMAT označeni tudi drugi mednarodni logosi, lahko dodaš isto kartico z drugim operaterjem tako, da poiščeš vse debetne (ali kreditne) kartice izdane na tvoje ime.",
+          "addCta": "Dodaj drugi logos"
+        }
+      }
+    },
+    "cobadge": {
+      "details": {
+        "card": {
+          "validUntil": "Velja do {{expiryDate}}"
+        }
+      }
+    },
+    "newRemove": {
+      "title": "Ali želiš izbrisati ta način plačila?",
+      "body": "Način plačila bomo odstranili iz Denarnice. Vse pobude, s katerimi je povezana, bodo onemogočene v 24 urah.",
+      "warningCapability": "Onemogočene bodo tudi funkcije: "
+    },
+    "capability": {
+      "title": "Razpoložljive pobude"
+    },
+    "outcomeMessage": {
+      "cta": {
+        "close": "Zapri",
+        "learnMore": "Izvej več",
+        "visualizeCard": "Ogled kartice"
+      },
+      "fallback": {
+        "title": "Prišlo je do nepričakovane napake",
+        "description": "Če težave ne odpraviš, se obrni na podporo."
+      },
+      "code1": {
+        "title": "Prišlo je do nepričakovane napake",
+        "description": "Če težave ne odpraviš, se obrni na podporo."
+      },
+      "code2": {
+        "title": "Pooblastilo zavrnjeno",
+        "description": "Tvoja banka ni odobrila operacije. Preveri, ali si pravilno vnesel/a različne kode, ki jih zahteva tvoja banka."
+      },
+      "code3": {
+        "title": "Podatki o kartici niso pravilni",
+        "description": "Izbriši kartico iz svoje Denarnice in jo poskusi znova dodati. Prepričaj se, da so vneseni podatki točno takšni, kot so zapisani na kartici."
+      },
+      "code4": {
+        "title": "Preveri tvojo e-pošto",
+        "description": "Izida plačila ni bilo mogoče preveriti. Če bo uspešen, boš kmalu prejel/a e-poštno sporočilo s potrdilom. Če e-pošte ne prejmeš, se obrni na podporo."
+      },
+      "code7": {
+        "title": "Prišlo je do težave s tvojo kartico",
+        "description": "Noben znesek ni bil zaračunan. Za več informacij se obrni na svojo banko."
+      },
+      "code8": {
+        "title": "Operacija je bila preklicana"
+      },
+      "code10": {
+        "title": "Pooblastilo zavrnjeno",
+        "description": "Verjetno si presegel/la zgornjo mejo svoje metode. Preveri pri svoji banki, preden poskusiš znova."
+      },
+      "code15": {
+        "title": "Omogoči način plačila v aplikaciji",
+        "description": "Pred ponovnim poskusom plačila izberi način v svoji Denarnici in omogoči funkcijo »Plačila v aplikaciji«."
+      },
+      "code18": {
+        "title": "Prišlo je do nepričakovane napake",
+        "description": "Če težave ne odpraviš, se obrni na podporo."
+      },
+      "code19": {
+        "title": "Pooblastilo zavrnjeno",
+        "description": "Morda si odstranil/a pagoPA iz samodejnih plačil PayPal-a. Izbriši račun PayPal iz svoje denarnice, ga znova dodaj in znova poskusi s plačilom."
+      },
+      "addCreditCard": {
+        "success": {
+          "title": "Tvoja kartica je bila uspešno dodana!"
+        }
+      },
+      "payment": {
+        "success": {
+          "title": "Hvala, operacija uspešno izvršena!",
+          "description1": "Poslali smo potrdilo za",
+          "description2": "Najdeš ga lahko tudi v svoji Denarnici."
+        }
+      }
+    },
+    "abortWebView": {
+      "title": "Ali želiš zapustiti operacijo v teku?",
+      "confirm": "Da, izvrši izhod",
+      "cancel": "Ne, nadaljuj",
+      "success": "Težave z dodajanjem? Obrni se na svojo banko."
+    },
+    "payment": {
+      "failure": {
+        "PAYMENT_UNAVAILABLE": {
+          "title": "S tem obvestilom je tehnična težava"
+        },
+        "PAYMENT_DATA_ERROR": {
+          "title": "Podatki v obvestilu so napačni"
+        },
+        "DOMAIN_UNKNOWN": {
+          "title": "Ustanova upnica ima težave pri odzivanju"
+        },
+        "PAYMENT_ONGOING": {
+          "title": "Plačilo že poteka, poskusi znova čez nekaj minut",
+          "PAA_PAGAMENTO_IN_CORSO": {
+            "title": "Plačilo za to obvestilo že poteka, poskusi znova čez 30 minut.",
+            "subtitle": "Če si že počakal/a 30 minut in je plačilo še vedno blokirano, nam s spodnjim gumbom pošlji prijavo."
+          },
+          "PPT_PAGAMENTO_IN_CORSO": {
+            "countdownTitle": "C'è già un'operazione in corso, riprova tra {{minutes}} minuti",
+            "countdownExpiredTitle": "Plačilo že poteka, poskusi znova čez nekaj minut"
+          }
+        },
+        "PAYMENT_CANCELED": {
+          "title": "Ustanova upnica je to obvestilo preklicala"
+        },
+        "PAYMENT_EXPIRED": {
+          "title": "Obvestilo je poteklo in ga ni več mogoče plačati"
+        },
+        "PAYMENT_DUPLICATED": {
+          "title": "To obvestilo je bilo že plačano!"
+        },
+        "PAYMENT_UNKNOWN": {
+          "title": "Ustanova, ki ga je izdala, tega obvestila o plačilu ne prepozna, plačila ni mogoče izvesti."
+        }
+      }
+    }
+  },
+  "saveCard": {
+    "saveCard": "Shrani kartico",
+    "header": "Ali želiš shraniti to kartico?",
+    "favoriteTitle": "Nastavi to kartico kot prednostno plačilno sredstvo",
+    "favoriteText": "Pri naslednjem plačilu ti bo samodejno ponujen ta način plačila"
+  },
+  "cardComponent": {
+    "validUntil": "Veljavna do",
+    "expiresOn": "Poteče dne",
+    "expiredCard": "Kartica je potekla dne",
+    "actions": "Dejanja",
+    "setFavorite": "Nastavi kot priljubljeno",
+    "unsetFavorite": "Odstrani iz priljubljenih",
+    "deleteTitle": "Ali želiš izbrisati to plačilno sredstvo?",
+    "deleteMsg": "Metodo bomo odstranili iz Denarnice. Vse pobude, s katerimi je povezana, bodo deaktivirane v 24 urah.",
+    "deleteLoading": "Brisanje metode v teku",
+    "neverUsed": "Nikoli uporabljena",
+    "lastUsage": "Zadnja uporaba",
+    "detailsAndTransactions": "Podrobnosti in transakcije",
+    "pick": "Plačaj s to metodo",
+    "removeCta": "Izbriši to metodo"
+  },
+  "messages": {
+    "accessibility": {
+      "message": {
+        "read": "Sporočilo",
+        "unread": "Neprebrano sporočilo",
+        "description": "{{newMessage}}, prejeto od {{organizationName}}, {{serviceName}}. {{zadeva}}. {{receivedAt}}. {{država}}",
+        "received_on": "prejeto dne",
+        "received_at": "prejeto ob uri"
+      }
+    },
+    "contextualHelpTitle": "Kaj lahko počneš v svojih Sporočilih",
+    "contextualHelpContent": "**Razdelek Sporočila objema vsa prejeta sporočila ustanov, ki ponujajo svoje storitve prek IO**.\nNastaviš lahko opomnike za roke ali plačaš obvestilo neposredno iz sporočila.\nSporočila so razdeljena med **prejeta** (ki vsebuje vsa sporočila, ki so prispela in niso arhivirana), **potekla** (ki prikazuje samo sporočila, ki imajo datum poteka, ki olajša upravljanje stvari, ki jih moraš še storiti) in **arhivirana** (kjer dobiš vsa arhivirana sporočila).\nČe želiš arhivirati sporočilo, preprosto pritisni in drži območje sporočila, ki ga želiš arhivirati, in izbereš gumb »Arhiviraj«, ki se bo v tistem trenutku pojavil na zaslonu.\n",
+    "counting": {
+      "one": "Imaš 1 sporočilo"
+    },
+    "tab": {
+      "inbox": "Prejeta",
+      "archive": "Arhivirana"
+    },
+    "contentTitle": "Sporočila",
+    "refresh": "Povleci navzdol za posodobitev",
+    "loading": "Nalaganje sporočil …",
+    "yesterday": "včeraj",
+    "errorLoading": {
+      "details": "Nalaganje podrobnosti sporočila ni uspelo",
+      "senderInfo": "Neznan pošiljatelj",
+      "serviceInfo": "Manjkajo servisne informacije",
+      "departmentInfo": "Manjkajo informacije o oddelku",
+      "noTitle": "Brez naslova"
+    },
+    "loadingErrorTitle": "Sporočil ni bilo mogoče naložiti",
+    "cta": {
+      "archive": "Arhiviraj",
+      "unarchive": "Ponastaviti",
+      "selectAll": "Vsa",
+      "deselectAll": "Nobenega",
+      "pay": "Plačaj {{amount}} €",
+      "onlyPay": "Plačaj",
+      "paid": "Plačano",
+      "seeNotice": "Glejte Obvestilo",
+      "reminder": "Opomnik",
+      "reminderShort": "Opomba",
+      "reminderCalendarSelect": "V kateri koledar želi dodati opomnik?",
+      "reminderTitle": "Opomnik za: {{title}}",
+      "reminderAlertTitle": "Dogodek že obstaja",
+      "reminderAlertDescription": "V koledarju že obstaja dogodek, ki ustreza izbranemu sporočilu. Želiš obdržati prejšnjega ali dodati nov dogodek?",
+      "reminderAlertKeep": "Ohrani prejšnji dogodek",
+      "reminderAlertAdd": "Dodaj nov dogodek",
+      "reminderAddSuccess": "Opomnik dodan",
+      "reminderAddFailure": "Napaka pri dodajanju opomnika, poskusi znova",
+      "reminderRemoveRequest": {
+        "title": "Ali res želiš odstraniti opomnik?",
+        "ok": "Odstrani opomnik",
+        "cancel": "Prekliči operacijo"
+      },
+      "reminderRemoveSuccess": "Opomnik izbrisan",
+      "reminderRemoveFailure": "Napaka pri brisanju opomnika, poskusi znova",
+      "preferenceCalendarSelect": "Izberi vnaprej določen koledar",
+      "calendarPermDenied": {
+        "title": "Videti je, da so bila dovoljenja za dostop do koledarja zavrnjena",
+        "ok": "Druga dovoljenja",
+        "cancel": "Prekliči"
+      },
+      "errors": {
+        "fetchCalendars": "Napaka pri pridobivanju koledarjev"
+      },
+      "helper": "IO si bo od zdaj naprej zapomnil to izbiro: spremeniš jo lahko v nastavitvah aplikacije."
+    },
+    "badge": {
+      "expired": "Potekel",
+      "paid": "Plačano"
+    },
+    "unknownSender": "Neznan pošiljatelj",
+    "noContent": "Vsebina ni na voljo",
+    "archive": {
+      "emptyMessage": {
+        "title": "Tvoj arhiv je prazen.",
+        "subtitle": "Pritisni in pridržite sporočilo, da ga premakneš v arhiv. Prav tako lahko arhivirate več sporočil hkrati. Arhivirana sporočila bodo še vedno shranjena in bodo na voljo v rezultatih iskanja."
+      }
+    },
+    "inbox": {
+      "emptyMessage": {
+        "title": "Tvoj seznam sporočil je prazen.",
+        "subtitle": "Osveži, za videti, če si prejel/a kakšno novo sporočilo."
+      }
+    },
+    "operations": {
+      "archive": {
+        "success": "Arhiviranje uspešno!",
+        "failure": "Arhiviranje ni bilo uspešno"
+      },
+      "restore": {
+        "success": "Obnovitev končana.",
+        "failure": "Obnovitev ni bila uspešna"
+      }
+    }
+  },
+  "messageDetails": {
+    "contextualHelpTitle": "Podrobnosti sporočila",
+    "contextualHelpContent": "Tukaj si lahko ogleda� podrobnosti sporocil, prejetih od ustanove, ki je integriranega z aplikacijo IO.\nCe ima� kakr�ne koli dvome ali vpra�anja o doloceni vsebini sporocila, se lahko obrne� na ustanovo prek kontaktov, ki jih najde� na dnu tega sporocila ali v razdelku �Storitve�.\n",
+    "headerTitle": "Sporočilo",
+    "emptyMessage": "Brez vsebine",
+    "loadingText": "Nalaganje podrobnosti sporočila …",
+    "errorText": "Podatkov o sporočilu ni bilo mogoče naložiti",
+    "retryText": "To je verjetno začasna napaka … poskusi znova!",
+    "submitBugText": "Če težave ne odpraviš, nam jo sporoči z »?« zgoraj desno, hvala!",
+    "addMemo": "Dodaj opomnik dne <b>{{date}}</b> [ob <b>{{hour}}</b>]\r\n",
+    "dateSending": "Datum in čas pošiljanja:",
+    "sender": "Pošiljatelj:",
+    "service": "Storitev:",
+    "question": "Je kaj nejasno?",
+    "answer": "Če ti vsebina sporočila ni jasna, moraš prijaviti napako, ali želiš izvedeti več, se lahko obrneš neposredno na predstavnike servisa, tako da navedeš naslednji ID sporočila.",
+    "call": "Pokliči",
+    "sendEmail": "Pošlji sporočilo",
+    "write": "Napiši",
+    "id": "ID:"
+  },
+  "notifications": {
+    "installation": {
+      "errorTitle": "Potisna obvestila",
+      "errorMessage": "Registracija v storitev potisnih obvestil je generirala eno napako"
+    }
+  },
+  "biometric_recognition": {
+    "contextualHelpTitle": "Kako deluje biometrično prepoznavanje",
+    "contextualHelpContent": "**Tu lahko omogočiš ali onemogočiš biometrično prepoznavanje.**\nAktiviranje biometričnega prepoznavanja je onemogočeno, če ga ta naprava ne podpira.\nAktivacija biometričnega prepoznavanja ti bo omogočila hitrejše izvajanje nekaterih operacij, brez uporabe kode za odklepanje. Npr. potrditev plačila ali neposreden dostop do aplikacije, če preteče le malo časa od zadnje prijave s CIE ali SPID.\n",
+    "switchLabel": "Aktiviraj biometrično prepoznavanje",
+    "enroll_cta": "Na tej napravi je prisotno biometrično prepoznavanje, vendar ni konfigurirano. Pojdi v meni z nastavitvami te naprave in jo konfiguriraj za omogočanje te funkcije.",
+    "enroll_btnLabel": "Pojdi na nastavitve",
+    "needed_to_disable": "Za onemogočanje je potrebno prepoznavanje"
+  },
+  "send_email_messages": {
+    "title": "Posredovanje sporočil preko elektronske pošte",
+    "subtitle": "Želiš, da IO posreduje vsebino sporočil tudi za"
+  },
+  "services": {
+    "optIn": {
+      "preferences": {
+        "completed": {
+          "title": "Nastavitve shranjene!",
+          "body": "Seznam razpoložljivih storitev si lahko vedno ogledaš v razdelku Storitve.",
+          "cta": "Oglejte si storitve, ki so na voljo"
+        },
+        "oldUsersBadge": "Trenutna nastavitev",
+        "choiceLabel": "Izbral/a si",
+        "unavailable": "Ni izbrano",
+        "title": "Kako želiš konfigurirati storitve na IO?",
+        "body": "IO je preprost, ker ti ni treba storiti ničesar: če ti mora storitev povedati nekaj pomembnega, ti lahko pošlje sporočilo.",
+        "quickConfig": {
+          "value": "Hitra nastavitev",
+          "label": "vse storitve, ki jih nisi deaktiviral/a, te lahko kontaktirajo.",
+          "title": "Uporabi hitro nastavitev",
+          "body": {
+            "text1": "Kontaktirale te bodo samo službe, ki ti bodo imele kaj pomembnega povedati.",
+            "text2": "Vedno lahko deaktiviraš komunikacijo storitev, ki te ne zanimajo."
+          }
+        },
+        "manualConfig": {
+          "value": "Ročna konfiguracija",
+          "label": "samo storitve, ki si jih aktiviral/a, te lahko kontaktirajo.",
+          "title": "Ročna konfiguracija",
+          "body": {
+            "text1": "Nobena služba ne bo mogla stopiti v stik s tabo. Če želiš prejemati sporočila, jih boš moral/a konfigurirati enega za drugim."
+          },
+          "bottomSheet": {
+            "title": "Če potrdiš, ne boš prejel/a nobenega sporočila",
+            "body": "Z ročno konfiguracijo ti sedanje ali prihodnje storitve IO ne morejo poslati sporočil. Če želiš storitvam, ki te zanimajo, omogočiti stik s tabo, jih boš moral/a konfigurirati eno za drugo, tako da omogočiš možnost »Stik v aplikaciji«, ki jo najdeš na vsakem zavihku storitve."
+          }
+        }
+      }
+    },
+    "details": {
+      "tosAndPrivacy": {
+        "title": "Pogoji in zasebnost",
+        "privacyLink": "Politika zasebnosti"
+      },
+      "preferences": {
+        "messageReadStatus": "Prejemanje potrdil o branju",
+        "pushNotifications": "Pošiljanje potisnih obvestil"
+      }
+    },
+    "title": "Storitve",
+    "contextualHelpTitle": "Kaj lahko storiš v svojih storitvah",
+    "contextualHelpContent": "**Na strani Storitve si lahko ogledaš seznam ustanov, ki ponujajo storitve na IO, in seznam storitev, povezanih s posamezno ustanovo.** Storitve so razdeljene med lokalne, kjer lahko izbereš ustanove, ki te zanimajo, glede na geografsko območje, kjer živiš, državno, tj. centralne uprave, ki ponujajo storitve vsem italijanskim državljanom, in končno vse, kjer lahko najdeš celoten seznam vseh storitev, ki so na voljo na IO (tako lokalnih kot državnih).\nVabimo te, da uporabiš to stran za ogled storitev, ki jih ponuja IO, nastavitev seznama lokalnih storitev in podrobnosti o posameznih storitvah. Kadar koli nova lokalna ali državna storitev dospe na IO, boš prejel/a obvestilo, tako da lahko takoj preveriš, za kaj gre in ali je zate uporabna.\n"
+  },
+  "identification": {
+    "title": "Podravljen/a!",
+    "titleProfileName": "Pozdravljen/a {{profileName}}!",
+    "titleValidation": "Potrdi operacijo",
+    "logout": "Izhod",
+    "logoutProfileName": "Ali nisi ti {{profileName}}?",
+    "logoutDescription": "Lahko se prijaviš s svojimi poverilnicami SPID ali CIE. Ta seja bo prekinjena.",
+    "logoutDescriptionProfileName": "Lahko se prijaviš s svojimi poverilnicami SPID ali CIE. Seja {{profileName}} bo prekinjena.",
+    "biometric": {
+      "fingerprintType": "Prstni odtis",
+      "title": "Biometrična identifikacija",
+      "popup": {
+        "reason": "Identifikacija prek Touch ID-ja ni uspela",
+        "title": "Potrebna je identifikacija",
+        "sensorDescription": "Hitra prijavia"
+      }
+    },
+    "fail": {
+      "remainingAttempts": "Imaš še {{attempts}} poskusa/e/ov.",
+      "remainingAttemptSingle": "Imaš še {{attempts}} poskus.",
+      "tooManyAttempts": "Preveč nepravilnih poskusov vnosa.",
+      "waitMessage": "Poskusi znova čez:"
+    },
+    "unlockCode": {
+      "accessibility": {
+        "unlockHint": "Vnesel/la si {{number}} števk od {{length}}",
+        "fingerprint": "Preverjanje pristnosti s prstnim odtisom",
+        "faceId": "Preverjanje pristnosti s prepoznavanjem obraza",
+        "delete": "Izbriši zadnjo vneseno številko"
+      },
+      "reset": {
+        "button": "Pozabil/a si",
+        "code": "kodo za odklepanje",
+        "button_short": "Spremeni kodo za odklepanje",
+        "subtitle": "Nastavi novo 6-mestno kodo"
+      },
+      "confirmValid": "Pravilna koda za odklepanje"
+    },
+    "forgetCode": {
+      "confirmTitle": "Si pozabil/a kodo za odklepanje?",
+      "confirmMsg": "Če želiš izbrati novo kodo za odklepanje, se boš moral/a znova prijaviti.",
+      "confirmMsgWithTask": "Če želiš izbrati novo kodo za odklepanje, boš moral/a preklicati trenutno operacijo in se znova prijaviti."
+    }
+  },
+  "calendarEvents": {
+    "calendarSelect": "V kateri koledar želiš dodati dogodek?"
+  },
+  "reminders": {
+    "emptyMonth": "V tem mesecu ni rokov",
+    "loadMoreData": "prejšnji roki",
+    "noOtherDeadlines": "Ni drugih rokov"
+  },
+  "openMaps": {
+    "genericError": "Med odpiranjem zemljevida je prišlo do napake",
+    "openAddressOnMap": "Odpri naslov na zemljevidu"
+  },
+  "genericError": "Prišlo je do napake",
+  "titleUpdateApp": "Posodobi IO!",
+  "msgErrorUpdateApp": "Med odpiranjem trgovine z aplikacijami je prišlo do napake",
+  "messageUpdateApp": "IO pogosto uvaja majhne izboljšave in nove funkcije: če želiš še naprej uporabljati aplikacijo, jo moraš posodobiti na najnovejšo različico.",
+  "titleUpdateAppAlert": "Za nadaljevanje posodobi IO",
+  "messageUpdateAppAlert": "Na voljo je nova različica IO v {{storeName}}; prenesi jo zdaj, če želiš uporabljati to funkcijo.",
+  "openStore": "Odpri {{storeName}}",
+  "btnUpdateApp": "Posodobi aplikacijo IO",
+  "systemsOff": {
+    "title": "Ni mogoče uporabiti IO",
+    "closeApp": "zapri aplikacijo in poskusi znova"
+  },
+  "contextualHelp": {
+    "title": "IO pomoč",
+    "sendPersonalInfo": {
+      "title": "Nova prijava"
+    }
+  },
+  "bottomSheets": {
+    "ciePin": {
+      "title": "Kje najdem svoj PIN?",
+      "content": "Koda PIN je sestavljena iz 8 števk:\n• prve 4 števke so ti bile dane v matičnem uradu;\n• zadnje 4 številke pa so ti bile poslane skupaj z elektronsko osebno izkaznico (CIE).\n  \n**Sestavi jih skupaj in jih vpiši v tem vrstnem redu.**\n"
+    }
+  },
+  "faq": {
+    "1": {
+      "title": "Kaj je SPID?",
+      "content": "SPID je avtentikacijski sistem, ki državljanom in podjetjem omogoča dostop do spletnih storitev javne uprave in pridruženih zasebnikov z unikatno digitalno identiteto. Identiteta SPID je sestavljena iz poverilnic (uporabniškega imena in gesla), ki se izdajo uporabniku in omogočajo dostop do vseh spletnih storitev.\r\n"
+    },
+    "2": {
+      "title": "Kako lahko pridobiš SPID?",
+      "content": "Za pridobitev poverilnic SPID se moraš obrniti na Arubo, Infocert, Inteso, Namirial, Poste, Register, Sielte, Tim ali Lepida. Ti subjekti (imenovani ponudniki identitete) ponujajo različne načine za zahtevanje in pridobitev SPID-a, lahko izbereš tistega, ki najbolj ustreza tvojim potrebam. Vse informacije o tem, kje in kako zaprositi za poverilnice SPID dobiš na spletnem mestu [https://www.spid.gov.it/cos-e-spid/come-attivare-spid/](https://www.spid.gov.it/cos-e-spid/come-attivare-spid/).\n"
+    },
+    "3": {
+      "title": "Ali si izgubil/a svoje poverilnice za SPID?",
+      "content": "Ne skrbi, poverilnice je vedno mogoče obnoviti.\n\n- Če si pridobil/a SPID pri Arubi, sledi postopku obnovitve tukaj: [https://guide.pec.it/spid/recupero-dati/procedure-di-recupero-dati-smarriti.aspx](https://guide.pec.it/spid/recupero-dati/procedure-di-recupero-dati-smarriti.aspx)\n\n- Če si pridobil/a SPID pri Infocert, sledi postopku obnovitve tukaj: [https://my.infocert.it/selfcare/#/recoveryPin](https://my.infocert.it/selfcare/#/recoveryPin)\n\n- Če si pridobil/a SPID pri Namirial, sledi postopku obnovitve tukaj: [https://portale.namirialtsp.com/private/user/spid_reset.php](https://portale.namirialtsp.com/private/user/spid_reset.php)\n\n- Če si pridobil/a SPID pri Intesa, sledi postopku obnovitve tukaj: [https://spid.intesa.it/area-privata/forgot-password.aspx](https://spid.intesa.it/area-privata/forgot-password.aspx)\n\n- Če si pridobil/a SPID pri Poste, sledi postopku obnovitve tukaj: [https://posteid.poste.it/recuperocredenziali.shtml](https://posteid.poste.it/recuperocredenziali.shtml)\n\n- Če si pridobil/a SPID pri Register, sledi postopku obnovitve tukaj: \n(pozabljeno uporabniško ime) [https://spid.register.it/selfcare/recovery/username](https://spid.register.it/selfcare/recovery/username)\n(pozabljeno geslo) [https://spid.register.it/selfcare/recovery/password](https://spid.register.it/selfcare/recovery/password)\n\n- Če si pridobil/a SPID pri Sielte, sledi postopku obnovitve tukaj: \n(pozabljeno geslo) [https://myid.sieltecloud.it/profile/recovery/forgotPassword](https://myid.sieltecloud.it/profile/recovery/forgotPassword)\n\n- Če si pridobil/a SPID pri Tim, sledi postopku obnovitve tukaj: \n(pozabljeno uporabniško ime) [https://login.id.tim.it/mps/fu.php](https://login.id.tim.it/mps/fu.php)\n(pozabljeno geslo) [https://login.id.tim.it/mps/fp.php](https://login.id.tim.it/mps/fp.php)\n\n- Če si pridobil/a SPID pri Lepida, sledi postopku obnovitve tukaj: \n[https://id.lepida.it/idm/app/recupero_credenziali.jsp](https://id.lepida.it/idm/app/recupero_credenziali.jsp)\n"
+    },
+    "4": {
+      "title": "Kaj je CIE?",
+      "content": "CIE, elektronska osebna izkaznica, je zelo varen elektronski dokument, opremljen z radiofrekvenčnim mikroprocesorjem, ki omogoča uporabo v različnih scenarijih, vključno z dostopom do spletnih storitev. Zadovoljuje varnostne potrebe naše države in nadomešča papirnato različico.\r\n"
+    },
+    "5": {
+      "title": "Kako lahko pridobiš CIE?",
+      "content": "Lahko se povežeš na naslov [https://www.prenotazionicie.interno.gov.it/](https://www.prenotazionicie.interno.gov.it) in vneseš ime svoje občine, da preveriš, ali uporablja sistem spletnega naročanja Agenda CIE. Če je tako, lahko nadaljuješ z rezervacijo termina neposredno s spletnega mesta, brez kakršne koli prijave. Še vedno pa obstaja možnost, da se lahko dogovoriš za termin na spletu preko spletne strani tvoje občine ali tako, da greš v enega izmed občinskih uradov.\r\n"
+    },
+    "6": {
+      "title": "Kaj je Identity Provider?",
+      "content": "Identiteto SPID izdajo ponudniki digitalnih identitet (Identity Provider), zasebni subjekti, akreditirani s strani AgID, ki v skladu s pravili Agencije zagotavljajo digitalne identitete in upravljajo avtentikacijo uporabnikov. Tvoj ponudnik identitete je subjekt, ki si ga izbral/a kot ponudnika tvoje identitete SPID.\r\n"
+    },
+    "7": {
+      "title": "Kako izbrati Identity Provider?",
+      "content": "Ponudniki identitet (Identity Provider) ponujajo različne metode registracije, brezplačno ali proti plačilu, njihov SPID pa ima različne stopnje varnosti. Tukaj je nekaj uporabnih parametrov, ki jih moraš upoštevati, če še nimaš SPID-a in se še odločaš, na katerega ponudnika identitete se obrniti:\n\n- način prepoznavanja, ki ti najbolj ustreza v fazi prijave (osebno, prek elektronske osebne izkaznice (CIE)*, Državne kartice storitev (Carta Nazionale dei Servizi - CNS), digitalnega podpisa ali prek spletne kamere);\n- želena raven varnosti SPID-a (1., 2. ali 3. stopnje);\n- če si že stranka enega od ponudnikov identitete, imaš morda poenostavljen način registracije;\n- če si italijanski državljan s stalnim prebivališčem v tujini, bodi pozoren/na na to, kdo ponuja storitev za tujino.\n\nZa več informacij lahko greš na spletno stran [SPID](https://www.spid.gov.it/cos-e-spid/come-attivare-spid/).\n"
+    },
+    "8": {
+      "title": "Ali je mogoče imeti več kot eno digitalno identiteto?",
+      "content": "Da, mogoče je zahtevati več kot eno digitalno identiteto – tudi z različnimi stopnjami varnosti – z različnimi upravitelji digitalne identitete. V primeru posedovanja več identitet se lahko vsak državljan prosto prijavi v IO z želenimi poverilnicami SPID.\r\n"
+    },
+    "9": {
+      "title": "Katero je tvoje geslo?",
+      "content": "Geslo je alfanumerična koda, ki si jo nastavil/a pri ustvarjanju digitalne identitete SPID. Če se ga ne spominjaš, lahko izbereš obnovitev gesla in začneš povezan postopek obnovitve, ki ga upravlja neposredno ponudnik identitete.\r\n"
+    },
+    "11": {
+      "title": "Kaj se zgodi, če presežeš 5 poskusov preverjanja pristnosti?",
+      "content": "Geslo je alfanumerična koda, ki si jo nastavil/a pri ustvarjanju digitalne identitete SPID. Če se ga ne spominjaš, lahko izbereš obnovitev gesla in začneš povezan postopek obnovitve, ki ga upravlja neposredno ponudnik identitete.\r\n"
+    },
+    "12": {
+      "title": "Si naredil/a vse pravilno, vendar se še vedno ne moreš prijaviti?",
+      "content": "Morda je te�ava povezana z integracijo med SPID-om in aplikacijo IO. Prijavi te�avo z uporabo gumbov na dnu te strani: potrudili se bomo, da ti pomagamo in ti cim prej omogocimo dostop do aplikacije IO.\r\n"
+    },
+    "13": {
+      "title": "Kako se upravljajo tvoji podatki?",
+      "content": "Za dostop do aplikacije IO je potrebno pooblastiti svojega ponudnika identitete, da posreduje tvojo davčno številko, ime, priimek, e-poštni naslov in številko mobilnega telefona na platformo IO. Aplikacija IO ustanovi ne sporoči tvoje davčne številke, vendar lahko vsaka ustanova uporabi aplikacijo IO, da ti piše le, če že ima tvoje podatke (in torej razmerje s tabo).\r\n"
+    },
+    "14": {
+      "title": "Kako lahko pozneje ponovno prebereš informacije o obdelavi osebnih podatkov?",
+      "content": "Ko je preverjanje pristnosti koncano, se bo� zna�el/la v aplikaciji IO. Na strani profila pod naslovom zasebnost si lahko kadarkoli ogleda� informacije o obdelavi osebnih podatkov uporabnikov aplikacije IO (13. clen Uredbe EU �t. 2016/679).\r\n"
+    },
+    "15": {
+      "title": "Kateri je PIN elektronske osebne izkaznice?",
+      "content": "Osemmestni PIN tvoje elektronske osebne izkaznice ti, za prvo polovico, izda Občina, ko vložiš prošnjo za izdajo CIE, drugo polovico pa prejmeš na dom ob dostavi le-te.\r\n"
+    },
+    "16": {
+      "title": "Ali ima tvoj telefon bralnik NFC?",
+      "content": "Podatke CIE je mogoce brati z napravo, opremljeno z vmesnikom NFC (Near Field Communication).\nPreveri, ali tvoja naprava podpira NFC, tako da si ogleda� specifikacije telefona.\nCe ima� napravo Android, preverite tudi, ali je NFC omogocen, tako da odpre� �Nastavitve� v razdelku �Povezave�.\n"
+    },
+    "17": {
+      "title": "Za kaj je potrebna koda za odklepanje?",
+      "content": "Koda za odklepanje je potrebna za tretjo stopnjo avtentikacije (poleg uporabniškega imena in gesla - prva stopnja - in kode OTP - druga stopnja -) in za zagotovitev varne uporabe aplikacije. Koda za odklepanje se od uporabnika zahteva med prijavo (če je seja še vedno aktivna), kar ti omogoča hiter vstop v aplikacijo IO, ne da bi moral/a vsakič znova vnesti uporabniško ime, geslo in OTP, in kot potrditev med plačilom ali drugem pomembnim dejanjem, ki neposredno vpliva na tvojo varnost (kot je npr. brisanje tvojega računa).\nBiometrično prepoznavanje, če je aktivirano, nadomešča funkcijo kode za odklepanje (odvisno od nastavitev boš moral/a vnesti biometrično prepoznavanje ali kodo za odklepanje).\nPrepoznavanje s kodo za odklepanje ostane aktivno 30 dni od zadnjega dostopa; na 31. dan seja poteče in potrebno bo ponovno preverjanje pristnosti ter vnos kode za odklepanje.\n"
+    },
+    "18": {
+      "title": "Ali je mogoče pozneje ponastaviti kodo za odklepanje?",
+      "content": "Da, kodo za odklepanje bo mogoče ponastaviti na strani profila z izbiro »Ponastavi kodo za odklepanje«. Po preverjanju pristnosti s SPID ali CIE boš pozvan/a, da znova začneš postopek preverjanja pristnosti, tako da vneseš novo kodo za odklepanje.\n"
+    },
+    "19": {
+      "title": "Ali je biometrično prepoznavanje varno?",
+      "content": "Metode prepoznavanja, ki temeljijo na biometriji, so se sčasoma izkazale za varnejše od številskih ali alfanumeričnih gesel, ki so pogosto ranljiva ali nenamerno posredovana drugim ljudem. Biometrično prepoznavanje nudi, v primerjavi z vnosom kode za odklepanje,  prednost hitrejše avtentikacije in omogoča hitrejše izvajanje operacij v aplikaciji IO.\n"
+    },
+    "20": {
+      "title": "Kdaj boš potreboval/a biometrično prepoznavanje?",
+      "content": "Biometrično prepoznavanje se od uporabnika zahteva med prijavo (če je seja še vedno aktivna), kar omogoča hiter vstop v aplikacijo IO, ne da bi morali vsakič znova vnesti svoje uporabniško ime, geslo in OTP, ter kot potrditev med plačilom oz. drugim pomembnim dejanjem, ki neposredno vpliva na varnost (kot je brisanje svojega računa).\nBiometrična prepoznava ostane aktivna 30 dni od zadnjega dostopa; na 31. dan seja poteče in boš moral/a ponovno izvesti vtentikiracijo.\n"
+    },
+    "21": {
+      "title": "Kako omogočiti biometrično prepoznavanje?",
+      "content": "Biometrično prepoznavanje je mogoče uporabiti v aplikaciji IO le, če ga naprava podpira in je omogočeno v sistemskih nastavitvah same naprave.\nČe tvoj telefon podpira biometrično prepoznavanje, ga lahko kadar koli aktiviraš v sistemskih nastavitvah.\n"
+    },
+    "22": {
+      "title": "Kako enemogočiti biometrično prepoznavanje?",
+      "content": "Biometrično prepoznavanje lahko v aplikaciji IO kadar koli onemogočiš, na strani »Profil«.\nBiometrično prepoznavanje je že onemogočeno, če ni na voljo v tvoji napravi ali pa, če je bilo onemogočeno v sistemskih nastavitvah.\n"
+    },
+    "23": {
+      "title": "Kakšna sporočila lahko prejemaš?",
+      "content": "Aplikacija IO omogoča prejemanje različnih vrst sporočil: obvestila o plačilu (z možnostjo sočasnega plačila prek aplikacije), opomnike na roke, obvestila in razne posodobitve.\nNe gre za generična sporočila, ki se nanašajo na dejavnost ustanove, temveč za sporočila, ki zadevajo tebe osebno, na primer sporočilo, ki te opozarja na potek veljavnosti dokumenta. Ne pričakuj, da boš v aplikaciji IO prejemal neželeno pošto – pisale ti bodo samo storitve, ki ti bodo imele kaj pomembnega povedati.\n"
+    },
+    "24": {
+      "title": "Kaj se zgodi, če arhiviraš sporočila?",
+      "content": "Arhivirana sporocila se premaknejo v zavihek �Arhivirano� v razdelku s sporocili.\nTa sprememba vpliva samo na telefon, ki ga uporablja� za izvajanje operacije arhiviranja: ce se prijavi� z istimi poverilnicami v drugi napravi, bo� vsa sporocila na�el/la v kategoriji �Prejeto�. �e vedno lahko odstrani� sporocila iz arhiva in samodejno jih bo� na�el/la v glavnem zavihku �Sporocila�.\n"
+    },
+    "25": {
+      "title": "Ali je mogoče izbrisati sporočila?",
+      "content": "Ne, prejetih sporočil ni mogoče izbrisati iz aplikacije.\n\nZa to smo ustvarili razdelek »*Arhivirano*«, kamor lahko premakneš sporočila, ki jih ne želiš več videti med prejetimi. Na ta način, če boš v prihodnosti moral/a poiskati informacije v starem sporočilu, lahko iščeš neposredno v zavihku »*Arhivirano*«.\n"
+    },
+    "26": {
+      "title": "Ali je možno odgovarjati na sporočila?",
+      "content": "Ne, v tej prvi izdaji ni mogoče odgovoriti na sporočilo določenega servisa neposredno iz aplikacije IO.\nAplikacija je trenutno kanal, ki omogoča komunikacijo med ustanovo in državljanom ter podpira izvajanje nekaterih operacij, kot je plačevanje.\nČe se moraš obrniti na ustanovo ali imaš vprašanja glede prejetega sporočila, si lahko ogledaš vse informacije v zvezi s storitvijo in ponudnikom v podrobnostih sporočila. Poleg tega, če slediš povezavi do profila storitve, boš našel/la kontaktne podatke, preko katerih lahko neposredno kontaktiraš subjekt (naslov okenca, telefon, spletna stran, aplikacija itd.).\n"
+    },
+    "27": {
+      "title": "Kako se poveže koledar?",
+      "content": "Koledar lahko povežeš z uporabo gumba »+ Opomnik« v predogledu ali v podrobnostih posameznega sporočila. Ko prvič izbereš »+ Opomnik«, boš pozvan/a, kateri koledar želiš povezati z aplikacijo IO: od takrat naprej bodo opomniki vstavljeni neposredno v navedeni koledar.\nKadar koli si, v nastavitvah v razdelku »Profil«, lahko ogledaš in urediš koledar, povezan z aplikacijo IO.\n"
+    },
+    "28": {
+      "title": "Te to sporočilo ne zanima?",
+      "content": "Če te ne zanima prejemanje sporočil te storitve, lahko sprejem kadar koli onemogočiš.\nZa to moraš vstopiti v razdelek Storitve, s seznama izbrati določeno storitev in izbrati besedo »Storitev je aktivna«. Od tega trenutka naprej bo prikazano sporočilo »Storitev ni aktivna« in storitev vam ne bo več pošiljala sporočil preko IO aplikacije.\nOpozarjamo te, da bo storitev, če bo potrebno, še naprej stopila v stik s tabo prek alternativnih kanalov, ki so na voljo (e-pošta, pošta, telefon itd.), odvisno od tvojih želja.\n"
+    },
+    "29": {
+      "title": "Ali je v sporočilu, ki si ga prejel/a, napaka?",
+      "content": "Če meniš, da je v sporočilu, ki si ga prejel/a, napaka, lahko uporabiš kontaktne podatke ponudnika storitev, da prijaviš napako ali zaprosiš za pojasnila.\nKontaktni podatki so na voljo v območju s podrobnostmi sporočila ali v razdelku »Storitve« v aplikaciji IO, tako da izbereš določeno ustanovo in storitev.\nOdvisno od kontaktnih metod, ki jih upravlja posamezen organ in služba, lahko kontaktni podatki vključujejo: naslov fizičnega okenca, telefonsko številko, e-poštni naslov in/ali CEP (PEC), spletno stran, spletno pomoč, mobilno aplikacijo.\n"
+    },
+    "30": {
+      "title": "Ali ima ta ustanova dovoljenje, da ti piše?",
+      "content": "Ko namestiš aplikacija IO, so v tvojem profilu vse ustanove privzeto aktivne. Ustanova ti lahko pošilja sporočila le, če ti mora dostaviti posebno sporočilo, povezano s tvojo davčno številko. Aplikacija IO subjektu ne sporoči tvoje davčne številke, vendar lahko vsak subjekt uporabi aplikacijo IO, da ti piše le, če že ima tvoje podatke (in torej ima razmerje s tabo).\nČe ne želiš več prejemati sporočil od določene ustanove, lahko onemogočiš njegove storitve v razdelku »storitve« v aplikaciji IO. Če v aplikaciji IO onemogočiš prejemanje sporočil ustanove, lahko subjekt še vedno stopi v stik z vami prek običajnih komunikacijskih kanalov, ki so v uporabi (e-pošta, telefon ali pošta, odvisno od primera).\n"
+    },
+    "31": {
+      "title": "Ali želite stopiti v stik z ustanovo?",
+      "content": "V podrobnostih sporočila si lahko ogledaš informacije v zvezi z določeno ustanovo in ponudnikom. Če slediš povezavi do profila storitve, boš našel/la razširjene informacije in kontaktne podatke, preko katerih lahko stopiš v stik s ponudnikom storitev.\nOdvisno od kontaktnih metod, ki jih uporablja posamezen organ in služba, lahko kontaktni podatki vključujejo: naslov fizičnega okenca, telefonsko številko, e-poštni naslov in/ali CEP (PEC), spletno stran, spletno pomoč, mobilno aplikacijo.\n"
+    },
+    "32": {
+      "title": "Kaj je identifikacijska koda sporočila?",
+      "content": "Identifikacijska koda ali ID sporočila je edinstvena koda, ki jo aplikacija IO ustvari v povezavi z vsakim poslanim sporočilom. Uporabiš jo lahko za identifikacijo sporočila v primeru zahtev za pomoč.\r\n"
+    },
+    "33": {
+      "title": "Ali je možno plačati obvestilo, ki ga nisi prejel/a prek IO aplikacije?",
+      "content": "Seveda, če obvestilo podpira plačilo prek pagoPA, lahko nadaljuješ in izvedeš transakcijo neposredno iz aplikacije IO.\nČe je na voljo QR koda in/ali Koda obvestila, je plačilni model primeren. Aplikacija IO iz razdelka »Denarnica« omogoča skeniranje QR kode ali ročno vstavljanje Kode obvestila, odvisno od tega, kaj ti bolj ustreza.\n"
+    },
+    "34": {
+      "title": "Kaj je QR koda?",
+      "content": "QR koda je dvodimenzionalna črtna koda ali matrika, sestavljena iz črnih kvadratkov, razporejenih znotraj belega kvadratnega vzorca. QR koda povezuje fizični svet z digitalnim: QR kodo, natisnjeno na listu, lahko skeniramo s kamero telefona za dostop do digitalne vsebine, kot je npr. spletna stran, plačilo, članek.\nQR koda, ki jo najdeš na obvestilu o plačilu, je povezana na Kodo obvestila, ki ti omogoča, da aktiviraš postopek plačila za določen namen, številko in davčno številko – s čimer se izogneš ročnemu vnosu teh podatkov med postopkom plačila.\n"
+    },
+    "35": {
+      "title": "Kaj je pagoPA?",
+      "content": "pagoPA je sistem, ki omogoča, da so vsa plačila javni upravi preprostejša, varnejša in preglednejša. pagoPA morajo obvezno sprejeti vse javne uprave in drugi subjekti, ki jih zahteva zakon, sprejema pa jih tudi vedno večje število bank in plačilnih institucij (ponudnikov plačilnih storitev – PSP). pagoPA je predviden pri izvajanju čl. št. 5 CAD (Zakonika o elektronski upravi - Codice dell’Amministrazione Digitale) in ZU 179/2012. pagoPA se je rodil zaradi posebnih razlogov za:\n\n- povečati uporabo elektronskih načinov plačevanja na sistemski ravni države glede na to, da so plačila kreditnim institucijam pomembna po številu transakcij in obsegu;\n- omogočiti državljanu svobodno izbiro načina plačila, pri čemer se izpostavi stroške provizije;\n- zmanjšati stroške vodenja izterjav za ustanove upnice;\n- poenotiti, na državni ravni, elektronske načine plačevanja ustanov upnicam.\n"
+    },
+    "36": {
+      "title": "Ne vidiš svojih računov pagoPA?",
+      "content": "Podrobnosti o svojih uspešnih transakcijah najdeš na seznamu operacij v razdelku »Plačila« aplikacije IO.\nVendar v aplikaciji niso prikazana vsa tvoja plačila javni upravi. Bolje, boš lahko videl/a samo potrdila, ki se nanašajo na plačila pagoPA, opravljena prek same aplikacije, in tista, opravljena na spletu, neposredno na spletnem mestu ali mobilni aplikaciji sodelujočih ustanov. Če plačila še vedno ni na seznamu operacij, je to lahko odvisno od dejstva, da si to plačilo izvedel/la brez registracije pri pagoPA ali s prijavo z e-poštnim naslovom brez avtentikacije preko SPID-a. Ko vstopiš v aplikacijo IO in preveriš pristnost s svojo digitalno identiteto (SPID ali CIE), si lahko dejansko ogledaš samo plačila pagoPA, ki si jih opravili kot registrirani uporabnik, in plačila, ki so identificirana s tvojo davčno številko. Na koncu upoštevaj še, da bo uskladitev računov uporabnikov, ki so se registrirali na pagoPA, zaključena tik pred uvedbo dostopa prek SPID-a, tako da bodo povezana plačila tudi vsa povezana s tvojo davčno številko.\n"
+    },
+    "37": {
+      "title": "Katere načine plačila lahko dodaš?",
+      "content": "Trenutno lahko dodaš debetne, kreditne, predplačniške in PagoBANCOMAT kartice. Dodajanje drugih načinov plačila je načrtovan v naslednjih mesecih. Oglej si posodobljen seznam na strani [Načini plačila](https://io.italia.it/metodi-pagamento).\r\n"
+    },
+    "38": {
+      "title": "Ali sta potrdilo o transakciji in razbremenilna izjava ista stvar?",
+      "content": "Potrdilo, ki ga vidiš v aplikaciji IO na koncu plačilne transakcije, vsebuje povzetek podatkov v zvezi z uspešno transakcijo. Potrdilo prikazuje vse podrobnosti plačila: kodo IUV (enotna identifikacija plačila - Identificativo Univoco del Versamento), znesek, upravičenca, datum in razlog za plačilo, ter vsebuje dokazilo o plačilu dolgovanih zneskov s strani dolžnika. Če iz posebnih razlogov potrebuješ tudi odpustnico (t.j. dokument, ki ga izda ustanova upnica in ki potrjuje, da so prejeli plačilo določenega zneska), se moraš obrniti na ustanovo samo, oziroma na edinio sebek, ki jo lahko izda, kot upravičenec do plačila.\n"
+    },
+    "39": {
+      "title": "Kaj je identifikacijska koda transakcije?",
+      "content": "Identifikacijska koda je edinstvena koda, ki jo, ob transakciji, z namenom identifikacije, generira pagoPA. To kodo lahko uporabiš v komunikaciji s pagoPA ali z ustanovami v primeru, da potrebuješ pomoč.\r\n"
+    },
+    "40": {
+      "title": "Ali je mogoče arhivirati ali upravljati potrdila o transakcijah?",
+      "content": "Vsa potrdila ostanejo vidna v razdelku »Denarnica« na seznamu »Moje operacije« (zadnja so na vrhu). Trenutno jih ni mogoče odstraniti ali organizirati drugače.\r\n"
+    },
+    "41": {
+      "title": "Kako lahko odstranim način plačila?",
+      "content": "Tvoji nacini placila so prikazani kot kartice (ali izkaznice) na vrhu zaslona. Z interakcijo s tem podrocjem lahko izbere� eno od predhodno dodanih metod. Tri navpicne pike (zgoraj desno) omogocajo dostop do menija, iz katerega lahko izvede� dve operaciji: doda�/odstrani� nacin placila med priljubljenimi ali trajno odstrani� nacin placila iz aplikacije IO. Ce �eli� nacin odstraniti, izberi to mo�nost.\r\n"
+    },
+    "42": {
+      "title": "Kako lahko dodam način plačila?",
+      "content": "V razdelku �Denarnica� na vrhu bo� na�el/la svoja placilna sredstva. Gumb �Dodaj nacin� ti omogoca, da doda� nov nacin placila.\n"
+    },
+    "43": {
+      "title": "Kje najdem varnostno kodo?",
+      "content": "To je trimestna koda, imenovana CVV ali CVS, ki jo najdeš na zadnji strani kartice.\nNa karticah American Express je koda (CID) štirimestna in se nahaja na sprednji strani.\n"
+    },
+    "44": {
+      "title": "Zakaj moram plačati provizijo?",
+      "content": "Za opravljanje plačilne storitve mora plačnik svojemu PSP plačati provizijo. Provizije za upravljanje plačil izhajajo iz nekaterih stroškov storitev, ki jih imajo ponudniki plačilnih storitev, da zagotovijo kakovostno storitev: na primer neprekinjenost delovanja, časi izvajanja transakcij morajo biti zelo hitri, stroški mednarodnih plačil v primeru plačila s kreditno kartico, varnost in storitve za preprečevanje goljufij, zanesljivost infrastrukture.\nZa več podrobnosti si oglej stran [Pogosto zastavljena vprašanja (FAQ)](https://pagopa-docs-faq.readthedocs.io/it/latest/_docs/FAQ_sezioneA.html) na spletni strani pagoPA."
+    },
+    "45": {
+      "title": "Zakaj se provizije spreminjajo od enega ponudnika do drugega?",
+      "content": "Vsaka institucija, ki upravlja plačila s pagoPA (Ponudniki plačilnih storitev - Prestatori di Servizi di Pagamento), lahko neodvisno uveljavlja različne stroške, odvisno od svoje poslovne politike in pogodbenih pogojev uporabnika.\r\n"
+    },
+    "46": {
+      "title": "Ali lahko za vsako plačilo izberem drugega ponudnika?",
+      "content": "Da, pri vsakem novem plačilu lahko izbereš upravitelja, ki se ti zdi najbolj primeren. Tistega, ki ga izbereš za plačilno storitev, ni nujno da je tvoja banka ali institucija, ki ti zagotavlja tvojo kreditno ali debetno kartico.\r\n"
+    },
+    "47": {
+      "title": "Kako upravljati storitve na IO?",
+      "content": "Ponudniki identitet (Identity Provider) ponujajo različne metode registracije, brezplačno ali proti plačilu, njihov SPID pa ima različne stopnje varnosti. Tukaj je nekaj uporabnih parametrov, ki jih moraš upoštevati, če še nimaš SPID-a in se še odločaš, na katerega ponudnika identitete se obrniti:\n\n- način prepoznavanja, ki ti najbolj ustreza v fazi prijave (osebno, prek elektronske osebne izkaznice (CIE)*, Državne kartice storitev (Carta Nazionale dei Servizi - CNS), digitalnega podpisa ali prek spletne kamere);\n- želena raven varnosti SPID-a (1., 2. ali 3. stopnje);\n- če si že stranka enega od ponudnikov identitete, imaš morda poenostavljen način registracije;\n- če si italijanski državljan s stalnim prebivališčem v tujini, bodi pozoren/na na to, kdo ponuja storitev za tujino.\n\nZa več informacij lahko greš na spletno stran [SPID](https://www.spid.gov.it/cos-e-spid/come-attivare-spid/).\n"
+    },
+    "48": {
+      "title": "Kaj so tvoja področja zanimanja?",
+      "content": "Tvoja interesna področja so geografska območja, kjer preživiš največ časa, in zato so z njim povezane tudi ustanove, ki na tem ozemlju opravljajo storitve: tvoja občina, tvoja dežela, šola, kjer se učijo tvoji otroci, najbližja bolnišnica. Z izbiro področij, ki te zanimajo, imaš možnost izpostaviti seznam lokalnih storitev, ki so ti najbolj uporabne. Kadarkoli bodo ustanove tvojih interesnih področij v IO dodale novo storitev, boš prejel/a obvestilo in lahko takoj preveril/a podrobnosti.\r\n"
+    },
+    "49": {
+      "title": "Ali lahko prek IO vzpostaviš stik z ustanovami?",
+      "content": "Iz aplikacije IO ne more� direktno vzpostaviti stika z ustanovami, vendar si lahko ogleda� njihove kontakte v razdelku �Storitve� na zavihku vsake storitve.\r\n"
+    },
+    "50": {
+      "title": "Kaj se zgodi, če onemogočiš določeno storitev?",
+      "content": "Onemogočanje storitve pomeni, da v aplikaciji IO od te storitve ne boš prejemal/a več sporočil. Ustanova, ki zagotavlja storitev, lahko v vsakem primeru stopi v stik s tabo ali ti z njo prek drugih kanalov, kot so spletna stran, e-pošta, telefonska številka ali pripadajoča pisarna.\r\n"
+    },
+    "51": {
+      "title": "Kako delujejo potisna obvestila?",
+      "content": "Potisna obvestila te obveščajo, da je v aplikacijo IO prispelo novo sporočilo, in te vabi, da bereš naprej. Če želiš, da so sporočila, povezana z določeno storitvijo, zasebna, lahko onemogočiš potisna obvestila za to storitev. Ko so potisna obvestila onemogočena, boš prihod novih sporočil prepoznal/a po znaku na ikoni aplikacije v telefonu in v razdelku Sporočila. Modra pika je namreč uporabljena za označevanje neprebranih sporočil.\r\n"
+    },
+    "52": {
+      "title": "Kako deluje posredovanje sporočil preko e-pošte?",
+      "content": "Ko je posredovanje sporočil po e-pošti vklopljeno, boš prejel/a kopijo sporočila, ki ga prejmeš v aplikaciji IO, na svoj e-poštni naslov, ki je povezan z aplikacijo. Če želiš, da so sporočila povezana s storitvijo zasebna, izklopi posredovanje e-pošte za to storitev. Posredovanje preko e-pošte pri nekaterih storitvah ni na voljo: ustanove se za to odloči glede na občutljivost samega sporočila.\r\n"
+    },
+    "53": {
+      "title": "Kako uporabljati digitalne dokumente?",
+      "content": "V zgornjem delu tvojega profila si lahko ogledaš digitalno različico nekaterih svojih dokumentov, kot so faksimile davčne številke, elektronska osebna izkaznica, zdravstvena izkaznica (v razvoju).\nTi dokumenti so faksimile, torej ne nadomeščajo v celoti fizičnega dokumenta, ampak jih lahko za branje podatkov in črtne kode na dokumentu uporabijo trgovci, ki to potrebujejo, npr. v lekarni ali na pošti.\nČe izbereš kartico na vrhu strani, si lahko ogledaš njene podrobnosti. Če se znova dotakneš faksimila, boš poleg podrobnosti videl/a celozaslonski predogled kartice (za lažje skeniranje kode na kartici).\n"
+    },
+    "54": {
+      "title": "Za kaj se uporablja faksimile davčne številke?",
+      "content": "S faksimilom lahko podatke in črtno kodo na dokumentu preberejo trgovci, ki to potrebujejo, na primer v lekarni ali na pošti.\n"
+    },
+    "55": {
+      "title": "Kako bo zaščitena tvoja zasebnost?",
+      "content": "Aplikacija IO je bila zasnovana in razvita v skladu z načeli in pravili, ki jih nalaga zakonodaja o varstvu osebnih podatkov, in sicer nova [Uredba (EU) 2016/679 (tako imenovana »GDPR«)](https://eur-lex.europa.eu/legal-content/SL/TXT/HTML/?uri=CELEX:32016R0679&from=EN) in [italijanska koda o zasebnosti](https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:2003-06-30;196!vig=) (ZU 196/2003, kot je bila nedavno spremenjena). Je torej varno orodje, ki varuje tvoje podatke in pravice. Vendar IO predstavlja le en kanal, ki ga javna uprava uporablja za povezovanje z državljani, tako da slednji ostajajo lastniki svojih osebnih podatkov, ki so potrebni za izvajanje njihovega institucionalnega mandata, tako kot se to dogaja danes. Razvojna ekipa IO se pogovarja z [Garantom za varstvo osebnih podatkov](https://www.garanteprivacy.it/), da bi IO postala orodje, ki izboljšuje izkušnjo državljanov tudi v smislu dostopnosti in preglednosti informacij v zvezi z zasebnostjo.\r\n"
+    },
+    "56": {
+      "title": "Kako izbrisati vse svoje podatke iz IO?",
+      "content": "Zahtevaš lahko izbris vseh svojih osebnih podatkov, povezanih z aplikacijo IO. Ob koncu operacije brisanja podatkov boš prejel/a potrditveno sporočilo na svoj e-poštni naslov, javljen v aplikaciji.\nTo ne pomeni, da ne boš več mogel/la uporabljati IO: v aplikacijo se boš lahko znova prijavil/a, vendar kot nov uporabnik/ca.\n"
+    },
+    "57": {
+      "title": "Si imel/a težave pri plačilu?",
+      "content": "Vstopi na stran [stanje mojih plačil](ioit://PAYMENTS_HISTORY_SCREEN), da s seznama izbereš neuspešne operacije in se zanje obrneš na pomoč.\n"
+    },
+    "58": {
+      "title": "Kako lahko uveljavljam bonus?",
+      "content": "Če si polnoleten/na, preprosto klikni gumb »Prosi za Počitniški bonus« na dnu strani in sledi poteku, ki ti bo predlagan. Aplikacija IO bo povprašala INPS, da preveri ISEE tvojih vzdrževanih družinskih članov, in če je v skladu z danimi pogoji, ti bo prikazala, koliko bonusa lahko dobiš ti ali tvoja družina. Ko bo tvoja prošnja potrjena, bomo ustvarili in aktivirali tvoj bonus.\n\nOpozorilo: postopek je bil čim bolj poenostavljen, vendar lahko obdelava podatkov traja dlje, kot je pričakovano. Ne skrbi: če se to zgodi, ti bomo v aplikaciji poslali sporočilo, ko bo tvoja prošnja pripravljena.\n"
+    },
+    "59": {
+      "title": "Kaj potrebujem za uveljavljanje bonusa?",
+      "content": "Potrebno je, da je nekdo od tvojih vzdrževanih družinskih članov INPS-u predložil Enotno nadomestno izjavo (DSU) in da obstaja veljaven navaden ISEE.\nBonus se izplača družinam, katerih ISEE ne presega 40.000 €.\nČe že veš, da INPS-u nisi nikoli predložil/a izjave DSU, ali če si jo predložil/a z zahtevo po drugi vrsti ISEE, ali če se je od zadnjega predloženega DSU kaj spremenilo (npr. sprememba števila družinskih članov, spremembe premoženja itd.), priporočamo, da, preden nadaljuješ s prošnjo, INPS-u oddaš novo vlogo.\n\n"
+    },
+    "60": {
+      "title": "Sem dobil bonus?",
+      "content": "Ne še. To je samo predogled pravega bonusa. Če želiš nadaljevati s prošnjo, klikni gumb »Aktiviraj bonus« na dnu strani.\r\n"
+    },
+    "61": {
+      "title": "Kaj pomeni, da so moji družinski člani upravičenci do Počitniškega bonusa?",
+      "content": "Na voljo je en Počitniški bonus na vzdrževane družinske člane. Bonus lahko uporabi kateri koli član od vzdrževanih družinskig članov, ki so navedeni na tej strani, ne nujno samo prosilec.\r\n"
+    },
+    "62": {
+      "title": "Kaj pomeni, da so v mojem DSU-ju pomankljivosti ali neskladja?",
+      "content": "Če te aplikacija opozori, da ima tvoj DSU »pomanjkljivosti ali neskladja«, lahko:\n- prenehaš prošnjo za bonus in predložiš nov DSU, da posodobiš svoj ISEE. V tem primeru lahko pozneje znova predložiš prošnjo za bonus;\n- lahko pa preveriš DSU, ki si ga poslal/a prek kanalov INPS, in - če je vse pravilno - vseeno nadaljuješ s prošnjo. Če se odločiš za nadaljevanje aktivacije Bonusa, po koriščenju le-tega v izbranem turističnem objektu, se lahko od tebe zahteva predložitev dokumentacije za dokazovanje popolnosti in resničnosti podatkov, navedenih v DSU.\n"
+    },
+    "63": {
+      "title": "Kako lahko uporabim Počitnički bonus?",
+      "content": "Počitniški bonus lahko porabiš v nastanitvenih objektih, ki sodelujejo v pobudi in se nahajajo na državnem ozemlju. Bonus, pripisan tvojim vzdrževanim družinskim članom, je identificiran z identifikacijsko kodo, kateri je povezana tudi QR koda (ki jo je mogoče prebrati neposredno z zaslona telefona). Hotelirju sporoči samo to kodo in tvojo davčno številko ali pa mu, ob plačilu bivanja, pokaži QR kodo.\nZa več informacij: [io.italia.it/bonus-vacanze](https://io.italia.it/bonus-vacanze)\nPoleg tega si lahko ogledaš [Uporabniški priročnik](https://www.agenziaentrate.gov.it/portale/documents/20143/233439/Guida_Bonus_Vacanze_v1.pdf/1bbb218f-b17f-6ccc-4c0c-62af8d7bb205) na spletni strani Agencije za javne prihodke.\n"
+    },
+    "64": {
+      "title": "Kako lahko delim Počitnički bonus z mojimi družinskimi člani?",
+      "content": "Če je družinski član namestil aplikacijo na svoj telefon in ima aktiven račun na IO, si jo lahko samodejno ogleda v razdelku »Denarnica«. Druga možnost je, da za tiste, ki nimajo računa v aplikaciji IO, s funkcijo »Deli«, ki jo najdeš na zaslonu s povzetkom bonusa, aplikacija ustvari kopijo identifikacijske kode in povezane QR kode. To lahko potem deliš z drugimi vzdrževanimi družinskimi člani, prek aplikacije Whatsapp ali drugih orodij, ki so na voljo na pametnem telefonu.\n\n**Pozor!** Pomembno je, da bonus, ki je pripisan tvojim vzdrževanim družinskim članom, deliš SAMO z ostalimi člani, ki so pooblaščeni za njegovo porabo, in, ob plačilu bivanja, s turističnim objektom, v katerem boš letoval (takoj zahtevaj tudi račun, v katerem bo naveden popust, dosežen s Počitniškim bonusom). V nasprotnem primeru lahko tvegaš, da bodo drugi porabili bonus namesto tebe, zaradi česar bo neuporaben za vse vzdrževane družinske člane.\n"
+    },
+    "65": {
+      "title": "Kje lahko najdem seznam institucij, ki sprejemajo Počitniški bonus?",
+      "content": "Sodelovanje turističnih nastanitvenih objektov v pobudi je brezplačno in ni predviden mehanizem za »vpis« v seznam. Struktura mora prek svojih kanalov obvestiti stranke, ali sprejema Počitniški bonus ali ne. Zator, preden ga zahtevaš, se prepričaj, da ga boš lahko uporabil/a tam, kjer si se odločil/a za naslednje počitnice.\r\n"
+    },
+    "66": {
+      "title": "Katere bonuse ali kartice s popusti lahko dodam?",
+      "content": "Trenutno lahko prosiš za Počitniški bonus ali aktivacijo storitve Cashback.\nSeznam na tej strani že prikazuje vse bonuse ali popuste, za katere je trenutno mogoče zaprositi prek aplikacije IO. Seznam bo posodobljen, ko bodo dodane nove pobude.\n"
+    },
+    "67": {
+      "title": "Ali moram svoj ISEE naložiti v aplikacijo IO v PDF različici?",
+      "content": "Ne. Po predložitvi enotne nadomestne izjave (DSU) za izračun ISEE podjetju INPS, za prošnjo za bonus prek IO, ti ni treba storiti ničesar drugega. Ko predložiš prošnjo, aplikacija sama preveri, neposredno v sistemu INPS, ali je tvoj ISEE pod zahtevanim pragom.\n"
+    },
+    "68": {
+      "title": "Ali v aplikaciji IO najdem seznam turističnih institucij, ki sprejemajo Počitniški bonus?",
+      "content": "Ne. Sodelovanje turistično-nastanitvenih objektov v pobudi je brezplačno in ni mehanizma za »vpis« na seznam. Struktura mora prek svojih kanalov obvestiti stranke, ali sprejema Počitniški bonus ali ne. Zato se, preden ga zahtevaš, prepričaj, da ga boš lahko uporabili tam, kjer si se odločil/a za naslednje počitnice.\r\n"
+    },
+    "69": {
+      "title": "Koliko časa lahko preteče od trenutka zahteve do aktivacije bonusa na IO?",
+      "content": "Če izpolnjuješ vse zahteve za upravičenost do ugodnosti, je aktivacija bonusa skoraj takojšnja: v nekaj minutah, od trenutka prošnje, aplikacija opravi potrebna preverjanja v sistemu INPS in pošlje povzetek na Agencijo za javne prihodke ter nato še potrditev, da je tvoj bonus aktiven.\nV primeru, da je postopek preverjanja upočasnjen zaradi razlogov, ki niso povezani z aplikacijo, bo IO nadaljeval s preverjanji namesto tebe in ti poslal sporočilo, v katerem te bo obvestil o času, v katerem moraš dopolniti prošnjo, da se izogneš ponovnemu ponavljanju začetnega preverjanja tvojega ISEE.\n\n"
+    },
+    "70": {
+      "title": "Ali moram v aplikacijo IO nujno dodati kreditno kartico, da lahko zahtevam in porabim bonus?",
+      "content": "Ne. Tudi če najdeš funkcijo za prošnjo za Počitniški bonus v razdelku »Plačila« v aplikaciji IO, uporaba bonusa ni na noben način povezana z razpoložljivostjo kreditne kartice ali drugih načinov plačila, shranjenih v aplikaciji. Ko koristiš Bonus za pridobitev popusta v turističnem objektu, kjer boš letoval/a, lahko morebitne dodatne zneske v zvezi s tvojim bivanjem doplačaš z načinom plačila, ki ti je najbolj všeč, če ga seveda sprejemajo.\r\n"
+    },
+    "71": {
+      "title": "Nameravam zahtevati Počitniški bonus, vendar ga ne bom uporabil osebno. Ali ga lahko odstopim drugemu drušinskemu članu?",
+      "content": "Da. Od 1. julija dalje, ko boš, prek aplikacije IO, prosil/a za Počitniški bonus in bo ta aktiviran, se lahko poljubno odločiš, ali ga boš uporabil/a za počitnice, na katerih so prisotni vsi vzdrževani člani družine ali samo nekateri. Ni nujno, da ga osebno porabiš ali da si osebno prisoten/na.\nUpoštevaj, da bo naslovnik računa (ali komercialnega dokumenta ali računa/potrdila), ki ga je izdal ponudnik turistične storitve, prav tako upravičen do davčne olajšave, ki jo predvideva Počitniški bonus, v davčni napovedi za naslednje leto.\n"
+    },
+    "72": {
+      "title": "Kako bom lahko delil Počitnički bonus z mojimi družinskimi člani?",
+      "content": "Če je družinski član namestil aplikacijo na svoj telefon in ima aktiven račun na IO, si jo lahko samodejno ogleda v razdelku »Plačila«. Druga možnost je, da za tiste, ki nimajo računa v aplikaciji IO, s funkcijo »Deli«, ki jo najdeš na zaslonu s povzetkom bonusa, aplikacija ustvari kopijo identifikacijske kode in povezane QR kode. To lahko potem deliš z drugimi vzdrževanimi družinskimi člani, prek aplikacije Whatsapp ali drugih orodij, ki so na voljo na pametnem telefonu.\r\n"
+    },
+    "73": {
+      "title": "Kako aplikacija IO pozna moje vzdrževane družinske člane?",
+      "content": "Ko prosiš za Bonus, aplikacija IO v sistemih INPS preveri, ali je tvoj ISEE nižji, na podlagi zneska, izračunanega iz podatkov, vnesenih v zadnjo Enotno nadomestno izjavo (DSU), predložena za vaše vzdrževane družinske člane. Med temi podatki je tudi sestava družinske enote, ki je poslana aplikaciji IO in, preden potrdiš aktivacijo, samodejno prikazana na zaslonu s povzetkom podatkov, v zvezi s prošnjo za bonus.\r\n"
+    },
+    "74": {
+      "title": "Ali bom lahko v aplikaciji IO zahteval tudi Bonus kolo?",
+      "content": "Ne. Trenutno ni predvideno, da bi se Bonus kolo izplačal prek aplikacije IO.\r\n"
+    },
+    "75": {
+      "title": "Po oddaji prošnje, sem v povzetku podatkov o mojih družinskih članih, ki mi jih aplikacija prikaže pred potrditvijo aktivacije Bonusa, naletel na napako. Kako naj to rešim?",
+      "content": "Če se ti v povzetku podatkov bonusa, povezanega s tvojimi vzdrževanimi družinskimi člani, nekaj ne zdi pravilno, boš moral/a verjetno predložiti nov DSU, za posodobitev seznama članov in povezanega indikatorja ISEE. V tem primeru moraš samo slediti navodilom v aplikaciji in preklicati prošnjo. V primeru preklica, boš lahko pozneje znova prosil za Bonus.\r\n"
+    },
+    "76": {
+      "title": "Aplikacija mi pravi, da je najvišji znesek mojega Počitniškega bonusa 500 evrov. Kaj se zgodi, če so stroški mojega bivanja nižji?",
+      "content": "Podatki na zaslonu s povzetkom tvojega aktivnega bonusa, v razdelku »Plačila«, v aplikaciji IO, se nanašajo na **najvišje razpoložljive zneske**: najvišji znesek **takojšnjega popusta**, ki ga lahko dobiš pri hotelirju in najvišji znesek **davčne ugodnosti**, ki jo boš lahko koristil/a kot davčno olajšavo v davčni napovedi prihodnje leto.\nČe je strošek počitnic nižji od najvišjega zneska tvojega Počitniškega bonusa, bosta tako popust kot odbitek ponovno izračunana na podlagi plačila: enaka bosta 80% oziroma 20% stroškov za bivanje. Preostali zneski ne bodo več uporabni, saj je treba bonus porabiti v enkratnem znesku. V navodilih za uporabo na spletni strani Uprave za prihodke boš našel/la nekaj uporabnih primerov in več podrobnosti.\n"
+    },
+    "77": {
+      "title": "Ali je za zahtevo Počitniškem bonusu, prek aplikacije IO, veljavna katera koli vrsta ISEE?",
+      "content": "Ne. Če želiš zaprositi za Počitniški bonus, moraš imeti veljaven ISEE tipa »navaden« ali »v teku« (v skladu z 9. členom Uredbe predsednika ministrskega sveta št. 159 z dne 5. december 2013), ki ne presega 40.000 evrov. V vseh drugih primerih (če na primer tvoj ISEE vsebuje samo »zmanjšane kazalnike«), ISEE ne bo veljaven v namene prošnje Počitniškega bonusa.\r\n"
+    },
+    "78": {
+      "title": "Si imel/a težave pri dodajanju novega plačilnega načina?",
+      "content": "Pojdi na stran [stanje dodajanja načinov plačila](ioit://CREDIT_CARD_ONBOARDING_ATTEMPTS_SCREEN), da s seznama izbereš neuspele operacije in se zanje obrneš na podporo.\n"
+    },
+    "79": {
+      "title": "Moja kartica PagoBANCOMAT je tudi debetna kartica. Kaj naj izberem?",
+      "content": "Predlagamo, da svojo kartico shrani� bodisi kot **PagoBANCOMAT** in kot **Debetna kartica**. Samo na ta nacin bo� lahko izvajal/a placila na IO in zbiral/a vse transakcije, ki veljajo za Cashback.\n"
+    },
+    "80": {
+      "title": "Zakaj shranjevanje ne uspe?",
+      "content": "Razlogov je lahko več, v vsakem primeru pa ti svetujemo, da preveriš pri svoji banki.\nNajpogostejši primeri so:\n1. Tvoja kartica ni omogočena za spletne nakupe.\n2. Tvoja kartica je trenutno 'onemogočena'.\n3. Storitve 3DS še nisi aktiviral/a: gre za varnostni sistem, povezan s spletnim plačevanjem.\n\nPodroben seznam podprtih načinov si lahko ogledaš na strani [Načini plačila](https://io.italia.it/metodi-pagamento).\n"
+    },
+    "81": {
+      "title": "Moja kartica nima varnostne kode.",
+      "content": "Previdno preveri hrbtno stran (za kartice Maestro, Mastercard, Visa) ali sprednjo stran (za kartice American Express). Če ne najdeš nobene varnostne kode, tvoja kartica najverjetneje ni omogočena za spletno plačevanje. Za več informacij se obrni na svojo banko."
+    }
+  },
+  "bonus": {
+    "accessibility": {
+      "sectionCardLabel": "Posodobi bonuse in popuste",
+      "sectionCardHint": "Posodobi seznam aktivnih bonusov"
+    },
+    "state": {
+      "completed": {
+        "caption": "zaključeno",
+        "description": "Ta pobuda  je zaključena in je ni več mogoče uporabljati"
+      }
+    },
+    "bonusVacanze": {
+      "multipleBonus": "Zahteval/a in aktiviral/a si dva ali več bonusov. Prepričaj se, da uporabljaš tistega, ki je povezan s pravilnim DSU, da se izogneš temu, da bodo tisti, ki uporabljajo bonus, deležni naknadnih poravnav.",
+      "usableAmount": "Se lahko uporabi v nastanitvenem objektu",
+      "taxBenefit": "Se lahko odbije v davčni napovedi",
+      "request": "Prosi za",
+      "code": "Koda",
+      "uniqueCode": "Identifikacijska koda",
+      "requestedAt": "Prošnja dne",
+      "consumedAt": "Uporabljen dne",
+      "advice": "S klikom na »Prosi za Počitniški bonus« izjavljaš, da si prebral/a in razumel/a",
+      "status": "Status",
+      "name": "Počitniški bonus",
+      "validity": "Velja v obdobju",
+      "amount": "Najvišji znesek",
+      "applicant": "Davčna koda prositelja",
+      "bonusClaim": "Kdo lahko unovči bonus?",
+      "shareMessage": "To je koda za vaš Počitniški bonus:",
+      "saveScreenShotOk": "Bonus shranjen v tvoji galeriji!",
+      "savedOn": "Shranjeno dne",
+      "eligibility": {
+        "loading": "Preverjamo ISEE tvojih vzdrževanih družinskih članov z INPS.\nProsim, počakaj.",
+        "activateBonus": {
+          "headerTitle": "Prošnja za ISEE",
+          "title": "Dobre novice!",
+          "description": "Tvoji vzdrževani družinski člani so upravičeni do naslednjega počitniškega bonusa:",
+          "discrepancies": {
+            "attention": "Pozor!",
+            "text": "INPS je sporočil o nekaterih pomanjkljivostih ali neskladjih v tvojem ISEE. Pred nadaljevanjem preveri, ali je vse pravilno. Če se odločiš nadaljevati, boš morda moral/a predložiti dokumentacijo za dokazovanje popolnosti in resničnosti podatkov, navedenih v DSU. V nasprotnem primeru lahko oddaš nov DSU in zahtevaš bonus pozneje."
+          },
+          "activateCTA": "Aktiviraj bonus"
+        }
+      },
+      "activation": {
+        "loading": "Tvojo zahtevo smo posredovali Agenciji za javne prihodke (Agenzia delle Entrate)\nProsim, počakaj.",
+        "timeout": {
+          "title": "Obdelujemo tvojo zahtevo."
+        }
+      }
+    },
+    "bonusList": {
+      "title": "Dodaj bonus ali popust",
+      "contentTitle": "Izberi enega od razpoložljivih bonusov",
+      "contextualHelp": {
+        "title": "Dodaj bonus ali kartico za popust",
+        "body": "Tukaj lahko izbereš bonus ali kartico za popust, ki jih želiš dodati. Ko bodo aktivirani, bodo prikazani v razdelku Denarnica. Podrobnosti bonusa ali popusta si lahko vedno ogledaš tako, da vstopiš v razdelek Denarnica in na seznamu izbereš ustrezen element."
+      }
+    },
+    "bonusInformation": {
+      "contextualHelp": {
+        "title": "Počitniški bonus",
+        "body": "Tukaj si lahko ogledaš vse informacije v zvezi s Počitniškim bonusom, določbo, ki jo je izdal Odlok o ponovnem zagonu, za spodbujanje turizma po karanteni zaradi izrednih razmer zaradi koronavirusa."
+      }
+    },
+    "request": "Prosi za nov bonus",
+    "requestLabel": "Bonusi in popusti",
+    "requestTitle": "Prošnja",
+    "validity_interval": "od {{from}} do {{to}}",
+    "active": "Aktivna",
+    "failed": "Ni uspela",
+    "redeemed": "Uporabljeno",
+    "termsAndConditionFooter": "S pritiskom »{{ctaText}}« izjavljaš, da si prebral/a in razumel/a [Vodnik] ({{regulationLink}}) in [Obvestilo o zasebnosti]({{tosUrl}})",
+    "tos": {
+      "title": "Obvestilo o obdelavi osebnih podatkov",
+      "content": "# Bonus Terms & Conditions\n\nS sprejetjem teh pogojev:\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Donec molestie metus hendrerit mauris maximus, cursus accumsan leo semper. Nullam sollicitudin neque suscipit nibh imperdiet maximus. Fusce eleifend, enim nec lobortis tristique, elit odio mollis dui, aliquam suscipit ante neque et justo. In tincidunt viverra elit eget faucibus. Donec nec sem non velit sodales maximus eget ornare urna. Aenean maximus enim consequat augue blandit rhoncus. Fusce congue arcu turpis, a rhoncus nulla commodo euismod. Aliquam erat volutpat. Ut pulvinar placerat semper. Aliquam fermentum pulvinar dui, pulvinar maximus arcu vestibulum in. Nullam magna dolor, posuere et quam a, mattis fringilla risus. In finibus in leo nec pellentesque.\n\nAenean maximus et sem sit amet vestibulum. Donec vestibulum neque eget erat fermentum imperdiet. Nullam pretium commodo libero, eget ullamcorper erat accumsan sit amet. Suspendisse at nunc suscipit, vestibulum nulla sodales, eleifend nunc. Quisque orci turpis, euismod eget euismod vitae, dictum ut quam. Etiam vitae velit id orci pretium lobortis at eget mauris. Maecenas vel bibendum purus. Donec in sapien accumsan, dictum sem at, molestie felis. Morbi efficitur malesuada finibus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\nDuis quis ligula vitae ipsum pharetra gravida. Aenean blandit, nunc ut pellentesque efficitur, mauris nibh accumsan ex, non convallis urna metus condimentum leo. Vivamus vitae magna consequat, placerat odio vel, efficitur quam. Sed condimentum consectetur turpis ac tincidunt. Donec in neque quis mauris auctor lacinia. Sed porttitor euismod orci, sed fringilla tortor fermentum sed. Vestibulum eget suscipit nunc.\n\nNam ullamcorper quam sed facilisis imperdiet. Vestibulum quis accumsan neque, non placerat lacus. Quisque gravida cursus eleifend. Nullam quis felis ante. Nulla id efficitur nisi. Nulla in ullamcorper turpis. Curabitur eros turpis, ornare eu massa at, sagittis commodo enim. Nunc eget cursus enim, nec elementum elit. Curabitur a interdum quam, in egestas mi. In eu imperdiet leo. Aenean dictum vulputate tortor, vel semper metus ultricies ut.\n\nMauris efficitur lacinia velit, non imperdiet lorem sodales et. Phasellus tortor ex, efficitur ut fermentum eget, tincidunt nec erat. Maecenas quis volutpat mauris. Cras posuere, lectus sed feugiat bibendum, dui magna pretium arcu, tristique iaculis risus ligula id elit. Sed libero felis, mattis et felis quis, convallis tempus lacus. Mauris aliquet dapibus elit, volutpat porta mi ultricies sit amet. Integer vel felis eu magna gravida auctor. In hac habitasse platea dictumst. Nam rhoncus ipsum a placerat consequat. Duis auctor tempor diam nec aliquet. Donec id sollicitudin odio. Curabitur consectetur auctor erat nec eleifend. Pellentesque et dui sapien. Vestibulum varius viverra leo.\n\nAenean sagittis accumsan arcu a rutrum. Mauris eu tristique arcu. In sit amet est eleifend, fermentum nisl et, pellentesque est. Curabitur arcu enim, mattis eu est sit amet, vestibulum tristique velit. Vestibulum quis neque fermentum diam faucibus volutpat a at lorem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ornare nisi risus, nec laoreet urna mollis sit amet. Donec luctus efficitur velit. Fusce cursus, eros et convallis tristique, nibh massa feugiat elit, eget fringilla enim nibh in mauris. Sed sit amet orci lacinia, malesuada sem eget, commodo augue. Vestibulum commodo quis quam et laoreet. Pellentesque laoreet quis mi quis tincidunt. Donec condimentum erat in feugiat gravida."
+    },
+    "bpd": {
+      "title": "Cashback",
+      "description": "Prejmi povračilo, ko v trgovinah plačuješ s to metodo",
+      "name": "Cashback",
+      "cta": {
+        "activeBonus": "Aktiviraj Cashback"
+      }
+    },
+    "cgn": {
+      "generic": {
+        "linkError": "Spletno mesto operaterja trenutno ni dosegljivo. Ponovno poskusi pozneje."
+      },
+      "accessibility": {
+        "code": "S pritiskom na element se kopira koda"
+      },
+      "name": "Državna mladinska izkaznica (Carta Giovani Nazionale)",
+      "departmentName": "Direktorat za mladinsko politiko in univerzalno civilno službo",
+      "merchantsList": {
+        "news": "Novosti",
+        "online": "Na spletu",
+        "places": "Mesta",
+        "navigationTitle": "Ugodnosti",
+        "screenTitle": "Izberi operaterja in odkrij ugodnosti",
+        "cta": {
+          "filter": "Filtriraj"
+        },
+        "categoriesList": {
+          "title": "Izberi kategorijo in odkrij ugodnosti"
+        },
+        "filter": {
+          "title": "Filtriraj trgovce",
+          "searchTitle": "Iskanje po imenu",
+          "inputPlaceholder": "Iskanje trgovine, gledališča ali drugega",
+          "addressTitle": "Iskanje po naslovu",
+          "addressPlaceholder": "Iskanje naslova",
+          "sliderLabel": "Razdalja, znotraj katere izvesti iskanje",
+          "sliderUnit": "Km",
+          "orderTitle": "Pokaži",
+          "categories": "Kategorije",
+          "cta": {
+            "cancel": "Odstrani",
+            "confirm_zero": "Uporabite filtre",
+            "confirm_one": "Uporabi filtre ({{count}})",
+            "confirm_other": "Uporabi filtre ({{count}})"
+          },
+          "order": {
+            "byDistance": "Glede na bližino tvoje lokacije",
+            "byName": "Po abecednem vrstnem redu"
+          }
+        }
+      },
+      "merchantDetail": {
+        "title": {
+          "deals": "Ugodnosti",
+          "description": "Opis"
+        },
+        "categories": {
+          "counting": "in drugih {{count}}",
+          "cultureAndEntertainment": "Kultura in prosti čas",
+          "health": "Zdravje in dobro počutje",
+          "learning": "Izobraževanje in usposabljanje",
+          "sport": "Šport",
+          "home": "Dom",
+          "telco": "Telefonija in internet",
+          "finance": "Bančne in finančne storitve",
+          "travel": "Potovanja in prevozi",
+          "mobility": "Trajnostna mobilnost",
+          "job": "Delo in pripravništvo"
+        }
+      },
+      "cta": {
+        "activeBonus": "Prosi za kartico",
+        "deactivateBonus": "Deaktiviraj kartico",
+        "goToDetail": "Oglej si kartico"
+      },
+      "detail": {
+        "cta": {
+          "buyers": "Odkrij ugodnosti",
+          "otp": "Ustvari kodo",
+          "eyca": {
+            "copy": "Kopiraj številko kartice EYCA",
+            "pending": "Izvedi več o EYCA",
+            "bottomSheet": "Oglej si ugodnosti EYCA"
+          }
+        },
+        "information": {
+          "active": "Kartica je aktivna in jo lahko uporabljaš do {{date}}",
+          "warning": "Pozor!",
+          "revoked": "Ta kartica je bila preklicana zaradi {{reason}}",
+          "expired": "Ta kartica je potekla dne {{date}}"
+        },
+        "ownership": "Kdo lahko izkoristi ugodnosti?",
+        "status": {
+          "title": "Državna mladinska izkaznica (Carta Giovani Nazionale)",
+          "eyca": "EYCA izkaznica",
+          "eycaCircuit": "EYCA vezje",
+          "eycaNumber": "Številka izkaznice",
+          "eycaPending": "Tvojo Državno mladinsko izkaznico povezujemo s številko EYCA.",
+          "eycaError": "Pri sistemih EYCA smo naleteli na težave.",
+          "eycaBottomSheetTitle": "Številka izkaznice EYCA",
+          "eycaDescription": "Do 31. leta je **tvoja Državna mladinska izkaznica pridružena krogu EYCA** (European Youth Card Association).\n\nZ vnosom številke izkaznice EYCA v e&#8209;commerce ali s prikazom izkaznice sodelujočim operaterjem, boš lahko pridobil/a popuste in ugodnosti pri kulturnih dejavnostih, trgovinah, prevozih, gostinstvu in namestitvah tudi v sodelujočih evropskih državah.",
+          "badge": {
+            "active": "Aktiviraj",
+            "revoked": "Preklicana",
+            "expired": "Potekla"
+          },
+          "date": {
+            "activated": "Aktivirana dne",
+            "expired": "Potekla dne",
+            "revoked": "Preklicana dne"
+          },
+          "expiration": {
+            "cgn": "Poteče dne",
+            "eyca": "Poteče dne"
+          }
+        }
+      },
+      "activation": {
+        "eyca": {
+          "loading": {
+            "caption": "Obdelujemo tvojo zahtevo",
+            "subCaption": "Prosim, počakaj."
+          },
+          "error": {
+            "title": "Storitev EYCA trenutno ni na voljo.",
+            "body": "Opravičujemo se za nevšečnost.\nProsim, poskusi znova pozneje."
+          }
+        },
+        "loading": {
+          "caption": "Poteka aktivacija tvoje Državne mladinske izkaznice",
+          "subCaption": "Prosim, počakaj."
+        },
+        "error": {
+          "title": "Storitev Državne mladinske izkaznice trenutno ni na voljo.",
+          "body": "Opravičujemo se za nevšečnost.\nProsim, poskusi znova pozneje."
+        },
+        "ineligible": {
+          "title": "Na žalost nimaš pogojev za aktivacijo Državne mladinske izkaznice.",
+          "body": "Državna mladinska izkaznica je na voljo samo italijanskim in evropskim državljanom, ki prebivajo v Italiji, starim od 18 do 35 let."
+        },
+        "timeout": {
+          "title": "Obdelujemo tvojo zahtevo.",
+          "body": "V aplikaciji ti bomo poslali sporočilo, ko bo tvoja Državna mladinska izkaznica aktivna."
+        },
+        "alreadyActive": {
+          "title": "Tvoja Državna mladinska izkaznica je aktivna!",
+          "body": "Podrobnosti si lahko ogledaš v razdelku Denarnicaj."
+        },
+        "pending": {
+          "title": "Tvoja Državna mladinska izkaznica je v aktivaciji.",
+          "body": "Ko bo aktivirana, boš prejel/a sporočilo."
+        },
+        "success": {
+          "title": "Končano!",
+          "body": "Tvoja Državna mladinska izkaznica je aktivna."
+        },
+        "deactivate": {
+          "toast": "Zahteva za deaktivacijo je bila uspešna",
+          "alert": {
+            "title": "Deaktiviraj izkaznico",
+            "message": "Ali si prepričan/a, da želiš deaktivirati svojo Državno mladinsko izkaznico? Če potrdiš, boš izgubil/a možnost dostopa do ugodnosti, ki jih zagotavlja pobuda, in izkaznica bo izginila iz Denarnice."
+          }
+        }
+      },
+      "otp": {
+        "error": "Zaradi tehnične težave nismo uspeli ustvariti kode za popust. Prosimo te, da poskusiš znova.",
+        "code": {
+          "title": "Tvoja koda za popust",
+          "validUntil": "Velja še",
+          "minutes_one": "1 minuto",
+          "minutes_other": "{{minutes}} minut",
+          "seconds_one": "1 sekundo",
+          "seconds_other": "{{seconds}} sekund"
+        }
+      }
+    },
+    "cdc": {
+      "serviceEntryPoint": {
+        "notAvailable": "Storitev trenutno ni na voljo. Poskusi pozneje."
+      }
+    }
+  },
+  "features": {
+    "messages": {
+      "loading": {
+        "title": "Nalagam podrobnosti sporočila",
+        "subtitle": "Počakaj par sekund"
+      }
+    },
+    "pn": {
+      "service": {
+        "activate": "Aktiviraj storitev",
+        "deactivate": "Onemogoči storitev",
+        "toast": {
+          "activated": "Hvala, storitev je aktivna!",
+          "error": "Pri tvoji zahtevi je prišlo do napake"
+        }
+      },
+      "details": {
+        "title": "Podrobnosti sporočila",
+        "loadError": {
+          "title": "Nekaj ​​je šlo narobe",
+          "body": "Podatkov o sporočilu ni bilo mogoče pridobiti. Prosim, poskusi ponovno"
+        },
+        "paymentSection": {
+          "title": "Obvestilo o plačilu"
+        },
+        "attachmentsSection": {
+          "title": "Priloge"
+        },
+        "infoSection": {
+          "title": "Informacije o obvestilu",
+          "iun": "Koda IUN"
+        },
+        "timeline": {
+          "title": "STANJE OBVESTILA",
+          "status": {
+            "DELIVERED": "Dostavljeno",
+            "DELIVERING": "Pošiljanje v teku",
+            "UNREACHABLE": "Neizsledljiv prejemnik",
+            "PAID": "Plačano",
+            "ACCEPTED": "Vloženo",
+            "EFFECTIVE_DATE": "Izpopolnjeno zaradi izteka rokov",
+            "VIEWED": "Izpopolnjeno zaradi ogleda",
+            "REFUSED": "Zavrnjeno",
+            "CANCELLED": "Prekinjeno"
+          },
+          "expand": "prikaži prejšnja stanja",
+          "info": "Z dostopom do spletne različice storitve, si lahko ogledaš podrobnosti vsakega stanja, preneseš potrdila in zahtevke do tretjih oseb",
+          "cta": "Dostop do spletne različice"
+        }
+      }
+    }
+  },
+  "support": {
+    "helpCenter": {
+      "header": "Pomoč",
+      "cta": {
+        "contactSupport": "Odpri prošnjo",
+        "seeReports": "Čakajoče prošnje"
+      },
+      "supportComponent": {
+        "title": "Ali potrebuješ pomoč?",
+        "subtitle": "Oglej si pogosto zastavljena vprašanja (FAQ): če ne najdeš odgovora, odpri prošnjo. Če si že odprl/la prošnjo in želiš preveriti njeno stanje ali dodati podrobnosti, izberi »Čakajoče prošnje«.",
+        "adviceMessage": "Če se tvoja težava nanaša na vsebino sporočila ali na storitev določenega subjekta, se obrni na dotičnega: podatke najdeš v sporočilu ali v opisu servisa."
+      }
+    },
+    "panicMode": {
+      "title": "Na žalost ti trenutno ne moremo pomagati",
+      "body": "Zavedamo se, da obstaja težava, in delamo za njeno rešitev. Če težave ne odpraviš ali če potrebuješ pomoč pri drugi temi, poskusi nam pisati pozneje."
+    },
+    "askPermissions": {
+      "nameSurname": "Ime in priimek",
+      "fiscalCode": "Davčna številka",
+      "emailAddress": "Naslov e-pošte",
+      "deviceAndOS": "Naprava in operacijski sistem",
+      "ipAddress": "IP naslov",
+      "appVersionsHistory": "Zgodovina različic aplikacije",
+      "appVersionsHistoryValue": "Če želiš razumeti, ali je težava odvisna od najnovejše posodobitve",
+      "identityProvider": "Ponudnik identitete (Identity Provider)",
+      "navigationData": "Navigacijski podatki v aplikaciji IO",
+      "navigationDataValue": "Na primer zadnji zaslon ali sporočilo, prikazano v aplikaciji IO",
+      "devicePerformance": "Zmogljivost naprave",
+      "stock": "Podatki obvestila o plačilu",
+      "stockValue": "Vključno z napako, ki si jo pravkar prejel/a",
+      "prominentDisclosure": "Dostop do galerije naprave",
+      "prominentDisclosureData": "Za nalaganje fotografij in posnetkov zaslona",
+      "header": "Odpri prošnjo",
+      "title": "Ali nam daješ svoje soglasje?",
+      "body": "Da lahko odgovorimo na tvojo prošnjo za pomoč, potrebujemo dostop do nekaterih tvojih podatkov. Če zavrneš soglasje, nam boš moral/a splošno prošnjo poslati po e-pošti.",
+      "listHeader": "Če daš svoje soglasje, bomo prejeli te podatke:",
+      "cta": {
+        "allow": "Dovoli",
+        "denies": "Ne dovoli"
+      },
+      "toast": {
+        "emailClientNotFound": "Za pomoč nam piši na: {{emailAddress}}"
+      }
+    },
+    "chooseCategory": {
+      "header": "Odpri novo prošnjo",
+      "title": {
+        "category": "Izberi temo",
+        "subCategory": "Nam lahko zaupaš več podrobnosti?"
+      },
+      "subTitle": {
+        "category": "Pomagaj nam bolje razumeti, kako ti lahko pomagamo, tako da izbereš temo svoje težave: odgovorili ti bomo v najkrajšem možnem času, med delovnim urnikom."
+      }
+    }
+  }
+}
