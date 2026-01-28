@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.23.0-rc.4](https://github.com/pagopa/io-app/compare/3.23.0-rc.3...3.23.0-rc.4) (2026-01-26)
+
+
+### Features
+
+* [[IOCOM-2881](https://pagopa.atlassian.net/browse/IOCOM-2881)] Add NFC not supported screen tracking strategy ([#7789](https://github.com/pagopa/io-app/issues/7789)) ([4627112](https://github.com/pagopa/io-app/commit/46271122883f42cd10b04a9d52703d30b80f9d04))
+* [[IOCOM-2882](https://pagopa.atlassian.net/browse/IOCOM-2882)] Add "CIE CAN educational" screen tracking strategy ([#7795](https://github.com/pagopa/io-app/issues/7795)) ([3d683cf](https://github.com/pagopa/io-app/commit/3d683cfabdd214794da697e27242c8ef0179f5f6))
+* [[IOCOM-2883](https://pagopa.atlassian.net/browse/IOCOM-2883)] Add AAR flow closing alert tracking strategy ([#7798](https://github.com/pagopa/io-app/issues/7798)) ([7a917fc](https://github.com/pagopa/io-app/commit/7a917fcfe94ee62cefbb14d0fc58177459f1dc98))
+* [[IOCOM-2884](https://pagopa.atlassian.net/browse/IOCOM-2884)] Add "CIE CAN insertion" and "CIE scanning educational" screens tracking strategy ([#7801](https://github.com/pagopa/io-app/issues/7801)) ([1d883ae](https://github.com/pagopa/io-app/commit/1d883aeeb297aa96d1f75919b4a272de9814da9d))
+
+
+### Bug Fixes
+
+* [[IOPAE-2355](https://pagopa.atlassian.net/browse/IOPAE-2355)] Fix SecureStorage import ([#7803](https://github.com/pagopa/io-app/issues/7803)) ([08599b0](https://github.com/pagopa/io-app/commit/08599b091bb16624f4d9b0f3c097412c0d14d145))
+
 ## [3.23.0-rc.3](https://github.com/pagopa/io-app/compare/3.23.0-rc.2...3.23.0-rc.3) (2026-01-23)
 
 
