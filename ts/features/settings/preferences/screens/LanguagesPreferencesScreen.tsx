@@ -1,10 +1,8 @@
 import {
-  Banner,
   ListItemHeader,
   RadioGroup,
   RadioItem,
   useIOToast,
-  VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -13,7 +11,6 @@ import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import _ from "lodash";
 import {
-  createRef,
   useCallback,
   useContext,
   useEffect,
@@ -34,15 +31,10 @@ import {
 } from "../../../../store/actions/persistedPreferences";
 
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { sectionStatusByKeySelector } from "../../../../store/reducers/backendStatus/sectionStatus";
 import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
 import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 import { usePrevious } from "../../../../utils/hooks/usePrevious";
-import {
-  fromLocaleToPreferredLanguage,
-  getFullLocale
-} from "../../../../utils/locale";
-import { openWebUrl } from "../../../../utils/url";
+import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
 import { profileUpsert } from "../../common/store/actions";
 import { profileSelector } from "../../common/store/selectors";
 
@@ -58,7 +50,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 type AppLocaleId = `app-locale-${AppLocale}`;
 
 const LanguagesPreferencesScreen = () => {
-  const viewRef = createRef<View>();
   const dispatch = useIODispatch();
   const toast = useIOToast();
   const selectedLanguage = useRef<string | undefined>(undefined);
@@ -66,10 +57,7 @@ const LanguagesPreferencesScreen = () => {
   const { showModal } = useContext(LightModalContext);
   const profile = useIOSelector(profileSelector, _.isEqual);
   const prevProfile = usePrevious(profile);
-  const bannerInfoSelector = useIOSelector(
-    sectionStatusByKeySelector("favourite_language")
-  );
-  const isBannerVisible = bannerInfoSelector && bannerInfoSelector.is_visible;
+
   const preferredLanguageSelect = useIOSelector(
     preferredLanguageSelector,
     _.isEqual
@@ -266,26 +254,6 @@ const LanguagesPreferencesScreen = () => {
               selectedItem={selectedAppLocale}
               onPress={handleAppLocaleChange}
             />
-
-            {isBannerVisible && (
-              <>
-                <VSpacer />
-                <Banner
-                  ref={viewRef}
-                  color="neutral"
-                  content={bannerInfoSelector.message[getFullLocale()]}
-                  pictogramName="charity"
-                  action={I18n.t(
-                    "profile.preferences.list.preferred_language.banner.button"
-                  )}
-                  onPress={() =>
-                    openWebUrl(
-                      bannerInfoSelector.web_url?.[getFullLocale()] || ""
-                    )
-                  }
-                />
-              </>
-            )}
           </View>
         </VStack>
       </IOScrollViewWithLargeHeader>
