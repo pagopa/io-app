@@ -5,7 +5,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { memo, RefObject, useMemo } from "react";
+import { memo, MutableRefObject, useMemo } from "react";
 import { Alert } from "react-native";
 import I18n from "i18next";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
@@ -27,12 +27,14 @@ import { formatAmountText } from "../utils";
 type Props = {
   transaction: NoticeListItem;
   onPress?: () => void;
-  openedItemRef?: RefObject<(() => void) | null>;
+  openedItemRef?: MutableRefObject<(() => void) | null>;
 };
 
 const ReceiptListItemTransaction = memo(
   ({ transaction, onPress, openedItemRef }: Props) => {
-    const recipient = transaction.payeeName ?? "";
+    const recipient = transaction.isCart
+      ? I18n.t("features.payments.transactions.multiplePayment")
+      : transaction.payeeName ?? "";
 
     const amountText = pipe(
       transaction.amount,
@@ -88,16 +90,8 @@ const ReceiptListItemTransaction = memo(
         analyticsHideReceiptAction(paymentAnalyticsData, "swipe");
 
         Alert.alert(
-          I18n.t(
-            transaction.isCart
-              ? "features.payments.transactions.receipt.hideBanner.isCart.title"
-              : "features.payments.transactions.receipt.hideBanner.title"
-          ),
-          I18n.t(
-            transaction.isCart
-              ? "features.payments.transactions.receipt.hideBanner.isCart.content"
-              : "features.payments.transactions.receipt.hideBanner.content"
-          ),
+          I18n.t("features.payments.transactions.receipt.hideBanner.title"),
+          I18n.t("features.payments.transactions.receipt.hideBanner.content"),
           [
             {
               text: I18n.t("global.buttons.cancel"),
@@ -131,6 +125,29 @@ const ReceiptListItemTransaction = memo(
         );
       }
     };
+
+    if (transaction.isCart) {
+      return (
+        <ListItemSwipeAction
+          color="contrast"
+          {...swipeActionProps}
+          openedItemRef={openedItemRef}
+        >
+          <ListItemTransaction
+            paymentLogoIcon={TransactionEmptyIcon}
+            onPress={onPress}
+            accessible
+            accessibilityLabel={accessibilityLabel}
+            title={I18n.t("features.payments.transactions.multiplePayment")}
+            subtitle={datetime}
+            transaction={{
+              amount: amountText,
+              amountAccessibilityLabel: accessibleAmountText
+            }}
+          />
+        </ListItemSwipeAction>
+      );
+    }
 
     return (
       <ListItemSwipeAction
