@@ -57,7 +57,7 @@ describe("hook the login outcome from the url", () => {
     ],
     [
       "fragment with other params",
-      `${remoteHost}${successSuffix}#state=xyz&token=${successToken}`,
+      `${remoteHost}${successSuffix}#other=xyz&token=${successToken}`,
       { success: true, token: successToken }
     ],
     [
@@ -73,7 +73,7 @@ describe("hook the login outcome from the url", () => {
     ],
     [
       "fallback to query if fragment exists but has no token",
-      `${remoteHost}${successSuffix}?token=${successToken}#state=123`,
+      `${remoteHost}${successSuffix}?token=${successToken}#other=123`,
       { success: true, token: successToken }
     ],
     [
