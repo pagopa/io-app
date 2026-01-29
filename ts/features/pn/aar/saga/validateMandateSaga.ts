@@ -8,7 +8,9 @@ import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils
 import { unknownToReason } from "../../../messages/utils";
 import {
   aarProblemJsonAnalyticsReport,
-  trackSendAARFailure
+  trackSendAARFailure,
+  trackSendAarMandateCieExpiredError,
+  trackSendAarMandateCieNotRelatedToDelegatorError
 } from "../analytics";
 import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
@@ -90,25 +92,39 @@ export function* validateMandateSaga(
           "Fast login expiration"
         );
         return;
-      // TODO: [IOCOM-2844] Map 400 and 422 errors
+      case 422:
+        const maybeErrorKey = value.errors
+          ?.map(({ code }) => code)
+          .find(code =>
+            code.match(/CIE_EXPIRED_ERROR|CIE_NOT_RELATED_TO_DELEGATOR_ERROR/)
+          );
+
+        if (maybeErrorKey?.match(/CIE_EXPIRED_ERROR/)) {
+          yield* call(trackSendAarMandateCieExpiredError);
+        }
+        if (maybeErrorKey?.match(/CIE_NOT_RELATED_TO_DELEGATOR_ERROR/)) {
+          yield* call(trackSendAarMandateCieNotRelatedToDelegatorError);
+        }
+        break;
       default:
-        const reason = `HTTP request failed (${aarProblemJsonAnalyticsReport(
-          status,
-          value
-        )})`;
-        yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
-        const errorState: AARFlowState = {
-          type: sendAARFlowStates.ko,
-          previousState: { ...action.payload },
-          ...(value !== undefined && { error: value }),
-          debugData: {
-            phase: sendAARFailurePhase,
-            reason
-          }
-        };
-        yield* put(setAarFlowState(errorState));
-        return;
+        break;
     }
+    const reason = `HTTP request failed (${aarProblemJsonAnalyticsReport(
+      status,
+      value
+    )})`;
+    yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
+    const errorState: AARFlowState = {
+      type: sendAARFlowStates.ko,
+      previousState: { ...action.payload },
+      ...(value !== undefined && { error: value }),
+      debugData: {
+        phase: sendAARFailurePhase,
+        reason
+      }
+    };
+    yield* put(setAarFlowState(errorState));
+    return;
   } catch (e) {
     const reason = `An error was thrown (${unknownToReason(e)})`;
     yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
