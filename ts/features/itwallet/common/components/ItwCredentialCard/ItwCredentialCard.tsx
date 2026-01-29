@@ -7,6 +7,7 @@ import { useIOSelector } from "../../../../../store/hooks";
 import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { itwCredentialsEidIssuedAtSelector } from "../../../credentials/store/selectors";
+import { itwCredentialUpgradeFailedSelector } from "../../../common/store/selectors/preferences";
 import { useItwDisplayCredentialStatus } from "../../../presentation/details/hooks/useItwDisplayCredentialStatus";
 import {
   getCredentialNameFromType,
@@ -61,8 +62,12 @@ export const ItwCredentialCard = ({
   const typefacePreference = useIOSelector(fontPreferenceSelector);
   const isItwPid = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const pidIssuedAt = useIOSelector(itwCredentialsEidIssuedAtSelector);
+  const hasUpgradeFailed = useIOSelector(
+    itwCredentialUpgradeFailedSelector(credentialType)
+  );
   const needsItwUpgrade =
-    isItwPid && isCredentialIssuedBeforePid(issuedAt, pidIssuedAt);
+    (isItwPid && isCredentialIssuedBeforePid(issuedAt, pidIssuedAt)) ||
+    hasUpgradeFailed;
   const status = useItwDisplayCredentialStatus(credentialStatus);
   const theme = useThemeColorByCredentialType(credentialType);
   const borderColorMap = useBorderColorByStatus();

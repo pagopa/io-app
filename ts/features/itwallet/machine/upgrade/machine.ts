@@ -19,6 +19,7 @@ export const itwCredentialUpgradeMachine = setup({
   },
   actions: {
     storeCredential: notImplemented,
+    markCredentialUpgradeFailed: notImplemented,
     pickNextCredential: assign({
       credentialIndex: ({ context }) => context.credentialIndex + 1
     }),
@@ -82,7 +83,7 @@ export const itwCredentialUpgradeMachine = setup({
           target: "Checking"
         },
         onError: {
-          actions: ["setFailedCredential"],
+          actions: ["setFailedCredential", "markCredentialUpgradeFailed"],
           target: "Checking"
         }
       }
