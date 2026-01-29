@@ -8,7 +8,11 @@ import {
 } from "../../utils/testUtils";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { setAarFlowState } from "../../store/actions";
-import { trackSendAARFailure } from "../../analytics";
+import {
+  trackSendAARFailure,
+  trackSendAarMandateCieExpiredError,
+  trackSendAarMandateCieNotRelatedToDelegatorError
+} from "../../analytics";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
@@ -168,6 +172,62 @@ describe("validateMandateSaga", () => {
       )
       .next()
       .isDone();
+  });
+
+  describe("Status code: 422", () => {
+    const statusCode = 422;
+
+    it.each([
+      ["CIE_EXPIRED_ERROR", trackSendAarMandateCieExpiredError],
+      [
+        "CIE_NOT_RELATED_TO_DELEGATOR_ERROR",
+        trackSendAarMandateCieNotRelatedToDelegatorError
+      ]
+    ])(
+      'should track the right error analytic event and dispatch a KO state when error code is "%s"',
+      (errorCode, trackingFunction) => {
+        const result = E.right({
+          status: statusCode,
+          value: {
+            status: statusCode,
+            detail: "A detail",
+            errors: [{ code: errorCode }]
+          }
+        }) as E.Right<any>;
+
+        const reason = `HTTP request failed (${result.right.status} ${result.right.value.status} A detail ${errorCode})`;
+        testSaga(
+          validateMandateSaga,
+          mockAcceptMandate,
+          sessionToken,
+          mockValidatingMandateAction
+        )
+          .next()
+          .select(isPnTestEnabledSelector)
+          .next(true)
+          .call(
+            withRefreshApiCall,
+            mockAcceptMandate(),
+            mockValidatingMandateAction
+          )
+          .next(result)
+          .call(trackingFunction)
+          .next()
+          .call(trackSendAARFailure, "Validate Mandate", reason)
+          .next()
+          .put(
+            setAarFlowState(
+              getMockKoState(
+                mockValidatingMandateState,
+                result.right.value,
+                reason
+              )
+            )
+          )
+          .next()
+          .isDone();
+      }
+    );
   });
 
   it('should call "trackSendAARFailure" with "Fast login expiration" and stop on 401', () => {
