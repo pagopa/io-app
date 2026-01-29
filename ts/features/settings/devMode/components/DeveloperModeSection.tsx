@@ -13,32 +13,22 @@ import {
   VSpacer,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as Sentry from "@sentry/react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useContext, ComponentProps } from "react";
-import { Alert, FlatList, ListRenderItemInfo } from "react-native";
+import * as Sentry from "@sentry/react-native";
 import I18n from "i18next";
+import { ComponentProps, useContext } from "react";
+import { Alert, FlatList, ListRenderItemInfo } from "react-native";
 import { AlertModal } from "../../../../components/ui/AlertModal";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import { isPlaygroundsEnabled } from "../../../../config";
-import { isFastLoginEnabledSelector } from "../../../authentication/fastLogin/store/selectors";
-import { lollipopPublicKeySelector } from "../../../lollipop/store/reducers/lollipop";
-import { toThumbprint } from "../../../lollipop/utils/crypto";
-import { notificationsInstallationSelector } from "../../../pushNotifications/store/reducers/installation";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { sessionExpired } from "../../../authentication/common/store/actions";
 import { setDebugModeEnabled } from "../../../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferencesPnTestEnvironmentSetEnabled
 } from "../../../../store/actions/persistedPreferences";
-import { clearCache } from "../../common/store/actions";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import {
-  sessionTokenSelector,
-  walletTokenSelector
-} from "../../../authentication/common/store/selectors";
 import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
 import {
   isIdPayLocallyEnabledSelector,
@@ -48,14 +38,24 @@ import {
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { getDeviceId } from "../../../../utils/device";
 import { isDevEnv, isLocalEnv } from "../../../../utils/environment";
-import { SETTINGS_ROUTES } from "../../common/navigation/routes";
-import { ITW_ROUTES } from "../../../itwallet/navigation/routes.ts";
 import {
   setActiveSessionLoginLocalFlag,
   setStartActiveSessionLogin
 } from "../../../authentication/activeSessionLogin/store/actions/index.ts";
-import { AUTHENTICATION_ROUTES } from "../../../authentication/common/navigation/routes.ts";
 import { isActiveSessionLoginLocallyEnabledSelector } from "../../../authentication/activeSessionLogin/store/selectors/index.ts";
+import { AUTHENTICATION_ROUTES } from "../../../authentication/common/navigation/routes.ts";
+import { sessionExpired } from "../../../authentication/common/store/actions";
+import {
+  sessionTokenSelector,
+  walletTokenSelector
+} from "../../../authentication/common/store/selectors";
+import { isFastLoginEnabledSelector } from "../../../authentication/fastLogin/store/selectors";
+import { ITW_ROUTES } from "../../../itwallet/navigation/routes.ts";
+import { lollipopPublicKeySelector } from "../../../lollipop/store/reducers/lollipop";
+import { toThumbprint } from "../../../lollipop/utils/crypto";
+import { notificationsInstallationSelector } from "../../../pushNotifications/store/reducers/installation";
+import { SETTINGS_ROUTES } from "../../common/navigation/routes";
+import { clearCache } from "../../common/store/actions";
 import ExperimentalDesignEnableSwitch from "./ExperimentalDesignEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -393,6 +393,13 @@ const PlaygroundsSection = () => {
       onPress: () =>
         navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
           screen: SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND
+        })
+    },
+    {
+      value: "NFC",
+      onPress: () =>
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.NFC_PLAYGROUND
         })
     },
     {
