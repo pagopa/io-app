@@ -18,9 +18,8 @@ jest.mock("react-native-device-info", () => ({
 
 describe("hook the login outcome from the url", () => {
   const remoteHost = "https://somedomain.com/somepath";
-  const successSuffix = "/profile.html?token=";
+  const successSuffix = "/profile.html";
   const successToken = "ABCDFG0123456" as SessionToken;
-  const success = remoteHost + successSuffix + successToken;
   const failureSuffix = "/error.html";
   const errorCode = "123456";
   const failureSuffixWithCode = failureSuffix + "?errorCode=";
@@ -30,26 +29,65 @@ describe("hook the login outcome from the url", () => {
   const urlRedirects: ReadonlyArray<
     [string, string, ReturnType<typeof extractLoginResult>]
   > = [
-    ["success happy case", success, { success: true, token: successToken }],
-
     [
-      "with other params",
-      success + "&param1=abc&param2=123",
+      "success happy case (query param)",
+      `${remoteHost}${successSuffix}?token=${successToken}`,
+      { success: true, token: successToken }
+    ],
+    [
+      "with other params (query param)",
+      `${remoteHost}${successSuffix}?token=${successToken}&param1=abc&param2=123`,
+      { success: true, token: successToken }
+    ],
+    [
+      "with token as not the first param (query param)",
+      `${remoteHost}${successSuffix}?param1=987&token=${successToken}&param2=123`,
       { success: true, token: successToken }
     ],
 
     [
-      "with token as not the first param",
-      `${remoteHost}/profile.html?param1=987&token=${successToken}&param2=123`,
+      "success happy case (fragment)",
+      `${remoteHost}${successSuffix}#token=${successToken}`,
+      { success: true, token: successToken }
+    ],
+    [
+      "fragment priority over query param",
+      `${remoteHost}${successSuffix}?token==${successToken}#token=${successToken}`,
+      { success: true, token: successToken }
+    ],
+    [
+      "fragment with other params",
+      `${remoteHost}${successSuffix}#state=xyz&token=${successToken}`,
+      { success: true, token: successToken }
+    ],
+    [
+      "fragment token as first param",
+      `${remoteHost}${successSuffix}#token=${successToken}&other=123`,
       { success: true, token: successToken }
     ],
 
     [
-      "with token defined but empty",
-      `${remoteHost + successSuffix}`,
+      "fallback to query if fragment is empty",
+      `${remoteHost}${successSuffix}?token=${successToken}#`,
+      { success: true, token: successToken }
+    ],
+    [
+      "fallback to query if fragment exists but has no token",
+      `${remoteHost}${successSuffix}?token=${successToken}#state=123`,
+      { success: true, token: successToken }
+    ],
+    [
+      "fallback to query if fragment token is empty string",
+      `${remoteHost}${successSuffix}?token=${successToken}#token=`,
+      { success: true, token: successToken }
+    ],
+
+    [
+      "with token empty in fragment and missing in query",
+      `${remoteHost}${successSuffix}#token=`,
       { success: false }
     ],
-    ["with no token", `${remoteHost}/profile.html`, { success: false }],
+    ["with no token", `${remoteHost}${successSuffix}`, { success: false }],
     [
       "with token and not expected success suffix",
       `${remoteHost}/anotherPath.html?token=${successToken}`,
@@ -61,7 +99,7 @@ describe("hook the login outcome from the url", () => {
       undefined
     ],
     ["invalid url", `someStrangeInput`, undefined],
-    ["empty url", `someStrangeInput`, undefined],
+    ["empty url", "", undefined],
     ["failure happy case", failureWithCode, { success: false, errorCode }],
     [
       "error code with other params",
