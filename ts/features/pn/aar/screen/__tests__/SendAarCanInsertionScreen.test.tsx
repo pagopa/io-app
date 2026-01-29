@@ -19,10 +19,15 @@ import { sendAARFlowStates } from "../../utils/stateUtils";
 import * as AAR_SELECTORS from "../../store/selectors";
 import { setAarFlowState } from "../../store/actions";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import { trackSendAarMandateCieCanEnter } from "../../analytics";
 
 const mockDispatch = jest.fn();
 const mockGoBack = jest.fn();
 const mockNavigate = jest.fn();
+
+jest.mock("../../analytics", () => ({
+  trackSendAarMandateCieCanEnter: jest.fn()
+}));
 
 jest.mock("../../../../../store/hooks", () => ({
   ...jest.requireActual("../../../../../store/hooks"),
@@ -41,7 +46,7 @@ describe("SendAarCieCanInsertionScreen", () => {
 
     expect(component.toJSON()).toMatchSnapshot();
   });
-  it('should call "setAccessibilityFocus" when component is focussed', async () => {
+  it('should call "setAccessibilityFocus" when component is focused', async () => {
     const spyOnSetAccessibilityFocus = jest.spyOn(
       ACCESSIBILITY_UTILS,
       "setAccessibilityFocus"
@@ -55,6 +60,17 @@ describe("SendAarCieCanInsertionScreen", () => {
         { current: expect.any(View) } as RefObject<View>,
         300
       );
+    });
+
+    expect(mockDispatch).not.toHaveBeenCalled();
+    expect(mockGoBack).not.toHaveBeenCalled();
+  });
+
+  it('should call "trackSendAarMandateCieCanEnter" when component is focused', async () => {
+    renderComponent();
+
+    await waitFor(() => {
+      expect(trackSendAarMandateCieCanEnter).toHaveBeenCalledTimes(1);
     });
 
     expect(mockDispatch).not.toHaveBeenCalled();

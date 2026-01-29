@@ -2,8 +2,8 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useEffect } from "react";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import LoadingComponent from "../../../fci/components/LoadingComponent";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import { trackIDPayOnboardingConversionRate } from "../analytics";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
@@ -15,12 +15,6 @@ const IdPayLoadingScreen = () => {
   const isLoading = useSelector(isLoadingSelector);
 
   const initiative = useSelector(selectInitiative);
-
-  const initiativeName = pipe(
-    initiative,
-    O.map(i => i.initiativeName),
-    O.toUndefined
-  );
 
   const initiativeId = pipe(
     initiative,
@@ -36,15 +30,14 @@ const IdPayLoadingScreen = () => {
 
   useOnFirstRender(() =>
     trackIDPayOnboardingConversionRate({
-      initiativeId,
-      initiativeName
+      initiativeId
     })
   );
 
   return (
-    <LoadingComponent
-      captionTitle={I18n.t("idpay.onboarding.loading.title")}
-      captionSubtitle={I18n.t("idpay.onboarding.loading.subtitle")}
+    <LoadingScreenContent
+      title={I18n.t("idpay.onboarding.loading.title")}
+      subtitle={I18n.t("idpay.onboarding.loading.subtitle")}
     />
   );
 };

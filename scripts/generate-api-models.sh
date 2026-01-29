@@ -2,7 +2,7 @@
 
 IO_BACKEND_VERSION=v17.5.2
 # need to change after merge on io-services-metadata
-IO_SERVICES_METADATA_VERSION=1.0.92
+IO_SERVICES_METADATA_VERSION=1.0.93
 # Session manager version
 IO_SESSION_MANAGER_VERSION=1.8.0
 # IO Wallet Backend version
@@ -18,7 +18,7 @@ declare -a apis=(
   "./definitions/pagopa/walletv2 https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/bonus/specs/bpd/pm/walletv2.json"
   "./definitions/pagopa/walletv3 https://raw.githubusercontent.com/pagopa/pagopa-infra/refs/tags/v1.745.1/src/domains/pay-wallet-app/api/io-payment-wallet/v1/_openapi.json.tpl"
   "./definitions/pagopa/ecommerce https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.731.1/src/domains/ecommerce-app/api/ecommerce-io/v2/_openapi.json.tpl"
-  "./definitions/pagopa/biz-events https://raw.githubusercontent.com/pagopa/pagopa-biz-events-service/refs/tags/0.1.87/openapi/openapi_lap_jwt.json"
+  "./definitions/pagopa/biz-events https://raw.githubusercontent.com/pagopa/pagopa-biz-events-service/refs/tags/0.2.3/openapi/openapi_lap_jwt.json"
   "./definitions/pagopa/platform https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.64.0/src/domains/shared-app/api/session-wallet/v1/_openapi.json.tpl"
   "./definitions/pagopa/cobadge/configuration https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/pagopa/cobadge/abi_definitions.yml"
   "./definitions/pagopa/privative/configuration https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/pagopa/privative/definitions.yml"
