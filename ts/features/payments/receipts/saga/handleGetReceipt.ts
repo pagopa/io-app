@@ -49,11 +49,17 @@ export function* handleGetReceipt(
       yield* put(
         getPaymentsReceiptAction.success({
           data: getTransactionListResult.right.value.notices,
-          appendElements: action.payload.firstLoad
+          appendElements: action.payload.firstLoad,
+          continuationToken
         })
       );
     } else if (getTransactionListResult.right.status === 404) {
-      yield* put(getPaymentsReceiptAction.success({ data: [] }));
+      yield* put(
+        getPaymentsReceiptAction.success({
+          data: [],
+          continuationToken: undefined
+        })
+      );
     } else if (getTransactionListResult.right.status !== 401) {
       // The 401 status returned from all the pagoPA APIs need to reset the session token before refreshing the token
 

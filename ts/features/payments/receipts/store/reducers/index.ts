@@ -13,6 +13,7 @@ import {
   getPaymentsReceiptAction,
   getPaymentsLatestReceiptAction,
   hidePaymentsReceiptAction,
+  setNeedsHomeListRefreshAction,
   PaymentsTransactionReceiptInfoPayload
 } from "../actions";
 import {
@@ -32,6 +33,8 @@ export type ReceiptTransactionState = {
   details: pot.Pot<NoticeDetailResponse, NetworkError>;
   receiptDocument: pot.Pot<PaymentsTransactionReceiptInfoPayload, NetworkError>;
   cancelTransactionRecord: pot.Pot<CancelTransactionRecord, NetworkError>;
+  needsHomeListRefresh: boolean;
+  continuationToken: string | undefined;
 };
 
 const INITIAL_STATE: ReceiptTransactionState = {
@@ -39,7 +42,9 @@ const INITIAL_STATE: ReceiptTransactionState = {
   latestTransactions: pot.none,
   details: pot.noneLoading,
   receiptDocument: pot.none,
-  cancelTransactionRecord: pot.none
+  cancelTransactionRecord: pot.none,
+  needsHomeListRefresh: false,
+  continuationToken: undefined
 };
 
 const reducer = (
@@ -78,7 +83,10 @@ const reducer = (
         : pot.toLoading(state.transactions);
       return {
         ...state,
-        transactions
+        transactions,
+        continuationToken: action.payload.firstLoad
+          ? undefined
+          : state.continuationToken
       };
     case getType(getPaymentsReceiptAction.success):
       const previousTransactions = pot.getOrElse(state.transactions, []);
@@ -87,7 +95,9 @@ const reducer = (
         ...state,
         transactions: !action.payload.appendElements
           ? pot.some([...previousTransactions, ...maybeTransactions])
-          : pot.some(maybeTransactions)
+          : pot.some(maybeTransactions),
+        continuationToken: action.payload.continuationToken,
+        needsHomeListRefresh: false
       };
     case getType(getPaymentsReceiptAction.failure):
       return {
@@ -217,6 +227,12 @@ const reducer = (
         transactions: pot.some(restoredTransactions),
         latestTransactions: pot.some(restoredLatestTransactions),
         cancelTransactionRecord: pot.none
+      };
+    }
+    case getType(setNeedsHomeListRefreshAction): {
+      return {
+        ...state,
+        needsHomeListRefresh: action.payload
       };
     }
   }

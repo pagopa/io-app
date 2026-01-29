@@ -8,7 +8,11 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
 import { TransactionClient } from "../../common/api/client";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
-import { hidePaymentsReceiptAction } from "../store/actions";
+import {
+  hidePaymentsReceiptAction,
+  getPaymentsLatestReceiptAction,
+  setNeedsHomeListRefreshAction
+} from "../store/actions";
 import * as analytics from "../analytics";
 /**
  * Handle the remote call to hide the transaction receipt
@@ -70,11 +74,15 @@ export function* handleDisableReceipt(
 
     if (getTransactionReceiptResult.right.status === 200) {
       handleHideReceiptSuccess();
+
       yield* put(
         hidePaymentsReceiptAction.success(
           getTransactionReceiptResult.right.value
         )
       );
+      // Set flag and refresh home list after successful hide
+      yield* put(setNeedsHomeListRefreshAction(true));
+      yield* put(getPaymentsLatestReceiptAction.request());
     } else if (getTransactionReceiptResult.right.status !== 401) {
       // The 401 status is handled by the withPaymentsSessionToken
       handleHideReceiptFailure();
