@@ -235,6 +235,10 @@ export const createEidIssuanceActionsImplementation = (
   closeIssuance: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    if (navigation.canGoBack() && context.mode === "reissuance") {
+      navigation.goBack();
+      return;
+    }
     navigation.reset({
       index: 1,
       routes: [
