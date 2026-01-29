@@ -1,7 +1,6 @@
 import {
   Body,
   Divider,
-  IOText,
   ListItemInfo,
   Pictogram
 } from "@pagopa/io-app-design-system";
@@ -12,7 +11,10 @@ import { LoadingScreenContent } from "../../../../components/screens/LoadingScre
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { convertUnknownToError } from "../../../../utils/errors";
+import {
+  convertUnknownToError,
+  serializeError
+} from "../../../../utils/errors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { getNfcAntennaInfo, NfcAntennaInfo } from "../../../../utils/nfc";
 
@@ -29,7 +31,7 @@ export const NfcPlayground = () => {
       const info = await getNfcAntennaInfo();
       setNfcAntennaInfo(info);
     } catch (e) {
-      setFailure(convertUnknownToError(e));
+      setFailure(serializeError(convertUnknownToError(e)));
     }
   });
 
@@ -43,18 +45,8 @@ export const NfcPlayground = () => {
       <OperationResultScreenContent
         isHeaderVisible={true}
         pictogram="attention"
-        title="NFC Antenna Info not available on this device."
-      >
-        <IOText
-          font="FiraCode"
-          size={12}
-          lineHeight={18}
-          color={"grey-700"}
-          weight="Medium"
-        >
-          {JSON.stringify(failure, null, 2)}
-        </IOText>
-      </OperationResultScreenContent>
+        title="NFC Antenna Info not available on this device"
+      />
     );
   }
 
