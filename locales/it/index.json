@@ -304,7 +304,9 @@
   "locales": {
     "it": "Italiano",
     "en": "Inglese",
-    "de": "Tedesco"
+    "de": "Tedesco",
+    "fr": "Francese",
+    "sl": "Sloveno"
   },
   "clipboard": {
     "copyIntoClipboard": "copia negli appunti",
@@ -740,6 +742,10 @@
         "preferred_language": {
           "title": "Lingua preferita",
           "subtitle": "In quale lingua vuoi usare l'applicazione?",
+          "headers": {
+            "services": "Servizi",
+            "app": "Applicazione"
+          },
           "alert": {
             "title": "Vuoi cambiare la lingua in",
             "subtitle": "Dovrai riavviare l'applicazione per applicare il cambiamento"

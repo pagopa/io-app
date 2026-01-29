@@ -740,6 +740,10 @@
         "preferred_language": {
           "title": "Favourite language",
           "subtitle": "In which language do you want to use the application?",
+          "headers": {
+            "services": "Services",
+            "app": "Application"
+          },
           "alert": {
             "title": "Do you want to change the language to",
             "subtitle": "You'll need to restart the application to make this happen"

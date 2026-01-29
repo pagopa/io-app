@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.23.0-rc.5](https://github.com/pagopa/io-app/compare/3.23.0-rc.4...3.23.0-rc.5) (2026-01-28)
+
+
+### Features
+
+* [[IOPLT-1113](https://pagopa.atlassian.net/browse/IOPLT-1113)] Add a revamped static screen to allow locale settings to be decoupled ([#7811](https://github.com/pagopa/io-app/issues/7811)) ([0ebf85b](https://github.com/pagopa/io-app/commit/0ebf85b19995574571e3b2f2e25f6a3a40200384))
+* **IT-Wallet:** [[SIW-3681](https://pagopa.atlassian.net/browse/SIW-3681)] Update of revocation alert copy ([#7810](https://github.com/pagopa/io-app/issues/7810)) ([d29cfd5](https://github.com/pagopa/io-app/commit/d29cfd58941baa7aa479181b61023a9e34cce14a))
+
+
+### Chores
+
+* [[IOPLT-1518](https://pagopa.atlassian.net/browse/IOPLT-1518)] Change theme default from `light` to `auto` ([#7794](https://github.com/pagopa/io-app/issues/7794)) ([fc1e3c3](https://github.com/pagopa/io-app/commit/fc1e3c32b3bd29a3858d48223d9ede4889d41f22))
+
 ## [3.23.0-rc.4](https://github.com/pagopa/io-app/compare/3.23.0-rc.3...3.23.0-rc.4) (2026-01-26)
 
 
