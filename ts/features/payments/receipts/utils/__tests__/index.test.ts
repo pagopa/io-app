@@ -4,10 +4,9 @@ import {
   filterTransactionsByIdAndGetIndex,
   formatAmountText,
   getPayerInfoLabel,
-  getTransactionByIndex,
   isValidPspName,
   removeAsterisks,
-  restoreTransactionAtIndex
+  restoreTransactionsToOriginalOrder
 } from "..";
 import { InfoNotice } from "../../../../../../definitions/pagopa/biz-events/InfoNotice";
 import { NoticeListItem } from "../../../../../../definitions/pagopa/biz-events/NoticeListItem";
@@ -222,133 +221,142 @@ describe("calculateTotalAmount", () => {
   });
 });
 
-describe("getTransactionByIndex", () => {
-  it("should return the transaction at the given index", () => {
-    const transactionPot = pot.some(mockTransactions);
-    expect(getTransactionByIndex(transactionPot, 1)).toEqual(
-      mockTransactions[1]
-    );
-    expect(getTransactionByIndex(transactionPot, 2)).toEqual(
-      mockTransactions[2]
-    );
-  });
-  it("should return undefined if the index is out of bounds", () => {
-    const transactionPot = pot.some(mockTransactions);
-    expect(getTransactionByIndex(transactionPot, -1)).toBeUndefined();
-    expect(getTransactionByIndex(transactionPot, 3)).toBeUndefined();
-  });
-});
-
 describe("filterTransactionsByIdAndGetIndex", () => {
-  it("should remove the transaction with the given ID and return the index", () => {
+  it("should remove the transaction with the given ID and return the indices", () => {
     const transactions = pot.some(mockTransactions);
-    const { filteredTransactions, removedIndex } =
+    const { filteredTransactions, removedIndices } =
       filterTransactionsByIdAndGetIndex(transactions, "2");
     expect(filteredTransactions).toEqual([
       mockTransactions[0],
       mockTransactions[2]
     ]);
-    expect(removedIndex).toBe(1);
+    expect(removedIndices).toEqual([1]);
   });
   it("should return the same transactions if the ID is not found", () => {
     const transactions = pot.some(mockTransactions);
-    const { filteredTransactions, removedIndex } =
+    const { filteredTransactions, removedIndices } =
       filterTransactionsByIdAndGetIndex(transactions, "4");
     expect(filteredTransactions).toEqual(mockTransactions);
-    expect(removedIndex).toBe(-1);
+    expect(removedIndices).toEqual([]);
   });
   it("should return an empty array if the transactions are empty", () => {
     const transactions = pot.some([]);
-    const { filteredTransactions, removedIndex } =
+    const { filteredTransactions, removedIndices } =
       filterTransactionsByIdAndGetIndex(transactions, "1");
     expect(filteredTransactions).toEqual([]);
-    expect(removedIndex).toBe(-1);
+    expect(removedIndices).toEqual([]);
   });
   it("should return an empty array if the transactions are undefined", () => {
     const transactions = pot.none;
-    const { filteredTransactions, removedIndex } =
+    const { filteredTransactions, removedIndices } =
       filterTransactionsByIdAndGetIndex(transactions, "1");
     expect(filteredTransactions).toEqual([]);
-    expect(removedIndex).toBe(-1);
+    expect(removedIndices).toEqual([]);
+  });
+  it("should remove multiple transactions for payer cart", () => {
+    const cartTransactions: ReadonlyArray<NoticeListItem> = [
+      { ...mockTransactions[0], eventId: "cart-123_CART_" },
+      { ...mockTransactions[1], eventId: "other" },
+      { ...mockTransactions[2], eventId: "cart-123_CART_456" }
+    ];
+    const transactions = pot.some(cartTransactions);
+    const { filteredTransactions, removedIndices } =
+      filterTransactionsByIdAndGetIndex(transactions, "cart-123_CART_");
+    expect(filteredTransactions).toEqual([cartTransactions[1]]);
+    expect(removedIndices).toEqual([0, 2]);
+  });
+  it("should remove only exact match for debtor cart", () => {
+    const cartTransactions: ReadonlyArray<NoticeListItem> = [
+      { ...mockTransactions[0], eventId: "cart-123_CART_456" },
+      { ...mockTransactions[1], eventId: "other" },
+      { ...mockTransactions[2], eventId: "cart-123_CART_789" }
+    ];
+    const transactions = pot.some(cartTransactions);
+    const { filteredTransactions, removedIndices } =
+      filterTransactionsByIdAndGetIndex(transactions, "cart-123_CART_456");
+    expect(filteredTransactions).toEqual([
+      cartTransactions[1],
+      cartTransactions[2]
+    ]);
+    expect(removedIndices).toEqual([0]);
   });
 });
 
-describe("restoreTransactionAtIndex", () => {
-  it("should restore the transaction at the specified index", () => {
-    const transactionPot = pot.some(mockTransactions);
-    const restoreItem: NoticeListItem = {
-      eventId: "4",
-      amount: "40.00",
-      isCart: false,
-      isDebtor: false,
-      isPayer: true,
-      noticeDate: "2021-01-04",
-      payeeTaxCode: "112233445",
-      payeeName: "Alice Doe"
-    };
-    const index = 1;
+describe("restoreTransactionsToOriginalOrder", () => {
+  it("should restore a single removed transaction at its original index", () => {
+    const filtered = [mockTransactions[0], mockTransactions[2]];
+    const removedIndices = [1];
+    const removedItems = [mockTransactions[1]];
 
-    const restoredPot = restoreTransactionAtIndex(
-      transactionPot,
-      restoreItem,
-      index
+    const result = restoreTransactionsToOriginalOrder(
+      filtered,
+      removedIndices,
+      removedItems
     );
-    const restoredTransactions = pot.getOrElse(restoredPot, []);
 
-    expect(restoredTransactions).toEqual([
-      mockTransactions[0],
-      restoreItem,
-      mockTransactions[1],
-      mockTransactions[2]
-    ]);
+    expect(result).toEqual(mockTransactions);
   });
 
-  it("should add the transaction at the end if the index is out of range", () => {
-    const transactionPot = pot.some(mockTransactions);
-    const restoreItem: NoticeListItem = {
-      eventId: "5",
-      amount: "50.00",
-      isCart: false,
-      isDebtor: true,
-      isPayer: false,
-      noticeDate: "2021-01-05",
-      payeeTaxCode: "556677889",
-      payeeName: "Bob Doe"
-    };
-    const index = 10; // Out of range
+  it("should restore multiple removed transactions at their original indices", () => {
+    const filtered = [mockTransactions[1]];
+    const removedIndices = [0, 2];
+    const removedItems = [mockTransactions[0], mockTransactions[2]];
 
-    const restoredPot = restoreTransactionAtIndex(
-      transactionPot,
-      restoreItem,
-      index
+    const result = restoreTransactionsToOriginalOrder(
+      filtered,
+      removedIndices,
+      removedItems
     );
-    const restoredTransactions = pot.getOrElse(restoredPot, []);
 
-    expect(restoredTransactions).toEqual([...mockTransactions, restoreItem]);
+    expect(result).toEqual(mockTransactions);
   });
 
-  it("should handle an empty transaction list and add the item as the only transaction", () => {
-    const transactionPot = pot.some([] as ReadonlyArray<NoticeListItem>);
-    const restoreItem: NoticeListItem = {
-      eventId: "6",
-      amount: "60.00",
-      isCart: true,
-      isDebtor: false,
-      isPayer: false,
-      noticeDate: "2021-01-06",
-      payeeTaxCode: "667788990",
-      payeeName: "Charlie Doe"
-    };
-    const index = 0;
+  it("should restore transaction at the beginning", () => {
+    const filtered = [mockTransactions[1], mockTransactions[2]];
+    const removedIndices = [0];
+    const removedItems = [mockTransactions[0]];
 
-    const restoredPot = restoreTransactionAtIndex(
-      transactionPot,
-      restoreItem,
-      index
+    const result = restoreTransactionsToOriginalOrder(
+      filtered,
+      removedIndices,
+      removedItems
     );
-    const restoredTransactions = pot.getOrElse(restoredPot, []);
 
-    expect(restoredTransactions).toEqual([restoreItem]);
+    expect(result).toEqual(mockTransactions);
+  });
+
+  it("should restore transaction at the end", () => {
+    const filtered = [mockTransactions[0], mockTransactions[1]];
+    const removedIndices = [2];
+    const removedItems = [mockTransactions[2]];
+
+    const result = restoreTransactionsToOriginalOrder(
+      filtered,
+      removedIndices,
+      removedItems
+    );
+
+    expect(result).toEqual(mockTransactions);
+  });
+
+  it("should handle empty filtered list", () => {
+    const filtered: ReadonlyArray<NoticeListItem> = [];
+    const removedIndices = [0, 1, 2];
+    const removedItems = [...mockTransactions];
+
+    const result = restoreTransactionsToOriginalOrder(
+      filtered,
+      removedIndices,
+      removedItems
+    );
+
+    expect(result).toEqual(mockTransactions);
+  });
+
+  it("should return same array if nothing was removed", () => {
+    const result = restoreTransactionsToOriginalOrder(mockTransactions, [], []);
+
+    expect(result).toEqual(mockTransactions);
   });
 });
 
