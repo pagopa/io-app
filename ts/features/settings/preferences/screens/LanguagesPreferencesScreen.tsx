@@ -40,12 +40,12 @@ import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 import { usePrevious } from "../../../../utils/hooks/usePrevious";
 import {
   fromLocaleToPreferredLanguage,
+  fromPreferredLanguageToLocale,
   getFullLocale
 } from "../../../../utils/locale";
 import { openWebUrl } from "../../../../utils/url";
 import { profileUpsert } from "../../common/store/actions";
 import { profileSelector } from "../../common/store/selectors";
-import { isAppLocaleSelectionEnabled } from "../../../../config";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.language.contextualHelpTitle",
@@ -117,8 +117,15 @@ const LanguagesPreferencesScreen = () => {
   );
 
   const initialSelectedItem = useMemo(
-    () => renderedItem.find(item => item.id === preferredLanguage)?.id,
-    [preferredLanguage, renderedItem]
+    () =>
+      renderedItem.find(
+        item =>
+          pot.isSome(profile) &&
+          profile.value.preferred_languages &&
+          item.id ===
+            fromPreferredLanguageToLocale(profile.value?.preferred_languages[0])
+      )?.id,
+    [profile, renderedItem]
   );
 
   const [selectedItem, setSelectedItem] = useState(initialSelectedItem);
@@ -134,15 +141,29 @@ const LanguagesPreferencesScreen = () => {
     []
   );
 
-  const [selectedAppLocale, setSelectedAppLocale] = useState<AppLocaleId>(
-    `app-locale-${I18n.language as AppLocale}` as AppLocaleId
+  const initialAppSelectedItem = useMemo(
+    () => renderedItem.find(item => item.id === preferredLanguage)?.id,
+    [preferredLanguage, renderedItem]
   );
 
-  const handleAppLocaleChange = useCallback((localeId: AppLocaleId) => {
-    const locale = localeId.replace("app-locale-", "") as AppLocale;
-    setSelectedAppLocale(localeId);
-    Alert.alert("Language selected", locale);
-  }, []);
+  const [selectedAppLocale, setSelectedAppLocale] = useState<AppLocaleId>(
+    `app-locale-${initialAppSelectedItem as AppLocale}` as AppLocaleId
+  );
+
+  const handleAppLocaleChange = useCallback(
+    (localeId: AppLocaleId) => {
+      const locale = localeId.replace("app-locale-", "") as AppLocale;
+
+      preferredLanguageSaveSuccessDispatch(locale as Locales);
+      setSelectedAppLocale(localeId);
+      showModal(
+        <AlertModal
+          message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
+        />
+      );
+    },
+    [preferredLanguageSaveSuccessDispatch, showModal]
+  );
 
   useEffect(() => {
     // start updating
@@ -159,13 +180,7 @@ const LanguagesPreferencesScreen = () => {
       !pot.isError(profile)
     ) {
       setIsLoading(false);
-      preferredLanguageSaveSuccessDispatch(selectedLanguage.current as Locales);
       setSelectedItem(selectedLanguage.current);
-      showModal(
-        <AlertModal
-          message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
-        />
-      );
       toast.success(
         I18n.t(
           "profile.preferences.list.preferred_language.toast.success.title"
@@ -182,17 +197,10 @@ const LanguagesPreferencesScreen = () => {
       pot.isError(profile)
     ) {
       setIsLoading(false);
+      setSelectedItem(selectedLanguage.current);
       toast.error(I18n.t("errors.profileUpdateError"));
     }
-  }, [
-    selectedLanguage,
-    preferredLanguageSaveSuccessDispatch,
-    prevProfile,
-    profile,
-    selectedItem,
-    showModal,
-    toast
-  ]);
+  }, [selectedLanguage, prevProfile, profile, selectedItem, toast]);
 
   const onLanguageSelected = useCallback(
     (language: string) => {
@@ -225,6 +233,34 @@ const LanguagesPreferencesScreen = () => {
     [selectedItem, upsertProfile]
   );
 
+  const onAppLanguageSelected = useCallback(
+    (language: string) => {
+      if (selectedItem !== language) {
+        const locale = language.replace("app-locale-", "") as AppLocale;
+        Alert.alert(
+          `${I18n.t(
+            "profile.preferences.list.preferred_language.alert.title"
+            // eslint-disable-next-line sonarjs/no-nested-template-literals
+          )} ${I18n.t(`locales.${locale as Locales}`)}?`,
+          I18n.t("profile.preferences.list.preferred_language.alert.subtitle"),
+          [
+            {
+              text: I18n.t("global.buttons.cancel"),
+              style: "cancel"
+            },
+            {
+              text: I18n.t("global.buttons.confirm"),
+              style: "default",
+              onPress: () => handleAppLocaleChange(language as AppLocaleId)
+            }
+          ],
+          { cancelable: false }
+        );
+      }
+    },
+    [handleAppLocaleChange, selectedItem]
+  );
+
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
       <IOScrollViewWithLargeHeader
@@ -241,14 +277,13 @@ const LanguagesPreferencesScreen = () => {
       >
         <VStack space={24}>
           <View>
-            {isAppLocaleSelectionEnabled && (
-              <ListItemHeader
-                iconName="institution"
-                label={I18n.t(
-                  "profile.preferences.list.preferred_language.headers.services"
-                )}
-              />
-            )}
+            <ListItemHeader
+              iconName="institution"
+              label={I18n.t(
+                "profile.preferences.list.preferred_language.headers.services"
+              )}
+            />
+
             <RadioGroup<string>
               type="radioListItem"
               items={renderedItem}
@@ -275,22 +310,21 @@ const LanguagesPreferencesScreen = () => {
               </>
             )}
           </View>
-          {isAppLocaleSelectionEnabled && (
-            <View>
-              <ListItemHeader
-                iconName="device"
-                label={I18n.t(
-                  "profile.preferences.list.preferred_language.headers.app"
-                )}
-              />
-              <RadioGroup<AppLocaleId>
-                type="radioListItem"
-                items={appLocaleOptions}
-                selectedItem={selectedAppLocale}
-                onPress={handleAppLocaleChange}
-              />
-            </View>
-          )}
+
+          <View>
+            <ListItemHeader
+              iconName="device"
+              label={I18n.t(
+                "profile.preferences.list.preferred_language.headers.app"
+              )}
+            />
+            <RadioGroup<AppLocaleId>
+              type="radioListItem"
+              items={appLocaleOptions}
+              selectedItem={selectedAppLocale}
+              onPress={onAppLanguageSelected}
+            />
+          </View>
         </VStack>
       </IOScrollViewWithLargeHeader>
     </LoadingSpinnerOverlay>
