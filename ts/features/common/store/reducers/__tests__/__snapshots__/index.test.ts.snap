@@ -328,6 +328,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "latestTransactions": {
         "kind": "PotNone",
       },
+      "needsHomeListRefresh": false,
       "receiptDocument": {
         "kind": "PotNone",
       },
