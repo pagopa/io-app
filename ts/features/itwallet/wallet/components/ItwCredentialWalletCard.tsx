@@ -3,9 +3,9 @@ import { useIOSelector } from "../../../../store/hooks";
 import { withWalletCardBaseComponent } from "../../../wallet/components/WalletCardBaseComponent";
 import { WalletCardPressableBase } from "../../../wallet/components/WalletCardPressableBase";
 import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { itwCredentialsEidIssuedAtSelector } from "../../credentials/store/selectors";
 import { isCredentialIssuedBeforePid } from "../../common/utils/itwCredentialUtils";
 
