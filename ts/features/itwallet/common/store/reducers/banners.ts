@@ -17,7 +17,7 @@ const FOREVER = 100 * 365; // approx. 100 years
 export type ItwBannerId =
   | "discovery" // (Legacy) Discovery banner for Documenti su IO
   | "discovery_wallet" // Discovery banner for IT Wallet placed in the wallet screen
-| "discovery_messages_inbox" // Discovery banner for IT Wallet placed in the messages inbox screen
+  | "discovery_messages_inbox" // Discovery banner for IT Wallet placed in the messages inbox screen
   | "upgradeMDLDetails"; // Upgrade to IT Wallet banner placed in MDL details screen
 
 /**
