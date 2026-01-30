@@ -33,6 +33,10 @@ export const itwSetPidReissuingSurveyHidden = createStandardAction(
   "ITW_SET_PID_REISSUING_SURVEY_HIDDEN"
 )<boolean>();
 
+export const itwDisableItwActivation = createStandardAction(
+  "ITW_DISABLE_ITW_ACTIVATION"
+)();
+
 export type ItwPreferencesActions =
   | ActionType<typeof itwSetReviewPending>
   | ActionType<typeof itwSetAuthLevel>
@@ -41,4 +45,5 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetFiscalCodeWhitelisted>
   | ActionType<typeof itwFreezeSimplifiedActivationRequirements>
   | ActionType<typeof itwClearSimplifiedActivationRequirements>
-  | ActionType<typeof itwSetPidReissuingSurveyHidden>;
+  | ActionType<typeof itwSetPidReissuingSurveyHidden>
+  | ActionType<typeof itwDisableItwActivation>;

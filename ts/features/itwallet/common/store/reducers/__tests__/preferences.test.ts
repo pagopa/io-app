@@ -67,7 +67,8 @@ describe("IT Wallet preferences reducer", () => {
         isPendingReview: true,
         authLevel: "L2",
         claimValuesHidden: true,
-        isWalletInstanceRemotelyActive: true
+        isWalletInstanceRemotelyActive: true,
+        isItwActivationDisabled: true
       },
       action
     );
@@ -75,7 +76,8 @@ describe("IT Wallet preferences reducer", () => {
     expect(newState).toEqual({
       ...itwPreferencesInitialState,
       claimValuesHidden: true,
-      isWalletInstanceRemotelyActive: true
+      isWalletInstanceRemotelyActive: true,
+      isItwActivationDisabled: true
     });
   });
 });

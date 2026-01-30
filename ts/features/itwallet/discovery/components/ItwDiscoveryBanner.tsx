@@ -16,7 +16,6 @@ type Props = {
   flow?: "messages_inbox" | "wallet";
   /** Dismiss handler */
   onDismiss?: () => void;
-
   /** Custom styles applied to the underlying {@link ItwEngagementBanner} component */
   style?: ComponentProps<typeof ItwEngagementBanner>["style"];
 };
@@ -37,14 +36,14 @@ export const ItwDiscoveryBanner = ({
   const isWalletEmpty = useIOSelector(itwIsWalletEmptySelector);
   const hasMdl = useIOSelector(itwIsMdlPresentSelector);
 
-  const handleStartPress = () => {
+  const navigateToDiscoveryScreen = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
       params: { level: "l3" }
     });
   };
 
-  const handleAddNewDocumentPress = () => {
+  const navigateToDocumentOnboardingScreen = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.ONBOARDING
     });
@@ -63,7 +62,7 @@ export const ItwDiscoveryBanner = ({
           "features.itWallet.engagementBanner.activation.description"
         )}
         action={I18n.t("features.itWallet.engagementBanner.activation.action")}
-        onPress={handleAddNewDocumentPress}
+        onPress={navigateToDocumentOnboardingScreen}
         onDismiss={handleOnDismiss}
         dismissable={true}
         style={style}
@@ -81,7 +80,7 @@ export const ItwDiscoveryBanner = ({
         action={I18n.t(
           "features.itWallet.engagementBanner.upgrade_empty.action"
         )}
-        onPress={handleStartPress}
+        onPress={navigateToDocumentOnboardingScreen}
         onDismiss={handleOnDismiss}
         style={style}
       />
@@ -100,7 +99,7 @@ export const ItwDiscoveryBanner = ({
         action={I18n.t(
           "features.itWallet.engagementBanner.upgrade_with_mdl.action"
         )}
-        onPress={handleStartPress}
+        onPress={navigateToDiscoveryScreen}
         onDismiss={handleOnDismiss}
         dismissable={true}
         style={style}
@@ -115,7 +114,7 @@ export const ItwDiscoveryBanner = ({
         "features.itWallet.engagementBanner.upgrade.description"
       )}
       action={I18n.t("features.itWallet.engagementBanner.upgrade.action")}
-      onPress={handleStartPress}
+      onPress={navigateToDiscoveryScreen}
       onDismiss={handleOnDismiss}
       dismissable={true}
       style={style}

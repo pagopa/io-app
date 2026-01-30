@@ -130,7 +130,7 @@ export const itwShouldHideEidLifecycleAlert = (state: GlobalState): boolean =>
     !isConnectedSelector(state));
 
 /**
- * Returns whether the new IT-Wallet activation banner sshould be rendered.
+ * Returns whether the new IT-Wallet activation banner should be rendered.
  * - The IT Wallet feature flag is enabled
  * - The wallet is not offline
  * - The L3 feature flag is enabled
