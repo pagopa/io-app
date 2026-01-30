@@ -148,7 +148,7 @@ export const itwShouldRenderDiscoveryBannerSelector = (state: GlobalState) =>
  * - The IT Wallet feature flag is enabled
  * - The wallet is not offline
  * - The L3 feature flag is enabled
- * - The wallet is active but not an IT Wallet istance
+ * - The wallet is active but not an IT Wallet instance
  * - The banner was not dismissed by the user
  */
 export const itwShouldRenderUpgradeBannerSelector = (state: GlobalState) =>
