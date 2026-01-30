@@ -2,6 +2,7 @@ import {
   Badge,
   ContentWrapper,
   IOButton,
+  ListItemHeader,
   ModuleNavigationAlt,
   VSpacer,
   VStack
@@ -57,7 +58,7 @@ export const ItwIdentificationModeSelectionScreen = ({
   );
   const mode = ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
-
+  const isReissuanceMode = mode === "reissuance";
   const disabledIdentificationMethods = useIOSelector(
     itwDisabledIdentificationMethodsSelector
   );
@@ -164,9 +165,44 @@ export const ItwIdentificationModeSelectionScreen = ({
       <ContentWrapper>
         <VSpacer size={8} />
         <VStack space={16}>
-          {!isCiePinDisabled && <CiePinMethodModule />}
-          {!isSpidDisabled && <SpidMethodModule />}
-          {!isCieIdDisabled && <CieIdMethodModule />}
+          {isReissuanceMode ? (
+            <>
+              {(!isCiePinDisabled || !isCieIdDisabled) && (
+                <VStack space={8}>
+                  <ListItemHeader
+                    label={I18n.t(`${i18nNs}.frequency.every12Months`)}
+                    endElement={{
+                      type: "badge",
+                      componentProps: {
+                        text: I18n.t(`${i18nNs}.mode.ciePin.reissuanceBadge`),
+                        variant: "highlight",
+                        outline: false,
+                        testID: "CiePinReissuanceBadgeTestID"
+                      }
+                    }}
+                  />
+                  <VStack space={16}>
+                    {!isCiePinDisabled && <CiePinMethodModule />}
+                    {!isCieIdDisabled && <CieIdMethodModule />}
+                  </VStack>
+                </VStack>
+              )}
+              {!isSpidDisabled && (
+                <VStack space={8}>
+                  <ListItemHeader
+                    label={I18n.t(`${i18nNs}.frequency.every90Days`)}
+                  />
+                  <SpidMethodModule />
+                </VStack>
+              )}
+            </>
+          ) : (
+            <>
+              {!isCiePinDisabled && <CiePinMethodModule />}
+              {!isCieIdDisabled && <CieIdMethodModule />}
+              {!isSpidDisabled && <SpidMethodModule />}
+            </>
+          )}
           {isL3 && !eidReissuing && (
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <IOButton
@@ -201,8 +237,8 @@ const CiePinMethodModule = () => {
   });
 
   const badgeProps: Badge | undefined = useMemo(() => {
-    if (level === "l2" && mode === "issuance") {
-      // Should not display the recommended badge for L2 issuance
+    if (mode === "reissuance" || (level === "l2" && mode === "issuance")) {
+      // Should not display the recommended badge for reissuance or L2 issuance
       return undefined;
     }
 

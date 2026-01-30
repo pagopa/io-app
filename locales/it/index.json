@@ -4869,11 +4869,11 @@
         "modeSelection": {
           "section": {
             "issuance": "Ottieni {{ feature }}",
-            "reissuance": "Conferma identità"
+            "reissuance": "Conferma periodica dell'identità"
           },
           "title": {
             "issuance": "Conferma la tua identità",
-            "reissuance": "Scegli come identificarti"
+            "reissuance": "Scegli come continuare"
           },
           "description": {
             "issuance": "È un passaggio di sicurezza necessario per associare i documenti digitali alla tua identità. ",
@@ -4884,6 +4884,7 @@
             "ciePin": {
               "title": "Continua con CIE + PIN",
               "subtitle": "Ha una durata di 12 mesi",
+              "reissuanceBadge": "Consigliato",
               "badge": "consigliato",
               "bottomSheet": {
                 "title": "Continua con CIE + PIN",
@@ -4922,6 +4923,10 @@
                 "warning": "Se scegli questo metodo dovrai ripetere il passaggio di sicurezza ogni 90 giorni."
               }
             }
+          },
+          "frequency": {
+            "every12Months": "Ogni 12 mesi",
+            "every90Days": "Ogni 90 giorni"
           }
         },
         "cie": {

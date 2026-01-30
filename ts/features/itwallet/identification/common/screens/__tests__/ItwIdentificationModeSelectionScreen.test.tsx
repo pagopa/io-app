@@ -65,27 +65,33 @@ describe("ItwIdentificationModeSelectionScreen", () => {
     expect(component.queryByTestId("noCieButtonTestID")).not.toBeNull();
   });
 
-  it("[reissuance, l2] should show CiePin (w/badge), CieId and SPID authentication methods", () => {
+  it("[reissuance, l2] should show frequency headers and list CiePin(without badge), CieId and SPID authentication methods", () => {
     const component = renderComponent("reissuance", "l2");
 
+    expect(component.queryByText("Ogni 12 mesi")).not.toBeNull();
+    expect(component.queryByText("Ogni 90 giorni")).not.toBeNull();
+    expect(
+      component.queryByTestId("CiePinReissuanceBadgeTestID")
+    ).not.toBeNull();
     expect(component.queryByTestId("CiePinMethodModuleTestID")).not.toBeNull();
     expect(component.queryByTestId("SpidMethodModuleTestID")).not.toBeNull();
     expect(component.queryByTestId("CieIDMethodModuleTestID")).not.toBeNull();
-    expect(
-      component.queryByTestId("CiePinRecommendedBadgeTestID")
-    ).not.toBeNull();
+    expect(component.queryByTestId("CiePinRecommendedBadgeTestID")).toBeNull();
     expect(component.queryByTestId("noCieButtonTestID")).toBeNull();
   });
 
-  it("[reissuance, l3] should show CiePin (w/badge) CieId and SPID authentication methods", () => {
+  it("[reissuance, l3] should show frequency headers and list CiePin(without badge), CieId and SPID authentication methods", () => {
     const component = renderComponent("reissuance", "l3");
 
+    expect(component.queryByText("Ogni 12 mesi")).not.toBeNull();
+    expect(component.queryByText("Ogni 90 giorni")).not.toBeNull();
+    expect(
+      component.queryByTestId("CiePinReissuanceBadgeTestID")
+    ).not.toBeNull();
     expect(component.queryByTestId("CiePinMethodModuleTestID")).not.toBeNull();
     expect(component.queryByTestId("SpidMethodModuleTestID")).not.toBeNull();
     expect(component.queryByTestId("CieIDMethodModuleTestID")).not.toBeNull();
-    expect(
-      component.queryByTestId("CiePinRecommendedBadgeTestID")
-    ).not.toBeNull();
+    expect(component.queryByTestId("CiePinRecommendedBadgeTestID")).toBeNull();
     expect(component.queryByTestId("noCieButtonTestID")).toBeNull();
   });
 
