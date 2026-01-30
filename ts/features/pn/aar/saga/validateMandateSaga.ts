@@ -19,8 +19,14 @@ import {
   SendAARFailurePhase,
   sendAARFlowStates
 } from "../utils/stateUtils";
+import { isDevEnv } from "../../../../utils/environment";
 
 const sendAARFailurePhase: SendAARFailurePhase = "Validate Mandate";
+
+export type AcceptMandateSuccessfulResponse = Extract<
+  Awaited<ReturnType<SendAARClient["acceptAARMandate"]>>,
+  { _tag: "Right" }
+>;
 
 export function* validateMandateSaga(
   acceptMandate: SendAARClient["acceptAARMandate"],
@@ -92,39 +98,25 @@ export function* validateMandateSaga(
           "Fast login expiration"
         );
         return;
-      case 422:
-        const maybeErrorKey = value.errors
-          ?.map(({ code }) => code)
-          .find(code =>
-            code.match(/CIE_EXPIRED_ERROR|CIE_NOT_RELATED_TO_DELEGATOR_ERROR/)
-          );
-
-        if (maybeErrorKey?.match(/CIE_EXPIRED_ERROR/)) {
-          yield* call(trackSendAarMandateCieExpiredError);
-        }
-        if (maybeErrorKey?.match(/CIE_NOT_RELATED_TO_DELEGATOR_ERROR/)) {
-          yield* call(trackSendAarMandateCieNotRelatedToDelegatorError);
-        }
-        break;
       default:
-        break;
+        const reason = `HTTP request failed (${aarProblemJsonAnalyticsReport(
+          status,
+          value
+        )})`;
+        yield* call(handleMixPanelCustomTrackingIfNeeded, status, value);
+        yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
+        const errorState: AARFlowState = {
+          type: sendAARFlowStates.ko,
+          previousState: { ...action.payload },
+          ...(value !== undefined && { error: value }),
+          debugData: {
+            phase: sendAARFailurePhase,
+            reason
+          }
+        };
+        yield* put(setAarFlowState(errorState));
+        return;
     }
-    const reason = `HTTP request failed (${aarProblemJsonAnalyticsReport(
-      status,
-      value
-    )})`;
-    yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
-    const errorState: AARFlowState = {
-      type: sendAARFlowStates.ko,
-      previousState: { ...action.payload },
-      ...(value !== undefined && { error: value }),
-      debugData: {
-        phase: sendAARFailurePhase,
-        reason
-      }
-    };
-    yield* put(setAarFlowState(errorState));
-    return;
   } catch (e) {
     const reason = `An error was thrown (${unknownToReason(e)})`;
     yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
@@ -140,3 +132,41 @@ export function* validateMandateSaga(
     );
   }
 }
+
+function handleMixPanelCustomTrackingIfNeeded<
+  S extends Exclude<
+    AcceptMandateSuccessfulResponse["right"]["status"],
+    204 | 401
+  >
+>(
+  status: S,
+  value: Extract<
+    AcceptMandateSuccessfulResponse["right"],
+    { status: S }
+  >["value"]
+) {
+  switch (status) {
+    case 422:
+      {
+        const maybeErrorKey = value.errors
+          ?.map(({ code }) => code)
+          .find(code =>
+            /CIE_EXPIRED_ERROR|CIE_NOT_RELATED_TO_DELEGATOR_ERROR/i.test(code)
+          );
+
+        if (/CIE_EXPIRED_ERROR/i.test(`${maybeErrorKey}`)) {
+          trackSendAarMandateCieExpiredError();
+        }
+        if (/CIE_NOT_RELATED_TO_DELEGATOR_ERROR/i.test(`${maybeErrorKey}`)) {
+          trackSendAarMandateCieNotRelatedToDelegatorError();
+        }
+      }
+      break;
+    default:
+      break;
+  }
+}
+
+export const testable = isDevEnv
+  ? { handleMixPanelCustomTrackingIfNeeded }
+  : undefined;
