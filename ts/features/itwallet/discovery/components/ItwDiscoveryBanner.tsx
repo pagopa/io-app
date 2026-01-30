@@ -12,6 +12,10 @@ import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 
 type Props = {
+  /** Flow type to determine dismissal logic and tracking properties  */
+  flow?: "messages_inbox" | "wallet";
+  /** Dismiss handler */
+  onDismiss?: () => void;
   /** Custom styles applied to the underlying {@link ItwEngagementBanner} component */
   style?: ComponentProps<typeof ItwEngagementBanner>["style"];
 };
@@ -20,7 +24,11 @@ type Props = {
  * Displays a banner that prompts the user to activate or upgrade its wallet to the
  * new IT-Wallet.
  */
-export const ItwDiscoveryBanner = ({ style }: Props) => {
+export const ItwDiscoveryBanner = ({
+  flow = "wallet",
+  onDismiss,
+  style
+}: Props) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
 
@@ -42,7 +50,8 @@ export const ItwDiscoveryBanner = ({ style }: Props) => {
   };
 
   const handleOnDismiss = () => {
-    dispatch(itwCloseBanner("discovery_wallet"));
+    onDismiss?.();
+    dispatch(itwCloseBanner(`discovery_${flow}`));
   };
 
   if (!isWalletActive) {
