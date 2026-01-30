@@ -1,5 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
+import { ItwAuthLevel, StoredCredential } from "../../utils/itwTypesUtils.ts";
 
 export const itwSetReviewPending = createStandardAction(
   "ITW_SET_REVIEW_PENDING"
@@ -35,7 +35,7 @@ export const itwSetPidReissuingSurveyHidden = createStandardAction(
 
 export const itwSetCredentialUpgradeFailed = createStandardAction(
   "ITW_SET_CREDENTIAL_UPGRADE_FAILED"
-)<{ credentialType: string; failed: boolean }>();
+)<ReadonlyArray<StoredCredential>>();
 
 export type ItwPreferencesActions =
   | ActionType<typeof itwSetReviewPending>

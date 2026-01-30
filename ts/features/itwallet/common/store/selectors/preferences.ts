@@ -51,10 +51,7 @@ export const itwIsPidReissuingSurveyHiddenSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.isPidReissuingSurveyHidden;
 
 /**
- * Returns whether the credential upgrade failed for the given type.
+ * Returns the list of credentials that failed the upgrade process.
  */
-export const itwCredentialUpgradeFailedSelector =
-  (credentialType: string) => (state: GlobalState) =>
-    state.features.itWallet.preferences.credentialUpgradeFailedByType?.[
-      credentialType
-    ] ?? false;
+export const itwCredentialUpgradeFailedSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.credentialUpgradeFailed ?? [];

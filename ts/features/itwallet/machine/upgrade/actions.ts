@@ -4,7 +4,6 @@ import {
   itwCredentialsRemoveByType,
   itwCredentialsStore
 } from "../../credentials/store/actions";
-import { itwSetCredentialUpgradeFailed } from "../../common/store/actions/preferences";
 import { Context } from "./context";
 import { CredentialUpgradeEvents } from "./events";
 import { UpgradeCredentialOutput } from "./actors";
@@ -21,25 +20,5 @@ export const createCredentialUpgradeActionsImplementation = (
     store.dispatch(itwCredentialsRemoveByType(credentialType));
     // Stores the new credentials
     store.dispatch(itwCredentialsStore(credentials));
-    // Clear any previous upgrade-failed flag for this credential type
-    store.dispatch(
-      itwSetCredentialUpgradeFailed({ credentialType, failed: false })
-    );
-  },
-
-  markCredentialUpgradeFailed: ({
-    context
-  }: ActionArgs<Context, CredentialUpgradeEvents, CredentialUpgradeEvents>) => {
-    const credentialType =
-      context.credentials[context.credentialIndex]?.credentialType;
-    if (context.issuanceMode !== "upgrade" || !credentialType) {
-      return;
-    }
-    store.dispatch(
-      itwSetCredentialUpgradeFailed({
-        credentialType,
-        failed: true
-      })
-    );
   }
 });

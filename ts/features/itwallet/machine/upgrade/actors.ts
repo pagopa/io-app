@@ -29,6 +29,9 @@ export const createCredentialUpgradeActorsImplementation = (env: Env) => ({
     const { pid, walletInstanceAttestation, credential, issuanceMode } = input;
     const isUpgrade = issuanceMode === "upgrade";
 
+    if (credential.credentialType === "mDL") {
+      throw new Error("mDL upgrade is not supported");
+    }
     const { requestedCredential, issuerConf, clientId, codeVerifier } =
       await credentialIssuanceUtils.requestCredential({
         env,

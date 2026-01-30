@@ -3,8 +3,10 @@ import { isConnectedSelector } from "../../../../connectivity/store/selectors";
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import {
   itwCredentialsEidStatusSelector,
+  itwCredentialsEidIssuedAtSelector,
   itwIsWalletEmptySelector
 } from "../../../credentials/store/selectors";
+import { isCredentialIssuedBeforePid } from "../../utils/itwCredentialUtils";
 import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsOperationalOrValid,
@@ -15,7 +17,10 @@ import {
   itwIsDiscoveryBannerHiddenSelector,
   itwIsWalletUpgradeMDLDetailsBannerHiddenSelector
 } from "./banners";
-import { itwIsL3EnabledSelector } from "./preferences";
+import {
+  itwCredentialUpgradeFailedSelector,
+  itwIsL3EnabledSelector
+} from "./preferences";
 import { isItwEnabledSelector } from "./remoteConfig";
 
 /**
@@ -82,6 +87,24 @@ export const itwShouldRenderL3UpgradeBannerSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
   itwIsL3EnabledSelector(state) &&
   !itwLifecycleIsITWalletValidSelector(state);
+
+/**
+ * Returns whether a credential should be upgraded in IT Wallet.
+ */
+export const itwShouldUpgradeCredentialSelector =
+  (credentialType: string, issuedAt?: string) => (state: GlobalState) => {
+    const isItwPid = itwLifecycleIsITWalletValidSelector(state);
+    const pidIssuedAt = itwCredentialsEidIssuedAtSelector(state);
+    const upgradeFailures = itwCredentialUpgradeFailedSelector(state);
+
+    const hasUpgradeFailed = upgradeFailures.some(
+      credential => credential.credentialType === credentialType
+    );
+    const isIssuedBeforePid =
+      isItwPid && isCredentialIssuedBeforePid(issuedAt, pidIssuedAt);
+
+    return isIssuedBeforePid || hasUpgradeFailed;
+  };
 
 /**
  * Returns whether the new IT-Wallet variant should be rendered.

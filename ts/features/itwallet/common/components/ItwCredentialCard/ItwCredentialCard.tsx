@@ -5,18 +5,15 @@ import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { useIOSelector } from "../../../../../store/hooks";
 import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
-import { itwCredentialsEidIssuedAtSelector } from "../../../credentials/store/selectors";
-import { itwCredentialUpgradeFailedSelector } from "../../../common/store/selectors/preferences";
 import { useItwDisplayCredentialStatus } from "../../../presentation/details/hooks/useItwDisplayCredentialStatus";
 import {
   getCredentialNameFromType,
-  isCredentialIssuedBeforePid,
   tagPropsByStatus,
   useBorderColorByStatus,
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
 import { useThemeColorByCredentialType } from "../../utils/itwStyleUtils";
+import { itwShouldUpgradeCredentialSelector } from "../../store/selectors";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
@@ -60,14 +57,9 @@ export const ItwCredentialCard = ({
   isMultiCredential
 }: ItwCredentialCard) => {
   const typefacePreference = useIOSelector(fontPreferenceSelector);
-  const isItwPid = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const pidIssuedAt = useIOSelector(itwCredentialsEidIssuedAtSelector);
-  const hasUpgradeFailed = useIOSelector(
-    itwCredentialUpgradeFailedSelector(credentialType)
+  const needsItwUpgrade = useIOSelector(
+    itwShouldUpgradeCredentialSelector(credentialType, issuedAt)
   );
-  const needsItwUpgrade =
-    (isItwPid && isCredentialIssuedBeforePid(issuedAt, pidIssuedAt)) ||
-    hasUpgradeFailed;
   const status = useItwDisplayCredentialStatus(credentialStatus);
   const theme = useThemeColorByCredentialType(credentialType);
   const borderColorMap = useBorderColorByStatus();

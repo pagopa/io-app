@@ -1,7 +1,7 @@
 import { IOToast } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import { ActionArgs, assertEvent, assign } from "xstate";
+import { ActionArgs, assertEvent, assign, DoneActorEvent } from "xstate";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIOStore } from "../../../../store/hooks";
@@ -18,7 +18,8 @@ import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/sele
 import {
   itwSetAuthLevel,
   itwFreezeSimplifiedActivationRequirements,
-  itwClearSimplifiedActivationRequirements
+  itwClearSimplifiedActivationRequirements,
+  itwSetCredentialUpgradeFailed
 } from "../../common/store/actions/preferences";
 import {
   itwCredentialsRemoveByType,
@@ -39,6 +40,7 @@ import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/ac
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { itwIsPidReissuingSurveyHiddenSelector } from "../../common/store/selectors/preferences";
+import { Output } from "../upgrade/output";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -310,6 +312,15 @@ export const createEidIssuanceActionsImplementation = (
 
   clearSimplifiedActivationRequirements: () => {
     store.dispatch(itwClearSimplifiedActivationRequirements());
+  },
+
+  storeCredentialUpgradeFailures: ({
+    event
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    const doneEvent = event as unknown as DoneActorEvent<Output>;
+    store.dispatch(
+      itwSetCredentialUpgradeFailed(doneEvent.output.failedCredentials)
+    );
   },
 
   loadPidIntoContext: assign<
