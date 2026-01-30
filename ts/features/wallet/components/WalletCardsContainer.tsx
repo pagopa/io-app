@@ -6,13 +6,13 @@ import Animated, { LinearTransition } from "react-native-reanimated";
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
 import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
-import { ItwUpgradeBanner } from "../../itwallet/common/components/ItwUpgradeBanner";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
+import { itwShouldRenderDiscoveryBannerSelector } from "../../itwallet/common/store/selectors";
+import { ItwDiscoveryBanner } from "../../itwallet/discovery/components/ItwDiscoveryBanner";
 import { ItwWalletCardsContainer } from "../../itwallet/wallet/components/ItwWalletCardsContainer";
 import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
 import {
-  selectWalletCategories,
   selectWalletOtherCards,
   shouldRenderItwCardsContainerSelector,
   shouldRenderWalletEmptyStateSelector,
@@ -39,6 +39,9 @@ const WalletCardsContainer = () => {
   const shouldRenderItwCardsContainer = useIOSelector(
     shouldRenderItwCardsContainerSelector
   );
+  const shouldRenderItwDiscoveryBanner = useIOSelector(
+    itwShouldRenderDiscoveryBannerSelector
+  );
 
   useItwWalletInstanceRevocationAlert();
 
@@ -51,17 +54,19 @@ const WalletCardsContainer = () => {
       return <WalletEmptyScreenContent />;
     }
     return (
-      <View testID="walletCardsContainerTestID" style={styles.content}>
-        <ItwUpgradeBanner />
-        <ItwWalletNotAvailableBanner />
-        {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
-        <OtherWalletCardsContainer />
-      </View>
+      <>
+        {shouldRenderItwDiscoveryBanner && <ItwDiscoveryBanner />}
+        <View testID="walletCardsContainerTestID" style={styles.content}>
+          {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
+          <OtherWalletCardsContainer />
+        </View>
+      </>
     );
   }, [
     shouldRenderLoadingState,
     shouldRenderEmptyState,
-    shouldRenderItwCardsContainer
+    shouldRenderItwCardsContainer,
+    shouldRenderItwDiscoveryBanner
   ]);
 
   return (
@@ -70,6 +75,7 @@ const WalletCardsContainer = () => {
       layout={LinearTransition.duration(200)}
     >
       <ItwEnvironmentAlert />
+      <ItwWalletNotAvailableBanner />
       <ItwDiscoveryBannerStandalone />
       {walletContent}
     </Animated.View>
@@ -92,26 +98,12 @@ const WalletCardsContainerSkeleton = () => (
  */
 const OtherWalletCardsContainer = withWalletCategoryFilter("other", () => {
   const cards = useIOSelector(selectWalletOtherCards);
-  const categories = useIOSelector(selectWalletCategories);
 
   useDebugInfo({
     other: {
       cards
     }
   });
-
-  const sectionHeader = useMemo((): React.ReactElement | undefined => {
-    // The section header must be displayed only if there are more categories
-    if (categories.size <= 1) {
-      return undefined;
-    }
-    return (
-      <ListItemHeader
-        testID={"walletCardsCategoryOtherHeaderTestID"}
-        label={I18n.t("features.wallet.cards.categories.other")}
-      />
-    );
-  }, [categories.size]);
 
   if (cards.length === 0) {
     return <WalletCardsCategoryRetryErrorBanner />;
@@ -122,7 +114,12 @@ const OtherWalletCardsContainer = withWalletCategoryFilter("other", () => {
       key="cards_category_other"
       testID="otherWalletCardsContainerTestID"
       cards={cards}
-      header={sectionHeader}
+      header={
+        <ListItemHeader
+          testID={"walletCardsCategoryOtherHeaderTestID"}
+          label={I18n.t("features.wallet.cards.categories.other")}
+        />
+      }
       bottomElement={<WalletCardsCategoryRetryErrorBanner />}
     />
   );
@@ -137,8 +134,8 @@ export {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 16,
-    gap: 16
+    gap: 16,
+    marginTop: 16
   },
   content: {
     flex: 1,
