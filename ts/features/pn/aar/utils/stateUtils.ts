@@ -258,6 +258,7 @@ export const validAARStatusTransitions = new Map<
     sendAARFlowStates.cieScanning,
     new Set([
       sendAARFlowStates.cieScanningAdvisory,
+      sendAARFlowStates.cieCanAdvisory,
       sendAARFlowStates.validatingMandate
     ])
   ],

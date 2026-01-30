@@ -85,10 +85,39 @@ export const SendAARCieCardReadingComponent = ({
     handleStartReading();
   }, [handleStartReading]);
 
-  const handleClose = useCallback(() => {
+  const restartToCanAdvisory = useCallback(() => {
     stopReading();
-    // TODO: handle navigate back
-  }, [stopReading]);
+    dispatch(
+      setAarFlowState({
+        type: sendAARFlowStates.cieCanAdvisory,
+        iun,
+        recipientInfo,
+        mandateId,
+        verificationCode
+      })
+    );
+  }, [dispatch, iun, mandateId, recipientInfo, stopReading, verificationCode]);
+  const restartToScanningAdvisory = useCallback(() => {
+    stopReading();
+    dispatch(
+      setAarFlowState({
+        type: sendAARFlowStates.cieScanningAdvisory,
+        iun,
+        recipientInfo,
+        mandateId,
+        can,
+        verificationCode
+      })
+    );
+  }, [
+    can,
+    dispatch,
+    iun,
+    mandateId,
+    recipientInfo,
+    stopReading,
+    verificationCode
+  ]);
 
   const contentMap: {
     [K in ReadStatus]: ScreenContentProps;
@@ -111,7 +140,7 @@ export const SendAARCieCardReadingComponent = ({
             secondaryAction: {
               testID: "tagLostCloseButton",
               label: i18n.t("global.buttons.close"),
-              onPress: handleClose
+              onPress: restartToScanningAdvisory
             }
           };
         case "WRONG_CAN":
@@ -137,7 +166,7 @@ export const SendAARCieCardReadingComponent = ({
             secondaryAction: {
               testID: "wrongCanCloseButton",
               label: i18n.t("global.buttons.close"),
-              onPress: handleClose
+              onPress: restartToCanAdvisory
             }
           };
         default:
@@ -152,7 +181,7 @@ export const SendAARCieCardReadingComponent = ({
             primaryAction: {
               testID: "genericErrorPrimaryAction",
               label: i18n.t("global.buttons.close"),
-              onPress: handleClose
+              onPress: restartToCanAdvisory
             },
             secondaryAction: {
               testID: "genericErrorSecondaryAction",
@@ -171,7 +200,7 @@ export const SendAARCieCardReadingComponent = ({
         pictogram: "nfcScanAndroid",
         secondaryAction: {
           label: i18n.t("global.buttons.close"),
-          onPress: handleClose
+          onPress: restartToScanningAdvisory
         }
       },
       [ReadStatus.READING]: {
@@ -180,7 +209,7 @@ export const SendAARCieCardReadingComponent = ({
         pictogram: "nfcScanAndroid",
         secondaryAction: {
           label: i18n.t("global.buttons.close"),
-          onPress: handleClose
+          onPress: restartToScanningAdvisory
         }
       },
       [ReadStatus.SUCCESS]: {
@@ -189,7 +218,13 @@ export const SendAARCieCardReadingComponent = ({
       },
       [ReadStatus.ERROR]: generateErrorContent()
     };
-  }, [errorName, handleStartReading, handleClose, present]);
+  }, [
+    restartToScanningAdvisory,
+    errorName,
+    handleStartReading,
+    restartToCanAdvisory,
+    present
+  ]);
 
   return (
     <SafeAreaView

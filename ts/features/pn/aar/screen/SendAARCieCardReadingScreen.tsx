@@ -29,6 +29,18 @@ export const SendAARCieCardReadingScreen = ({
 
   useEffect(() => {
     switch (currentFlow.type) {
+      case sendAARFlowStates.cieCanAdvisory: {
+        navigation.replace(PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL, {
+          animationTypeForReplace: "pop"
+        });
+        break;
+      }
+      case sendAARFlowStates.cieScanningAdvisory: {
+        navigation.replace(PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL, {
+          animationTypeForReplace: "pop"
+        });
+        break;
+      }
       case sendAARFlowStates.displayingNotificationData: {
         navigation.replace(PN_ROUTES.MESSAGE_DETAILS, {
           messageId: currentFlow.iun,

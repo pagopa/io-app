@@ -86,6 +86,7 @@ describe("stateUtils", () => {
         sendAARFlowStates.cieScanning,
         [
           sendAARFlowStates.cieScanningAdvisory,
+          sendAARFlowStates.cieCanAdvisory,
           sendAARFlowStates.validatingMandate
         ]
       ],
