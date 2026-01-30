@@ -35,7 +35,7 @@ type AmountWithProgressProps = {
 };
 
 type LoadingProps =
-  | { isLoading: true; label?: string }
+  | { isLoading: true; label?: string; skeletonColor: ColorValue }
   | ({ isLoading?: false; label: string } & (
       | AmountProps
       | AmountWithProgressProps
@@ -47,7 +47,12 @@ const BonusCardCounter = (props: BonusCardCounter) => {
   const isDark = useIOThemeContext().themeType === "dark";
 
   if (props.isLoading) {
-    return <BonusCardCounterSkeleton type={props.type} />;
+    return (
+      <BonusCardCounterSkeleton
+        type={props.type}
+        skeletonColor={props.skeletonColor}
+      />
+    );
   }
 
   return (
@@ -114,48 +119,46 @@ const BonusProgressBar = ({ progress }: BonusProgressBarProps) => {
   );
 };
 
-type BonusCardCounterSkeletonProps = {
+const BonusCardCounterSkeleton = ({
+  type,
+  skeletonColor
+}: {
   type: CounterType;
-};
-
-const BonusCardCounterSkeleton = ({ type }: BonusCardCounterSkeletonProps) => {
-  const placeholderColor = IOColors["blueItalia-100"];
-
-  return (
-    <View
-      style={[styles.container, { alignItems: "center" }]}
-      testID="BonusCardCounterSkeletonTestID"
-    >
-      <IOSkeleton
-        color={placeholderColor}
-        shape="rectangle"
-        height={16}
-        width={64}
-        radius={16}
-      />
-      <VSpacer size={8} />
-      <IOSkeleton
-        color={placeholderColor}
-        shape="rectangle"
-        height={24}
-        width={100}
-        radius={24}
-      />
-      {type === "ValueWithProgress" && (
-        <>
-          <VSpacer size={8} />
-          <IOSkeleton
-            color={placeholderColor}
-            shape="rectangle"
-            height={6}
-            width={110}
-            radius={8}
-          />
-        </>
-      )}
-    </View>
-  );
-};
+  skeletonColor: ColorValue;
+}) => (
+  <View
+    style={[styles.container, { alignItems: "center" }]}
+    testID="BonusCardCounterSkeletonTestID"
+  >
+    <IOSkeleton
+      color={skeletonColor}
+      shape="rectangle"
+      height={16}
+      width={64}
+      radius={16}
+    />
+    <VSpacer size={8} />
+    <IOSkeleton
+      color={skeletonColor}
+      shape="rectangle"
+      height={24}
+      width={100}
+      radius={24}
+    />
+    {type === "ValueWithProgress" && (
+      <>
+        <VSpacer size={8} />
+        <IOSkeleton
+          color={skeletonColor}
+          shape="rectangle"
+          height={6}
+          width={110}
+          radius={8}
+        />
+      </>
+    )}
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {
