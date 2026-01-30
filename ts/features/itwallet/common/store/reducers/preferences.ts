@@ -8,10 +8,11 @@ import {
   itwSetWalletInstanceRemotelyActive,
   itwFreezeSimplifiedActivationRequirements,
   itwClearSimplifiedActivationRequirements,
-  itwSetPidReissuingSurveyHidden
+  itwSetPidReissuingSurveyHidden,
+  itwSetCredentialUpgradeFailed
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
-import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
+import { ItwAuthLevel, StoredCredential } from "../../utils/itwTypesUtils.ts";
 
 export type ItwPreferencesState = {
   // Indicates whether the user should see the modal to review the app.
@@ -31,6 +32,8 @@ export type ItwPreferencesState = {
   // Indicates whether the bottom sheet survey is visible when the user quits
   // the reissuing flow only for the first time
   isPidReissuingSurveyHidden?: boolean;
+  // Credentials that failed to upgrade
+  credentialUpgradeFailed?: ReadonlyArray<StoredCredential>;
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {};
@@ -110,6 +113,11 @@ const reducer = (
         isPidReissuingSurveyHidden: action.payload
       };
     }
+    case getType(itwSetCredentialUpgradeFailed):
+      return {
+        ...state,
+        credentialUpgradeFailed: action.payload
+      };
 
     default:
       return state;
