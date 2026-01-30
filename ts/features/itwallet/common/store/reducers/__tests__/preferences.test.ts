@@ -1,13 +1,15 @@
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import {
   itwSetAuthLevel,
-  itwSetClaimValuesHidden
+  itwSetClaimValuesHidden,
+  itwSetCredentialUpgradeFailed
 } from "../../actions/preferences";
 import reducer, {
   itwPreferencesInitialState,
   ItwPreferencesState
 } from "../preferences";
 import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
+import { ItwStoredCredentialsMocks } from "../../../utils/itwMocksUtils";
 
 describe("IT Wallet preferences reducer", () => {
   const INITIAL_STATE: ItwPreferencesState = {};
@@ -57,6 +59,25 @@ describe("IT Wallet preferences reducer", () => {
     expect(newState).toEqual({
       ...newState,
       claimValuesHidden: true
+    });
+  });
+
+  it("should override credential upgrade failures", () => {
+    const initialFailures = [ItwStoredCredentialsMocks.L3.mdl];
+    const updatedFailures = [ItwStoredCredentialsMocks.L3.ts];
+
+    const stateAfterInitial = reducer(
+      INITIAL_STATE,
+      itwSetCredentialUpgradeFailed(initialFailures)
+    );
+    const stateAfterUpdate = reducer(
+      stateAfterInitial,
+      itwSetCredentialUpgradeFailed(updatedFailures)
+    );
+
+    expect(stateAfterUpdate).toEqual({
+      ...stateAfterInitial,
+      credentialUpgradeFailed: updatedFailures
     });
   });
 
