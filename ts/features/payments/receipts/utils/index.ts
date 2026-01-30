@@ -104,83 +104,46 @@ export const calculateTotalAmount = (
 };
 
 /**
- * Filters transactions by a given transaction ID and returns the filtered transactions along with indices of removed transactions.
- *
- * For cart transactions:
- * - Payer carts (eventId ends with _CART_): removes all transactions with that prefix
- * - Debtor carts (eventId contains _CART_<id-biz>): removes only the exact match
+ * Filters transactions by a given transaction ID and returns the filtered transactions along with the index of the removed transaction.
  *
  * @param transactions - A potential array of NoticeListItem objects wrapped in a Pot, which may contain a NetworkError.
  * @param transactionId - The ID of the transaction to filter out.
  * @returns An object containing:
- *   - `filteredTransactions`: An array of NoticeListItem objects excluding the transaction(s) with the given ID.
- *   - `removedIndices`: Array of indices of removed transactions in the original array.
+ *   - `filteredTransactions`: An array of NoticeListItem objects excluding the transaction with the given ID.
+ *   - `removedIndex`: The index of the removed transaction in the original array, or -1 if the transaction was not found.
  */
 export const filterTransactionsByIdAndGetIndex = (
   transactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>,
   transactionId: string
 ): {
   filteredTransactions: Array<NoticeListItem>;
-  removedIndices: Array<number>;
+  removedIndex: number;
 } => {
   const transactionList = pot.getOrElse(transactions, []);
-  const isPayerCart = transactionId.endsWith("_CART_");
-  const removedIndices: Array<number> = [];
-
-  const filteredTransactions = transactionList.filter((transaction, index) => {
-    const shouldRemove = isPayerCart
-      ? transaction.eventId.startsWith(transactionId)
-      : transaction.eventId === transactionId;
-
-    if (shouldRemove) {
-      // eslint-disable-next-line functional/immutable-data
-      removedIndices.push(index);
-      return false;
-    }
-    return true;
-  });
-
-  return { filteredTransactions, removedIndices };
+  const removedIndex = transactionList.findIndex(
+    transaction => transaction.eventId === transactionId
+  );
+  const filteredTransactions = transactionList.filter(
+    transaction => transaction.eventId !== transactionId
+  );
+  return { filteredTransactions, removedIndex };
 };
 
-/**
- * Restores multiple transactions at their original indices.
- * Rebuilds the complete array by placing removed items at their original positions.
- *
- * @param filteredTransactions - The current filtered array (without removed items).
- * @param removedIndices - Array of original indices where items were removed.
- * @param removedItems - Array of items that were removed.
- * @returns The restored array with all items in their original positions.
- */
-export const restoreTransactionsToOriginalOrder = (
-  filteredTransactions: ReadonlyArray<NoticeListItem>,
-  removedIndices: Array<number>,
-  removedItems: Array<NoticeListItem>
-): Array<NoticeListItem> => {
-  // Create a map of removed indices to items for lookup
-  const removedMap = new Map<number, NoticeListItem>();
-  removedIndices.forEach((index, i) => {
-    removedMap.set(index, removedItems[i]);
-  });
-  const totalLength = filteredTransactions.length + removedIndices.length;
-  const result: Array<NoticeListItem> = [];
-  // eslint-disable-next-line functional/no-let
-  let filteredIdx = 0;
+export const getTransactionByIndex = (
+  transactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>,
+  index: number
+): NoticeListItem => pot.getOrElse(transactions, [])[index];
 
-  Array.from({ length: totalLength }, (_, i) => {
-    const removedItem = removedMap.get(i);
-    if (removedItem !== undefined) {
-      // eslint-disable-next-line functional/immutable-data
-      result.push(removedItem);
-    } else if (filteredIdx < filteredTransactions.length) {
-      // eslint-disable-next-line functional/immutable-data
-      result.push(filteredTransactions[filteredIdx]);
-      filteredIdx += 1;
-    }
-  });
-
-  return result;
-};
+export const restoreTransactionAtIndex = (
+  transactionPot: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>,
+  restoreItem: NoticeListItem,
+  index: number
+) =>
+  pot.map(transactionPot, transactions => [
+    ...transactions.slice(0, index),
+    restoreItem,
+    ...transactions.slice(index)
+  ]);
 
 export const removeAsterisks = (text: string): string =>
   text.replace(/\*/g, "");
