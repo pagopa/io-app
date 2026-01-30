@@ -374,7 +374,7 @@ describe("itwHasExpiringCredentialsSelector", () => {
     expect(itwHasExpiringCredentialsSelector(state)).toEqual(true);
   });
 
-  it("should return false when all credensials are valid", () => {
+  it("should return false when all credentials are valid", () => {
     const state = getStateWithCredentials({
       [mockedDisabilityCard.credentialId]: {
         ...mockedDisabilityCard,
