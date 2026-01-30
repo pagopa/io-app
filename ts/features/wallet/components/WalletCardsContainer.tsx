@@ -7,6 +7,7 @@ import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
 import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
+import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
 import { itwShouldRenderDiscoveryBannerSelector } from "../../itwallet/common/store/selectors";
 import { ItwDiscoveryBanner } from "../../itwallet/discovery/components/ItwDiscoveryBanner";
 import { ItwWalletCardsContainer } from "../../itwallet/wallet/components/ItwWalletCardsContainer";
@@ -75,6 +76,7 @@ const WalletCardsContainer = () => {
     >
       <ItwEnvironmentAlert />
       <ItwWalletNotAvailableBanner />
+      <ItwDiscoveryBannerStandalone />
       {walletContent}
     </Animated.View>
   );
