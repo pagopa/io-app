@@ -14,12 +14,11 @@ import { HideReceiptTrigger } from "../analytics";
 
 type Props = {
   transactionId: string;
-  isCart?: boolean;
   trigger?: HideReceiptTrigger;
 };
 
 const HideReceiptButton = (props: Props) => {
-  const { transactionId, trigger = "tap", isCart = false } = props;
+  const { transactionId, trigger = "tap" } = props;
   const dispatch = useDispatch();
   const navigation = useIONavigation();
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
@@ -41,16 +40,8 @@ const HideReceiptButton = (props: Props) => {
     analyticsHideReceiptAction(paymentAnalyticsData);
 
     Alert.alert(
-      I18n.t(
-        isCart
-          ? "features.payments.transactions.receipt.hideBanner.isCart.title"
-          : "features.payments.transactions.receipt.hideBanner.title"
-      ),
-      I18n.t(
-        isCart
-          ? "features.payments.transactions.receipt.hideBanner.isCart.content"
-          : "features.payments.transactions.receipt.hideBanner.content"
-      ),
+      I18n.t("features.payments.transactions.receipt.hideBanner.title"),
+      I18n.t("features.payments.transactions.receipt.hideBanner.content"),
       [
         {
           text: I18n.t(
