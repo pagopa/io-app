@@ -4399,7 +4399,7 @@
       "transactions": {
         "multiplePayment": "Pagamento multiplo",
         "title": "Ricevute pagoPA",
-        "button": "Show all",
+        "button": "Mostra tutte",
         "empty": {
           "title": "Qui vedrai le tue ricevute pagoPA",
           "content": "Paga un avviso in app o presso un qualsiasi canale abilitato a pagoPA."
