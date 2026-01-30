@@ -1,6 +1,7 @@
-import { createStore } from "redux";
-import { Alert } from "react-native";
 import { act, fireEvent } from "@testing-library/react-native";
+import _ from "lodash";
+import { Alert } from "react-native";
+import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -13,7 +14,6 @@ import {
 import { sendAarMockStates } from "../../utils/testUtils";
 import { sendAARFlowStates } from "../../utils/stateUtils";
 import * as AAR_SELECTORS from "../../store/selectors";
-import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import {
   trackSendAarMandateCieReadingClosureAlert,
   trackSendAarMandateCieReadingClosureAlertAccepted,
@@ -21,6 +21,7 @@ import {
 } from "../../analytics";
 
 const mockReplace = jest.fn();
+const mockShouldNeverCall = jest.fn();
 const mockTerminateFlow = jest.fn();
 
 jest.mock("../../analytics", () => ({
@@ -60,23 +61,24 @@ describe("SendAarActivateNfcScreen", () => {
       renderComponent();
 
       if (isCieScanning) {
-        const { type: _, ...params } = aarState;
+        const { type: _T, ...params } = aarState;
 
         expect(mockReplace).toHaveBeenCalledTimes(1);
         expect(mockReplace).toHaveBeenCalledWith(
-          MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
-          {
-            screen: PN_ROUTES.MAIN,
-            params: {
-              screen: PN_ROUTES.SEND_AAR_CIE_CARD_READING,
-              params
-            }
-          }
+          PN_ROUTES.SEND_AAR_CIE_CARD_READING,
+          params
         );
       } else {
         expect(mockReplace).not.toHaveBeenCalled();
       }
       expect(spyOnAlert).not.toHaveBeenCalled();
+    });
+
+    it(`should never call any non-replace navigation action when type is "${aarState.type}"`, () => {
+      jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
+      renderComponent();
+
+      expect(mockShouldNeverCall).not.toHaveBeenCalled();
     });
   });
 
@@ -190,7 +192,11 @@ function renderComponent() {
     ({ navigation, route }: SendAarActivateNfcScreenProps) => (
       <SendAarActivateNfcScreen
         route={route}
-        navigation={{ ...navigation, replace: mockReplace }}
+        navigation={{
+          ..._.mapValues(navigation, () => mockShouldNeverCall),
+          setOptions: navigation.setOptions,
+          replace: mockReplace
+        }}
       />
     ),
     PN_ROUTES.SEND_AAR_NFC_ACTIVATION,
