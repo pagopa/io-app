@@ -308,10 +308,10 @@ export const itwCredentialsListByTypeSelector = (key: string) =>
 export const itwHasExpiringCredentialsSelector = createSelector(
   itwCredentialsSelector,
   credentials => {
-    const statues = Object.values(credentials).map(credential =>
+    const statuses = Object.values(credentials).map(credential =>
       getCredentialStatus(credential)
     );
-    return statues.some(
+    return statuses.some(
       status => status === "jwtExpiring" || status === "jwtExpired"
     );
   }
