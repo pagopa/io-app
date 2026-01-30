@@ -17,12 +17,12 @@ import {
 } from "../actions";
 import {
   filterTransactionsByIdAndGetIndex,
-  restoreTransactionsToOriginalOrder
+  getTransactionByIndex,
+  restoreTransactionAtIndex
 } from "../../utils";
 
-type CancelTransactionRecord = {
-  removedItems: Array<NoticeListItem>;
-  removedIndices: Array<number>;
+type CancelTransactionRecord = NoticeListItem & {
+  index: number;
   cancelType: "transactions" | "latestTransactions";
 };
 
@@ -142,7 +142,7 @@ const reducer = (
         receiptDocument: pot.none
       };
     case getType(hidePaymentsReceiptAction.request): {
-      const { filteredTransactions, removedIndices: transactionIndices } =
+      const { filteredTransactions, removedIndex: transactionIndex } =
         filterTransactionsByIdAndGetIndex(
           state.transactions,
           action.payload.transactionId
@@ -150,32 +150,25 @@ const reducer = (
 
       const {
         filteredTransactions: filteredLatestTransactions,
-        removedIndices: latestTransactionIndices
+        removedIndex: latestTransactionIndex
       } = filterTransactionsByIdAndGetIndex(
         state.latestTransactions,
         action.payload.transactionId
       );
 
-      const hasTransactionRemovals = transactionIndices.length > 0;
-      const cancelType: "transactions" | "latestTransactions" =
-        hasTransactionRemovals ? "transactions" : "latestTransactions";
-      const removedIndices = hasTransactionRemovals
-        ? transactionIndices
-        : latestTransactionIndices;
-      const removedItems = hasTransactionRemovals
-        ? removedIndices.map(
-            index => pot.getOrElse(state.transactions, [])[index]
-          )
-        : removedIndices.map(
-            index => pot.getOrElse(state.latestTransactions, [])[index]
-          );
-
       return {
         ...state,
         cancelTransactionRecord: pot.some({
-          removedItems,
-          removedIndices,
-          cancelType
+          ...(transactionIndex > -1
+            ? getTransactionByIndex(state.transactions, transactionIndex)
+            : getTransactionByIndex(
+                state.latestTransactions,
+                latestTransactionIndex
+              )),
+          index:
+            transactionIndex > -1 ? transactionIndex : latestTransactionIndex,
+          cancelType:
+            transactionIndex > -1 ? "transactions" : "latestTransactions"
         }),
         transactions: pot.some(filteredTransactions),
         latestTransactions: pot.some(filteredLatestTransactions)
@@ -187,36 +180,22 @@ const reducer = (
         return state;
       }
 
-      const { cancelType, removedItems, removedIndices } = restoreValue;
-      const currentTransactions = pot.getOrElse(state.transactions, []);
-      const currentLatestTransactions = pot.getOrElse(
-        state.latestTransactions,
-        []
-      );
-
-      const restoredTransactions =
-        cancelType === "transactions"
-          ? restoreTransactionsToOriginalOrder(
-              currentTransactions,
-              removedIndices,
-              removedItems
-            )
-          : currentTransactions;
-
-      const restoredLatestTransactions =
-        cancelType === "latestTransactions"
-          ? restoreTransactionsToOriginalOrder(
-              currentLatestTransactions,
-              removedIndices,
-              removedItems
-            )
-          : currentLatestTransactions;
+      const { cancelType, index, ...restoreItem } = restoreValue;
 
       return {
         ...state,
-        transactions: pot.some(restoredTransactions),
-        latestTransactions: pot.some(restoredLatestTransactions),
-        cancelTransactionRecord: pot.none
+        transactions:
+          cancelType !== "latestTransactions"
+            ? restoreTransactionAtIndex(state.transactions, restoreItem, index)
+            : state.transactions,
+        latestTransactions:
+          cancelType === "latestTransactions"
+            ? restoreTransactionAtIndex(
+                state.latestTransactions,
+                restoreItem,
+                index
+              )
+            : state.latestTransactions
       };
     }
   }
