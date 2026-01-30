@@ -110,7 +110,7 @@ const reducer = (
       // - claimValuesHidden
       // - isWalletInstanceRemotelyActive: the correct value will be set in the saga related to the wallet deactivation
       // - isFiscalCodeWhitelisted: avoids to have the value undefined after a wallet reset
-      // - isItwActivationHidden: should persist across wallet resets
+      // - isItwActivationDisabled: should persist across wallet resets
       const {
         claimValuesHidden,
         isWalletInstanceRemotelyActive,
