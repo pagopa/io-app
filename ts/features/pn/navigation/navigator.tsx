@@ -23,7 +23,12 @@ const hiddenHeader = {
 };
 
 export const PnStackNavigator = () => (
-  <Stack.Navigator initialRouteName={PN_ROUTES.MESSAGE_DETAILS}>
+  <Stack.Navigator
+    initialRouteName={PN_ROUTES.MESSAGE_DETAILS}
+    screenOptions={{
+      gestureEnabled: false
+    }}
+  >
     <Stack.Screen
       name={PN_ROUTES.MESSAGE_DETAILS}
       component={MessageDetailsScreen}

@@ -1,6 +1,6 @@
 import { Banner } from "@pagopa/io-app-design-system";
-import { View } from "react-native";
 import I18n from "i18next";
+import { View } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { ITW_ROUTES } from "../../navigation/routes";
@@ -27,6 +27,7 @@ export const ItwWalletReadyBanner = () => {
   return (
     <View style={{ marginHorizontal: -8 }}>
       <Banner
+        testID="itwWalletReadyBannerTestID"
         title={
           isNewItwRenderable
             ? undefined
@@ -44,7 +45,6 @@ export const ItwWalletReadyBanner = () => {
         )}
         color="turquoise"
         onPress={handleOnPress}
-        testID="itwWalletReadyBannerTestID"
         pictogramName="itWallet"
       />
     </View>

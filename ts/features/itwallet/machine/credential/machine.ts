@@ -268,9 +268,7 @@ export const itwCredentialIssuanceMachine = setup({
               clientId: context.clientId,
               codeVerifier: context.codeVerifier,
               requestedCredential: context.requestedCredential,
-              issuerConf: context.issuerConf,
-              operationType:
-                context.mode === "upgrade" ? "reissuing" : undefined
+              issuerConf: context.issuerConf
             }),
             onDone: {
               target: "ObtainingStatusAssertion",

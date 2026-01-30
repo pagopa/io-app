@@ -46,12 +46,6 @@ const IdPayMultiValuePrerequisitesScreen = () => {
   const initiative =
     IdPayOnboardingMachineContext.useSelector(selectInitiative);
 
-  const initiativeName = pipe(
-    initiative,
-    O.map(i => i.initiativeName),
-    O.toUndefined
-  );
-
   const initiativeId = pipe(
     initiative,
     O.map(i => i.initiativeId),
@@ -60,8 +54,7 @@ const IdPayMultiValuePrerequisitesScreen = () => {
 
   useOnFirstRender(() =>
     trackIDPayOnboardingMultiSelfDeclaration({
-      initiativeId,
-      initiativeName
+      initiativeId
     })
   );
 
@@ -82,7 +75,6 @@ const IdPayMultiValuePrerequisitesScreen = () => {
           <MultiValuePrerequisiteItemScreenContent
             selfDeclaration={selfDeclaration}
             initiativeId={initiativeId}
-            initiativeName={initiativeName}
           />
         </View>
       ))}
@@ -93,13 +85,11 @@ const IdPayMultiValuePrerequisitesScreen = () => {
 type MultiValuePrerequisiteItemScreenContentProps = {
   selfDeclaration: SelfCriteriaMultiDTO | SelfCriteriaMultiTypeDTO;
   initiativeId?: string;
-  initiativeName?: string;
 };
 
 const MultiValuePrerequisiteItemScreenContent = ({
   selfDeclaration,
-  initiativeId,
-  initiativeName
+  initiativeId
 }: MultiValuePrerequisiteItemScreenContentProps) => {
   const machine = IdPayOnboardingMachineContext.useActorRef();
 
@@ -120,8 +110,7 @@ const MultiValuePrerequisiteItemScreenContent = ({
       );
       trackIDPayOnboardingAlert({
         screen: "multi_self_declaration",
-        initiativeId,
-        initiativeName
+        initiativeId
       });
       return;
     }

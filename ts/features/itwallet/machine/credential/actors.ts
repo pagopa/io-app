@@ -118,8 +118,7 @@ export const createCredentialIssuanceActorsImplementation = (
       issuerConf,
       walletInstanceAttestation,
       clientId,
-      codeVerifier,
-      operationType
+      codeVerifier
     } = input;
 
     const eid = itwCredentialsEidSelector(store.getState());
@@ -140,8 +139,7 @@ export const createCredentialIssuanceActorsImplementation = (
       issuerConf,
       clientId,
       codeVerifier,
-      pid: eid.value,
-      operationType
+      pid: eid.value
     });
   });
 
