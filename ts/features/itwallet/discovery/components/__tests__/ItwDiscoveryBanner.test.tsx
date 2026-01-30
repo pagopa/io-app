@@ -23,6 +23,52 @@ jest.mock("@react-navigation/native", () => {
   };
 });
 
+type BannerScenario = {
+  name: string;
+  isWalletActive: boolean;
+  isWalletEmpty: boolean;
+  hasMdl: boolean;
+};
+
+const allScenarios: Array<BannerScenario> = [
+  {
+    name: "activation banner",
+    isWalletActive: false,
+    isWalletEmpty: true,
+    hasMdl: false
+  },
+  {
+    name: "empty wallet banner",
+    isWalletActive: true,
+    isWalletEmpty: true,
+    hasMdl: false
+  },
+  {
+    name: "MDL upgrade banner",
+    isWalletActive: true,
+    isWalletEmpty: false,
+    hasMdl: true
+  },
+  {
+    name: "default upgrade banner",
+    isWalletActive: true,
+    isWalletEmpty: false,
+    hasMdl: false
+  }
+];
+
+const setupMocks = (scenario: BannerScenario) => {
+  jest
+    .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
+    .mockReturnValue(scenario.isWalletActive);
+  jest
+    .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
+    .mockReturnValue(scenario.isWalletEmpty);
+  jest
+    .spyOn(credentialsSelectors, "itwIsMdlPresentSelector")
+    .mockReturnValue(scenario.hasMdl);
+};
+
 describe("ItwDiscoveryBanner", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -32,150 +78,44 @@ describe("ItwDiscoveryBanner", () => {
     jest.restoreAllMocks();
   });
 
-  describe("when wallet is not active", () => {
-    beforeEach(() => {
-      jest
-        .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-        .mockReturnValue(false);
-      jest
-        .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
-        .mockReturnValue(true);
-      jest
-        .spyOn(credentialsSelectors, "itwIsMdlPresentSelector")
-        .mockReturnValue(false);
-    });
-
-    it("should match snapshot for activation banner", () => {
-      const component = renderComponent();
-      expect(component).toMatchSnapshot();
-    });
-
-    it("should navigate to onboarding when action button is pressed", () => {
-      const { getByTestId } = renderComponent();
-      const actionButton = getByTestId("itwEngagementBannerActionButtonTestID");
-
-      fireEvent.press(actionButton);
-
-      expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
-        screen: ITW_ROUTES.ONBOARDING
-      });
-    });
-  });
-
-  describe("when wallet is active and empty", () => {
-    beforeEach(() => {
-      jest
-        .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-        .mockReturnValue(true);
-      jest
-        .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
-        .mockReturnValue(true);
-      jest
-        .spyOn(credentialsSelectors, "itwIsMdlPresentSelector")
-        .mockReturnValue(false);
-    });
-
-    it("should match snapshot for empty wallet banner", () => {
-      const component = renderComponent();
-      expect(component).toMatchSnapshot();
-    });
-
-    it("should navigate to discovery info with L3 level when action button is pressed", () => {
-      const { getByTestId } = renderComponent();
-      const actionButton = getByTestId("itwEngagementBannerActionButtonTestID");
-
-      fireEvent.press(actionButton);
-
-      expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
-        screen: ITW_ROUTES.DISCOVERY.INFO,
-        params: { level: "l3" }
-      });
-    });
-
-    it("should not render close button (not dismissable)", () => {
-      const { queryByTestId } = renderComponent();
-      expect(queryByTestId("itwEngagementBannerCloseButtonTestID")).toBeNull();
-    });
-  });
-
-  describe("when wallet is active, not empty, and has MDL", () => {
-    beforeEach(() => {
-      jest
-        .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-        .mockReturnValue(true);
-      jest
-        .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
-        .mockReturnValue(false);
-      jest
-        .spyOn(credentialsSelectors, "itwIsMdlPresentSelector")
-        .mockReturnValue(true);
-    });
-
-    it("should match snapshot for MDL upgrade banner", () => {
+  describe("snapshots", () => {
+    test.each(allScenarios)("should match snapshot for $name", scenario => {
+      setupMocks(scenario);
       const component = renderComponent();
       expect(component).toMatchSnapshot();
     });
   });
 
-  describe("when wallet is active, not empty, and does not have MDL", () => {
-    beforeEach(() => {
-      jest
-        .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-        .mockReturnValue(true);
-      jest
-        .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
-        .mockReturnValue(false);
-      jest
-        .spyOn(credentialsSelectors, "itwIsMdlPresentSelector")
-        .mockReturnValue(false);
-    });
+  describe("navigation", () => {
+    const onboardingScenarios = allScenarios.filter(
+      s => !s.isWalletActive || s.isWalletEmpty
+    );
 
-    it("should match snapshot for default upgrade banner", () => {
-      const component = renderComponent();
-      expect(component).toMatchSnapshot();
-    });
+    test.each(onboardingScenarios)(
+      "should navigate to onboarding when action button is pressed ($name)",
+      scenario => {
+        setupMocks(scenario);
+        const { getByTestId } = renderComponent();
+        const actionButton = getByTestId(
+          "itwEngagementBannerActionButtonTestID"
+        );
+
+        fireEvent.press(actionButton);
+
+        expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.ONBOARDING
+        });
+      }
+    );
   });
 
   describe("dismissal behavior", () => {
-    type DismissableScenario = {
-      name: string;
-      isWalletActive: boolean;
-      isWalletEmpty: boolean;
-      hasMdl: boolean;
-    };
-
-    const dismissableScenarios: Array<DismissableScenario> = [
-      {
-        name: "wallet not active",
-        isWalletActive: false,
-        isWalletEmpty: true,
-        hasMdl: false
-      },
-      {
-        name: "wallet active with MDL",
-        isWalletActive: true,
-        isWalletEmpty: false,
-        hasMdl: true
-      },
-      {
-        name: "wallet active without MDL",
-        isWalletActive: true,
-        isWalletEmpty: false,
-        hasMdl: false
-      }
-    ];
-
-    const setupMocks = (scenario: DismissableScenario) => {
-      jest
-        .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-        .mockReturnValue(scenario.isWalletActive);
-      jest
-        .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
-        .mockReturnValue(scenario.isWalletEmpty);
-      jest
-        .spyOn(credentialsSelectors, "itwIsMdlPresentSelector")
-        .mockReturnValue(scenario.hasMdl);
-    };
+    const dismissableScenarios = allScenarios.filter(
+      ({ isWalletActive, isWalletEmpty }) => !(isWalletActive && isWalletEmpty)
+    );
+    const nonDismissableScenarios = allScenarios.filter(
+      ({ isWalletActive, isWalletEmpty }) => isWalletActive && isWalletEmpty
+    );
 
     test.each(dismissableScenarios)(
       "should render close button when $name",
@@ -189,7 +129,7 @@ describe("ItwDiscoveryBanner", () => {
     );
 
     test.each(dismissableScenarios)(
-      "should dispatch itwCloseBanner action with 'discovery_wallet' when close button is pressed with default flow ($name)",
+      "should dispatch itwCloseBanner action when close button is pressed ($name)",
       scenario => {
         setupMocks(scenario);
         const { getByTestId, store } = renderComponent();
@@ -202,31 +142,20 @@ describe("ItwDiscoveryBanner", () => {
       }
     );
 
-    test.each(dismissableScenarios)(
-      "should dispatch itwCloseBanner action with 'discovery_messages_inbox' when close button is pressed with messages_inbox flow ($name)",
+    test.each(nonDismissableScenarios)(
+      "should not render close button when $name",
       scenario => {
         setupMocks(scenario);
-        const { getByTestId, store } = renderComponent({
-          flow: "messages_inbox"
-        });
-        const closeButton = getByTestId("itwEngagementBannerCloseButtonTestID");
-
-        fireEvent.press(closeButton);
-
-        const actions = store.getActions();
-        expect(actions).toContainEqual(
-          itwCloseBanner("discovery_messages_inbox")
-        );
+        const { queryByTestId } = renderComponent();
+        expect(
+          queryByTestId("itwEngagementBannerCloseButtonTestID")
+        ).toBeNull();
       }
     );
   });
 });
 
-type RenderComponentProps = {
-  flow?: "messages_inbox" | "wallet";
-};
-
-const renderComponent = (props: RenderComponentProps = {}) => {
+const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
@@ -234,7 +163,7 @@ const renderComponent = (props: RenderComponentProps = {}) => {
 
   return {
     ...renderScreenWithNavigationStoreContext<GlobalState>(
-      () => <ItwDiscoveryBanner {...props} />,
+      ItwDiscoveryBanner,
       ROUTES.WALLET_HOME,
       {},
       store

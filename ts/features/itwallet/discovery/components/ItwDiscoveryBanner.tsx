@@ -21,7 +21,7 @@ type Props = {
 };
 
 /**
- * Disaplays a banner that prompts the user to activate or upgrade its wallet to the
+ * Displays a banner that prompts the user to activate or upgrade its wallet to the
  * new IT-Wallet.
  */
 export const ItwDiscoveryBanner = ({

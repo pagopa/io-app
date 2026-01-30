@@ -10,7 +10,6 @@ import ItwDeckImage from "../../../../img/features/itWallet/brand/itw_deck_walle
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import { trackWalletAdd } from "../../itwallet/analytics";
-import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
 import { PoweredByItWalletText } from "../../itwallet/common/components/PoweredByItWalletText";
 import { itwIsL3EnabledSelector } from "../../itwallet/common/store/selectors/preferences";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
@@ -50,23 +49,20 @@ const WalletEmptyScreenContent = () => {
   }
 
   return (
-    <>
-      <ItwDiscoveryBannerStandalone />
-      <View style={styles.container} testID="walletEmptyScreenContentTestID">
-        <Pictogram name="cardAdd" />
-        <Body color="grey-650" weight="Regular" style={styles.text}>
-          {I18n.t("features.wallet.home.screen.legacy.emptyMessage")}
-        </Body>
-        <IOButton
-          fullWidth
-          variant="solid"
-          label={I18n.t("features.wallet.home.screen.legacy.cta")}
-          onPress={handleAddToWalletButtonPress}
-          icon="addSmall"
-          iconPosition="end"
-        />
-      </View>
-    </>
+    <View style={styles.container} testID="walletEmptyScreenContentTestID">
+      <Pictogram name="cardAdd" />
+      <Body color="grey-650" weight="Regular" style={styles.text}>
+        {I18n.t("features.wallet.home.screen.legacy.emptyMessage")}
+      </Body>
+      <IOButton
+        fullWidth
+        variant="solid"
+        label={I18n.t("features.wallet.home.screen.legacy.cta")}
+        onPress={handleAddToWalletButtonPress}
+        icon="addSmall"
+        iconPosition="end"
+      />
+    </View>
   );
 };
 
