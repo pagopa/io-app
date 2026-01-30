@@ -68,7 +68,7 @@ const getTokenFromHash = (hash: unknown): string | undefined => {
 
   try {
     const searchParams = new URLSearchParams(paramsString);
-    return searchParams.get("token") ?? undefined;
+    return searchParams.get("token") || undefined;
   } catch (e) {
     trackSessionTokenFragmentFailure(
       e instanceof Error ? e.message : String(e)
