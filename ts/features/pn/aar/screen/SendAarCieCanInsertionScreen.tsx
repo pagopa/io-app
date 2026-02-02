@@ -1,23 +1,22 @@
-import { useCallback, useEffect, useRef, useState } from "react";
 import { OTPInput, VSpacer } from "@pagopa/io-app-design-system";
-import { Keyboard, KeyboardAvoidingView, Platform, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import i18n from "i18next";
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Keyboard, KeyboardAvoidingView, Platform, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { setAarFlowState } from "../store/actions";
-import { sendAARFlowStates } from "../utils/stateUtils";
-import { currentAARFlowData } from "../store/selectors";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { PnParamsList } from "../../navigation/params";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import PN_ROUTES from "../../navigation/routes";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
 import { trackSendAarMandateCieCanEnter } from "../analytics";
+import { setAarFlowState } from "../store/actions";
+import { currentAARFlowData } from "../store/selectors";
+import { sendAARFlowStates } from "../utils/stateUtils";
 
 export const CIE_CAN_LENGTH = 6;
 
@@ -39,16 +38,15 @@ export const SendAarCieCanInsertionScreen = ({
   useEffect(() => {
     switch (currentAarState.type) {
       case sendAARFlowStates.cieScanningAdvisory: {
-        navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-          screen: PN_ROUTES.MAIN,
-          params: {
-            screen: PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL
-          }
+        navigation.replace(PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL, {
+          animationTypeForReplace: "push"
         });
         break;
       }
       case sendAARFlowStates.cieCanAdvisory: {
-        navigation.goBack();
+        navigation.replace(PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL, {
+          animationTypeForReplace: "pop"
+        });
         break;
       }
       default:
