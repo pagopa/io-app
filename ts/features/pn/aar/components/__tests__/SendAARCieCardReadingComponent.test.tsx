@@ -36,6 +36,40 @@ jest.mock("react-redux", () => ({
 }));
 jest.mock("../../../../../utils/hooks/bottomSheet");
 
+const testRestartHandlerCalled = (
+  restartType: "canAdvisory" | "scanningAdvisory"
+) => {
+  const { iun, recipientInfo, mandateId, can, verificationCode } =
+    cieCardReadingComponentProps;
+  expect(mockStopReading).toHaveBeenCalledTimes(1);
+  expect(mockDispatch).toHaveBeenCalledTimes(1);
+  switch (restartType) {
+    case "canAdvisory":
+      expect(mockDispatch).toHaveBeenCalledWith(
+        setAarFlowState({
+          type: sendAARFlowStates.cieCanAdvisory,
+          iun,
+          recipientInfo,
+          mandateId,
+          verificationCode
+        })
+      );
+      break;
+    case "scanningAdvisory":
+      expect(mockDispatch).toHaveBeenCalledWith(
+        setAarFlowState({
+          type: sendAARFlowStates.cieScanningAdvisory,
+          iun,
+          recipientInfo,
+          mandateId,
+          can,
+          verificationCode
+        })
+      );
+      break;
+  }
+};
+
 const mockedUseIOBottomSheetModal = useIOBottomSheetModal as jest.Mock;
 mockedUseIOBottomSheetModal.mockImplementation(() => ({
   present: mockPresentBottomSheet,
@@ -302,7 +336,7 @@ describe("SendAARCieCardReadingComponent", () => {
       beforeEach(() => {
         mockErrorState({ name: "WRONG_CAN" });
       });
-      it('should invoke "stopReading" when the cancel action is triggered', () => {
+      it("should terminate the current flow when the cancel action is triggered", () => {
         const { getByTestId } = renderComponent();
         const closeButton = getByTestId("wrongCanCloseButton");
 
@@ -312,21 +346,19 @@ describe("SendAARCieCardReadingComponent", () => {
 
         expect(mockStopReading).toHaveBeenCalledTimes(1);
       });
-      it('should invoke "startReading" on retry CTA press', () => {
+      it("should navigate back to the CAN advisory state on retry CTA press", () => {
         const { getByTestId } = renderComponent();
 
         const retryButton = getByTestId("wrongCanRetryButton");
         expect(retryButton).toBeTruthy();
 
         // reset the mock triggered on component mount
-        mockStartReading.mockClear();
+        // mockStartReading.mockClear();
 
-        expect(mockStartReading).not.toHaveBeenCalled();
+        expect(mockStopReading).not.toHaveBeenCalled();
 
         fireEvent.press(retryButton);
-
-        expect(mockStartReading).toHaveBeenCalledTimes(1);
-        expect(mockStopReading).not.toHaveBeenCalled();
+        testRestartHandlerCalled("canAdvisory");
       });
       test.each(["ios", "android"] as const)(
         "should output the right subtitle for platform %s",
@@ -361,7 +393,7 @@ describe("SendAARCieCardReadingComponent", () => {
           queryByText("features.pn.aar.flow.cieScanning.error.GENERIC.title")
         ).toBeTruthy();
       });
-      it('should invoke "stopReading" when the primary action is triggered', () => {
+      it("should restart to CAN advisory when the primary action is triggered", () => {
         const { getByTestId } = renderComponent();
         const closeButton = getByTestId("genericErrorPrimaryAction");
 
@@ -369,7 +401,7 @@ describe("SendAARCieCardReadingComponent", () => {
         expect(mockStopReading).not.toHaveBeenCalled();
         fireEvent.press(closeButton);
 
-        expect(mockStopReading).toHaveBeenCalledTimes(1);
+        testRestartHandlerCalled("canAdvisory");
       });
       it("should present the bottom sheet when the secondary action is triggered", () => {
         const { getByTestId } = renderComponent();

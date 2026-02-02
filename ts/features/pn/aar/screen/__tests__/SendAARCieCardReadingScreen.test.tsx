@@ -41,6 +41,12 @@ describe("SendAARCieCardReadingScreen", () => {
         sendAARFlowStates.cieScanningAdvisory
       ] as Array<AARFlowStateName>
     ).includes(type);
+    const shouldNavigateBack = (
+      [
+        sendAARFlowStates.cieCanAdvisory,
+        sendAARFlowStates.cieScanningAdvisory
+      ] as Array<AARFlowStateName>
+    ).includes(type);
 
     it(`${
       shouldNavigate ? "should" : "should not"
@@ -55,6 +61,25 @@ describe("SendAARCieCardReadingScreen", () => {
       }
       expect(mockShouldNeverCall).not.toHaveBeenCalled();
     });
+    if (shouldNavigateBack) {
+      it(`should call "replace" with "pop" as animation parameter when type is: "${type}"`, () => {
+        jest
+          .spyOn(AAR_SELECTORS, "currentAARFlowData")
+          .mockReturnValue(aarState);
+        renderComponent();
+
+        expect(mockReplace).toHaveBeenCalledTimes(1);
+        const replaceParams = mockReplace.mock.calls[0][1] as Record<
+          string,
+          unknown
+        >;
+        const hasAnimationTypeForReplace =
+          "animationTypeForReplace" in replaceParams;
+        expect(hasAnimationTypeForReplace).toBe(true);
+        const animationTypeForReplace = replaceParams.animationTypeForReplace;
+        expect(animationTypeForReplace).toBe("pop");
+      });
+    }
   });
 });
 

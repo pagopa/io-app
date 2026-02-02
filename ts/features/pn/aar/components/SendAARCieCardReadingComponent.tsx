@@ -17,6 +17,7 @@ import {
   ReadStatus,
   useCieInternalAuthAndMrtdReading
 } from "../hooks/useCieInternalAuthAndMrtdReading";
+import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
 import { setAarFlowState } from "../store/actions";
 import { RecipientInfo, sendAARFlowStates } from "../utils/stateUtils";
 import { sendAarErrorSupportBottomSheetComponent } from "./errors/SendAARErrorComponent";
@@ -47,6 +48,7 @@ export const SendAARCieCardReadingComponent = ({
   const data = isSuccessState(readState) ? readState.data : undefined;
   const errorName = isError ? readState.error.name : undefined;
   const progress = isReadingState(readState) ? readState.progress : 0;
+  const { terminateFlow } = useSendAarFlowManager();
 
   const handleZendeskAssistance = () => {
     dismiss();
@@ -97,6 +99,11 @@ export const SendAARCieCardReadingComponent = ({
       })
     );
   }, [dispatch, iun, mandateId, recipientInfo, stopReading, verificationCode]);
+
+  const errorCloseHandler = useCallback(() => {
+    stopReading();
+    terminateFlow();
+  }, [stopReading, terminateFlow]);
   const restartToScanningAdvisory = useCallback(() => {
     stopReading();
     dispatch(
@@ -140,7 +147,7 @@ export const SendAARCieCardReadingComponent = ({
             secondaryAction: {
               testID: "tagLostCloseButton",
               label: i18n.t("global.buttons.close"),
-              onPress: restartToScanningAdvisory
+              onPress: errorCloseHandler
             }
           };
         case "WRONG_CAN":
@@ -161,12 +168,12 @@ export const SendAARCieCardReadingComponent = ({
             primaryAction: {
               testID: "wrongCanRetryButton",
               label: i18n.t("global.buttons.retry"),
-              onPress: handleStartReading
+              onPress: restartToCanAdvisory
             },
             secondaryAction: {
               testID: "wrongCanCloseButton",
               label: i18n.t("global.buttons.close"),
-              onPress: restartToCanAdvisory
+              onPress: errorCloseHandler
             }
           };
         default:
@@ -180,7 +187,7 @@ export const SendAARCieCardReadingComponent = ({
             ),
             primaryAction: {
               testID: "genericErrorPrimaryAction",
-              label: i18n.t("global.buttons.close"),
+              label: i18n.t("global.buttons.retry"),
               onPress: restartToCanAdvisory
             },
             secondaryAction: {
@@ -222,6 +229,7 @@ export const SendAARCieCardReadingComponent = ({
     restartToScanningAdvisory,
     errorName,
     handleStartReading,
+    errorCloseHandler,
     restartToCanAdvisory,
     present
   ]);
