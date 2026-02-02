@@ -2,8 +2,6 @@ import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import i18n from "i18next";
 import { useCallback, useEffect, useLayoutEffect } from "react";
 import { Alert } from "react-native";
-import i18n from "i18next";
-import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
