@@ -1,6 +1,6 @@
 {
   "name": "io",
-  "version": "3.23.0-rc.5",
+  "version": "3.23.0-rc.6",
   "private": true,
   "scripts": {
     "start": "react-native start",

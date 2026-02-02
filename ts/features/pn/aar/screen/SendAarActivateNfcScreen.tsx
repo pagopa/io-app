@@ -1,22 +1,21 @@
+import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
+import i18n from "i18next";
 import { useCallback, useEffect, useLayoutEffect } from "react";
 import { Alert } from "react-native";
-import i18n from "i18next";
-import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
+import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../store/hooks";
 import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
-import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
-import { useIOSelector } from "../../../../store/hooks";
-import { currentAARFlowData } from "../store/selectors";
-import { sendAARFlowStates } from "../utils/stateUtils";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import { SendAarActivateNfcComponent } from "../components/SendAarActivateNfcComponent";
-import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
 import {
   trackSendAarMandateCieReadingClosureAlert,
   trackSendAarMandateCieReadingClosureAlertAccepted,
   trackSendAarMandateCieReadingClosureAlertContinue
 } from "../analytics";
+import { SendAarActivateNfcComponent } from "../components/SendAarActivateNfcComponent";
+import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
+import { currentAARFlowData } from "../store/selectors";
+import { sendAARFlowStates } from "../utils/stateUtils";
 
 export type SendAarActivateNfcScreenProps = IOStackNavigationRouteProps<
   PnParamsList,
@@ -33,13 +32,7 @@ export const SendAarActivateNfcScreen = ({
     if (currentAarData.type === sendAARFlowStates.cieScanning) {
       const { type: _, ...params } = currentAarData;
 
-      navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-        screen: PN_ROUTES.MAIN,
-        params: {
-          screen: PN_ROUTES.SEND_AAR_CIE_CARD_READING,
-          params
-        }
-      });
+      navigation.replace(PN_ROUTES.SEND_AAR_CIE_CARD_READING, params);
     }
   }, [currentAarData, navigation]);
 
