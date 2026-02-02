@@ -4,17 +4,27 @@ import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { SendAARMessageDetailBottomSheetComponent } from "../SendAARMessageDetailBottomSheetComponent";
-import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
-import PN_ROUTES from "../../../navigation/routes";
-import * as ANALYTICS from "../../analytics";
-import * as BANNER from "../../../reminderBanner/reducer/bannerDismiss";
 import * as BOTTOM_SHEET from "../../../../../utils/hooks/bottomSheet";
-import * as IO_NAVIGATION from "../../../../../navigation/params/AppParamsList";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { SendUserType } from "../../../../pushNotifications/analytics";
+import PN_ROUTES from "../../../navigation/routes";
+import * as BANNER from "../../../reminderBanner/reducer/bannerDismiss";
+import * as ANALYTICS from "../../analytics";
+import { SendAARMessageDetailBottomSheetComponent } from "../SendAARMessageDetailBottomSheetComponent";
 
+const mockReplace = jest.fn();
+const mockPopToTop = jest.fn();
 jest.mock("../SendAARMessageDetailBottomSheet");
+jest.mock("@react-navigation/native", () => {
+  const actualNav = jest.requireActual("@react-navigation/native");
+  return {
+    ...actualNav,
+    useNavigation: () => ({
+      popToTop: mockPopToTop,
+      replace: mockReplace
+    })
+  };
+});
 
 const sendUserTypes: ReadonlyArray<SendUserType> = [
   "mandatory",
@@ -78,19 +88,6 @@ describe("SendAARMessageDetailBottomSheetComponent", () => {
       it(`should call trackSendAarNotificationClosureConfirm, dismiss and ${
         sendServiceEnabled ? "popToTop" : "navigate to engagement screen"
       } (user type ${sendUserType}, sendServiceEnabled ${sendServiceEnabled})`, () => {
-        const mockPopToTop = jest.fn();
-        const mockReplace = jest.fn();
-        jest.spyOn(IO_NAVIGATION, "useIONavigation").mockImplementation(
-          () =>
-            ({
-              popToTop: mockPopToTop,
-              replace: mockReplace
-            } as unknown as IO_NAVIGATION.IOStackNavigationProp<
-              IO_NAVIGATION.AppParamsList,
-              keyof IO_NAVIGATION.AppParamsList
-            >)
-        );
-
         const mockDismiss = jest.fn();
         const refUseIOBottomSheetModal = BOTTOM_SHEET.useIOBottomSheetModal;
         jest
@@ -140,18 +137,11 @@ describe("SendAARMessageDetailBottomSheetComponent", () => {
           expect(mockPopToTop.mock.calls.length).toBe(0);
 
           expect(mockReplace.mock.calls.length).toBe(1);
-          expect(mockReplace.mock.calls[0].length).toBe(2);
-          expect(mockReplace.mock.calls[0][0]).toBe(
-            MESSAGES_ROUTES.MESSAGES_NAVIGATOR
-          );
-          expect(mockReplace.mock.calls[0][1]).toEqual({
-            screen: PN_ROUTES.MAIN,
+          expect(mockReplace).toHaveBeenCalledWith(PN_ROUTES.MAIN, {
+            screen: PN_ROUTES.ENGAGEMENT_SCREEN,
             params: {
-              screen: PN_ROUTES.ENGAGEMENT_SCREEN,
-              params: {
-                sendOpeningSource: "aar",
-                sendUserType
-              }
+              sendOpeningSource: "aar",
+              sendUserType
             }
           });
         }

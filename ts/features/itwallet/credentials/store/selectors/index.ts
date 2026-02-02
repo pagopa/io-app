@@ -298,3 +298,32 @@ export const itwCredentialsListByTypeSelector = (key: string) =>
       O.getOrElse<ReadonlyArray<StoredCredential>>(() => [])
     )
   );
+
+/**
+ * Returns whether the wallet has at least one credential that is expiring or expired.
+ *
+ * @param state - The global state.
+ * @returns Whether the wallet has at least one expiring or expired credential.
+ */
+export const itwHasExpiringCredentialsSelector = createSelector(
+  itwCredentialsSelector,
+  credentials => {
+    const statuses = Object.values(credentials).map(credential =>
+      getCredentialStatus(credential)
+    );
+    return statuses.some(
+      status => status === "jwtExpiring" || status === "jwtExpired"
+    );
+  }
+);
+
+/**
+ * Convenience selector that returns true if the user has a mDL credential stored.
+ *
+ * @param state - The global state.
+ * @returns Whether the user has a mDL credential.
+ */
+export const itwIsMdlPresentSelector = createSelector(
+  itwCredentialsByTypeSelector,
+  credentials => credentials.mDL !== undefined
+);
