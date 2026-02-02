@@ -2,10 +2,10 @@ import configureMockStore from "redux-mock-store";
 import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { ItwWalletReadyBanner } from "../ItwWalletReadyBanner";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as selectors from "../../store/selectors";
+import { ItwWalletReadyBanner } from "../ItwWalletReadyBanner";
 
 describe("ItwWalletReadyBanner", () => {
   it("should not render", () => {
