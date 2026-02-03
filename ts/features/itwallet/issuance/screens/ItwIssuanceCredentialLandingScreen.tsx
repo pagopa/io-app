@@ -6,8 +6,10 @@ import {
   IOStackNavigationProp,
   IOStackNavigationRouteProps
 } from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { itwCredentialStatusSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
@@ -79,21 +81,31 @@ export const ItwIssuanceCredentialLandingScreen = ({
   if (isCredentialValid) {
     return (
       <OperationResultScreenContent
+        pictogram="success"
         title={I18n.t(
-          `features.itWallet.issuance.credentialAlreadyAdded.title`
+          `features.itWallet.issuance.credentialAlreadyUpdated.title`
         )}
         subtitle={I18n.t(
-          `features.itWallet.issuance.credentialAlreadyAdded.body`
+          `features.itWallet.issuance.credentialAlreadyUpdated.subtitle`,
+          {
+            credential: getCredentialNameFromType(credentialType)
+          }
         )}
-        pictogram="itWallet"
         action={{
           label: I18n.t(
-            `features.itWallet.issuance.credentialAlreadyAdded.primaryAction`
+            `features.itWallet.issuance.credentialAlreadyUpdated.action`
           ),
           onPress: () =>
-            navigation.replace(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
-              params: { credentialType }
+            navigation.reset({
+              index: 1,
+              routes: [
+                {
+                  name: ROUTES.MAIN,
+                  params: {
+                    screen: ROUTES.WALLET_HOME
+                  }
+                }
+              ]
             })
         }}
         secondaryAction={{
