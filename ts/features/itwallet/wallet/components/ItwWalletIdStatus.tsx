@@ -11,7 +11,7 @@ import { Pressable, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 import BackgroundImageValid from "../../../../../img/features/itWallet/brand/itw_deck_status.svg";
 import BackgroundImageExpired from "../../../../../img/features/itWallet/brand/itw_deck_status_expired.svg";
-import ItWalletIdLogoImage from "../../../../../img/features/itWallet/brand/itw_id_logo.svg";
+import { ItWalletIdLogo } from "../../common/components/ItWalletIdLogo";
 import { ItwBrandedBox } from "../../common/components/ItwBrandedBox";
 import { ItwSkiaBrandedGradientVariant } from "../../common/components/ItwBrandedSkiaGradient";
 import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils";
@@ -89,7 +89,7 @@ export const ItwWalletIdStatus = ({
 
           {/* Header  */}
           <View style={styles.header}>
-            <ItWalletIdLogoImage width={103} height={24} />
+            <ItWalletIdLogo width={103} height={24} />
             <Icon size={16} {...statusIconPropsByPidStatus[pidStatus]} />
           </View>
 
