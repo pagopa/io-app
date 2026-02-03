@@ -109,7 +109,7 @@ const ReceiptDetailsScreen = () => {
     toast.info("Stiamo generando la ricevuta, torna tra un po’.");
   };
 
-  const navigateToPdfReceiptScreen = () => {
+  const handleOnDownloadPdfReceiptSuccess = () => {
     navigation.navigate(PaymentsReceiptRoutes.PAYMENT_RECEIPT_NAVIGATOR, {
       screen: PaymentsReceiptRoutes.PAYMENT_RECEIPT_PREVIEW_SCREEN
     });
@@ -133,7 +133,7 @@ const ReceiptDetailsScreen = () => {
       getPaymentsReceiptDownloadAction.request({
         transactionId,
         onErrorGeneration: handlePdfReceiptGenerationError,
-        onSuccess: navigateToPdfReceiptScreen,
+        onSuccess: handleOnDownloadPdfReceiptSuccess,
         onError: navigateToPdfErrorScreen
       })
     );

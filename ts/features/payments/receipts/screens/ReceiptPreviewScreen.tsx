@@ -17,6 +17,7 @@ import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import * as analytics from "../analytics";
 import { walletReceiptPotSelector } from "../store/selectors";
 import { RECEIPT_DOCUMENT_TYPE_PREFIX } from "../utils";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 
 const ReceiptPreviewScreen = () => {
   const theme = useIOTheme();
@@ -127,6 +128,13 @@ const ReceiptPreviewScreen = () => {
       </View>
     );
   }
+
+  return (
+    <OperationResultScreenContent
+      pictogram="umbrella"
+      title={I18n.t("global.genericError")}
+    />
+  );
 };
 
 export default ReceiptPreviewScreen;
