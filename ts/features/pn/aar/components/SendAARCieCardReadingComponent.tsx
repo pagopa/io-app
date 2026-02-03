@@ -70,6 +70,7 @@ export const SendAARCieCardReadingComponent = ({
   useEffect(() => {
     if (isDefined(data)) {
       const { signedChallenge, ...nisData } = data.nis_data;
+      stopReading();
 
       dispatch(
         setAarFlowState({
@@ -84,7 +85,15 @@ export const SendAARCieCardReadingComponent = ({
         })
       );
     }
-  }, [data, iun, recipientInfo, mandateId, dispatch, verificationCode]);
+  }, [
+    data,
+    iun,
+    recipientInfo,
+    mandateId,
+    dispatch,
+    verificationCode,
+    stopReading
+  ]);
 
   useEffect(() => {
     handleStartReading();

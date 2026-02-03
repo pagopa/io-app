@@ -297,9 +297,11 @@ describe("SendAARCieCardReadingComponent", () => {
       );
       expect(title).toBeTruthy();
     });
-    it("should update the AAR flow state", () => {
+    it("should update the AAR flow state and call 'stopReading'", () => {
+      expect(mockStopReading).not.toHaveBeenCalled();
       renderComponent();
 
+      expect(mockStopReading).toHaveBeenCalledTimes(1);
       expect(mockDispatch).toHaveBeenCalledTimes(1);
       expect(mockDispatch).toHaveBeenCalledWith(
         setAarFlowState({
