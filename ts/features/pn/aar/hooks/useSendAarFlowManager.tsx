@@ -1,7 +1,8 @@
-import { useCallback } from "react";
-import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
+import { useCallback } from "react";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { PnParamsList } from "../../navigation/params";
 import { trackSendAARToSAccepted } from "../analytics";
 import { setAarFlowState, terminateAarFlow } from "../store/actions";
 import { currentAARFlowData } from "../store/selectors";
@@ -10,9 +11,6 @@ import {
   maybeIunFromAarFlowState,
   sendAARFlowStates
 } from "../utils/stateUtils";
-import { PnParamsList } from "../../navigation/params";
-import { MESSAGES_STACK_NAVIGATOR_ID } from "../../../messages/navigation/MessagesNavigator";
-import { MessagesParamsList } from "../../../messages/navigation/params";
 
 type SendAarFlowManager = {
   terminateFlow: () => void;
@@ -25,30 +23,15 @@ export type SendAarFlowHandlerType = {
 };
 
 export const useSendAarFlowManager = (): SendAarFlowManager => {
-  const navigation =
-    useNavigation<
-      StackNavigationProp<
-        PnParamsList,
-        keyof PnParamsList,
-        typeof MESSAGES_STACK_NAVIGATOR_ID
-      >
-    >();
+  const navigation = useNavigation<IOStackNavigationProp<PnParamsList>>();
   const dispatch = useIODispatch();
   const currentFlowData = useIOSelector(currentAARFlowData);
 
   const handleTerminateFlow = useCallback(() => {
-    // We retrieve the parent stack's navigation to ensure the entire flow is closed when the flow is terminated
-    // If messagesStackNavigation doesn't provide the desired behavior,
-    // consider switching to `AuthenticatedStackNavigator`
-    const maybeMessagesNavigation =
-      navigation.getParent<StackNavigationProp<MessagesParamsList> | undefined>(
-        MESSAGES_STACK_NAVIGATOR_ID
-      ) ?? navigation;
-
     dispatch(
       terminateAarFlow({ messageId: maybeIunFromAarFlowState(currentFlowData) })
     );
-    maybeMessagesNavigation.popToTop();
+    navigation.popToTop();
   }, [dispatch, navigation, currentFlowData]);
 
   const goToNextState = () => {
