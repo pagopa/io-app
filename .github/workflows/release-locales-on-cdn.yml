@@ -20,7 +20,7 @@ jobs:
   publish:
     name: Release locales to production assets CDN
     runs-on: ubuntu-24.04
-    environment: dev-cd # to be changed to prod
+    environment: prod-cd # to be changed to prod
     permissions:
       id-token: write
       pull-requests: write
