@@ -58,6 +58,7 @@ jobs:
         id: storage_upload
         run: |
             az storage copy \
+              --auth-mode login \
               --account-name "$STORAGE_ACCOUNT_NAME" \
               --destination-container "$STORAGE_ACCOUNT_CONTAINER" \
               --source './$REPOSITORY_PATH' \
