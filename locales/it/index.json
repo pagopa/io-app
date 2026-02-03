@@ -4577,6 +4577,18 @@
           "banner": {
             "label": "Il caricamento delle ricevute è fallito.",
             "retryButton": "Prova di nuovo"
+          },
+          "400": {
+            "title": "I dati della ricevuta non sono corretti",
+            "subtitle": "Il Codice Fiscale non corrisponde a quello indicato in fase di pagamento."
+          },
+          "404": {
+            "title": "Non siamo riusciti a generare la ricevuta, riprova più tardi",
+            "subtitle": "Se il problema persiste, contatta l’assistenza."
+          },
+          "500": {
+            "title": "Stiamo riscontrando alcuni problemi sui nostri sistemi",
+            "subtitle": "Riprova più tardi."
           }
         },
         "filters": {
