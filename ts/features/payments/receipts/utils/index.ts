@@ -208,8 +208,10 @@ export const mapDownloadReceiptErrorToOutcomeProps = (
   switch (errorCode) {
     case DownloadReceiptOutcomeErrorEnum.GN_400_003:
       return {
-        title: I18n.t("features.payments.transactions.error.400.title"),
-        subtitle: I18n.t("features.payments.transactions.error.400.subtitle"),
+        title: I18n.t("features.payments.transactions.receipt.error.400.title"),
+        subtitle: I18n.t(
+          "features.payments.transactions.receipt.error.400.subtitle"
+        ),
         pictogram: "attention",
         action: {
           label: I18n.t("wallet.payment.support.supportTitle"),
@@ -223,8 +225,10 @@ export const mapDownloadReceiptErrorToOutcomeProps = (
     case DownloadReceiptOutcomeErrorEnum.AT_404_001:
     case DownloadReceiptOutcomeErrorEnum.BZ_404_003:
       return {
-        title: I18n.t("features.payments.transactions.error.404.title"),
-        subtitle: I18n.t("features.payments.transactions.error.404.subtitle"),
+        title: I18n.t("features.payments.transactions.receipt.error.404.title"),
+        subtitle: I18n.t(
+          "features.payments.transactions.receipt.error.404.subtitle"
+        ),
         pictogram: "searchLens",
         action: {
           label: I18n.t("global.buttons.close"),
@@ -243,8 +247,10 @@ export const mapDownloadReceiptErrorToOutcomeProps = (
     case DownloadReceiptOutcomeErrorEnum.FG_000_001:
     default:
       return {
-        title: I18n.t("features.payments.transactions.error.500.title"),
-        subtitle: I18n.t("features.payments.transactions.error.500.subtitle"),
+        title: I18n.t("features.payments.transactions.receipt.error.500.title"),
+        subtitle: I18n.t(
+          "features.payments.transactions.receipt.error.500.subtitle"
+        ),
         pictogram: "umbrella",
         action: {
           label: I18n.t("global.buttons.close"),

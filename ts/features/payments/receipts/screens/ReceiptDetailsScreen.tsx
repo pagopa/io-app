@@ -106,7 +106,7 @@ const ReceiptDetailsScreen = () => {
         paymentAnalyticsData?.receiptOrganizationFiscalCode
     });
 
-    toast.info("Stiamo generando la ricevuta, torna tra un po’.");
+    toast.info(I18n.t("features.payments.transactions.receipt.error.banner.label"));
   };
 
   const handleOnDownloadPdfReceiptSuccess = () => {
