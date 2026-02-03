@@ -61,7 +61,7 @@ jobs:
               --auth-mode login \
               --account-name "$STORAGE_ACCOUNT_NAME" \
               --destination-container "$STORAGE_ACCOUNT_CONTAINER" \
-              --source './$REPOSITORY_PATH' \
+              --source "./$REPOSITORY_PATH" \
               --include-pattern "$FILES_TO_COPY"
               --exclude-pattern "$EXCLUDED_PATTERN" \
               --exclude-path "$EXCLUDED_PATH" \
