@@ -19,6 +19,7 @@ import { ItwEidLifecycleAlert } from "../../common/components/ItwEidLifecycleAle
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
 
 const ItwSettingsScreen = () => {
   const navigation = useIONavigation();
@@ -50,7 +51,12 @@ const ItwSettingsScreen = () => {
   }, [machineRef]);
 
   const handleObtainItwOnPress = useCallback(() => {
-    trackItwTapUpgradeBanner(routeName);
+    // TODO SIW-3572: deletion of ITW_TAP_BANNER
+    trackItwTapUpgradeBanner({
+      banner_id: "itwDiscoveryItWalletNewUser",
+      banner_page: routeName,
+      banner_landing: ITW_SCREENVIEW_EVENTS.ITW_INTRO
+    });
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
       params: { level: "l3" }
