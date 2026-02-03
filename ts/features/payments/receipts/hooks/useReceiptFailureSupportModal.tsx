@@ -66,15 +66,13 @@ const useReceiptFailureSupportModal = (
 
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
-  const { receiptPayerFiscalCode = undefined, receiptEventId = undefined } =
-    paymentAnalyticsData ?? {};
+  const { receiptEventId = undefined } = paymentAnalyticsData ?? {};
 
   const handleCopyAllToClipboard = () => {
     const data = `${I18n.t(
       "wallet.payment.support.errorCode"
     )}: ${faultCodeDetail}
-    ${I18n.t("wallet.payment.support.entityCode")}: ${receiptPayerFiscalCode}
-    ${I18n.t("wallet.payment.support.entityCode")}: ${receiptEventId}`;
+    ${I18n.t("transaction.details.info.transactionId")}: ${receiptEventId}`;
 
     clipboardSetStringWithFeedback(data);
   };
@@ -117,23 +115,11 @@ const useReceiptFailureSupportModal = (
             onPress={() => clipboardSetStringWithFeedback(faultCodeDetail)}
           />
         )}
-
-        {receiptPayerFiscalCode && (
-          <ListItemInfoCopy
-            label={I18n.t("wallet.payment.support.entityCode")}
-            accessibilityLabel={I18n.t("wallet.payment.support.entityCode")}
-            icon="entityCode"
-            value={receiptPayerFiscalCode}
-            onPress={() =>
-              clipboardSetStringWithFeedback(receiptPayerFiscalCode)
-            }
-          />
-        )}
         {receiptEventId && (
           <ListItemInfoCopy
-            label={I18n.t("wallet.payment.support.noticeNumber")}
-            accessibilityLabel={I18n.t("wallet.payment.support.noticeNumber")}
-            icon="entityCode"
+            label={I18n.t("transaction.details.info.transactionId")}
+            accessibilityLabel={I18n.t("transaction.details.info.transactionId")}
+            icon="transactions"
             value={receiptEventId}
             onPress={() => clipboardSetStringWithFeedback(receiptEventId)}
           />
