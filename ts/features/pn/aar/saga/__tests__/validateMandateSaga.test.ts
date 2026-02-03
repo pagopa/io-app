@@ -368,6 +368,14 @@ describe("handleMixPanelCustomTrackingIfNeeded", () => {
       errors: [{ code: "ANY_ERROR_CODE" }]
     },
     {
+      status: 422,
+      errors: [{ code: "NOT_A_CIE_NOT_RELATED_TO_DELEGATOR_ERROR" }]
+    },
+    {
+      status: 422,
+      errors: [{ code: "NOT_A_CIE_EXPIRED_ERROR" }]
+    },
+    {
       status: 500
     },
     {
