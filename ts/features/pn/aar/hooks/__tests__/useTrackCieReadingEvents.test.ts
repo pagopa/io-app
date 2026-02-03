@@ -4,13 +4,17 @@ import { useTrackCieReadingEvents } from "../useTrackCieReadingEvents";
 import {
   trackSendAarMandateCieCardReading,
   trackSendAarMandateCieCardReadingError,
-  trackSendAarMandateCieCardReadingSuccess
+  trackSendAarMandateCieCardReadingSuccess,
+  trackSendAarMandateCieCanCodeError,
+  trackSendAarMandateCieCardReadingFailure
 } from "../../analytics";
 
 jest.mock("../../analytics", () => ({
   trackSendAarMandateCieCardReading: jest.fn(),
   trackSendAarMandateCieCardReadingError: jest.fn(),
-  trackSendAarMandateCieCardReadingSuccess: jest.fn()
+  trackSendAarMandateCieCardReadingSuccess: jest.fn(),
+  trackSendAarMandateCieCanCodeError: jest.fn(),
+  trackSendAarMandateCieCardReadingFailure: jest.fn()
 }));
 
 const idleState: CieReadState = {
@@ -22,6 +26,11 @@ const successState: CieReadState = {
   data: {} as Extract<CieReadState, { status: ReadStatus.SUCCESS }>["data"]
 };
 
+const readingState: CieReadState = {
+  status: ReadStatus.READING,
+  progress: 0.5
+};
+
 const tagLostState: CieReadState = {
   status: ReadStatus.ERROR,
   error: {
@@ -29,11 +38,14 @@ const tagLostState: CieReadState = {
   }
 };
 
-const untrackedStates: ReadonlyArray<CieReadState> = [
-  {
-    status: ReadStatus.READING,
-    progress: 0.5
-  },
+const wrongCanState: CieReadState = {
+  status: ReadStatus.ERROR,
+  error: {
+    name: "WRONG_CAN"
+  }
+};
+
+const readStatesForGenericAnalytics: ReadonlyArray<CieReadState> = [
   {
     status: ReadStatus.ERROR,
     error: {
@@ -91,12 +103,6 @@ const untrackedStates: ReadonlyArray<CieReadState> = [
   {
     status: ReadStatus.ERROR,
     error: {
-      name: "WRONG_CAN"
-    }
-  },
-  {
-    status: ReadStatus.ERROR,
-    error: {
       name: "WRONG_PIN",
       attemptsLeft: 2
     }
@@ -110,15 +116,15 @@ describe("useTrackCieReadingEvents", () => {
     });
 
     expect(trackSendAarMandateCieCardReading).toHaveBeenCalledTimes(1);
-    expect(trackSendAarMandateCieCardReadingSuccess).not.toHaveBeenCalled();
-    expect(trackSendAarMandateCieCardReadingError).not.toHaveBeenCalled();
     (trackSendAarMandateCieCardReading as jest.Mock).mockClear();
 
     rerender(idleState);
 
+    expect(trackSendAarMandateCieCanCodeError).not.toHaveBeenCalled();
     expect(trackSendAarMandateCieCardReading).not.toHaveBeenCalled();
-    expect(trackSendAarMandateCieCardReadingSuccess).not.toHaveBeenCalled();
     expect(trackSendAarMandateCieCardReadingError).not.toHaveBeenCalled();
+    expect(trackSendAarMandateCieCardReadingSuccess).not.toHaveBeenCalled();
+    expect(trackSendAarMandateCieCardReadingFailure).not.toHaveBeenCalled();
   });
 
   it('should call "trackSendAarMandateCieCardReadingSuccess" once when readState is in SUCCESS state', () => {
@@ -127,15 +133,15 @@ describe("useTrackCieReadingEvents", () => {
     });
 
     expect(trackSendAarMandateCieCardReadingSuccess).toHaveBeenCalledTimes(1);
-    expect(trackSendAarMandateCieCardReading).not.toHaveBeenCalled();
-    expect(trackSendAarMandateCieCardReadingError).not.toHaveBeenCalled();
     (trackSendAarMandateCieCardReadingSuccess as jest.Mock).mockClear();
 
     rerender(successState);
 
+    expect(trackSendAarMandateCieCanCodeError).not.toHaveBeenCalled();
     expect(trackSendAarMandateCieCardReading).not.toHaveBeenCalled();
-    expect(trackSendAarMandateCieCardReadingSuccess).not.toHaveBeenCalled();
     expect(trackSendAarMandateCieCardReadingError).not.toHaveBeenCalled();
+    expect(trackSendAarMandateCieCardReadingSuccess).not.toHaveBeenCalled();
+    expect(trackSendAarMandateCieCardReadingFailure).not.toHaveBeenCalled();
   });
 
   it('should call "trackSendAarMandateCieCardReadingError" once when readState is in ERROR state and error code is "TAG_LOST"', () => {
@@ -144,33 +150,65 @@ describe("useTrackCieReadingEvents", () => {
     });
 
     expect(trackSendAarMandateCieCardReadingError).toHaveBeenCalledTimes(1);
-    expect(trackSendAarMandateCieCardReading).not.toHaveBeenCalled();
-    expect(trackSendAarMandateCieCardReadingSuccess).not.toHaveBeenCalled();
     (trackSendAarMandateCieCardReadingError as jest.Mock).mockClear();
 
     rerender(tagLostState);
 
+    expect(trackSendAarMandateCieCanCodeError).not.toHaveBeenCalled();
     expect(trackSendAarMandateCieCardReading).not.toHaveBeenCalled();
-    expect(trackSendAarMandateCieCardReadingSuccess).not.toHaveBeenCalled();
     expect(trackSendAarMandateCieCardReadingError).not.toHaveBeenCalled();
+    expect(trackSendAarMandateCieCardReadingSuccess).not.toHaveBeenCalled();
+    expect(trackSendAarMandateCieCardReadingFailure).not.toHaveBeenCalled();
   });
 
-  it.each(untrackedStates)(
-    "should not track any event when readState is %o",
+  it('should call "trackSendAarMandateCieCardReadingFailure" once when readState is in ERROR state and error code is "WRONG_CAN"', () => {
+    const { rerender } = renderHook(useTrackCieReadingEvents, {
+      initialProps: wrongCanState
+    });
+
+    expect(trackSendAarMandateCieCanCodeError).toHaveBeenCalledTimes(1);
+    (trackSendAarMandateCieCanCodeError as jest.Mock).mockClear();
+
+    rerender(wrongCanState);
+
+    expect(trackSendAarMandateCieCanCodeError).not.toHaveBeenCalled();
+    expect(trackSendAarMandateCieCardReading).not.toHaveBeenCalled();
+    expect(trackSendAarMandateCieCardReadingError).not.toHaveBeenCalled();
+    expect(trackSendAarMandateCieCardReadingSuccess).not.toHaveBeenCalled();
+    expect(trackSendAarMandateCieCardReadingFailure).not.toHaveBeenCalled();
+  });
+
+  it.each(readStatesForGenericAnalytics)(
+    'should track "trackSendAarMandateCieCardReadingFailure" once when readState is %o',
     readState => {
       const { rerender } = renderHook(useTrackCieReadingEvents, {
         initialProps: readState
       });
 
-      expect(trackSendAarMandateCieCardReading).not.toHaveBeenCalled();
-      expect(trackSendAarMandateCieCardReadingSuccess).not.toHaveBeenCalled();
-      expect(trackSendAarMandateCieCardReadingError).not.toHaveBeenCalled();
+      expect(trackSendAarMandateCieCardReadingFailure).toHaveBeenCalledTimes(1);
+      (trackSendAarMandateCieCardReadingFailure as jest.Mock).mockClear();
 
       rerender(readState);
 
+      expect(trackSendAarMandateCieCanCodeError).not.toHaveBeenCalled();
       expect(trackSendAarMandateCieCardReading).not.toHaveBeenCalled();
-      expect(trackSendAarMandateCieCardReadingSuccess).not.toHaveBeenCalled();
       expect(trackSendAarMandateCieCardReadingError).not.toHaveBeenCalled();
+      expect(trackSendAarMandateCieCardReadingSuccess).not.toHaveBeenCalled();
+      expect(trackSendAarMandateCieCardReadingFailure).not.toHaveBeenCalled();
     }
   );
+
+  it("should not track any event when readState is in READING state", () => {
+    const { rerender } = renderHook(useTrackCieReadingEvents, {
+      initialProps: readingState
+    });
+
+    rerender(readingState);
+
+    expect(trackSendAarMandateCieCanCodeError).not.toHaveBeenCalled();
+    expect(trackSendAarMandateCieCardReading).not.toHaveBeenCalled();
+    expect(trackSendAarMandateCieCardReadingError).not.toHaveBeenCalled();
+    expect(trackSendAarMandateCieCardReadingSuccess).not.toHaveBeenCalled();
+    expect(trackSendAarMandateCieCardReadingFailure).not.toHaveBeenCalled();
+  });
 });
