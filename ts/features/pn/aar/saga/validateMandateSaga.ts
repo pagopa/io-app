@@ -151,13 +151,15 @@ function handleMixPanelCustomTrackingIfNeeded<
         const maybeErrorKey = value.errors
           ?.map(({ code }) => code)
           .find(code =>
-            /CIE_EXPIRED_ERROR|CIE_NOT_RELATED_TO_DELEGATOR_ERROR/i.test(code)
+            /^(CIE_EXPIRED_ERROR|CIE_NOT_RELATED_TO_DELEGATOR_ERROR)$/i.test(
+              code
+            )
           );
 
-        if (/CIE_EXPIRED_ERROR/i.test(`${maybeErrorKey}`)) {
+        if (/^CIE_EXPIRED_ERROR$/i.test(`${maybeErrorKey}`)) {
           trackSendAarMandateCieExpiredError();
         }
-        if (/CIE_NOT_RELATED_TO_DELEGATOR_ERROR/i.test(`${maybeErrorKey}`)) {
+        if (/^CIE_NOT_RELATED_TO_DELEGATOR_ERROR$/i.test(`${maybeErrorKey}`)) {
           trackSendAarMandateCieNotRelatedToDelegatorError();
         }
       }
