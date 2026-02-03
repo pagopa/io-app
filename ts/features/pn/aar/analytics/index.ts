@@ -314,3 +314,27 @@ export const trackSendAarMandateCieNfcActivationControlAlertClosure = () => {
   const eventProps = buildEventProperties("UX", "action");
   void mixpanelTrack(eventName, eventProps);
 };
+
+export const trackSendAarMandateCieCanCodeError = () => {
+  const eventName = "SEND_MANDATE_CIE_CAN_ERROR";
+  const eventProps = buildEventProperties("KO", undefined);
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarMandateCieCardReadingFailure = () => {
+  const eventName = "SEND_MANDATE_CIE_CARD_READING_FAILURE";
+  const eventProps = buildEventProperties("KO", undefined);
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarMandateCieExpiredError = () => {
+  const eventName = "SEND_MANDATE_CIE_EXPIRED_ERROR";
+  const eventProps = buildEventProperties("KO", undefined);
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarMandateCieNotRelatedToDelegatorError = () => {
+  const eventName = "SEND_MANDATE_CIE_NOT_RELATED_TO_DELEGATOR_ERROR";
+  const eventProps = buildEventProperties("KO", undefined);
+  void mixpanelTrack(eventName, eventProps);
+};
