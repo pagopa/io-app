@@ -37,12 +37,8 @@ const useReceiptFailureSupportModal = (
 ): IDPayFailureSupportModal => {
   const dispatch = useIODispatch();
 
-  const getFaultCodeDetail = (): string => {
-    if (error && "code" in error) {
-      return error.code ?? "";
-    }
-    return "";
-  };
+  const getFaultCodeDetail = (): string =>
+    error && "code" in error ? error?.code ?? "" : "";
 
   const faultCodeDetail = getFaultCodeDetail();
 
@@ -62,9 +58,7 @@ const useReceiptFailureSupportModal = (
     dispatch(
       zendeskSupportStart({
         startingRoute: "n/a",
-        assistanceType: {
-          idPay: true
-        }
+        assistanceType: {}
       })
     );
     dispatch(zendeskSelectedCategory(defaultZendeskIDPayCategory));
@@ -72,11 +66,15 @@ const useReceiptFailureSupportModal = (
 
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
-  const organizationFiscalCode =
-    paymentAnalyticsData?.receiptOrganizationFiscalCode ?? "";
+  const { receiptPayerFiscalCode = undefined, receiptEventId = undefined } =
+    paymentAnalyticsData ?? {};
 
   const handleCopyAllToClipboard = () => {
-    const data = "";
+    const data = `${I18n.t(
+      "wallet.payment.support.errorCode"
+    )}: ${faultCodeDetail}
+    ${I18n.t("wallet.payment.support.entityCode")}: ${receiptPayerFiscalCode}
+    ${I18n.t("wallet.payment.support.entityCode")}: ${receiptEventId}`;
 
     clipboardSetStringWithFeedback(data);
   };
@@ -119,17 +117,27 @@ const useReceiptFailureSupportModal = (
             onPress={() => clipboardSetStringWithFeedback(faultCodeDetail)}
           />
         )}
-        {
+
+        {receiptPayerFiscalCode && (
           <ListItemInfoCopy
             label={I18n.t("wallet.payment.support.entityCode")}
             accessibilityLabel={I18n.t("wallet.payment.support.entityCode")}
             icon="entityCode"
-            value={organizationFiscalCode}
+            value={receiptPayerFiscalCode}
             onPress={() =>
-              clipboardSetStringWithFeedback(organizationFiscalCode)
+              clipboardSetStringWithFeedback(receiptPayerFiscalCode)
             }
           />
-        }
+        )}
+        {receiptEventId && (
+          <ListItemInfoCopy
+            label={I18n.t("wallet.payment.support.noticeNumber")}
+            accessibilityLabel={I18n.t("wallet.payment.support.noticeNumber")}
+            icon="entityCode"
+            value={receiptEventId}
+            onPress={() => clipboardSetStringWithFeedback(receiptEventId)}
+          />
+        )}
         <VSpacer size={24} />
       </>
     ),
