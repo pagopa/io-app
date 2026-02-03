@@ -48,38 +48,30 @@ describe("SendAARCieCardReadingScreen", () => {
       ] as Array<AARFlowStateName>
     ).includes(type);
 
-    it(`${
-      shouldNavigate ? "should" : "should not"
-    } call "replace", and never call any non-replace actions when type is: "${type}"`, () => {
+    it(`${shouldNavigate ? "should" : "should not"} call "replace"${
+      shouldNavigateBack ? ' with "pop" as animation parameter' : ""
+    } and never call any non-replace actions when type is: "${type}"`, () => {
       jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
       renderComponent();
 
       if (shouldNavigate) {
         expect(mockReplace).toHaveBeenCalledTimes(1);
+        if (shouldNavigateBack) {
+          const replaceParams = mockReplace.mock.calls[0][1] as Record<
+            string,
+            unknown
+          >;
+          const hasAnimationTypeForReplace =
+            "animationTypeForReplace" in replaceParams;
+          expect(hasAnimationTypeForReplace).toBe(true);
+          const animationTypeForReplace = replaceParams.animationTypeForReplace;
+          expect(animationTypeForReplace).toBe("pop");
+        }
       } else {
         expect(mockReplace).not.toHaveBeenCalled();
       }
       expect(mockShouldNeverCall).not.toHaveBeenCalled();
     });
-    if (shouldNavigateBack) {
-      it(`should call "replace" with "pop" as animation parameter when type is: "${type}"`, () => {
-        jest
-          .spyOn(AAR_SELECTORS, "currentAARFlowData")
-          .mockReturnValue(aarState);
-        renderComponent();
-
-        expect(mockReplace).toHaveBeenCalledTimes(1);
-        const replaceParams = mockReplace.mock.calls[0][1] as Record<
-          string,
-          unknown
-        >;
-        const hasAnimationTypeForReplace =
-          "animationTypeForReplace" in replaceParams;
-        expect(hasAnimationTypeForReplace).toBe(true);
-        const animationTypeForReplace = replaceParams.animationTypeForReplace;
-        expect(animationTypeForReplace).toBe("pop");
-      });
-    }
   });
 });
 

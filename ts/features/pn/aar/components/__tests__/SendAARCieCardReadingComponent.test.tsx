@@ -186,10 +186,16 @@ describe("SendAARCieCardReadingComponent", () => {
         queryByText("features.pn.aar.flow.cieScanning.idle.title")
       ).toBeTruthy();
     });
-    it(
-      'should invoke "stopReading" when the cancelAction is triggered',
-      testCancelAction
-    );
+    it("should navigate to scanningAdvisory when the cancelAction is triggered", () => {
+      const { getByTestId } = renderComponent();
+      const closeButton = getByTestId("idleCloseButton");
+
+      expect(closeButton).toBeTruthy();
+      expect(mockStopReading).not.toHaveBeenCalled();
+
+      fireEvent.press(closeButton);
+      testRestartHandlerCalled("scanningAdvisory");
+    });
     it('should invoke "startReading" only once despite transition from IDLE state to READING state', () => {
       const { rerender } = renderComponentWithStoreAndNavigationContextForFocus(
         Component,
@@ -217,10 +223,16 @@ describe("SendAARCieCardReadingComponent", () => {
         queryByText("features.pn.aar.flow.cieScanning.reading.subtitle")
       ).toBeTruthy();
     });
-    it(
-      'should invoke "stopReading" when the cancelAction is triggered',
-      testCancelAction
-    );
+    it('should change the state to "scanningAdvisory" when the cancelAction is triggered', () => {
+      const { getByTestId } = renderComponent();
+      const closeButton = getByTestId("readingCloseButton");
+
+      expect(closeButton).toBeTruthy();
+      expect(mockStopReading).not.toHaveBeenCalled();
+
+      fireEvent.press(closeButton);
+      testRestartHandlerCalled("scanningAdvisory");
+    });
     it('should invoke "startReading" only once despite transition from READING state to SUCCESS state', () => {
       expect(mockStartReading).toHaveBeenCalledTimes(0);
       const { rerender } = renderComponentWithStoreAndNavigationContextForFocus(
@@ -327,34 +339,30 @@ describe("SendAARCieCardReadingComponent", () => {
         expect(mockStartReading).toHaveBeenCalledTimes(1);
         expect(mockStopReading).not.toHaveBeenCalled();
       });
-      it(
-        'should invoke "stopReading" when the cancel action is triggered',
-        testCancelAction
-      );
+      it("should go back to the scanning advisory screen when the cancel action is triggered", () => {
+        const { getByTestId } = renderComponent();
+
+        const retryButton = getByTestId("tagLostCloseButton");
+        expect(retryButton).toBeTruthy();
+        expect(mockStopReading).not.toHaveBeenCalled();
+
+        fireEvent.press(retryButton);
+        testRestartHandlerCalled("scanningAdvisory");
+      });
     });
     describe("WRONG_CAN error", () => {
       beforeEach(() => {
         mockErrorState({ name: "WRONG_CAN" });
       });
-      it("should terminate the current flow when the cancel action is triggered", () => {
-        const { getByTestId } = renderComponent();
-        const closeButton = getByTestId("wrongCanCloseButton");
-
-        expect(closeButton).toBeTruthy();
-        expect(mockStopReading).not.toHaveBeenCalled();
-        fireEvent.press(closeButton);
-
-        expect(mockStopReading).toHaveBeenCalledTimes(1);
-      });
+      it(
+        "should terminate the current flow when the cancel action is triggered",
+        testCancelErrorAction
+      );
       it("should navigate back to the CAN advisory state on retry CTA press", () => {
         const { getByTestId } = renderComponent();
 
         const retryButton = getByTestId("wrongCanRetryButton");
         expect(retryButton).toBeTruthy();
-
-        // reset the mock triggered on component mount
-        // mockStartReading.mockClear();
-
         expect(mockStopReading).not.toHaveBeenCalled();
 
         fireEvent.press(retryButton);
@@ -459,7 +467,7 @@ function mockReadState(readState: ReadState) {
   });
 }
 
-function testCancelAction() {
+function testCancelErrorAction() {
   const { queryByText } = renderComponent();
 
   expect(mockStartReading).toHaveBeenCalledTimes(1);
@@ -468,6 +476,7 @@ function testCancelAction() {
   const cancelAction = queryByText("global.buttons.close");
 
   expect(cancelAction).toBeTruthy();
+  expect(mockTerminateFlow).not.toHaveBeenCalled();
 
   mockStartReading.mockClear();
   // If passes the previous check we can assume it exists
@@ -475,6 +484,7 @@ function testCancelAction() {
 
   expect(mockStopReading).toHaveBeenCalledTimes(1);
   expect(mockStartReading).not.toHaveBeenCalled();
+  expect(mockTerminateFlow).toHaveBeenCalledTimes(1);
 }
 
 const Component = (

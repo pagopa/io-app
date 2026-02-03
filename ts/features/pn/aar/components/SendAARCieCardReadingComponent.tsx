@@ -104,6 +104,7 @@ export const SendAARCieCardReadingComponent = ({
     stopReading();
     terminateFlow();
   }, [stopReading, terminateFlow]);
+
   const restartToScanningAdvisory = useCallback(() => {
     stopReading();
     dispatch(
@@ -147,7 +148,7 @@ export const SendAARCieCardReadingComponent = ({
             secondaryAction: {
               testID: "tagLostCloseButton",
               label: i18n.t("global.buttons.close"),
-              onPress: errorCloseHandler
+              onPress: restartToScanningAdvisory
             }
           };
         case "WRONG_CAN":
@@ -206,6 +207,7 @@ export const SendAARCieCardReadingComponent = ({
         title: i18n.t("features.pn.aar.flow.cieScanning.idle.title"),
         pictogram: "nfcScanAndroid",
         secondaryAction: {
+          testID: "idleCloseButton",
           label: i18n.t("global.buttons.close"),
           onPress: restartToScanningAdvisory
         }
@@ -215,6 +217,7 @@ export const SendAARCieCardReadingComponent = ({
         subtitle: i18n.t("features.pn.aar.flow.cieScanning.reading.subtitle"),
         pictogram: "nfcScanAndroid",
         secondaryAction: {
+          testID: "readingCloseButton",
           label: i18n.t("global.buttons.close"),
           onPress: restartToScanningAdvisory
         }
