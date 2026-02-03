@@ -2,13 +2,13 @@ name: Release locales on CDN
 
 on:
   pull_request: #added to register workflow
-  # push:
-  #   branches:
-  #     - IOPLT-1318-GHA-release-locales # to be switched to master
-  #   paths-ignore:
-  #     - "CODEOWNERS"
-  #     - "**.md"
-  #     - ".**"
+  push:
+    branches:
+      - IOPLT-1318-GHA-release-locales # to be switched to master
+    paths-ignore:
+      - "CODEOWNERS"
+      - "**.md"
+      - ".**"
 
   workflow_dispatch:
 
@@ -20,7 +20,7 @@ jobs:
   publish:
     name: Release locales to production assets CDN
     runs-on: ubuntu-24.04
-    environment: prod-cd
+    environment: dev-cd # to be changed to prod
     permissions:
       id-token: write
       pull-requests: write
