@@ -118,7 +118,9 @@ const useReceiptFailureSupportModal = (
         {receiptEventId && (
           <ListItemInfoCopy
             label={I18n.t("transaction.details.info.transactionId")}
-            accessibilityLabel={I18n.t("transaction.details.info.transactionId")}
+            accessibilityLabel={I18n.t(
+              "transaction.details.info.transactionId"
+            )}
             icon="transactions"
             value={receiptEventId}
             onPress={() => clipboardSetStringWithFeedback(receiptEventId)}

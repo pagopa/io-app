@@ -106,7 +106,9 @@ const ReceiptDetailsScreen = () => {
         paymentAnalyticsData?.receiptOrganizationFiscalCode
     });
 
-    toast.info(I18n.t("features.payments.transactions.receipt.error.banner.label"));
+    toast.info(
+      I18n.t("features.payments.transactions.receipt.error.banner.label")
+    );
   };
 
   const handleOnDownloadPdfReceiptSuccess = () => {

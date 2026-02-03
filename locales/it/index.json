@@ -4589,6 +4589,12 @@
           "totalFeeUnknown": "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}",
           "totalFeeUnknownPsp": "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto dal gestore della transazione (PSP)"
         },
+        "error": {
+          "banner": {
+            "label": "Il caricamento delle ricevute è fallito.",
+            "retryButton": "Prova di nuovo"
+          }
+        },
         "filters": {
           "tabs": {
             "all": "Tutte",
