@@ -5,12 +5,11 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import I18n from "i18next";
 import { useState } from "react";
 import { Platform, View } from "react-native";
 import Pdf from "react-native-pdf";
 import Share from "react-native-share";
-import I18n from "i18next";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -128,12 +127,6 @@ const ReceiptPreviewScreen = () => {
       </View>
     );
   }
-  return (
-    <OperationResultScreenContent
-      pictogram="umbrella"
-      title={I18n.t("global.genericError")}
-    />
-  );
 };
 
 export default ReceiptPreviewScreen;
