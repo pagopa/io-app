@@ -1,11 +1,17 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import { SectionListData } from "react-native";
 import { InfoNotice } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
+import { OperationResultScreenContentProps } from "../../../../components/screens/OperationResultScreenContent";
 import { NetworkError } from "../../../../utils/errors";
 import { capitalizeTextName } from "../../../../utils/strings";
+import {
+  DownloadReceiptOutcomeErrorEnum,
+  ReceiptDownloadFailure
+} from "../types";
 
 export const RECEIPT_DOCUMENT_TYPE_PREFIX = "data:application/pdf;base64,";
 
@@ -192,3 +198,58 @@ export const isValidPspName = (pspName: string | undefined): boolean =>
     O.map(name => name !== "-"),
     O.getOrElse(() => false)
   );
+
+export const mapDownloadReceiptErrorToOutcomeProps = (
+  error: NetworkError | ReceiptDownloadFailure,
+  onClose: () => void,
+  handleContactSupport: () => void
+): OperationResultScreenContentProps => {
+  const errorCode = "code" in error ? error.code : undefined;
+  switch (errorCode) {
+    case DownloadReceiptOutcomeErrorEnum.GN_400_003:
+      return {
+        title: I18n.t("features.payments.transactions.error.400.title"),
+        subtitle: I18n.t("features.payments.transactions.error.400.subtitle"),
+        pictogram: "attention",
+        action: {
+          label: I18n.t("wallet.payment.support.supportTitle"),
+          onPress: handleContactSupport
+        },
+        secondaryAction: {
+          label: I18n.t("global.buttons.close"),
+          onPress: onClose
+        }
+      };
+    case DownloadReceiptOutcomeErrorEnum.AT_404_001:
+    case DownloadReceiptOutcomeErrorEnum.BZ_404_003:
+      return {
+        title: I18n.t("features.payments.transactions.error.404.title"),
+        subtitle: I18n.t("features.payments.transactions.error.404.subtitle"),
+        pictogram: "searchLens",
+        action: {
+          label: I18n.t("global.buttons.close"),
+          onPress: onClose
+        },
+        secondaryAction: {
+          label: I18n.t("wallet.payment.support.supportTitle"),
+          onPress: handleContactSupport
+        }
+      };
+    case DownloadReceiptOutcomeErrorEnum.UN_500_000:
+    case DownloadReceiptOutcomeErrorEnum.GN_500_001:
+    case DownloadReceiptOutcomeErrorEnum.GN_500_002:
+    case DownloadReceiptOutcomeErrorEnum.GN_500_003:
+    case DownloadReceiptOutcomeErrorEnum.GN_500_004:
+    case DownloadReceiptOutcomeErrorEnum.FG_000_001:
+    default:
+      return {
+        title: I18n.t("features.payments.transactions.error.500.title"),
+        subtitle: I18n.t("features.payments.transactions.error.500.subtitle"),
+        pictogram: "umbrella",
+        action: {
+          label: I18n.t("global.buttons.close"),
+          onPress: onClose
+        }
+      };
+  }
+};
