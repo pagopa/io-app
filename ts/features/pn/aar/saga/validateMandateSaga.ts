@@ -9,6 +9,7 @@ import { unknownToReason } from "../../../messages/utils";
 import {
   aarProblemJsonAnalyticsReport,
   trackSendAARFailure,
+  trackSendAarMandateCieDataError,
   trackSendAarMandateCieExpiredError,
   trackSendAarMandateCieNotRelatedToDelegatorError
 } from "../analytics";
@@ -103,7 +104,12 @@ export function* validateMandateSaga(
           status,
           value
         )})`;
-        yield* call(handleMixPanelCustomTrackingIfNeeded, status, value);
+        yield* call(
+          handleMixPanelCustomTrackingIfNeeded,
+          status,
+          value,
+          reason
+        );
         yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
         const errorState: AARFlowState = {
           type: sendAARFlowStates.ko,
@@ -143,30 +149,27 @@ function handleMixPanelCustomTrackingIfNeeded<
   value: Extract<
     AcceptMandateSuccessfulResponse["right"],
     { status: S }
-  >["value"]
+  >["value"],
+  reason: string
 ) {
-  switch (status) {
-    case 422:
-      {
-        const maybeErrorKey = value.errors
-          ?.map(({ code }) => code)
-          .find(code =>
-            /^(CIE_EXPIRED_ERROR|CIE_NOT_RELATED_TO_DELEGATOR_ERROR)$/i.test(
-              code
-            )
-          );
+  if (status === 422) {
+    const maybeErrorKey = value.errors
+      ?.map(({ code }) => code)
+      .find(code =>
+        /^(CIE_EXPIRED_ERROR|CIE_NOT_RELATED_TO_DELEGATOR_ERROR)$/i.test(code)
+      );
 
-        if (/^CIE_EXPIRED_ERROR$/i.test(`${maybeErrorKey}`)) {
-          trackSendAarMandateCieExpiredError();
-        }
-        if (/^CIE_NOT_RELATED_TO_DELEGATOR_ERROR$/i.test(`${maybeErrorKey}`)) {
-          trackSendAarMandateCieNotRelatedToDelegatorError();
-        }
-      }
-      break;
-    default:
-      break;
+    if (/^CIE_EXPIRED_ERROR$/i.test(`${maybeErrorKey}`)) {
+      trackSendAarMandateCieExpiredError();
+      return;
+    }
+    if (/^CIE_NOT_RELATED_TO_DELEGATOR_ERROR$/i.test(`${maybeErrorKey}`)) {
+      trackSendAarMandateCieNotRelatedToDelegatorError();
+      return;
+    }
   }
+
+  trackSendAarMandateCieDataError(reason);
 }
 
 export const testable = isDevEnv

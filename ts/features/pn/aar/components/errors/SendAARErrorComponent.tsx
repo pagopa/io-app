@@ -37,7 +37,8 @@ import {
 
 export const sendAarErrorSupportBottomSheetComponent = (
   onAssistancePress: () => void,
-  assistanceErrorCode?: string
+  assistanceErrorCode?: string,
+  onCopyToClipboardPress?: () => void
 ) => (
   <>
     <Body>{I18n.t("features.pn.aar.flow.ko.GENERIC.detail.subTitle")}</Body>
@@ -72,6 +73,7 @@ export const sendAarErrorSupportBottomSheetComponent = (
           numberOfLines={2}
           onPress={() => {
             trackSendAarErrorScreenDetailsCode();
+            onCopyToClipboardPress?.();
             clipboardSetStringWithFeedback(assistanceErrorCode);
           }}
           testID="error_code_value"
