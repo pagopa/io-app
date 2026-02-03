@@ -20,6 +20,7 @@ import {
 import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
 import { setAarFlowState } from "../store/actions";
 import { RecipientInfo, sendAARFlowStates } from "../utils/stateUtils";
+import { useTrackCieReadingEvents } from "../hooks/useTrackCieReadingEvents";
 import { sendAarErrorSupportBottomSheetComponent } from "./errors/SendAARErrorComponent";
 
 type ScreenContentProps = Omit<CieCardReadContentProps, "progress">;
@@ -43,6 +44,8 @@ export const SendAARCieCardReadingComponent = ({
   const theme = useIOTheme();
   const { startReading, stopReading, readState } =
     useCieInternalAuthAndMrtdReading();
+
+  useTrackCieReadingEvents(readState);
 
   const isError = isErrorState(readState);
   const data = isSuccessState(readState) ? readState.data : undefined;

@@ -35,6 +35,15 @@ import {
   trackSendAarMandateCieCanEnter,
   trackSendAarMandateCieCardReadingDisclaimer,
   trackSendAarMandateCieCardReadingDisclaimerContinue,
+  trackSendAarMandateCieCardReading,
+  trackSendAarMandateCieCardReadingSuccess,
+  trackSendAarMandateCieCardReadingError,
+  trackSendAarMandateCieNfcActivation,
+  trackSendAarMandateCieNfcActivationContinue,
+  trackSendAarMandateCieNfcActivationControlAlert,
+  trackSendAarMandateCieNfcActivationControlAlertClosure,
+  trackSendAarMandateCieNfcActivationControlAlertGoToSettings,
+  trackSendAarMandateCieNfcGoToSettings,
   type SendAarScreen
 } from "..";
 import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
@@ -230,6 +239,60 @@ const simpleTrackingTests: ReadonlyArray<TrackingTestBase> = [
     fn: trackSendAarMandateCieCardReadingDisclaimerContinue,
     eventName: "SEND_MANDATE_CIE_CARD_READING_DISCLAIMER_CONTINUE",
     eventProps: { event_category: "UX", event_type: "action" }
+  },
+  {
+    name: "trackSendAarMandateCieCardReading",
+    fn: trackSendAarMandateCieCardReading,
+    eventName: "SEND_MANDATE_CIE_CARD_READING",
+    eventProps: { event_category: "UX", event_type: "screen_view" }
+  },
+  {
+    name: "trackSendAarMandateCieCardReadingSuccess",
+    fn: trackSendAarMandateCieCardReadingSuccess,
+    eventName: "SEND_MANDATE_CIE_CARD_READING_SUCCESS",
+    eventProps: { event_category: "UX", event_type: "screen_view" }
+  },
+  {
+    name: "trackSendAarMandateCieCardReadingError",
+    fn: trackSendAarMandateCieCardReadingError,
+    eventName: "SEND_MANDATE_CIE_CARD_READING_ERROR",
+    eventProps: { event_category: "KO", event_type: undefined }
+  },
+  {
+    name: "trackSendAarMandateCieNfcActivation",
+    fn: trackSendAarMandateCieNfcActivation,
+    eventName: "SEND_MANDATE_CIE_NFC_ACTIVATION",
+    eventProps: { event_category: "UX", event_type: "screen_view" }
+  },
+  {
+    name: "trackSendAarMandateCieNfcActivationContinue",
+    fn: trackSendAarMandateCieNfcActivationContinue,
+    eventName: "SEND_MANDATE_CIE_NFC_ACTIVATION_CONTINUE",
+    eventProps: { event_category: "UX", event_type: "action" }
+  },
+  {
+    name: "trackSendAarMandateCieNfcActivationControlAlert",
+    fn: trackSendAarMandateCieNfcActivationControlAlert,
+    eventName: "SEND_MANDATE_CIE_NFC_ACTIVATION_CONTROL_ALERT",
+    eventProps: { event_category: "UX", event_type: "screen_view" }
+  },
+  {
+    name: "trackSendAarMandateCieNfcActivationControlAlertClosure",
+    fn: trackSendAarMandateCieNfcActivationControlAlertClosure,
+    eventName: "SEND_MANDATE_CIE_NFC_ACTIVATION_CONTROL_ALERT_CLOSURE",
+    eventProps: { event_category: "UX", event_type: "action" }
+  },
+  {
+    name: "trackSendAarMandateCieNfcActivationControlAlertGoToSettings",
+    fn: trackSendAarMandateCieNfcActivationControlAlertGoToSettings,
+    eventName: "SEND_MANDATE_CIE_NFC_ACTIVATION_CONTROL_ALERT_GO_TO_SETTINGS",
+    eventProps: { event_category: "UX", event_type: "exit" }
+  },
+  {
+    name: "trackSendAarMandateCieNfcGoToSettings",
+    fn: trackSendAarMandateCieNfcGoToSettings,
+    eventName: "SEND_MANDATE_CIE_NFC_GO_TO_SETTINGS",
+    eventProps: { event_category: "UX", event_type: "exit" }
   }
 ];
 

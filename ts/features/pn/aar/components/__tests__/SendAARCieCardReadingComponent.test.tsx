@@ -1,4 +1,4 @@
-import { fireEvent, render } from "@testing-library/react-native";
+import { act, fireEvent, render } from "@testing-library/react-native";
 import { omit } from "lodash";
 import * as RN from "react-native";
 import { createStore } from "redux";
@@ -18,6 +18,7 @@ import {
   SendAARCieCardReadingComponent,
   SendAARCieCardReadingComponentProps
 } from "../SendAARCieCardReadingComponent";
+import { useTrackCieReadingEvents } from "../../hooks/useTrackCieReadingEvents";
 type ReadState = ReturnType<
   typeof useCieInternalAuthAndMrtdReading
 >["readState"];
@@ -95,6 +96,10 @@ jest.mock("../../hooks/useCieInternalAuthAndMrtdReading", () => {
   };
 });
 
+jest.mock("../../hooks/useTrackCieReadingEvents", () => ({
+  useTrackCieReadingEvents: jest.fn()
+}));
+
 const cieCardReadingComponentProps: SendAARCieCardReadingComponentProps = {
   can: "123456",
   iun: "iun",
@@ -134,24 +139,39 @@ const mockUseCieInternalAuthAndMrtdReading =
     ReturnType<typeof useCieInternalAuthAndMrtdReading>
   >;
 
+const mockReadStates: ReadonlyArray<ReadState> = [
+  { status: ReadStatus.IDLE },
+  { status: ReadStatus.READING, progress: 0 },
+  { status: ReadStatus.READING, progress: 0.5 },
+  { status: ReadStatus.READING, progress: 1 },
+  { status: ReadStatus.SUCCESS, data: successDataMock },
+  ...errorsMock.map<ReadState>(error => ({ status: ReadStatus.ERROR, error }))
+];
+
 describe("SendAARCieCardReadingComponent", () => {
   afterEach(jest.clearAllMocks);
 
-  it.each<ReadState>([
-    { status: ReadStatus.IDLE },
-    { status: ReadStatus.READING, progress: 0 },
-    { status: ReadStatus.READING, progress: 0.5 },
-    { status: ReadStatus.READING, progress: 1 },
-    { status: ReadStatus.SUCCESS, data: successDataMock },
-    ...errorsMock.map<ReadState>(error => ({ status: ReadStatus.ERROR, error }))
-  ])("should match the snapshot for readState: %o", readState => {
-    mockReadState(readState);
+  it.each<ReadState>(mockReadStates)(
+    "should match the snapshot for readState: %o",
+    readState => {
+      mockReadState(readState);
 
-    const component = renderComponent();
+      const component = renderComponent();
 
-    expect(component).toMatchSnapshot();
-  });
+      expect(component).toMatchSnapshot();
+    }
+  );
 
+  it.each<ReadState>(mockReadStates)(
+    'should invoke "useTrackCieReadingEvents" for readState: %o',
+    readState => {
+      mockReadState(readState);
+
+      renderComponent();
+
+      expect(useTrackCieReadingEvents).toHaveBeenCalledTimes(1);
+    }
+  );
   describe("SendAARCieCardReadingComponent: ReadState is IDLE", () => {
     beforeEach(() => {
       mockReadState({ status: ReadStatus.IDLE });
@@ -333,8 +353,10 @@ describe("SendAARCieCardReadingComponent", () => {
 
         expect(retryAction).toBeTruthy();
 
-        // If passes the previous check we can assume it exists
-        fireEvent.press(retryAction!);
+        act(() => {
+          // If passes the previous check we can assume it exists
+          fireEvent.press(retryAction!);
+        });
 
         expect(mockStartReading).toHaveBeenCalledTimes(1);
         expect(mockStopReading).not.toHaveBeenCalled();
@@ -407,7 +429,10 @@ describe("SendAARCieCardReadingComponent", () => {
 
         expect(closeButton).toBeTruthy();
         expect(mockStopReading).not.toHaveBeenCalled();
-        fireEvent.press(closeButton);
+
+        act(() => {
+          fireEvent.press(closeButton);
+        });
 
         testRestartHandlerCalled("canAdvisory");
       });
@@ -419,7 +444,10 @@ describe("SendAARCieCardReadingComponent", () => {
 
         expect(secondaryActionButton).toBeTruthy();
         expect(mockPresentBottomSheet).not.toHaveBeenCalled();
-        fireEvent.press(secondaryActionButton);
+
+        act(() => {
+          fireEvent.press(secondaryActionButton);
+        });
 
         expect(mockPresentBottomSheet).toHaveBeenCalledTimes(1);
       });
@@ -451,7 +479,10 @@ describe("SendAARCieCardReadingComponent", () => {
         const assistanceButton = getByTestId("button_assistance");
         expect(assistanceButton).toBeTruthy();
         expect(mockDismissBottomSheet).not.toHaveBeenCalled();
-        fireEvent.press(assistanceButton);
+
+        act(() => {
+          fireEvent.press(assistanceButton);
+        });
 
         expect(mockDismissBottomSheet).toHaveBeenCalledTimes(1);
       });
