@@ -304,7 +304,9 @@
   "locales": {
     "it": "Italiano",
     "en": "Inglese",
-    "de": "Tedesco"
+    "de": "Tedesco",
+    "fr": "Francese",
+    "sl": "Sloveno"
   },
   "clipboard": {
     "copyIntoClipboard": "copia negli appunti",
@@ -740,6 +742,10 @@
         "preferred_language": {
           "title": "Lingua preferita",
           "subtitle": "In quale lingua vuoi usare l'applicazione?",
+          "headers": {
+            "services": "Servizi",
+            "app": "Applicazione"
+          },
           "alert": {
             "title": "Vuoi cambiare la lingua in",
             "subtitle": "Dovrai riavviare l'applicazione per applicare il cambiamento"
@@ -4529,7 +4535,7 @@
       "transactions": {
         "multiplePayment": "Pagamento multiplo",
         "title": "Ricevute pagoPA",
-        "button": "Mostra tutte",
+        "button": "Vedi tutte",
         "empty": {
           "title": "Qui vedrai le tue ricevute pagoPA",
           "content": "Paga un avviso in app o presso un qualsiasi canale abilitato a pagoPA."
@@ -4553,15 +4559,10 @@
             "failed": "C’è stato un errore, riprova"
           },
           "hideBanner": {
-            "isCart": {
-              "title": "Vuoi nascondere queste ricevute dalla tua lista?",
-              "content": "Stai per nascondere definitivamente tutte le ricevute collegate a questa transazione. Non compariranno più nell’elenco."
-            },
             "title": "Vuoi nascondere questa ricevuta dalla tua lista?",
             "content": "L’operazione è irreversibile. La ricevuta non verrà più mostrata nell’elenco delle tue ricevute.",
             "accept": "Sì, nascondi"
-          },
-          "debtorCartBanner": "Questo avviso è stato pagato insieme ad altri in un'unica transazione. Per informazioni sui costi di commissione, consulta il documento ricevuto in fase di pagamento."
+          }
         },
         "details": {
           "totalFeeUnknown": "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}",
@@ -5830,20 +5831,32 @@
         "action": "Ricarica l'app IO",
         "failure": "Nessuna connessione. Collegati a internet e riprova."
       },
-      "upgrade": {
-        "banner": {
-          "documents": {
-            "active": {
-              "title": "Passa a IT-Wallet",
-              "description": "Aggiorna i tuoi documenti digitali e passa a funzionalità evolute con l’unico portafoglio digitale di Stato: pubblico, sicuro e gratuito. Garantito dallo Stato, accessibile solo a te.",
-              "action": "Passa a IT-Wallet"
-            },
-            "inactive": {
-              "title": "IT-Wallet per i tuoi documenti",
-              "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**. Garantito dallo Stato, accessibile solo a te.",
-              "action": "Ottieni IT-Wallet"
-            }
-          }
+      "engagementBanner": {
+        "activation": {
+          "title": "Porta su IO i tuoi documenti digitali",
+          "description": "Con piena validità ufficiale, digitali e sempre a portata di mano!",
+          "action": "Aggiungi un documento"
+        },
+        "upgrade_empty": {
+          "title": "Il tuo Portafoglio è ora parte di IT-Wallet",
+          "description": "Scopri le funzionalità evolute dei documenti digitali su IO.",
+          "action": "Aggiungi documento"
+        },
+        "upgrade": {
+          "title": "IO dà il benvenuto a IT-Wallet",
+          "description": "Il tuo portafoglio digitale pubblico: semplice, sicuro, tuo. Scopri i nuovi documenti ora disponibili!",
+          "action": "Inizia"
+        },
+        "upgrade_with_mdl": {
+          "title": "Dimostra chi sei col tuo dispositivo",
+          "description": "Usa la tua Patente digitale anche come documento di riconoscimento, in modo facile e sicuro!",
+          "action": "Inizia"
+        },
+        "dismissAlert": {
+          "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?",
+          "description": "Potrai ottenere IT-Wallet in qualsiasi altro momento, andando in Impostazioni > IT-Wallet.",
+          "confirm": "Sì, rinuncia",
+          "cancel": "Indietro"
         }
       },
       "settings": {
