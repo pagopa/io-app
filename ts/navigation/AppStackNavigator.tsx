@@ -9,6 +9,7 @@ import {
   NavigationContainer,
   NavigationContainerProps
 } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import { PropsWithChildren, ReactElement, useEffect, useRef } from "react";
 
 import { Linking, View } from "react-native";
@@ -55,6 +56,14 @@ import { linkingSubscription } from "./linkingSubscription";
 import { AppParamsList } from "./params/AppParamsList";
 import ROUTES from "./routes";
 
+const IngressStack = createStackNavigator();
+
+const IngressStackNavigator = (): ReactElement => (
+  <IngressStack.Navigator screenOptions={{ headerShown: false }}>
+    <IngressStack.Screen name="INGRESS" component={IngressScreen} />
+  </IngressStack.Navigator>
+);
+
 type OnStateChangeStateType = Parameters<
   NonNullable<NavigationContainerProps["onStateChange"]>
 >[0];
@@ -78,16 +87,16 @@ export const AppStackNavigator = (): ReactElement => {
     dispatch(startApplicationInitialization());
   }, [dispatch]);
 
+  if (startupStatus === StartupStatusEnum.INITIAL) {
+    return <IngressStackNavigator />;
+  }
+
   if (startupStatus === StartupStatusEnum.OFFLINE) {
     return <OfflineStackNavigator />;
   }
 
   if (startupStatus === StartupStatusEnum.NOT_AUTHENTICATED) {
     return <NotAuthenticatedStackNavigator />;
-  }
-
-  if (startupStatus === StartupStatusEnum.INITIAL) {
-    return <IngressScreen />;
   }
 
   return <AuthenticatedStackNavigator />;

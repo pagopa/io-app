@@ -136,7 +136,7 @@ export const DesignSystemNavigator = () => {
             color: IOColors[theme["textHeading-default"]]
           },
           headerTitleAlign: "center",
-          headerBackTitleVisible: false,
+          headerBackButtonDisplayMode: "minimal",
           headerShown: true,
           autoHideHomeIndicator: true
         }}
