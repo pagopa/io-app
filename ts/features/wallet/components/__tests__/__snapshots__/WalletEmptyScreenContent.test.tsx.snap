@@ -569,6 +569,49 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(11, 62, 227, 1)",
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderCurve": "continuous",
+                                  "elevation": 0,
+                                  "flexDirection": "row",
+                                  "justifyContent": "center",
+                                  "overflow": "hidden",
+                                  "textAlignVertical": "center",
+                                },
+                                {
+                                  "paddingHorizontal": 16,
+                                },
+                                {
+                                  "backgroundColor": "#0B3EE3",
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
+                                },
+                                {},
+                              ]
+                            }
+                            nativeID="3"
                             style={
                               [
                                 {
@@ -580,9 +623,15 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
-                                false,
                                 {
-                                  "backgroundColor": undefined,
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                                {
+                                  "backgroundColor": "rgba(11, 62, 227, 1)",
                                 },
                                 {
                                   "paddingHorizontal": 16,
@@ -599,6 +648,33 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                  },
+                                  {
+                                    "columnGap": 8,
+                                  },
+                                  {
+                                    "flexDirection": "row-reverse",
+                                  },
+                                ]
+                              }
+                              nativeID="4"
                               style={
                                 [
                                   {
@@ -620,20 +696,29 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                 accessibilityLabel=""
                                 accessible={false}
                                 align="xMidYMid"
-                                animatedProps={
-                                  {
-                                    "color": undefined,
-                                  }
-                                }
                                 bbHeight={30}
                                 bbWidth={30}
-                                color="#555C70"
+                                collapsable={false}
+                                color="rgba(255, 255, 255, 1)"
                                 focusable={false}
                                 height={30}
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {
+                                      "color": "rgba(255, 255, 255, 1)",
+                                    },
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                nativeID="5"
                                 style={
                                   [
                                     {
@@ -681,9 +766,33 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                 accessibilityElementsHidden={true}
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "color": "rgba(255, 255, 255, 1)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "textAlign": "auto",
+                                    },
+                                    {
+                                      "color": "#FFFFFF",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
+                                nativeID="6"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -704,7 +813,7 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                         "color": "#FFFFFF",
                                       },
                                       {
-                                        "color": undefined,
+                                        "color": "rgba(255, 255, 255, 1)",
                                       },
                                     ],
                                   ]
@@ -1148,6 +1257,49 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(11, 62, 227, 1)",
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderCurve": "continuous",
+                                  "elevation": 0,
+                                  "flexDirection": "row",
+                                  "justifyContent": "center",
+                                  "overflow": "hidden",
+                                  "textAlignVertical": "center",
+                                },
+                                {
+                                  "paddingHorizontal": 16,
+                                },
+                                {
+                                  "backgroundColor": "#0B3EE3",
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
+                                },
+                                {},
+                              ]
+                            }
+                            nativeID="0"
                             style={
                               [
                                 {
@@ -1159,9 +1311,15 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
-                                false,
                                 {
-                                  "backgroundColor": undefined,
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                                {
+                                  "backgroundColor": "rgba(11, 62, 227, 1)",
                                 },
                                 {
                                   "paddingHorizontal": 16,
@@ -1178,6 +1336,31 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                  },
+                                  {
+                                    "columnGap": 8,
+                                  },
+                                  false,
+                                ]
+                              }
+                              nativeID="1"
                               style={
                                 [
                                   {
@@ -1196,9 +1379,33 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                 accessibilityElementsHidden={true}
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "color": "rgba(255, 255, 255, 1)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "textAlign": "auto",
+                                    },
+                                    {
+                                      "color": "#FFFFFF",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
+                                nativeID="2"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1219,7 +1426,7 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                         "color": "#FFFFFF",
                                       },
                                       {
-                                        "color": undefined,
+                                        "color": "rgba(255, 255, 255, 1)",
                                       },
                                     ],
                                   ]

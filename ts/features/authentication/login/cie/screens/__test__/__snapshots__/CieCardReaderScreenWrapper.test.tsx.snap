@@ -488,6 +488,7 @@ exports[`CieCardReaderScreenWrapper Should match the snapshot 1`] = `
                                                 "stroke",
                                                 "strokeWidth",
                                                 "strokeDasharray",
+                                                "strokeDashoffset",
                                                 "strokeLinecap",
                                               ]
                                             }
@@ -504,6 +505,7 @@ exports[`CieCardReaderScreenWrapper Should match the snapshot 1`] = `
                                                 565.4866776461628,
                                               ]
                                             }
+                                            strokeDashoffset={null}
                                             strokeLinecap={1}
                                             strokeWidth={3}
                                           />
@@ -879,6 +881,48 @@ exports[`CieCardReaderScreenWrapper Should match the snapshot 1`] = `
                                       }
                                     >
                                       <View
+                                        collapsable={false}
+                                        jestAnimatedProps={
+                                          {
+                                            "value": {},
+                                          }
+                                        }
+                                        jestAnimatedStyle={
+                                          {
+                                            "value": {
+                                              "transform": [
+                                                {
+                                                  "scale": 1,
+                                                },
+                                              ],
+                                            },
+                                          }
+                                        }
+                                        jestInlineStyle={
+                                          [
+                                            {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "elevation": 0,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "overflow": "hidden",
+                                              "textAlignVertical": "center",
+                                            },
+                                            {
+                                              "paddingHorizontal": 0,
+                                            },
+                                            {
+                                              "backgroundColor": "transparent",
+                                              "borderColor": "#0B3EE3",
+                                              "borderRadius": 8,
+                                              "borderWidth": 0,
+                                              "height": undefined,
+                                            },
+                                            {},
+                                          ]
+                                        }
+                                        nativeID="1"
                                         style={
                                           [
                                             {
@@ -890,7 +934,13 @@ exports[`CieCardReaderScreenWrapper Should match the snapshot 1`] = `
                                               "overflow": "hidden",
                                               "textAlignVertical": "center",
                                             },
-                                            false,
+                                            {
+                                              "transform": [
+                                                {
+                                                  "scale": 1,
+                                                },
+                                              ],
+                                            },
                                             {},
                                             {
                                               "paddingHorizontal": 0,
@@ -907,6 +957,31 @@ exports[`CieCardReaderScreenWrapper Should match the snapshot 1`] = `
                                         }
                                       >
                                         <View
+                                          collapsable={false}
+                                          jestAnimatedProps={
+                                            {
+                                              "value": {},
+                                            }
+                                          }
+                                          jestAnimatedStyle={
+                                            {
+                                              "value": {},
+                                            }
+                                          }
+                                          jestInlineStyle={
+                                            [
+                                              {
+                                                "alignItems": "center",
+                                                "flexDirection": "row",
+                                                "justifyContent": "center",
+                                              },
+                                              {
+                                                "columnGap": 8,
+                                              },
+                                              false,
+                                            ]
+                                          }
+                                          nativeID="2"
                                           style={
                                             [
                                               {
@@ -925,9 +1000,33 @@ exports[`CieCardReaderScreenWrapper Should match the snapshot 1`] = `
                                             accessibilityElementsHidden={true}
                                             accessible={false}
                                             allowFontScaling={true}
+                                            collapsable={false}
                                             ellipsizeMode="tail"
                                             importantForAccessibility="no-hide-descendants"
+                                            jestAnimatedProps={
+                                              {
+                                                "value": {},
+                                              }
+                                            }
+                                            jestAnimatedStyle={
+                                              {
+                                                "value": {
+                                                  "color": "rgba(11, 62, 227, 1)",
+                                                },
+                                              }
+                                            }
+                                            jestInlineStyle={
+                                              [
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                                {
+                                                  "color": "#0B3EE3",
+                                                },
+                                              ]
+                                            }
                                             maxFontSizeMultiplier={1.5}
+                                            nativeID="3"
                                             numberOfLines={1}
                                             style={
                                               [
@@ -945,7 +1044,7 @@ exports[`CieCardReaderScreenWrapper Should match the snapshot 1`] = `
                                                     "color": "#0B3EE3",
                                                   },
                                                   {
-                                                    "color": undefined,
+                                                    "color": "rgba(11, 62, 227, 1)",
                                                   },
                                                 ],
                                               ]

@@ -818,7 +818,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "height": 12,
-                                      "opacity": 0.55,
+                                      "opacity": 0.75,
                                       "width": 120,
                                     }
                                   }
@@ -831,7 +831,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "height": 16,
-                                      "opacity": 0.55,
+                                      "opacity": 0.75,
                                       "width": 180,
                                     }
                                   }
@@ -846,7 +846,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                   "borderCurve": "continuous",
                                   "borderRadius": 16,
                                   "height": 24,
-                                  "opacity": 0.55,
+                                  "opacity": 0.75,
                                   "width": 64,
                                 }
                               }

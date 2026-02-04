@@ -373,6 +373,39 @@ exports[`BannerAttachments BannerAttachments component should match snapshot 1`]
                         testID="banner-attachment-banner"
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "transform": [
+                                  {
+                                    "scale": 1,
+                                  },
+                                ],
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "alignContent": "center",
+                                "alignItems": "flex-start",
+                                "borderCurve": "continuous",
+                                "borderRadius": 8,
+                                "flexDirection": "row",
+                                "padding": 16,
+                              },
+                              {
+                                "backgroundColor": "#F4F5F8",
+                              },
+                            ]
+                          }
+                          nativeID="0"
                           style={
                             [
                               {
@@ -389,7 +422,7 @@ exports[`BannerAttachments BannerAttachments component should match snapshot 1`]
                               {
                                 "transform": [
                                   {
-                                    "scale": undefined,
+                                    "scale": 1,
                                   },
                                 ],
                               },
@@ -736,6 +769,48 @@ Se i documenti non sono più disponibili, contatta l'ente che li ha inviati.
                                 testID="banner-attachment-bottomsheet-cta"
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "elevation": 0,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "overflow": "hidden",
+                                        "textAlignVertical": "center",
+                                      },
+                                      {
+                                        "paddingHorizontal": 0,
+                                      },
+                                      {
+                                        "backgroundColor": "transparent",
+                                        "borderColor": "#0B3EE3",
+                                        "borderRadius": 8,
+                                        "borderWidth": 0,
+                                        "height": undefined,
+                                      },
+                                      {},
+                                    ]
+                                  }
+                                  nativeID="1"
                                   style={
                                     [
                                       {
@@ -747,7 +822,13 @@ Se i documenti non sono più disponibili, contatta l'ente che li ha inviati.
                                         "overflow": "hidden",
                                         "textAlignVertical": "center",
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                       {},
                                       {
                                         "paddingHorizontal": 0,
@@ -764,6 +845,31 @@ Se i documenti non sono più disponibili, contatta l'ente che li ha inviati.
                                   }
                                 >
                                   <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "flexDirection": "row",
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "columnGap": 8,
+                                        },
+                                        false,
+                                      ]
+                                    }
+                                    nativeID="2"
                                     style={
                                       [
                                         {
@@ -783,20 +889,29 @@ Se i documenti non sono più disponibili, contatta l'ente che li ha inviati.
                                       accessibilityLabel=""
                                       accessible={false}
                                       align="xMidYMid"
-                                      animatedProps={
-                                        {
-                                          "color": undefined,
-                                        }
-                                      }
                                       bbHeight={36}
                                       bbWidth={36}
-                                      color="#555C70"
+                                      collapsable={false}
+                                      color="rgba(11, 62, 227, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {
+                                            "color": "rgba(11, 62, 227, 1)",
+                                          },
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
                                       meetOrSlice={0}
                                       minX={0}
                                       minY={0}
+                                      nativeID="3"
                                       style={
                                         [
                                           {
@@ -844,9 +959,33 @@ Se i documenti non sono più disponibili, contatta l'ente che li ha inviati.
                                       accessibilityElementsHidden={true}
                                       accessible={false}
                                       allowFontScaling={true}
+                                      collapsable={false}
                                       ellipsizeMode="tail"
                                       importantForAccessibility="no-hide-descendants"
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {
+                                            "color": "rgba(11, 62, 227, 1)",
+                                          },
+                                        }
+                                      }
+                                      jestInlineStyle={
+                                        [
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
+                                          },
+                                        ]
+                                      }
                                       maxFontSizeMultiplier={1.5}
+                                      nativeID="4"
                                       numberOfLines={1}
                                       style={
                                         [
@@ -867,7 +1006,7 @@ Se i documenti non sono più disponibili, contatta l'ente che li ha inviati.
                                               "color": "#0B3EE3",
                                             },
                                             {
-                                              "color": undefined,
+                                              "color": "rgba(11, 62, 227, 1)",
                                             },
                                           ],
                                         ]

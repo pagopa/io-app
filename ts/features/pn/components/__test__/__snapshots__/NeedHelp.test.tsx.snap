@@ -377,7 +377,30 @@ exports[`NeedHelp NeedHelp Component Should match snapshot 1`] = `
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
+                          nativeID="0"
                           style={
                             [
                               {
@@ -386,12 +409,42 @@ exports[`NeedHelp NeedHelp Component Should match snapshot 1`] = `
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
+                            nativeID="1"
                             style={
                               [
                                 {
@@ -405,7 +458,7 @@ exports[`NeedHelp NeedHelp Component Should match snapshot 1`] = `
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -611,6 +664,48 @@ Se hai bisogno di supporto su SEND, consulta le risorse di assistenza
                                 testID="needHelp-bottomsheet-action"
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "elevation": 0,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "overflow": "hidden",
+                                        "textAlignVertical": "center",
+                                      },
+                                      {
+                                        "paddingHorizontal": 0,
+                                      },
+                                      {
+                                        "backgroundColor": "transparent",
+                                        "borderColor": "#0B3EE3",
+                                        "borderRadius": 8,
+                                        "borderWidth": 0,
+                                        "height": undefined,
+                                      },
+                                      {},
+                                    ]
+                                  }
+                                  nativeID="2"
                                   style={
                                     [
                                       {
@@ -622,7 +717,13 @@ Se hai bisogno di supporto su SEND, consulta le risorse di assistenza
                                         "overflow": "hidden",
                                         "textAlignVertical": "center",
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                       {},
                                       {
                                         "paddingHorizontal": 0,
@@ -639,6 +740,31 @@ Se hai bisogno di supporto su SEND, consulta le risorse di assistenza
                                   }
                                 >
                                   <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "flexDirection": "row",
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "columnGap": 8,
+                                        },
+                                        false,
+                                      ]
+                                    }
+                                    nativeID="3"
                                     style={
                                       [
                                         {
@@ -658,20 +784,29 @@ Se hai bisogno di supporto su SEND, consulta le risorse di assistenza
                                       accessibilityLabel=""
                                       accessible={false}
                                       align="xMidYMid"
-                                      animatedProps={
-                                        {
-                                          "color": undefined,
-                                        }
-                                      }
                                       bbHeight={36}
                                       bbWidth={36}
-                                      color="#555C70"
+                                      collapsable={false}
+                                      color="rgba(11, 62, 227, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {
+                                            "color": "rgba(11, 62, 227, 1)",
+                                          },
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
                                       meetOrSlice={0}
                                       minX={0}
                                       minY={0}
+                                      nativeID="4"
                                       style={
                                         [
                                           {
@@ -716,9 +851,33 @@ Se hai bisogno di supporto su SEND, consulta le risorse di assistenza
                                       accessibilityElementsHidden={true}
                                       accessible={false}
                                       allowFontScaling={true}
+                                      collapsable={false}
                                       ellipsizeMode="tail"
                                       importantForAccessibility="no-hide-descendants"
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {
+                                            "color": "rgba(11, 62, 227, 1)",
+                                          },
+                                        }
+                                      }
+                                      jestInlineStyle={
+                                        [
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
+                                          },
+                                        ]
+                                      }
                                       maxFontSizeMultiplier={1.5}
+                                      nativeID="5"
                                       numberOfLines={1}
                                       style={
                                         [
@@ -739,7 +898,7 @@ Se hai bisogno di supporto su SEND, consulta le risorse di assistenza
                                               "color": "#0B3EE3",
                                             },
                                             {
-                                              "color": undefined,
+                                              "color": "rgba(11, 62, 227, 1)",
                                             },
                                           ],
                                         ]

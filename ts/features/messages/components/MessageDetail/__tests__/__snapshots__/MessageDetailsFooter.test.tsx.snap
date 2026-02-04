@@ -394,7 +394,30 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                         >
                           <View
                             accessibilityElementsHidden={true}
+                            collapsable={false}
                             importantForAccessibility="no-hide-descendants"
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
+                            nativeID="16"
                             style={
                               [
                                 {
@@ -403,12 +426,42 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              nativeID="17"
                               style={
                                 [
                                   {
@@ -422,7 +475,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -925,7 +978,30 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                         >
                           <View
                             accessibilityElementsHidden={true}
+                            collapsable={false}
                             importantForAccessibility="no-hide-descendants"
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
+                            nativeID="20"
                             style={
                               [
                                 {
@@ -934,12 +1010,42 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              nativeID="21"
                               style={
                                 [
                                   {
@@ -953,7 +1059,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -1456,7 +1562,30 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                         >
                           <View
                             accessibilityElementsHidden={true}
+                            collapsable={false}
                             importantForAccessibility="no-hide-descendants"
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
+                            nativeID="18"
                             style={
                               [
                                 {
@@ -1465,12 +1594,42 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              nativeID="19"
                               style={
                                 [
                                   {
@@ -1484,7 +1643,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -1987,7 +2146,30 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                         >
                           <View
                             accessibilityElementsHidden={true}
+                            collapsable={false}
                             importantForAccessibility="no-hide-descendants"
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
+                            nativeID="22"
                             style={
                               [
                                 {
@@ -1996,12 +2178,42 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              nativeID="23"
                               style={
                                 [
                                   {
@@ -2015,7 +2227,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -2518,7 +2730,30 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                         >
                           <View
                             accessibilityElementsHidden={true}
+                            collapsable={false}
                             importantForAccessibility="no-hide-descendants"
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
+                            nativeID="0"
                             style={
                               [
                                 {
@@ -2527,12 +2762,42 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              nativeID="1"
                               style={
                                 [
                                   {
@@ -2546,7 +2811,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -2678,7 +2943,30 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                         >
                           <View
                             accessibilityElementsHidden={true}
+                            collapsable={false}
                             importantForAccessibility="no-hide-descendants"
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
+                            nativeID="2"
                             style={
                               [
                                 {
@@ -2687,12 +2975,42 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              nativeID="3"
                               style={
                                 [
                                   {
@@ -2706,7 +3024,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -3209,7 +3527,30 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                         >
                           <View
                             accessibilityElementsHidden={true}
+                            collapsable={false}
                             importantForAccessibility="no-hide-descendants"
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
+                            nativeID="8"
                             style={
                               [
                                 {
@@ -3218,12 +3559,42 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              nativeID="9"
                               style={
                                 [
                                   {
@@ -3237,7 +3608,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -3369,7 +3740,30 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                         >
                           <View
                             accessibilityElementsHidden={true}
+                            collapsable={false}
                             importantForAccessibility="no-hide-descendants"
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
+                            nativeID="10"
                             style={
                               [
                                 {
@@ -3378,12 +3772,42 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              nativeID="11"
                               style={
                                 [
                                   {
@@ -3397,7 +3821,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -3900,7 +4324,30 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                         >
                           <View
                             accessibilityElementsHidden={true}
+                            collapsable={false}
                             importantForAccessibility="no-hide-descendants"
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
+                            nativeID="4"
                             style={
                               [
                                 {
@@ -3909,12 +4356,42 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              nativeID="5"
                               style={
                                 [
                                   {
@@ -3928,7 +4405,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -4060,7 +4537,30 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                         >
                           <View
                             accessibilityElementsHidden={true}
+                            collapsable={false}
                             importantForAccessibility="no-hide-descendants"
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
+                            nativeID="6"
                             style={
                               [
                                 {
@@ -4069,12 +4569,42 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              nativeID="7"
                               style={
                                 [
                                   {
@@ -4088,7 +4618,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -4591,7 +5121,30 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                         >
                           <View
                             accessibilityElementsHidden={true}
+                            collapsable={false}
                             importantForAccessibility="no-hide-descendants"
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
+                            nativeID="12"
                             style={
                               [
                                 {
@@ -4600,12 +5153,42 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              nativeID="13"
                               style={
                                 [
                                   {
@@ -4619,7 +5202,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -4751,7 +5334,30 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                         >
                           <View
                             accessibilityElementsHidden={true}
+                            collapsable={false}
                             importantForAccessibility="no-hide-descendants"
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
+                            nativeID="14"
                             style={
                               [
                                 {
@@ -4760,12 +5366,42 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              nativeID="15"
                               style={
                                 [
                                   {
@@ -4779,7 +5415,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },

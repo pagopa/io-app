@@ -411,7 +411,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "height": 12,
-                                      "opacity": 0.55,
+                                      "opacity": 0.75,
                                       "width": 120,
                                     }
                                   }
@@ -424,7 +424,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "height": 16,
-                                      "opacity": 0.55,
+                                      "opacity": 0.75,
                                       "width": 180,
                                     }
                                   }
@@ -439,7 +439,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                                   "borderCurve": "continuous",
                                   "borderRadius": 16,
                                   "height": 24,
-                                  "opacity": 0.55,
+                                  "opacity": 0.75,
                                   "width": 64,
                                 }
                               }
@@ -842,6 +842,43 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
+                            nativeID="0"
                             style={
                               [
                                 {
@@ -862,7 +899,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -1417,6 +1454,43 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable-wi
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
+                            nativeID="1"
                             style={
                               [
                                 {
@@ -1437,7 +1511,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable-wi
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -1971,6 +2045,43 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
+                            nativeID="2"
                             style={
                               [
                                 {
@@ -1991,7 +2102,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },

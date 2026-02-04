@@ -382,6 +382,39 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                           testID="pushNotificationsBanner"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignContent": "center",
+                                  "alignItems": "flex-start",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "flexDirection": "row",
+                                  "padding": 16,
+                                },
+                                {
+                                  "backgroundColor": "#DBF9FA",
+                                },
+                              ]
+                            }
+                            nativeID="0"
                             style={
                               [
                                 {
@@ -398,7 +431,7 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -719,6 +752,36 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
+                                  nativeID="1"
                                   style={
                                     [
                                       {
@@ -729,7 +792,13 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                         "height": 24,
                                         "width": 24,
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                     ]
                                   }
                                 >
@@ -738,20 +807,29 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    animatedProps={
-                                      {
-                                        "color": undefined,
-                                      }
-                                    }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    collapsable={false}
                                     color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {
+                                          "color": "rgba(14, 15, 19, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    nativeID="2"
                                     style={
                                       [
                                         {

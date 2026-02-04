@@ -33,14 +33,34 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
   >
     <View
       collapsable={false}
-      style={
+      jestAnimatedProps={
         {
-          "transform": [
-            {
-              "rotateZ": "0deg",
-            },
-          ],
+          "value": {},
         }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "transform": [
+              {
+                "rotateZ": "0deg",
+              },
+            ],
+          },
+        }
+      }
+      jestInlineStyle={{}}
+      nativeID="0"
+      style={
+        [
+          {
+            "transform": [
+              {
+                "rotateZ": "0deg",
+              },
+            ],
+          },
+        ]
       }
       testID="LoadingSpinnerAnimatedTestID"
     >

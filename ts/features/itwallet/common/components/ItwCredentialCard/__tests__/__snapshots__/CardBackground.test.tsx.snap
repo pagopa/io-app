@@ -19,6 +19,34 @@ exports[`CardBackground should render correctly EuropeanDisabilityCard in state 
   }
 >
   <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    nativeID="3"
     style={
       [
         {
@@ -141,6 +169,34 @@ exports[`CardBackground should render correctly EuropeanDisabilityCard in state 
   }
 >
   <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    nativeID="4"
     style={
       [
         {
@@ -263,6 +319,34 @@ exports[`CardBackground should render correctly EuropeanDisabilityCard in state 
   }
 >
   <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    nativeID="5"
     style={
       [
         {
@@ -385,6 +469,34 @@ exports[`CardBackground should render correctly EuropeanHealthInsuranceCard in s
   }
 >
   <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    nativeID="6"
     style={
       [
         {
@@ -507,6 +619,34 @@ exports[`CardBackground should render correctly EuropeanHealthInsuranceCard in s
   }
 >
   <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    nativeID="7"
     style={
       [
         {
@@ -629,6 +769,34 @@ exports[`CardBackground should render correctly EuropeanHealthInsuranceCard in s
   }
 >
   <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    nativeID="8"
     style={
       [
         {
@@ -751,6 +919,34 @@ exports[`CardBackground should render correctly InvalidCredentialType in state d
   }
 >
   <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    nativeID="18"
     style={
       [
         {
@@ -873,6 +1069,34 @@ exports[`CardBackground should render correctly education_degree in state defaul
   }
 >
   <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    nativeID="9"
     style={
       [
         {
@@ -995,6 +1219,34 @@ exports[`CardBackground should render correctly education_degree in state faded 
   }
 >
   <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    nativeID="10"
     style={
       [
         {
@@ -1117,6 +1369,34 @@ exports[`CardBackground should render correctly education_degree in state greysc
   }
 >
   <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    nativeID="11"
     style={
       [
         {
@@ -1239,6 +1519,34 @@ exports[`CardBackground should render correctly education_enrollment in state de
   }
 >
   <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    nativeID="12"
     style={
       [
         {
@@ -1361,6 +1669,34 @@ exports[`CardBackground should render correctly education_enrollment in state fa
   }
 >
   <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    nativeID="13"
     style={
       [
         {
@@ -1483,6 +1819,34 @@ exports[`CardBackground should render correctly education_enrollment in state gr
   }
 >
   <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    nativeID="14"
     style={
       [
         {
@@ -1605,6 +1969,34 @@ exports[`CardBackground should render correctly mDL in state default 1`] = `
   }
 >
   <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    nativeID="0"
     style={
       [
         {
@@ -1727,6 +2119,34 @@ exports[`CardBackground should render correctly mDL in state faded 1`] = `
   }
 >
   <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    nativeID="1"
     style={
       [
         {
@@ -1849,6 +2269,34 @@ exports[`CardBackground should render correctly mDL in state greyscale 1`] = `
   }
 >
   <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    nativeID="2"
     style={
       [
         {
@@ -1971,6 +2419,34 @@ exports[`CardBackground should render correctly residency in state default 1`] =
   }
 >
   <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    nativeID="15"
     style={
       [
         {
@@ -2093,6 +2569,34 @@ exports[`CardBackground should render correctly residency in state faded 1`] = `
   }
 >
   <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    nativeID="16"
     style={
       [
         {
@@ -2215,6 +2719,34 @@ exports[`CardBackground should render correctly residency in state greyscale 1`]
   }
 >
   <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    nativeID="17"
     style={
       [
         {

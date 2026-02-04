@@ -14,6 +14,17 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
       ]
     }
     decelerationRate="normal"
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {},
+      }
+    }
+    nativeID="0"
     onScroll={[Function]}
     scrollEventThrottle={8}
     snapToEnd={false}
@@ -172,6 +183,48 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
           testID="cie-id-wizard-open-cie-id-link"
         >
           <View
+            collapsable={false}
+            jestAnimatedProps={
+              {
+                "value": {},
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {
+                  "transform": [
+                    {
+                      "scale": 1,
+                    },
+                  ],
+                },
+              }
+            }
+            jestInlineStyle={
+              [
+                {
+                  "alignItems": "center",
+                  "borderCurve": "continuous",
+                  "elevation": 0,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "overflow": "hidden",
+                  "textAlignVertical": "center",
+                },
+                {
+                  "paddingHorizontal": 0,
+                },
+                {
+                  "backgroundColor": "transparent",
+                  "borderColor": "#0B3EE3",
+                  "borderRadius": 8,
+                  "borderWidth": 0,
+                  "height": undefined,
+                },
+                {},
+              ]
+            }
+            nativeID="1"
             style={
               [
                 {
@@ -183,7 +236,13 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                   "overflow": "hidden",
                   "textAlignVertical": "center",
                 },
-                false,
+                {
+                  "transform": [
+                    {
+                      "scale": 1,
+                    },
+                  ],
+                },
                 {},
                 {
                   "paddingHorizontal": 0,
@@ -200,6 +259,31 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
             }
           >
             <View
+              collapsable={false}
+              jestAnimatedProps={
+                {
+                  "value": {},
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {},
+                }
+              }
+              jestInlineStyle={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  {
+                    "columnGap": 8,
+                  },
+                  false,
+                ]
+              }
+              nativeID="2"
               style={
                 [
                   {
@@ -218,9 +302,33 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                 accessibilityElementsHidden={true}
                 accessible={false}
                 allowFontScaling={true}
+                collapsable={false}
                 ellipsizeMode="tail"
                 importantForAccessibility="no-hide-descendants"
+                jestAnimatedProps={
+                  {
+                    "value": {},
+                  }
+                }
+                jestAnimatedStyle={
+                  {
+                    "value": {
+                      "color": "rgba(11, 62, 227, 1)",
+                    },
+                  }
+                }
+                jestInlineStyle={
+                  [
+                    {
+                      "textAlign": "auto",
+                    },
+                    {
+                      "color": "#0B3EE3",
+                    },
+                  ]
+                }
                 maxFontSizeMultiplier={1.5}
+                nativeID="3"
                 numberOfLines={1}
                 style={
                   [
@@ -241,7 +349,7 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                         "color": "#0B3EE3",
                       },
                       {
-                        "color": undefined,
+                        "color": "rgba(11, 62, 227, 1)",
                       },
                     ],
                   ]
@@ -273,6 +381,30 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
     }
   >
     <View
+      collapsable={false}
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {},
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          },
+          false,
+        ]
+      }
+      nativeID="4"
       pointerEvents="none"
       style={
         [
@@ -288,10 +420,29 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "opacity": 1,
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            false,
+          ]
+        }
+        nativeID="5"
         style={
           [
             {
-              "opacity": undefined,
+              "opacity": 1,
             },
             false,
           ]
@@ -301,26 +452,26 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
           colors={
             [
               16777215,
-              218103807,
-              419430399,
-              620756991,
-              822083583,
-              1040187391,
-              1241513983,
-              1442840575,
-              1644167167,
-              1845493759,
-              2046820351,
-              2264924159,
+              33554431,
+              83886079,
+              150994943,
+              268435455,
+              385875967,
+              520093695,
+              687865855,
+              855638015,
+              1056964607,
+              1258291199,
+              1476395007,
+              1711276031,
+              1946157055,
+              2214592511,
               2466250751,
-              2667577343,
-              2868903935,
-              3070230527,
-              3271557119,
-              3489660927,
-              3690987519,
-              3892314111,
-              4093640703,
+              2751463423,
+              3036676095,
+              3338665983,
+              3640655871,
+              3959422975,
               4294967295,
             ]
           }
@@ -431,6 +582,49 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
         testID="cie-id-wizard-login-with-cie-id"
       >
         <View
+          collapsable={false}
+          jestAnimatedProps={
+            {
+              "value": {},
+            }
+          }
+          jestAnimatedStyle={
+            {
+              "value": {
+                "backgroundColor": "rgba(11, 62, 227, 1)",
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              },
+            }
+          }
+          jestInlineStyle={
+            [
+              {
+                "alignItems": "center",
+                "borderCurve": "continuous",
+                "elevation": 0,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "overflow": "hidden",
+                "textAlignVertical": "center",
+              },
+              {
+                "paddingHorizontal": 16,
+              },
+              {
+                "backgroundColor": "#0B3EE3",
+                "borderColor": "#FFFFFF",
+                "borderRadius": 8,
+                "borderWidth": 0,
+                "height": 48,
+              },
+              {},
+            ]
+          }
+          nativeID="6"
           style={
             [
               {
@@ -442,9 +636,15 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                 "overflow": "hidden",
                 "textAlignVertical": "center",
               },
-              false,
               {
-                "backgroundColor": undefined,
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              },
+              {
+                "backgroundColor": "rgba(11, 62, 227, 1)",
               },
               {
                 "paddingHorizontal": 16,
@@ -461,6 +661,31 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
           }
         >
           <View
+            collapsable={false}
+            jestAnimatedProps={
+              {
+                "value": {},
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+            jestInlineStyle={
+              [
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                },
+                {
+                  "columnGap": 8,
+                },
+                false,
+              ]
+            }
+            nativeID="7"
             style={
               [
                 {
@@ -479,9 +704,33 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
               accessibilityElementsHidden={true}
               accessible={false}
               allowFontScaling={true}
+              collapsable={false}
               ellipsizeMode="tail"
               importantForAccessibility="no-hide-descendants"
+              jestAnimatedProps={
+                {
+                  "value": {},
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {
+                    "color": "rgba(255, 255, 255, 1)",
+                  },
+                }
+              }
+              jestInlineStyle={
+                [
+                  {
+                    "textAlign": "auto",
+                  },
+                  {
+                    "color": "#FFFFFF",
+                  },
+                ]
+              }
               maxFontSizeMultiplier={1.5}
+              nativeID="8"
               numberOfLines={1}
               style={
                 [
@@ -502,7 +751,7 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                       "color": "#FFFFFF",
                     },
                     {
-                      "color": undefined,
+                      "color": "rgba(255, 255, 255, 1)",
                     },
                   ],
                 ]
@@ -576,6 +825,48 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
           testID="cie-id-wizard-navigate-to-cie-pin-wizard"
         >
           <View
+            collapsable={false}
+            jestAnimatedProps={
+              {
+                "value": {},
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {
+                  "transform": [
+                    {
+                      "scale": 1,
+                    },
+                  ],
+                },
+              }
+            }
+            jestInlineStyle={
+              [
+                {
+                  "alignItems": "center",
+                  "borderCurve": "continuous",
+                  "elevation": 0,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "overflow": "hidden",
+                  "textAlignVertical": "center",
+                },
+                {
+                  "paddingHorizontal": 0,
+                },
+                {
+                  "backgroundColor": "transparent",
+                  "borderColor": "#0B3EE3",
+                  "borderRadius": 8,
+                  "borderWidth": 0,
+                  "height": undefined,
+                },
+                {},
+              ]
+            }
+            nativeID="9"
             style={
               [
                 {
@@ -587,7 +878,13 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                   "overflow": "hidden",
                   "textAlignVertical": "center",
                 },
-                false,
+                {
+                  "transform": [
+                    {
+                      "scale": 1,
+                    },
+                  ],
+                },
                 {},
                 {
                   "paddingHorizontal": 0,
@@ -604,6 +901,31 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
             }
           >
             <View
+              collapsable={false}
+              jestAnimatedProps={
+                {
+                  "value": {},
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {},
+                }
+              }
+              jestInlineStyle={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  {
+                    "columnGap": 8,
+                  },
+                  false,
+                ]
+              }
+              nativeID="10"
               style={
                 [
                   {
@@ -622,9 +944,33 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                 accessibilityElementsHidden={true}
                 accessible={false}
                 allowFontScaling={true}
+                collapsable={false}
                 ellipsizeMode="tail"
                 importantForAccessibility="no-hide-descendants"
+                jestAnimatedProps={
+                  {
+                    "value": {},
+                  }
+                }
+                jestAnimatedStyle={
+                  {
+                    "value": {
+                      "color": "rgba(11, 62, 227, 1)",
+                    },
+                  }
+                }
+                jestInlineStyle={
+                  [
+                    {
+                      "textAlign": "auto",
+                    },
+                    {
+                      "color": "#0B3EE3",
+                    },
+                  ]
+                }
                 maxFontSizeMultiplier={1.5}
+                nativeID="11"
                 numberOfLines={1}
                 style={
                   [
@@ -645,7 +991,7 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                         "color": "#0B3EE3",
                       },
                       {
-                        "color": undefined,
+                        "color": "rgba(11, 62, 227, 1)",
                       },
                     ],
                   ]
@@ -676,6 +1022,17 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
       ]
     }
     decelerationRate="normal"
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {},
+      }
+    }
+    nativeID="48"
     onScroll={[Function]}
     scrollEventThrottle={8}
     snapToEnd={false}
@@ -832,6 +1189,48 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
           testID="cie-pin-wizard-open-bottom-sheet"
         >
           <View
+            collapsable={false}
+            jestAnimatedProps={
+              {
+                "value": {},
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {
+                  "transform": [
+                    {
+                      "scale": 1,
+                    },
+                  ],
+                },
+              }
+            }
+            jestInlineStyle={
+              [
+                {
+                  "alignItems": "center",
+                  "borderCurve": "continuous",
+                  "elevation": 0,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "overflow": "hidden",
+                  "textAlignVertical": "center",
+                },
+                {
+                  "paddingHorizontal": 0,
+                },
+                {
+                  "backgroundColor": "transparent",
+                  "borderColor": "#0B3EE3",
+                  "borderRadius": 8,
+                  "borderWidth": 0,
+                  "height": undefined,
+                },
+                {},
+              ]
+            }
+            nativeID="49"
             style={
               [
                 {
@@ -843,7 +1242,13 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   "overflow": "hidden",
                   "textAlignVertical": "center",
                 },
-                false,
+                {
+                  "transform": [
+                    {
+                      "scale": 1,
+                    },
+                  ],
+                },
                 {},
                 {
                   "paddingHorizontal": 0,
@@ -860,6 +1265,31 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
             }
           >
             <View
+              collapsable={false}
+              jestAnimatedProps={
+                {
+                  "value": {},
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {},
+                }
+              }
+              jestInlineStyle={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  {
+                    "columnGap": 8,
+                  },
+                  false,
+                ]
+              }
+              nativeID="50"
               style={
                 [
                   {
@@ -878,9 +1308,33 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 accessibilityElementsHidden={true}
                 accessible={false}
                 allowFontScaling={true}
+                collapsable={false}
                 ellipsizeMode="tail"
                 importantForAccessibility="no-hide-descendants"
+                jestAnimatedProps={
+                  {
+                    "value": {},
+                  }
+                }
+                jestAnimatedStyle={
+                  {
+                    "value": {
+                      "color": "rgba(11, 62, 227, 1)",
+                    },
+                  }
+                }
+                jestInlineStyle={
+                  [
+                    {
+                      "textAlign": "auto",
+                    },
+                    {
+                      "color": "#0B3EE3",
+                    },
+                  ]
+                }
                 maxFontSizeMultiplier={1.5}
+                nativeID="51"
                 numberOfLines={1}
                 style={
                   [
@@ -901,7 +1355,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                         "color": "#0B3EE3",
                       },
                       {
-                        "color": undefined,
+                        "color": "rgba(11, 62, 227, 1)",
                       },
                     ],
                   ]
@@ -1193,6 +1647,48 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
             testID="cie-pin-wizard-open-cie-pin-link"
           >
             <View
+              collapsable={false}
+              jestAnimatedProps={
+                {
+                  "value": {},
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {
+                    "transform": [
+                      {
+                        "scale": 1,
+                      },
+                    ],
+                  },
+                }
+              }
+              jestInlineStyle={
+                [
+                  {
+                    "alignItems": "center",
+                    "borderCurve": "continuous",
+                    "elevation": 0,
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "overflow": "hidden",
+                    "textAlignVertical": "center",
+                  },
+                  {
+                    "paddingHorizontal": 0,
+                  },
+                  {
+                    "backgroundColor": "transparent",
+                    "borderColor": "#0B3EE3",
+                    "borderRadius": 8,
+                    "borderWidth": 0,
+                    "height": undefined,
+                  },
+                  {},
+                ]
+              }
+              nativeID="52"
               style={
                 [
                   {
@@ -1204,7 +1700,13 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
-                  false,
+                  {
+                    "transform": [
+                      {
+                        "scale": 1,
+                      },
+                    ],
+                  },
                   {},
                   {
                     "paddingHorizontal": 0,
@@ -1221,6 +1723,31 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
               }
             >
               <View
+                collapsable={false}
+                jestAnimatedProps={
+                  {
+                    "value": {},
+                  }
+                }
+                jestAnimatedStyle={
+                  {
+                    "value": {},
+                  }
+                }
+                jestInlineStyle={
+                  [
+                    {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    },
+                    {
+                      "columnGap": 8,
+                    },
+                    false,
+                  ]
+                }
+                nativeID="53"
                 style={
                   [
                     {
@@ -1239,9 +1766,33 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   accessibilityElementsHidden={true}
                   accessible={false}
                   allowFontScaling={true}
+                  collapsable={false}
                   ellipsizeMode="tail"
                   importantForAccessibility="no-hide-descendants"
+                  jestAnimatedProps={
+                    {
+                      "value": {},
+                    }
+                  }
+                  jestAnimatedStyle={
+                    {
+                      "value": {
+                        "color": "rgba(11, 62, 227, 1)",
+                      },
+                    }
+                  }
+                  jestInlineStyle={
+                    [
+                      {
+                        "textAlign": "auto",
+                      },
+                      {
+                        "color": "#0B3EE3",
+                      },
+                    ]
+                  }
                   maxFontSizeMultiplier={1.5}
+                  nativeID="54"
                   numberOfLines={1}
                   style={
                     [
@@ -1262,7 +1813,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                           "color": "#0B3EE3",
                         },
                         {
-                          "color": undefined,
+                          "color": "rgba(11, 62, 227, 1)",
                         },
                       ],
                     ]
@@ -1302,6 +1853,30 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
     }
   >
     <View
+      collapsable={false}
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {},
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          },
+          false,
+        ]
+      }
+      nativeID="55"
       pointerEvents="none"
       style={
         [
@@ -1317,10 +1892,29 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "opacity": 1,
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            false,
+          ]
+        }
+        nativeID="56"
         style={
           [
             {
-              "opacity": undefined,
+              "opacity": 1,
             },
             false,
           ]
@@ -1330,26 +1924,26 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
           colors={
             [
               16777215,
-              218103807,
-              419430399,
-              620756991,
-              822083583,
-              1040187391,
-              1241513983,
-              1442840575,
-              1644167167,
-              1845493759,
-              2046820351,
-              2264924159,
+              33554431,
+              83886079,
+              150994943,
+              268435455,
+              385875967,
+              520093695,
+              687865855,
+              855638015,
+              1056964607,
+              1258291199,
+              1476395007,
+              1711276031,
+              1946157055,
+              2214592511,
               2466250751,
-              2667577343,
-              2868903935,
-              3070230527,
-              3271557119,
-              3489660927,
-              3690987519,
-              3892314111,
-              4093640703,
+              2751463423,
+              3036676095,
+              3338665983,
+              3640655871,
+              3959422975,
               4294967295,
             ]
           }
@@ -1460,6 +2054,49 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
         testID="cie-pin-wizard-navigate-to-cie-pin-screen"
       >
         <View
+          collapsable={false}
+          jestAnimatedProps={
+            {
+              "value": {},
+            }
+          }
+          jestAnimatedStyle={
+            {
+              "value": {
+                "backgroundColor": "rgba(11, 62, 227, 1)",
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              },
+            }
+          }
+          jestInlineStyle={
+            [
+              {
+                "alignItems": "center",
+                "borderCurve": "continuous",
+                "elevation": 0,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "overflow": "hidden",
+                "textAlignVertical": "center",
+              },
+              {
+                "paddingHorizontal": 16,
+              },
+              {
+                "backgroundColor": "#0B3EE3",
+                "borderColor": "#FFFFFF",
+                "borderRadius": 8,
+                "borderWidth": 0,
+                "height": 48,
+              },
+              {},
+            ]
+          }
+          nativeID="57"
           style={
             [
               {
@@ -1471,9 +2108,15 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 "overflow": "hidden",
                 "textAlignVertical": "center",
               },
-              false,
               {
-                "backgroundColor": undefined,
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              },
+              {
+                "backgroundColor": "rgba(11, 62, 227, 1)",
               },
               {
                 "paddingHorizontal": 16,
@@ -1490,6 +2133,31 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
           }
         >
           <View
+            collapsable={false}
+            jestAnimatedProps={
+              {
+                "value": {},
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+            jestInlineStyle={
+              [
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                },
+                {
+                  "columnGap": 8,
+                },
+                false,
+              ]
+            }
+            nativeID="58"
             style={
               [
                 {
@@ -1508,9 +2176,33 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
               accessibilityElementsHidden={true}
               accessible={false}
               allowFontScaling={true}
+              collapsable={false}
               ellipsizeMode="tail"
               importantForAccessibility="no-hide-descendants"
+              jestAnimatedProps={
+                {
+                  "value": {},
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {
+                    "color": "rgba(255, 255, 255, 1)",
+                  },
+                }
+              }
+              jestInlineStyle={
+                [
+                  {
+                    "textAlign": "auto",
+                  },
+                  {
+                    "color": "#FFFFFF",
+                  },
+                ]
+              }
               maxFontSizeMultiplier={1.5}
+              nativeID="59"
               numberOfLines={1}
               style={
                 [
@@ -1531,7 +2223,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                       "color": "#FFFFFF",
                     },
                     {
-                      "color": undefined,
+                      "color": "rgba(255, 255, 255, 1)",
                     },
                   ],
                 ]
@@ -1605,6 +2297,48 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
           testID="cie-pin-wizard-navigate-to-spid-wizard"
         >
           <View
+            collapsable={false}
+            jestAnimatedProps={
+              {
+                "value": {},
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {
+                  "transform": [
+                    {
+                      "scale": 1,
+                    },
+                  ],
+                },
+              }
+            }
+            jestInlineStyle={
+              [
+                {
+                  "alignItems": "center",
+                  "borderCurve": "continuous",
+                  "elevation": 0,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "overflow": "hidden",
+                  "textAlignVertical": "center",
+                },
+                {
+                  "paddingHorizontal": 0,
+                },
+                {
+                  "backgroundColor": "transparent",
+                  "borderColor": "#0B3EE3",
+                  "borderRadius": 8,
+                  "borderWidth": 0,
+                  "height": undefined,
+                },
+                {},
+              ]
+            }
+            nativeID="60"
             style={
               [
                 {
@@ -1616,7 +2350,13 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   "overflow": "hidden",
                   "textAlignVertical": "center",
                 },
-                false,
+                {
+                  "transform": [
+                    {
+                      "scale": 1,
+                    },
+                  ],
+                },
                 {},
                 {
                   "paddingHorizontal": 0,
@@ -1633,6 +2373,31 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
             }
           >
             <View
+              collapsable={false}
+              jestAnimatedProps={
+                {
+                  "value": {},
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {},
+                }
+              }
+              jestInlineStyle={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  {
+                    "columnGap": 8,
+                  },
+                  false,
+                ]
+              }
+              nativeID="61"
               style={
                 [
                   {
@@ -1651,9 +2416,33 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 accessibilityElementsHidden={true}
                 accessible={false}
                 allowFontScaling={true}
+                collapsable={false}
                 ellipsizeMode="tail"
                 importantForAccessibility="no-hide-descendants"
+                jestAnimatedProps={
+                  {
+                    "value": {},
+                  }
+                }
+                jestAnimatedStyle={
+                  {
+                    "value": {
+                      "color": "rgba(11, 62, 227, 1)",
+                    },
+                  }
+                }
+                jestInlineStyle={
+                  [
+                    {
+                      "textAlign": "auto",
+                    },
+                    {
+                      "color": "#0B3EE3",
+                    },
+                  ]
+                }
                 maxFontSizeMultiplier={1.5}
+                nativeID="62"
                 numberOfLines={1}
                 style={
                   [
@@ -1674,7 +2463,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                         "color": "#0B3EE3",
                       },
                       {
-                        "color": undefined,
+                        "color": "rgba(11, 62, 227, 1)",
                       },
                     ],
                   ]
@@ -1705,6 +2494,17 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
       ]
     }
     decelerationRate="normal"
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {},
+      }
+    }
+    nativeID="135"
     onScroll={[Function]}
     scrollEventThrottle={8}
     snapToEnd={false}
@@ -1877,7 +2677,30 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
         >
           <View
             accessibilityElementsHidden={true}
+            collapsable={false}
             importantForAccessibility="no-hide-descendants"
+            jestAnimatedProps={
+              {
+                "value": {},
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {
+                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                },
+              }
+            }
+            jestInlineStyle={
+              [
+                {
+                  "marginHorizontal": -24,
+                  "paddingHorizontal": 24,
+                  "paddingVertical": 12,
+                },
+              ]
+            }
+            nativeID="136"
             style={
               [
                 {
@@ -1886,12 +2709,42 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                   "paddingVertical": 12,
                 },
                 {
-                  "backgroundColor": undefined,
+                  "backgroundColor": "rgba(244, 245, 248, 0)",
                 },
               ]
             }
           >
             <View
+              collapsable={false}
+              jestAnimatedProps={
+                {
+                  "value": {},
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {
+                    "transform": [
+                      {
+                        "scale": 1,
+                      },
+                    ],
+                  },
+                }
+              }
+              jestInlineStyle={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "space-between",
+                  },
+                  {
+                    "columnGap": 18,
+                  },
+                ]
+              }
+              nativeID="137"
               style={
                 [
                   {
@@ -1905,7 +2758,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                   {
                     "transform": [
                       {
-                        "scale": undefined,
+                        "scale": 1,
                       },
                     ],
                   },
@@ -2037,7 +2890,30 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
         >
           <View
             accessibilityElementsHidden={true}
+            collapsable={false}
             importantForAccessibility="no-hide-descendants"
+            jestAnimatedProps={
+              {
+                "value": {},
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {
+                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                },
+              }
+            }
+            jestInlineStyle={
+              [
+                {
+                  "marginHorizontal": -24,
+                  "paddingHorizontal": 24,
+                  "paddingVertical": 12,
+                },
+              ]
+            }
+            nativeID="138"
             style={
               [
                 {
@@ -2046,12 +2922,42 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                   "paddingVertical": 12,
                 },
                 {
-                  "backgroundColor": undefined,
+                  "backgroundColor": "rgba(244, 245, 248, 0)",
                 },
               ]
             }
           >
             <View
+              collapsable={false}
+              jestAnimatedProps={
+                {
+                  "value": {},
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {
+                    "transform": [
+                      {
+                        "scale": 1,
+                      },
+                    ],
+                  },
+                }
+              }
+              jestInlineStyle={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "space-between",
+                  },
+                  {
+                    "columnGap": 18,
+                  },
+                ]
+              }
+              nativeID="139"
               style={
                 [
                   {
@@ -2065,7 +2971,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                   {
                     "transform": [
                       {
-                        "scale": undefined,
+                        "scale": 1,
                       },
                     ],
                   },
@@ -2239,7 +3145,30 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
         >
           <View
             accessibilityElementsHidden={true}
+            collapsable={false}
             importantForAccessibility="no-hide-descendants"
+            jestAnimatedProps={
+              {
+                "value": {},
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {
+                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                },
+              }
+            }
+            jestInlineStyle={
+              [
+                {
+                  "marginHorizontal": -24,
+                  "paddingHorizontal": 24,
+                  "paddingVertical": 12,
+                },
+              ]
+            }
+            nativeID="140"
             style={
               [
                 {
@@ -2248,12 +3177,42 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                   "paddingVertical": 12,
                 },
                 {
-                  "backgroundColor": undefined,
+                  "backgroundColor": "rgba(244, 245, 248, 0)",
                 },
               ]
             }
           >
             <View
+              collapsable={false}
+              jestAnimatedProps={
+                {
+                  "value": {},
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {
+                    "transform": [
+                      {
+                        "scale": 1,
+                      },
+                    ],
+                  },
+                }
+              }
+              jestInlineStyle={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "space-between",
+                  },
+                  {
+                    "columnGap": 18,
+                  },
+                ]
+              }
+              nativeID="141"
               style={
                 [
                   {
@@ -2267,7 +3226,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                   {
                     "transform": [
                       {
-                        "scale": undefined,
+                        "scale": 1,
                       },
                     ],
                   },
@@ -2383,6 +3342,30 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
     }
   >
     <View
+      collapsable={false}
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {},
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          },
+          false,
+        ]
+      }
+      nativeID="142"
       pointerEvents="none"
       style={
         [
@@ -2398,10 +3381,29 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "opacity": 1,
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            false,
+          ]
+        }
+        nativeID="143"
         style={
           [
             {
-              "opacity": undefined,
+              "opacity": 1,
             },
             false,
           ]
@@ -2411,26 +3413,26 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
           colors={
             [
               16777215,
-              218103807,
-              419430399,
-              620756991,
-              822083583,
-              1040187391,
-              1241513983,
-              1442840575,
-              1644167167,
-              1845493759,
-              2046820351,
-              2264924159,
+              33554431,
+              83886079,
+              150994943,
+              268435455,
+              385875967,
+              520093695,
+              687865855,
+              855638015,
+              1056964607,
+              1258291199,
+              1476395007,
+              1711276031,
+              1946157055,
+              2214592511,
               2466250751,
-              2667577343,
-              2868903935,
-              3070230527,
-              3271557119,
-              3489660927,
-              3690987519,
-              3892314111,
-              4093640703,
+              2751463423,
+              3036676095,
+              3338665983,
+              3640655871,
+              3959422975,
               4294967295,
             ]
           }
@@ -2540,6 +3542,49 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
         }
       >
         <View
+          collapsable={false}
+          jestAnimatedProps={
+            {
+              "value": {},
+            }
+          }
+          jestAnimatedStyle={
+            {
+              "value": {
+                "backgroundColor": "rgba(11, 62, 227, 1)",
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              },
+            }
+          }
+          jestInlineStyle={
+            [
+              {
+                "alignItems": "center",
+                "borderCurve": "continuous",
+                "elevation": 0,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "overflow": "hidden",
+                "textAlignVertical": "center",
+              },
+              {
+                "paddingHorizontal": 16,
+              },
+              {
+                "backgroundColor": "#0B3EE3",
+                "borderColor": "#FFFFFF",
+                "borderRadius": 8,
+                "borderWidth": 0,
+                "height": 48,
+              },
+              {},
+            ]
+          }
+          nativeID="144"
           style={
             [
               {
@@ -2551,9 +3596,15 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 "overflow": "hidden",
                 "textAlignVertical": "center",
               },
-              false,
               {
-                "backgroundColor": undefined,
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              },
+              {
+                "backgroundColor": "rgba(11, 62, 227, 1)",
               },
               {
                 "paddingHorizontal": 16,
@@ -2570,6 +3621,31 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
           }
         >
           <View
+            collapsable={false}
+            jestAnimatedProps={
+              {
+                "value": {},
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+            jestInlineStyle={
+              [
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                },
+                {
+                  "columnGap": 8,
+                },
+                false,
+              ]
+            }
+            nativeID="145"
             style={
               [
                 {
@@ -2588,9 +3664,33 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
               accessibilityElementsHidden={true}
               accessible={false}
               allowFontScaling={true}
+              collapsable={false}
               ellipsizeMode="tail"
               importantForAccessibility="no-hide-descendants"
+              jestAnimatedProps={
+                {
+                  "value": {},
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {
+                    "color": "rgba(255, 255, 255, 1)",
+                  },
+                }
+              }
+              jestInlineStyle={
+                [
+                  {
+                    "textAlign": "auto",
+                  },
+                  {
+                    "color": "#FFFFFF",
+                  },
+                ]
+              }
               maxFontSizeMultiplier={1.5}
+              nativeID="146"
               numberOfLines={1}
               style={
                 [
@@ -2611,7 +3711,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                       "color": "#FFFFFF",
                     },
                     {
-                      "color": undefined,
+                      "color": "rgba(255, 255, 255, 1)",
                     },
                   ],
                 ]
@@ -2641,6 +3741,17 @@ exports[`SpidWizard Should match the snapshot 1`] = `
       ]
     }
     decelerationRate="normal"
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {},
+      }
+    }
+    nativeID="108"
     onScroll={[Function]}
     scrollEventThrottle={8}
     snapToEnd={false}
@@ -2748,6 +3859,30 @@ exports[`SpidWizard Should match the snapshot 1`] = `
     }
   >
     <View
+      collapsable={false}
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {},
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          },
+          false,
+        ]
+      }
+      nativeID="109"
       pointerEvents="none"
       style={
         [
@@ -2763,10 +3898,29 @@ exports[`SpidWizard Should match the snapshot 1`] = `
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "opacity": 1,
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            false,
+          ]
+        }
+        nativeID="110"
         style={
           [
             {
-              "opacity": undefined,
+              "opacity": 1,
             },
             false,
           ]
@@ -2776,26 +3930,26 @@ exports[`SpidWizard Should match the snapshot 1`] = `
           colors={
             [
               16777215,
-              218103807,
-              419430399,
-              620756991,
-              822083583,
-              1040187391,
-              1241513983,
-              1442840575,
-              1644167167,
-              1845493759,
-              2046820351,
-              2264924159,
+              33554431,
+              83886079,
+              150994943,
+              268435455,
+              385875967,
+              520093695,
+              687865855,
+              855638015,
+              1056964607,
+              1258291199,
+              1476395007,
+              1711276031,
+              1946157055,
+              2214592511,
               2466250751,
-              2667577343,
-              2868903935,
-              3070230527,
-              3271557119,
-              3489660927,
-              3690987519,
-              3892314111,
-              4093640703,
+              2751463423,
+              3036676095,
+              3338665983,
+              3640655871,
+              3959422975,
               4294967295,
             ]
           }
@@ -2906,6 +4060,49 @@ exports[`SpidWizard Should match the snapshot 1`] = `
         testID="spid-wizard-navigate-to-idp-selection"
       >
         <View
+          collapsable={false}
+          jestAnimatedProps={
+            {
+              "value": {},
+            }
+          }
+          jestAnimatedStyle={
+            {
+              "value": {
+                "backgroundColor": "rgba(11, 62, 227, 1)",
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              },
+            }
+          }
+          jestInlineStyle={
+            [
+              {
+                "alignItems": "center",
+                "borderCurve": "continuous",
+                "elevation": 0,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "overflow": "hidden",
+                "textAlignVertical": "center",
+              },
+              {
+                "paddingHorizontal": 16,
+              },
+              {
+                "backgroundColor": "#0B3EE3",
+                "borderColor": "#FFFFFF",
+                "borderRadius": 8,
+                "borderWidth": 0,
+                "height": 48,
+              },
+              {},
+            ]
+          }
+          nativeID="111"
           style={
             [
               {
@@ -2917,9 +4114,15 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                 "overflow": "hidden",
                 "textAlignVertical": "center",
               },
-              false,
               {
-                "backgroundColor": undefined,
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              },
+              {
+                "backgroundColor": "rgba(11, 62, 227, 1)",
               },
               {
                 "paddingHorizontal": 16,
@@ -2936,6 +4139,31 @@ exports[`SpidWizard Should match the snapshot 1`] = `
           }
         >
           <View
+            collapsable={false}
+            jestAnimatedProps={
+              {
+                "value": {},
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+            jestInlineStyle={
+              [
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                },
+                {
+                  "columnGap": 8,
+                },
+                false,
+              ]
+            }
+            nativeID="112"
             style={
               [
                 {
@@ -2954,9 +4182,33 @@ exports[`SpidWizard Should match the snapshot 1`] = `
               accessibilityElementsHidden={true}
               accessible={false}
               allowFontScaling={true}
+              collapsable={false}
               ellipsizeMode="tail"
               importantForAccessibility="no-hide-descendants"
+              jestAnimatedProps={
+                {
+                  "value": {},
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {
+                    "color": "rgba(255, 255, 255, 1)",
+                  },
+                }
+              }
+              jestInlineStyle={
+                [
+                  {
+                    "textAlign": "auto",
+                  },
+                  {
+                    "color": "#FFFFFF",
+                  },
+                ]
+              }
               maxFontSizeMultiplier={1.5}
+              nativeID="113"
               numberOfLines={1}
               style={
                 [
@@ -2977,7 +4229,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                       "color": "#FFFFFF",
                     },
                     {
-                      "color": undefined,
+                      "color": "rgba(255, 255, 255, 1)",
                     },
                   ],
                 ]
@@ -3051,6 +4303,48 @@ exports[`SpidWizard Should match the snapshot 1`] = `
           testID="spid-wizard-navigate-to-id-activation-wizard"
         >
           <View
+            collapsable={false}
+            jestAnimatedProps={
+              {
+                "value": {},
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {
+                  "transform": [
+                    {
+                      "scale": 1,
+                    },
+                  ],
+                },
+              }
+            }
+            jestInlineStyle={
+              [
+                {
+                  "alignItems": "center",
+                  "borderCurve": "continuous",
+                  "elevation": 0,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "overflow": "hidden",
+                  "textAlignVertical": "center",
+                },
+                {
+                  "paddingHorizontal": 0,
+                },
+                {
+                  "backgroundColor": "transparent",
+                  "borderColor": "#0B3EE3",
+                  "borderRadius": 8,
+                  "borderWidth": 0,
+                  "height": undefined,
+                },
+                {},
+              ]
+            }
+            nativeID="114"
             style={
               [
                 {
@@ -3062,7 +4356,13 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                   "overflow": "hidden",
                   "textAlignVertical": "center",
                 },
-                false,
+                {
+                  "transform": [
+                    {
+                      "scale": 1,
+                    },
+                  ],
+                },
                 {},
                 {
                   "paddingHorizontal": 0,
@@ -3079,6 +4379,31 @@ exports[`SpidWizard Should match the snapshot 1`] = `
             }
           >
             <View
+              collapsable={false}
+              jestAnimatedProps={
+                {
+                  "value": {},
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {},
+                }
+              }
+              jestInlineStyle={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  {
+                    "columnGap": 8,
+                  },
+                  false,
+                ]
+              }
+              nativeID="115"
               style={
                 [
                   {
@@ -3097,9 +4422,33 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                 accessibilityElementsHidden={true}
                 accessible={false}
                 allowFontScaling={true}
+                collapsable={false}
                 ellipsizeMode="tail"
                 importantForAccessibility="no-hide-descendants"
+                jestAnimatedProps={
+                  {
+                    "value": {},
+                  }
+                }
+                jestAnimatedStyle={
+                  {
+                    "value": {
+                      "color": "rgba(11, 62, 227, 1)",
+                    },
+                  }
+                }
+                jestInlineStyle={
+                  [
+                    {
+                      "textAlign": "auto",
+                    },
+                    {
+                      "color": "#0B3EE3",
+                    },
+                  ]
+                }
                 maxFontSizeMultiplier={1.5}
+                nativeID="116"
                 numberOfLines={1}
                 style={
                   [
@@ -3120,7 +4469,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                         "color": "#0B3EE3",
                       },
                       {
-                        "color": undefined,
+                        "color": "rgba(11, 62, 227, 1)",
                       },
                     ],
                   ]

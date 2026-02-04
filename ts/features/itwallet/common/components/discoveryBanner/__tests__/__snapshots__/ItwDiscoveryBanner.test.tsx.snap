@@ -381,6 +381,39 @@ exports[`ItwDiscoveryBanner should match snapshot with 'onboarding' banner type 
                           testID="itwDiscoveryBannerTestID"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignContent": "center",
+                                  "alignItems": "flex-start",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "flexDirection": "row",
+                                  "padding": 16,
+                                },
+                                {
+                                  "backgroundColor": "#DBF9FA",
+                                },
+                              ]
+                            }
+                            nativeID="0"
                             style={
                               [
                                 {
@@ -397,7 +430,7 @@ exports[`ItwDiscoveryBanner should match snapshot with 'onboarding' banner type 
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -1111,6 +1144,39 @@ exports[`ItwDiscoveryBanner should match snapshot with 'reactivating' banner typ
                           testID="itwDiscoveryBannerTestID"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignContent": "center",
+                                  "alignItems": "flex-start",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "flexDirection": "row",
+                                  "padding": 16,
+                                },
+                                {
+                                  "backgroundColor": "#DBF9FA",
+                                },
+                              ]
+                            }
+                            nativeID="1"
                             style={
                               [
                                 {
@@ -1127,7 +1193,7 @@ exports[`ItwDiscoveryBanner should match snapshot with 'reactivating' banner typ
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },

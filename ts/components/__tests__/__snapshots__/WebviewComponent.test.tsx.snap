@@ -54,14 +54,34 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
       >
         <View
           collapsable={false}
-          style={
+          jestAnimatedProps={
             {
-              "transform": [
-                {
-                  "rotateZ": "0deg",
-                },
-              ],
+              "value": {},
             }
+          }
+          jestAnimatedStyle={
+            {
+              "value": {
+                "transform": [
+                  {
+                    "rotateZ": "0deg",
+                  },
+                ],
+              },
+            }
+          }
+          jestInlineStyle={{}}
+          nativeID="0"
+          style={
+            [
+              {
+                "transform": [
+                  {
+                    "rotateZ": "0deg",
+                  },
+                ],
+              },
+            ]
           }
           testID="LoadingSpinnerAnimatedTestID"
         >

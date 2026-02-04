@@ -375,6 +375,36 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                         testID="due-date-alert"
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "transform": [
+                                  {
+                                    "scale": 1,
+                                  },
+                                ],
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "borderCurve": "continuous",
+                                "borderRadius": 12,
+                                "padding": 16,
+                              },
+                              {
+                                "backgroundColor": "#FFF5DA",
+                              },
+                            ]
+                          }
+                          nativeID="0"
                           style={
                             [
                               {
@@ -388,7 +418,7 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                               {
                                 "transform": [
                                   {
-                                    "scale": undefined,
+                                    "scale": 1,
                                   },
                                 ],
                               },

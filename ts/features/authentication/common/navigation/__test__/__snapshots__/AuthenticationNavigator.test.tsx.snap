@@ -1428,6 +1428,49 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                             testID="landing-button-login-cie"
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
+                                ]
+                              }
+                              nativeID="1"
                               style={
                                 [
                                   {
@@ -1439,9 +1482,15 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "backgroundColor": undefined,
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                  {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
                                   },
                                   {
                                     "paddingHorizontal": 16,
@@ -1458,6 +1507,31 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
+                                nativeID="2"
                                 style={
                                   [
                                     {
@@ -1477,20 +1551,29 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                   accessibilityLabel=""
                                   accessible={false}
                                   align="xMidYMid"
-                                  animatedProps={
-                                    {
-                                      "color": undefined,
-                                    }
-                                  }
                                   bbHeight={30}
                                   bbWidth={30}
-                                  color="#555C70"
+                                  collapsable={false}
+                                  color="rgba(255, 255, 255, 1)"
                                   focusable={false}
                                   height={30}
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {
+                                        "color": "rgba(255, 255, 255, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  nativeID="3"
                                   style={
                                     [
                                       {
@@ -1538,9 +1621,33 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={true}
+                                  collapsable={false}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "color": "rgba(255, 255, 255, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#FFFFFF",
+                                      },
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
+                                  nativeID="4"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1561,7 +1668,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           "color": "#FFFFFF",
                                         },
                                         {
-                                          "color": undefined,
+                                          "color": "rgba(255, 255, 255, 1)",
                                         },
                                       ],
                                     ]
@@ -1620,6 +1727,49 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                             testID="landing-button-login-spid"
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
+                                ]
+                              }
+                              nativeID="5"
                               style={
                                 [
                                   {
@@ -1631,9 +1781,15 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "backgroundColor": undefined,
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                  {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
                                   },
                                   {
                                     "paddingHorizontal": 16,
@@ -1650,6 +1806,31 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
+                                nativeID="6"
                                 style={
                                   [
                                     {
@@ -1669,20 +1850,29 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                   accessibilityLabel=""
                                   accessible={false}
                                   align="xMidYMid"
-                                  animatedProps={
-                                    {
-                                      "color": undefined,
-                                    }
-                                  }
                                   bbHeight={30}
                                   bbWidth={30}
-                                  color="#555C70"
+                                  collapsable={false}
+                                  color="rgba(255, 255, 255, 1)"
                                   focusable={false}
                                   height={30}
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {
+                                        "color": "rgba(255, 255, 255, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  nativeID="7"
                                   style={
                                     [
                                       {
@@ -1730,9 +1920,33 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={true}
+                                  collapsable={false}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "color": "rgba(255, 255, 255, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#FFFFFF",
+                                      },
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
+                                  nativeID="8"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1753,7 +1967,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           "color": "#FFFFFF",
                                         },
                                         {
-                                          "color": undefined,
+                                          "color": "rgba(255, 255, 255, 1)",
                                         },
                                       ],
                                     ]
@@ -1845,6 +2059,43 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                     testID="bottom-sheet-login-with-cie-pin"
                                   >
                                     <View
+                                      collapsable={false}
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {
+                                            "transform": [
+                                              {
+                                                "scale": 1,
+                                              },
+                                            ],
+                                          },
+                                        }
+                                      }
+                                      jestInlineStyle={
+                                        [
+                                          {
+                                            "alignItems": "center",
+                                            "borderColor": "#E8EBF1",
+                                            "borderCurve": "continuous",
+                                            "borderRadius": 8,
+                                            "borderWidth": 1,
+                                            "flexDirection": "row",
+                                            "justifyContent": "space-between",
+                                            "paddingHorizontal": 16,
+                                            "paddingVertical": 16,
+                                          },
+                                          {
+                                            "borderColor": "#E8EBF1",
+                                          },
+                                          false,
+                                        ]
+                                      }
+                                      nativeID="9"
                                       style={
                                         [
                                           {
@@ -1865,7 +2116,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           {
                                             "transform": [
                                               {
-                                                "scale": undefined,
+                                                "scale": 1,
                                               },
                                             ],
                                           },
@@ -2050,6 +2301,43 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                     testID="bottom-sheet-login-with-cie-id"
                                   >
                                     <View
+                                      collapsable={false}
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {
+                                            "transform": [
+                                              {
+                                                "scale": 1,
+                                              },
+                                            ],
+                                          },
+                                        }
+                                      }
+                                      jestInlineStyle={
+                                        [
+                                          {
+                                            "alignItems": "center",
+                                            "borderColor": "#E8EBF1",
+                                            "borderCurve": "continuous",
+                                            "borderRadius": 8,
+                                            "borderWidth": 1,
+                                            "flexDirection": "row",
+                                            "justifyContent": "space-between",
+                                            "paddingHorizontal": 16,
+                                            "paddingVertical": 16,
+                                          },
+                                          {
+                                            "borderColor": "#E8EBF1",
+                                          },
+                                          false,
+                                        ]
+                                      }
+                                      nativeID="10"
                                       style={
                                         [
                                           {
@@ -2070,7 +2358,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           {
                                             "transform": [
                                               {
-                                                "scale": undefined,
+                                                "scale": 1,
                                               },
                                             ],
                                           },
@@ -2245,6 +2533,39 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                     testID="bottom-sheet-login-wizards"
                                   >
                                     <View
+                                      collapsable={false}
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {
+                                            "transform": [
+                                              {
+                                                "scale": 1,
+                                              },
+                                            ],
+                                          },
+                                        }
+                                      }
+                                      jestInlineStyle={
+                                        [
+                                          {
+                                            "alignContent": "center",
+                                            "alignItems": "flex-start",
+                                            "borderCurve": "continuous",
+                                            "borderRadius": 8,
+                                            "flexDirection": "row",
+                                            "padding": 16,
+                                          },
+                                          {
+                                            "backgroundColor": "#DBF9FA",
+                                          },
+                                        ]
+                                      }
+                                      nativeID="11"
                                       style={
                                         [
                                           {
@@ -2261,7 +2582,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           {
                                             "transform": [
                                               {
-                                                "scale": undefined,
+                                                "scale": 1,
                                               },
                                             ],
                                           },
@@ -2597,7 +2918,30 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                   >
                                     <View
                                       accessibilityElementsHidden={true}
+                                      collapsable={false}
                                       importantForAccessibility="no-hide-descendants"
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {
+                                            "backgroundColor": "rgba(244, 245, 248, 0)",
+                                          },
+                                        }
+                                      }
+                                      jestInlineStyle={
+                                        [
+                                          {
+                                            "marginHorizontal": -24,
+                                            "paddingHorizontal": 24,
+                                            "paddingVertical": 12,
+                                          },
+                                        ]
+                                      }
+                                      nativeID="12"
                                       style={
                                         [
                                           {
@@ -2606,12 +2950,42 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                             "paddingVertical": 12,
                                           },
                                           {
-                                            "backgroundColor": undefined,
+                                            "backgroundColor": "rgba(244, 245, 248, 0)",
                                           },
                                         ]
                                       }
                                     >
                                       <View
+                                        collapsable={false}
+                                        jestAnimatedProps={
+                                          {
+                                            "value": {},
+                                          }
+                                        }
+                                        jestAnimatedStyle={
+                                          {
+                                            "value": {
+                                              "transform": [
+                                                {
+                                                  "scale": 1,
+                                                },
+                                              ],
+                                            },
+                                          }
+                                        }
+                                        jestInlineStyle={
+                                          [
+                                            {
+                                              "alignItems": "center",
+                                              "flexDirection": "row",
+                                              "justifyContent": "space-between",
+                                            },
+                                            {
+                                              "columnGap": 18,
+                                            },
+                                          ]
+                                        }
+                                        nativeID="13"
                                         style={
                                           [
                                             {
@@ -2625,7 +2999,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                             {
                                               "transform": [
                                                 {
-                                                  "scale": undefined,
+                                                  "scale": 1,
                                                 },
                                               ],
                                             },
@@ -2764,7 +3138,30 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                   >
                                     <View
                                       accessibilityElementsHidden={true}
+                                      collapsable={false}
                                       importantForAccessibility="no-hide-descendants"
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {
+                                            "backgroundColor": "rgba(244, 245, 248, 0)",
+                                          },
+                                        }
+                                      }
+                                      jestInlineStyle={
+                                        [
+                                          {
+                                            "marginHorizontal": -24,
+                                            "paddingHorizontal": 24,
+                                            "paddingVertical": 12,
+                                          },
+                                        ]
+                                      }
+                                      nativeID="14"
                                       style={
                                         [
                                           {
@@ -2773,12 +3170,42 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                             "paddingVertical": 12,
                                           },
                                           {
-                                            "backgroundColor": undefined,
+                                            "backgroundColor": "rgba(244, 245, 248, 0)",
                                           },
                                         ]
                                       }
                                     >
                                       <View
+                                        collapsable={false}
+                                        jestAnimatedProps={
+                                          {
+                                            "value": {},
+                                          }
+                                        }
+                                        jestAnimatedStyle={
+                                          {
+                                            "value": {
+                                              "transform": [
+                                                {
+                                                  "scale": 1,
+                                                },
+                                              ],
+                                            },
+                                          }
+                                        }
+                                        jestInlineStyle={
+                                          [
+                                            {
+                                              "alignItems": "center",
+                                              "flexDirection": "row",
+                                              "justifyContent": "space-between",
+                                            },
+                                            {
+                                              "columnGap": 18,
+                                            },
+                                          ]
+                                        }
+                                        nativeID="15"
                                         style={
                                           [
                                             {
@@ -2792,7 +3219,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                             {
                                               "transform": [
                                                 {
-                                                  "scale": undefined,
+                                                  "scale": 1,
                                                 },
                                               ],
                                             },
@@ -2931,7 +3358,30 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                   >
                                     <View
                                       accessibilityElementsHidden={true}
+                                      collapsable={false}
                                       importantForAccessibility="no-hide-descendants"
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {
+                                            "backgroundColor": "rgba(244, 245, 248, 0)",
+                                          },
+                                        }
+                                      }
+                                      jestInlineStyle={
+                                        [
+                                          {
+                                            "marginHorizontal": -24,
+                                            "paddingHorizontal": 24,
+                                            "paddingVertical": 12,
+                                          },
+                                        ]
+                                      }
+                                      nativeID="16"
                                       style={
                                         [
                                           {
@@ -2940,12 +3390,42 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                             "paddingVertical": 12,
                                           },
                                           {
-                                            "backgroundColor": undefined,
+                                            "backgroundColor": "rgba(244, 245, 248, 0)",
                                           },
                                         ]
                                       }
                                     >
                                       <View
+                                        collapsable={false}
+                                        jestAnimatedProps={
+                                          {
+                                            "value": {},
+                                          }
+                                        }
+                                        jestAnimatedStyle={
+                                          {
+                                            "value": {
+                                              "transform": [
+                                                {
+                                                  "scale": 1,
+                                                },
+                                              ],
+                                            },
+                                          }
+                                        }
+                                        jestInlineStyle={
+                                          [
+                                            {
+                                              "alignItems": "center",
+                                              "flexDirection": "row",
+                                              "justifyContent": "space-between",
+                                            },
+                                            {
+                                              "columnGap": 18,
+                                            },
+                                          ]
+                                        }
+                                        nativeID="17"
                                         style={
                                           [
                                             {
@@ -2959,7 +3439,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                             {
                                               "transform": [
                                                 {
-                                                  "scale": undefined,
+                                                  "scale": 1,
                                                 },
                                               ],
                                             },
@@ -3155,6 +3635,30 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                       >
                         <View
                           accessibilityRole="header"
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "borderBottomWidth": 1,
+                                "borderColor": "rgba(210,214,227,0)",
+                              },
+                              {},
+                            ]
+                          }
+                          nativeID="18"
                           style={
                             [
                               {
@@ -3170,6 +3674,32 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "marginTop": 0,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "flexGrow": 1,
+                                  "height": 56,
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 24,
+                                },
+                              ]
+                            }
+                            nativeID="19"
                             style={
                               [
                                 {
@@ -3210,7 +3740,29 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                               <Text
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "opacity": 1,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "color": "#0E0F13",
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
+                                nativeID="20"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -3281,6 +3833,36 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
+                                  nativeID="21"
                                   style={
                                     [
                                       {
@@ -3291,7 +3873,13 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                         "height": 24,
                                         "width": 24,
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                     ]
                                   }
                                 >
@@ -3300,20 +3888,29 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    animatedProps={
-                                      {
-                                        "color": undefined,
-                                      }
-                                    }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    collapsable={false}
                                     color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {
+                                          "color": "rgba(11, 62, 227, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    nativeID="22"
                                     style={
                                       [
                                         {
@@ -3394,6 +3991,36 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
+                                  nativeID="23"
                                   style={
                                     [
                                       {
@@ -3404,7 +4031,13 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                         "height": 24,
                                         "width": 24,
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                     ]
                                   }
                                 >
@@ -3413,20 +4046,29 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    animatedProps={
-                                      {
-                                        "color": undefined,
-                                      }
-                                    }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    collapsable={false}
                                     color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {
+                                          "color": "rgba(11, 62, 227, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    nativeID="24"
                                     style={
                                       [
                                         {

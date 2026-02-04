@@ -341,6 +341,32 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                       }
                     >
                       <View
+                        collapsable={false}
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestInlineStyle={
+                          [
+                            {
+                              "paddingBottom": 24,
+                              "width": "100%",
+                            },
+                            {
+                              "bottom": 0,
+                              "position": "absolute",
+                            },
+                            false,
+                            undefined,
+                          ]
+                        }
+                        nativeID="29"
                         style={
                           [
                             {
@@ -357,6 +383,37 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                         }
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "backgroundColor": "#FFFFFF",
+                                "bottom": 0,
+                                "height": 0,
+                                "position": "absolute",
+                                "shadowColor": "#0E0F13",
+                                "shadowOffset": {
+                                  "height": -4,
+                                  "width": 0,
+                                },
+                                "shadowOpacity": 0.1,
+                                "shadowRadius": 32,
+                                "width": "100%",
+                              },
+                              undefined,
+                            ]
+                          }
+                          nativeID="30"
                           pointerEvents="none"
                           style={
                             [
@@ -429,6 +486,49 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
+                                ]
+                              }
+                              nativeID="31"
                               style={
                                 [
                                   {
@@ -440,9 +540,15 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "backgroundColor": undefined,
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                  {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
                                   },
                                   {
                                     "paddingHorizontal": 16,
@@ -459,6 +565,31 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
+                                nativeID="32"
                                 style={
                                   [
                                     {
@@ -477,9 +608,33 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={true}
+                                  collapsable={false}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "color": "rgba(255, 255, 255, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#FFFFFF",
+                                      },
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
+                                  nativeID="33"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -500,7 +655,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                           "color": "#FFFFFF",
                                         },
                                         {
-                                          "color": undefined,
+                                          "color": "rgba(255, 255, 255, 1)",
                                         },
                                       ],
                                     ]
@@ -573,6 +728,48 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "borderCurve": "continuous",
+                                      "elevation": 0,
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                      "overflow": "hidden",
+                                      "textAlignVertical": "center",
+                                    },
+                                    {
+                                      "paddingHorizontal": 0,
+                                    },
+                                    {
+                                      "backgroundColor": "transparent",
+                                      "borderColor": "#0B3EE3",
+                                      "borderRadius": 8,
+                                      "borderWidth": 0,
+                                      "height": undefined,
+                                    },
+                                    {},
+                                  ]
+                                }
+                                nativeID="34"
                                 style={
                                   [
                                     {
@@ -584,7 +781,13 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
-                                    false,
+                                    {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
                                     {},
                                     {
                                       "paddingHorizontal": 0,
@@ -601,6 +804,31 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "columnGap": 8,
+                                      },
+                                      false,
+                                    ]
+                                  }
+                                  nativeID="35"
                                   style={
                                     [
                                       {
@@ -619,9 +847,33 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                     accessibilityElementsHidden={true}
                                     accessible={false}
                                     allowFontScaling={true}
+                                    collapsable={false}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "color": "rgba(11, 62, 227, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                        },
+                                      ]
+                                    }
                                     maxFontSizeMultiplier={1.5}
+                                    nativeID="36"
                                     numberOfLines={1}
                                     style={
                                       [
@@ -642,7 +894,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                             "color": "#0B3EE3",
                                           },
                                           {
-                                            "color": undefined,
+                                            "color": "rgba(11, 62, 227, 1)",
                                           },
                                         ],
                                       ]
@@ -1010,6 +1262,32 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                       }
                     >
                       <View
+                        collapsable={false}
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestInlineStyle={
+                          [
+                            {
+                              "paddingBottom": 24,
+                              "width": "100%",
+                            },
+                            {
+                              "bottom": 0,
+                              "position": "absolute",
+                            },
+                            false,
+                            undefined,
+                          ]
+                        }
+                        nativeID="0"
                         style={
                           [
                             {
@@ -1026,6 +1304,37 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                         }
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "backgroundColor": "#FFFFFF",
+                                "bottom": 0,
+                                "height": 0,
+                                "position": "absolute",
+                                "shadowColor": "#0E0F13",
+                                "shadowOffset": {
+                                  "height": -4,
+                                  "width": 0,
+                                },
+                                "shadowOpacity": 0.1,
+                                "shadowRadius": 32,
+                                "width": "100%",
+                              },
+                              undefined,
+                            ]
+                          }
+                          nativeID="1"
                           pointerEvents="none"
                           style={
                             [
@@ -1098,6 +1407,46 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  false,
+                                  false,
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#BBC2D6",
+                                    "borderColor": "#555C70",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {
+                                    "opacity": 0.5,
+                                  },
+                                ]
+                              }
+                              nativeID="2"
                               style={
                                 [
                                   {
@@ -1128,6 +1477,31 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
+                                nativeID="3"
                                 style={
                                   [
                                     {
@@ -1146,9 +1520,32 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={true}
+                                  collapsable={false}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#555C70",
+                                      },
+                                      false,
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
+                                  nativeID="4"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1225,6 +1622,50 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "backgroundColor": "rgba(9, 50, 182, 0)",
+                                    "borderColor": "rgba(11, 62, 227, 1)",
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "rgba(9,50,182,0)",
+                                    "borderColor": "#0B3EE3",
+                                    "borderRadius": 8,
+                                    "borderWidth": 2,
+                                    "height": 48,
+                                  },
+                                  {},
+                                ]
+                              }
+                              nativeID="5"
                               style={
                                 [
                                   {
@@ -1236,10 +1677,16 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "backgroundColor": undefined,
-                                    "borderColor": undefined,
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                  {
+                                    "backgroundColor": "rgba(9, 50, 182, 0)",
+                                    "borderColor": "rgba(11, 62, 227, 1)",
                                   },
                                   {
                                     "paddingHorizontal": 16,
@@ -1256,6 +1703,31 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
+                                nativeID="6"
                                 style={
                                   [
                                     {
@@ -1274,9 +1746,33 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={true}
+                                  collapsable={false}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "color": "rgba(11, 62, 227, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                      },
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
+                                  nativeID="7"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1297,7 +1793,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                           "color": "#0B3EE3",
                                         },
                                         {
-                                          "color": undefined,
+                                          "color": "rgba(11, 62, 227, 1)",
                                         },
                                       ],
                                     ]
@@ -1370,6 +1866,48 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "borderCurve": "continuous",
+                                      "elevation": 0,
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                      "overflow": "hidden",
+                                      "textAlignVertical": "center",
+                                    },
+                                    {
+                                      "paddingHorizontal": 0,
+                                    },
+                                    {
+                                      "backgroundColor": "transparent",
+                                      "borderColor": "#0B3EE3",
+                                      "borderRadius": 8,
+                                      "borderWidth": 0,
+                                      "height": undefined,
+                                    },
+                                    {},
+                                  ]
+                                }
+                                nativeID="8"
                                 style={
                                   [
                                     {
@@ -1381,7 +1919,13 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
-                                    false,
+                                    {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
                                     {},
                                     {
                                       "paddingHorizontal": 0,
@@ -1398,6 +1942,31 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "columnGap": 8,
+                                      },
+                                      false,
+                                    ]
+                                  }
+                                  nativeID="9"
                                   style={
                                     [
                                       {
@@ -1416,9 +1985,33 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                     accessibilityElementsHidden={true}
                                     accessible={false}
                                     allowFontScaling={true}
+                                    collapsable={false}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "color": "rgba(11, 62, 227, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                        },
+                                      ]
+                                    }
                                     maxFontSizeMultiplier={1.5}
+                                    nativeID="10"
                                     numberOfLines={1}
                                     style={
                                       [
@@ -1439,7 +2032,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                             "color": "#0B3EE3",
                                           },
                                           {
-                                            "color": undefined,
+                                            "color": "rgba(11, 62, 227, 1)",
                                           },
                                         ],
                                       ]
@@ -2159,6 +2752,32 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                       }
                     >
                       <View
+                        collapsable={false}
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestInlineStyle={
+                          [
+                            {
+                              "paddingBottom": 24,
+                              "width": "100%",
+                            },
+                            {
+                              "bottom": 0,
+                              "position": "absolute",
+                            },
+                            false,
+                            undefined,
+                          ]
+                        }
+                        nativeID="19"
                         style={
                           [
                             {
@@ -2175,6 +2794,37 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                         }
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "backgroundColor": "#FFFFFF",
+                                "bottom": 0,
+                                "height": 0,
+                                "position": "absolute",
+                                "shadowColor": "#0E0F13",
+                                "shadowOffset": {
+                                  "height": -4,
+                                  "width": 0,
+                                },
+                                "shadowOpacity": 0.1,
+                                "shadowRadius": 32,
+                                "width": "100%",
+                              },
+                              undefined,
+                            ]
+                          }
+                          nativeID="20"
                           pointerEvents="none"
                           style={
                             [
@@ -2247,6 +2897,46 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  false,
+                                  false,
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#BBC2D6",
+                                    "borderColor": "#555C70",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {
+                                    "opacity": 0.5,
+                                  },
+                                ]
+                              }
+                              nativeID="21"
                               style={
                                 [
                                   {
@@ -2277,6 +2967,31 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
+                                nativeID="22"
                                 style={
                                   [
                                     {
@@ -2295,9 +3010,32 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={true}
+                                  collapsable={false}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#555C70",
+                                      },
+                                      false,
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
+                                  nativeID="23"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -3035,6 +3773,32 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                       }
                     >
                       <View
+                        collapsable={false}
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestInlineStyle={
+                          [
+                            {
+                              "paddingBottom": 24,
+                              "width": "100%",
+                            },
+                            {
+                              "bottom": 0,
+                              "position": "absolute",
+                            },
+                            false,
+                            undefined,
+                          ]
+                        }
+                        nativeID="24"
                         style={
                           [
                             {
@@ -3051,6 +3815,37 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                         }
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "backgroundColor": "#FFFFFF",
+                                "bottom": 0,
+                                "height": 0,
+                                "position": "absolute",
+                                "shadowColor": "#0E0F13",
+                                "shadowOffset": {
+                                  "height": -4,
+                                  "width": 0,
+                                },
+                                "shadowOpacity": 0.1,
+                                "shadowRadius": 32,
+                                "width": "100%",
+                              },
+                              undefined,
+                            ]
+                          }
+                          nativeID="25"
                           pointerEvents="none"
                           style={
                             [
@@ -3123,6 +3918,46 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  false,
+                                  false,
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#BBC2D6",
+                                    "borderColor": "#555C70",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {
+                                    "opacity": 0.5,
+                                  },
+                                ]
+                              }
+                              nativeID="26"
                               style={
                                 [
                                   {
@@ -3153,114 +3988,167 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                               }
                             >
                               <View
-                                skipExiting={true}
-                              >
-                                <View
-                                  exiting={[Function]}
-                                  style={
+                                collapsable={false}
+                                exiting={[Function]}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                  }
+                                }
+                                nativeID="27"
+                                style={
+                                  [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                <View
+                                  accessibilityRole="progressbar"
+                                  accessible={true}
+                                  style={
+                                    {
+                                      "height": 24,
+                                      "width": 24,
                                     }
                                   }
+                                  testID="LoadingSpinnerTestID"
                                 >
                                   <View
-                                    accessibilityRole="progressbar"
-                                    accessible={true}
-                                    style={
+                                    collapsable={false}
+                                    jestAnimatedProps={
                                       {
-                                        "height": 24,
-                                        "width": 24,
+                                        "value": {},
                                       }
                                     }
-                                    testID="LoadingSpinnerTestID"
-                                  >
-                                    <View
-                                      collapsable={false}
-                                      style={
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "0deg",
+                                            },
+                                          ],
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={{}}
+                                    nativeID="28"
+                                    style={
+                                      [
                                         {
                                           "transform": [
                                             {
                                               "rotateZ": "0deg",
                                             },
                                           ],
-                                        }
+                                        },
+                                      ]
+                                    }
+                                    testID="LoadingSpinnerAnimatedTestID"
+                                  >
+                                    <RNSVGSvgView
+                                      align="xMidYMid"
+                                      bbHeight={24}
+                                      bbWidth={24}
+                                      fill="none"
+                                      focusable={false}
+                                      height={24}
+                                      meetOrSlice={0}
+                                      minX={0}
+                                      minY={0}
+                                      style={
+                                        [
+                                          {
+                                            "backgroundColor": "transparent",
+                                            "borderWidth": 0,
+                                          },
+                                          {
+                                            "flex": 0,
+                                            "height": 24,
+                                            "width": 24,
+                                          },
+                                        ]
                                       }
-                                      testID="LoadingSpinnerAnimatedTestID"
+                                      vbHeight={24}
+                                      vbWidth={24}
+                                      width={24}
                                     >
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight={24}
-                                        bbWidth={24}
-                                        fill="none"
-                                        focusable={false}
-                                        height={24}
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
-                                        style={
+                                      <RNSVGGroup
+                                        fill={null}
+                                        propList={
                                           [
-                                            {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            {
-                                              "flex": 0,
-                                              "height": 24,
-                                              "width": 24,
-                                            },
+                                            "fill",
                                           ]
                                         }
-                                        vbHeight={24}
-                                        vbWidth={24}
-                                        width={24}
                                       >
+                                        <RNSVGDefs>
+                                          <RNSVGLinearGradient
+                                            gradient={
+                                              [
+                                                0,
+                                                5594224,
+                                                1,
+                                                -11182992,
+                                              ]
+                                            }
+                                            gradientTransform={null}
+                                            gradientUnits={0}
+                                            name="spinner-secondHalf"
+                                            x1="0%"
+                                            x2="100%"
+                                            y1="0%"
+                                            y2="0%"
+                                          />
+                                          <RNSVGLinearGradient
+                                            gradient={
+                                              [
+                                                0,
+                                                -11182992,
+                                                1,
+                                                -11182992,
+                                              ]
+                                            }
+                                            gradientTransform={null}
+                                            gradientUnits={0}
+                                            name="spinner-firstHalf"
+                                            x1="0%"
+                                            x2="100%"
+                                            y1="0%"
+                                            y2="0%"
+                                          />
+                                        </RNSVGDefs>
                                         <RNSVGGroup
-                                          fill={null}
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
                                           propList={
                                             [
-                                              "fill",
+                                              "strokeWidth",
                                             ]
                                           }
+                                          strokeWidth={3}
                                         >
-                                          <RNSVGDefs>
-                                            <RNSVGLinearGradient
-                                              gradient={
-                                                [
-                                                  0,
-                                                  5594224,
-                                                  1,
-                                                  -11182992,
-                                                ]
-                                              }
-                                              gradientTransform={null}
-                                              gradientUnits={0}
-                                              name="spinner-secondHalf"
-                                              x1="0%"
-                                              x2="100%"
-                                              y1="0%"
-                                              y2="0%"
-                                            />
-                                            <RNSVGLinearGradient
-                                              gradient={
-                                                [
-                                                  0,
-                                                  -11182992,
-                                                  1,
-                                                  -11182992,
-                                                ]
-                                              }
-                                              gradientTransform={null}
-                                              gradientUnits={0}
-                                              name="spinner-firstHalf"
-                                              x1="0%"
-                                              x2="100%"
-                                              y1="0%"
-                                              y2="0%"
-                                            />
-                                          </RNSVGDefs>
-                                          <RNSVGGroup
+                                          <RNSVGPath
+                                            d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -3269,77 +4157,61 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                                             }
                                             propList={
                                               [
-                                                "strokeWidth",
+                                                "stroke",
                                               ]
                                             }
-                                            strokeWidth={3}
-                                          >
-                                            <RNSVGPath
-                                              d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
-                                              fill={
-                                                {
-                                                  "payload": 4278190080,
-                                                  "type": 0,
-                                                }
+                                            stroke={
+                                              {
+                                                "brushRef": "spinner-secondHalf",
+                                                "type": 1,
                                               }
-                                              propList={
-                                                [
-                                                  "stroke",
-                                                ]
+                                            }
+                                          />
+                                          <RNSVGPath
+                                            d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
+                                            fill={
+                                              {
+                                                "payload": 4278190080,
+                                                "type": 0,
                                               }
-                                              stroke={
-                                                {
-                                                  "brushRef": "spinner-secondHalf",
-                                                  "type": 1,
-                                                }
+                                            }
+                                            propList={
+                                              [
+                                                "stroke",
+                                              ]
+                                            }
+                                            stroke={
+                                              {
+                                                "brushRef": "spinner-firstHalf",
+                                                "type": 1,
                                               }
-                                            />
-                                            <RNSVGPath
-                                              d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
-                                              fill={
-                                                {
-                                                  "payload": 4278190080,
-                                                  "type": 0,
-                                                }
+                                            }
+                                          />
+                                          <RNSVGPath
+                                            d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
+                                            fill={
+                                              {
+                                                "payload": 4278190080,
+                                                "type": 0,
                                               }
-                                              propList={
-                                                [
-                                                  "stroke",
-                                                ]
+                                            }
+                                            propList={
+                                              [
+                                                "stroke",
+                                                "strokeLinecap",
+                                              ]
+                                            }
+                                            stroke={
+                                              {
+                                                "payload": 4283784304,
+                                                "type": 0,
                                               }
-                                              stroke={
-                                                {
-                                                  "brushRef": "spinner-firstHalf",
-                                                  "type": 1,
-                                                }
-                                              }
-                                            />
-                                            <RNSVGPath
-                                              d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
-                                              fill={
-                                                {
-                                                  "payload": 4278190080,
-                                                  "type": 0,
-                                                }
-                                              }
-                                              propList={
-                                                [
-                                                  "stroke",
-                                                  "strokeLinecap",
-                                                ]
-                                              }
-                                              stroke={
-                                                {
-                                                  "payload": 4283784304,
-                                                  "type": 0,
-                                                }
-                                              }
-                                              strokeLinecap={1}
-                                            />
-                                          </RNSVGGroup>
+                                            }
+                                            strokeLinecap={1}
+                                          />
                                         </RNSVGGroup>
-                                      </RNSVGSvgView>
-                                    </View>
+                                      </RNSVGGroup>
+                                    </RNSVGSvgView>
                                   </View>
                                 </View>
                               </View>
@@ -3701,6 +4573,32 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                       }
                     >
                       <View
+                        collapsable={false}
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestInlineStyle={
+                          [
+                            {
+                              "paddingBottom": 24,
+                              "width": "100%",
+                            },
+                            {
+                              "bottom": 0,
+                              "position": "absolute",
+                            },
+                            false,
+                            undefined,
+                          ]
+                        }
+                        nativeID="37"
                         style={
                           [
                             {
@@ -3717,6 +4615,37 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                         }
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "backgroundColor": "#FFFFFF",
+                                "bottom": 0,
+                                "height": 0,
+                                "position": "absolute",
+                                "shadowColor": "#0E0F13",
+                                "shadowOffset": {
+                                  "height": -4,
+                                  "width": 0,
+                                },
+                                "shadowOpacity": 0.1,
+                                "shadowRadius": 32,
+                                "width": "100%",
+                              },
+                              undefined,
+                            ]
+                          }
+                          nativeID="38"
                           pointerEvents="none"
                           style={
                             [
@@ -3789,6 +4718,49 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
+                                ]
+                              }
+                              nativeID="39"
                               style={
                                 [
                                   {
@@ -3800,9 +4772,15 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "backgroundColor": undefined,
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                  {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
                                   },
                                   {
                                     "paddingHorizontal": 16,
@@ -3819,6 +4797,31 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
+                                nativeID="40"
                                 style={
                                   [
                                     {
@@ -3837,9 +4840,33 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={true}
+                                  collapsable={false}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "color": "rgba(255, 255, 255, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#FFFFFF",
+                                      },
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
+                                  nativeID="41"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -3860,7 +4887,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                                           "color": "#FFFFFF",
                                         },
                                         {
-                                          "color": undefined,
+                                          "color": "rgba(255, 255, 255, 1)",
                                         },
                                       ],
                                     ]
@@ -4227,6 +5254,32 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                       }
                     >
                       <View
+                        collapsable={false}
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestInlineStyle={
+                          [
+                            {
+                              "paddingBottom": 24,
+                              "width": "100%",
+                            },
+                            {
+                              "bottom": 0,
+                              "position": "absolute",
+                            },
+                            false,
+                            undefined,
+                          ]
+                        }
+                        nativeID="11"
                         style={
                           [
                             {
@@ -4243,6 +5296,37 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                         }
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "backgroundColor": "#FFFFFF",
+                                "bottom": 0,
+                                "height": 0,
+                                "position": "absolute",
+                                "shadowColor": "#0E0F13",
+                                "shadowOffset": {
+                                  "height": -4,
+                                  "width": 0,
+                                },
+                                "shadowOpacity": 0.1,
+                                "shadowRadius": 32,
+                                "width": "100%",
+                              },
+                              undefined,
+                            ]
+                          }
+                          nativeID="12"
                           pointerEvents="none"
                           style={
                             [
@@ -4315,6 +5399,46 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  false,
+                                  false,
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#BBC2D6",
+                                    "borderColor": "#555C70",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {
+                                    "opacity": 0.5,
+                                  },
+                                ]
+                              }
+                              nativeID="13"
                               style={
                                 [
                                   {
@@ -4345,6 +5469,31 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
+                                nativeID="14"
                                 style={
                                   [
                                     {
@@ -4363,9 +5512,32 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={true}
+                                  collapsable={false}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#555C70",
+                                      },
+                                      false,
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
+                                  nativeID="15"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -4457,6 +5629,48 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "borderCurve": "continuous",
+                                      "elevation": 0,
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                      "overflow": "hidden",
+                                      "textAlignVertical": "center",
+                                    },
+                                    {
+                                      "paddingHorizontal": 0,
+                                    },
+                                    {
+                                      "backgroundColor": "transparent",
+                                      "borderColor": "#0B3EE3",
+                                      "borderRadius": 8,
+                                      "borderWidth": 0,
+                                      "height": undefined,
+                                    },
+                                    {},
+                                  ]
+                                }
+                                nativeID="16"
                                 style={
                                   [
                                     {
@@ -4468,7 +5682,13 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
-                                    false,
+                                    {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
                                     {},
                                     {
                                       "paddingHorizontal": 0,
@@ -4485,6 +5705,31 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "columnGap": 8,
+                                      },
+                                      false,
+                                    ]
+                                  }
+                                  nativeID="17"
                                   style={
                                     [
                                       {
@@ -4503,9 +5748,33 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                     accessibilityElementsHidden={true}
                                     accessible={false}
                                     allowFontScaling={true}
+                                    collapsable={false}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "color": "rgba(11, 62, 227, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                        },
+                                      ]
+                                    }
                                     maxFontSizeMultiplier={1.5}
+                                    nativeID="18"
                                     numberOfLines={1}
                                     style={
                                       [
@@ -4526,7 +5795,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                             "color": "#0B3EE3",
                                           },
                                           {
-                                            "color": undefined,
+                                            "color": "rgba(11, 62, 227, 1)",
                                           },
                                         ],
                                       ]

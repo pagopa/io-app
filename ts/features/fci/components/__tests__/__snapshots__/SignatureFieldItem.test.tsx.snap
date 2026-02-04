@@ -45,6 +45,32 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
     testID="ListItemCheckbox"
   >
     <View
+      collapsable={false}
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "backgroundColor": "rgba(244, 245, 248, 0)",
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "marginHorizontal": -24,
+            "paddingHorizontal": 24,
+            "paddingVertical": 12,
+          },
+          {
+            "opacity": 1,
+          },
+        ]
+      }
+      nativeID="0"
       needsOffscreenAlphaCompositing={true}
       style={
         [
@@ -54,7 +80,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
             "paddingVertical": 12,
           },
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "rgba(244, 245, 248, 0)",
           },
           {
             "opacity": 1,
@@ -63,14 +89,35 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
       }
     >
       <View
-        style={
+        collapsable={false}
+        jestAnimatedProps={
           {
-            "transform": [
-              {
-                "scale": undefined,
-              },
-            ],
+            "value": {},
           }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={{}}
+        nativeID="1"
+        style={
+          [
+            {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          ]
         }
       >
         <View
@@ -187,6 +234,43 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
                 }
               />
               <View
+                collapsable={false}
+                jestAnimatedProps={
+                  {
+                    "value": {},
+                  }
+                }
+                jestAnimatedStyle={
+                  {
+                    "value": {
+                      "opacity": 0,
+                      "transform": [
+                        {
+                          "scale": 0.5,
+                        },
+                      ],
+                    },
+                  }
+                }
+                jestInlineStyle={
+                  [
+                    {
+                      "borderCurve": "continuous",
+                      "left": 0,
+                      "position": "absolute",
+                      "top": 0,
+                    },
+                    {
+                      "borderRadius": 7.5,
+                      "height": 36,
+                      "width": 36,
+                    },
+                    {
+                      "backgroundColor": "#0B3EE3",
+                    },
+                  ]
+                }
+                nativeID="2"
                 style={
                   [
                     {
@@ -207,7 +291,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
                       "opacity": 0,
                       "transform": [
                         {
-                          "scale": undefined,
+                          "scale": 0.5,
                         },
                       ],
                     },

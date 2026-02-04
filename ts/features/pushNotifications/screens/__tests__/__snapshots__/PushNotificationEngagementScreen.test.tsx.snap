@@ -551,6 +551,49 @@ exports[`PushNotificationEngagementScreen should match snapshot 1`] = `
                                     testID="engagement-cta"
                                   >
                                     <View
+                                      collapsable={false}
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {
+                                            "backgroundColor": "rgba(11, 62, 227, 1)",
+                                            "transform": [
+                                              {
+                                                "scale": 1,
+                                              },
+                                            ],
+                                          },
+                                        }
+                                      }
+                                      jestInlineStyle={
+                                        [
+                                          {
+                                            "alignItems": "center",
+                                            "borderCurve": "continuous",
+                                            "elevation": 0,
+                                            "flexDirection": "row",
+                                            "justifyContent": "center",
+                                            "overflow": "hidden",
+                                            "textAlignVertical": "center",
+                                          },
+                                          {
+                                            "paddingHorizontal": 16,
+                                          },
+                                          {
+                                            "backgroundColor": "#0B3EE3",
+                                            "borderColor": "#FFFFFF",
+                                            "borderRadius": 8,
+                                            "borderWidth": 0,
+                                            "height": 48,
+                                          },
+                                          {},
+                                        ]
+                                      }
+                                      nativeID="0"
                                       style={
                                         [
                                           {
@@ -562,9 +605,15 @@ exports[`PushNotificationEngagementScreen should match snapshot 1`] = `
                                             "overflow": "hidden",
                                             "textAlignVertical": "center",
                                           },
-                                          false,
                                           {
-                                            "backgroundColor": undefined,
+                                            "transform": [
+                                              {
+                                                "scale": 1,
+                                              },
+                                            ],
+                                          },
+                                          {
+                                            "backgroundColor": "rgba(11, 62, 227, 1)",
                                           },
                                           {
                                             "paddingHorizontal": 16,
@@ -581,6 +630,31 @@ exports[`PushNotificationEngagementScreen should match snapshot 1`] = `
                                       }
                                     >
                                       <View
+                                        collapsable={false}
+                                        jestAnimatedProps={
+                                          {
+                                            "value": {},
+                                          }
+                                        }
+                                        jestAnimatedStyle={
+                                          {
+                                            "value": {},
+                                          }
+                                        }
+                                        jestInlineStyle={
+                                          [
+                                            {
+                                              "alignItems": "center",
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                            },
+                                            {
+                                              "columnGap": 8,
+                                            },
+                                            false,
+                                          ]
+                                        }
+                                        nativeID="1"
                                         style={
                                           [
                                             {
@@ -599,9 +673,33 @@ exports[`PushNotificationEngagementScreen should match snapshot 1`] = `
                                           accessibilityElementsHidden={true}
                                           accessible={false}
                                           allowFontScaling={true}
+                                          collapsable={false}
                                           ellipsizeMode="tail"
                                           importantForAccessibility="no-hide-descendants"
+                                          jestAnimatedProps={
+                                            {
+                                              "value": {},
+                                            }
+                                          }
+                                          jestAnimatedStyle={
+                                            {
+                                              "value": {
+                                                "color": "rgba(255, 255, 255, 1)",
+                                              },
+                                            }
+                                          }
+                                          jestInlineStyle={
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#FFFFFF",
+                                              },
+                                            ]
+                                          }
                                           maxFontSizeMultiplier={1.5}
+                                          nativeID="2"
                                           numberOfLines={1}
                                           style={
                                             [
@@ -622,7 +720,7 @@ exports[`PushNotificationEngagementScreen should match snapshot 1`] = `
                                                   "color": "#FFFFFF",
                                                 },
                                                 {
-                                                  "color": undefined,
+                                                  "color": "rgba(255, 255, 255, 1)",
                                                 },
                                               ],
                                             ]
@@ -653,6 +751,30 @@ exports[`PushNotificationEngagementScreen should match snapshot 1`] = `
                       >
                         <View
                           accessibilityRole="header"
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "borderBottomWidth": 1,
+                                "borderColor": "rgba(210,214,227,0)",
+                              },
+                              {},
+                            ]
+                          }
+                          nativeID="3"
                           style={
                             [
                               {
@@ -668,6 +790,32 @@ exports[`PushNotificationEngagementScreen should match snapshot 1`] = `
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "marginTop": 0,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "flexGrow": 1,
+                                  "height": 56,
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 24,
+                                },
+                              ]
+                            }
+                            nativeID="4"
                             style={
                               [
                                 {
@@ -708,7 +856,29 @@ exports[`PushNotificationEngagementScreen should match snapshot 1`] = `
                               <Text
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "opacity": 1,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "color": "#0E0F13",
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
+                                nativeID="5"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -780,6 +950,36 @@ exports[`PushNotificationEngagementScreen should match snapshot 1`] = `
                                 testID="header-close"
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
+                                  nativeID="6"
                                   style={
                                     [
                                       {
@@ -790,7 +990,13 @@ exports[`PushNotificationEngagementScreen should match snapshot 1`] = `
                                         "height": 24,
                                         "width": 24,
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                     ]
                                   }
                                 >
@@ -799,20 +1005,29 @@ exports[`PushNotificationEngagementScreen should match snapshot 1`] = `
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    animatedProps={
-                                      {
-                                        "color": undefined,
-                                      }
-                                    }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    collapsable={false}
                                     color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {
+                                          "color": "rgba(14, 15, 19, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    nativeID="7"
                                     style={
                                       [
                                         {

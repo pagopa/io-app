@@ -502,6 +502,32 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                         </RCTScrollView>
                       </View>
                       <View
+                        collapsable={false}
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestInlineStyle={
+                          [
+                            {
+                              "paddingBottom": 24,
+                              "width": "100%",
+                            },
+                            {
+                              "bottom": 0,
+                              "position": "absolute",
+                            },
+                            false,
+                            undefined,
+                          ]
+                        }
+                        nativeID="80"
                         style={
                           [
                             {
@@ -519,6 +545,37 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                         testID="export-footer"
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "backgroundColor": "#FFFFFF",
+                                "bottom": 0,
+                                "height": 0,
+                                "position": "absolute",
+                                "shadowColor": "#0E0F13",
+                                "shadowOffset": {
+                                  "height": -4,
+                                  "width": 0,
+                                },
+                                "shadowOpacity": 0.1,
+                                "shadowRadius": 32,
+                                "width": "100%",
+                              },
+                              undefined,
+                            ]
+                          }
+                          nativeID="81"
                           pointerEvents="none"
                           style={
                             [
@@ -592,6 +649,49 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                             testID="export-button"
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
+                                ]
+                              }
+                              nativeID="82"
                               style={
                                 [
                                   {
@@ -603,9 +703,15 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "backgroundColor": undefined,
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                  {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
                                   },
                                   {
                                     "paddingHorizontal": 16,
@@ -622,6 +728,31 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
+                                nativeID="83"
                                 style={
                                   [
                                     {
@@ -640,9 +771,33 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={true}
+                                  collapsable={false}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "color": "rgba(255, 255, 255, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#FFFFFF",
+                                      },
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
+                                  nativeID="84"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -663,7 +818,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                           "color": "#FFFFFF",
                                         },
                                         {
-                                          "color": undefined,
+                                          "color": "rgba(255, 255, 255, 1)",
                                         },
                                       ],
                                     ]
@@ -1191,6 +1346,32 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                         </RCTScrollView>
                       </View>
                       <View
+                        collapsable={false}
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestInlineStyle={
+                          [
+                            {
+                              "paddingBottom": 24,
+                              "width": "100%",
+                            },
+                            {
+                              "bottom": 0,
+                              "position": "absolute",
+                            },
+                            false,
+                            undefined,
+                          ]
+                        }
+                        nativeID="40"
                         style={
                           [
                             {
@@ -1208,6 +1389,37 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                         testID="export-footer"
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "backgroundColor": "#FFFFFF",
+                                "bottom": 0,
+                                "height": 0,
+                                "position": "absolute",
+                                "shadowColor": "#0E0F13",
+                                "shadowOffset": {
+                                  "height": -4,
+                                  "width": 0,
+                                },
+                                "shadowOpacity": 0.1,
+                                "shadowRadius": 32,
+                                "width": "100%",
+                              },
+                              undefined,
+                            ]
+                          }
+                          nativeID="41"
                           pointerEvents="none"
                           style={
                             [
@@ -1281,6 +1493,49 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                             testID="export-button"
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
+                                ]
+                              }
+                              nativeID="42"
                               style={
                                 [
                                   {
@@ -1292,9 +1547,15 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "backgroundColor": undefined,
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                  {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
                                   },
                                   {
                                     "paddingHorizontal": 16,
@@ -1311,114 +1572,167 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                               }
                             >
                               <View
-                                skipExiting={true}
-                              >
-                                <View
-                                  exiting={[Function]}
-                                  style={
+                                collapsable={false}
+                                exiting={[Function]}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                  }
+                                }
+                                nativeID="43"
+                                style={
+                                  [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                <View
+                                  accessibilityRole="progressbar"
+                                  accessible={true}
+                                  style={
+                                    {
+                                      "height": 24,
+                                      "width": 24,
                                     }
                                   }
+                                  testID="LoadingSpinnerTestID"
                                 >
                                   <View
-                                    accessibilityRole="progressbar"
-                                    accessible={true}
-                                    style={
+                                    collapsable={false}
+                                    jestAnimatedProps={
                                       {
-                                        "height": 24,
-                                        "width": 24,
+                                        "value": {},
                                       }
                                     }
-                                    testID="LoadingSpinnerTestID"
-                                  >
-                                    <View
-                                      collapsable={false}
-                                      style={
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "0deg",
+                                            },
+                                          ],
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={{}}
+                                    nativeID="44"
+                                    style={
+                                      [
                                         {
                                           "transform": [
                                             {
                                               "rotateZ": "0deg",
                                             },
                                           ],
-                                        }
+                                        },
+                                      ]
+                                    }
+                                    testID="LoadingSpinnerAnimatedTestID"
+                                  >
+                                    <RNSVGSvgView
+                                      align="xMidYMid"
+                                      bbHeight={24}
+                                      bbWidth={24}
+                                      fill="none"
+                                      focusable={false}
+                                      height={24}
+                                      meetOrSlice={0}
+                                      minX={0}
+                                      minY={0}
+                                      style={
+                                        [
+                                          {
+                                            "backgroundColor": "transparent",
+                                            "borderWidth": 0,
+                                          },
+                                          {
+                                            "flex": 0,
+                                            "height": 24,
+                                            "width": 24,
+                                          },
+                                        ]
                                       }
-                                      testID="LoadingSpinnerAnimatedTestID"
+                                      vbHeight={24}
+                                      vbWidth={24}
+                                      width={24}
                                     >
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight={24}
-                                        bbWidth={24}
-                                        fill="none"
-                                        focusable={false}
-                                        height={24}
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
-                                        style={
+                                      <RNSVGGroup
+                                        fill={null}
+                                        propList={
                                           [
-                                            {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            {
-                                              "flex": 0,
-                                              "height": 24,
-                                              "width": 24,
-                                            },
+                                            "fill",
                                           ]
                                         }
-                                        vbHeight={24}
-                                        vbWidth={24}
-                                        width={24}
                                       >
+                                        <RNSVGDefs>
+                                          <RNSVGLinearGradient
+                                            gradient={
+                                              [
+                                                0,
+                                                16777215,
+                                                1,
+                                                -1,
+                                              ]
+                                            }
+                                            gradientTransform={null}
+                                            gradientUnits={0}
+                                            name="spinner-secondHalf"
+                                            x1="0%"
+                                            x2="100%"
+                                            y1="0%"
+                                            y2="0%"
+                                          />
+                                          <RNSVGLinearGradient
+                                            gradient={
+                                              [
+                                                0,
+                                                -1,
+                                                1,
+                                                -1,
+                                              ]
+                                            }
+                                            gradientTransform={null}
+                                            gradientUnits={0}
+                                            name="spinner-firstHalf"
+                                            x1="0%"
+                                            x2="100%"
+                                            y1="0%"
+                                            y2="0%"
+                                          />
+                                        </RNSVGDefs>
                                         <RNSVGGroup
-                                          fill={null}
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
                                           propList={
                                             [
-                                              "fill",
+                                              "strokeWidth",
                                             ]
                                           }
+                                          strokeWidth={3}
                                         >
-                                          <RNSVGDefs>
-                                            <RNSVGLinearGradient
-                                              gradient={
-                                                [
-                                                  0,
-                                                  16777215,
-                                                  1,
-                                                  -1,
-                                                ]
-                                              }
-                                              gradientTransform={null}
-                                              gradientUnits={0}
-                                              name="spinner-secondHalf"
-                                              x1="0%"
-                                              x2="100%"
-                                              y1="0%"
-                                              y2="0%"
-                                            />
-                                            <RNSVGLinearGradient
-                                              gradient={
-                                                [
-                                                  0,
-                                                  -1,
-                                                  1,
-                                                  -1,
-                                                ]
-                                              }
-                                              gradientTransform={null}
-                                              gradientUnits={0}
-                                              name="spinner-firstHalf"
-                                              x1="0%"
-                                              x2="100%"
-                                              y1="0%"
-                                              y2="0%"
-                                            />
-                                          </RNSVGDefs>
-                                          <RNSVGGroup
+                                          <RNSVGPath
+                                            d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -1427,77 +1741,61 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                             }
                                             propList={
                                               [
-                                                "strokeWidth",
+                                                "stroke",
                                               ]
                                             }
-                                            strokeWidth={3}
-                                          >
-                                            <RNSVGPath
-                                              d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
-                                              fill={
-                                                {
-                                                  "payload": 4278190080,
-                                                  "type": 0,
-                                                }
+                                            stroke={
+                                              {
+                                                "brushRef": "spinner-secondHalf",
+                                                "type": 1,
                                               }
-                                              propList={
-                                                [
-                                                  "stroke",
-                                                ]
+                                            }
+                                          />
+                                          <RNSVGPath
+                                            d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
+                                            fill={
+                                              {
+                                                "payload": 4278190080,
+                                                "type": 0,
                                               }
-                                              stroke={
-                                                {
-                                                  "brushRef": "spinner-secondHalf",
-                                                  "type": 1,
-                                                }
+                                            }
+                                            propList={
+                                              [
+                                                "stroke",
+                                              ]
+                                            }
+                                            stroke={
+                                              {
+                                                "brushRef": "spinner-firstHalf",
+                                                "type": 1,
                                               }
-                                            />
-                                            <RNSVGPath
-                                              d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
-                                              fill={
-                                                {
-                                                  "payload": 4278190080,
-                                                  "type": 0,
-                                                }
+                                            }
+                                          />
+                                          <RNSVGPath
+                                            d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
+                                            fill={
+                                              {
+                                                "payload": 4278190080,
+                                                "type": 0,
                                               }
-                                              propList={
-                                                [
-                                                  "stroke",
-                                                ]
+                                            }
+                                            propList={
+                                              [
+                                                "stroke",
+                                                "strokeLinecap",
+                                              ]
+                                            }
+                                            stroke={
+                                              {
+                                                "payload": 4294967295,
+                                                "type": 0,
                                               }
-                                              stroke={
-                                                {
-                                                  "brushRef": "spinner-firstHalf",
-                                                  "type": 1,
-                                                }
-                                              }
-                                            />
-                                            <RNSVGPath
-                                              d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
-                                              fill={
-                                                {
-                                                  "payload": 4278190080,
-                                                  "type": 0,
-                                                }
-                                              }
-                                              propList={
-                                                [
-                                                  "stroke",
-                                                  "strokeLinecap",
-                                                ]
-                                              }
-                                              stroke={
-                                                {
-                                                  "payload": 4294967295,
-                                                  "type": 0,
-                                                }
-                                              }
-                                              strokeLinecap={1}
-                                            />
-                                          </RNSVGGroup>
+                                            }
+                                            strokeLinecap={1}
+                                          />
                                         </RNSVGGroup>
-                                      </RNSVGSvgView>
-                                    </View>
+                                      </RNSVGGroup>
+                                    </RNSVGSvgView>
                                   </View>
                                 </View>
                               </View>
@@ -2026,6 +2324,32 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                         </RCTScrollView>
                       </View>
                       <View
+                        collapsable={false}
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestInlineStyle={
+                          [
+                            {
+                              "paddingBottom": 24,
+                              "width": "100%",
+                            },
+                            {
+                              "bottom": 0,
+                              "position": "absolute",
+                            },
+                            false,
+                            undefined,
+                          ]
+                        }
+                        nativeID="20"
                         style={
                           [
                             {
@@ -2043,6 +2367,37 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                         testID="export-footer"
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "backgroundColor": "#FFFFFF",
+                                "bottom": 0,
+                                "height": 0,
+                                "position": "absolute",
+                                "shadowColor": "#0E0F13",
+                                "shadowOffset": {
+                                  "height": -4,
+                                  "width": 0,
+                                },
+                                "shadowOpacity": 0.1,
+                                "shadowRadius": 32,
+                                "width": "100%",
+                              },
+                              undefined,
+                            ]
+                          }
+                          nativeID="21"
                           pointerEvents="none"
                           style={
                             [
@@ -2116,6 +2471,49 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                             testID="export-button"
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
+                                ]
+                              }
+                              nativeID="22"
                               style={
                                 [
                                   {
@@ -2127,9 +2525,15 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "backgroundColor": undefined,
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                  {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
                                   },
                                   {
                                     "paddingHorizontal": 16,
@@ -2146,6 +2550,31 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
+                                nativeID="23"
                                 style={
                                   [
                                     {
@@ -2164,9 +2593,33 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={true}
+                                  collapsable={false}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "color": "rgba(255, 255, 255, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#FFFFFF",
+                                      },
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
+                                  nativeID="24"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -2187,7 +2640,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                           "color": "#FFFFFF",
                                         },
                                         {
-                                          "color": undefined,
+                                          "color": "rgba(255, 255, 255, 1)",
                                         },
                                       ],
                                     ]
@@ -2721,6 +3174,32 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                         </RCTScrollView>
                       </View>
                       <View
+                        collapsable={false}
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestInlineStyle={
+                          [
+                            {
+                              "paddingBottom": 24,
+                              "width": "100%",
+                            },
+                            {
+                              "bottom": 0,
+                              "position": "absolute",
+                            },
+                            false,
+                            undefined,
+                          ]
+                        }
+                        nativeID="0"
                         style={
                           [
                             {
@@ -2738,6 +3217,37 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                         testID="export-footer"
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "backgroundColor": "#FFFFFF",
+                                "bottom": 0,
+                                "height": 0,
+                                "position": "absolute",
+                                "shadowColor": "#0E0F13",
+                                "shadowOffset": {
+                                  "height": -4,
+                                  "width": 0,
+                                },
+                                "shadowOpacity": 0.1,
+                                "shadowRadius": 32,
+                                "width": "100%",
+                              },
+                              undefined,
+                            ]
+                          }
+                          nativeID="1"
                           pointerEvents="none"
                           style={
                             [
@@ -2811,6 +3321,49 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                             testID="export-button"
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
+                                ]
+                              }
+                              nativeID="2"
                               style={
                                 [
                                   {
@@ -2822,9 +3375,15 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "backgroundColor": undefined,
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                  {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
                                   },
                                   {
                                     "paddingHorizontal": 16,
@@ -2841,114 +3400,167 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                               }
                             >
                               <View
-                                skipExiting={true}
-                              >
-                                <View
-                                  exiting={[Function]}
-                                  style={
+                                collapsable={false}
+                                exiting={[Function]}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                  }
+                                }
+                                nativeID="3"
+                                style={
+                                  [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                <View
+                                  accessibilityRole="progressbar"
+                                  accessible={true}
+                                  style={
+                                    {
+                                      "height": 24,
+                                      "width": 24,
                                     }
                                   }
+                                  testID="LoadingSpinnerTestID"
                                 >
                                   <View
-                                    accessibilityRole="progressbar"
-                                    accessible={true}
-                                    style={
+                                    collapsable={false}
+                                    jestAnimatedProps={
                                       {
-                                        "height": 24,
-                                        "width": 24,
+                                        "value": {},
                                       }
                                     }
-                                    testID="LoadingSpinnerTestID"
-                                  >
-                                    <View
-                                      collapsable={false}
-                                      style={
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "0deg",
+                                            },
+                                          ],
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={{}}
+                                    nativeID="4"
+                                    style={
+                                      [
                                         {
                                           "transform": [
                                             {
                                               "rotateZ": "0deg",
                                             },
                                           ],
-                                        }
+                                        },
+                                      ]
+                                    }
+                                    testID="LoadingSpinnerAnimatedTestID"
+                                  >
+                                    <RNSVGSvgView
+                                      align="xMidYMid"
+                                      bbHeight={24}
+                                      bbWidth={24}
+                                      fill="none"
+                                      focusable={false}
+                                      height={24}
+                                      meetOrSlice={0}
+                                      minX={0}
+                                      minY={0}
+                                      style={
+                                        [
+                                          {
+                                            "backgroundColor": "transparent",
+                                            "borderWidth": 0,
+                                          },
+                                          {
+                                            "flex": 0,
+                                            "height": 24,
+                                            "width": 24,
+                                          },
+                                        ]
                                       }
-                                      testID="LoadingSpinnerAnimatedTestID"
+                                      vbHeight={24}
+                                      vbWidth={24}
+                                      width={24}
                                     >
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight={24}
-                                        bbWidth={24}
-                                        fill="none"
-                                        focusable={false}
-                                        height={24}
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
-                                        style={
+                                      <RNSVGGroup
+                                        fill={null}
+                                        propList={
                                           [
-                                            {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            {
-                                              "flex": 0,
-                                              "height": 24,
-                                              "width": 24,
-                                            },
+                                            "fill",
                                           ]
                                         }
-                                        vbHeight={24}
-                                        vbWidth={24}
-                                        width={24}
                                       >
+                                        <RNSVGDefs>
+                                          <RNSVGLinearGradient
+                                            gradient={
+                                              [
+                                                0,
+                                                16777215,
+                                                1,
+                                                -1,
+                                              ]
+                                            }
+                                            gradientTransform={null}
+                                            gradientUnits={0}
+                                            name="spinner-secondHalf"
+                                            x1="0%"
+                                            x2="100%"
+                                            y1="0%"
+                                            y2="0%"
+                                          />
+                                          <RNSVGLinearGradient
+                                            gradient={
+                                              [
+                                                0,
+                                                -1,
+                                                1,
+                                                -1,
+                                              ]
+                                            }
+                                            gradientTransform={null}
+                                            gradientUnits={0}
+                                            name="spinner-firstHalf"
+                                            x1="0%"
+                                            x2="100%"
+                                            y1="0%"
+                                            y2="0%"
+                                          />
+                                        </RNSVGDefs>
                                         <RNSVGGroup
-                                          fill={null}
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
                                           propList={
                                             [
-                                              "fill",
+                                              "strokeWidth",
                                             ]
                                           }
+                                          strokeWidth={3}
                                         >
-                                          <RNSVGDefs>
-                                            <RNSVGLinearGradient
-                                              gradient={
-                                                [
-                                                  0,
-                                                  16777215,
-                                                  1,
-                                                  -1,
-                                                ]
-                                              }
-                                              gradientTransform={null}
-                                              gradientUnits={0}
-                                              name="spinner-secondHalf"
-                                              x1="0%"
-                                              x2="100%"
-                                              y1="0%"
-                                              y2="0%"
-                                            />
-                                            <RNSVGLinearGradient
-                                              gradient={
-                                                [
-                                                  0,
-                                                  -1,
-                                                  1,
-                                                  -1,
-                                                ]
-                                              }
-                                              gradientTransform={null}
-                                              gradientUnits={0}
-                                              name="spinner-firstHalf"
-                                              x1="0%"
-                                              x2="100%"
-                                              y1="0%"
-                                              y2="0%"
-                                            />
-                                          </RNSVGDefs>
-                                          <RNSVGGroup
+                                          <RNSVGPath
+                                            d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -2957,77 +3569,61 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                             }
                                             propList={
                                               [
-                                                "strokeWidth",
+                                                "stroke",
                                               ]
                                             }
-                                            strokeWidth={3}
-                                          >
-                                            <RNSVGPath
-                                              d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
-                                              fill={
-                                                {
-                                                  "payload": 4278190080,
-                                                  "type": 0,
-                                                }
+                                            stroke={
+                                              {
+                                                "brushRef": "spinner-secondHalf",
+                                                "type": 1,
                                               }
-                                              propList={
-                                                [
-                                                  "stroke",
-                                                ]
+                                            }
+                                          />
+                                          <RNSVGPath
+                                            d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
+                                            fill={
+                                              {
+                                                "payload": 4278190080,
+                                                "type": 0,
                                               }
-                                              stroke={
-                                                {
-                                                  "brushRef": "spinner-secondHalf",
-                                                  "type": 1,
-                                                }
+                                            }
+                                            propList={
+                                              [
+                                                "stroke",
+                                              ]
+                                            }
+                                            stroke={
+                                              {
+                                                "brushRef": "spinner-firstHalf",
+                                                "type": 1,
                                               }
-                                            />
-                                            <RNSVGPath
-                                              d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
-                                              fill={
-                                                {
-                                                  "payload": 4278190080,
-                                                  "type": 0,
-                                                }
+                                            }
+                                          />
+                                          <RNSVGPath
+                                            d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
+                                            fill={
+                                              {
+                                                "payload": 4278190080,
+                                                "type": 0,
                                               }
-                                              propList={
-                                                [
-                                                  "stroke",
-                                                ]
+                                            }
+                                            propList={
+                                              [
+                                                "stroke",
+                                                "strokeLinecap",
+                                              ]
+                                            }
+                                            stroke={
+                                              {
+                                                "payload": 4294967295,
+                                                "type": 0,
                                               }
-                                              stroke={
-                                                {
-                                                  "brushRef": "spinner-firstHalf",
-                                                  "type": 1,
-                                                }
-                                              }
-                                            />
-                                            <RNSVGPath
-                                              d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
-                                              fill={
-                                                {
-                                                  "payload": 4278190080,
-                                                  "type": 0,
-                                                }
-                                              }
-                                              propList={
-                                                [
-                                                  "stroke",
-                                                  "strokeLinecap",
-                                                ]
-                                              }
-                                              stroke={
-                                                {
-                                                  "payload": 4294967295,
-                                                  "type": 0,
-                                                }
-                                              }
-                                              strokeLinecap={1}
-                                            />
-                                          </RNSVGGroup>
+                                            }
+                                            strokeLinecap={1}
+                                          />
                                         </RNSVGGroup>
-                                      </RNSVGSvgView>
-                                    </View>
+                                      </RNSVGGroup>
+                                    </RNSVGSvgView>
                                   </View>
                                 </View>
                               </View>
@@ -3506,6 +4102,32 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                         </RCTScrollView>
                       </View>
                       <View
+                        collapsable={false}
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestInlineStyle={
+                          [
+                            {
+                              "paddingBottom": 24,
+                              "width": "100%",
+                            },
+                            {
+                              "bottom": 0,
+                              "position": "absolute",
+                            },
+                            false,
+                            undefined,
+                          ]
+                        }
+                        nativeID="100"
                         style={
                           [
                             {
@@ -3523,6 +4145,37 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                         testID="export-footer"
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "backgroundColor": "#FFFFFF",
+                                "bottom": 0,
+                                "height": 0,
+                                "position": "absolute",
+                                "shadowColor": "#0E0F13",
+                                "shadowOffset": {
+                                  "height": -4,
+                                  "width": 0,
+                                },
+                                "shadowOpacity": 0.1,
+                                "shadowRadius": 32,
+                                "width": "100%",
+                              },
+                              undefined,
+                            ]
+                          }
+                          nativeID="101"
                           pointerEvents="none"
                           style={
                             [
@@ -3596,6 +4249,49 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                             testID="export-button"
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
+                                ]
+                              }
+                              nativeID="102"
                               style={
                                 [
                                   {
@@ -3607,9 +4303,15 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "backgroundColor": undefined,
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                  {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
                                   },
                                   {
                                     "paddingHorizontal": 16,
@@ -3626,6 +4328,31 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
+                                nativeID="103"
                                 style={
                                   [
                                     {
@@ -3644,9 +4371,33 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={true}
+                                  collapsable={false}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "color": "rgba(255, 255, 255, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#FFFFFF",
+                                      },
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
+                                  nativeID="104"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -3667,7 +4418,7 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                                           "color": "#FFFFFF",
                                         },
                                         {
-                                          "color": undefined,
+                                          "color": "rgba(255, 255, 255, 1)",
                                         },
                                       ],
                                     ]
@@ -4151,6 +4902,32 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                         </RCTScrollView>
                       </View>
                       <View
+                        collapsable={false}
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestInlineStyle={
+                          [
+                            {
+                              "paddingBottom": 24,
+                              "width": "100%",
+                            },
+                            {
+                              "bottom": 0,
+                              "position": "absolute",
+                            },
+                            false,
+                            undefined,
+                          ]
+                        }
+                        nativeID="60"
                         style={
                           [
                             {
@@ -4168,6 +4945,37 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                         testID="export-footer"
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "backgroundColor": "#FFFFFF",
+                                "bottom": 0,
+                                "height": 0,
+                                "position": "absolute",
+                                "shadowColor": "#0E0F13",
+                                "shadowOffset": {
+                                  "height": -4,
+                                  "width": 0,
+                                },
+                                "shadowOpacity": 0.1,
+                                "shadowRadius": 32,
+                                "width": "100%",
+                              },
+                              undefined,
+                            ]
+                          }
+                          nativeID="61"
                           pointerEvents="none"
                           style={
                             [
@@ -4241,6 +5049,49 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                             testID="export-button"
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
+                                ]
+                              }
+                              nativeID="62"
                               style={
                                 [
                                   {
@@ -4252,9 +5103,15 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "backgroundColor": undefined,
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                  {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
                                   },
                                   {
                                     "paddingHorizontal": 16,
@@ -4271,114 +5128,167 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                               }
                             >
                               <View
-                                skipExiting={true}
-                              >
-                                <View
-                                  exiting={[Function]}
-                                  style={
+                                collapsable={false}
+                                exiting={[Function]}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                  }
+                                }
+                                nativeID="63"
+                                style={
+                                  [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                <View
+                                  accessibilityRole="progressbar"
+                                  accessible={true}
+                                  style={
+                                    {
+                                      "height": 24,
+                                      "width": 24,
                                     }
                                   }
+                                  testID="LoadingSpinnerTestID"
                                 >
                                   <View
-                                    accessibilityRole="progressbar"
-                                    accessible={true}
-                                    style={
+                                    collapsable={false}
+                                    jestAnimatedProps={
                                       {
-                                        "height": 24,
-                                        "width": 24,
+                                        "value": {},
                                       }
                                     }
-                                    testID="LoadingSpinnerTestID"
-                                  >
-                                    <View
-                                      collapsable={false}
-                                      style={
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "0deg",
+                                            },
+                                          ],
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={{}}
+                                    nativeID="64"
+                                    style={
+                                      [
                                         {
                                           "transform": [
                                             {
                                               "rotateZ": "0deg",
                                             },
                                           ],
-                                        }
+                                        },
+                                      ]
+                                    }
+                                    testID="LoadingSpinnerAnimatedTestID"
+                                  >
+                                    <RNSVGSvgView
+                                      align="xMidYMid"
+                                      bbHeight={24}
+                                      bbWidth={24}
+                                      fill="none"
+                                      focusable={false}
+                                      height={24}
+                                      meetOrSlice={0}
+                                      minX={0}
+                                      minY={0}
+                                      style={
+                                        [
+                                          {
+                                            "backgroundColor": "transparent",
+                                            "borderWidth": 0,
+                                          },
+                                          {
+                                            "flex": 0,
+                                            "height": 24,
+                                            "width": 24,
+                                          },
+                                        ]
                                       }
-                                      testID="LoadingSpinnerAnimatedTestID"
+                                      vbHeight={24}
+                                      vbWidth={24}
+                                      width={24}
                                     >
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight={24}
-                                        bbWidth={24}
-                                        fill="none"
-                                        focusable={false}
-                                        height={24}
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
-                                        style={
+                                      <RNSVGGroup
+                                        fill={null}
+                                        propList={
                                           [
-                                            {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            {
-                                              "flex": 0,
-                                              "height": 24,
-                                              "width": 24,
-                                            },
+                                            "fill",
                                           ]
                                         }
-                                        vbHeight={24}
-                                        vbWidth={24}
-                                        width={24}
                                       >
+                                        <RNSVGDefs>
+                                          <RNSVGLinearGradient
+                                            gradient={
+                                              [
+                                                0,
+                                                16777215,
+                                                1,
+                                                -1,
+                                              ]
+                                            }
+                                            gradientTransform={null}
+                                            gradientUnits={0}
+                                            name="spinner-secondHalf"
+                                            x1="0%"
+                                            x2="100%"
+                                            y1="0%"
+                                            y2="0%"
+                                          />
+                                          <RNSVGLinearGradient
+                                            gradient={
+                                              [
+                                                0,
+                                                -1,
+                                                1,
+                                                -1,
+                                              ]
+                                            }
+                                            gradientTransform={null}
+                                            gradientUnits={0}
+                                            name="spinner-firstHalf"
+                                            x1="0%"
+                                            x2="100%"
+                                            y1="0%"
+                                            y2="0%"
+                                          />
+                                        </RNSVGDefs>
                                         <RNSVGGroup
-                                          fill={null}
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
                                           propList={
                                             [
-                                              "fill",
+                                              "strokeWidth",
                                             ]
                                           }
+                                          strokeWidth={3}
                                         >
-                                          <RNSVGDefs>
-                                            <RNSVGLinearGradient
-                                              gradient={
-                                                [
-                                                  0,
-                                                  16777215,
-                                                  1,
-                                                  -1,
-                                                ]
-                                              }
-                                              gradientTransform={null}
-                                              gradientUnits={0}
-                                              name="spinner-secondHalf"
-                                              x1="0%"
-                                              x2="100%"
-                                              y1="0%"
-                                              y2="0%"
-                                            />
-                                            <RNSVGLinearGradient
-                                              gradient={
-                                                [
-                                                  0,
-                                                  -1,
-                                                  1,
-                                                  -1,
-                                                ]
-                                              }
-                                              gradientTransform={null}
-                                              gradientUnits={0}
-                                              name="spinner-firstHalf"
-                                              x1="0%"
-                                              x2="100%"
-                                              y1="0%"
-                                              y2="0%"
-                                            />
-                                          </RNSVGDefs>
-                                          <RNSVGGroup
+                                          <RNSVGPath
+                                            d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -4387,77 +5297,61 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                                             }
                                             propList={
                                               [
-                                                "strokeWidth",
+                                                "stroke",
                                               ]
                                             }
-                                            strokeWidth={3}
-                                          >
-                                            <RNSVGPath
-                                              d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
-                                              fill={
-                                                {
-                                                  "payload": 4278190080,
-                                                  "type": 0,
-                                                }
+                                            stroke={
+                                              {
+                                                "brushRef": "spinner-secondHalf",
+                                                "type": 1,
                                               }
-                                              propList={
-                                                [
-                                                  "stroke",
-                                                ]
+                                            }
+                                          />
+                                          <RNSVGPath
+                                            d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
+                                            fill={
+                                              {
+                                                "payload": 4278190080,
+                                                "type": 0,
                                               }
-                                              stroke={
-                                                {
-                                                  "brushRef": "spinner-secondHalf",
-                                                  "type": 1,
-                                                }
+                                            }
+                                            propList={
+                                              [
+                                                "stroke",
+                                              ]
+                                            }
+                                            stroke={
+                                              {
+                                                "brushRef": "spinner-firstHalf",
+                                                "type": 1,
                                               }
-                                            />
-                                            <RNSVGPath
-                                              d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
-                                              fill={
-                                                {
-                                                  "payload": 4278190080,
-                                                  "type": 0,
-                                                }
+                                            }
+                                          />
+                                          <RNSVGPath
+                                            d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
+                                            fill={
+                                              {
+                                                "payload": 4278190080,
+                                                "type": 0,
                                               }
-                                              propList={
-                                                [
-                                                  "stroke",
-                                                ]
+                                            }
+                                            propList={
+                                              [
+                                                "stroke",
+                                                "strokeLinecap",
+                                              ]
+                                            }
+                                            stroke={
+                                              {
+                                                "payload": 4294967295,
+                                                "type": 0,
                                               }
-                                              stroke={
-                                                {
-                                                  "brushRef": "spinner-firstHalf",
-                                                  "type": 1,
-                                                }
-                                              }
-                                            />
-                                            <RNSVGPath
-                                              d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
-                                              fill={
-                                                {
-                                                  "payload": 4278190080,
-                                                  "type": 0,
-                                                }
-                                              }
-                                              propList={
-                                                [
-                                                  "stroke",
-                                                  "strokeLinecap",
-                                                ]
-                                              }
-                                              stroke={
-                                                {
-                                                  "payload": 4294967295,
-                                                  "type": 0,
-                                                }
-                                              }
-                                              strokeLinecap={1}
-                                            />
-                                          </RNSVGGroup>
+                                            }
+                                            strokeLinecap={1}
+                                          />
                                         </RNSVGGroup>
-                                      </RNSVGSvgView>
-                                    </View>
+                                      </RNSVGGroup>
+                                    </RNSVGSvgView>
                                   </View>
                                 </View>
                               </View>

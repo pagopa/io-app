@@ -757,6 +757,49 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                           testID="primary_button"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(11, 62, 227, 1)",
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderCurve": "continuous",
+                                  "elevation": 0,
+                                  "flexDirection": "row",
+                                  "justifyContent": "center",
+                                  "overflow": "hidden",
+                                  "textAlignVertical": "center",
+                                },
+                                {
+                                  "paddingHorizontal": 24,
+                                },
+                                {
+                                  "backgroundColor": "#0B3EE3",
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
+                                },
+                                {},
+                              ]
+                            }
+                            nativeID="6"
                             style={
                               [
                                 {
@@ -768,9 +811,15 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
-                                false,
                                 {
-                                  "backgroundColor": undefined,
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                                {
+                                  "backgroundColor": "rgba(11, 62, 227, 1)",
                                 },
                                 {
                                   "paddingHorizontal": 24,
@@ -787,6 +836,31 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                  },
+                                  {
+                                    "columnGap": 8,
+                                  },
+                                  false,
+                                ]
+                              }
+                              nativeID="7"
                               style={
                                 [
                                   {
@@ -805,9 +879,33 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                 accessibilityElementsHidden={true}
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "color": "rgba(255, 255, 255, 1)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "textAlign": "auto",
+                                    },
+                                    {
+                                      "color": "#FFFFFF",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
+                                nativeID="8"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -828,7 +926,7 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                         "color": "#FFFFFF",
                                       },
                                       {
-                                        "color": undefined,
+                                        "color": "rgba(255, 255, 255, 1)",
                                       },
                                     ],
                                   ]
@@ -901,6 +999,48 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                             testID="secondary_button"
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 0,
+                                  },
+                                  {
+                                    "backgroundColor": "transparent",
+                                    "borderColor": "#0B3EE3",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": undefined,
+                                  },
+                                  {},
+                                ]
+                              }
+                              nativeID="9"
                               style={
                                 [
                                   {
@@ -912,7 +1052,13 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
                                   {},
                                   {
                                     "paddingHorizontal": 0,
@@ -929,6 +1075,31 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
+                                nativeID="10"
                                 style={
                                   [
                                     {
@@ -947,9 +1118,33 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={true}
+                                  collapsable={false}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "color": "rgba(11, 62, 227, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                      },
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
+                                  nativeID="11"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -970,7 +1165,7 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                           "color": "#0B3EE3",
                                         },
                                         {
-                                          "color": undefined,
+                                          "color": "rgba(11, 62, 227, 1)",
                                         },
                                       ],
                                     ]
@@ -1760,6 +1955,49 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                           testID="primary_button"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(11, 62, 227, 1)",
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderCurve": "continuous",
+                                  "elevation": 0,
+                                  "flexDirection": "row",
+                                  "justifyContent": "center",
+                                  "overflow": "hidden",
+                                  "textAlignVertical": "center",
+                                },
+                                {
+                                  "paddingHorizontal": 24,
+                                },
+                                {
+                                  "backgroundColor": "#0B3EE3",
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
+                                },
+                                {},
+                              ]
+                            }
+                            nativeID="12"
                             style={
                               [
                                 {
@@ -1771,9 +2009,15 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
-                                false,
                                 {
-                                  "backgroundColor": undefined,
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                                {
+                                  "backgroundColor": "rgba(11, 62, 227, 1)",
                                 },
                                 {
                                   "paddingHorizontal": 24,
@@ -1790,6 +2034,31 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                  },
+                                  {
+                                    "columnGap": 8,
+                                  },
+                                  false,
+                                ]
+                              }
+                              nativeID="13"
                               style={
                                 [
                                   {
@@ -1808,9 +2077,33 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                 accessibilityElementsHidden={true}
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "color": "rgba(255, 255, 255, 1)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "textAlign": "auto",
+                                    },
+                                    {
+                                      "color": "#FFFFFF",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
+                                nativeID="14"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1831,7 +2124,7 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                         "color": "#FFFFFF",
                                       },
                                       {
-                                        "color": undefined,
+                                        "color": "rgba(255, 255, 255, 1)",
                                       },
                                     ],
                                   ]
@@ -1904,6 +2197,48 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                             testID="secondary_button"
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 0,
+                                  },
+                                  {
+                                    "backgroundColor": "transparent",
+                                    "borderColor": "#0B3EE3",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": undefined,
+                                  },
+                                  {},
+                                ]
+                              }
+                              nativeID="15"
                               style={
                                 [
                                   {
@@ -1915,7 +2250,13 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
                                   {},
                                   {
                                     "paddingHorizontal": 0,
@@ -1932,6 +2273,31 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
+                                nativeID="16"
                                 style={
                                   [
                                     {
@@ -1950,9 +2316,33 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={true}
+                                  collapsable={false}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "color": "rgba(11, 62, 227, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                      },
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
+                                  nativeID="17"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1973,7 +2363,7 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                           "color": "#0B3EE3",
                                         },
                                         {
-                                          "color": undefined,
+                                          "color": "rgba(11, 62, 227, 1)",
                                         },
                                       ],
                                     ]
@@ -2602,6 +2992,49 @@ exports[`BottomSheetContent doesn't render a link and matches its snapshot when 
                           testID="primary_button"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(11, 62, 227, 1)",
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderCurve": "continuous",
+                                  "elevation": 0,
+                                  "flexDirection": "row",
+                                  "justifyContent": "center",
+                                  "overflow": "hidden",
+                                  "textAlignVertical": "center",
+                                },
+                                {
+                                  "paddingHorizontal": 24,
+                                },
+                                {
+                                  "backgroundColor": "#0B3EE3",
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
+                                },
+                                {},
+                              ]
+                            }
+                            nativeID="0"
                             style={
                               [
                                 {
@@ -2613,9 +3046,15 @@ exports[`BottomSheetContent doesn't render a link and matches its snapshot when 
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
-                                false,
                                 {
-                                  "backgroundColor": undefined,
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                                {
+                                  "backgroundColor": "rgba(11, 62, 227, 1)",
                                 },
                                 {
                                   "paddingHorizontal": 24,
@@ -2632,6 +3071,31 @@ exports[`BottomSheetContent doesn't render a link and matches its snapshot when 
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                  },
+                                  {
+                                    "columnGap": 8,
+                                  },
+                                  false,
+                                ]
+                              }
+                              nativeID="1"
                               style={
                                 [
                                   {
@@ -2650,9 +3114,33 @@ exports[`BottomSheetContent doesn't render a link and matches its snapshot when 
                                 accessibilityElementsHidden={true}
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "color": "rgba(255, 255, 255, 1)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "textAlign": "auto",
+                                    },
+                                    {
+                                      "color": "#FFFFFF",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
+                                nativeID="2"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -2673,7 +3161,7 @@ exports[`BottomSheetContent doesn't render a link and matches its snapshot when 
                                         "color": "#FFFFFF",
                                       },
                                       {
-                                        "color": undefined,
+                                        "color": "rgba(255, 255, 255, 1)",
                                       },
                                     ],
                                   ]
@@ -2746,6 +3234,48 @@ exports[`BottomSheetContent doesn't render a link and matches its snapshot when 
                             testID="secondary_button"
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 0,
+                                  },
+                                  {
+                                    "backgroundColor": "transparent",
+                                    "borderColor": "#0B3EE3",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": undefined,
+                                  },
+                                  {},
+                                ]
+                              }
+                              nativeID="3"
                               style={
                                 [
                                   {
@@ -2757,7 +3287,13 @@ exports[`BottomSheetContent doesn't render a link and matches its snapshot when 
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
                                   {},
                                   {
                                     "paddingHorizontal": 0,
@@ -2774,6 +3310,31 @@ exports[`BottomSheetContent doesn't render a link and matches its snapshot when 
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
+                                nativeID="4"
                                 style={
                                   [
                                     {
@@ -2792,9 +3353,33 @@ exports[`BottomSheetContent doesn't render a link and matches its snapshot when 
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={true}
+                                  collapsable={false}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "color": "rgba(11, 62, 227, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                      },
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
+                                  nativeID="5"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -2815,7 +3400,7 @@ exports[`BottomSheetContent doesn't render a link and matches its snapshot when 
                                           "color": "#0B3EE3",
                                         },
                                         {
-                                          "color": undefined,
+                                          "color": "rgba(11, 62, 227, 1)",
                                         },
                                       ],
                                     ]

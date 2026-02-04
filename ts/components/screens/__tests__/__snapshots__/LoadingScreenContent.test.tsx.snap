@@ -401,14 +401,34 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
                               >
                                 <View
                                   collapsable={false}
-                                  style={
+                                  jestAnimatedProps={
                                     {
-                                      "transform": [
-                                        {
-                                          "rotateZ": "0deg",
-                                        },
-                                      ],
+                                      "value": {},
                                     }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "rotateZ": "0deg",
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={{}}
+                                  nativeID="2"
+                                  style={
+                                    [
+                                      {
+                                        "transform": [
+                                          {
+                                            "rotateZ": "0deg",
+                                          },
+                                        ],
+                                      },
+                                    ]
                                   }
                                   testID="LoadingSpinnerAnimatedTestID"
                                 >
@@ -1040,14 +1060,34 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
                               >
                                 <View
                                   collapsable={false}
-                                  style={
+                                  jestAnimatedProps={
                                     {
-                                      "transform": [
-                                        {
-                                          "rotateZ": "0deg",
-                                        },
-                                      ],
+                                      "value": {},
                                     }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "rotateZ": "0deg",
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={{}}
+                                  nativeID="3"
+                                  style={
+                                    [
+                                      {
+                                        "transform": [
+                                          {
+                                            "rotateZ": "0deg",
+                                          },
+                                        ],
+                                      },
+                                    ]
                                   }
                                   testID="LoadingSpinnerAnimatedTestID"
                                 >
@@ -1679,14 +1719,34 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                               >
                                 <View
                                   collapsable={false}
-                                  style={
+                                  jestAnimatedProps={
                                     {
-                                      "transform": [
-                                        {
-                                          "rotateZ": "0deg",
-                                        },
-                                      ],
+                                      "value": {},
                                     }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "rotateZ": "0deg",
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={{}}
+                                  nativeID="0"
+                                  style={
+                                    [
+                                      {
+                                        "transform": [
+                                          {
+                                            "rotateZ": "0deg",
+                                          },
+                                        ],
+                                      },
+                                    ]
                                   }
                                   testID="LoadingSpinnerAnimatedTestID"
                                 >
@@ -2295,14 +2355,34 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                               >
                                 <View
                                   collapsable={false}
-                                  style={
+                                  jestAnimatedProps={
                                     {
-                                      "transform": [
-                                        {
-                                          "rotateZ": "0deg",
-                                        },
-                                      ],
+                                      "value": {},
                                     }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "rotateZ": "0deg",
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={{}}
+                                  nativeID="1"
+                                  style={
+                                    [
+                                      {
+                                        "transform": [
+                                          {
+                                            "rotateZ": "0deg",
+                                          },
+                                        ],
+                                      },
+                                    ]
                                   }
                                   testID="LoadingSpinnerAnimatedTestID"
                                 >

@@ -1213,6 +1213,36 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                         testID="due-date-alert"
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "transform": [
+                                  {
+                                    "scale": 1,
+                                  },
+                                ],
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "borderCurve": "continuous",
+                                "borderRadius": 12,
+                                "padding": 16,
+                              },
+                              {
+                                "backgroundColor": "#FFF5DA",
+                              },
+                            ]
+                          }
+                          nativeID="0"
                           style={
                             [
                               {
@@ -1226,7 +1256,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                               {
                                 "transform": [
                                   {
-                                    "scale": undefined,
+                                    "scale": 1,
                                   },
                                 ],
                               },

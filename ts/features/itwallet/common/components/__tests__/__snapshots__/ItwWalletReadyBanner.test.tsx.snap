@@ -380,6 +380,39 @@ exports[`ItwWalletReadyBanner should match snapshot when ITW new interface activ
                           testID="itwWalletReadyBannerTestID"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignContent": "center",
+                                  "alignItems": "flex-start",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "flexDirection": "row",
+                                  "padding": 16,
+                                },
+                                {
+                                  "backgroundColor": "#DBF9FA",
+                                },
+                              ]
+                            }
+                            nativeID="1"
                             style={
                               [
                                 {
@@ -396,7 +429,7 @@ exports[`ItwWalletReadyBanner should match snapshot when ITW new interface activ
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -1109,6 +1142,39 @@ exports[`ItwWalletReadyBanner should match snapshot when ITW new interface activ
                           testID="itwWalletReadyBannerTestID"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignContent": "center",
+                                  "alignItems": "flex-start",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "flexDirection": "row",
+                                  "padding": 16,
+                                },
+                                {
+                                  "backgroundColor": "#DBF9FA",
+                                },
+                              ]
+                            }
+                            nativeID="0"
                             style={
                               [
                                 {
@@ -1125,7 +1191,7 @@ exports[`ItwWalletReadyBanner should match snapshot when ITW new interface activ
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },

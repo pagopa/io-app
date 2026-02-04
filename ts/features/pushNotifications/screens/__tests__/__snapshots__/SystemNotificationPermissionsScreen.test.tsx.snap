@@ -358,6 +358,17 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                           ]
                         }
                         decelerationRate="normal"
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
+                        nativeID="0"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -642,6 +653,30 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                         }
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "bottom": 0,
+                                "left": 0,
+                                "position": "absolute",
+                                "right": 0,
+                                "top": 0,
+                              },
+                              false,
+                            ]
+                          }
+                          nativeID="1"
                           pointerEvents="none"
                           style={
                             [
@@ -657,10 +692,29 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "opacity": 1,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                false,
+                              ]
+                            }
+                            nativeID="2"
                             style={
                               [
                                 {
-                                  "opacity": undefined,
+                                  "opacity": 1,
                                 },
                                 false,
                               ]
@@ -670,26 +724,26 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                               colors={
                                 [
                                   16777215,
-                                  218103807,
-                                  419430399,
-                                  620756991,
-                                  822083583,
-                                  1040187391,
-                                  1241513983,
-                                  1442840575,
-                                  1644167167,
-                                  1845493759,
-                                  2046820351,
-                                  2264924159,
+                                  33554431,
+                                  83886079,
+                                  150994943,
+                                  268435455,
+                                  385875967,
+                                  520093695,
+                                  687865855,
+                                  855638015,
+                                  1056964607,
+                                  1258291199,
+                                  1476395007,
+                                  1711276031,
+                                  1946157055,
+                                  2214592511,
                                   2466250751,
-                                  2667577343,
-                                  2868903935,
-                                  3070230527,
-                                  3271557119,
-                                  3489660927,
-                                  3690987519,
-                                  3892314111,
-                                  4093640703,
+                                  2751463423,
+                                  3036676095,
+                                  3338665983,
+                                  3640655871,
+                                  3959422975,
                                   4294967295,
                                 ]
                               }
@@ -800,6 +854,49 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                             testID="notifications-modal-open-system-settings-button"
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
+                                ]
+                              }
+                              nativeID="3"
                               style={
                                 [
                                   {
@@ -811,9 +908,15 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "backgroundColor": undefined,
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                  {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
                                   },
                                   {
                                     "paddingHorizontal": 16,
@@ -830,6 +933,31 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
+                                nativeID="4"
                                 style={
                                   [
                                     {
@@ -848,9 +976,33 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={true}
+                                  collapsable={false}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "color": "rgba(255, 255, 255, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#FFFFFF",
+                                      },
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
+                                  nativeID="5"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -871,7 +1023,7 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                           "color": "#FFFFFF",
                                         },
                                         {
-                                          "color": undefined,
+                                          "color": "rgba(255, 255, 255, 1)",
                                         },
                                       ],
                                     ]
@@ -945,6 +1097,48 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                               testID="notifications-modal-not-now-button"
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "borderCurve": "continuous",
+                                      "elevation": 0,
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                      "overflow": "hidden",
+                                      "textAlignVertical": "center",
+                                    },
+                                    {
+                                      "paddingHorizontal": 0,
+                                    },
+                                    {
+                                      "backgroundColor": "transparent",
+                                      "borderColor": "#0B3EE3",
+                                      "borderRadius": 8,
+                                      "borderWidth": 0,
+                                      "height": undefined,
+                                    },
+                                    {},
+                                  ]
+                                }
+                                nativeID="6"
                                 style={
                                   [
                                     {
@@ -956,7 +1150,13 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
-                                    false,
+                                    {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
                                     {},
                                     {
                                       "paddingHorizontal": 0,
@@ -973,6 +1173,31 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "columnGap": 8,
+                                      },
+                                      false,
+                                    ]
+                                  }
+                                  nativeID="7"
                                   style={
                                     [
                                       {
@@ -991,9 +1216,33 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                     accessibilityElementsHidden={true}
                                     accessible={false}
                                     allowFontScaling={true}
+                                    collapsable={false}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "color": "rgba(11, 62, 227, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                        },
+                                      ]
+                                    }
                                     maxFontSizeMultiplier={1.5}
+                                    nativeID="8"
                                     numberOfLines={1}
                                     style={
                                       [
@@ -1014,7 +1263,7 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                             "color": "#0B3EE3",
                                           },
                                           {
-                                            "color": undefined,
+                                            "color": "rgba(11, 62, 227, 1)",
                                           },
                                         ],
                                       ]

@@ -415,6 +415,36 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               testID="toggle-claim-visibility"
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "height": 24,
+                                      "width": 24,
+                                    },
+                                  ]
+                                }
+                                nativeID="18"
                                 style={
                                   [
                                     {
@@ -425,7 +455,13 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       "height": 24,
                                       "width": 24,
                                     },
-                                    false,
+                                    {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
                                   ]
                                 }
                               >
@@ -434,20 +470,29 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   accessibilityLabel=""
                                   accessible={false}
                                   align="xMidYMid"
-                                  animatedProps={
-                                    {
-                                      "color": undefined,
-                                    }
-                                  }
                                   bbHeight={36}
                                   bbWidth={36}
+                                  collapsable={false}
                                   color="#0B3EE3"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {
+                                        "color": "rgba(11, 62, 227, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  nativeID="19"
                                   style={
                                     [
                                       {
@@ -1637,6 +1682,36 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
+                                  nativeID="36"
                                   style={
                                     [
                                       {
@@ -1647,7 +1722,13 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "height": 24,
                                         "width": 24,
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                     ]
                                   }
                                 >
@@ -1656,20 +1737,29 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    animatedProps={
-                                      {
-                                        "color": undefined,
-                                      }
-                                    }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    collapsable={false}
                                     color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {
+                                          "color": "rgba(11, 62, 227, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    nativeID="37"
                                     style={
                                       [
                                         {
@@ -2309,6 +2399,36 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               testID="toggle-claim-visibility"
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "height": 24,
+                                      "width": 24,
+                                    },
+                                  ]
+                                }
+                                nativeID="0"
                                 style={
                                   [
                                     {
@@ -2319,7 +2439,13 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       "height": 24,
                                       "width": 24,
                                     },
-                                    false,
+                                    {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
                                   ]
                                 }
                               >
@@ -2328,20 +2454,29 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   accessibilityLabel=""
                                   accessible={false}
                                   align="xMidYMid"
-                                  animatedProps={
-                                    {
-                                      "color": undefined,
-                                    }
-                                  }
                                   bbHeight={36}
                                   bbWidth={36}
+                                  collapsable={false}
                                   color="#0B3EE3"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {
+                                        "color": "rgba(11, 62, 227, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  nativeID="1"
                                   style={
                                     [
                                       {
@@ -2517,6 +2652,29 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
+                            nativeID="2"
                             style={
                               [
                                 {
@@ -2525,12 +2683,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              nativeID="3"
                               style={
                                 [
                                   {
@@ -2544,7 +2732,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -2748,6 +2936,29 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
+                            nativeID="4"
                             style={
                               [
                                 {
@@ -2756,12 +2967,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              nativeID="5"
                               style={
                                 [
                                   {
@@ -2775,7 +3016,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -2886,6 +3127,29 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
+                            nativeID="6"
                             style={
                               [
                                 {
@@ -2894,12 +3158,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              nativeID="7"
                               style={
                                 [
                                   {
@@ -2913,7 +3207,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -3024,6 +3318,29 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
+                            nativeID="8"
                             style={
                               [
                                 {
@@ -3032,12 +3349,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              nativeID="9"
                               style={
                                 [
                                   {
@@ -3051,7 +3398,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -3306,6 +3653,29 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
+                            nativeID="10"
                             style={
                               [
                                 {
@@ -3314,12 +3684,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              nativeID="11"
                               style={
                                 [
                                   {
@@ -3333,7 +3733,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -3444,6 +3844,29 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
+                            nativeID="12"
                             style={
                               [
                                 {
@@ -3452,12 +3875,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              nativeID="13"
                               style={
                                 [
                                   {
@@ -3471,7 +3924,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -3675,6 +4128,29 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
+                            nativeID="14"
                             style={
                               [
                                 {
@@ -3683,12 +4159,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              nativeID="15"
                               style={
                                 [
                                   {
@@ -3702,7 +4208,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -3897,6 +4403,36 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
+                                  nativeID="16"
                                   style={
                                     [
                                       {
@@ -3907,7 +4443,13 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "height": 24,
                                         "width": 24,
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                     ]
                                   }
                                 >
@@ -3916,20 +4458,29 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    animatedProps={
-                                      {
-                                        "color": undefined,
-                                      }
-                                    }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    collapsable={false}
                                     color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {
+                                          "color": "rgba(11, 62, 227, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    nativeID="17"
                                     style={
                                       [
                                         {
