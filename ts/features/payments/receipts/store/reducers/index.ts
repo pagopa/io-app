@@ -19,6 +19,7 @@ import {
   filterTransactionsByIdAndGetIndex,
   restoreTransactionsToOriginalOrder
 } from "../../utils";
+import { ReceiptDownloadFailure } from "../../types";
 
 type CancelTransactionRecord = {
   removedItems: Array<NoticeListItem>;
@@ -30,7 +31,10 @@ export type ReceiptTransactionState = {
   transactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>;
   latestTransactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>;
   details: pot.Pot<NoticeDetailResponse, NetworkError>;
-  receiptDocument: pot.Pot<PaymentsTransactionReceiptInfoPayload, NetworkError>;
+  receiptDocument: pot.Pot<
+    PaymentsTransactionReceiptInfoPayload,
+    NetworkError | ReceiptDownloadFailure
+  >;
   cancelTransactionRecord: pot.Pot<CancelTransactionRecord, NetworkError>;
 };
 
