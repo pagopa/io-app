@@ -17,6 +17,7 @@ import {
   ReadStatus,
   useCieInternalAuthAndMrtdReading
 } from "../hooks/useCieInternalAuthAndMrtdReading";
+import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
 import { setAarFlowState } from "../store/actions";
 import { RecipientInfo, sendAARFlowStates } from "../utils/stateUtils";
 import { useTrackCieReadingEvents } from "../hooks/useTrackCieReadingEvents";
@@ -41,8 +42,7 @@ export const SendAARCieCardReadingComponent = ({
 }: SendAARCieCardReadingComponentProps) => {
   const dispatch = useIODispatch();
   const theme = useIOTheme();
-  const { startReading, stopReading, readState } =
-    useCieInternalAuthAndMrtdReading();
+  const { startReading, readState } = useCieInternalAuthAndMrtdReading();
 
   useTrackCieReadingEvents(readState);
 
@@ -50,6 +50,7 @@ export const SendAARCieCardReadingComponent = ({
   const data = isSuccessState(readState) ? readState.data : undefined;
   const errorName = isError ? readState.error.name : undefined;
   const progress = isReadingState(readState) ? readState.progress : 0;
+  const { terminateFlow } = useSendAarFlowManager();
 
   const handleZendeskAssistance = () => {
     dismiss();
@@ -88,10 +89,32 @@ export const SendAARCieCardReadingComponent = ({
     handleStartReading();
   }, [handleStartReading]);
 
-  const handleClose = useCallback(() => {
-    stopReading();
-    // TODO: handle navigate back
-  }, [stopReading]);
+  const restartToCanAdvisory = useCallback(() => {
+    dispatch(
+      setAarFlowState({
+        type: sendAARFlowStates.cieCanAdvisory,
+        iun,
+        recipientInfo,
+        mandateId,
+        verificationCode
+      })
+    );
+  }, [dispatch, iun, mandateId, recipientInfo, verificationCode]);
+
+  const errorCloseHandler = useCallback(terminateFlow, [terminateFlow]);
+
+  const restartToScanningAdvisory = useCallback(() => {
+    dispatch(
+      setAarFlowState({
+        type: sendAARFlowStates.cieScanningAdvisory,
+        iun,
+        recipientInfo,
+        mandateId,
+        can,
+        verificationCode
+      })
+    );
+  }, [can, dispatch, iun, mandateId, recipientInfo, verificationCode]);
 
   const contentMap: {
     [K in ReadStatus]: ScreenContentProps;
@@ -114,7 +137,7 @@ export const SendAARCieCardReadingComponent = ({
             secondaryAction: {
               testID: "tagLostCloseButton",
               label: i18n.t("global.buttons.close"),
-              onPress: handleClose
+              onPress: restartToScanningAdvisory
             }
           };
         case "WRONG_CAN":
@@ -135,12 +158,12 @@ export const SendAARCieCardReadingComponent = ({
             primaryAction: {
               testID: "wrongCanRetryButton",
               label: i18n.t("global.buttons.retry"),
-              onPress: handleStartReading
+              onPress: restartToCanAdvisory
             },
             secondaryAction: {
               testID: "wrongCanCloseButton",
               label: i18n.t("global.buttons.close"),
-              onPress: handleClose
+              onPress: errorCloseHandler
             }
           };
         default:
@@ -154,8 +177,8 @@ export const SendAARCieCardReadingComponent = ({
             ),
             primaryAction: {
               testID: "genericErrorPrimaryAction",
-              label: i18n.t("global.buttons.close"),
-              onPress: handleClose
+              label: i18n.t("global.buttons.retry"),
+              onPress: restartToCanAdvisory
             },
             secondaryAction: {
               testID: "genericErrorSecondaryAction",
@@ -173,8 +196,9 @@ export const SendAARCieCardReadingComponent = ({
         title: i18n.t("features.pn.aar.flow.cieScanning.idle.title"),
         pictogram: "nfcScanAndroid",
         secondaryAction: {
+          testID: "idleCloseButton",
           label: i18n.t("global.buttons.close"),
-          onPress: handleClose
+          onPress: restartToScanningAdvisory
         }
       },
       [ReadStatus.READING]: {
@@ -182,8 +206,9 @@ export const SendAARCieCardReadingComponent = ({
         subtitle: i18n.t("features.pn.aar.flow.cieScanning.reading.subtitle"),
         pictogram: "nfcScanAndroid",
         secondaryAction: {
+          testID: "readingCloseButton",
           label: i18n.t("global.buttons.close"),
-          onPress: handleClose
+          onPress: restartToScanningAdvisory
         }
       },
       [ReadStatus.SUCCESS]: {
@@ -192,7 +217,14 @@ export const SendAARCieCardReadingComponent = ({
       },
       [ReadStatus.ERROR]: generateErrorContent()
     };
-  }, [errorName, handleStartReading, handleClose, present]);
+  }, [
+    restartToScanningAdvisory,
+    errorName,
+    handleStartReading,
+    errorCloseHandler,
+    restartToCanAdvisory,
+    present
+  ]);
 
   return (
     <SafeAreaView
