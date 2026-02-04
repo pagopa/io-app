@@ -48,31 +48,36 @@ type Props = WithTestID<{
 }>;
 
 const renderNavigationComponent = (
-  { onPrevious, onNext, iconLeftDisabled, iconRightDisabled }: Props,
+  { onPrevious, onNext, iconLeftDisabled, iconRightDisabled, disabled }: Props,
   title: string
-) => (
-  <HStack space={8}>
-    {/* button left */}
-    <IconButton
-      onPress={onPrevious}
-      disabled={iconLeftDisabled}
-      testID={"DocumentsNavigationBarLeftButtonTestID"}
-      icon="chevronLeft"
-      iconSize={24}
-      accessibilityLabel="previous"
-    />
-    <H6>{title}</H6>
-    {/* button right */}
-    <IconButton
-      onPress={onNext}
-      disabled={iconRightDisabled}
-      testID={"DocumentsNavigationBarRightButtonTestID"}
-      icon="chevronRight"
-      iconSize={24}
-      accessibilityLabel="next"
-    />
-  </HStack>
-);
+) => {
+  if (disabled) {
+    return null;
+  }
+  return (
+    <HStack space={8}>
+      {/* button left */}
+      <IconButton
+        onPress={onPrevious}
+        disabled={iconLeftDisabled}
+        testID={"DocumentsNavigationBarLeftButtonTestID"}
+        icon="chevronLeft"
+        iconSize={24}
+        accessibilityLabel="previous"
+      />
+      <H6>{title}</H6>
+      {/* button right */}
+      <IconButton
+        onPress={onNext}
+        disabled={iconRightDisabled}
+        testID={"DocumentsNavigationBarRightButtonTestID"}
+        icon="chevronRight"
+        iconSize={24}
+        accessibilityLabel="next"
+      />
+    </HStack>
+  );
+};
 
 /**
  * A component to render a documents navigation bar with two buttons

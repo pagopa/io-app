@@ -91,6 +91,13 @@ const FciDocumentsScreen = () => {
   }, [dispatch, documentSignaturesSelector, documents, currentDoc, isFocused]);
 
   useEffect(() => {
+    if (isFocused) {
+      setTotalPages(0);
+      setCurrentPage(1);
+    }
+  }, [currentDoc, downloadPath, isFocused]);
+
+  useEffect(() => {
     // with a document opened, we can track the opening success event
     if (documents[currentDoc] && isFocused) {
       trackFciDocOpeningSuccess(
@@ -170,17 +177,22 @@ const FciDocumentsScreen = () => {
      * onPageChanged, which is called to report that the first page
      * has loaded */
     <Pdf
+      key={`${documents[currentDoc]?.id ?? "doc"}:${downloadPath}`}
       ref={pdfRef}
       source={{
         uri: `${downloadPath}`
       }}
       onLoadComplete={(numberOfPages, _) => {
+        if (!isFocused) {
+          return;
+        }
         setTotalPages(numberOfPages);
       }}
       onPageChanged={(page, numberOfPages) => {
-        if (totalPages === 0) {
-          setTotalPages(numberOfPages);
+        if (!isFocused) {
+          return;
         }
+        setTotalPages(numberOfPages);
         setCurrentPage(page);
       }}
       enablePaging
@@ -244,7 +256,7 @@ const FciDocumentsScreen = () => {
         iconRightDisabled={currentPage === totalPages}
         onPrevious={onPrevious}
         onNext={onNext}
-        disabled={false}
+        disabled={totalPages === 0}
         testID={"FciDocumentsNavBarTestID"}
       />
       <View style={{ flex: 1 }} testID={"FciDocumentsScreenTestID"}>
