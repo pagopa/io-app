@@ -8,7 +8,7 @@ import {
   ITW_TECH_EVENTS
 } from "./enum";
 import {
-  TrackItwDiscoveryBannerProperties,
+  TrackItwBannerProperties,
   ItwFlow,
   ItwWalletDataShare,
   ItwScreenFlowContext,
@@ -28,8 +28,8 @@ import {
 
 // Screen view events
 
-export const trackItwDiscoveryBannerLegacy = (
-  properties: TrackItwDiscoveryBannerProperties
+export const trackItwBannerVisualized = (
+  properties: TrackItwBannerProperties
 ) => {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.BANNER,
@@ -77,7 +77,7 @@ export const trackItwDismissalContext = (
 };
 
 export const trackItwDiscoveryBanner = (
-  properties: TrackItwDiscoveryBannerProperties
+  properties: TrackItwBannerProperties
 ) => {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_BANNER,
@@ -94,18 +94,14 @@ export const trackItwSurveyRequest = (properties: TrackQualtricsSurvey) => {
 
 // Actions events
 
-export const trackItwDiscoveryBannerLegacyTap = (
-  properties: TrackItwDiscoveryBannerProperties
-) => {
+export const trackItwBannerTap = (properties: TrackItwBannerProperties) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.TAP_BANNER,
     buildEventProperties("UX", "action", properties)
   );
 };
 
-export const trackItwDiscoveryBannerLegacyClose = (
-  properties: TrackItwDiscoveryBannerProperties
-) => {
+export const trackItwBannerClosure = (properties: TrackItwBannerProperties) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.CLOSE_BANNER,
     buildEventProperties("UX", "action", properties)
@@ -213,7 +209,7 @@ export const trackItwDismissalAction = (
 };
 
 export const trackItwDiscoveryBannerTap = (
-  properties: TrackItwDiscoveryBannerProperties
+  properties: TrackItwBannerProperties
 ) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_TAP_BANNER,
@@ -221,8 +217,8 @@ export const trackItwDiscoveryBannerTap = (
   );
 };
 
-export const trackItwDiscoveryBannerClose = (
-  properties: TrackItwDiscoveryBannerProperties
+export const trackItwDiscoveryBannerClosure = (
+  properties: TrackItwBannerProperties
 ) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CLOSE_BANNER,

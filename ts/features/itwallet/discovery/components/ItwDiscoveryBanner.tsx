@@ -12,7 +12,7 @@ import {
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import {
-  trackItwDiscoveryBannerClose,
+  trackItwDiscoveryBannerClosure,
   trackItwDiscoveryBannerTap,
   trackItwDiscoveryBanner
 } from "../../analytics";
@@ -95,7 +95,7 @@ export const ItwDiscoveryBanner = ({
   };
 
   const handleOnDismiss = () => {
-    trackItwDiscoveryBannerClose(trackBannerProperties);
+    trackItwDiscoveryBannerClosure(trackBannerProperties);
     onDismiss?.();
     dispatch(itwCloseBanner(`discovery_${flow}`));
   };

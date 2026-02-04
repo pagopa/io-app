@@ -70,7 +70,7 @@ export type CredentialStatusAssertionFailure = {
 
 export type ItwIdMethod = IdentificationContext["mode"];
 
-export type TrackItwDiscoveryBannerProperties = {
+export type TrackItwBannerProperties = {
   banner_id: string;
   banner_page: string;
   banner_landing: string;
