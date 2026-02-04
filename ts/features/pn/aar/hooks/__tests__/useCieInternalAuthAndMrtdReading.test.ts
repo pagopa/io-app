@@ -27,6 +27,13 @@ jest.mock("@pagopa/io-react-native-cie", () => ({
     startInternalAuthAndMRTDReading: jest.fn()
   }
 }));
+const mockStopReading = CieManager.stopReading as jest.Mock;
+const mockAddListener = CieManager.addListener as jest.Mock;
+const mockInternalAuth =
+  CieManager.startInternalAuthAndMRTDReading as jest.Mock;
+const mockSetAlertMessage = CieManager.setAlertMessage as jest.Mock;
+const mockSetCurrentAlertMessage =
+  CieManager.setCurrentAlertMessage as jest.Mock;
 
 describe("useCieInternalAuthAndMrtdReading", () => {
   beforeEach(() => {
@@ -40,15 +47,11 @@ describe("useCieInternalAuthAndMrtdReading", () => {
   });
 
   it("should not re-render on first execution of 'startReading'", async () => {
-    const spyOnStartInternalAuth = jest.spyOn(
-      CieManager,
-      "startInternalAuthAndMRTDReading"
-    );
     const { result } = renderHook(() => useCieInternalAuthAndMrtdReading());
 
     const initialState = result.current.readState;
 
-    expect(spyOnStartInternalAuth).not.toHaveBeenCalled();
+    expect(mockInternalAuth).not.toHaveBeenCalled();
 
     await act(async () => {
       await result.current.startReading(TEST_CAN, TEST_CHALLENGE, "base64url");
@@ -56,8 +59,8 @@ describe("useCieInternalAuthAndMrtdReading", () => {
 
     const stateAfterStartReading = result.current.readState;
 
-    expect(spyOnStartInternalAuth).toHaveBeenCalledTimes(1);
-    expect(spyOnStartInternalAuth).toHaveBeenCalledWith(
+    expect(mockInternalAuth).toHaveBeenCalledTimes(1);
+    expect(mockInternalAuth).toHaveBeenCalledWith(
       TEST_CAN,
       TEST_CHALLENGE,
       "base64url"
@@ -65,43 +68,40 @@ describe("useCieInternalAuthAndMrtdReading", () => {
     expect(initialState).toBe(stateAfterStartReading);
   });
   it('should register to "onEvent", "onError" and "onInternalAuthAndMRTDWithPaceSuccess" events', () => {
-    const spyOnAddListener = jest.spyOn(CieManager, "addListener");
-    expect(spyOnAddListener).toHaveBeenCalledTimes(0);
+    expect(mockAddListener).toHaveBeenCalledTimes(0);
 
     renderHook(() => useCieInternalAuthAndMrtdReading());
 
-    expect(spyOnAddListener).toHaveBeenCalledTimes(3);
+    expect(mockAddListener).toHaveBeenCalledTimes(3);
 
-    expect(spyOnAddListener).toHaveBeenCalledWith(
+    expect(mockAddListener).toHaveBeenCalledWith(
       "onEvent",
       expect.any(Function)
     );
-    expect(spyOnAddListener).toHaveBeenCalledWith(
+    expect(mockAddListener).toHaveBeenCalledWith(
       "onError",
       expect.any(Function)
     );
-    expect(spyOnAddListener).toHaveBeenCalledWith(
+    expect(mockAddListener).toHaveBeenCalledWith(
       "onInternalAuthAndMRTDWithPaceSuccess",
       expect.any(Function)
     );
   });
   it('should remove all listeners and invoke "CieManager.stopReading" on unmount', () => {
     const mockRemove = jest.fn();
-    jest.spyOn(CieManager, "addListener").mockReturnValue(mockRemove);
-
-    const spyOnStopReading = jest.spyOn(CieManager, "stopReading");
+    mockAddListener.mockReturnValue(mockRemove);
 
     const { unmount } = renderHook(() => useCieInternalAuthAndMrtdReading());
 
     expect(mockRemove).not.toHaveBeenCalled();
-    expect(spyOnStopReading).not.toHaveBeenCalled();
+    expect(mockStopReading).not.toHaveBeenCalled();
 
     act(() => {
       unmount();
     });
 
     expect(mockRemove).toHaveBeenCalledTimes(3);
-    expect(spyOnStopReading).toHaveBeenCalledTimes(1);
+    expect(mockStopReading).toHaveBeenCalledTimes(1);
   });
   it.each([
     "CONNECTED",
@@ -112,13 +112,12 @@ describe("useCieInternalAuthAndMrtdReading", () => {
   ])(
     'should trigger HapticFeedback only when the "ON_TAG_DISCOVERED" event is sent, not for "%s"',
     eventName => {
-      const spyOnAddListener = jest.spyOn(CieManager, "addListener");
       const spyOnHapticFeedbackTrigger = jest.spyOn(HapticFeedback, "trigger");
       const { result } = renderHook(() => useCieInternalAuthAndMrtdReading());
 
-      expect(spyOnAddListener.mock.calls[0][0]).toBe("onEvent");
+      expect(mockAddListener.mock.calls[0][0]).toBe("onEvent");
 
-      const onEventCallback = spyOnAddListener.mock.calls[0][1] as (
+      const onEventCallback = mockAddListener.mock.calls[0][1] as (
         event: NfcEvent
       ) => void;
       const progress1 = Math.random();
@@ -159,17 +158,15 @@ describe("useCieInternalAuthAndMrtdReading", () => {
       const errorPayload: Exclude<NfcError, { name: "WRONG_PIN" }> = {
         name: errorName
       };
-      const spyOnAddListener = jest.spyOn(CieManager, "addListener");
-      const spyOnStopReading = jest.spyOn(CieManager, "stopReading");
 
       const { result } = renderHook(() => useCieInternalAuthAndMrtdReading());
 
-      expect(spyOnAddListener.mock.calls[1][0]).toBe("onError");
+      expect(mockAddListener.mock.calls[1][0]).toBe("onError");
       expect(result.current.readState).toStrictEqual({
         status: ReadStatus.IDLE
       });
 
-      const onErrorCallback = spyOnAddListener.mock.calls[1][1] as (
+      const onErrorCallback = mockAddListener.mock.calls[1][1] as (
         error: NfcError
       ) => void;
 
@@ -177,14 +174,14 @@ describe("useCieInternalAuthAndMrtdReading", () => {
         onErrorCallback(errorPayload);
       });
 
-      expect(spyOnStopReading).toHaveBeenCalledTimes(1);
+      expect(mockStopReading).toHaveBeenCalledTimes(1);
       expect(result.current.readState).toStrictEqual({
         status: ReadStatus.ERROR,
         error: errorPayload
       });
     }
   );
-  it("should update the readState when the reading process has been completed", () => {
+  it("should update the readState and call 'stopReading' when the reading process has been completed", () => {
     const successPayload: InternalAuthAndMrtdResponse = {
       nis_data: {
         nis: "",
@@ -198,18 +195,18 @@ describe("useCieInternalAuthAndMrtdReading", () => {
         sod: ""
       }
     };
-    const spyOnAddListener = jest.spyOn(CieManager, "addListener");
 
     const { result } = renderHook(() => useCieInternalAuthAndMrtdReading());
 
-    expect(spyOnAddListener.mock.calls[2][0]).toBe(
+    expect(mockAddListener.mock.calls[2][0]).toBe(
       "onInternalAuthAndMRTDWithPaceSuccess"
     );
     expect(result.current.readState).toStrictEqual({ status: ReadStatus.IDLE });
 
-    const onInternalAuthAndMRTDWithPaceSuccessCallback = spyOnAddListener.mock
+    const onInternalAuthAndMRTDWithPaceSuccessCallback = mockAddListener.mock
       .calls[2][1] as (result: InternalAuthAndMrtdResponse) => void;
 
+    expect(mockStopReading).toHaveBeenCalledTimes(0);
     act(() => {
       onInternalAuthAndMRTDWithPaceSuccessCallback(successPayload);
     });
@@ -218,6 +215,7 @@ describe("useCieInternalAuthAndMrtdReading", () => {
       status: ReadStatus.SUCCESS,
       data: successPayload
     });
+    expect(mockStopReading).toHaveBeenCalledTimes(1);
   });
   it.each([
     {
@@ -232,7 +230,6 @@ describe("useCieInternalAuthAndMrtdReading", () => {
     "$it",
     async ({ platform }) => {
       jest.replaceProperty(Platform, "OS", platform);
-      const spyOnSetAlertMessage = jest.spyOn(CieManager, "setAlertMessage");
 
       const { result, rerender, unmount } = renderHook(() =>
         useCieInternalAuthAndMrtdReading()
@@ -258,19 +255,19 @@ describe("useCieInternalAuthAndMrtdReading", () => {
 
       switch (platform) {
         case "ios": {
-          expect(spyOnSetAlertMessage).toHaveBeenCalledTimes(2);
-          expect(spyOnSetAlertMessage).toHaveBeenCalledWith(
+          expect(mockSetAlertMessage).toHaveBeenCalledTimes(2);
+          expect(mockSetAlertMessage).toHaveBeenCalledWith(
             "readingInstructions",
             expect.any(String)
           );
-          expect(spyOnSetAlertMessage).toHaveBeenCalledWith(
+          expect(mockSetAlertMessage).toHaveBeenCalledWith(
             "readingSuccess",
             expect.any(String)
           );
           break;
         }
         default: {
-          expect(spyOnSetAlertMessage).not.toHaveBeenCalled();
+          expect(mockSetAlertMessage).not.toHaveBeenCalled();
           break;
         }
       }
@@ -289,26 +286,19 @@ describe("useCieInternalAuthAndMrtdReading", () => {
     "$it",
     ({ platform }) => {
       jest.replaceProperty(Platform, "OS", platform);
-      const spyOnSetCurrentAlertMessage = jest.spyOn(
-        CieManager,
-        "setCurrentAlertMessage"
-      );
-      const spyOnAddListener = jest
-        .spyOn(CieManager, "addListener")
-        .mockReturnValue(jest.fn());
 
       const { result, rerender, unmount } = renderHook(() =>
         useCieInternalAuthAndMrtdReading()
       );
 
       const [onEventCb, onErrorCb, onSuccessCb] =
-        spyOnAddListener.mock.calls.map(([, cb]) => cb) as [
+        mockAddListener.mock.calls.map(([, cb]) => cb) as [
           (e: NfcEvent) => void,
           (e: NfcError) => void,
           (r: InternalAuthAndMrtdResponse) => void
         ];
 
-      expect(spyOnSetCurrentAlertMessage).not.toHaveBeenCalled();
+      expect(mockSetCurrentAlertMessage).not.toHaveBeenCalled();
 
       act(() => {
         onEventCb({ name: "ANY_EVENT", progress: 0.1 });
@@ -321,19 +311,19 @@ describe("useCieInternalAuthAndMrtdReading", () => {
 
       switch (platform) {
         case "ios": {
-          expect(spyOnSetCurrentAlertMessage).toHaveBeenCalledTimes(1);
-          expect(spyOnSetCurrentAlertMessage).toHaveBeenCalledWith(
+          expect(mockSetCurrentAlertMessage).toHaveBeenCalledTimes(1);
+          expect(mockSetCurrentAlertMessage).toHaveBeenCalledWith(
             expect.any(String)
           );
           break;
         }
         default: {
-          expect(spyOnSetCurrentAlertMessage).not.toHaveBeenCalled();
+          expect(mockSetCurrentAlertMessage).not.toHaveBeenCalled();
           break;
         }
       }
 
-      spyOnSetCurrentAlertMessage.mockRestore();
+      mockSetCurrentAlertMessage.mockRestore();
 
       act(() => {
         onErrorCb({ name: "TAG_LOST" });
@@ -359,7 +349,7 @@ describe("useCieInternalAuthAndMrtdReading", () => {
 
       act(unmount);
 
-      expect(spyOnSetCurrentAlertMessage).not.toHaveBeenCalled();
+      expect(mockSetCurrentAlertMessage).not.toHaveBeenCalled();
     }
   );
   it('should keep the same instances of "startReading" and "stopReading" despite the hook re-renders', () => {
