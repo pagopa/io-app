@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -13,6 +14,7 @@ import { sendAarMockStates } from "../../utils/testUtils";
 import { sendAARFlowStates } from "../../utils/stateUtils";
 
 const mockReplace = jest.fn();
+const mockShouldNeverCall = jest.fn();
 
 jest.mock("../../components/SendAARCieCardReadingComponent");
 
@@ -37,7 +39,7 @@ describe("SendAARCieCardReadingScreen", () => {
 
     it(`${
       shouldNavigate ? "should" : "should not"
-    } call "replace" when type is: "${type}"`, () => {
+    } call "replace", and never call any non-replace actions when type is: "${type}"`, () => {
       jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
       renderComponent();
 
@@ -46,6 +48,7 @@ describe("SendAARCieCardReadingScreen", () => {
       } else {
         expect(mockReplace).not.toHaveBeenCalled();
       }
+      expect(mockShouldNeverCall).not.toHaveBeenCalled();
     });
   });
 });
@@ -58,7 +61,7 @@ function renderComponent() {
     ({ route, navigation }: SendAARCieCardReadingScreenProps) => (
       <SendAARCieCardReadingScreen
         navigation={{
-          ...navigation,
+          ..._.mapValues(navigation, () => mockShouldNeverCall),
           replace: mockReplace
         }}
         route={{

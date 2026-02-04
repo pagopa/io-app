@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.23.0-rc.6](https://github.com/pagopa/io-app/compare/3.23.0-rc.5...3.23.0-rc.6) (2026-01-29)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-3737](https://pagopa.atlassian.net/browse/SIW-3737)] Add Android NFC Antenna info via native APIs ([#7799](https://github.com/pagopa/io-app/issues/7799)) ([0d78d5d](https://github.com/pagopa/io-app/commit/0d78d5d65bef1ebc82f45858d4f4a5285cacb841)), closes [/#diff-ce43b4673ba550f9e636ac63b5ddce3915726b8b0fed75be58c7e724022d4f3fR1-R42](https://github.com/pagopa///issues/diff-ce43b4673ba550f9e636ac63b5ddce3915726b8b0fed75be58c7e724022d4f3fR1-R42) [/#diff-e4595726ee81e30e5a4e3c1e2cba628530b0c2936935a818dae9734fdc59b055R1-R14](https://github.com/pagopa///issues/diff-e4595726ee81e30e5a4e3c1e2cba628530b0c2936935a818dae9734fdc59b055R1-R14) [/#diff-266f5a0d436e918b4c6a8ce655ece9527fb76226fbfb44f7f2d16bf1069b269aR50](https://github.com/pagopa///issues/diff-266f5a0d436e918b4c6a8ce655ece9527fb76226fbfb44f7f2d16bf1069b269aR50) [/#diff-4766fc5d3eaaed7fd678cc01376c13cf5730aa34e6d7459d147d85c697753594R49](https://github.com/pagopa///issues/diff-4766fc5d3eaaed7fd678cc01376c13cf5730aa34e6d7459d147d85c697753594R49) [/#diff-489778b3a8709db85e849d2e49e8f94f9aea08a4418a9187f1a6bf06715ba261R226-R229](https://github.com/pagopa///issues/diff-489778b3a8709db85e849d2e49e8f94f9aea08a4418a9187f1a6bf06715ba261R226-R229) [/#diff-4de2e00cec46b685293e2428c73a769f075888b6c109df62fc408698d9b8a5a3R398-R404](https://github.com/pagopa///issues/diff-4de2e00cec46b685293e2428c73a769f075888b6c109df62fc408698d9b8a5a3R398-R404)
+
+
+### Chores
+
+* [[IOBP-000](https://pagopa.atlassian.net/browse/IOBP-000)] Revert "refactor: [[IOBP-2403](https://pagopa.atlassian.net/browse/IOBP-2403),[IOBP-2496](https://pagopa.atlassian.net/browse/IOBP-2496),[IOBP-2535](https://pagopa.atlassian.net/browse/IOBP-2535)] Enable `cart` receipt download" ([#7816](https://github.com/pagopa/io-app/issues/7816)) ([2effdae](https://github.com/pagopa/io-app/commit/2effdaeb13fb779707fda5e3797f1d4d99499685)), closes [pagopa/io-app#7796](https://github.com/pagopa/io-app/issues/7796)
+
+## [3.23.0-rc.5](https://github.com/pagopa/io-app/compare/3.23.0-rc.4...3.23.0-rc.5) (2026-01-28)
+
+
+### Features
+
+* [[IOPLT-1113](https://pagopa.atlassian.net/browse/IOPLT-1113)] Add a revamped static screen to allow locale settings to be decoupled ([#7811](https://github.com/pagopa/io-app/issues/7811)) ([0ebf85b](https://github.com/pagopa/io-app/commit/0ebf85b19995574571e3b2f2e25f6a3a40200384))
+* **IT-Wallet:** [[SIW-3681](https://pagopa.atlassian.net/browse/SIW-3681)] Update of revocation alert copy ([#7810](https://github.com/pagopa/io-app/issues/7810)) ([d29cfd5](https://github.com/pagopa/io-app/commit/d29cfd58941baa7aa479181b61023a9e34cce14a))
+
+
+### Chores
+
+* [[IOPLT-1518](https://pagopa.atlassian.net/browse/IOPLT-1518)] Change theme default from `light` to `auto` ([#7794](https://github.com/pagopa/io-app/issues/7794)) ([fc1e3c3](https://github.com/pagopa/io-app/commit/fc1e3c32b3bd29a3858d48223d9ede4889d41f22))
+
 ## [3.23.0-rc.4](https://github.com/pagopa/io-app/compare/3.23.0-rc.3...3.23.0-rc.4) (2026-01-26)
 
 
