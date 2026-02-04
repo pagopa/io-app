@@ -200,11 +200,11 @@ export const isValidPspName = (pspName: string | undefined): boolean =>
   );
 
 export const mapDownloadReceiptErrorToOutcomeProps = (
-  error: NetworkError | ReceiptDownloadFailure,
+  error: NetworkError | ReceiptDownloadFailure | undefined,
   onClose: () => void,
   handleContactSupport: () => void
 ): OperationResultScreenContentProps => {
-  const errorCode = "code" in error ? error.code : undefined;
+  const errorCode = error && "code" in error ? error.code : undefined;
 
   const supportAction = {
     label: I18n.t("wallet.payment.support.supportTitle"),
