@@ -279,7 +279,8 @@ const reducer = (
           receiptOrganizationFiscalCode:
             action.payload.carts?.[0]?.payee?.taxCode,
           receiptOrganizationName: action.payload.carts?.[0]?.payee?.name,
-          receiptPayerFiscalCode: action.payload.infoNotice?.payer?.taxCode
+          receiptPayerFiscalCode: action.payload.infoNotice?.payer?.taxCode,
+          receiptEventId: action.payload.infoNotice?.eventId
         }
       };
     case getType(getPaymentsReceiptDownloadAction.request): {
