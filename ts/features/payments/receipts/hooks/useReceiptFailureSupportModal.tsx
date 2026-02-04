@@ -84,8 +84,12 @@ const useReceiptFailureSupportModal = (
   } = useIOBottomSheetModal({
     component: (
       <>
-        <ListItemHeader label={I18n.t("wallet.payment.support.supportTitle")} />
+        <ListItemHeader
+          label={I18n.t("wallet.payment.support.supportTitle")}
+          testID="receipt-failure-support-modal-header"
+        />
         <ListItemAction
+          testID="receipt-failure-support-modal-contact-support-button"
           label={I18n.t("wallet.payment.support.chat")}
           accessibilityLabel={I18n.t("wallet.payment.support.chat")}
           onPress={() => {
@@ -102,12 +106,14 @@ const useReceiptFailureSupportModal = (
             type: "buttonLink",
             componentProps: {
               label: I18n.t("wallet.payment.support.copyAll"),
-              onPress: handleCopyAllToClipboard
+              onPress: handleCopyAllToClipboard,
+              testID: "receipt-failure-support-modal-copy-all-button"
             }
           }}
         />
         {faultCodeDetail !== "" && (
           <ListItemInfoCopy
+            testID="receipt-failure-support-modal-fault-code"
             label={I18n.t("wallet.payment.support.errorCode")}
             accessibilityLabel={I18n.t("wallet.payment.support.errorCode")}
             icon="ladybug"
@@ -117,6 +123,7 @@ const useReceiptFailureSupportModal = (
         )}
         {receiptEventId && (
           <ListItemInfoCopy
+            testID="receipt-failure-support-modal-transaction-id"
             label={I18n.t("transaction.details.info.transactionId")}
             accessibilityLabel={I18n.t(
               "transaction.details.info.transactionId"

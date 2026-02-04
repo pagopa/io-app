@@ -31,6 +31,7 @@ const ReceiptDownloadErrorScreen = () => {
   return (
     <>
       <OperationResultScreenContent
+        testID="download-receipt-error-screen"
         {...mapDownloadReceiptErrorToOutcomeProps(
           pot.isError(transactionReceiptPot) && transactionReceiptPot.error,
           () => navigate.goBack(),

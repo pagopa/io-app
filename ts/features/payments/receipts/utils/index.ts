@@ -205,6 +205,18 @@ export const mapDownloadReceiptErrorToOutcomeProps = (
   handleContactSupport: () => void
 ): OperationResultScreenContentProps => {
   const errorCode = "code" in error ? error.code : undefined;
+
+  const supportAction = {
+    label: I18n.t("wallet.payment.support.supportTitle"),
+    onPress: handleContactSupport,
+    testID: "contact-support-button"
+  };
+
+  const closeAction = {
+    label: I18n.t("global.buttons.close"),
+    onPress: onClose
+  };
+
   switch (errorCode) {
     case DownloadReceiptOutcomeErrorEnum.GN_400_003:
       return {
@@ -213,14 +225,8 @@ export const mapDownloadReceiptErrorToOutcomeProps = (
           "features.payments.transactions.receipt.error.400.subtitle"
         ),
         pictogram: "attention",
-        action: {
-          label: I18n.t("wallet.payment.support.supportTitle"),
-          onPress: handleContactSupport
-        },
-        secondaryAction: {
-          label: I18n.t("global.buttons.close"),
-          onPress: onClose
-        }
+        action: supportAction,
+        secondaryAction: closeAction
       };
     case DownloadReceiptOutcomeErrorEnum.AT_404_001:
     case DownloadReceiptOutcomeErrorEnum.BZ_404_003:
@@ -230,14 +236,8 @@ export const mapDownloadReceiptErrorToOutcomeProps = (
           "features.payments.transactions.receipt.error.404.subtitle"
         ),
         pictogram: "searchLens",
-        action: {
-          label: I18n.t("global.buttons.close"),
-          onPress: onClose
-        },
-        secondaryAction: {
-          label: I18n.t("wallet.payment.support.supportTitle"),
-          onPress: handleContactSupport
-        }
+        action: closeAction,
+        secondaryAction: supportAction
       };
     case DownloadReceiptOutcomeErrorEnum.UN_500_000:
     case DownloadReceiptOutcomeErrorEnum.GN_500_001:
@@ -252,10 +252,7 @@ export const mapDownloadReceiptErrorToOutcomeProps = (
           "features.payments.transactions.receipt.error.500.subtitle"
         ),
         pictogram: "umbrella",
-        action: {
-          label: I18n.t("global.buttons.close"),
-          onPress: onClose
-        }
+        action: closeAction
       };
   }
 };

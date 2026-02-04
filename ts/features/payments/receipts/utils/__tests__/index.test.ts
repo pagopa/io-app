@@ -1,15 +1,22 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import I18n from "i18next";
 import {
   calculateTotalAmount,
   filterTransactionsByIdAndGetIndex,
   formatAmountText,
   getPayerInfoLabel,
   isValidPspName,
+  mapDownloadReceiptErrorToOutcomeProps,
   removeAsterisks,
   restoreTransactionsToOriginalOrder
 } from "..";
 import { InfoNotice } from "../../../../../../definitions/pagopa/biz-events/InfoNotice";
 import { NoticeListItem } from "../../../../../../definitions/pagopa/biz-events/NoticeListItem";
+import { getNetworkError, NetworkError } from "../../../../../utils/errors";
+import {
+  DownloadReceiptOutcomeErrorEnum,
+  ReceiptDownloadFailure
+} from "../../types";
 
 const mockTransactions: ReadonlyArray<NoticeListItem> = [
   {
@@ -393,5 +400,123 @@ describe("isValidPspName", () => {
 
   it("should return true if the name is not undefined and not equal to '-'", () => {
     expect(isValidPspName("Test PSP")).toBe(true);
+  });
+});
+
+describe("mapDownloadReceiptErrorToOutcomeProps", () => {
+  const error_400 = {
+    status: 400,
+    code: DownloadReceiptOutcomeErrorEnum.GN_400_003
+  } as ReceiptDownloadFailure;
+
+  const error_404 = [
+    {
+      status: 404,
+      code: DownloadReceiptOutcomeErrorEnum.AT_404_001
+    },
+    {
+      status: 404,
+      code: DownloadReceiptOutcomeErrorEnum.BZ_404_003
+    }
+  ] as Array<ReceiptDownloadFailure>;
+
+  const defaultErrors = [
+    getNetworkError(new Error("network error")),
+    {
+      status: 500,
+      code: DownloadReceiptOutcomeErrorEnum.UN_500_000
+    },
+    {
+      status: 500,
+      code: DownloadReceiptOutcomeErrorEnum.GN_500_001
+    },
+    {
+      status: 500,
+      code: DownloadReceiptOutcomeErrorEnum.GN_500_002
+    },
+    {
+      status: 500,
+      code: DownloadReceiptOutcomeErrorEnum.GN_500_003
+    },
+    {
+      status: 500,
+      code: DownloadReceiptOutcomeErrorEnum.GN_500_004
+    },
+    {
+      status: 500,
+      code: DownloadReceiptOutcomeErrorEnum.FG_000_001
+    }
+  ] as Array<NetworkError | ReceiptDownloadFailure>;
+
+  const onCloseMock = jest.fn();
+  const handleContactSupportMock = jest.fn();
+
+  it("Should return correct outcome props for 400 error", () => {
+    const result = mapDownloadReceiptErrorToOutcomeProps(
+      error_400,
+      onCloseMock,
+      handleContactSupportMock
+    );
+    expect(result).toEqual({
+      title: I18n.t("features.payments.transactions.receipt.error.400.title"),
+      subtitle: I18n.t(
+        "features.payments.transactions.receipt.error.400.subtitle"
+      ),
+      pictogram: "attention",
+      action: {
+        label: I18n.t("wallet.payment.support.supportTitle"),
+        onPress: expect.any(Function)
+      },
+      secondaryAction: {
+        label: I18n.t("global.buttons.close"),
+        onPress: expect.any(Function)
+      }
+    });
+  });
+
+  it("Should return correct outcome props for 404 errors", () => {
+    error_404.forEach(error => {
+      const result = mapDownloadReceiptErrorToOutcomeProps(
+        error,
+        onCloseMock,
+        handleContactSupportMock
+      );
+      expect(result).toEqual({
+        title: I18n.t("features.payments.transactions.receipt.error.404.title"),
+        subtitle: I18n.t(
+          "features.payments.transactions.receipt.error.404.subtitle"
+        ),
+        pictogram: "searchLens",
+        action: {
+          label: I18n.t("global.buttons.close"),
+          onPress: expect.any(Function)
+        },
+        secondaryAction: {
+          label: I18n.t("wallet.payment.support.supportTitle"),
+          onPress: expect.any(Function)
+        }
+      });
+    });
+  });
+
+  it("Should return default outcome props for other cases", () => {
+    defaultErrors.forEach(error => {
+      const result = mapDownloadReceiptErrorToOutcomeProps(
+        error,
+        onCloseMock,
+        handleContactSupportMock
+      );
+      expect(result).toEqual({
+        title: I18n.t("features.payments.transactions.receipt.error.500.title"),
+        subtitle: I18n.t(
+          "features.payments.transactions.receipt.error.500.subtitle"
+        ),
+        pictogram: "umbrella",
+        action: {
+          label: I18n.t("global.buttons.close"),
+          onPress: expect.any(Function)
+        }
+      });
+    });
   });
 });
