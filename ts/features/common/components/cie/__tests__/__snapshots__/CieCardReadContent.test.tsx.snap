@@ -80,7 +80,6 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
             },
           ]
         }
-        nativeID="12"
         style={
           [
             {
@@ -368,7 +367,6 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                 {},
               ]
             }
-            nativeID="13"
             style={
               [
                 {
@@ -427,7 +425,6 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                   false,
                 ]
               }
-              nativeID="14"
               style={
                 [
                   {
@@ -472,7 +469,6 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                   ]
                 }
                 maxFontSizeMultiplier={1.5}
-                nativeID="15"
                 numberOfLines={1}
                 style={
                   [
@@ -871,7 +867,6 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                 {},
               ]
             }
-            nativeID="16"
             style={
               [
                 {
@@ -932,7 +927,6 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                   false,
                 ]
               }
-              nativeID="17"
               style={
                 [
                   {
@@ -977,7 +971,6 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                   ]
                 }
                 maxFontSizeMultiplier={1.5}
-                nativeID="18"
                 numberOfLines={1}
                 style={
                   [
@@ -1107,7 +1100,6 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                 {},
               ]
             }
-            nativeID="19"
             style={
               [
                 {
@@ -1166,7 +1158,6 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                   false,
                 ]
               }
-              nativeID="20"
               style={
                 [
                   {
@@ -1211,7 +1202,6 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                   ]
                 }
                 maxFontSizeMultiplier={1.5}
-                nativeID="21"
                 numberOfLines={1}
                 style={
                   [
@@ -1327,7 +1317,6 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
             },
           ]
         }
-        nativeID="11"
         style={
           [
             {
@@ -1625,7 +1614,6 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
             },
           ]
         }
-        nativeID="1"
         style={
           [
             {
@@ -1909,7 +1897,6 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
               {},
             ]
           }
-          nativeID="2"
           style={
             [
               {
@@ -1968,7 +1955,6 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
                 false,
               ]
             }
-            nativeID="3"
             style={
               [
                 {
@@ -2013,7 +1999,6 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
                 ]
               }
               maxFontSizeMultiplier={1.5}
-              nativeID="4"
               numberOfLines={1}
               style={
                 [
@@ -2400,7 +2385,6 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
             {},
           ]
         }
-        nativeID="5"
         style={
           [
             {
@@ -2461,7 +2445,6 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
               false,
             ]
           }
-          nativeID="6"
           style={
             [
               {
@@ -2506,7 +2489,6 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
               ]
             }
             maxFontSizeMultiplier={1.5}
-            nativeID="7"
             numberOfLines={1}
             style={
               [
@@ -2633,7 +2615,6 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
               {},
             ]
           }
-          nativeID="8"
           style={
             [
               {
@@ -2692,7 +2673,6 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
                 false,
               ]
             }
-            nativeID="9"
             style={
               [
                 {
@@ -2737,7 +2717,6 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
                 ]
               }
               maxFontSizeMultiplier={1.5}
-              nativeID="10"
               numberOfLines={1}
               style={
                 [
@@ -2852,7 +2831,6 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
             },
           ]
         }
-        nativeID="0"
         style={
           [
             {

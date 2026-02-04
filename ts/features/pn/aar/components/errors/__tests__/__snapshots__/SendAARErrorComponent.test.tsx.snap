@@ -652,7 +652,6 @@ exports[`SendAARErrorComponent - Full Test Suite should match snapshot and call 
                                         {},
                                       ]
                                     }
-                                    nativeID="54"
                                     style={
                                       [
                                         {
@@ -713,7 +712,6 @@ exports[`SendAARErrorComponent - Full Test Suite should match snapshot and call 
                                           false,
                                         ]
                                       }
-                                      nativeID="55"
                                       style={
                                         [
                                           {
@@ -758,7 +756,6 @@ exports[`SendAARErrorComponent - Full Test Suite should match snapshot and call 
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="56"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -896,7 +893,6 @@ exports[`SendAARErrorComponent - Full Test Suite should match snapshot and call 
                                         {},
                                       ]
                                     }
-                                    nativeID="57"
                                     style={
                                       [
                                         {
@@ -955,7 +951,6 @@ exports[`SendAARErrorComponent - Full Test Suite should match snapshot and call 
                                           false,
                                         ]
                                       }
-                                      nativeID="58"
                                       style={
                                         [
                                           {
@@ -1000,7 +995,6 @@ exports[`SendAARErrorComponent - Full Test Suite should match snapshot and call 
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="59"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -1212,7 +1206,6 @@ exports[`SendAARErrorComponent - Full Test Suite should match snapshot and call 
                                     },
                                   ]
                                 }
-                                nativeID="60"
                                 style={
                                   [
                                     {
@@ -1256,7 +1249,6 @@ exports[`SendAARErrorComponent - Full Test Suite should match snapshot and call 
                                       },
                                     ]
                                   }
-                                  nativeID="61"
                                   style={
                                     [
                                       {
@@ -1488,7 +1480,6 @@ exports[`SendAARErrorComponent - Full Test Suite should match snapshot and call 
                                     },
                                   ]
                                 }
-                                nativeID="62"
                                 style={
                                   [
                                     {
@@ -1532,7 +1523,6 @@ exports[`SendAARErrorComponent - Full Test Suite should match snapshot and call 
                                       },
                                     ]
                                   }
-                                  nativeID="63"
                                   style={
                                     [
                                       {

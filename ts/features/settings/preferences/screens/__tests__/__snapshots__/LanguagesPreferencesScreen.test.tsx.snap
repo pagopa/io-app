@@ -241,7 +241,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                 "value": {},
                               }
                             }
-                            nativeID="0"
                             onScroll={[Function]}
                             scrollEventThrottle={8}
                             snapToEnd={false}
@@ -413,7 +412,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                             },
                                           ]
                                         }
-                                        nativeID="1"
                                         needsOffscreenAlphaCompositing={true}
                                         style={
                                           [
@@ -450,7 +448,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                             }
                                           }
                                           jestInlineStyle={{}}
-                                          nativeID="2"
                                           style={
                                             [
                                               {
@@ -611,7 +608,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                       },
                                                     ]
                                                   }
-                                                  nativeID="3"
                                                   style={
                                                     [
                                                       {
@@ -712,7 +708,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                             },
                                           ]
                                         }
-                                        nativeID="4"
                                         needsOffscreenAlphaCompositing={true}
                                         style={
                                           [
@@ -749,7 +744,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                             }
                                           }
                                           jestInlineStyle={{}}
-                                          nativeID="5"
                                           style={
                                             [
                                               {
@@ -910,7 +904,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                       },
                                                     ]
                                                   }
-                                                  nativeID="6"
                                                   style={
                                                     [
                                                       {
@@ -1011,7 +1004,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                             },
                                           ]
                                         }
-                                        nativeID="7"
                                         needsOffscreenAlphaCompositing={true}
                                         style={
                                           [
@@ -1048,7 +1040,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                             }
                                           }
                                           jestInlineStyle={{}}
-                                          nativeID="8"
                                           style={
                                             [
                                               {
@@ -1209,7 +1200,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                       },
                                                     ]
                                                   }
-                                                  nativeID="9"
                                                   style={
                                                     [
                                                       {
@@ -1286,7 +1276,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                               {},
                             ]
                           }
-                          nativeID="10"
                           style={
                             [
                               {
@@ -1327,7 +1316,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                 },
                               ]
                             }
-                            nativeID="11"
                             style={
                               [
                                 {
@@ -1408,7 +1396,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                     },
                                   ]
                                 }
-                                nativeID="12"
                                 style={
                                   [
                                     {
@@ -1456,7 +1443,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="13"
                                   style={
                                     [
                                       {
@@ -1541,7 +1527,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="14"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1643,7 +1628,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                       },
                                     ]
                                   }
-                                  nativeID="15"
                                   style={
                                     [
                                       {
@@ -1691,7 +1675,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="16"
                                     style={
                                       [
                                         {

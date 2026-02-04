@@ -222,7 +222,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                             "value": {},
                           }
                         }
-                        nativeID="0"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -293,7 +292,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                               {},
                             ]
                           }
-                          nativeID="1"
                           style={
                             [
                               {
@@ -334,7 +332,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                                 },
                               ]
                             }
-                            nativeID="2"
                             style={
                               [
                                 {
@@ -415,7 +412,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                                     },
                                   ]
                                 }
-                                nativeID="3"
                                 style={
                                   [
                                     {
@@ -463,7 +459,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="4"
                                   style={
                                     [
                                       {
@@ -548,7 +543,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="5"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -648,7 +642,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                                       },
                                     ]
                                   }
-                                  nativeID="6"
                                   style={
                                     [
                                       {
@@ -696,7 +689,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="7"
                                     style={
                                       [
                                         {
@@ -995,7 +987,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                             "value": {},
                           }
                         }
-                        nativeID="8"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -1070,7 +1061,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                               false,
                             ]
                           }
-                          nativeID="9"
                           pointerEvents="none"
                           style={
                             [
@@ -1104,7 +1094,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                 false,
                               ]
                             }
-                            nativeID="10"
                             style={
                               [
                                 {
@@ -1289,7 +1278,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                   {},
                                 ]
                               }
-                              nativeID="11"
                               style={
                                 [
                                   {
@@ -1350,7 +1338,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     false,
                                   ]
                                 }
-                                nativeID="12"
                                 style={
                                   [
                                     {
@@ -1395,7 +1382,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="13"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1466,7 +1452,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                               {},
                             ]
                           }
-                          nativeID="14"
                           style={
                             [
                               {
@@ -1507,7 +1492,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                 },
                               ]
                             }
-                            nativeID="15"
                             style={
                               [
                                 {
@@ -1588,7 +1572,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     },
                                   ]
                                 }
-                                nativeID="16"
                                 style={
                                   [
                                     {
@@ -1636,7 +1619,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="17"
                                   style={
                                     [
                                       {
@@ -1721,7 +1703,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="18"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1821,7 +1802,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                       },
                                     ]
                                   }
-                                  nativeID="19"
                                   style={
                                     [
                                       {
@@ -1869,7 +1849,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="20"
                                     style={
                                       [
                                         {
@@ -2168,7 +2147,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                             "value": {},
                           }
                         }
-                        nativeID="22"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -2243,7 +2221,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                               false,
                             ]
                           }
-                          nativeID="23"
                           pointerEvents="none"
                           style={
                             [
@@ -2277,7 +2254,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                 false,
                               ]
                             }
-                            nativeID="24"
                             style={
                               [
                                 {
@@ -2462,7 +2438,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                   {},
                                 ]
                               }
-                              nativeID="25"
                               style={
                                 [
                                   {
@@ -2523,7 +2498,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     false,
                                   ]
                                 }
-                                nativeID="26"
                                 style={
                                   [
                                     {
@@ -2568,7 +2542,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="27"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -2703,7 +2676,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     {},
                                   ]
                                 }
-                                nativeID="28"
                                 style={
                                   [
                                     {
@@ -2762,7 +2734,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                       false,
                                     ]
                                   }
-                                  nativeID="29"
                                   style={
                                     [
                                       {
@@ -2807,7 +2778,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                       ]
                                     }
                                     maxFontSizeMultiplier={1.5}
-                                    nativeID="30"
                                     numberOfLines={1}
                                     style={
                                       [
@@ -2879,7 +2849,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                               {},
                             ]
                           }
-                          nativeID="31"
                           style={
                             [
                               {
@@ -2920,7 +2889,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                 },
                               ]
                             }
-                            nativeID="32"
                             style={
                               [
                                 {
@@ -3001,7 +2969,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     },
                                   ]
                                 }
-                                nativeID="33"
                                 style={
                                   [
                                     {
@@ -3049,7 +3016,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="34"
                                   style={
                                     [
                                       {
@@ -3134,7 +3100,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="35"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -3234,7 +3199,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                       },
                                     ]
                                   }
-                                  nativeID="36"
                                   style={
                                     [
                                       {
@@ -3282,7 +3246,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="37"
                                     style={
                                       [
                                         {

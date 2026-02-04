@@ -362,7 +362,6 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             "value": {},
                           }
                         }
-                        nativeID="0"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -803,7 +802,6 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                               false,
                             ]
                           }
-                          nativeID="1"
                           pointerEvents="none"
                           style={
                             [
@@ -837,7 +835,6 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                 false,
                               ]
                             }
-                            nativeID="2"
                             style={
                               [
                                 {
@@ -1022,7 +1019,6 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                   {},
                                 ]
                               }
-                              nativeID="3"
                               style={
                                 [
                                   {
@@ -1083,7 +1079,6 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     false,
                                   ]
                                 }
-                                nativeID="4"
                                 style={
                                   [
                                     {
@@ -1128,7 +1123,6 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="5"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1263,7 +1257,6 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     {},
                                   ]
                                 }
-                                nativeID="6"
                                 style={
                                   [
                                     {
@@ -1322,7 +1315,6 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                       false,
                                     ]
                                   }
-                                  nativeID="7"
                                   style={
                                     [
                                       {
@@ -1367,7 +1359,6 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                       ]
                                     }
                                     maxFontSizeMultiplier={1.5}
-                                    nativeID="8"
                                     numberOfLines={1}
                                     style={
                                       [

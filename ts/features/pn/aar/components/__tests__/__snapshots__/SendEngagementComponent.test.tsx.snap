@@ -221,7 +221,6 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                             "value": {},
                           }
                         }
-                        nativeID="11"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -1317,7 +1316,6 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                               false,
                             ]
                           }
-                          nativeID="12"
                           pointerEvents="none"
                           style={
                             [
@@ -1351,7 +1349,6 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                                 false,
                               ]
                             }
-                            nativeID="13"
                             style={
                               [
                                 {
@@ -1537,7 +1534,6 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                                   {},
                                 ]
                               }
-                              nativeID="14"
                               style={
                                 [
                                   {
@@ -1593,7 +1589,6 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                                     "justifyContent": "center",
                                   }
                                 }
-                                nativeID="15"
                                 style={
                                   [
                                     {
@@ -1634,7 +1629,6 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                                       }
                                     }
                                     jestInlineStyle={{}}
-                                    nativeID="16"
                                     style={
                                       [
                                         {
@@ -1842,7 +1836,6 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                               {},
                             ]
                           }
-                          nativeID="17"
                           style={
                             [
                               {
@@ -1883,7 +1876,6 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                                 },
                               ]
                             }
-                            nativeID="18"
                             style={
                               [
                                 {
@@ -1946,7 +1938,6 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="19"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -2047,7 +2038,6 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                                       },
                                     ]
                                   }
-                                  nativeID="20"
                                   style={
                                     [
                                       {
@@ -2095,7 +2085,6 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="21"
                                     style={
                                       [
                                         {
@@ -2393,7 +2382,6 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                             "value": {},
                           }
                         }
-                        nativeID="0"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -3489,7 +3477,6 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                               false,
                             ]
                           }
-                          nativeID="1"
                           pointerEvents="none"
                           style={
                             [
@@ -3523,7 +3510,6 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                                 false,
                               ]
                             }
-                            nativeID="2"
                             style={
                               [
                                 {
@@ -3709,7 +3695,6 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                                   {},
                                 ]
                               }
-                              nativeID="3"
                               style={
                                 [
                                   {
@@ -3770,7 +3755,6 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                                     false,
                                   ]
                                 }
-                                nativeID="4"
                                 style={
                                   [
                                     {
@@ -3815,7 +3799,6 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="5"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -3886,7 +3869,6 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                               {},
                             ]
                           }
-                          nativeID="6"
                           style={
                             [
                               {
@@ -3927,7 +3909,6 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                                 },
                               ]
                             }
-                            nativeID="7"
                             style={
                               [
                                 {
@@ -3990,7 +3971,6 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="8"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -4091,7 +4071,6 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                                       },
                                     ]
                                   }
-                                  nativeID="9"
                                   style={
                                     [
                                       {
@@ -4139,7 +4118,6 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="10"
                                     style={
                                       [
                                         {

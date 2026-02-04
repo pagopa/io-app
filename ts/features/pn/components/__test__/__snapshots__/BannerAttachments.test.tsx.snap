@@ -405,7 +405,6 @@ exports[`BannerAttachments BannerAttachments component should match snapshot 1`]
                               },
                             ]
                           }
-                          nativeID="0"
                           style={
                             [
                               {
@@ -810,7 +809,6 @@ Se i documenti non sono più disponibili, contatta l'ente che li ha inviati.
                                       {},
                                     ]
                                   }
-                                  nativeID="1"
                                   style={
                                     [
                                       {
@@ -869,7 +867,6 @@ Se i documenti non sono più disponibili, contatta l'ente che li ha inviati.
                                         false,
                                       ]
                                     }
-                                    nativeID="2"
                                     style={
                                       [
                                         {
@@ -911,7 +908,6 @@ Se i documenti non sono più disponibili, contatta l'ente che li ha inviati.
                                       meetOrSlice={0}
                                       minX={0}
                                       minY={0}
-                                      nativeID="3"
                                       style={
                                         [
                                           {
@@ -985,7 +981,6 @@ Se i documenti non sono più disponibili, contatta l'ente che li ha inviati.
                                         ]
                                       }
                                       maxFontSizeMultiplier={1.5}
-                                      nativeID="4"
                                       numberOfLines={1}
                                       style={
                                         [

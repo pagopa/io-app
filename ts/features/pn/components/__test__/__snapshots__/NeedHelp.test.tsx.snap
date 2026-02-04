@@ -400,7 +400,6 @@ exports[`NeedHelp NeedHelp Component Should match snapshot 1`] = `
                               },
                             ]
                           }
-                          nativeID="0"
                           style={
                             [
                               {
@@ -444,7 +443,6 @@ exports[`NeedHelp NeedHelp Component Should match snapshot 1`] = `
                                 },
                               ]
                             }
-                            nativeID="1"
                             style={
                               [
                                 {
@@ -705,7 +703,6 @@ Se hai bisogno di supporto su SEND, consulta le risorse di assistenza
                                       {},
                                     ]
                                   }
-                                  nativeID="2"
                                   style={
                                     [
                                       {
@@ -764,7 +761,6 @@ Se hai bisogno di supporto su SEND, consulta le risorse di assistenza
                                         false,
                                       ]
                                     }
-                                    nativeID="3"
                                     style={
                                       [
                                         {
@@ -806,7 +802,6 @@ Se hai bisogno di supporto su SEND, consulta le risorse di assistenza
                                       meetOrSlice={0}
                                       minX={0}
                                       minY={0}
-                                      nativeID="4"
                                       style={
                                         [
                                           {
@@ -877,7 +872,6 @@ Se hai bisogno di supporto su SEND, consulta le risorse di assistenza
                                         ]
                                       }
                                       maxFontSizeMultiplier={1.5}
-                                      nativeID="5"
                                       numberOfLines={1}
                                       style={
                                         [

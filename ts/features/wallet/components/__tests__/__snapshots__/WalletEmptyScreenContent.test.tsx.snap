@@ -611,7 +611,6 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                 {},
                               ]
                             }
-                            nativeID="3"
                             style={
                               [
                                 {
@@ -674,7 +673,6 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                   },
                                 ]
                               }
-                              nativeID="4"
                               style={
                                 [
                                   {
@@ -718,7 +716,6 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
-                                nativeID="5"
                                 style={
                                   [
                                     {
@@ -792,7 +789,6 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="6"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1299,7 +1295,6 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                 {},
                               ]
                             }
-                            nativeID="0"
                             style={
                               [
                                 {
@@ -1360,7 +1355,6 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                   false,
                                 ]
                               }
-                              nativeID="1"
                               style={
                                 [
                                   {
@@ -1405,7 +1399,6 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="2"
                                 numberOfLines={1}
                                 style={
                                   [

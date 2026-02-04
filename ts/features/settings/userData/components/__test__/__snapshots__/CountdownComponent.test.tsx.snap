@@ -398,7 +398,6 @@ exports[`CountdownComponent should render correctly when visible is true 1`] = `
                                 },
                               ]
                             }
-                            nativeID="0"
                             style={
                               [
                                 {

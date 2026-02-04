@@ -681,7 +681,6 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri i
                                         {},
                                       ]
                                     }
-                                    nativeID="3"
                                     style={
                                       [
                                         {
@@ -742,7 +741,6 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri i
                                           false,
                                         ]
                                       }
-                                      nativeID="4"
                                       style={
                                         [
                                           {
@@ -784,7 +782,6 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri i
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
-                                        nativeID="5"
                                         style={
                                           [
                                             {
@@ -858,7 +855,6 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri i
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="6"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -1558,7 +1554,6 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when no redirect_uri 
                                         {},
                                       ]
                                     }
-                                    nativeID="0"
                                     style={
                                       [
                                         {
@@ -1619,7 +1614,6 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when no redirect_uri 
                                           false,
                                         ]
                                       }
-                                      nativeID="1"
                                       style={
                                         [
                                           {
@@ -1664,7 +1658,6 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when no redirect_uri 
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="2"
                                         numberOfLines={1}
                                         style={
                                           [

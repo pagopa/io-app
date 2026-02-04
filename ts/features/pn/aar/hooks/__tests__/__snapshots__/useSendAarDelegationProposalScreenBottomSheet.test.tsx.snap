@@ -831,7 +831,6 @@ exports[`useSendAarDelegationProposalScreenBottomSheet should render the correct
                                 {},
                               ]
                             }
-                            nativeID="0"
                             style={
                               [
                                 {
@@ -892,7 +891,6 @@ exports[`useSendAarDelegationProposalScreenBottomSheet should render the correct
                                   false,
                                 ]
                               }
-                              nativeID="1"
                               style={
                                 [
                                   {
@@ -937,7 +935,6 @@ exports[`useSendAarDelegationProposalScreenBottomSheet should render the correct
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="2"
                                 numberOfLines={1}
                                 style={
                                   [

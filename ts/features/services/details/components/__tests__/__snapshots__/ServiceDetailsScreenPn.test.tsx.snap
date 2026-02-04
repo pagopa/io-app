@@ -222,7 +222,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                             "value": {},
                           }
                         }
-                        nativeID="45"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -297,7 +296,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                               false,
                             ]
                           }
-                          nativeID="46"
                           pointerEvents="none"
                           style={
                             [
@@ -331,7 +329,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                                 false,
                               ]
                             }
-                            nativeID="47"
                             style={
                               [
                                 {
@@ -516,7 +513,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                                   {},
                                 ]
                               }
-                              nativeID="48"
                               style={
                                 [
                                   {
@@ -577,7 +573,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                                     false,
                                   ]
                                 }
-                                nativeID="49"
                                 style={
                                   [
                                     {
@@ -622,7 +617,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="50"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -693,7 +687,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                               {},
                             ]
                           }
-                          nativeID="51"
                           style={
                             [
                               {
@@ -734,7 +727,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                                 },
                               ]
                             }
-                            nativeID="52"
                             style={
                               [
                                 {
@@ -815,7 +807,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                                     },
                                   ]
                                 }
-                                nativeID="53"
                                 style={
                                   [
                                     {
@@ -863,7 +854,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="54"
                                   style={
                                     [
                                       {
@@ -948,7 +938,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="55"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1048,7 +1037,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                                       },
                                     ]
                                   }
-                                  nativeID="56"
                                   style={
                                     [
                                       {
@@ -1096,7 +1084,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="57"
                                     style={
                                       [
                                         {
@@ -1395,7 +1382,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                             "value": {},
                           }
                         }
-                        nativeID="31"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -1470,7 +1456,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                               false,
                             ]
                           }
-                          nativeID="32"
                           pointerEvents="none"
                           style={
                             [
@@ -1504,7 +1489,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                                 false,
                               ]
                             }
-                            nativeID="33"
                             style={
                               [
                                 {
@@ -1689,7 +1673,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                                   {},
                                 ]
                               }
-                              nativeID="34"
                               style={
                                 [
                                   {
@@ -1750,7 +1733,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                                     false,
                                   ]
                                 }
-                                nativeID="35"
                                 style={
                                   [
                                     {
@@ -1795,7 +1777,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="36"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1866,7 +1847,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                               {},
                             ]
                           }
-                          nativeID="37"
                           style={
                             [
                               {
@@ -1907,7 +1887,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                                 },
                               ]
                             }
-                            nativeID="38"
                             style={
                               [
                                 {
@@ -1988,7 +1967,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                                     },
                                   ]
                                 }
-                                nativeID="39"
                                 style={
                                   [
                                     {
@@ -2036,7 +2014,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="40"
                                   style={
                                     [
                                       {
@@ -2121,7 +2098,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="41"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -2221,7 +2197,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                                       },
                                     ]
                                   }
-                                  nativeID="42"
                                   style={
                                     [
                                       {
@@ -2269,7 +2244,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="43"
                                     style={
                                       [
                                         {
@@ -2568,7 +2542,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not enable
                             "value": {},
                           }
                         }
-                        nativeID="0"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -2639,7 +2612,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not enable
                               {},
                             ]
                           }
-                          nativeID="1"
                           style={
                             [
                               {
@@ -2680,7 +2652,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not enable
                                 },
                               ]
                             }
-                            nativeID="2"
                             style={
                               [
                                 {
@@ -2761,7 +2732,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not enable
                                     },
                                   ]
                                 }
-                                nativeID="3"
                                 style={
                                   [
                                     {
@@ -2809,7 +2779,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not enable
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="4"
                                   style={
                                     [
                                       {
@@ -2894,7 +2863,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not enable
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="5"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -2994,7 +2962,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not enable
                                       },
                                     ]
                                   }
-                                  nativeID="6"
                                   style={
                                     [
                                       {
@@ -3042,7 +3009,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not enable
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="7"
                                     style={
                                       [
                                         {
@@ -3341,7 +3307,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                             "value": {},
                           }
                         }
-                        nativeID="17"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -3416,7 +3381,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                               false,
                             ]
                           }
-                          nativeID="18"
                           pointerEvents="none"
                           style={
                             [
@@ -3450,7 +3414,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                                 false,
                               ]
                             }
-                            nativeID="19"
                             style={
                               [
                                 {
@@ -3635,7 +3598,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                                   {},
                                 ]
                               }
-                              nativeID="20"
                               style={
                                 [
                                   {
@@ -3696,7 +3658,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                                     false,
                                   ]
                                 }
-                                nativeID="21"
                                 style={
                                   [
                                     {
@@ -3741,7 +3702,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="22"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -3812,7 +3772,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                               {},
                             ]
                           }
-                          nativeID="23"
                           style={
                             [
                               {
@@ -3853,7 +3812,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                                 },
                               ]
                             }
-                            nativeID="24"
                             style={
                               [
                                 {
@@ -3934,7 +3892,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                                     },
                                   ]
                                 }
-                                nativeID="25"
                                 style={
                                   [
                                     {
@@ -3982,7 +3939,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="26"
                                   style={
                                     [
                                       {
@@ -4067,7 +4023,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="27"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -4167,7 +4122,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                                       },
                                     ]
                                   }
-                                  nativeID="28"
                                   style={
                                     [
                                       {
@@ -4215,7 +4169,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="29"
                                     style={
                                       [
                                         {
@@ -4514,7 +4467,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when servicePreference cou
                             "value": {},
                           }
                         }
-                        nativeID="8"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -4585,7 +4537,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when servicePreference cou
                               {},
                             ]
                           }
-                          nativeID="9"
                           style={
                             [
                               {
@@ -4626,7 +4577,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when servicePreference cou
                                 },
                               ]
                             }
-                            nativeID="10"
                             style={
                               [
                                 {
@@ -4707,7 +4657,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when servicePreference cou
                                     },
                                   ]
                                 }
-                                nativeID="11"
                                 style={
                                   [
                                     {
@@ -4755,7 +4704,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when servicePreference cou
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="12"
                                   style={
                                     [
                                       {
@@ -4840,7 +4788,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when servicePreference cou
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="13"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -4940,7 +4887,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when servicePreference cou
                                       },
                                     ]
                                   }
-                                  nativeID="14"
                                   style={
                                     [
                                       {
@@ -4988,7 +4934,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when servicePreference cou
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="15"
                                     style={
                                       [
                                         {

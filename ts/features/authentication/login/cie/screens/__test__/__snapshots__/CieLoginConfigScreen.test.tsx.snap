@@ -221,7 +221,6 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                             "value": {},
                           }
                         }
-                        nativeID="7"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -314,7 +313,6 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                                   },
                                 ]
                               }
-                              nativeID="8"
                               style={
                                 [
                                   {
@@ -611,7 +609,6 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                               {},
                             ]
                           }
-                          nativeID="9"
                           style={
                             [
                               {
@@ -652,7 +649,6 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                                 },
                               ]
                             }
-                            nativeID="10"
                             style={
                               [
                                 {
@@ -733,7 +729,6 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                                     },
                                   ]
                                 }
-                                nativeID="11"
                                 style={
                                   [
                                     {
@@ -781,7 +776,6 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="12"
                                   style={
                                     [
                                       {
@@ -866,7 +860,6 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="13"
                                 numberOfLines={1}
                                 style={
                                   [

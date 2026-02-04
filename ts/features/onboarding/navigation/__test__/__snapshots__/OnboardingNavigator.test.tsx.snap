@@ -221,7 +221,6 @@ exports[`OnboardingNavigator renders all routes (snapshot) 1`] = `
                             "value": {},
                           }
                         }
-                        nativeID="0"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -1368,7 +1367,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                               false,
                             ]
                           }
-                          nativeID="1"
                           pointerEvents="none"
                           style={
                             [
@@ -1402,7 +1400,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                 false,
                               ]
                             }
-                            nativeID="2"
                             style={
                               [
                                 {
@@ -1588,7 +1585,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                   {},
                                 ]
                               }
-                              nativeID="3"
                               style={
                                 [
                                   {
@@ -1649,7 +1645,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                     false,
                                   ]
                                 }
-                                nativeID="4"
                                 style={
                                   [
                                     {
@@ -1694,7 +1689,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="5"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1829,7 +1823,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                     {},
                                   ]
                                 }
-                                nativeID="6"
                                 style={
                                   [
                                     {
@@ -1888,7 +1881,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                       false,
                                     ]
                                   }
-                                  nativeID="7"
                                   style={
                                     [
                                       {
@@ -1933,7 +1925,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                       ]
                                     }
                                     maxFontSizeMultiplier={1.5}
-                                    nativeID="8"
                                     numberOfLines={1}
                                     style={
                                       [
@@ -2005,7 +1996,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                               {},
                             ]
                           }
-                          nativeID="9"
                           style={
                             [
                               {
@@ -2046,7 +2036,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                 },
                               ]
                             }
-                            nativeID="10"
                             style={
                               [
                                 {
@@ -2127,7 +2116,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                     },
                                   ]
                                 }
-                                nativeID="11"
                                 style={
                                   [
                                     {
@@ -2175,7 +2163,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="12"
                                   style={
                                     [
                                       {
@@ -2260,7 +2247,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="13"
                                 numberOfLines={1}
                                 style={
                                   [

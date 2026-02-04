@@ -400,7 +400,6 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                               },
                             ]
                           }
-                          nativeID="0"
                           style={
                             [
                               {
@@ -444,7 +443,6 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                                 },
                               ]
                             }
-                            nativeID="1"
                             style={
                               [
                                 {
@@ -1009,7 +1007,6 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                               },
                             ]
                           }
-                          nativeID="2"
                           style={
                             [
                               {
@@ -1053,7 +1050,6 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                 },
                               ]
                             }
-                            nativeID="3"
                             style={
                               [
                                 {
@@ -1673,7 +1669,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                               },
                             ]
                           }
-                          nativeID="4"
                           style={
                             [
                               {
@@ -1717,7 +1712,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                 },
                               ]
                             }
-                            nativeID="5"
                             style={
                               [
                                 {
@@ -1973,7 +1967,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                     },
                                   ]
                                 }
-                                nativeID="6"
                                 style={
                                   [
                                     {
@@ -2017,7 +2010,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                       },
                                     ]
                                   }
-                                  nativeID="7"
                                   style={
                                     [
                                       {
@@ -2570,7 +2562,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                               },
                             ]
                           }
-                          nativeID="8"
                           style={
                             [
                               {
@@ -2614,7 +2605,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                 },
                               ]
                             }
-                            nativeID="9"
                             style={
                               [
                                 {
@@ -2870,7 +2860,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                     },
                                   ]
                                 }
-                                nativeID="10"
                                 style={
                                   [
                                     {
@@ -2914,7 +2903,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                       },
                                     ]
                                   }
-                                  nativeID="11"
                                   style={
                                     [
                                       {
@@ -3467,7 +3455,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                               },
                             ]
                           }
-                          nativeID="12"
                           style={
                             [
                               {
@@ -3511,7 +3498,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                 },
                               ]
                             }
-                            nativeID="13"
                             style={
                               [
                                 {
@@ -3767,7 +3753,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                     },
                                   ]
                                 }
-                                nativeID="14"
                                 style={
                                   [
                                     {
@@ -3811,7 +3796,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                       },
                                     ]
                                   }
-                                  nativeID="15"
                                   style={
                                     [
                                       {
@@ -4008,7 +3992,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                     },
                                   ]
                                 }
-                                nativeID="16"
                                 style={
                                   [
                                     {
@@ -4052,7 +4035,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                       },
                                     ]
                                   }
-                                  nativeID="17"
                                   style={
                                     [
                                       {
@@ -4605,7 +4587,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                               },
                             ]
                           }
-                          nativeID="18"
                           style={
                             [
                               {
@@ -4649,7 +4630,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                 },
                               ]
                             }
-                            nativeID="19"
                             style={
                               [
                                 {
@@ -4905,7 +4885,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                     },
                                   ]
                                 }
-                                nativeID="20"
                                 style={
                                   [
                                     {
@@ -4949,7 +4928,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                       },
                                     ]
                                   }
-                                  nativeID="21"
                                   style={
                                     [
                                       {
@@ -5146,7 +5124,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                     },
                                   ]
                                 }
-                                nativeID="22"
                                 style={
                                   [
                                     {
@@ -5190,7 +5167,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                       },
                                     ]
                                   }
-                                  nativeID="23"
                                   style={
                                     [
                                       {
@@ -5743,7 +5719,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                               },
                             ]
                           }
-                          nativeID="32"
                           style={
                             [
                               {
@@ -5787,7 +5762,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                 },
                               ]
                             }
-                            nativeID="33"
                             style={
                               [
                                 {
@@ -6043,7 +6017,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     },
                                   ]
                                 }
-                                nativeID="34"
                                 style={
                                   [
                                     {
@@ -6087,7 +6060,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       },
                                     ]
                                   }
-                                  nativeID="35"
                                   style={
                                     [
                                       {
@@ -6331,7 +6303,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     },
                                   ]
                                 }
-                                nativeID="36"
                                 style={
                                   [
                                     {
@@ -6375,7 +6346,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       },
                                     ]
                                   }
-                                  nativeID="37"
                                   style={
                                     [
                                       {
@@ -6572,7 +6542,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     },
                                   ]
                                 }
-                                nativeID="38"
                                 style={
                                   [
                                     {
@@ -6616,7 +6585,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       },
                                     ]
                                   }
-                                  nativeID="39"
                                   style={
                                     [
                                       {
@@ -6860,7 +6828,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     },
                                   ]
                                 }
-                                nativeID="40"
                                 style={
                                   [
                                     {
@@ -6904,7 +6871,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       },
                                     ]
                                   }
-                                  nativeID="41"
                                   style={
                                     [
                                       {
@@ -7101,7 +7067,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     },
                                   ]
                                 }
-                                nativeID="42"
                                 style={
                                   [
                                     {
@@ -7145,7 +7110,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       },
                                     ]
                                   }
-                                  nativeID="43"
                                   style={
                                     [
                                       {
@@ -7342,7 +7306,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     },
                                   ]
                                 }
-                                nativeID="44"
                                 style={
                                   [
                                     {
@@ -7386,7 +7349,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       },
                                     ]
                                   }
-                                  nativeID="45"
                                   style={
                                     [
                                       {
@@ -7939,7 +7901,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                               },
                             ]
                           }
-                          nativeID="24"
                           style={
                             [
                               {
@@ -7983,7 +7944,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                 },
                               ]
                             }
-                            nativeID="25"
                             style={
                               [
                                 {
@@ -8239,7 +8199,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     },
                                   ]
                                 }
-                                nativeID="26"
                                 style={
                                   [
                                     {
@@ -8283,7 +8242,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                       },
                                     ]
                                   }
-                                  nativeID="27"
                                   style={
                                     [
                                       {
@@ -8527,7 +8485,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     },
                                   ]
                                 }
-                                nativeID="28"
                                 style={
                                   [
                                     {
@@ -8571,7 +8528,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                       },
                                     ]
                                   }
-                                  nativeID="29"
                                   style={
                                     [
                                       {
@@ -8768,7 +8724,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     },
                                   ]
                                 }
-                                nativeID="30"
                                 style={
                                   [
                                     {
@@ -8812,7 +8767,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                       },
                                     ]
                                   }
-                                  nativeID="31"
                                   style={
                                     [
                                       {

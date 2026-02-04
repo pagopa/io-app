@@ -1242,7 +1242,6 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                               },
                             ]
                           }
-                          nativeID="0"
                           style={
                             [
                               {

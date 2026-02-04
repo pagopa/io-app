@@ -46,7 +46,6 @@ exports[`CardBackground should render correctly EuropeanDisabilityCard in state 
         },
       ]
     }
-    nativeID="3"
     style={
       [
         {
@@ -196,7 +195,6 @@ exports[`CardBackground should render correctly EuropeanDisabilityCard in state 
         },
       ]
     }
-    nativeID="4"
     style={
       [
         {
@@ -346,7 +344,6 @@ exports[`CardBackground should render correctly EuropeanDisabilityCard in state 
         },
       ]
     }
-    nativeID="5"
     style={
       [
         {
@@ -496,7 +493,6 @@ exports[`CardBackground should render correctly EuropeanHealthInsuranceCard in s
         },
       ]
     }
-    nativeID="6"
     style={
       [
         {
@@ -646,7 +642,6 @@ exports[`CardBackground should render correctly EuropeanHealthInsuranceCard in s
         },
       ]
     }
-    nativeID="7"
     style={
       [
         {
@@ -796,7 +791,6 @@ exports[`CardBackground should render correctly EuropeanHealthInsuranceCard in s
         },
       ]
     }
-    nativeID="8"
     style={
       [
         {
@@ -946,7 +940,6 @@ exports[`CardBackground should render correctly InvalidCredentialType in state d
         },
       ]
     }
-    nativeID="18"
     style={
       [
         {
@@ -1096,7 +1089,6 @@ exports[`CardBackground should render correctly education_degree in state defaul
         },
       ]
     }
-    nativeID="9"
     style={
       [
         {
@@ -1246,7 +1238,6 @@ exports[`CardBackground should render correctly education_degree in state faded 
         },
       ]
     }
-    nativeID="10"
     style={
       [
         {
@@ -1396,7 +1387,6 @@ exports[`CardBackground should render correctly education_degree in state greysc
         },
       ]
     }
-    nativeID="11"
     style={
       [
         {
@@ -1546,7 +1536,6 @@ exports[`CardBackground should render correctly education_enrollment in state de
         },
       ]
     }
-    nativeID="12"
     style={
       [
         {
@@ -1696,7 +1685,6 @@ exports[`CardBackground should render correctly education_enrollment in state fa
         },
       ]
     }
-    nativeID="13"
     style={
       [
         {
@@ -1846,7 +1834,6 @@ exports[`CardBackground should render correctly education_enrollment in state gr
         },
       ]
     }
-    nativeID="14"
     style={
       [
         {
@@ -1996,7 +1983,6 @@ exports[`CardBackground should render correctly mDL in state default 1`] = `
         },
       ]
     }
-    nativeID="0"
     style={
       [
         {
@@ -2146,7 +2132,6 @@ exports[`CardBackground should render correctly mDL in state faded 1`] = `
         },
       ]
     }
-    nativeID="1"
     style={
       [
         {
@@ -2296,7 +2281,6 @@ exports[`CardBackground should render correctly mDL in state greyscale 1`] = `
         },
       ]
     }
-    nativeID="2"
     style={
       [
         {
@@ -2446,7 +2430,6 @@ exports[`CardBackground should render correctly residency in state default 1`] =
         },
       ]
     }
-    nativeID="15"
     style={
       [
         {
@@ -2596,7 +2579,6 @@ exports[`CardBackground should render correctly residency in state faded 1`] = `
         },
       ]
     }
-    nativeID="16"
     style={
       [
         {
@@ -2746,7 +2728,6 @@ exports[`CardBackground should render correctly residency in state greyscale 1`]
         },
       ]
     }
-    nativeID="17"
     style={
       [
         {

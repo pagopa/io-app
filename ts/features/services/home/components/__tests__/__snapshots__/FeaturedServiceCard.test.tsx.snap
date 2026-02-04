@@ -404,7 +404,6 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                               },
                             ]
                           }
-                          nativeID="0"
                           style={
                             [
                               {
@@ -966,7 +965,6 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                               },
                             ]
                           }
-                          nativeID="1"
                           style={
                             [
                               {

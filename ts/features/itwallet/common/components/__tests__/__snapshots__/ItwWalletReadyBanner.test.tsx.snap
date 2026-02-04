@@ -412,7 +412,6 @@ exports[`ItwWalletReadyBanner should match snapshot when ITW new interface activ
                                 },
                               ]
                             }
-                            nativeID="1"
                             style={
                               [
                                 {
@@ -1174,7 +1173,6 @@ exports[`ItwWalletReadyBanner should match snapshot when ITW new interface activ
                                 },
                               ]
                             }
-                            nativeID="0"
                             style={
                               [
                                 {

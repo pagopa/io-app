@@ -362,7 +362,6 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
                             "value": {},
                           }
                         }
-                        nativeID="23"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -798,7 +797,6 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
                               false,
                             ]
                           }
-                          nativeID="24"
                           pointerEvents="none"
                           style={
                             [
@@ -832,7 +830,6 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
                                 false,
                               ]
                             }
-                            nativeID="25"
                             style={
                               [
                                 {
@@ -1018,7 +1015,6 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
                                   {},
                                 ]
                               }
-                              nativeID="26"
                               style={
                                 [
                                   {
@@ -1079,7 +1075,6 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
                                     false,
                                   ]
                                 }
-                                nativeID="27"
                                 style={
                                   [
                                     {
@@ -1124,7 +1119,6 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="28"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1823,7 +1817,6 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
                                         {},
                                       ]
                                     }
-                                    nativeID="14"
                                     style={
                                       [
                                         {
@@ -1884,7 +1877,6 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
                                           false,
                                         ]
                                       }
-                                      nativeID="15"
                                       style={
                                         [
                                           {
@@ -1929,7 +1921,6 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="16"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -2369,7 +2360,6 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                               }
                             }
                             jestInlineStyle={{}}
-                            nativeID="0"
                             style={
                               [
                                 {
@@ -2999,7 +2989,6 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                               }
                             }
                             jestInlineStyle={{}}
-                            nativeID="1"
                             style={
                               [
                                 {
@@ -3891,7 +3880,6 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
                                         {},
                                       ]
                                     }
-                                    nativeID="2"
                                     style={
                                       [
                                         {
@@ -3952,7 +3940,6 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
                                           false,
                                         ]
                                       }
-                                      nativeID="3"
                                       style={
                                         [
                                           {
@@ -3997,7 +3984,6 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="4"
                                         numberOfLines={1}
                                         style={
                                           [

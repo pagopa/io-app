@@ -457,7 +457,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                       false,
                                     ]
                                   }
-                                  nativeID="2"
                                   style={
                                     [
                                       {
@@ -668,7 +667,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                       false,
                                     ]
                                   }
-                                  nativeID="3"
                                   style={
                                     [
                                       {
@@ -1252,7 +1250,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                       false,
                                     ]
                                   }
-                                  nativeID="0"
                                   style={
                                     [
                                       {
@@ -1476,7 +1473,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                       false,
                                     ]
                                   }
-                                  nativeID="1"
                                   style={
                                     [
                                       {

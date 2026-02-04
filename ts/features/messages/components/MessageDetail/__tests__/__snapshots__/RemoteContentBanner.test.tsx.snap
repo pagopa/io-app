@@ -411,7 +411,6 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                               },
                             ]
                           }
-                          nativeID="0"
                           style={
                             [
                               {

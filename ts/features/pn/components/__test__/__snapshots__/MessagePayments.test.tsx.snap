@@ -826,7 +826,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 false,
                               ]
                             }
-                            nativeID="7"
                             style={
                               [
                                 {
@@ -1113,7 +1112,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 false,
                               ]
                             }
-                            nativeID="8"
                             style={
                               [
                                 {
@@ -1400,7 +1398,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 false,
                               ]
                             }
-                            nativeID="9"
                             style={
                               [
                                 {
@@ -1687,7 +1684,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 false,
                               ]
                             }
-                            nativeID="10"
                             style={
                               [
                                 {
@@ -1974,7 +1970,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 false,
                               ]
                             }
-                            nativeID="11"
                             style={
                               [
                                 {
@@ -2261,7 +2256,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 false,
                               ]
                             }
-                            nativeID="12"
                             style={
                               [
                                 {
@@ -2548,7 +2542,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 false,
                               ]
                             }
-                            nativeID="13"
                             style={
                               [
                                 {
@@ -3243,7 +3236,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 false,
                               ]
                             }
-                            nativeID="0"
                             style={
                               [
                                 {
@@ -3530,7 +3522,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 false,
                               ]
                             }
-                            nativeID="1"
                             style={
                               [
                                 {
@@ -3817,7 +3808,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 false,
                               ]
                             }
-                            nativeID="2"
                             style={
                               [
                                 {
@@ -4104,7 +4094,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 false,
                               ]
                             }
-                            nativeID="3"
                             style={
                               [
                                 {
@@ -4391,7 +4380,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 false,
                               ]
                             }
-                            nativeID="4"
                             style={
                               [
                                 {
@@ -4678,7 +4666,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 false,
                               ]
                             }
-                            nativeID="5"
                             style={
                               [
                                 {
@@ -4965,7 +4952,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 false,
                               ]
                             }
-                            nativeID="6"
                             style={
                               [
                                 {
@@ -6004,7 +5990,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 false,
                               ]
                             }
-                            nativeID="16"
                             style={
                               [
                                 {
@@ -6242,7 +6227,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 false,
                               ]
                             }
-                            nativeID="17"
                             style={
                               [
                                 {
@@ -6528,7 +6512,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 false,
                               ]
                             }
-                            nativeID="18"
                             style={
                               [
                                 {
@@ -6814,7 +6797,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 false,
                               ]
                             }
-                            nativeID="19"
                             style={
                               [
                                 {
@@ -7100,7 +7082,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 false,
                               ]
                             }
-                            nativeID="20"
                             style={
                               [
                                 {
@@ -7787,7 +7768,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 false,
                               ]
                             }
-                            nativeID="21"
                             style={
                               [
                                 {
@@ -8025,7 +8005,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 false,
                               ]
                             }
-                            nativeID="22"
                             style={
                               [
                                 {
@@ -8311,7 +8290,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 false,
                               ]
                             }
-                            nativeID="23"
                             style={
                               [
                                 {
@@ -8597,7 +8575,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 false,
                               ]
                             }
-                            nativeID="24"
                             style={
                               [
                                 {
@@ -8883,7 +8860,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 false,
                               ]
                             }
-                            nativeID="25"
                             style={
                               [
                                 {
@@ -9570,7 +9546,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 false,
                               ]
                             }
-                            nativeID="26"
                             style={
                               [
                                 {
@@ -9808,7 +9783,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 false,
                               ]
                             }
-                            nativeID="27"
                             style={
                               [
                                 {
@@ -10094,7 +10068,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 false,
                               ]
                             }
-                            nativeID="28"
                             style={
                               [
                                 {
@@ -10380,7 +10353,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 false,
                               ]
                             }
-                            nativeID="29"
                             style={
                               [
                                 {
@@ -10666,7 +10638,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 false,
                               ]
                             }
-                            nativeID="30"
                             style={
                               [
                                 {
@@ -10976,7 +10947,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {},
                               ]
                             }
-                            nativeID="31"
                             style={
                               [
                                 {
@@ -11035,7 +11005,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   false,
                                 ]
                               }
-                              nativeID="32"
                               style={
                                 [
                                   {
@@ -11080,7 +11049,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="33"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -11599,7 +11567,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 false,
                               ]
                             }
-                            nativeID="34"
                             style={
                               [
                                 {
@@ -11837,7 +11804,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 false,
                               ]
                             }
-                            nativeID="35"
                             style={
                               [
                                 {
@@ -12123,7 +12089,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 false,
                               ]
                             }
-                            nativeID="36"
                             style={
                               [
                                 {
@@ -12409,7 +12374,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 false,
                               ]
                             }
-                            nativeID="37"
                             style={
                               [
                                 {
@@ -12695,7 +12659,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 false,
                               ]
                             }
-                            nativeID="38"
                             style={
                               [
                                 {
@@ -13005,7 +12968,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {},
                               ]
                             }
-                            nativeID="39"
                             style={
                               [
                                 {
@@ -13064,7 +13026,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   false,
                                 ]
                               }
-                              nativeID="40"
                               style={
                                 [
                                   {
@@ -13109,7 +13070,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="41"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -13628,7 +13588,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 false,
                               ]
                             }
-                            nativeID="14"
                             style={
                               [
                                 {
@@ -14267,7 +14226,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 false,
                               ]
                             }
-                            nativeID="15"
                             style={
                               [
                                 {

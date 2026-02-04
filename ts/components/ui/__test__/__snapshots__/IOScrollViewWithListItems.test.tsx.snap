@@ -362,7 +362,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                             "value": {},
                           }
                         }
-                        nativeID="0"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -710,7 +709,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                               false,
                             ]
                           }
-                          nativeID="1"
                           pointerEvents="none"
                           style={
                             [
@@ -744,7 +742,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                 false,
                               ]
                             }
-                            nativeID="2"
                             style={
                               [
                                 {
@@ -930,7 +927,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                   {},
                                 ]
                               }
-                              nativeID="3"
                               style={
                                 [
                                   {
@@ -991,7 +987,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                     false,
                                   ]
                                 }
-                                nativeID="4"
                                 style={
                                   [
                                     {
@@ -1036,7 +1031,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="5"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1445,7 +1439,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                             "value": {},
                           }
                         }
-                        nativeID="12"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -1518,7 +1511,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                               false,
                             ]
                           }
-                          nativeID="13"
                           pointerEvents="none"
                           style={
                             [
@@ -1552,7 +1544,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                 false,
                               ]
                             }
-                            nativeID="14"
                             style={
                               [
                                 {
@@ -1738,7 +1729,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                   {},
                                 ]
                               }
-                              nativeID="15"
                               style={
                                 [
                                   {
@@ -1799,7 +1789,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                     false,
                                   ]
                                 }
-                                nativeID="16"
                                 style={
                                   [
                                     {
@@ -1844,7 +1833,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="17"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -2253,7 +2241,6 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                             "value": {},
                           }
                         }
-                        nativeID="6"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -2649,7 +2636,6 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                               false,
                             ]
                           }
-                          nativeID="7"
                           pointerEvents="none"
                           style={
                             [
@@ -2683,7 +2669,6 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                 false,
                               ]
                             }
-                            nativeID="8"
                             style={
                               [
                                 {
@@ -2869,7 +2854,6 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                   {},
                                 ]
                               }
-                              nativeID="9"
                               style={
                                 [
                                   {
@@ -2930,7 +2914,6 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                     false,
                                   ]
                                 }
-                                nativeID="10"
                                 style={
                                   [
                                     {
@@ -2975,7 +2958,6 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="11"
                                   numberOfLines={1}
                                   style={
                                     [

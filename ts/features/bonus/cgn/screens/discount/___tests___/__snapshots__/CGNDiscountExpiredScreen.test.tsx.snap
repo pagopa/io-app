@@ -621,7 +621,6 @@ exports[`CGNDiscountExpiredScreen should render correctly 1`] = `
                                         {},
                                       ]
                                     }
-                                    nativeID="0"
                                     style={
                                       [
                                         {
@@ -682,7 +681,6 @@ exports[`CGNDiscountExpiredScreen should render correctly 1`] = `
                                           false,
                                         ]
                                       }
-                                      nativeID="1"
                                       style={
                                         [
                                           {
@@ -727,7 +725,6 @@ exports[`CGNDiscountExpiredScreen should render correctly 1`] = `
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="2"
                                         numberOfLines={1}
                                         style={
                                           [

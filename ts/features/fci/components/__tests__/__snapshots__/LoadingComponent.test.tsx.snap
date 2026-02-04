@@ -50,7 +50,6 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
         }
       }
       jestInlineStyle={{}}
-      nativeID="0"
       style={
         [
           {

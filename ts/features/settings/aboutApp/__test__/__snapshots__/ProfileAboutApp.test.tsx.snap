@@ -221,7 +221,6 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                             "value": {},
                           }
                         }
-                        nativeID="15"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -490,7 +489,6 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                                     },
                                   ]
                                 }
-                                nativeID="16"
                                 style={
                                   [
                                     {
@@ -790,7 +788,6 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                               {},
                             ]
                           }
-                          nativeID="17"
                           style={
                             [
                               {
@@ -831,7 +828,6 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                                 },
                               ]
                             }
-                            nativeID="18"
                             style={
                               [
                                 {
@@ -912,7 +908,6 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                                     },
                                   ]
                                 }
-                                nativeID="19"
                                 style={
                                   [
                                     {
@@ -960,7 +955,6 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="20"
                                   style={
                                     [
                                       {
@@ -1045,7 +1039,6 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="21"
                                 numberOfLines={1}
                                 style={
                                   [

@@ -413,7 +413,6 @@ exports[`pnActivationBanner should match snapshot 1`] = `
                                 },
                               ]
                             }
-                            nativeID="0"
                             style={
                               [
                                 {
@@ -858,7 +857,6 @@ exports[`pnActivationBanner should match snapshot 1`] = `
                                       },
                                     ]
                                   }
-                                  nativeID="1"
                                   style={
                                     [
                                       {
@@ -906,7 +904,6 @@ exports[`pnActivationBanner should match snapshot 1`] = `
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="2"
                                     style={
                                       [
                                         {

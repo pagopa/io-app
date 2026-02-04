@@ -312,7 +312,6 @@ exports[`CieIdNotInstalled Should match the snapshot 1`] = `
                   {},
                 ]
               }
-              nativeID="0"
               style={
                 [
                   {
@@ -373,7 +372,6 @@ exports[`CieIdNotInstalled Should match the snapshot 1`] = `
                     false,
                   ]
                 }
-                nativeID="1"
                 style={
                   [
                     {
@@ -418,7 +416,6 @@ exports[`CieIdNotInstalled Should match the snapshot 1`] = `
                     ]
                   }
                   maxFontSizeMultiplier={1.5}
-                  nativeID="2"
                   numberOfLines={1}
                   style={
                     [
@@ -556,7 +553,6 @@ exports[`CieIdNotInstalled Should match the snapshot 1`] = `
                   {},
                 ]
               }
-              nativeID="3"
               style={
                 [
                   {
@@ -615,7 +611,6 @@ exports[`CieIdNotInstalled Should match the snapshot 1`] = `
                     false,
                   ]
                 }
-                nativeID="4"
                 style={
                   [
                     {
@@ -660,7 +655,6 @@ exports[`CieIdNotInstalled Should match the snapshot 1`] = `
                     ]
                   }
                   maxFontSizeMultiplier={1.5}
-                  nativeID="5"
                   numberOfLines={1}
                   style={
                     [

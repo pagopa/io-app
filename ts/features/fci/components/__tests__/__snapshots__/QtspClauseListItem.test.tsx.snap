@@ -597,7 +597,6 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                       },
                                     ]
                                   }
-                                  nativeID="0"
                                   style={
                                     [
                                       {

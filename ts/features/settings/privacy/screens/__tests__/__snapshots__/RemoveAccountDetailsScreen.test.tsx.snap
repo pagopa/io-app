@@ -221,7 +221,6 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                             "value": {},
                           }
                         }
-                        nativeID="0"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -432,7 +431,6 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                       },
                                     ]
                                   }
-                                  nativeID="1"
                                   needsOffscreenAlphaCompositing={true}
                                   style={
                                     [
@@ -469,7 +467,6 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                       }
                                     }
                                     jestInlineStyle={{}}
-                                    nativeID="2"
                                     style={
                                       [
                                         {
@@ -630,7 +627,6 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                                 },
                                               ]
                                             }
-                                            nativeID="3"
                                             style={
                                               [
                                                 {
@@ -731,7 +727,6 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                       },
                                     ]
                                   }
-                                  nativeID="4"
                                   needsOffscreenAlphaCompositing={true}
                                   style={
                                     [
@@ -768,7 +763,6 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                       }
                                     }
                                     jestInlineStyle={{}}
-                                    nativeID="5"
                                     style={
                                       [
                                         {
@@ -929,7 +923,6 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                                 },
                                               ]
                                             }
-                                            nativeID="6"
                                             style={
                                               [
                                                 {
@@ -1030,7 +1023,6 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                       },
                                     ]
                                   }
-                                  nativeID="7"
                                   needsOffscreenAlphaCompositing={true}
                                   style={
                                     [
@@ -1067,7 +1059,6 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                       }
                                     }
                                     jestInlineStyle={{}}
-                                    nativeID="8"
                                     style={
                                       [
                                         {
@@ -1228,7 +1219,6 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                                 },
                                               ]
                                             }
-                                            nativeID="9"
                                             style={
                                               [
                                                 {
@@ -1329,7 +1319,6 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                       },
                                     ]
                                   }
-                                  nativeID="10"
                                   needsOffscreenAlphaCompositing={true}
                                   style={
                                     [
@@ -1366,7 +1355,6 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                       }
                                     }
                                     jestInlineStyle={{}}
-                                    nativeID="11"
                                     style={
                                       [
                                         {
@@ -1527,7 +1515,6 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                                 },
                                               ]
                                             }
-                                            nativeID="12"
                                             style={
                                               [
                                                 {
@@ -1676,7 +1663,6 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                     {},
                                   ]
                                 }
-                                nativeID="13"
                                 style={
                                   [
                                     {
@@ -1737,7 +1723,6 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                       false,
                                     ]
                                   }
-                                  nativeID="14"
                                   style={
                                     [
                                       {
@@ -1782,7 +1767,6 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                       ]
                                     }
                                     maxFontSizeMultiplier={1.5}
-                                    nativeID="15"
                                     numberOfLines={1}
                                     style={
                                       [
@@ -1854,7 +1838,6 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                               {},
                             ]
                           }
-                          nativeID="16"
                           style={
                             [
                               {
@@ -1895,7 +1878,6 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                 },
                               ]
                             }
-                            nativeID="17"
                             style={
                               [
                                 {
@@ -1976,7 +1958,6 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                     },
                                   ]
                                 }
-                                nativeID="18"
                                 style={
                                   [
                                     {
@@ -2024,7 +2005,6 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="19"
                                   style={
                                     [
                                       {
@@ -2109,7 +2089,6 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="20"
                                 numberOfLines={1}
                                 style={
                                   [

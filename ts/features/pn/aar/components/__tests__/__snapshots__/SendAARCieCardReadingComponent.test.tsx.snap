@@ -142,7 +142,6 @@ exports[`SendAARCieCardReadingComponent SendAARCieCardReadingComponent: ReadStat
           },
         ]
       }
-      nativeID="254"
       style={
         [
           {
@@ -186,7 +185,6 @@ exports[`SendAARCieCardReadingComponent SendAARCieCardReadingComponent: ReadStat
             },
           ]
         }
-        nativeID="255"
         style={
           [
             {
@@ -416,7 +414,6 @@ exports[`SendAARCieCardReadingComponent SendAARCieCardReadingComponent: ReadStat
           },
         ]
       }
-      nativeID="256"
       style={
         [
           {
@@ -460,7 +457,6 @@ exports[`SendAARCieCardReadingComponent SendAARCieCardReadingComponent: ReadStat
             },
           ]
         }
-        nativeID="257"
         style={
           [
             {
@@ -1036,7 +1032,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     },
                                   ]
                                 }
-                                nativeID="16"
                                 style={
                                   [
                                     {
@@ -1950,7 +1945,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     {},
                                   ]
                                 }
-                                nativeID="23"
                                 style={
                                   [
                                     {
@@ -2011,7 +2005,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       false,
                                     ]
                                   }
-                                  nativeID="24"
                                   style={
                                     [
                                       {
@@ -2056,7 +2049,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       ]
                                     }
                                     maxFontSizeMultiplier={1.5}
-                                    nativeID="25"
                                     numberOfLines={1}
                                     style={
                                       [
@@ -2184,7 +2176,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       {},
                                     ]
                                   }
-                                  nativeID="26"
                                   style={
                                     [
                                       {
@@ -2243,7 +2234,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         false,
                                       ]
                                     }
-                                    nativeID="27"
                                     style={
                                       [
                                         {
@@ -2288,7 +2278,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         ]
                                       }
                                       maxFontSizeMultiplier={1.5}
-                                      nativeID="28"
                                       numberOfLines={1}
                                       style={
                                         [
@@ -3047,7 +3036,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     {},
                                   ]
                                 }
-                                nativeID="35"
                                 style={
                                   [
                                     {
@@ -3108,7 +3096,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       false,
                                     ]
                                   }
-                                  nativeID="36"
                                   style={
                                     [
                                       {
@@ -3153,7 +3140,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       ]
                                     }
                                     maxFontSizeMultiplier={1.5}
-                                    nativeID="37"
                                     numberOfLines={1}
                                     style={
                                       [
@@ -3281,7 +3267,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       {},
                                     ]
                                   }
-                                  nativeID="38"
                                   style={
                                     [
                                       {
@@ -3340,7 +3325,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         false,
                                       ]
                                     }
-                                    nativeID="39"
                                     style={
                                       [
                                         {
@@ -3385,7 +3369,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         ]
                                       }
                                       maxFontSizeMultiplier={1.5}
-                                      nativeID="40"
                                       numberOfLines={1}
                                       style={
                                         [
@@ -4144,7 +4127,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     {},
                                   ]
                                 }
-                                nativeID="29"
                                 style={
                                   [
                                     {
@@ -4205,7 +4187,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       false,
                                     ]
                                   }
-                                  nativeID="30"
                                   style={
                                     [
                                       {
@@ -4250,7 +4231,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       ]
                                     }
                                     maxFontSizeMultiplier={1.5}
-                                    nativeID="31"
                                     numberOfLines={1}
                                     style={
                                       [
@@ -4378,7 +4358,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       {},
                                     ]
                                   }
-                                  nativeID="32"
                                   style={
                                     [
                                       {
@@ -4437,7 +4416,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         false,
                                       ]
                                     }
-                                    nativeID="33"
                                     style={
                                       [
                                         {
@@ -4482,7 +4460,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         ]
                                       }
                                       maxFontSizeMultiplier={1.5}
-                                      nativeID="34"
                                       numberOfLines={1}
                                       style={
                                         [
@@ -5192,7 +5169,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     {},
                                   ]
                                 }
-                                nativeID="17"
                                 style={
                                   [
                                     {
@@ -5253,7 +5229,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       false,
                                     ]
                                   }
-                                  nativeID="18"
                                   style={
                                     [
                                       {
@@ -5298,7 +5273,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       ]
                                     }
                                     maxFontSizeMultiplier={1.5}
-                                    nativeID="19"
                                     numberOfLines={1}
                                     style={
                                       [
@@ -5426,7 +5400,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       {},
                                     ]
                                   }
-                                  nativeID="20"
                                   style={
                                     [
                                       {
@@ -5485,7 +5458,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         false,
                                       ]
                                     }
-                                    nativeID="21"
                                     style={
                                       [
                                         {
@@ -5530,7 +5502,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         ]
                                       }
                                       maxFontSizeMultiplier={1.5}
-                                      nativeID="22"
                                       numberOfLines={1}
                                       style={
                                         [
@@ -6011,7 +5982,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     },
                                   ]
                                 }
-                                nativeID="0"
                                 style={
                                   [
                                     {
@@ -6393,7 +6363,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       {},
                                     ]
                                   }
-                                  nativeID="1"
                                   style={
                                     [
                                       {
@@ -6452,7 +6421,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         false,
                                       ]
                                     }
-                                    nativeID="2"
                                     style={
                                       [
                                         {
@@ -6497,7 +6465,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         ]
                                       }
                                       maxFontSizeMultiplier={1.5}
-                                      nativeID="3"
                                       numberOfLines={1}
                                       style={
                                         [
@@ -6978,7 +6945,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     },
                                   ]
                                 }
-                                nativeID="4"
                                 style={
                                   [
                                     {
@@ -7380,7 +7346,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       {},
                                     ]
                                   }
-                                  nativeID="5"
                                   style={
                                     [
                                       {
@@ -7439,7 +7404,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         false,
                                       ]
                                     }
-                                    nativeID="6"
                                     style={
                                       [
                                         {
@@ -7484,7 +7448,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         ]
                                       }
                                       maxFontSizeMultiplier={1.5}
-                                      nativeID="7"
                                       numberOfLines={1}
                                       style={
                                         [
@@ -7965,7 +7928,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     },
                                   ]
                                 }
-                                nativeID="8"
                                 style={
                                   [
                                     {
@@ -8367,7 +8329,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       {},
                                     ]
                                   }
-                                  nativeID="9"
                                   style={
                                     [
                                       {
@@ -8426,7 +8387,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         false,
                                       ]
                                     }
-                                    nativeID="10"
                                     style={
                                       [
                                         {
@@ -8471,7 +8431,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         ]
                                       }
                                       maxFontSizeMultiplier={1.5}
-                                      nativeID="11"
                                       numberOfLines={1}
                                       style={
                                         [
@@ -8952,7 +8911,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     },
                                   ]
                                 }
-                                nativeID="12"
                                 style={
                                   [
                                     {
@@ -9354,7 +9312,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       {},
                                     ]
                                   }
-                                  nativeID="13"
                                   style={
                                     [
                                       {
@@ -9413,7 +9370,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         false,
                                       ]
                                     }
-                                    nativeID="14"
                                     style={
                                       [
                                         {
@@ -9458,7 +9414,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         ]
                                       }
                                       maxFontSizeMultiplier={1.5}
-                                      nativeID="15"
                                       numberOfLines={1}
                                       style={
                                         [

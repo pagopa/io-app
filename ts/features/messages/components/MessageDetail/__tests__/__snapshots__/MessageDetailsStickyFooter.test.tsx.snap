@@ -366,7 +366,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                             undefined,
                           ]
                         }
-                        nativeID="29"
                         style={
                           [
                             {
@@ -413,7 +412,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                               undefined,
                             ]
                           }
-                          nativeID="30"
                           pointerEvents="none"
                           style={
                             [
@@ -528,7 +526,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                   {},
                                 ]
                               }
-                              nativeID="31"
                               style={
                                 [
                                   {
@@ -589,7 +586,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                     false,
                                   ]
                                 }
-                                nativeID="32"
                                 style={
                                   [
                                     {
@@ -634,7 +630,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="33"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -769,7 +764,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                     {},
                                   ]
                                 }
-                                nativeID="34"
                                 style={
                                   [
                                     {
@@ -828,7 +822,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                       false,
                                     ]
                                   }
-                                  nativeID="35"
                                   style={
                                     [
                                       {
@@ -873,7 +866,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                       ]
                                     }
                                     maxFontSizeMultiplier={1.5}
-                                    nativeID="36"
                                     numberOfLines={1}
                                     style={
                                       [
@@ -1287,7 +1279,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                             undefined,
                           ]
                         }
-                        nativeID="0"
                         style={
                           [
                             {
@@ -1334,7 +1325,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                               undefined,
                             ]
                           }
-                          nativeID="1"
                           pointerEvents="none"
                           style={
                             [
@@ -1446,7 +1436,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                   },
                                 ]
                               }
-                              nativeID="2"
                               style={
                                 [
                                   {
@@ -1501,7 +1490,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                     false,
                                   ]
                                 }
-                                nativeID="3"
                                 style={
                                   [
                                     {
@@ -1545,7 +1533,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="4"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1665,7 +1652,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                   {},
                                 ]
                               }
-                              nativeID="5"
                               style={
                                 [
                                   {
@@ -1727,7 +1713,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                     false,
                                   ]
                                 }
-                                nativeID="6"
                                 style={
                                   [
                                     {
@@ -1772,7 +1757,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="7"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1907,7 +1891,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                     {},
                                   ]
                                 }
-                                nativeID="8"
                                 style={
                                   [
                                     {
@@ -1966,7 +1949,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                       false,
                                     ]
                                   }
-                                  nativeID="9"
                                   style={
                                     [
                                       {
@@ -2011,7 +1993,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                       ]
                                     }
                                     maxFontSizeMultiplier={1.5}
-                                    nativeID="10"
                                     numberOfLines={1}
                                     style={
                                       [
@@ -2777,7 +2758,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                             undefined,
                           ]
                         }
-                        nativeID="19"
                         style={
                           [
                             {
@@ -2824,7 +2804,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                               undefined,
                             ]
                           }
-                          nativeID="20"
                           pointerEvents="none"
                           style={
                             [
@@ -2936,7 +2915,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                                   },
                                 ]
                               }
-                              nativeID="21"
                               style={
                                 [
                                   {
@@ -2991,7 +2969,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                                     false,
                                   ]
                                 }
-                                nativeID="22"
                                 style={
                                   [
                                     {
@@ -3035,7 +3012,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="23"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -3798,7 +3774,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                             undefined,
                           ]
                         }
-                        nativeID="24"
                         style={
                           [
                             {
@@ -3845,7 +3820,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                               undefined,
                             ]
                           }
-                          nativeID="25"
                           pointerEvents="none"
                           style={
                             [
@@ -3957,7 +3931,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                                   },
                                 ]
                               }
-                              nativeID="26"
                               style={
                                 [
                                   {
@@ -4007,7 +3980,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                                     "justifyContent": "center",
                                   }
                                 }
-                                nativeID="27"
                                 style={
                                   [
                                     {
@@ -4048,7 +4020,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                                       }
                                     }
                                     jestInlineStyle={{}}
-                                    nativeID="28"
                                     style={
                                       [
                                         {
@@ -4598,7 +4569,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                             undefined,
                           ]
                         }
-                        nativeID="37"
                         style={
                           [
                             {
@@ -4645,7 +4615,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                               undefined,
                             ]
                           }
-                          nativeID="38"
                           pointerEvents="none"
                           style={
                             [
@@ -4760,7 +4729,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                                   {},
                                 ]
                               }
-                              nativeID="39"
                               style={
                                 [
                                   {
@@ -4821,7 +4789,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                                     false,
                                   ]
                                 }
-                                nativeID="40"
                                 style={
                                   [
                                     {
@@ -4866,7 +4833,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="41"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -5279,7 +5245,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                             undefined,
                           ]
                         }
-                        nativeID="11"
                         style={
                           [
                             {
@@ -5326,7 +5291,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                               undefined,
                             ]
                           }
-                          nativeID="12"
                           pointerEvents="none"
                           style={
                             [
@@ -5438,7 +5402,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                   },
                                 ]
                               }
-                              nativeID="13"
                               style={
                                 [
                                   {
@@ -5493,7 +5456,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                     false,
                                   ]
                                 }
-                                nativeID="14"
                                 style={
                                   [
                                     {
@@ -5537,7 +5499,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="15"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -5670,7 +5631,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                     {},
                                   ]
                                 }
-                                nativeID="16"
                                 style={
                                   [
                                     {
@@ -5729,7 +5689,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                       false,
                                     ]
                                   }
-                                  nativeID="17"
                                   style={
                                     [
                                       {
@@ -5774,7 +5733,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                       ]
                                     }
                                     maxFontSizeMultiplier={1.5}
-                                    nativeID="18"
                                     numberOfLines={1}
                                     style={
                                       [

@@ -237,7 +237,6 @@ exports[`SendAarCieCardReadingEducationalScreen should match the snapshot 1`] = 
                               "value": {},
                             }
                           }
-                          nativeID="0"
                           onScroll={[Function]}
                           scrollEventThrottle={8}
                           snapToEnd={false}
@@ -403,7 +402,6 @@ exports[`SendAarCieCardReadingEducationalScreen should match the snapshot 1`] = 
                                 false,
                               ]
                             }
-                            nativeID="1"
                             pointerEvents="none"
                             style={
                               [
@@ -437,7 +435,6 @@ exports[`SendAarCieCardReadingEducationalScreen should match the snapshot 1`] = 
                                   false,
                                 ]
                               }
-                              nativeID="2"
                               style={
                                 [
                                   {
@@ -623,7 +620,6 @@ exports[`SendAarCieCardReadingEducationalScreen should match the snapshot 1`] = 
                                     {},
                                   ]
                                 }
-                                nativeID="3"
                                 style={
                                   [
                                     {
@@ -684,7 +680,6 @@ exports[`SendAarCieCardReadingEducationalScreen should match the snapshot 1`] = 
                                       false,
                                     ]
                                   }
-                                  nativeID="4"
                                   style={
                                     [
                                       {
@@ -729,7 +724,6 @@ exports[`SendAarCieCardReadingEducationalScreen should match the snapshot 1`] = 
                                       ]
                                     }
                                     maxFontSizeMultiplier={1.5}
-                                    nativeID="5"
                                     numberOfLines={1}
                                     style={
                                       [
@@ -801,7 +795,6 @@ exports[`SendAarCieCardReadingEducationalScreen should match the snapshot 1`] = 
                               {},
                             ]
                           }
-                          nativeID="6"
                           style={
                             [
                               {
@@ -842,7 +835,6 @@ exports[`SendAarCieCardReadingEducationalScreen should match the snapshot 1`] = 
                                 },
                               ]
                             }
-                            nativeID="7"
                             style={
                               [
                                 {
@@ -923,7 +915,6 @@ exports[`SendAarCieCardReadingEducationalScreen should match the snapshot 1`] = 
                                     },
                                   ]
                                 }
-                                nativeID="8"
                                 style={
                                   [
                                     {
@@ -971,7 +962,6 @@ exports[`SendAarCieCardReadingEducationalScreen should match the snapshot 1`] = 
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="9"
                                   style={
                                     [
                                       {
@@ -1056,7 +1046,6 @@ exports[`SendAarCieCardReadingEducationalScreen should match the snapshot 1`] = 
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="10"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1158,7 +1147,6 @@ exports[`SendAarCieCardReadingEducationalScreen should match the snapshot 1`] = 
                                       },
                                     ]
                                   }
-                                  nativeID="11"
                                   style={
                                     [
                                       {
@@ -1206,7 +1194,6 @@ exports[`SendAarCieCardReadingEducationalScreen should match the snapshot 1`] = 
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="12"
                                     style={
                                       [
                                         {

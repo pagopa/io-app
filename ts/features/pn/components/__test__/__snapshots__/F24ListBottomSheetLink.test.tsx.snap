@@ -429,7 +429,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                               {},
                             ]
                           }
-                          nativeID="0"
                           style={
                             [
                               {
@@ -488,7 +487,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                                 false,
                               ]
                             }
-                            nativeID="1"
                             style={
                               [
                                 {
@@ -533,7 +531,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="2"
                               numberOfLines={1}
                               style={
                                 [
@@ -1050,7 +1047,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                               {},
                             ]
                           }
-                          nativeID="3"
                           style={
                             [
                               {
@@ -1109,7 +1105,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                                 false,
                               ]
                             }
-                            nativeID="4"
                             style={
                               [
                                 {
@@ -1154,7 +1149,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="5"
                               numberOfLines={1}
                               style={
                                 [
@@ -1671,7 +1665,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                               {},
                             ]
                           }
-                          nativeID="6"
                           style={
                             [
                               {
@@ -1730,7 +1723,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                                 false,
                               ]
                             }
-                            nativeID="7"
                             style={
                               [
                                 {
@@ -1775,7 +1767,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="8"
                               numberOfLines={1}
                               style={
                                 [
@@ -2292,7 +2283,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                               {},
                             ]
                           }
-                          nativeID="9"
                           style={
                             [
                               {
@@ -2351,7 +2341,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                                 false,
                               ]
                             }
-                            nativeID="10"
                             style={
                               [
                                 {
@@ -2396,7 +2385,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="11"
                               numberOfLines={1}
                               style={
                                 [
@@ -2913,7 +2901,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                               {},
                             ]
                           }
-                          nativeID="12"
                           style={
                             [
                               {
@@ -2972,7 +2959,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                                 false,
                               ]
                             }
-                            nativeID="13"
                             style={
                               [
                                 {
@@ -3017,7 +3003,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="14"
                               numberOfLines={1}
                               style={
                                 [
@@ -3534,7 +3519,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                               {},
                             ]
                           }
-                          nativeID="15"
                           style={
                             [
                               {
@@ -3593,7 +3577,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                                 false,
                               ]
                             }
-                            nativeID="16"
                             style={
                               [
                                 {
@@ -3638,7 +3621,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="17"
                               numberOfLines={1}
                               style={
                                 [
@@ -4155,7 +4137,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                               {},
                             ]
                           }
-                          nativeID="18"
                           style={
                             [
                               {
@@ -4214,7 +4195,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                                 false,
                               ]
                             }
-                            nativeID="19"
                             style={
                               [
                                 {
@@ -4259,7 +4239,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="20"
                               numberOfLines={1}
                               style={
                                 [
@@ -4776,7 +4755,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                               {},
                             ]
                           }
-                          nativeID="21"
                           style={
                             [
                               {
@@ -4835,7 +4813,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                                 false,
                               ]
                             }
-                            nativeID="22"
                             style={
                               [
                                 {
@@ -4880,7 +4857,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="23"
                               numberOfLines={1}
                               style={
                                 [
@@ -5397,7 +5373,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                               {},
                             ]
                           }
-                          nativeID="24"
                           style={
                             [
                               {
@@ -5456,7 +5431,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                                 false,
                               ]
                             }
-                            nativeID="25"
                             style={
                               [
                                 {
@@ -5501,7 +5475,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="26"
                               numberOfLines={1}
                               style={
                                 [
@@ -6018,7 +5991,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                               {},
                             ]
                           }
-                          nativeID="27"
                           style={
                             [
                               {
@@ -6077,7 +6049,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                                 false,
                               ]
                             }
-                            nativeID="28"
                             style={
                               [
                                 {
@@ -6122,7 +6093,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="29"
                               numberOfLines={1}
                               style={
                                 [
@@ -6259,7 +6229,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                                     false,
                                   ]
                                 }
-                                nativeID="30"
                                 style={
                                   [
                                     {
@@ -6892,7 +6861,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                               {},
                             ]
                           }
-                          nativeID="31"
                           style={
                             [
                               {
@@ -6951,7 +6919,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                                 false,
                               ]
                             }
-                            nativeID="32"
                             style={
                               [
                                 {
@@ -6996,7 +6963,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="33"
                               numberOfLines={1}
                               style={
                                 [
@@ -7133,7 +7099,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                                     false,
                                   ]
                                 }
-                                nativeID="34"
                                 style={
                                   [
                                     {
@@ -7766,7 +7731,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                               {},
                             ]
                           }
-                          nativeID="35"
                           style={
                             [
                               {
@@ -7825,7 +7789,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                                 false,
                               ]
                             }
-                            nativeID="36"
                             style={
                               [
                                 {
@@ -7870,7 +7833,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="37"
                               numberOfLines={1}
                               style={
                                 [
@@ -8007,7 +7969,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                                     false,
                                   ]
                                 }
-                                nativeID="38"
                                 style={
                                   [
                                     {
@@ -8640,7 +8601,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                               {},
                             ]
                           }
-                          nativeID="39"
                           style={
                             [
                               {
@@ -8699,7 +8659,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                                 false,
                               ]
                             }
-                            nativeID="40"
                             style={
                               [
                                 {
@@ -8744,7 +8703,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="41"
                               numberOfLines={1}
                               style={
                                 [
@@ -8881,7 +8839,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                                     false,
                                   ]
                                 }
-                                nativeID="42"
                                 style={
                                   [
                                     {
@@ -9514,7 +9471,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                               {},
                             ]
                           }
-                          nativeID="43"
                           style={
                             [
                               {
@@ -9573,7 +9529,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                                 false,
                               ]
                             }
-                            nativeID="44"
                             style={
                               [
                                 {
@@ -9618,7 +9573,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="45"
                               numberOfLines={1}
                               style={
                                 [
@@ -9755,7 +9709,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                                     false,
                                   ]
                                 }
-                                nativeID="46"
                                 style={
                                   [
                                     {
@@ -10388,7 +10341,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                               {},
                             ]
                           }
-                          nativeID="47"
                           style={
                             [
                               {
@@ -10447,7 +10399,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                                 false,
                               ]
                             }
-                            nativeID="48"
                             style={
                               [
                                 {
@@ -10492,7 +10443,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="49"
                               numberOfLines={1}
                               style={
                                 [
@@ -10629,7 +10579,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                                     false,
                                   ]
                                 }
-                                nativeID="50"
                                 style={
                                   [
                                     {
@@ -11262,7 +11211,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                               {},
                             ]
                           }
-                          nativeID="51"
                           style={
                             [
                               {
@@ -11321,7 +11269,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                                 false,
                               ]
                             }
-                            nativeID="52"
                             style={
                               [
                                 {
@@ -11366,7 +11313,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="53"
                               numberOfLines={1}
                               style={
                                 [
@@ -11503,7 +11449,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                                     false,
                                   ]
                                 }
-                                nativeID="54"
                                 style={
                                   [
                                     {
@@ -12136,7 +12081,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                               {},
                             ]
                           }
-                          nativeID="55"
                           style={
                             [
                               {
@@ -12195,7 +12139,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                                 false,
                               ]
                             }
-                            nativeID="56"
                             style={
                               [
                                 {
@@ -12240,7 +12183,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="57"
                               numberOfLines={1}
                               style={
                                 [
@@ -12377,7 +12319,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                                     false,
                                   ]
                                 }
-                                nativeID="58"
                                 style={
                                   [
                                     {
@@ -13010,7 +12951,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                               {},
                             ]
                           }
-                          nativeID="59"
                           style={
                             [
                               {
@@ -13069,7 +13009,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                                 false,
                               ]
                             }
-                            nativeID="60"
                             style={
                               [
                                 {
@@ -13114,7 +13053,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="61"
                               numberOfLines={1}
                               style={
                                 [
@@ -13251,7 +13189,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                                     false,
                                   ]
                                 }
-                                nativeID="62"
                                 style={
                                   [
                                     {
@@ -13884,7 +13821,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                               {},
                             ]
                           }
-                          nativeID="63"
                           style={
                             [
                               {
@@ -13943,7 +13879,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                 false,
                               ]
                             }
-                            nativeID="64"
                             style={
                               [
                                 {
@@ -13988,7 +13923,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="65"
                               numberOfLines={1}
                               style={
                                 [
@@ -14125,7 +14059,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                     false,
                                   ]
                                 }
-                                nativeID="66"
                                 style={
                                   [
                                     {
@@ -14385,7 +14318,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                     false,
                                   ]
                                 }
-                                nativeID="67"
                                 style={
                                   [
                                     {
@@ -15018,7 +14950,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                               {},
                             ]
                           }
-                          nativeID="68"
                           style={
                             [
                               {
@@ -15077,7 +15008,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                 false,
                               ]
                             }
-                            nativeID="69"
                             style={
                               [
                                 {
@@ -15122,7 +15052,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="70"
                               numberOfLines={1}
                               style={
                                 [
@@ -15259,7 +15188,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                     false,
                                   ]
                                 }
-                                nativeID="71"
                                 style={
                                   [
                                     {
@@ -15519,7 +15447,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                     false,
                                   ]
                                 }
-                                nativeID="72"
                                 style={
                                   [
                                     {
@@ -16152,7 +16079,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                               {},
                             ]
                           }
-                          nativeID="73"
                           style={
                             [
                               {
@@ -16211,7 +16137,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                 false,
                               ]
                             }
-                            nativeID="74"
                             style={
                               [
                                 {
@@ -16256,7 +16181,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="75"
                               numberOfLines={1}
                               style={
                                 [
@@ -16393,7 +16317,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                     false,
                                   ]
                                 }
-                                nativeID="76"
                                 style={
                                   [
                                     {
@@ -16653,7 +16576,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                     false,
                                   ]
                                 }
-                                nativeID="77"
                                 style={
                                   [
                                     {
@@ -17286,7 +17208,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                               {},
                             ]
                           }
-                          nativeID="78"
                           style={
                             [
                               {
@@ -17345,7 +17266,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                 false,
                               ]
                             }
-                            nativeID="79"
                             style={
                               [
                                 {
@@ -17390,7 +17310,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="80"
                               numberOfLines={1}
                               style={
                                 [
@@ -17527,7 +17446,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                     false,
                                   ]
                                 }
-                                nativeID="81"
                                 style={
                                   [
                                     {
@@ -17787,7 +17705,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                     false,
                                   ]
                                 }
-                                nativeID="82"
                                 style={
                                   [
                                     {
@@ -18420,7 +18337,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                               {},
                             ]
                           }
-                          nativeID="83"
                           style={
                             [
                               {
@@ -18479,7 +18395,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                 false,
                               ]
                             }
-                            nativeID="84"
                             style={
                               [
                                 {
@@ -18524,7 +18439,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="85"
                               numberOfLines={1}
                               style={
                                 [
@@ -18661,7 +18575,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                     false,
                                   ]
                                 }
-                                nativeID="86"
                                 style={
                                   [
                                     {
@@ -18921,7 +18834,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                     false,
                                   ]
                                 }
-                                nativeID="87"
                                 style={
                                   [
                                     {
@@ -19554,7 +19466,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                               {},
                             ]
                           }
-                          nativeID="88"
                           style={
                             [
                               {
@@ -19613,7 +19524,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                 false,
                               ]
                             }
-                            nativeID="89"
                             style={
                               [
                                 {
@@ -19658,7 +19568,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="90"
                               numberOfLines={1}
                               style={
                                 [
@@ -19795,7 +19704,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                     false,
                                   ]
                                 }
-                                nativeID="91"
                                 style={
                                   [
                                     {
@@ -20055,7 +19963,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                     false,
                                   ]
                                 }
-                                nativeID="92"
                                 style={
                                   [
                                     {
@@ -20688,7 +20595,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                               {},
                             ]
                           }
-                          nativeID="93"
                           style={
                             [
                               {
@@ -20747,7 +20653,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                 false,
                               ]
                             }
-                            nativeID="94"
                             style={
                               [
                                 {
@@ -20792,7 +20697,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="95"
                               numberOfLines={1}
                               style={
                                 [
@@ -20929,7 +20833,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                     false,
                                   ]
                                 }
-                                nativeID="96"
                                 style={
                                   [
                                     {
@@ -21189,7 +21092,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                     false,
                                   ]
                                 }
-                                nativeID="97"
                                 style={
                                   [
                                     {
@@ -21822,7 +21724,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                               {},
                             ]
                           }
-                          nativeID="98"
                           style={
                             [
                               {
@@ -21881,7 +21782,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                 false,
                               ]
                             }
-                            nativeID="99"
                             style={
                               [
                                 {
@@ -21926,7 +21826,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="100"
                               numberOfLines={1}
                               style={
                                 [
@@ -22063,7 +21962,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                     false,
                                   ]
                                 }
-                                nativeID="101"
                                 style={
                                   [
                                     {
@@ -22323,7 +22221,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                     false,
                                   ]
                                 }
-                                nativeID="102"
                                 style={
                                   [
                                     {
@@ -22956,7 +22853,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                               {},
                             ]
                           }
-                          nativeID="103"
                           style={
                             [
                               {
@@ -23015,7 +22911,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                 false,
                               ]
                             }
-                            nativeID="104"
                             style={
                               [
                                 {
@@ -23060,7 +22955,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                 ]
                               }
                               maxFontSizeMultiplier={1.5}
-                              nativeID="105"
                               numberOfLines={1}
                               style={
                                 [
@@ -23197,7 +23091,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                     false,
                                   ]
                                 }
-                                nativeID="106"
                                 style={
                                   [
                                     {
@@ -23457,7 +23350,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                     false,
                                   ]
                                 }
-                                nativeID="107"
                                 style={
                                   [
                                     {

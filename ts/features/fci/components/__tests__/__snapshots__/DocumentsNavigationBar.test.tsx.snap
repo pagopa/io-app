@@ -104,7 +104,6 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
             },
           ]
         }
-        nativeID="0"
         style={
           [
             {
@@ -152,7 +151,6 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
           meetOrSlice={0}
           minX={0}
           minY={0}
-          nativeID="1"
           style={
             [
               {
@@ -283,7 +281,6 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
             },
           ]
         }
-        nativeID="2"
         style={
           [
             {
@@ -331,7 +328,6 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
           meetOrSlice={0}
           minX={0}
           minY={0}
-          nativeID="3"
           style={
             [
               {

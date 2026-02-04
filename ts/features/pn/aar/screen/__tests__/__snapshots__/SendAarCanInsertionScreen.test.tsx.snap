@@ -250,7 +250,6 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                                 "value": {},
                               }
                             }
-                            nativeID="0"
                             onScroll={[Function]}
                             scrollEventThrottle={8}
                             snapToEnd={false}
@@ -384,7 +383,6 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                                       },
                                     ]
                                   }
-                                  nativeID="1"
                                   style={
                                     [
                                       {
@@ -685,7 +683,6 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                               {},
                             ]
                           }
-                          nativeID="2"
                           style={
                             [
                               {
@@ -726,7 +723,6 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                                 },
                               ]
                             }
-                            nativeID="3"
                             style={
                               [
                                 {
@@ -807,7 +803,6 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                                     },
                                   ]
                                 }
-                                nativeID="4"
                                 style={
                                   [
                                     {
@@ -855,7 +850,6 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="5"
                                   style={
                                     [
                                       {
@@ -940,7 +934,6 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="6"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1042,7 +1035,6 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                                       },
                                     ]
                                   }
-                                  nativeID="7"
                                   style={
                                     [
                                       {
@@ -1090,7 +1082,6 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="8"
                                     style={
                                       [
                                         {

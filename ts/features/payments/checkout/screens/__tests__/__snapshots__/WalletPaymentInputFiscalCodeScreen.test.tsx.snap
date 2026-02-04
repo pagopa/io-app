@@ -362,7 +362,6 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                             "value": {},
                           }
                         }
-                        nativeID="0"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -539,7 +538,6 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                     },
                                   ]
                                 }
-                                nativeID="1"
                                 style={
                                   [
                                     {
@@ -589,7 +587,6 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                     },
                                   ]
                                 }
-                                nativeID="2"
                                 style={
                                   [
                                     {
@@ -754,7 +751,6 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                     },
                                   ]
                                 }
-                                nativeID="3"
                                 pointerEvents="none"
                                 style={
                                   [
@@ -812,7 +808,6 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="4"
                                   numberOfLines={1}
                                   onLayout={[Function]}
                                   style={
@@ -863,7 +858,6 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                     "overflow": "visible",
                                   }
                                 }
-                                nativeID="5"
                                 style={
                                   [
                                     {
@@ -1077,7 +1071,6 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                     {},
                                   ]
                                 }
-                                nativeID="6"
                                 style={
                                   [
                                     {
@@ -1138,7 +1131,6 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                       false,
                                     ]
                                   }
-                                  nativeID="7"
                                   style={
                                     [
                                       {
@@ -1183,7 +1175,6 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                       ]
                                     }
                                     maxFontSizeMultiplier={1.5}
-                                    nativeID="8"
                                     numberOfLines={1}
                                     style={
                                       [

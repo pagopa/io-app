@@ -269,7 +269,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                   }
                                 }
                                 jestInlineStyle={{}}
-                                nativeID="0"
                                 style={
                                   [
                                     {
@@ -504,7 +503,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                 "value": {},
                               }
                             }
-                            nativeID="1"
                             onScroll={[Function]}
                             scrollEventThrottle={8}
                             snapToEnd={false}
@@ -709,7 +707,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                   false,
                                 ]
                               }
-                              nativeID="2"
                               pointerEvents="none"
                               style={
                                 [
@@ -743,7 +740,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                     false,
                                   ]
                                 }
-                                nativeID="3"
                                 style={
                                   [
                                     {
@@ -928,7 +924,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                       {},
                                     ]
                                   }
-                                  nativeID="4"
                                   style={
                                     [
                                       {
@@ -989,7 +984,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                         false,
                                       ]
                                     }
-                                    nativeID="5"
                                     style={
                                       [
                                         {
@@ -1034,7 +1028,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                         ]
                                       }
                                       maxFontSizeMultiplier={1.5}
-                                      nativeID="6"
                                       numberOfLines={1}
                                       style={
                                         [
@@ -1107,7 +1100,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                               {},
                             ]
                           }
-                          nativeID="7"
                           style={
                             [
                               {
@@ -1148,7 +1140,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                 },
                               ]
                             }
-                            nativeID="8"
                             style={
                               [
                                 {
@@ -1229,7 +1220,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                     },
                                   ]
                                 }
-                                nativeID="9"
                                 style={
                                   [
                                     {
@@ -1277,7 +1267,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="10"
                                   style={
                                     [
                                       {
@@ -1362,7 +1351,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="11"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1462,7 +1450,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                       },
                                     ]
                                   }
-                                  nativeID="12"
                                   style={
                                     [
                                       {
@@ -1510,7 +1497,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="13"
                                     style={
                                       [
                                         {
@@ -1856,7 +1842,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                   }
                                 }
                                 jestInlineStyle={{}}
-                                nativeID="14"
                                 style={
                                   [
                                     {
@@ -2091,7 +2076,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                 "value": {},
                               }
                             }
-                            nativeID="15"
                             onScroll={[Function]}
                             scrollEventThrottle={8}
                             snapToEnd={false}
@@ -2296,7 +2280,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                   false,
                                 ]
                               }
-                              nativeID="16"
                               pointerEvents="none"
                               style={
                                 [
@@ -2330,7 +2313,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                     false,
                                   ]
                                 }
-                                nativeID="17"
                                 style={
                                   [
                                     {
@@ -2515,7 +2497,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                       {},
                                     ]
                                   }
-                                  nativeID="18"
                                   style={
                                     [
                                       {
@@ -2576,7 +2557,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                         false,
                                       ]
                                     }
-                                    nativeID="19"
                                     style={
                                       [
                                         {
@@ -2621,7 +2601,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                         ]
                                       }
                                       maxFontSizeMultiplier={1.5}
-                                      nativeID="20"
                                       numberOfLines={1}
                                       style={
                                         [
@@ -2694,7 +2673,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                               {},
                             ]
                           }
-                          nativeID="21"
                           style={
                             [
                               {
@@ -2735,7 +2713,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                 },
                               ]
                             }
-                            nativeID="22"
                             style={
                               [
                                 {
@@ -2816,7 +2793,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                     },
                                   ]
                                 }
-                                nativeID="23"
                                 style={
                                   [
                                     {
@@ -2864,7 +2840,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="24"
                                   style={
                                     [
                                       {
@@ -2949,7 +2924,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="25"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -3049,7 +3023,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                       },
                                     ]
                                   }
-                                  nativeID="26"
                                   style={
                                     [
                                       {
@@ -3097,7 +3070,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="27"
                                     style={
                                       [
                                         {

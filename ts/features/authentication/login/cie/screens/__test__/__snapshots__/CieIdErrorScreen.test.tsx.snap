@@ -320,7 +320,6 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                   {},
                 ]
               }
-              nativeID="30"
               style={
                 [
                   {
@@ -381,7 +380,6 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     false,
                   ]
                 }
-                nativeID="31"
                 style={
                   [
                     {
@@ -426,7 +424,6 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     ]
                   }
                   maxFontSizeMultiplier={1.5}
-                  nativeID="32"
                   numberOfLines={1}
                   style={
                     [
@@ -564,7 +561,6 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                   {},
                 ]
               }
-              nativeID="33"
               style={
                 [
                   {
@@ -623,7 +619,6 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     false,
                   ]
                 }
-                nativeID="34"
                 style={
                   [
                     {
@@ -668,7 +663,6 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     ]
                   }
                   maxFontSizeMultiplier={1.5}
-                  nativeID="35"
                   numberOfLines={1}
                   style={
                     [
@@ -1029,7 +1023,6 @@ Inserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura
                   {},
                 ]
               }
-              nativeID="6"
               style={
                 [
                   {
@@ -1090,7 +1083,6 @@ Inserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura
                     false,
                   ]
                 }
-                nativeID="7"
                 style={
                   [
                     {
@@ -1135,7 +1127,6 @@ Inserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura
                     ]
                   }
                   maxFontSizeMultiplier={1.5}
-                  nativeID="8"
                   numberOfLines={1}
                   style={
                     [
@@ -1273,7 +1264,6 @@ Inserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura
                   {},
                 ]
               }
-              nativeID="9"
               style={
                 [
                   {
@@ -1332,7 +1322,6 @@ Inserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura
                     false,
                   ]
                 }
-                nativeID="10"
                 style={
                   [
                     {
@@ -1377,7 +1366,6 @@ Inserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura
                     ]
                   }
                   maxFontSizeMultiplier={1.5}
-                  nativeID="11"
                   numberOfLines={1}
                   style={
                     [

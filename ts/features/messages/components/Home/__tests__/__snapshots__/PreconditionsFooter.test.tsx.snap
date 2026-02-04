@@ -366,7 +366,6 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                             undefined,
                           ]
                         }
-                        nativeID="0"
                         style={
                           [
                             {
@@ -413,7 +412,6 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                               undefined,
                             ]
                           }
-                          nativeID="1"
                           pointerEvents="none"
                           style={
                             [
@@ -529,7 +527,6 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                   {},
                                 ]
                               }
-                              nativeID="2"
                               style={
                                 [
                                   {
@@ -590,7 +587,6 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                     false,
                                   ]
                                 }
-                                nativeID="3"
                                 style={
                                   [
                                     {
@@ -635,7 +631,6 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="4"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -771,7 +766,6 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                     {},
                                   ]
                                 }
-                                nativeID="5"
                                 style={
                                   [
                                     {
@@ -830,7 +824,6 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                       false,
                                     ]
                                   }
-                                  nativeID="6"
                                   style={
                                     [
                                       {
@@ -875,7 +868,6 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                       ]
                                     }
                                     maxFontSizeMultiplier={1.5}
-                                    nativeID="7"
                                     numberOfLines={1}
                                     style={
                                       [
@@ -1641,7 +1633,6 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                             undefined,
                           ]
                         }
-                        nativeID="8"
                         style={
                           [
                             {
@@ -1688,7 +1679,6 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                               undefined,
                             ]
                           }
-                          nativeID="9"
                           pointerEvents="none"
                           style={
                             [
@@ -1804,7 +1794,6 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                   {},
                                 ]
                               }
-                              nativeID="10"
                               style={
                                 [
                                   {
@@ -1865,7 +1854,6 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                     false,
                                   ]
                                 }
-                                nativeID="11"
                                 style={
                                   [
                                     {
@@ -1910,7 +1898,6 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="12"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -2046,7 +2033,6 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                     {},
                                   ]
                                 }
-                                nativeID="13"
                                 style={
                                   [
                                     {
@@ -2105,7 +2091,6 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                       false,
                                     ]
                                   }
-                                  nativeID="14"
                                   style={
                                     [
                                       {
@@ -2150,7 +2135,6 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                       ]
                                     }
                                     maxFontSizeMultiplier={1.5}
-                                    nativeID="15"
                                     numberOfLines={1}
                                     style={
                                       [

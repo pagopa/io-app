@@ -24,7 +24,6 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
         "value": {},
       }
     }
-    nativeID="0"
     onScroll={[Function]}
     scrollEventThrottle={8}
     snapToEnd={false}
@@ -224,7 +223,6 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                 {},
               ]
             }
-            nativeID="1"
             style={
               [
                 {
@@ -283,7 +281,6 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                   false,
                 ]
               }
-              nativeID="2"
               style={
                 [
                   {
@@ -328,7 +325,6 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                   ]
                 }
                 maxFontSizeMultiplier={1.5}
-                nativeID="3"
                 numberOfLines={1}
                 style={
                   [
@@ -404,7 +400,6 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
           false,
         ]
       }
-      nativeID="4"
       pointerEvents="none"
       style={
         [
@@ -438,7 +433,6 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
             false,
           ]
         }
-        nativeID="5"
         style={
           [
             {
@@ -624,7 +618,6 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
               {},
             ]
           }
-          nativeID="6"
           style={
             [
               {
@@ -685,7 +678,6 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                 false,
               ]
             }
-            nativeID="7"
             style={
               [
                 {
@@ -730,7 +722,6 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                 ]
               }
               maxFontSizeMultiplier={1.5}
-              nativeID="8"
               numberOfLines={1}
               style={
                 [
@@ -866,7 +857,6 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                 {},
               ]
             }
-            nativeID="9"
             style={
               [
                 {
@@ -925,7 +915,6 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                   false,
                 ]
               }
-              nativeID="10"
               style={
                 [
                   {
@@ -970,7 +959,6 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                   ]
                 }
                 maxFontSizeMultiplier={1.5}
-                nativeID="11"
                 numberOfLines={1}
                 style={
                   [
@@ -1032,7 +1020,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
         "value": {},
       }
     }
-    nativeID="48"
     onScroll={[Function]}
     scrollEventThrottle={8}
     snapToEnd={false}
@@ -1230,7 +1217,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 {},
               ]
             }
-            nativeID="49"
             style={
               [
                 {
@@ -1289,7 +1275,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   false,
                 ]
               }
-              nativeID="50"
               style={
                 [
                   {
@@ -1334,7 +1319,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   ]
                 }
                 maxFontSizeMultiplier={1.5}
-                nativeID="51"
                 numberOfLines={1}
                 style={
                   [
@@ -1688,7 +1672,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   {},
                 ]
               }
-              nativeID="52"
               style={
                 [
                   {
@@ -1747,7 +1730,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     false,
                   ]
                 }
-                nativeID="53"
                 style={
                   [
                     {
@@ -1792,7 +1774,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     ]
                   }
                   maxFontSizeMultiplier={1.5}
-                  nativeID="54"
                   numberOfLines={1}
                   style={
                     [
@@ -1876,7 +1857,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
           false,
         ]
       }
-      nativeID="55"
       pointerEvents="none"
       style={
         [
@@ -1910,7 +1890,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
             false,
           ]
         }
-        nativeID="56"
         style={
           [
             {
@@ -2096,7 +2075,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
               {},
             ]
           }
-          nativeID="57"
           style={
             [
               {
@@ -2157,7 +2135,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 false,
               ]
             }
-            nativeID="58"
             style={
               [
                 {
@@ -2202,7 +2179,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 ]
               }
               maxFontSizeMultiplier={1.5}
-              nativeID="59"
               numberOfLines={1}
               style={
                 [
@@ -2338,7 +2314,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 {},
               ]
             }
-            nativeID="60"
             style={
               [
                 {
@@ -2397,7 +2372,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   false,
                 ]
               }
-              nativeID="61"
               style={
                 [
                   {
@@ -2442,7 +2416,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   ]
                 }
                 maxFontSizeMultiplier={1.5}
-                nativeID="62"
                 numberOfLines={1}
                 style={
                   [
@@ -2504,7 +2477,6 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
         "value": {},
       }
     }
-    nativeID="135"
     onScroll={[Function]}
     scrollEventThrottle={8}
     snapToEnd={false}
@@ -2700,7 +2672,6 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 },
               ]
             }
-            nativeID="136"
             style={
               [
                 {
@@ -2744,7 +2715,6 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                   },
                 ]
               }
-              nativeID="137"
               style={
                 [
                   {
@@ -2913,7 +2883,6 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 },
               ]
             }
-            nativeID="138"
             style={
               [
                 {
@@ -2957,7 +2926,6 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                   },
                 ]
               }
-              nativeID="139"
               style={
                 [
                   {
@@ -3168,7 +3136,6 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 },
               ]
             }
-            nativeID="140"
             style={
               [
                 {
@@ -3212,7 +3179,6 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                   },
                 ]
               }
-              nativeID="141"
               style={
                 [
                   {
@@ -3365,7 +3331,6 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
           false,
         ]
       }
-      nativeID="142"
       pointerEvents="none"
       style={
         [
@@ -3399,7 +3364,6 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
             false,
           ]
         }
-        nativeID="143"
         style={
           [
             {
@@ -3584,7 +3548,6 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
               {},
             ]
           }
-          nativeID="144"
           style={
             [
               {
@@ -3645,7 +3608,6 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 false,
               ]
             }
-            nativeID="145"
             style={
               [
                 {
@@ -3690,7 +3652,6 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 ]
               }
               maxFontSizeMultiplier={1.5}
-              nativeID="146"
               numberOfLines={1}
               style={
                 [
@@ -3751,7 +3712,6 @@ exports[`SpidWizard Should match the snapshot 1`] = `
         "value": {},
       }
     }
-    nativeID="108"
     onScroll={[Function]}
     scrollEventThrottle={8}
     snapToEnd={false}
@@ -3882,7 +3842,6 @@ exports[`SpidWizard Should match the snapshot 1`] = `
           false,
         ]
       }
-      nativeID="109"
       pointerEvents="none"
       style={
         [
@@ -3916,7 +3875,6 @@ exports[`SpidWizard Should match the snapshot 1`] = `
             false,
           ]
         }
-        nativeID="110"
         style={
           [
             {
@@ -4102,7 +4060,6 @@ exports[`SpidWizard Should match the snapshot 1`] = `
               {},
             ]
           }
-          nativeID="111"
           style={
             [
               {
@@ -4163,7 +4120,6 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                 false,
               ]
             }
-            nativeID="112"
             style={
               [
                 {
@@ -4208,7 +4164,6 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                 ]
               }
               maxFontSizeMultiplier={1.5}
-              nativeID="113"
               numberOfLines={1}
               style={
                 [
@@ -4344,7 +4299,6 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                 {},
               ]
             }
-            nativeID="114"
             style={
               [
                 {
@@ -4403,7 +4357,6 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                   false,
                 ]
               }
-              nativeID="115"
               style={
                 [
                   {
@@ -4448,7 +4401,6 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                   ]
                 }
                 maxFontSizeMultiplier={1.5}
-                nativeID="116"
                 numberOfLines={1}
                 style={
                   [

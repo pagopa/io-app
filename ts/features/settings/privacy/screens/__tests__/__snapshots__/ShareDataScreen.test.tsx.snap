@@ -221,7 +221,6 @@ exports[`ShareDataScreen should match snapshot 1`] = `
                             "value": {},
                           }
                         }
-                        nativeID="0"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -1209,7 +1208,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                               false,
                             ]
                           }
-                          nativeID="1"
                           pointerEvents="none"
                           style={
                             [
@@ -1243,7 +1241,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                 false,
                               ]
                             }
-                            nativeID="2"
                             style={
                               [
                                 {
@@ -1429,7 +1426,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                   {},
                                 ]
                               }
-                              nativeID="3"
                               style={
                                 [
                                   {
@@ -1490,7 +1486,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                     false,
                                   ]
                                 }
-                                nativeID="4"
                                 style={
                                   [
                                     {
@@ -1535,7 +1530,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="5"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1606,7 +1600,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                               {},
                             ]
                           }
-                          nativeID="6"
                           style={
                             [
                               {
@@ -1647,7 +1640,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                 },
                               ]
                             }
-                            nativeID="7"
                             style={
                               [
                                 {
@@ -1728,7 +1720,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                     },
                                   ]
                                 }
-                                nativeID="8"
                                 style={
                                   [
                                     {
@@ -1776,7 +1767,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="9"
                                   style={
                                     [
                                       {
@@ -1861,7 +1851,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="10"
                                 numberOfLines={1}
                                 style={
                                   [

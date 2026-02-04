@@ -794,7 +794,6 @@ Inizia"
                                       },
                                     ]
                                   }
-                                  nativeID="8"
                                   style={
                                     [
                                       {
@@ -842,7 +841,6 @@ Inizia"
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="9"
                                     style={
                                       [
                                         {
@@ -1046,7 +1044,6 @@ Inizia"
                                   {},
                                 ]
                               }
-                              nativeID="10"
                               style={
                                 [
                                   {
@@ -1107,7 +1104,6 @@ Inizia"
                                     false,
                                   ]
                                 }
-                                nativeID="11"
                                 style={
                                   [
                                     {
@@ -1152,7 +1148,6 @@ Inizia"
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="12"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1993,7 +1988,6 @@ Aggiungi un documento"
                                       },
                                     ]
                                   }
-                                  nativeID="0"
                                   style={
                                     [
                                       {
@@ -2041,7 +2035,6 @@ Aggiungi un documento"
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="1"
                                     style={
                                       [
                                         {
@@ -2245,7 +2238,6 @@ Aggiungi un documento"
                                   {},
                                 ]
                               }
-                              nativeID="2"
                               style={
                                 [
                                   {
@@ -2306,7 +2298,6 @@ Aggiungi un documento"
                                     false,
                                   ]
                                 }
-                                nativeID="3"
                                 style={
                                   [
                                     {
@@ -2351,7 +2342,6 @@ Aggiungi un documento"
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="4"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -3192,7 +3182,6 @@ Inizia"
                                       },
                                     ]
                                   }
-                                  nativeID="13"
                                   style={
                                     [
                                       {
@@ -3240,7 +3229,6 @@ Inizia"
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="14"
                                     style={
                                       [
                                         {
@@ -3444,7 +3432,6 @@ Inizia"
                                   {},
                                 ]
                               }
-                              nativeID="15"
                               style={
                                 [
                                   {
@@ -3505,7 +3492,6 @@ Inizia"
                                     false,
                                   ]
                                 }
-                                nativeID="16"
                                 style={
                                   [
                                     {
@@ -3550,7 +3536,6 @@ Inizia"
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="17"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -4484,7 +4469,6 @@ Aggiungi documento"
                                   {},
                                 ]
                               }
-                              nativeID="5"
                               style={
                                 [
                                   {
@@ -4545,7 +4529,6 @@ Aggiungi documento"
                                     false,
                                   ]
                                 }
-                                nativeID="6"
                                 style={
                                   [
                                     {
@@ -4590,7 +4573,6 @@ Aggiungi documento"
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="7"
                                   numberOfLines={1}
                                   style={
                                     [

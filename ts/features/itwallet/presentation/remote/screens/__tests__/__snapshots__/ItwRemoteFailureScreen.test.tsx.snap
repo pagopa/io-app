@@ -687,7 +687,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                         {},
                                       ]
                                     }
-                                    nativeID="34"
                                     style={
                                       [
                                         {
@@ -748,7 +747,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                           false,
                                         ]
                                       }
-                                      nativeID="35"
                                       style={
                                         [
                                           {
@@ -793,7 +791,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="36"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -930,7 +927,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                         {},
                                       ]
                                     }
-                                    nativeID="37"
                                     style={
                                       [
                                         {
@@ -989,7 +985,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                           false,
                                         ]
                                       }
-                                      nativeID="38"
                                       style={
                                         [
                                           {
@@ -1034,7 +1029,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="39"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -1411,7 +1405,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                           },
                                         ]
                                       }
-                                      nativeID="40"
                                       style={
                                         [
                                           {
@@ -1455,7 +1448,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                             },
                                           ]
                                         }
-                                        nativeID="41"
                                         style={
                                           [
                                             {
@@ -2269,7 +2261,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                         {},
                                       ]
                                     }
-                                    nativeID="0"
                                     style={
                                       [
                                         {
@@ -2330,7 +2321,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                           false,
                                         ]
                                       }
-                                      nativeID="1"
                                       style={
                                         [
                                           {
@@ -2375,7 +2365,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="2"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -2752,7 +2741,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                           },
                                         ]
                                       }
-                                      nativeID="3"
                                       style={
                                         [
                                           {
@@ -2796,7 +2784,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                             },
                                           ]
                                         }
-                                        nativeID="4"
                                         style={
                                           [
                                             {
@@ -3641,7 +3628,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                         {},
                                       ]
                                     }
-                                    nativeID="5"
                                     style={
                                       [
                                         {
@@ -3702,7 +3688,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                           false,
                                         ]
                                       }
-                                      nativeID="6"
                                       style={
                                         [
                                           {
@@ -3747,7 +3732,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="7"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -4124,7 +4108,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                           },
                                         ]
                                       }
-                                      nativeID="8"
                                       style={
                                         [
                                           {
@@ -4168,7 +4151,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                             },
                                           ]
                                         }
-                                        nativeID="9"
                                         style={
                                           [
                                             {
@@ -5105,7 +5087,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                                         {},
                                       ]
                                     }
-                                    nativeID="56"
                                     style={
                                       [
                                         {
@@ -5166,7 +5147,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                                           false,
                                         ]
                                       }
-                                      nativeID="57"
                                       style={
                                         [
                                           {
@@ -5211,7 +5191,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="58"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -6170,7 +6149,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                         {},
                                       ]
                                     }
-                                    nativeID="10"
                                     style={
                                       [
                                         {
@@ -6231,7 +6209,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                           false,
                                         ]
                                       }
-                                      nativeID="11"
                                       style={
                                         [
                                           {
@@ -6276,7 +6253,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="12"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -6413,7 +6389,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                         {},
                                       ]
                                     }
-                                    nativeID="13"
                                     style={
                                       [
                                         {
@@ -6472,7 +6447,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                           false,
                                         ]
                                       }
-                                      nativeID="14"
                                       style={
                                         [
                                           {
@@ -6517,7 +6491,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="15"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -6894,7 +6867,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                           },
                                         ]
                                       }
-                                      nativeID="16"
                                       style={
                                         [
                                           {
@@ -6938,7 +6910,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                             },
                                           ]
                                         }
-                                        nativeID="17"
                                         style={
                                           [
                                             {
@@ -7774,7 +7745,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                         {},
                                       ]
                                     }
-                                    nativeID="18"
                                     style={
                                       [
                                         {
@@ -7835,7 +7805,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                           false,
                                         ]
                                       }
-                                      nativeID="19"
                                       style={
                                         [
                                           {
@@ -7880,7 +7849,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="20"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -8017,7 +7985,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                         {},
                                       ]
                                     }
-                                    nativeID="21"
                                     style={
                                       [
                                         {
@@ -8076,7 +8043,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                           false,
                                         ]
                                       }
-                                      nativeID="22"
                                       style={
                                         [
                                           {
@@ -8121,7 +8087,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="23"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -8498,7 +8463,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                           },
                                         ]
                                       }
-                                      nativeID="24"
                                       style={
                                         [
                                           {
@@ -8542,7 +8506,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                             },
                                           ]
                                         }
-                                        nativeID="25"
                                         style={
                                           [
                                             {
@@ -9440,7 +9403,6 @@ Genera un nuovo QR Code e riprova.
                                         {},
                                       ]
                                     }
-                                    nativeID="50"
                                     style={
                                       [
                                         {
@@ -9501,7 +9463,6 @@ Genera un nuovo QR Code e riprova.
                                           false,
                                         ]
                                       }
-                                      nativeID="51"
                                       style={
                                         [
                                           {
@@ -9546,7 +9507,6 @@ Genera un nuovo QR Code e riprova.
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="52"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -9683,7 +9643,6 @@ Genera un nuovo QR Code e riprova.
                                         {},
                                       ]
                                     }
-                                    nativeID="53"
                                     style={
                                       [
                                         {
@@ -9742,7 +9701,6 @@ Genera un nuovo QR Code e riprova.
                                           false,
                                         ]
                                       }
-                                      nativeID="54"
                                       style={
                                         [
                                           {
@@ -9787,7 +9745,6 @@ Genera un nuovo QR Code e riprova.
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="55"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -10788,7 +10745,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                         {},
                                       ]
                                     }
-                                    nativeID="42"
                                     style={
                                       [
                                         {
@@ -10849,7 +10805,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                           false,
                                         ]
                                       }
-                                      nativeID="43"
                                       style={
                                         [
                                           {
@@ -10894,7 +10849,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="44"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -11031,7 +10985,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                         {},
                                       ]
                                     }
-                                    nativeID="45"
                                     style={
                                       [
                                         {
@@ -11090,7 +11043,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                           false,
                                         ]
                                       }
-                                      nativeID="46"
                                       style={
                                         [
                                           {
@@ -11135,7 +11087,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="47"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -11513,7 +11464,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                           },
                                         ]
                                       }
-                                      nativeID="48"
                                       style={
                                         [
                                           {
@@ -11557,7 +11507,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                             },
                                           ]
                                         }
-                                        nativeID="49"
                                         style={
                                           [
                                             {
@@ -12407,7 +12356,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                                         {},
                                       ]
                                     }
-                                    nativeID="59"
                                     style={
                                       [
                                         {
@@ -12468,7 +12416,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                                           false,
                                         ]
                                       }
-                                      nativeID="60"
                                       style={
                                         [
                                           {
@@ -12513,7 +12460,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="61"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -12650,7 +12596,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                                         {},
                                       ]
                                     }
-                                    nativeID="62"
                                     style={
                                       [
                                         {
@@ -12709,7 +12654,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                                           false,
                                         ]
                                       }
-                                      nativeID="63"
                                       style={
                                         [
                                           {
@@ -12754,7 +12698,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="64"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -13765,7 +13708,6 @@ continuare
                                         {},
                                       ]
                                     }
-                                    nativeID="26"
                                     style={
                                       [
                                         {
@@ -13826,7 +13768,6 @@ continuare
                                           false,
                                         ]
                                       }
-                                      nativeID="27"
                                       style={
                                         [
                                           {
@@ -13871,7 +13812,6 @@ continuare
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="28"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -14008,7 +13948,6 @@ continuare
                                         {},
                                       ]
                                     }
-                                    nativeID="29"
                                     style={
                                       [
                                         {
@@ -14067,7 +14006,6 @@ continuare
                                           false,
                                         ]
                                       }
-                                      nativeID="30"
                                       style={
                                         [
                                           {
@@ -14112,7 +14050,6 @@ continuare
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="31"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -14489,7 +14426,6 @@ continuare
                                           },
                                         ]
                                       }
-                                      nativeID="32"
                                       style={
                                         [
                                           {
@@ -14533,7 +14469,6 @@ continuare
                                             },
                                           ]
                                         }
-                                        nativeID="33"
                                         style={
                                           [
                                             {

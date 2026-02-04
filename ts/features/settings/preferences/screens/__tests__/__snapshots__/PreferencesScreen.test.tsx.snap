@@ -221,7 +221,6 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                             "value": {},
                           }
                         }
-                        nativeID="0"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -437,7 +436,6 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    nativeID="1"
                                     style={
                                       [
                                         {
@@ -478,7 +476,6 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                           },
                                         ]
                                       }
-                                      nativeID="2"
                                       style={
                                         [
                                           {
@@ -676,7 +673,6 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    nativeID="3"
                                     style={
                                       [
                                         {
@@ -717,7 +713,6 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                           },
                                         ]
                                       }
-                                      nativeID="4"
                                       style={
                                         [
                                           {
@@ -915,7 +910,6 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    nativeID="5"
                                     style={
                                       [
                                         {
@@ -956,7 +950,6 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                           },
                                         ]
                                       }
-                                      nativeID="6"
                                       style={
                                         [
                                           {
@@ -1154,7 +1147,6 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    nativeID="7"
                                     style={
                                       [
                                         {
@@ -1195,7 +1187,6 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                           },
                                         ]
                                       }
-                                      nativeID="8"
                                       style={
                                         [
                                           {
@@ -1393,7 +1384,6 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    nativeID="9"
                                     style={
                                       [
                                         {
@@ -1434,7 +1424,6 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                           },
                                         ]
                                       }
-                                      nativeID="10"
                                       style={
                                         [
                                           {
@@ -1632,7 +1621,6 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    nativeID="11"
                                     style={
                                       [
                                         {
@@ -1673,7 +1661,6 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                           },
                                         ]
                                       }
-                                      nativeID="12"
                                       style={
                                         [
                                           {
@@ -1842,7 +1829,6 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                               {},
                             ]
                           }
-                          nativeID="13"
                           style={
                             [
                               {
@@ -1883,7 +1869,6 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                 },
                               ]
                             }
-                            nativeID="14"
                             style={
                               [
                                 {
@@ -1964,7 +1949,6 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                     },
                                   ]
                                 }
-                                nativeID="15"
                                 style={
                                   [
                                     {
@@ -2012,7 +1996,6 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="16"
                                   style={
                                     [
                                       {
@@ -2097,7 +2080,6 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="17"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -2199,7 +2181,6 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                       },
                                     ]
                                   }
-                                  nativeID="18"
                                   style={
                                     [
                                       {
@@ -2247,7 +2228,6 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="19"
                                     style={
                                       [
                                         {

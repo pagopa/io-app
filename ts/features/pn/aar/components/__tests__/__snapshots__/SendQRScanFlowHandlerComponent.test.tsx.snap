@@ -589,7 +589,6 @@ exports[`SendQRScanFlowHandlerComponent should match snapshot and track the scre
                                         {},
                                       ]
                                     }
-                                    nativeID="0"
                                     style={
                                       [
                                         {
@@ -650,7 +649,6 @@ exports[`SendQRScanFlowHandlerComponent should match snapshot and track the scre
                                           false,
                                         ]
                                       }
-                                      nativeID="1"
                                       style={
                                         [
                                           {
@@ -695,7 +693,6 @@ exports[`SendQRScanFlowHandlerComponent should match snapshot and track the scre
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="2"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -769,7 +766,6 @@ exports[`SendQRScanFlowHandlerComponent should match snapshot and track the scre
                               {},
                             ]
                           }
-                          nativeID="3"
                           style={
                             [
                               {
@@ -810,7 +806,6 @@ exports[`SendQRScanFlowHandlerComponent should match snapshot and track the scre
                                 },
                               ]
                             }
-                            nativeID="4"
                             style={
                               [
                                 {
@@ -873,7 +868,6 @@ exports[`SendQRScanFlowHandlerComponent should match snapshot and track the scre
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="5"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -974,7 +968,6 @@ exports[`SendQRScanFlowHandlerComponent should match snapshot and track the scre
                                       },
                                     ]
                                   }
-                                  nativeID="6"
                                   style={
                                     [
                                       {
@@ -1022,7 +1015,6 @@ exports[`SendQRScanFlowHandlerComponent should match snapshot and track the scre
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="7"
                                     style={
                                       [
                                         {

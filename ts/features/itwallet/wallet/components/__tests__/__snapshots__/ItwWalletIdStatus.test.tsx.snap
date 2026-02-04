@@ -59,7 +59,6 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
         },
       ]
     }
-    nativeID="1"
     style={
       [
         {
@@ -606,7 +605,6 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
                 {},
               ]
             }
-            nativeID="2"
             style={
               [
                 {
@@ -665,7 +663,6 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
                   false,
                 ]
               }
-              nativeID="3"
               style={
                 [
                   {
@@ -710,7 +707,6 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
                   ]
                 }
                 maxFontSizeMultiplier={1.5}
-                nativeID="4"
                 numberOfLines={1}
                 style={
                   [
@@ -807,7 +803,6 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpiring
         },
       ]
     }
-    nativeID="5"
     style={
       [
         {
@@ -1348,7 +1343,6 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "valid" 1`] 
         },
       ]
     }
-    nativeID="0"
     style={
       [
         {

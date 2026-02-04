@@ -1163,7 +1163,6 @@ exports[`MessageDetailsBody should match snapshot for message with invalid CTA 1
                               },
                             ]
                           }
-                          nativeID="0"
                           style={
                             [
                               {

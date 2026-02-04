@@ -416,7 +416,6 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                 },
                               ]
                             }
-                            nativeID="0"
                             style={
                               [
                                 {
@@ -464,7 +463,6 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
-                              nativeID="1"
                               style={
                                 [
                                   {
@@ -989,7 +987,6 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                             undefined,
                           ]
                         }
-                        nativeID="2"
                         style={
                           [
                             {
@@ -1036,7 +1033,6 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                               undefined,
                             ]
                           }
-                          nativeID="3"
                           pointerEvents="none"
                           style={
                             [
@@ -1152,7 +1148,6 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                   {},
                                 ]
                               }
-                              nativeID="4"
                               style={
                                 [
                                   {
@@ -1213,7 +1208,6 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                     false,
                                   ]
                                 }
-                                nativeID="5"
                                 style={
                                   [
                                     {
@@ -1258,7 +1252,6 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="6"
                                   numberOfLines={1}
                                   style={
                                     [

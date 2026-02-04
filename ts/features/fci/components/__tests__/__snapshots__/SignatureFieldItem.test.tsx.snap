@@ -70,7 +70,6 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
           },
         ]
       }
-      nativeID="0"
       needsOffscreenAlphaCompositing={true}
       style={
         [
@@ -107,7 +106,6 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
           }
         }
         jestInlineStyle={{}}
-        nativeID="1"
         style={
           [
             {
@@ -270,7 +268,6 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
                     },
                   ]
                 }
-                nativeID="2"
                 style={
                   [
                     {

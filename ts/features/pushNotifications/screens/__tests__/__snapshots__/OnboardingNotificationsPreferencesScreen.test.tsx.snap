@@ -1166,7 +1166,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 {},
                               ]
                             }
-                            nativeID="37"
                             style={
                               [
                                 {
@@ -1227,7 +1226,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   false,
                                 ]
                               }
-                              nativeID="38"
                               style={
                                 [
                                   {
@@ -1272,7 +1270,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="39"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1342,7 +1339,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               {},
                             ]
                           }
-                          nativeID="40"
                           style={
                             [
                               {
@@ -1383,7 +1379,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 },
                               ]
                             }
-                            nativeID="41"
                             style={
                               [
                                 {
@@ -1446,7 +1441,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="42"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1546,7 +1540,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                       },
                                     ]
                                   }
-                                  nativeID="43"
                                   style={
                                     [
                                       {
@@ -1594,7 +1587,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="44"
                                     style={
                                       [
                                         {
@@ -2837,7 +2829,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 {},
                               ]
                             }
-                            nativeID="66"
                             style={
                               [
                                 {
@@ -2899,7 +2890,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   false,
                                 ]
                               }
-                              nativeID="67"
                               style={
                                 [
                                   {
@@ -2944,7 +2934,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="68"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -3014,7 +3003,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               {},
                             ]
                           }
-                          nativeID="69"
                           style={
                             [
                               {
@@ -3055,7 +3043,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 },
                               ]
                             }
-                            nativeID="70"
                             style={
                               [
                                 {
@@ -3118,7 +3105,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="74"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -3218,7 +3204,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                       },
                                     ]
                                   }
-                                  nativeID="72"
                                   style={
                                     [
                                       {
@@ -3266,7 +3251,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="73"
                                     style={
                                       [
                                         {
@@ -4509,7 +4493,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 {},
                               ]
                             }
-                            nativeID="46"
                             style={
                               [
                                 {
@@ -4571,7 +4554,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   false,
                                 ]
                               }
-                              nativeID="47"
                               style={
                                 [
                                   {
@@ -4616,7 +4598,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="48"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -4686,7 +4667,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               {},
                             ]
                           }
-                          nativeID="49"
                           style={
                             [
                               {
@@ -4727,7 +4707,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 },
                               ]
                             }
-                            nativeID="50"
                             style={
                               [
                                 {
@@ -4790,7 +4769,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="54"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -4890,7 +4868,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                       },
                                     ]
                                   }
-                                  nativeID="52"
                                   style={
                                     [
                                       {
@@ -4938,7 +4915,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="53"
                                     style={
                                       [
                                         {
@@ -6181,7 +6157,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 {},
                               ]
                             }
-                            nativeID="56"
                             style={
                               [
                                 {
@@ -6243,7 +6218,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   false,
                                 ]
                               }
-                              nativeID="57"
                               style={
                                 [
                                   {
@@ -6288,7 +6262,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="58"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -6358,7 +6331,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               {},
                             ]
                           }
-                          nativeID="59"
                           style={
                             [
                               {
@@ -6399,7 +6371,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 },
                               ]
                             }
-                            nativeID="60"
                             style={
                               [
                                 {
@@ -6462,7 +6433,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="64"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -6562,7 +6532,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                       },
                                     ]
                                   }
-                                  nativeID="62"
                                   style={
                                     [
                                       {
@@ -6610,7 +6579,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="63"
                                     style={
                                       [
                                         {
@@ -7267,7 +7235,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         }
                                       }
                                       jestInlineStyle={{}}
-                                      nativeID="26"
                                       style={
                                         [
                                           {
@@ -7655,7 +7622,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         }
                                       }
                                       jestInlineStyle={{}}
-                                      nativeID="27"
                                       style={
                                         [
                                           {
@@ -8185,7 +8151,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 {},
                               ]
                             }
-                            nativeID="28"
                             style={
                               [
                                 {
@@ -8241,7 +8206,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   "justifyContent": "center",
                                 }
                               }
-                              nativeID="29"
                               style={
                                 [
                                   {
@@ -8282,7 +8246,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     }
                                   }
                                   jestInlineStyle={{}}
-                                  nativeID="30"
                                   style={
                                     [
                                       {
@@ -8489,7 +8452,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               {},
                             ]
                           }
-                          nativeID="31"
                           style={
                             [
                               {
@@ -8530,7 +8492,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 },
                               ]
                             }
-                            nativeID="32"
                             style={
                               [
                                 {
@@ -8593,7 +8554,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="33"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -8693,7 +8653,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                       },
                                     ]
                                   }
-                                  nativeID="34"
                                   style={
                                     [
                                       {
@@ -8741,7 +8700,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="35"
                                     style={
                                       [
                                         {

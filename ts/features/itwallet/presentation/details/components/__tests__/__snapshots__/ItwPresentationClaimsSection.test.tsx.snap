@@ -444,7 +444,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     },
                                   ]
                                 }
-                                nativeID="18"
                                 style={
                                   [
                                     {
@@ -492,7 +491,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="19"
                                   style={
                                     [
                                       {
@@ -1711,7 +1709,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       },
                                     ]
                                   }
-                                  nativeID="36"
                                   style={
                                     [
                                       {
@@ -1759,7 +1756,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="37"
                                     style={
                                       [
                                         {
@@ -2428,7 +2424,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     },
                                   ]
                                 }
-                                nativeID="0"
                                 style={
                                   [
                                     {
@@ -2476,7 +2471,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="1"
                                   style={
                                     [
                                       {
@@ -2674,7 +2668,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 },
                               ]
                             }
-                            nativeID="2"
                             style={
                               [
                                 {
@@ -2718,7 +2711,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   },
                                 ]
                               }
-                              nativeID="3"
                               style={
                                 [
                                   {
@@ -2958,7 +2950,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 },
                               ]
                             }
-                            nativeID="4"
                             style={
                               [
                                 {
@@ -3002,7 +2993,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   },
                                 ]
                               }
-                              nativeID="5"
                               style={
                                 [
                                   {
@@ -3149,7 +3139,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 },
                               ]
                             }
-                            nativeID="6"
                             style={
                               [
                                 {
@@ -3193,7 +3182,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   },
                                 ]
                               }
-                              nativeID="7"
                               style={
                                 [
                                   {
@@ -3340,7 +3328,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 },
                               ]
                             }
-                            nativeID="8"
                             style={
                               [
                                 {
@@ -3384,7 +3371,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   },
                                 ]
                               }
-                              nativeID="9"
                               style={
                                 [
                                   {
@@ -3675,7 +3661,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 },
                               ]
                             }
-                            nativeID="10"
                             style={
                               [
                                 {
@@ -3719,7 +3704,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   },
                                 ]
                               }
-                              nativeID="11"
                               style={
                                 [
                                   {
@@ -3866,7 +3850,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 },
                               ]
                             }
-                            nativeID="12"
                             style={
                               [
                                 {
@@ -3910,7 +3893,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   },
                                 ]
                               }
-                              nativeID="13"
                               style={
                                 [
                                   {
@@ -4150,7 +4132,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 },
                               ]
                             }
-                            nativeID="14"
                             style={
                               [
                                 {
@@ -4194,7 +4175,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   },
                                 ]
                               }
-                              nativeID="15"
                               style={
                                 [
                                   {
@@ -4432,7 +4412,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       },
                                     ]
                                   }
-                                  nativeID="16"
                                   style={
                                     [
                                       {
@@ -4480,7 +4459,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="17"
                                     style={
                                       [
                                         {

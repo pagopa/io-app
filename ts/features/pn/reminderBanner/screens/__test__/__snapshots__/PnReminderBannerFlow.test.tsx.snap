@@ -652,7 +652,6 @@ exports[`error screens should display an error screen in case of missing_sid err
                                         {},
                                       ]
                                     }
-                                    nativeID="0"
                                     style={
                                       [
                                         {
@@ -713,7 +712,6 @@ exports[`error screens should display an error screen in case of missing_sid err
                                           false,
                                         ]
                                       }
-                                      nativeID="1"
                                       style={
                                         [
                                           {
@@ -758,7 +756,6 @@ exports[`error screens should display an error screen in case of missing_sid err
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="2"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -1491,7 +1488,6 @@ exports[`error screens should display an error screen in case of preferences err
                                         {},
                                       ]
                                     }
-                                    nativeID="3"
                                     style={
                                       [
                                         {
@@ -1552,7 +1548,6 @@ exports[`error screens should display an error screen in case of preferences err
                                           false,
                                         ]
                                       }
-                                      nativeID="4"
                                       style={
                                         [
                                           {
@@ -1597,7 +1592,6 @@ exports[`error screens should display an error screen in case of preferences err
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="5"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -2381,7 +2375,6 @@ exports[`loading screens + error interop should render the correct loading scree
                                         {},
                                       ]
                                     }
-                                    nativeID="6"
                                     style={
                                       [
                                         {
@@ -2442,7 +2435,6 @@ exports[`loading screens + error interop should render the correct loading scree
                                           false,
                                         ]
                                       }
-                                      nativeID="7"
                                       style={
                                         [
                                           {
@@ -2487,7 +2479,6 @@ exports[`loading screens + error interop should render the correct loading scree
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="8"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -2927,7 +2918,6 @@ exports[`loading screens + error interop should render the correct loading scree
                               }
                             }
                             jestInlineStyle={{}}
-                            nativeID="9"
                             style={
                               [
                                 {
@@ -3557,7 +3547,6 @@ exports[`loading screens + error interop should render the correct loading scree
                               }
                             }
                             jestInlineStyle={{}}
-                            nativeID="12"
                             style={
                               [
                                 {
@@ -4187,7 +4176,6 @@ exports[`loading screens + error interop should render the correct loading scree
                               }
                             }
                             jestInlineStyle={{}}
-                            nativeID="13"
                             style={
                               [
                                 {
@@ -4817,7 +4805,6 @@ exports[`loading screens + error interop should render the correct loading scree
                               }
                             }
                             jestInlineStyle={{}}
-                            nativeID="10"
                             style={
                               [
                                 {
@@ -5447,7 +5434,6 @@ exports[`loading screens + error interop should render the correct loading scree
                               }
                             }
                             jestInlineStyle={{}}
-                            nativeID="11"
                             style={
                               [
                                 {

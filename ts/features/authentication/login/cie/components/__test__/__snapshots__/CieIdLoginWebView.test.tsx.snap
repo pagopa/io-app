@@ -97,7 +97,6 @@ exports[`CieIdLoginWebView Should match the snapshot 1`] = `
                 }
               }
               jestInlineStyle={{}}
-              nativeID="0"
               style={
                 [
                   {
@@ -386,7 +385,6 @@ exports[`CieIdLoginWebView Should match the snapshot 1`] = `
                     {},
                   ]
                 }
-                nativeID="1"
                 style={
                   [
                     {
@@ -448,7 +446,6 @@ exports[`CieIdLoginWebView Should match the snapshot 1`] = `
                       false,
                     ]
                   }
-                  nativeID="2"
                   style={
                     [
                       {
@@ -493,7 +490,6 @@ exports[`CieIdLoginWebView Should match the snapshot 1`] = `
                       ]
                     }
                     maxFontSizeMultiplier={1.5}
-                    nativeID="3"
                     numberOfLines={1}
                     style={
                       [

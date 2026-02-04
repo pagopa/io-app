@@ -505,7 +505,6 @@ exports[`CiePinScreen should match snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    nativeID="0"
                                     style={
                                       [
                                         {
@@ -893,7 +892,6 @@ exports[`CiePinScreen should match snapshot 1`] = `
                                           },
                                         ]
                                       }
-                                      nativeID="1"
                                       style={
                                         [
                                           {

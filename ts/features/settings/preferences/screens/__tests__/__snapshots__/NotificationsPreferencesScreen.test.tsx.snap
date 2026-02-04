@@ -221,7 +221,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             "value": {},
                           }
                         }
-                        nativeID="132"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -1009,7 +1008,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               {},
                             ]
                           }
-                          nativeID="133"
                           style={
                             [
                               {
@@ -1050,7 +1048,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 },
                               ]
                             }
-                            nativeID="134"
                             style={
                               [
                                 {
@@ -1131,7 +1128,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     },
                                   ]
                                 }
-                                nativeID="135"
                                 style={
                                   [
                                     {
@@ -1179,7 +1175,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="136"
                                   style={
                                     [
                                       {
@@ -1264,7 +1259,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="137"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1366,7 +1360,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                       },
                                     ]
                                   }
-                                  nativeID="138"
                                   style={
                                     [
                                       {
@@ -1414,7 +1407,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="139"
                                     style={
                                       [
                                         {
@@ -1712,7 +1704,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             "value": {},
                           }
                         }
-                        nativeID="123"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -2500,7 +2491,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               {},
                             ]
                           }
-                          nativeID="124"
                           style={
                             [
                               {
@@ -2541,7 +2531,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 },
                               ]
                             }
-                            nativeID="125"
                             style={
                               [
                                 {
@@ -2622,7 +2611,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     },
                                   ]
                                 }
-                                nativeID="126"
                                 style={
                                   [
                                     {
@@ -2670,7 +2658,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="127"
                                   style={
                                     [
                                       {
@@ -2755,7 +2742,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="128"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -2857,7 +2843,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                       },
                                     ]
                                   }
-                                  nativeID="129"
                                   style={
                                     [
                                       {
@@ -2905,7 +2890,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="130"
                                     style={
                                       [
                                         {
@@ -3203,7 +3187,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             "value": {},
                           }
                         }
-                        nativeID="150"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -3991,7 +3974,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               {},
                             ]
                           }
-                          nativeID="151"
                           style={
                             [
                               {
@@ -4032,7 +4014,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 },
                               ]
                             }
-                            nativeID="152"
                             style={
                               [
                                 {
@@ -4113,7 +4094,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     },
                                   ]
                                 }
-                                nativeID="153"
                                 style={
                                   [
                                     {
@@ -4161,7 +4141,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="154"
                                   style={
                                     [
                                       {
@@ -4246,7 +4225,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="155"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -4348,7 +4326,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                       },
                                     ]
                                   }
-                                  nativeID="156"
                                   style={
                                     [
                                       {
@@ -4396,7 +4373,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="157"
                                     style={
                                       [
                                         {
@@ -4694,7 +4670,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             "value": {},
                           }
                         }
-                        nativeID="141"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -5482,7 +5457,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               {},
                             ]
                           }
-                          nativeID="142"
                           style={
                             [
                               {
@@ -5523,7 +5497,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 },
                               ]
                             }
-                            nativeID="143"
                             style={
                               [
                                 {
@@ -5604,7 +5577,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     },
                                   ]
                                 }
-                                nativeID="144"
                                 style={
                                   [
                                     {
@@ -5652,7 +5624,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="145"
                                   style={
                                     [
                                       {
@@ -5737,7 +5708,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="146"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -5839,7 +5809,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                       },
                                     ]
                                   }
-                                  nativeID="147"
                                   style={
                                     [
                                       {
@@ -5887,7 +5856,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="148"
                                     style={
                                       [
                                         {
@@ -6185,7 +6153,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             "value": {},
                           }
                         }
-                        nativeID="114"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -6973,7 +6940,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               {},
                             ]
                           }
-                          nativeID="115"
                           style={
                             [
                               {
@@ -7014,7 +6980,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 },
                               ]
                             }
-                            nativeID="116"
                             style={
                               [
                                 {
@@ -7095,7 +7060,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     },
                                   ]
                                 }
-                                nativeID="117"
                                 style={
                                   [
                                     {
@@ -7143,7 +7107,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="118"
                                   style={
                                     [
                                       {
@@ -7228,7 +7191,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="119"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -7330,7 +7292,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                       },
                                     ]
                                   }
-                                  nativeID="120"
                                   style={
                                     [
                                       {
@@ -7378,7 +7339,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="121"
                                     style={
                                       [
                                         {
@@ -7676,7 +7636,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             "value": {},
                           }
                         }
-                        nativeID="105"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -8464,7 +8423,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               {},
                             ]
                           }
-                          nativeID="106"
                           style={
                             [
                               {
@@ -8505,7 +8463,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 },
                               ]
                             }
-                            nativeID="107"
                             style={
                               [
                                 {
@@ -8586,7 +8543,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     },
                                   ]
                                 }
-                                nativeID="108"
                                 style={
                                   [
                                     {
@@ -8634,7 +8590,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="109"
                                   style={
                                     [
                                       {
@@ -8719,7 +8674,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="110"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -8821,7 +8775,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                       },
                                     ]
                                   }
-                                  nativeID="111"
                                   style={
                                     [
                                       {
@@ -8869,7 +8822,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="112"
                                     style={
                                       [
                                         {
@@ -9167,7 +9119,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             "value": {},
                           }
                         }
-                        nativeID="186"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -9955,7 +9906,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               {},
                             ]
                           }
-                          nativeID="187"
                           style={
                             [
                               {
@@ -9996,7 +9946,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 },
                               ]
                             }
-                            nativeID="188"
                             style={
                               [
                                 {
@@ -10077,7 +10026,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     },
                                   ]
                                 }
-                                nativeID="189"
                                 style={
                                   [
                                     {
@@ -10125,7 +10073,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="190"
                                   style={
                                     [
                                       {
@@ -10210,7 +10157,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="191"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -10312,7 +10258,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                       },
                                     ]
                                   }
-                                  nativeID="192"
                                   style={
                                     [
                                       {
@@ -10360,7 +10305,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="193"
                                     style={
                                       [
                                         {
@@ -10658,7 +10602,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             "value": {},
                           }
                         }
-                        nativeID="177"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -11446,7 +11389,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               {},
                             ]
                           }
-                          nativeID="178"
                           style={
                             [
                               {
@@ -11487,7 +11429,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 },
                               ]
                             }
-                            nativeID="179"
                             style={
                               [
                                 {
@@ -11568,7 +11509,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     },
                                   ]
                                 }
-                                nativeID="180"
                                 style={
                                   [
                                     {
@@ -11616,7 +11556,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="181"
                                   style={
                                     [
                                       {
@@ -11701,7 +11640,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="182"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -11803,7 +11741,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                       },
                                     ]
                                   }
-                                  nativeID="183"
                                   style={
                                     [
                                       {
@@ -11851,7 +11788,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="184"
                                     style={
                                       [
                                         {
@@ -12149,7 +12085,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             "value": {},
                           }
                         }
-                        nativeID="204"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -12937,7 +12872,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               {},
                             ]
                           }
-                          nativeID="205"
                           style={
                             [
                               {
@@ -12978,7 +12912,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 },
                               ]
                             }
-                            nativeID="206"
                             style={
                               [
                                 {
@@ -13059,7 +12992,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     },
                                   ]
                                 }
-                                nativeID="207"
                                 style={
                                   [
                                     {
@@ -13107,7 +13039,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="208"
                                   style={
                                     [
                                       {
@@ -13192,7 +13123,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="209"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -13294,7 +13224,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                       },
                                     ]
                                   }
-                                  nativeID="210"
                                   style={
                                     [
                                       {
@@ -13342,7 +13271,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="211"
                                     style={
                                       [
                                         {
@@ -13640,7 +13568,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             "value": {},
                           }
                         }
-                        nativeID="195"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -14428,7 +14355,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               {},
                             ]
                           }
-                          nativeID="196"
                           style={
                             [
                               {
@@ -14469,7 +14395,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 },
                               ]
                             }
-                            nativeID="197"
                             style={
                               [
                                 {
@@ -14550,7 +14475,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     },
                                   ]
                                 }
-                                nativeID="198"
                                 style={
                                   [
                                     {
@@ -14598,7 +14522,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="199"
                                   style={
                                     [
                                       {
@@ -14683,7 +14606,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="200"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -14785,7 +14707,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                       },
                                     ]
                                   }
-                                  nativeID="201"
                                   style={
                                     [
                                       {
@@ -14833,7 +14754,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="202"
                                     style={
                                       [
                                         {
@@ -15131,7 +15051,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             "value": {},
                           }
                         }
-                        nativeID="168"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -15919,7 +15838,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               {},
                             ]
                           }
-                          nativeID="169"
                           style={
                             [
                               {
@@ -15960,7 +15878,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 },
                               ]
                             }
-                            nativeID="170"
                             style={
                               [
                                 {
@@ -16041,7 +15958,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     },
                                   ]
                                 }
-                                nativeID="171"
                                 style={
                                   [
                                     {
@@ -16089,7 +16005,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="172"
                                   style={
                                     [
                                       {
@@ -16174,7 +16089,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="173"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -16276,7 +16190,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                       },
                                     ]
                                   }
-                                  nativeID="174"
                                   style={
                                     [
                                       {
@@ -16324,7 +16237,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="175"
                                     style={
                                       [
                                         {
@@ -16622,7 +16534,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             "value": {},
                           }
                         }
-                        nativeID="159"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -17410,7 +17321,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               {},
                             ]
                           }
-                          nativeID="160"
                           style={
                             [
                               {
@@ -17451,7 +17361,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 },
                               ]
                             }
-                            nativeID="161"
                             style={
                               [
                                 {
@@ -17532,7 +17441,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     },
                                   ]
                                 }
-                                nativeID="162"
                                 style={
                                   [
                                     {
@@ -17580,7 +17488,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="163"
                                   style={
                                     [
                                       {
@@ -17665,7 +17572,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="164"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -17767,7 +17673,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                       },
                                     ]
                                   }
-                                  nativeID="165"
                                   style={
                                     [
                                       {
@@ -17815,7 +17720,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="166"
                                     style={
                                       [
                                         {
@@ -18113,7 +18017,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             "value": {},
                           }
                         }
-                        nativeID="78"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -18901,7 +18804,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               {},
                             ]
                           }
-                          nativeID="79"
                           style={
                             [
                               {
@@ -18942,7 +18844,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 },
                               ]
                             }
-                            nativeID="80"
                             style={
                               [
                                 {
@@ -19023,7 +18924,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     },
                                   ]
                                 }
-                                nativeID="81"
                                 style={
                                   [
                                     {
@@ -19071,7 +18971,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="82"
                                   style={
                                     [
                                       {
@@ -19156,7 +19055,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="83"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -19258,7 +19156,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                       },
                                     ]
                                   }
-                                  nativeID="84"
                                   style={
                                     [
                                       {
@@ -19306,7 +19203,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="85"
                                     style={
                                       [
                                         {
@@ -19604,7 +19500,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             "value": {},
                           }
                         }
-                        nativeID="69"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -20392,7 +20287,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               {},
                             ]
                           }
-                          nativeID="70"
                           style={
                             [
                               {
@@ -20433,7 +20327,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 },
                               ]
                             }
-                            nativeID="71"
                             style={
                               [
                                 {
@@ -20514,7 +20407,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     },
                                   ]
                                 }
-                                nativeID="72"
                                 style={
                                   [
                                     {
@@ -20562,7 +20454,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="73"
                                   style={
                                     [
                                       {
@@ -20647,7 +20538,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="74"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -20749,7 +20639,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                       },
                                     ]
                                   }
-                                  nativeID="75"
                                   style={
                                     [
                                       {
@@ -20797,7 +20686,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="76"
                                     style={
                                       [
                                         {
@@ -21095,7 +20983,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             "value": {},
                           }
                         }
-                        nativeID="96"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -21883,7 +21770,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               {},
                             ]
                           }
-                          nativeID="97"
                           style={
                             [
                               {
@@ -21924,7 +21810,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 },
                               ]
                             }
-                            nativeID="98"
                             style={
                               [
                                 {
@@ -22005,7 +21890,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     },
                                   ]
                                 }
-                                nativeID="99"
                                 style={
                                   [
                                     {
@@ -22053,7 +21937,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="100"
                                   style={
                                     [
                                       {
@@ -22138,7 +22021,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="101"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -22240,7 +22122,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                       },
                                     ]
                                   }
-                                  nativeID="102"
                                   style={
                                     [
                                       {
@@ -22288,7 +22169,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="103"
                                     style={
                                       [
                                         {
@@ -22586,7 +22466,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             "value": {},
                           }
                         }
-                        nativeID="87"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -23374,7 +23253,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               {},
                             ]
                           }
-                          nativeID="88"
                           style={
                             [
                               {
@@ -23415,7 +23293,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 },
                               ]
                             }
-                            nativeID="89"
                             style={
                               [
                                 {
@@ -23496,7 +23373,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     },
                                   ]
                                 }
-                                nativeID="90"
                                 style={
                                   [
                                     {
@@ -23544,7 +23420,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="91"
                                   style={
                                     [
                                       {
@@ -23629,7 +23504,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="92"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -23731,7 +23605,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                       },
                                     ]
                                   }
-                                  nativeID="93"
                                   style={
                                     [
                                       {
@@ -23779,7 +23652,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="94"
                                     style={
                                       [
                                         {
@@ -24077,7 +23949,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             "value": {},
                           }
                         }
-                        nativeID="60"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -24865,7 +24736,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               {},
                             ]
                           }
-                          nativeID="61"
                           style={
                             [
                               {
@@ -24906,7 +24776,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 },
                               ]
                             }
-                            nativeID="62"
                             style={
                               [
                                 {
@@ -24987,7 +24856,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     },
                                   ]
                                 }
-                                nativeID="63"
                                 style={
                                   [
                                     {
@@ -25035,7 +24903,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="64"
                                   style={
                                     [
                                       {
@@ -25120,7 +24987,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="65"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -25222,7 +25088,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                       },
                                     ]
                                   }
-                                  nativeID="66"
                                   style={
                                     [
                                       {
@@ -25270,7 +25135,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="67"
                                     style={
                                       [
                                         {
@@ -25568,7 +25432,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             "value": {},
                           }
                         }
-                        nativeID="51"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -26356,7 +26219,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               {},
                             ]
                           }
-                          nativeID="52"
                           style={
                             [
                               {
@@ -26397,7 +26259,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 },
                               ]
                             }
-                            nativeID="53"
                             style={
                               [
                                 {
@@ -26478,7 +26339,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     },
                                   ]
                                 }
-                                nativeID="54"
                                 style={
                                   [
                                     {
@@ -26526,7 +26386,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="55"
                                   style={
                                     [
                                       {
@@ -26611,7 +26470,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="56"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -26713,7 +26571,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                       },
                                     ]
                                   }
-                                  nativeID="57"
                                   style={
                                     [
                                       {
@@ -26761,7 +26618,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="58"
                                     style={
                                       [
                                         {

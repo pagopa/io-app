@@ -651,7 +651,6 @@ exports[`ItwProximityFailureScreen should render failure screen for RELYING_PART
                                         {},
                                       ]
                                     }
-                                    nativeID="0"
                                     style={
                                       [
                                         {
@@ -712,7 +711,6 @@ exports[`ItwProximityFailureScreen should render failure screen for RELYING_PART
                                           false,
                                         ]
                                       }
-                                      nativeID="1"
                                       style={
                                         [
                                           {
@@ -757,7 +755,6 @@ exports[`ItwProximityFailureScreen should render failure screen for RELYING_PART
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="2"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -1561,7 +1558,6 @@ exports[`ItwProximityFailureScreen should render failure screen for TIMEOUT 1`] 
                                         {},
                                       ]
                                     }
-                                    nativeID="3"
                                     style={
                                       [
                                         {
@@ -1622,7 +1618,6 @@ exports[`ItwProximityFailureScreen should render failure screen for TIMEOUT 1`] 
                                           false,
                                         ]
                                       }
-                                      nativeID="4"
                                       style={
                                         [
                                           {
@@ -1667,7 +1662,6 @@ exports[`ItwProximityFailureScreen should render failure screen for TIMEOUT 1`] 
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="5"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -2504,7 +2498,6 @@ exports[`ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP
                                         {},
                                       ]
                                     }
-                                    nativeID="6"
                                     style={
                                       [
                                         {
@@ -2565,7 +2558,6 @@ exports[`ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP
                                           false,
                                         ]
                                       }
-                                      nativeID="7"
                                       style={
                                         [
                                           {
@@ -2610,7 +2602,6 @@ exports[`ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="8"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -2747,7 +2738,6 @@ exports[`ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP
                                         {},
                                       ]
                                     }
-                                    nativeID="9"
                                     style={
                                       [
                                         {
@@ -2806,7 +2796,6 @@ exports[`ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP
                                           false,
                                         ]
                                       }
-                                      nativeID="10"
                                       style={
                                         [
                                           {
@@ -2851,7 +2840,6 @@ exports[`ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="11"
                                         numberOfLines={1}
                                         style={
                                           [

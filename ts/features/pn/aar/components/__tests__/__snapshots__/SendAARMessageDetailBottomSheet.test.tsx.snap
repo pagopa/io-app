@@ -799,7 +799,6 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                 {},
                               ]
                             }
-                            nativeID="6"
                             style={
                               [
                                 {
@@ -860,7 +859,6 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                   false,
                                 ]
                               }
-                              nativeID="7"
                               style={
                                 [
                                   {
@@ -905,7 +903,6 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="8"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1040,7 +1037,6 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                   {},
                                 ]
                               }
-                              nativeID="9"
                               style={
                                 [
                                   {
@@ -1099,7 +1095,6 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                     false,
                                   ]
                                 }
-                                nativeID="10"
                                 style={
                                   [
                                     {
@@ -1144,7 +1139,6 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="11"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1997,7 +1991,6 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                 {},
                               ]
                             }
-                            nativeID="12"
                             style={
                               [
                                 {
@@ -2058,7 +2051,6 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                   false,
                                 ]
                               }
-                              nativeID="13"
                               style={
                                 [
                                   {
@@ -2103,7 +2095,6 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="14"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -2238,7 +2229,6 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                   {},
                                 ]
                               }
-                              nativeID="15"
                               style={
                                 [
                                   {
@@ -2297,7 +2287,6 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                     false,
                                   ]
                                 }
-                                nativeID="16"
                                 style={
                                   [
                                     {
@@ -2342,7 +2331,6 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="17"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -3034,7 +3022,6 @@ exports[`BottomSheetContent doesn't render a link and matches its snapshot when 
                                 {},
                               ]
                             }
-                            nativeID="0"
                             style={
                               [
                                 {
@@ -3095,7 +3082,6 @@ exports[`BottomSheetContent doesn't render a link and matches its snapshot when 
                                   false,
                                 ]
                               }
-                              nativeID="1"
                               style={
                                 [
                                   {
@@ -3140,7 +3126,6 @@ exports[`BottomSheetContent doesn't render a link and matches its snapshot when 
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="2"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -3275,7 +3260,6 @@ exports[`BottomSheetContent doesn't render a link and matches its snapshot when 
                                   {},
                                 ]
                               }
-                              nativeID="3"
                               style={
                                 [
                                   {
@@ -3334,7 +3318,6 @@ exports[`BottomSheetContent doesn't render a link and matches its snapshot when 
                                     false,
                                   ]
                                 }
-                                nativeID="4"
                                 style={
                                   [
                                     {
@@ -3379,7 +3362,6 @@ exports[`BottomSheetContent doesn't render a link and matches its snapshot when 
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="5"
                                   numberOfLines={1}
                                   style={
                                     [

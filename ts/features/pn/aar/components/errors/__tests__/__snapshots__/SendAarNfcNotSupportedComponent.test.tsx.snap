@@ -228,7 +228,6 @@ exports[`SendAarNfcNotSupportedComponent should match the snapshot 1`] = `
                             "value": {},
                           }
                         }
-                        nativeID="0"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -694,7 +693,6 @@ exports[`SendAarNfcNotSupportedComponent should match the snapshot 1`] = `
                               false,
                             ]
                           }
-                          nativeID="1"
                           pointerEvents="none"
                           style={
                             [
@@ -728,7 +726,6 @@ exports[`SendAarNfcNotSupportedComponent should match the snapshot 1`] = `
                                 false,
                               ]
                             }
-                            nativeID="2"
                             style={
                               [
                                 {
@@ -914,7 +911,6 @@ exports[`SendAarNfcNotSupportedComponent should match the snapshot 1`] = `
                                   {},
                                 ]
                               }
-                              nativeID="3"
                               style={
                                 [
                                   {
@@ -975,7 +971,6 @@ exports[`SendAarNfcNotSupportedComponent should match the snapshot 1`] = `
                                     false,
                                   ]
                                 }
-                                nativeID="4"
                                 style={
                                   [
                                     {
@@ -1017,7 +1012,6 @@ exports[`SendAarNfcNotSupportedComponent should match the snapshot 1`] = `
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="5"
                                   style={
                                     [
                                       {
@@ -1091,7 +1085,6 @@ exports[`SendAarNfcNotSupportedComponent should match the snapshot 1`] = `
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="6"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1162,7 +1155,6 @@ exports[`SendAarNfcNotSupportedComponent should match the snapshot 1`] = `
                               {},
                             ]
                           }
-                          nativeID="7"
                           style={
                             [
                               {
@@ -1203,7 +1195,6 @@ exports[`SendAarNfcNotSupportedComponent should match the snapshot 1`] = `
                                 },
                               ]
                             }
-                            nativeID="8"
                             style={
                               [
                                 {
@@ -1266,7 +1257,6 @@ exports[`SendAarNfcNotSupportedComponent should match the snapshot 1`] = `
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="9"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1367,7 +1357,6 @@ exports[`SendAarNfcNotSupportedComponent should match the snapshot 1`] = `
                                       },
                                     ]
                                   }
-                                  nativeID="10"
                                   style={
                                     [
                                       {
@@ -1415,7 +1404,6 @@ exports[`SendAarNfcNotSupportedComponent should match the snapshot 1`] = `
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="11"
                                     style={
                                       [
                                         {

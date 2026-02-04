@@ -652,7 +652,6 @@ exports[`SendAARTosComponent should match snapshot 1`] = `
                                         {},
                                       ]
                                     }
-                                    nativeID="14"
                                     style={
                                       [
                                         {
@@ -713,7 +712,6 @@ exports[`SendAARTosComponent should match snapshot 1`] = `
                                           false,
                                         ]
                                       }
-                                      nativeID="15"
                                       style={
                                         [
                                           {
@@ -755,7 +753,6 @@ exports[`SendAARTosComponent should match snapshot 1`] = `
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
-                                        nativeID="16"
                                         style={
                                           [
                                             {
@@ -829,7 +826,6 @@ exports[`SendAARTosComponent should match snapshot 1`] = `
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="17"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -967,7 +963,6 @@ exports[`SendAARTosComponent should match snapshot 1`] = `
                                         {},
                                       ]
                                     }
-                                    nativeID="18"
                                     style={
                                       [
                                         {
@@ -1026,7 +1021,6 @@ exports[`SendAARTosComponent should match snapshot 1`] = `
                                           false,
                                         ]
                                       }
-                                      nativeID="19"
                                       style={
                                         [
                                           {
@@ -1071,7 +1065,6 @@ exports[`SendAARTosComponent should match snapshot 1`] = `
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="20"
                                         numberOfLines={1}
                                         style={
                                           [

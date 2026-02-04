@@ -1470,7 +1470,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                   {},
                                 ]
                               }
-                              nativeID="26"
                               style={
                                 [
                                   {
@@ -1531,7 +1530,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     false,
                                   ]
                                 }
-                                nativeID="27"
                                 style={
                                   [
                                     {
@@ -1573,7 +1571,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="28"
                                   style={
                                     [
                                       {
@@ -1647,7 +1644,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="29"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1769,7 +1765,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                   {},
                                 ]
                               }
-                              nativeID="30"
                               style={
                                 [
                                   {
@@ -1830,7 +1825,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     false,
                                   ]
                                 }
-                                nativeID="31"
                                 style={
                                   [
                                     {
@@ -1872,7 +1866,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="32"
                                   style={
                                     [
                                       {
@@ -1946,7 +1939,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="33"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -2066,7 +2058,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         false,
                                       ]
                                     }
-                                    nativeID="34"
                                     style={
                                       [
                                         {
@@ -2308,7 +2299,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         false,
                                       ]
                                     }
-                                    nativeID="35"
                                     style={
                                       [
                                         {
@@ -2536,7 +2526,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    nativeID="36"
                                     style={
                                       [
                                         {
@@ -2882,7 +2871,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    nativeID="37"
                                     style={
                                       [
                                         {
@@ -2926,7 +2914,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                           },
                                         ]
                                       }
-                                      nativeID="38"
                                       style={
                                         [
                                           {
@@ -3102,7 +3089,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    nativeID="39"
                                     style={
                                       [
                                         {
@@ -3146,7 +3132,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                           },
                                         ]
                                       }
-                                      nativeID="40"
                                       style={
                                         [
                                           {
@@ -3322,7 +3307,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    nativeID="41"
                                     style={
                                       [
                                         {
@@ -3366,7 +3350,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                           },
                                         ]
                                       }
-                                      nativeID="42"
                                       style={
                                         [
                                           {
@@ -3598,7 +3581,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                               {},
                             ]
                           }
-                          nativeID="43"
                           style={
                             [
                               {
@@ -3639,7 +3621,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                 },
                               ]
                             }
-                            nativeID="44"
                             style={
                               [
                                 {
@@ -3702,7 +3683,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="45"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -3802,7 +3782,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                       },
                                     ]
                                   }
-                                  nativeID="46"
                                   style={
                                     [
                                       {
@@ -3850,7 +3829,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="47"
                                     style={
                                       [
                                         {
@@ -3960,7 +3938,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                       },
                                     ]
                                   }
-                                  nativeID="48"
                                   style={
                                     [
                                       {
@@ -4008,7 +3985,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="49"
                                     style={
                                       [
                                         {

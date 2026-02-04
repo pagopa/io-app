@@ -518,7 +518,6 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
                                         {},
                                       ]
                                     }
-                                    nativeID="0"
                                     style={
                                       [
                                         {
@@ -579,7 +578,6 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
                                           false,
                                         ]
                                       }
-                                      nativeID="1"
                                       style={
                                         [
                                           {
@@ -624,7 +622,6 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="2"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -762,7 +759,6 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
                                         {},
                                       ]
                                     }
-                                    nativeID="3"
                                     style={
                                       [
                                         {
@@ -821,7 +817,6 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
                                           false,
                                         ]
                                       }
-                                      nativeID="4"
                                       style={
                                         [
                                           {
@@ -866,7 +861,6 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="5"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -940,7 +934,6 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
                               {},
                             ]
                           }
-                          nativeID="6"
                           style={
                             [
                               {
@@ -981,7 +974,6 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
                                 },
                               ]
                             }
-                            nativeID="7"
                             style={
                               [
                                 {
@@ -1044,7 +1036,6 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="8"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1144,7 +1135,6 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
                                       },
                                     ]
                                   }
-                                  nativeID="9"
                                   style={
                                     [
                                       {
@@ -1192,7 +1182,6 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="10"
                                     style={
                                       [
                                         {

@@ -764,7 +764,6 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                                 },
                               ]
                             }
-                            nativeID="0"
                             style={
                               [
                                 {
@@ -1506,7 +1505,6 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'onboarding' ba
                                 },
                               ]
                             }
-                            nativeID="1"
                             style={
                               [
                                 {
@@ -2248,7 +2246,6 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'reactivating' 
                                 },
                               ]
                             }
-                            nativeID="2"
                             style={
                               [
                                 {

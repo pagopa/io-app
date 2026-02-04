@@ -527,7 +527,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                             undefined,
                           ]
                         }
-                        nativeID="80"
                         style={
                           [
                             {
@@ -575,7 +574,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                               undefined,
                             ]
                           }
-                          nativeID="81"
                           pointerEvents="none"
                           style={
                             [
@@ -691,7 +689,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                   {},
                                 ]
                               }
-                              nativeID="82"
                               style={
                                 [
                                   {
@@ -752,7 +749,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     false,
                                   ]
                                 }
-                                nativeID="83"
                                 style={
                                   [
                                     {
@@ -797,7 +793,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="84"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1371,7 +1366,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                             undefined,
                           ]
                         }
-                        nativeID="40"
                         style={
                           [
                             {
@@ -1419,7 +1413,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                               undefined,
                             ]
                           }
-                          nativeID="41"
                           pointerEvents="none"
                           style={
                             [
@@ -1535,7 +1528,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                   {},
                                 ]
                               }
-                              nativeID="42"
                               style={
                                 [
                                   {
@@ -1591,7 +1583,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     "justifyContent": "center",
                                   }
                                 }
-                                nativeID="43"
                                 style={
                                   [
                                     {
@@ -1632,7 +1623,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                       }
                                     }
                                     jestInlineStyle={{}}
-                                    nativeID="44"
                                     style={
                                       [
                                         {
@@ -2349,7 +2339,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                             undefined,
                           ]
                         }
-                        nativeID="20"
                         style={
                           [
                             {
@@ -2397,7 +2386,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                               undefined,
                             ]
                           }
-                          nativeID="21"
                           pointerEvents="none"
                           style={
                             [
@@ -2513,7 +2501,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                   {},
                                 ]
                               }
-                              nativeID="22"
                               style={
                                 [
                                   {
@@ -2574,7 +2561,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     false,
                                   ]
                                 }
-                                nativeID="23"
                                 style={
                                   [
                                     {
@@ -2619,7 +2605,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="24"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -3199,7 +3184,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                             undefined,
                           ]
                         }
-                        nativeID="0"
                         style={
                           [
                             {
@@ -3247,7 +3231,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                               undefined,
                             ]
                           }
-                          nativeID="1"
                           pointerEvents="none"
                           style={
                             [
@@ -3363,7 +3346,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                   {},
                                 ]
                               }
-                              nativeID="2"
                               style={
                                 [
                                   {
@@ -3419,7 +3401,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     "justifyContent": "center",
                                   }
                                 }
-                                nativeID="3"
                                 style={
                                   [
                                     {
@@ -3460,7 +3441,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                       }
                                     }
                                     jestInlineStyle={{}}
-                                    nativeID="4"
                                     style={
                                       [
                                         {
@@ -4127,7 +4107,6 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                             undefined,
                           ]
                         }
-                        nativeID="100"
                         style={
                           [
                             {
@@ -4175,7 +4154,6 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                               undefined,
                             ]
                           }
-                          nativeID="101"
                           pointerEvents="none"
                           style={
                             [
@@ -4291,7 +4269,6 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                                   {},
                                 ]
                               }
-                              nativeID="102"
                               style={
                                 [
                                   {
@@ -4352,7 +4329,6 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                                     false,
                                   ]
                                 }
-                                nativeID="103"
                                 style={
                                   [
                                     {
@@ -4397,7 +4373,6 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="104"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -4927,7 +4902,6 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                             undefined,
                           ]
                         }
-                        nativeID="60"
                         style={
                           [
                             {
@@ -4975,7 +4949,6 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                               undefined,
                             ]
                           }
-                          nativeID="61"
                           pointerEvents="none"
                           style={
                             [
@@ -5091,7 +5064,6 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                                   {},
                                 ]
                               }
-                              nativeID="62"
                               style={
                                 [
                                   {
@@ -5147,7 +5119,6 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                                     "justifyContent": "center",
                                   }
                                 }
-                                nativeID="63"
                                 style={
                                   [
                                     {
@@ -5188,7 +5159,6 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                                       }
                                     }
                                     jestInlineStyle={{}}
-                                    nativeID="64"
                                     style={
                                       [
                                         {

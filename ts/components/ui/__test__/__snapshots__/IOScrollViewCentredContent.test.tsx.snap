@@ -368,7 +368,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                             "value": {},
                           }
                         }
-                        nativeID="90"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -671,7 +670,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       {},
                                     ]
                                   }
-                                  nativeID="91"
                                   style={
                                     [
                                       {
@@ -730,7 +728,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         false,
                                       ]
                                     }
-                                    nativeID="92"
                                     style={
                                       [
                                         {
@@ -775,7 +772,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         ]
                                       }
                                       maxFontSizeMultiplier={1.5}
-                                      nativeID="93"
                                       numberOfLines={1}
                                       style={
                                         [
@@ -852,7 +848,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               false,
                             ]
                           }
-                          nativeID="94"
                           pointerEvents="none"
                           style={
                             [
@@ -886,7 +881,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 false,
                               ]
                             }
-                            nativeID="95"
                             style={
                               [
                                 {
@@ -1071,7 +1065,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {},
                                 ]
                               }
-                              nativeID="96"
                               style={
                                 [
                                   {
@@ -1132,7 +1125,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     false,
                                   ]
                                 }
-                                nativeID="97"
                                 style={
                                   [
                                     {
@@ -1177,7 +1169,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="98"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1592,7 +1583,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                             "value": {},
                           }
                         }
-                        nativeID="111"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -1895,7 +1885,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       {},
                                     ]
                                   }
-                                  nativeID="112"
                                   style={
                                     [
                                       {
@@ -1954,7 +1943,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         false,
                                       ]
                                     }
-                                    nativeID="113"
                                     style={
                                       [
                                         {
@@ -1999,7 +1987,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         ]
                                       }
                                       maxFontSizeMultiplier={1.5}
-                                      nativeID="114"
                                       numberOfLines={1}
                                       style={
                                         [
@@ -2076,7 +2063,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               false,
                             ]
                           }
-                          nativeID="115"
                           pointerEvents="none"
                           style={
                             [
@@ -2110,7 +2096,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 false,
                               ]
                             }
-                            nativeID="116"
                             style={
                               [
                                 {
@@ -2295,7 +2280,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {},
                                 ]
                               }
-                              nativeID="117"
                               style={
                                 [
                                   {
@@ -2356,7 +2340,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     false,
                                   ]
                                 }
-                                nativeID="118"
                                 style={
                                   [
                                     {
@@ -2401,7 +2384,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="119"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -2523,7 +2505,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {},
                                 ]
                               }
-                              nativeID="120"
                               style={
                                 [
                                   {
@@ -2585,7 +2566,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     false,
                                   ]
                                 }
-                                nativeID="121"
                                 style={
                                   [
                                     {
@@ -2630,7 +2610,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="122"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -2765,7 +2744,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     {},
                                   ]
                                 }
-                                nativeID="123"
                                 style={
                                   [
                                     {
@@ -2824,7 +2802,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       false,
                                     ]
                                   }
-                                  nativeID="124"
                                   style={
                                     [
                                       {
@@ -2869,7 +2846,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       ]
                                     }
                                     maxFontSizeMultiplier={1.5}
-                                    nativeID="125"
                                     numberOfLines={1}
                                     style={
                                       [
@@ -3285,7 +3261,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                             "value": {},
                           }
                         }
-                        nativeID="99"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -3588,7 +3563,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       {},
                                     ]
                                   }
-                                  nativeID="100"
                                   style={
                                     [
                                       {
@@ -3647,7 +3621,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         false,
                                       ]
                                     }
-                                    nativeID="101"
                                     style={
                                       [
                                         {
@@ -3692,7 +3665,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         ]
                                       }
                                       maxFontSizeMultiplier={1.5}
-                                      nativeID="102"
                                       numberOfLines={1}
                                       style={
                                         [
@@ -3769,7 +3741,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               false,
                             ]
                           }
-                          nativeID="103"
                           pointerEvents="none"
                           style={
                             [
@@ -3803,7 +3774,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 false,
                               ]
                             }
-                            nativeID="104"
                             style={
                               [
                                 {
@@ -3988,7 +3958,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {},
                                 ]
                               }
-                              nativeID="105"
                               style={
                                 [
                                   {
@@ -4049,7 +4018,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     false,
                                   ]
                                 }
-                                nativeID="106"
                                 style={
                                   [
                                     {
@@ -4094,7 +4062,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="107"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -4229,7 +4196,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     {},
                                   ]
                                 }
-                                nativeID="108"
                                 style={
                                   [
                                     {
@@ -4288,7 +4254,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       false,
                                     ]
                                   }
-                                  nativeID="109"
                                   style={
                                     [
                                       {
@@ -4333,7 +4298,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       ]
                                     }
                                     maxFontSizeMultiplier={1.5}
-                                    nativeID="110"
                                     numberOfLines={1}
                                     style={
                                       [
@@ -4749,7 +4713,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                             "value": {},
                           }
                         }
-                        nativeID="27"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -5001,7 +4964,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               false,
                             ]
                           }
-                          nativeID="28"
                           pointerEvents="none"
                           style={
                             [
@@ -5035,7 +4997,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 false,
                               ]
                             }
-                            nativeID="29"
                             style={
                               [
                                 {
@@ -5220,7 +5181,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {},
                                 ]
                               }
-                              nativeID="30"
                               style={
                                 [
                                   {
@@ -5281,7 +5241,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     false,
                                   ]
                                 }
-                                nativeID="31"
                                 style={
                                   [
                                     {
@@ -5326,7 +5285,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="32"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -5741,7 +5699,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                             "value": {},
                           }
                         }
-                        nativeID="42"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -5993,7 +5950,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               false,
                             ]
                           }
-                          nativeID="43"
                           pointerEvents="none"
                           style={
                             [
@@ -6027,7 +5983,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 false,
                               ]
                             }
-                            nativeID="44"
                             style={
                               [
                                 {
@@ -6212,7 +6167,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {},
                                 ]
                               }
-                              nativeID="45"
                               style={
                                 [
                                   {
@@ -6273,7 +6227,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     false,
                                   ]
                                 }
-                                nativeID="46"
                                 style={
                                   [
                                     {
@@ -6318,7 +6271,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="47"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -6440,7 +6392,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {},
                                 ]
                               }
-                              nativeID="48"
                               style={
                                 [
                                   {
@@ -6502,7 +6453,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     false,
                                   ]
                                 }
-                                nativeID="49"
                                 style={
                                   [
                                     {
@@ -6547,7 +6497,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="50"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -6682,7 +6631,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     {},
                                   ]
                                 }
-                                nativeID="51"
                                 style={
                                   [
                                     {
@@ -6741,7 +6689,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       false,
                                     ]
                                   }
-                                  nativeID="52"
                                   style={
                                     [
                                       {
@@ -6786,7 +6733,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       ]
                                     }
                                     maxFontSizeMultiplier={1.5}
-                                    nativeID="53"
                                     numberOfLines={1}
                                     style={
                                       [
@@ -7202,7 +7148,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                             "value": {},
                           }
                         }
-                        nativeID="33"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -7454,7 +7399,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               false,
                             ]
                           }
-                          nativeID="34"
                           pointerEvents="none"
                           style={
                             [
@@ -7488,7 +7432,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 false,
                               ]
                             }
-                            nativeID="35"
                             style={
                               [
                                 {
@@ -7673,7 +7616,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {},
                                 ]
                               }
-                              nativeID="36"
                               style={
                                 [
                                   {
@@ -7734,7 +7676,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     false,
                                   ]
                                 }
-                                nativeID="37"
                                 style={
                                   [
                                     {
@@ -7779,7 +7720,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="38"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -7914,7 +7854,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     {},
                                   ]
                                 }
-                                nativeID="39"
                                 style={
                                   [
                                     {
@@ -7973,7 +7912,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       false,
                                     ]
                                   }
-                                  nativeID="40"
                                   style={
                                     [
                                       {
@@ -8018,7 +7956,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       ]
                                     }
                                     maxFontSizeMultiplier={1.5}
-                                    nativeID="41"
                                     numberOfLines={1}
                                     style={
                                       [
@@ -8434,7 +8371,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                             "value": {},
                           }
                         }
-                        nativeID="54"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -8714,7 +8650,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       {},
                                     ]
                                   }
-                                  nativeID="55"
                                   style={
                                     [
                                       {
@@ -8773,7 +8708,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         false,
                                       ]
                                     }
-                                    nativeID="56"
                                     style={
                                       [
                                         {
@@ -8818,7 +8752,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         ]
                                       }
                                       maxFontSizeMultiplier={1.5}
-                                      nativeID="57"
                                       numberOfLines={1}
                                       style={
                                         [
@@ -8895,7 +8828,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               false,
                             ]
                           }
-                          nativeID="58"
                           pointerEvents="none"
                           style={
                             [
@@ -8929,7 +8861,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 false,
                               ]
                             }
-                            nativeID="59"
                             style={
                               [
                                 {
@@ -9114,7 +9045,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {},
                                 ]
                               }
-                              nativeID="60"
                               style={
                                 [
                                   {
@@ -9175,7 +9105,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     false,
                                   ]
                                 }
-                                nativeID="61"
                                 style={
                                   [
                                     {
@@ -9220,7 +9149,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="62"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -9635,7 +9563,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                             "value": {},
                           }
                         }
-                        nativeID="75"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -9915,7 +9842,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       {},
                                     ]
                                   }
-                                  nativeID="76"
                                   style={
                                     [
                                       {
@@ -9974,7 +9900,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         false,
                                       ]
                                     }
-                                    nativeID="77"
                                     style={
                                       [
                                         {
@@ -10019,7 +9944,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         ]
                                       }
                                       maxFontSizeMultiplier={1.5}
-                                      nativeID="78"
                                       numberOfLines={1}
                                       style={
                                         [
@@ -10096,7 +10020,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               false,
                             ]
                           }
-                          nativeID="79"
                           pointerEvents="none"
                           style={
                             [
@@ -10130,7 +10053,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 false,
                               ]
                             }
-                            nativeID="80"
                             style={
                               [
                                 {
@@ -10315,7 +10237,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {},
                                 ]
                               }
-                              nativeID="81"
                               style={
                                 [
                                   {
@@ -10376,7 +10297,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     false,
                                   ]
                                 }
-                                nativeID="82"
                                 style={
                                   [
                                     {
@@ -10421,7 +10341,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="83"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -10543,7 +10462,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {},
                                 ]
                               }
-                              nativeID="84"
                               style={
                                 [
                                   {
@@ -10605,7 +10523,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     false,
                                   ]
                                 }
-                                nativeID="85"
                                 style={
                                   [
                                     {
@@ -10650,7 +10567,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="86"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -10785,7 +10701,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     {},
                                   ]
                                 }
-                                nativeID="87"
                                 style={
                                   [
                                     {
@@ -10844,7 +10759,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       false,
                                     ]
                                   }
-                                  nativeID="88"
                                   style={
                                     [
                                       {
@@ -10889,7 +10803,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       ]
                                     }
                                     maxFontSizeMultiplier={1.5}
-                                    nativeID="89"
                                     numberOfLines={1}
                                     style={
                                       [
@@ -11305,7 +11218,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                             "value": {},
                           }
                         }
-                        nativeID="63"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -11585,7 +11497,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       {},
                                     ]
                                   }
-                                  nativeID="64"
                                   style={
                                     [
                                       {
@@ -11644,7 +11555,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         false,
                                       ]
                                     }
-                                    nativeID="65"
                                     style={
                                       [
                                         {
@@ -11689,7 +11599,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         ]
                                       }
                                       maxFontSizeMultiplier={1.5}
-                                      nativeID="66"
                                       numberOfLines={1}
                                       style={
                                         [
@@ -11766,7 +11675,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               false,
                             ]
                           }
-                          nativeID="67"
                           pointerEvents="none"
                           style={
                             [
@@ -11800,7 +11708,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 false,
                               ]
                             }
-                            nativeID="68"
                             style={
                               [
                                 {
@@ -11985,7 +11892,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {},
                                 ]
                               }
-                              nativeID="69"
                               style={
                                 [
                                   {
@@ -12046,7 +11952,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     false,
                                   ]
                                 }
-                                nativeID="70"
                                 style={
                                   [
                                     {
@@ -12091,7 +11996,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="71"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -12226,7 +12130,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     {},
                                   ]
                                 }
-                                nativeID="72"
                                 style={
                                   [
                                     {
@@ -12285,7 +12188,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       false,
                                     ]
                                   }
-                                  nativeID="73"
                                   style={
                                     [
                                       {
@@ -12330,7 +12232,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       ]
                                     }
                                     maxFontSizeMultiplier={1.5}
-                                    nativeID="74"
                                     numberOfLines={1}
                                     style={
                                       [
@@ -12746,7 +12647,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                             "value": {},
                           }
                         }
-                        nativeID="0"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -12975,7 +12875,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               false,
                             ]
                           }
-                          nativeID="1"
                           pointerEvents="none"
                           style={
                             [
@@ -13009,7 +12908,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 false,
                               ]
                             }
-                            nativeID="2"
                             style={
                               [
                                 {
@@ -13194,7 +13092,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {},
                                 ]
                               }
-                              nativeID="3"
                               style={
                                 [
                                   {
@@ -13255,7 +13152,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     false,
                                   ]
                                 }
-                                nativeID="4"
                                 style={
                                   [
                                     {
@@ -13300,7 +13196,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="5"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -13715,7 +13610,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                             "value": {},
                           }
                         }
-                        nativeID="15"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -13944,7 +13838,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               false,
                             ]
                           }
-                          nativeID="16"
                           pointerEvents="none"
                           style={
                             [
@@ -13978,7 +13871,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 false,
                               ]
                             }
-                            nativeID="17"
                             style={
                               [
                                 {
@@ -14163,7 +14055,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {},
                                 ]
                               }
-                              nativeID="18"
                               style={
                                 [
                                   {
@@ -14224,7 +14115,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     false,
                                   ]
                                 }
-                                nativeID="19"
                                 style={
                                   [
                                     {
@@ -14269,7 +14159,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="20"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -14391,7 +14280,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {},
                                 ]
                               }
-                              nativeID="21"
                               style={
                                 [
                                   {
@@ -14453,7 +14341,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     false,
                                   ]
                                 }
-                                nativeID="22"
                                 style={
                                   [
                                     {
@@ -14498,7 +14385,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="23"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -14633,7 +14519,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     {},
                                   ]
                                 }
-                                nativeID="24"
                                 style={
                                   [
                                     {
@@ -14692,7 +14577,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       false,
                                     ]
                                   }
-                                  nativeID="25"
                                   style={
                                     [
                                       {
@@ -14737,7 +14621,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       ]
                                     }
                                     maxFontSizeMultiplier={1.5}
-                                    nativeID="26"
                                     numberOfLines={1}
                                     style={
                                       [
@@ -15153,7 +15036,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                             "value": {},
                           }
                         }
-                        nativeID="6"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -15382,7 +15264,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               false,
                             ]
                           }
-                          nativeID="7"
                           pointerEvents="none"
                           style={
                             [
@@ -15416,7 +15297,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 false,
                               ]
                             }
-                            nativeID="8"
                             style={
                               [
                                 {
@@ -15601,7 +15481,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {},
                                 ]
                               }
-                              nativeID="9"
                               style={
                                 [
                                   {
@@ -15662,7 +15541,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     false,
                                   ]
                                 }
-                                nativeID="10"
                                 style={
                                   [
                                     {
@@ -15707,7 +15585,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="11"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -15842,7 +15719,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     {},
                                   ]
                                 }
-                                nativeID="12"
                                 style={
                                   [
                                     {
@@ -15901,7 +15777,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       false,
                                     ]
                                   }
-                                  nativeID="13"
                                   style={
                                     [
                                       {
@@ -15946,7 +15821,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       ]
                                     }
                                     maxFontSizeMultiplier={1.5}
-                                    nativeID="14"
                                     numberOfLines={1}
                                     style={
                                       [

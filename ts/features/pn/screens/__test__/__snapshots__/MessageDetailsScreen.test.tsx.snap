@@ -340,7 +340,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               {},
                             ]
                           }
-                          nativeID="5"
                           style={
                             [
                               {
@@ -381,7 +380,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                 },
                               ]
                             }
-                            nativeID="6"
                             style={
                               [
                                 {
@@ -444,7 +442,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="7"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -545,7 +542,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       },
                                     ]
                                   }
-                                  nativeID="8"
                                   style={
                                     [
                                       {
@@ -593,7 +589,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="9"
                                     style={
                                       [
                                         {
@@ -1010,7 +1005,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               {},
                             ]
                           }
-                          nativeID="377"
                           style={
                             [
                               {
@@ -1051,7 +1045,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                 },
                               ]
                             }
-                            nativeID="378"
                             style={
                               [
                                 {
@@ -1114,7 +1107,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="379"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1215,7 +1207,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       },
                                     ]
                                   }
-                                  nativeID="380"
                                   style={
                                     [
                                       {
@@ -1263,7 +1254,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="381"
                                     style={
                                       [
                                         {
@@ -1680,7 +1670,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               {},
                             ]
                           }
-                          nativeID="742"
                           style={
                             [
                               {
@@ -1721,7 +1710,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                 },
                               ]
                             }
-                            nativeID="743"
                             style={
                               [
                                 {
@@ -1784,7 +1772,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="744"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1885,7 +1872,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       },
                                     ]
                                   }
-                                  nativeID="745"
                                   style={
                                     [
                                       {
@@ -1933,7 +1919,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="746"
                                     style={
                                       [
                                         {
@@ -2331,7 +2316,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               {},
                             ]
                           }
-                          nativeID="1105"
                           style={
                             [
                               {
@@ -2372,7 +2356,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                 },
                               ]
                             }
-                            nativeID="1106"
                             style={
                               [
                                 {
@@ -2453,7 +2436,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     },
                                   ]
                                 }
-                                nativeID="1107"
                                 style={
                                   [
                                     {
@@ -2501,7 +2483,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="1108"
                                   style={
                                     [
                                       {
@@ -2586,7 +2567,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="1109"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -2687,7 +2667,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       },
                                     ]
                                   }
-                                  nativeID="1110"
                                   style={
                                     [
                                       {
@@ -2735,7 +2714,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="1111"
                                     style={
                                       [
                                         {
@@ -3133,7 +3111,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               {},
                             ]
                           }
-                          nativeID="1608"
                           style={
                             [
                               {
@@ -3174,7 +3151,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                 },
                               ]
                             }
-                            nativeID="1609"
                             style={
                               [
                                 {
@@ -3255,7 +3231,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     },
                                   ]
                                 }
-                                nativeID="1610"
                                 style={
                                   [
                                     {
@@ -3303,7 +3278,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="1611"
                                   style={
                                     [
                                       {
@@ -3388,7 +3362,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="1612"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -3489,7 +3462,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       },
                                     ]
                                   }
-                                  nativeID="1613"
                                   style={
                                     [
                                       {
@@ -3537,7 +3509,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="1614"
                                     style={
                                       [
                                         {
@@ -3935,7 +3906,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               {},
                             ]
                           }
-                          nativeID="2111"
                           style={
                             [
                               {
@@ -3976,7 +3946,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                 },
                               ]
                             }
-                            nativeID="2112"
                             style={
                               [
                                 {
@@ -4057,7 +4026,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     },
                                   ]
                                 }
-                                nativeID="2113"
                                 style={
                                   [
                                     {
@@ -4105,7 +4073,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="2114"
                                   style={
                                     [
                                       {
@@ -4190,7 +4157,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="2115"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -4291,7 +4257,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       },
                                     ]
                                   }
-                                  nativeID="2116"
                                   style={
                                     [
                                       {
@@ -4339,7 +4304,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="2117"
                                     style={
                                       [
                                         {
@@ -4737,7 +4701,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               {},
                             ]
                           }
-                          nativeID="2611"
                           style={
                             [
                               {
@@ -4778,7 +4741,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                 },
                               ]
                             }
-                            nativeID="2612"
                             style={
                               [
                                 {
@@ -4859,7 +4821,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     },
                                   ]
                                 }
-                                nativeID="2613"
                                 style={
                                   [
                                     {
@@ -4907,7 +4868,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="2614"
                                   style={
                                     [
                                       {
@@ -4992,7 +4952,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="2615"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -5093,7 +5052,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       },
                                     ]
                                   }
-                                  nativeID="2616"
                                   style={
                                     [
                                       {
@@ -5141,7 +5099,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="2617"
                                     style={
                                       [
                                         {
@@ -5539,7 +5496,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               {},
                             ]
                           }
-                          nativeID="3109"
                           style={
                             [
                               {
@@ -5580,7 +5536,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                 },
                               ]
                             }
-                            nativeID="3110"
                             style={
                               [
                                 {
@@ -5661,7 +5616,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     },
                                   ]
                                 }
-                                nativeID="3111"
                                 style={
                                   [
                                     {
@@ -5709,7 +5663,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="3112"
                                   style={
                                     [
                                       {
@@ -5794,7 +5747,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="3113"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -5895,7 +5847,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       },
                                     ]
                                   }
-                                  nativeID="3114"
                                   style={
                                     [
                                       {
@@ -5943,7 +5894,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="3115"
                                     style={
                                       [
                                         {
@@ -6341,7 +6291,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               {},
                             ]
                           }
-                          nativeID="3607"
                           style={
                             [
                               {
@@ -6382,7 +6331,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                 },
                               ]
                             }
-                            nativeID="3608"
                             style={
                               [
                                 {
@@ -6463,7 +6411,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     },
                                   ]
                                 }
-                                nativeID="3609"
                                 style={
                                   [
                                     {
@@ -6511,7 +6458,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="3610"
                                   style={
                                     [
                                       {
@@ -6596,7 +6542,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="3611"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -6697,7 +6642,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       },
                                     ]
                                   }
-                                  nativeID="3612"
                                   style={
                                     [
                                       {
@@ -6745,7 +6689,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="3613"
                                     style={
                                       [
                                         {
@@ -7274,7 +7217,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                               {},
                             ]
                           }
-                          nativeID="1097"
                           style={
                             [
                               {
@@ -7315,7 +7257,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                 },
                               ]
                             }
-                            nativeID="1098"
                             style={
                               [
                                 {
@@ -7396,7 +7337,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                     },
                                   ]
                                 }
-                                nativeID="1099"
                                 style={
                                   [
                                     {
@@ -7444,7 +7384,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="1100"
                                   style={
                                     [
                                       {
@@ -7529,7 +7468,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="1101"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -7630,7 +7568,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                       },
                                     ]
                                   }
-                                  nativeID="1102"
                                   style={
                                     [
                                       {
@@ -7678,7 +7615,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="1103"
                                     style={
                                       [
                                         {
@@ -8207,7 +8143,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                               {},
                             ]
                           }
-                          nativeID="1600"
                           style={
                             [
                               {
@@ -8248,7 +8183,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                 },
                               ]
                             }
-                            nativeID="1601"
                             style={
                               [
                                 {
@@ -8329,7 +8263,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                     },
                                   ]
                                 }
-                                nativeID="1602"
                                 style={
                                   [
                                     {
@@ -8377,7 +8310,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="1603"
                                   style={
                                     [
                                       {
@@ -8462,7 +8394,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="1604"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -8563,7 +8494,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                       },
                                     ]
                                   }
-                                  nativeID="1605"
                                   style={
                                     [
                                       {
@@ -8611,7 +8541,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="1606"
                                     style={
                                       [
                                         {
@@ -9140,7 +9069,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                               {},
                             ]
                           }
-                          nativeID="2103"
                           style={
                             [
                               {
@@ -9181,7 +9109,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                 },
                               ]
                             }
-                            nativeID="2104"
                             style={
                               [
                                 {
@@ -9262,7 +9189,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                     },
                                   ]
                                 }
-                                nativeID="2105"
                                 style={
                                   [
                                     {
@@ -9310,7 +9236,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="2106"
                                   style={
                                     [
                                       {
@@ -9395,7 +9320,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="2107"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -9496,7 +9420,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                       },
                                     ]
                                   }
-                                  nativeID="2108"
                                   style={
                                     [
                                       {
@@ -9544,7 +9467,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="2109"
                                     style={
                                       [
                                         {
@@ -10073,7 +9995,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                               {},
                             ]
                           }
-                          nativeID="2604"
                           style={
                             [
                               {
@@ -10114,7 +10035,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                 },
                               ]
                             }
-                            nativeID="2605"
                             style={
                               [
                                 {
@@ -10195,7 +10115,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                     },
                                   ]
                                 }
-                                nativeID="2606"
                                 style={
                                   [
                                     {
@@ -10243,7 +10162,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="2607"
                                   style={
                                     [
                                       {
@@ -10328,7 +10246,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="2608"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -10429,7 +10346,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                       },
                                     ]
                                   }
-                                  nativeID="2609"
                                   style={
                                     [
                                       {
@@ -10477,7 +10393,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="2610"
                                     style={
                                       [
                                         {
@@ -11006,7 +10921,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                               {},
                             ]
                           }
-                          nativeID="3101"
                           style={
                             [
                               {
@@ -11047,7 +10961,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                 },
                               ]
                             }
-                            nativeID="3102"
                             style={
                               [
                                 {
@@ -11128,7 +11041,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                     },
                                   ]
                                 }
-                                nativeID="3103"
                                 style={
                                   [
                                     {
@@ -11176,7 +11088,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="3104"
                                   style={
                                     [
                                       {
@@ -11261,7 +11172,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="3105"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -11362,7 +11272,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                       },
                                     ]
                                   }
-                                  nativeID="3106"
                                   style={
                                     [
                                       {
@@ -11410,7 +11319,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="3107"
                                     style={
                                       [
                                         {
@@ -11939,7 +11847,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                               {},
                             ]
                           }
-                          nativeID="3599"
                           style={
                             [
                               {
@@ -11980,7 +11887,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                 },
                               ]
                             }
-                            nativeID="3600"
                             style={
                               [
                                 {
@@ -12061,7 +11967,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                     },
                                   ]
                                 }
-                                nativeID="3601"
                                 style={
                                   [
                                     {
@@ -12109,7 +12014,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="3602"
                                   style={
                                     [
                                       {
@@ -12194,7 +12098,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="3603"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -12295,7 +12198,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                       },
                                     ]
                                   }
-                                  nativeID="3604"
                                   style={
                                     [
                                       {
@@ -12343,7 +12245,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="3605"
                                     style={
                                       [
                                         {
@@ -12872,7 +12773,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                               {},
                             ]
                           }
-                          nativeID="0"
                           style={
                             [
                               {
@@ -12913,7 +12813,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                 },
                               ]
                             }
-                            nativeID="1"
                             style={
                               [
                                 {
@@ -12976,7 +12875,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="2"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -13077,7 +12975,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                       },
                                     ]
                                   }
-                                  nativeID="3"
                                   style={
                                     [
                                       {
@@ -13125,7 +13022,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="4"
                                     style={
                                       [
                                         {
@@ -13654,7 +13550,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                               {},
                             ]
                           }
-                          nativeID="371"
                           style={
                             [
                               {
@@ -13695,7 +13590,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                 },
                               ]
                             }
-                            nativeID="372"
                             style={
                               [
                                 {
@@ -13758,7 +13652,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="373"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -13859,7 +13752,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                       },
                                     ]
                                   }
-                                  nativeID="374"
                                   style={
                                     [
                                       {
@@ -13907,7 +13799,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="375"
                                     style={
                                       [
                                         {
@@ -14436,7 +14327,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                               {},
                             ]
                           }
-                          nativeID="736"
                           style={
                             [
                               {
@@ -14477,7 +14367,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                 },
                               ]
                             }
-                            nativeID="737"
                             style={
                               [
                                 {
@@ -14540,7 +14429,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="738"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -14641,7 +14529,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                       },
                                     ]
                                   }
-                                  nativeID="739"
                                   style={
                                     [
                                       {
@@ -14689,7 +14576,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="740"
                                     style={
                                       [
                                         {

@@ -825,7 +825,6 @@ Premendo
                                         {},
                                       ]
                                     }
-                                    nativeID="12"
                                     style={
                                       [
                                         {
@@ -886,7 +885,6 @@ Premendo
                                           false,
                                         ]
                                       }
-                                      nativeID="13"
                                       style={
                                         [
                                           {
@@ -931,7 +929,6 @@ Premendo
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="14"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -1069,7 +1066,6 @@ Premendo
                                         {},
                                       ]
                                     }
-                                    nativeID="15"
                                     style={
                                       [
                                         {
@@ -1128,7 +1124,6 @@ Premendo
                                           false,
                                         ]
                                       }
-                                      nativeID="16"
                                       style={
                                         [
                                           {
@@ -1173,7 +1168,6 @@ Premendo
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="17"
                                         numberOfLines={1}
                                         style={
                                           [

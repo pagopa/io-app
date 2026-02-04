@@ -393,7 +393,6 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                             }
                           }
                           jestInlineStyle={{}}
-                          nativeID="0"
                           style={
                             [
                               {

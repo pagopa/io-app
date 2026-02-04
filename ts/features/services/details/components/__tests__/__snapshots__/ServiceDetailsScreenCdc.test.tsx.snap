@@ -222,7 +222,6 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is active 1`
                             "value": {},
                           }
                         }
-                        nativeID="8"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -293,7 +292,6 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is active 1`
                               {},
                             ]
                           }
-                          nativeID="9"
                           style={
                             [
                               {
@@ -334,7 +332,6 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is active 1`
                                 },
                               ]
                             }
-                            nativeID="10"
                             style={
                               [
                                 {
@@ -415,7 +412,6 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is active 1`
                                     },
                                   ]
                                 }
-                                nativeID="11"
                                 style={
                                   [
                                     {
@@ -463,7 +459,6 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is active 1`
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="12"
                                   style={
                                     [
                                       {
@@ -548,7 +543,6 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is active 1`
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="13"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -648,7 +642,6 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is active 1`
                                       },
                                     ]
                                   }
-                                  nativeID="14"
                                   style={
                                     [
                                       {
@@ -696,7 +689,6 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is active 1`
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="15"
                                     style={
                                       [
                                         {
@@ -995,7 +987,6 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is not enabl
                             "value": {},
                           }
                         }
-                        nativeID="0"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -1066,7 +1057,6 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is not enabl
                               {},
                             ]
                           }
-                          nativeID="1"
                           style={
                             [
                               {
@@ -1107,7 +1097,6 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is not enabl
                                 },
                               ]
                             }
-                            nativeID="2"
                             style={
                               [
                                 {
@@ -1188,7 +1177,6 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is not enabl
                                     },
                                   ]
                                 }
-                                nativeID="3"
                                 style={
                                   [
                                     {
@@ -1236,7 +1224,6 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is not enabl
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="4"
                                   style={
                                     [
                                       {
@@ -1321,7 +1308,6 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is not enabl
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="5"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1421,7 +1407,6 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is not enabl
                                       },
                                     ]
                                   }
-                                  nativeID="6"
                                   style={
                                     [
                                       {
@@ -1469,7 +1454,6 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is not enabl
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="7"
                                     style={
                                       [
                                         {

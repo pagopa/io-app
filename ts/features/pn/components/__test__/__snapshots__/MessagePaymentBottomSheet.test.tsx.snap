@@ -850,7 +850,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       false,
                                     ]
                                   }
-                                  nativeID="0"
                                   style={
                                     [
                                       {
@@ -1109,7 +1108,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       false,
                                     ]
                                   }
-                                  nativeID="1"
                                   style={
                                     [
                                       {
@@ -1395,7 +1393,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       false,
                                     ]
                                   }
-                                  nativeID="2"
                                   style={
                                     [
                                       {
@@ -1681,7 +1678,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       false,
                                     ]
                                   }
-                                  nativeID="3"
                                   style={
                                     [
                                       {
@@ -1967,7 +1963,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       false,
                                     ]
                                   }
-                                  nativeID="4"
                                   style={
                                     [
                                       {
@@ -2253,7 +2248,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       false,
                                     ]
                                   }
-                                  nativeID="5"
                                   style={
                                     [
                                       {
@@ -2539,7 +2533,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       false,
                                     ]
                                   }
-                                  nativeID="6"
                                   style={
                                     [
                                       {

@@ -71,7 +71,6 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
             }
           }
           jestInlineStyle={{}}
-          nativeID="1"
           style={
             [
               {
@@ -360,7 +359,6 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
                 {},
               ]
             }
-            nativeID="2"
             style={
               [
                 {
@@ -422,7 +420,6 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
                   false,
                 ]
               }
-              nativeID="3"
               style={
                 [
                   {
@@ -467,7 +464,6 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
                   ]
                 }
                 maxFontSizeMultiplier={1.5}
-                nativeID="4"
                 numberOfLines={1}
                 style={
                   [
@@ -620,7 +616,6 @@ exports[`LoadingSpinnerOverlay Should match base loading snapshot 1`] = `
             }
           }
           jestInlineStyle={{}}
-          nativeID="0"
           style={
             [
               {

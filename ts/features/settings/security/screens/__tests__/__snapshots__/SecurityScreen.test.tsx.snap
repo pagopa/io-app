@@ -362,7 +362,6 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                             "value": {},
                           }
                         }
-                        nativeID="12"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -522,7 +521,6 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                     },
                                   ]
                                 }
-                                nativeID="13"
                                 style={
                                   [
                                     {
@@ -563,7 +561,6 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                       },
                                     ]
                                   }
-                                  nativeID="14"
                                   style={
                                     [
                                       {
@@ -755,7 +752,6 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                     },
                                   ]
                                 }
-                                nativeID="15"
                                 style={
                                   [
                                     {
@@ -796,7 +792,6 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                       },
                                     ]
                                   }
-                                  nativeID="16"
                                   style={
                                     [
                                       {

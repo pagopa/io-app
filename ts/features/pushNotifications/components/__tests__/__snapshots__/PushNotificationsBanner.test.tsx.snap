@@ -414,7 +414,6 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                 },
                               ]
                             }
-                            nativeID="0"
                             style={
                               [
                                 {
@@ -781,7 +780,6 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                       },
                                     ]
                                   }
-                                  nativeID="1"
                                   style={
                                     [
                                       {
@@ -829,7 +827,6 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="2"
                                     style={
                                       [
                                         {

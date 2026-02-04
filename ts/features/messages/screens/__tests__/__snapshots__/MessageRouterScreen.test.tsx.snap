@@ -277,7 +277,6 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                     }
                                   }
                                   jestInlineStyle={{}}
-                                  nativeID="0"
                                   style={
                                     [
                                       {
@@ -542,7 +541,6 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                               {},
                             ]
                           }
-                          nativeID="1"
                           style={
                             [
                               {
@@ -583,7 +581,6 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                 },
                               ]
                             }
-                            nativeID="2"
                             style={
                               [
                                 {
@@ -664,7 +661,6 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                     },
                                   ]
                                 }
-                                nativeID="3"
                                 style={
                                   [
                                     {
@@ -712,7 +708,6 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="4"
                                   style={
                                     [
                                       {
@@ -797,7 +792,6 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="5"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -897,7 +891,6 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                       },
                                     ]
                                   }
-                                  nativeID="6"
                                   style={
                                     [
                                       {
@@ -945,7 +938,6 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="7"
                                     style={
                                       [
                                         {
@@ -1299,7 +1291,6 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                     }
                                   }
                                   jestInlineStyle={{}}
-                                  nativeID="17"
                                   style={
                                     [
                                       {
@@ -1564,7 +1555,6 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                               {},
                             ]
                           }
-                          nativeID="18"
                           style={
                             [
                               {
@@ -1605,7 +1595,6 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                 },
                               ]
                             }
-                            nativeID="19"
                             style={
                               [
                                 {
@@ -1686,7 +1675,6 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                     },
                                   ]
                                 }
-                                nativeID="20"
                                 style={
                                   [
                                     {
@@ -1734,7 +1722,6 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="21"
                                   style={
                                     [
                                       {
@@ -1819,7 +1806,6 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="22"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1919,7 +1905,6 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                       },
                                     ]
                                   }
-                                  nativeID="23"
                                   style={
                                     [
                                       {
@@ -1967,7 +1952,6 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="24"
                                     style={
                                       [
                                         {
@@ -2523,7 +2507,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                         {},
                                       ]
                                     }
-                                    nativeID="26"
                                     style={
                                       [
                                         {
@@ -2584,7 +2567,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                           false,
                                         ]
                                       }
-                                      nativeID="27"
                                       style={
                                         [
                                           {
@@ -2629,7 +2611,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="28"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -2766,7 +2747,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                         {},
                                       ]
                                     }
-                                    nativeID="29"
                                     style={
                                       [
                                         {
@@ -2825,7 +2805,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                           false,
                                         ]
                                       }
-                                      nativeID="30"
                                       style={
                                         [
                                           {
@@ -2870,7 +2849,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="31"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -2944,7 +2922,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                               {},
                             ]
                           }
-                          nativeID="32"
                           style={
                             [
                               {
@@ -2985,7 +2962,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                 },
                               ]
                             }
-                            nativeID="33"
                             style={
                               [
                                 {
@@ -3066,7 +3042,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                     },
                                   ]
                                 }
-                                nativeID="34"
                                 style={
                                   [
                                     {
@@ -3114,7 +3089,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="35"
                                   style={
                                     [
                                       {
@@ -3199,7 +3173,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="36"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -3299,7 +3272,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                       },
                                     ]
                                   }
-                                  nativeID="37"
                                   style={
                                     [
                                       {
@@ -3347,7 +3319,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="38"
                                     style={
                                       [
                                         {
@@ -3701,7 +3672,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                     }
                                   }
                                   jestInlineStyle={{}}
-                                  nativeID="40"
                                   style={
                                     [
                                       {
@@ -3966,7 +3936,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                               {},
                             ]
                           }
-                          nativeID="41"
                           style={
                             [
                               {
@@ -4007,7 +3976,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                 },
                               ]
                             }
-                            nativeID="42"
                             style={
                               [
                                 {
@@ -4088,7 +4056,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                     },
                                   ]
                                 }
-                                nativeID="43"
                                 style={
                                   [
                                     {
@@ -4136,7 +4103,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="44"
                                   style={
                                     [
                                       {
@@ -4221,7 +4187,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="45"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -4321,7 +4286,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                       },
                                     ]
                                   }
-                                  nativeID="46"
                                   style={
                                     [
                                       {
@@ -4369,7 +4333,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="47"
                                     style={
                                       [
                                         {
@@ -4723,7 +4686,6 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                     }
                                   }
                                   jestInlineStyle={{}}
-                                  nativeID="8"
                                   style={
                                     [
                                       {
@@ -4988,7 +4950,6 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                               {},
                             ]
                           }
-                          nativeID="9"
                           style={
                             [
                               {
@@ -5029,7 +4990,6 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                 },
                               ]
                             }
-                            nativeID="10"
                             style={
                               [
                                 {
@@ -5110,7 +5070,6 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                     },
                                   ]
                                 }
-                                nativeID="11"
                                 style={
                                   [
                                     {
@@ -5158,7 +5117,6 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="12"
                                   style={
                                     [
                                       {
@@ -5243,7 +5201,6 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="13"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -5343,7 +5300,6 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                       },
                                     ]
                                   }
-                                  nativeID="14"
                                   style={
                                     [
                                       {
@@ -5391,7 +5347,6 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="15"
                                     style={
                                       [
                                         {

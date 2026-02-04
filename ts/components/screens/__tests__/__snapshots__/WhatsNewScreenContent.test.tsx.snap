@@ -433,7 +433,6 @@ exports[`WhatsNewScreenContent should match the snapshots 1`] = `
                     {},
                   ]
                 }
-                nativeID="0"
                 style={
                   [
                     {
@@ -494,7 +493,6 @@ exports[`WhatsNewScreenContent should match the snapshots 1`] = `
                       false,
                     ]
                   }
-                  nativeID="1"
                   style={
                     [
                       {
@@ -539,7 +537,6 @@ exports[`WhatsNewScreenContent should match the snapshots 1`] = `
                       ]
                     }
                     maxFontSizeMultiplier={1.5}
-                    nativeID="2"
                     numberOfLines={1}
                     style={
                       [
@@ -668,7 +665,6 @@ exports[`WhatsNewScreenContent should match the snapshots 1`] = `
                     {},
                   ]
                 }
-                nativeID="3"
                 style={
                   [
                     {
@@ -727,7 +723,6 @@ exports[`WhatsNewScreenContent should match the snapshots 1`] = `
                       false,
                     ]
                   }
-                  nativeID="4"
                   style={
                     [
                       {
@@ -772,7 +767,6 @@ exports[`WhatsNewScreenContent should match the snapshots 1`] = `
                       ]
                     }
                     maxFontSizeMultiplier={1.5}
-                    nativeID="5"
                     numberOfLines={1}
                     style={
                       [

@@ -368,7 +368,6 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                             "value": {},
                           }
                         }
-                        nativeID="0"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -676,7 +675,6 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                               false,
                             ]
                           }
-                          nativeID="1"
                           pointerEvents="none"
                           style={
                             [
@@ -710,7 +708,6 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                 false,
                               ]
                             }
-                            nativeID="2"
                             style={
                               [
                                 {
@@ -896,7 +893,6 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                   {},
                                 ]
                               }
-                              nativeID="3"
                               style={
                                 [
                                   {
@@ -957,7 +953,6 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                     false,
                                   ]
                                 }
-                                nativeID="4"
                                 style={
                                   [
                                     {
@@ -1002,7 +997,6 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="5"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1138,7 +1132,6 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                     {},
                                   ]
                                 }
-                                nativeID="6"
                                 style={
                                   [
                                     {
@@ -1197,7 +1190,6 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                       false,
                                     ]
                                   }
-                                  nativeID="7"
                                   style={
                                     [
                                       {
@@ -1242,7 +1234,6 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                       ]
                                     }
                                     maxFontSizeMultiplier={1.5}
-                                    nativeID="8"
                                     numberOfLines={1}
                                     style={
                                       [

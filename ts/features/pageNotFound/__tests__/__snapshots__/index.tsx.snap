@@ -313,7 +313,6 @@ Prova ad aggiornare IO.
                   {},
                 ]
               }
-              nativeID="0"
               style={
                 [
                   {
@@ -374,7 +373,6 @@ Prova ad aggiornare IO.
                     false,
                   ]
                 }
-                nativeID="1"
                 style={
                   [
                     {
@@ -419,7 +417,6 @@ Prova ad aggiornare IO.
                     ]
                   }
                   maxFontSizeMultiplier={1.5}
-                  nativeID="2"
                   numberOfLines={1}
                   style={
                     [
@@ -557,7 +554,6 @@ Prova ad aggiornare IO.
                   {},
                 ]
               }
-              nativeID="3"
               style={
                 [
                   {
@@ -616,7 +612,6 @@ Prova ad aggiornare IO.
                     false,
                   ]
                 }
-                nativeID="4"
                 style={
                   [
                     {
@@ -661,7 +656,6 @@ Prova ad aggiornare IO.
                     ]
                   }
                   maxFontSizeMultiplier={1.5}
-                  nativeID="5"
                   numberOfLines={1}
                   style={
                     [

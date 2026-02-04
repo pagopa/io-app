@@ -404,7 +404,6 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                               },
                             ]
                           }
-                          nativeID="0"
                           style={
                             [
                               {

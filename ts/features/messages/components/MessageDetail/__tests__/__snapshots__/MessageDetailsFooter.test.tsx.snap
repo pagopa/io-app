@@ -417,7 +417,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                 },
                               ]
                             }
-                            nativeID="16"
                             style={
                               [
                                 {
@@ -461,7 +460,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                   },
                                 ]
                               }
-                              nativeID="17"
                               style={
                                 [
                                   {
@@ -1001,7 +999,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                 },
                               ]
                             }
-                            nativeID="20"
                             style={
                               [
                                 {
@@ -1045,7 +1042,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                   },
                                 ]
                               }
-                              nativeID="21"
                               style={
                                 [
                                   {
@@ -1585,7 +1581,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                 },
                               ]
                             }
-                            nativeID="18"
                             style={
                               [
                                 {
@@ -1629,7 +1624,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                   },
                                 ]
                               }
-                              nativeID="19"
                               style={
                                 [
                                   {
@@ -2169,7 +2163,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                 },
                               ]
                             }
-                            nativeID="22"
                             style={
                               [
                                 {
@@ -2213,7 +2206,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                   },
                                 ]
                               }
-                              nativeID="23"
                               style={
                                 [
                                   {
@@ -2753,7 +2745,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 },
                               ]
                             }
-                            nativeID="0"
                             style={
                               [
                                 {
@@ -2797,7 +2788,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   },
                                 ]
                               }
-                              nativeID="1"
                               style={
                                 [
                                   {
@@ -2966,7 +2956,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 },
                               ]
                             }
-                            nativeID="2"
                             style={
                               [
                                 {
@@ -3010,7 +2999,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   },
                                 ]
                               }
-                              nativeID="3"
                               style={
                                 [
                                   {
@@ -3550,7 +3538,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 },
                               ]
                             }
-                            nativeID="8"
                             style={
                               [
                                 {
@@ -3594,7 +3581,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   },
                                 ]
                               }
-                              nativeID="9"
                               style={
                                 [
                                   {
@@ -3763,7 +3749,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 },
                               ]
                             }
-                            nativeID="10"
                             style={
                               [
                                 {
@@ -3807,7 +3792,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   },
                                 ]
                               }
-                              nativeID="11"
                               style={
                                 [
                                   {
@@ -4347,7 +4331,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 },
                               ]
                             }
-                            nativeID="4"
                             style={
                               [
                                 {
@@ -4391,7 +4374,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   },
                                 ]
                               }
-                              nativeID="5"
                               style={
                                 [
                                   {
@@ -4560,7 +4542,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 },
                               ]
                             }
-                            nativeID="6"
                             style={
                               [
                                 {
@@ -4604,7 +4585,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   },
                                 ]
                               }
-                              nativeID="7"
                               style={
                                 [
                                   {
@@ -5144,7 +5124,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 },
                               ]
                             }
-                            nativeID="12"
                             style={
                               [
                                 {
@@ -5188,7 +5167,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   },
                                 ]
                               }
-                              nativeID="13"
                               style={
                                 [
                                   {
@@ -5357,7 +5335,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 },
                               ]
                             }
-                            nativeID="14"
                             style={
                               [
                                 {
@@ -5401,7 +5378,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   },
                                 ]
                               }
-                              nativeID="15"
                               style={
                                 [
                                   {

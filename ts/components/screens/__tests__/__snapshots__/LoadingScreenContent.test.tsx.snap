@@ -418,7 +418,6 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
                                     }
                                   }
                                   jestInlineStyle={{}}
-                                  nativeID="2"
                                   style={
                                     [
                                       {
@@ -1077,7 +1076,6 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
                                     }
                                   }
                                   jestInlineStyle={{}}
-                                  nativeID="3"
                                   style={
                                     [
                                       {
@@ -1736,7 +1734,6 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                     }
                                   }
                                   jestInlineStyle={{}}
-                                  nativeID="0"
                                   style={
                                     [
                                       {
@@ -2372,7 +2369,6 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                     }
                                   }
                                   jestInlineStyle={{}}
-                                  nativeID="1"
                                   style={
                                     [
                                       {

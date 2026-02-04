@@ -71,7 +71,6 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
             }
           }
           jestInlineStyle={{}}
-          nativeID="0"
           style={
             [
               {

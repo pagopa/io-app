@@ -1070,7 +1070,6 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                             undefined,
                           ]
                         }
-                        nativeID="5"
                         style={
                           [
                             {
@@ -1117,7 +1116,6 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                               undefined,
                             ]
                           }
-                          nativeID="6"
                           pointerEvents="none"
                           style={
                             [
@@ -1232,7 +1230,6 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                                   {},
                                 ]
                               }
-                              nativeID="7"
                               style={
                                 [
                                   {
@@ -1293,7 +1290,6 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                                     false,
                                   ]
                                 }
-                                nativeID="8"
                                 style={
                                   [
                                     {
@@ -1338,7 +1334,6 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                                     ]
                                   }
                                   maxFontSizeMultiplier={1.5}
-                                  nativeID="9"
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1751,7 +1746,6 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                             undefined,
                           ]
                         }
-                        nativeID="0"
                         style={
                           [
                             {
@@ -1798,7 +1792,6 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                               undefined,
                             ]
                           }
-                          nativeID="1"
                           pointerEvents="none"
                           style={
                             [
@@ -1910,7 +1903,6 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                   },
                                 ]
                               }
-                              nativeID="2"
                               style={
                                 [
                                   {
@@ -1960,7 +1952,6 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                     "justifyContent": "center",
                                   }
                                 }
-                                nativeID="3"
                                 style={
                                   [
                                     {
@@ -2001,7 +1992,6 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                       }
                                     }
                                     jestInlineStyle={{}}
-                                    nativeID="4"
                                     style={
                                       [
                                         {

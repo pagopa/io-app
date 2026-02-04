@@ -3259,7 +3259,6 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                                     }
                                   }
                                   jestInlineStyle={{}}
-                                  nativeID="0"
                                   style={
                                     [
                                       {
@@ -6008,7 +6007,6 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                                     }
                                   }
                                   jestInlineStyle={{}}
-                                  nativeID="1"
                                   style={
                                     [
                                       {

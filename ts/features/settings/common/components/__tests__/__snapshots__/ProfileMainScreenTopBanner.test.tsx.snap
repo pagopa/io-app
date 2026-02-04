@@ -80,7 +80,6 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           },
         ]
       }
-      nativeID="1"
       style={
         [
           {
@@ -412,7 +411,6 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
                 },
               ]
             }
-            nativeID="2"
             style={
               [
                 {
@@ -460,7 +458,6 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
               meetOrSlice={0}
               minX={0}
               minY={0}
-              nativeID="3"
               style={
                 [
                   {
@@ -593,7 +590,6 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           },
         ]
       }
-      nativeID="0"
       style={
         [
           {

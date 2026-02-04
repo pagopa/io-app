@@ -328,7 +328,6 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                               },
                             ]
                           }
-                          nativeID="0"
                           style={
                             [
                               {
@@ -455,7 +454,6 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                       },
                                     ]
                                   }
-                                  nativeID="1"
                                   style={
                                     [
                                       {
@@ -503,7 +501,6 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="2"
                                     style={
                                       [
                                         {
@@ -613,7 +610,6 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                       },
                                     ]
                                   }
-                                  nativeID="3"
                                   style={
                                     [
                                       {
@@ -661,7 +657,6 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="4"
                                     style={
                                       [
                                         {
@@ -771,7 +766,6 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                       },
                                     ]
                                   }
-                                  nativeID="5"
                                   style={
                                     [
                                       {
@@ -819,7 +813,6 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="6"
                                     style={
                                       [
                                         {

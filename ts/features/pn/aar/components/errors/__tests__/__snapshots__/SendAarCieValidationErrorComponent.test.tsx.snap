@@ -674,7 +674,6 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
                                         {},
                                       ]
                                     }
-                                    nativeID="0"
                                     style={
                                       [
                                         {
@@ -735,7 +734,6 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
                                           false,
                                         ]
                                       }
-                                      nativeID="1"
                                       style={
                                         [
                                           {
@@ -777,7 +775,6 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
-                                        nativeID="2"
                                         style={
                                           [
                                             {
@@ -851,7 +848,6 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="3"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -989,7 +985,6 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
                                         {},
                                       ]
                                     }
-                                    nativeID="4"
                                     style={
                                       [
                                         {
@@ -1048,7 +1043,6 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
                                           false,
                                         ]
                                       }
-                                      nativeID="5"
                                       style={
                                         [
                                           {
@@ -1093,7 +1087,6 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="6"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -1795,7 +1788,6 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
                                         {},
                                       ]
                                     }
-                                    nativeID="57"
                                     style={
                                       [
                                         {
@@ -1856,7 +1848,6 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
                                           false,
                                         ]
                                       }
-                                      nativeID="58"
                                       style={
                                         [
                                           {
@@ -1901,7 +1892,6 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="59"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -2039,7 +2029,6 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
                                         {},
                                       ]
                                     }
-                                    nativeID="60"
                                     style={
                                       [
                                         {
@@ -2098,7 +2087,6 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
                                           false,
                                         ]
                                       }
-                                      nativeID="61"
                                       style={
                                         [
                                           {
@@ -2143,7 +2131,6 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="62"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -2845,7 +2832,6 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
                                         {},
                                       ]
                                     }
-                                    nativeID="21"
                                     style={
                                       [
                                         {
@@ -2906,7 +2892,6 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
                                           false,
                                         ]
                                       }
-                                      nativeID="22"
                                       style={
                                         [
                                           {
@@ -2951,7 +2936,6 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="23"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -3089,7 +3073,6 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
                                         {},
                                       ]
                                     }
-                                    nativeID="24"
                                     style={
                                       [
                                         {
@@ -3148,7 +3131,6 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
                                           false,
                                         ]
                                       }
-                                      nativeID="25"
                                       style={
                                         [
                                           {
@@ -3193,7 +3175,6 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="26"
                                         numberOfLines={1}
                                         style={
                                           [

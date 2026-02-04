@@ -400,7 +400,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                               },
                             ]
                           }
-                          nativeID="10"
                           style={
                             [
                               {
@@ -444,7 +443,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                                 },
                               ]
                             }
-                            nativeID="11"
                             style={
                               [
                                 {
@@ -1021,7 +1019,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                               },
                             ]
                           }
-                          nativeID="8"
                           style={
                             [
                               {
@@ -1065,7 +1062,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                                 },
                               ]
                             }
-                            nativeID="9"
                             style={
                               [
                                 {
@@ -1642,7 +1638,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                               },
                             ]
                           }
-                          nativeID="6"
                           style={
                             [
                               {
@@ -1686,7 +1681,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                                 },
                               ]
                             }
-                            nativeID="7"
                             style={
                               [
                                 {
@@ -2263,7 +2257,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                               },
                             ]
                           }
-                          nativeID="4"
                           style={
                             [
                               {
@@ -2307,7 +2300,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                                 },
                               ]
                             }
-                            nativeID="5"
                             style={
                               [
                                 {
@@ -2884,7 +2876,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                               },
                             ]
                           }
-                          nativeID="2"
                           style={
                             [
                               {
@@ -2928,7 +2919,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                                 },
                               ]
                             }
-                            nativeID="3"
                             style={
                               [
                                 {
@@ -3505,7 +3495,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                               },
                             ]
                           }
-                          nativeID="0"
                           style={
                             [
                               {
@@ -3549,7 +3538,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                                 },
                               ]
                             }
-                            nativeID="1"
                             style={
                               [
                                 {
@@ -4126,7 +4114,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                               },
                             ]
                           }
-                          nativeID="22"
                           style={
                             [
                               {
@@ -4170,7 +4157,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                                 },
                               ]
                             }
-                            nativeID="23"
                             style={
                               [
                                 {
@@ -4947,7 +4933,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                               },
                             ]
                           }
-                          nativeID="20"
                           style={
                             [
                               {
@@ -4991,7 +4976,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                                 },
                               ]
                             }
-                            nativeID="21"
                             style={
                               [
                                 {
@@ -5768,7 +5752,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                               },
                             ]
                           }
-                          nativeID="18"
                           style={
                             [
                               {
@@ -5812,7 +5795,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                                 },
                               ]
                             }
-                            nativeID="19"
                             style={
                               [
                                 {
@@ -6589,7 +6571,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                               },
                             ]
                           }
-                          nativeID="16"
                           style={
                             [
                               {
@@ -6633,7 +6614,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                                 },
                               ]
                             }
-                            nativeID="17"
                             style={
                               [
                                 {
@@ -7410,7 +7390,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                               },
                             ]
                           }
-                          nativeID="14"
                           style={
                             [
                               {
@@ -7454,7 +7433,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                                 },
                               ]
                             }
-                            nativeID="15"
                             style={
                               [
                                 {
@@ -8231,7 +8209,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                               },
                             ]
                           }
-                          nativeID="12"
                           style={
                             [
                               {
@@ -8275,7 +8252,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                                 },
                               ]
                             }
-                            nativeID="13"
                             style={
                               [
                                 {
@@ -9052,7 +9028,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                               },
                             ]
                           }
-                          nativeID="34"
                           style={
                             [
                               {
@@ -9096,7 +9071,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                                 },
                               ]
                             }
-                            nativeID="35"
                             style={
                               [
                                 {
@@ -9673,7 +9647,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                               },
                             ]
                           }
-                          nativeID="32"
                           style={
                             [
                               {
@@ -9717,7 +9690,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                                 },
                               ]
                             }
-                            nativeID="33"
                             style={
                               [
                                 {
@@ -10294,7 +10266,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                               },
                             ]
                           }
-                          nativeID="30"
                           style={
                             [
                               {
@@ -10338,7 +10309,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                                 },
                               ]
                             }
-                            nativeID="31"
                             style={
                               [
                                 {
@@ -10915,7 +10885,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                               },
                             ]
                           }
-                          nativeID="28"
                           style={
                             [
                               {
@@ -10959,7 +10928,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                                 },
                               ]
                             }
-                            nativeID="29"
                             style={
                               [
                                 {
@@ -11536,7 +11504,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                               },
                             ]
                           }
-                          nativeID="26"
                           style={
                             [
                               {
@@ -11580,7 +11547,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                                 },
                               ]
                             }
-                            nativeID="27"
                             style={
                               [
                                 {
@@ -12157,7 +12123,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                               },
                             ]
                           }
-                          nativeID="24"
                           style={
                             [
                               {
@@ -12201,7 +12166,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                                 },
                               ]
                             }
-                            nativeID="25"
                             style={
                               [
                                 {
@@ -12778,7 +12742,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                               },
                             ]
                           }
-                          nativeID="46"
                           style={
                             [
                               {
@@ -12822,7 +12785,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                                 },
                               ]
                             }
-                            nativeID="47"
                             style={
                               [
                                 {
@@ -13599,7 +13561,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                               },
                             ]
                           }
-                          nativeID="44"
                           style={
                             [
                               {
@@ -13643,7 +13604,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                                 },
                               ]
                             }
-                            nativeID="45"
                             style={
                               [
                                 {
@@ -14420,7 +14380,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                               },
                             ]
                           }
-                          nativeID="42"
                           style={
                             [
                               {
@@ -14464,7 +14423,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                                 },
                               ]
                             }
-                            nativeID="43"
                             style={
                               [
                                 {
@@ -15241,7 +15199,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                               },
                             ]
                           }
-                          nativeID="40"
                           style={
                             [
                               {
@@ -15285,7 +15242,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                                 },
                               ]
                             }
-                            nativeID="41"
                             style={
                               [
                                 {
@@ -16062,7 +16018,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                               },
                             ]
                           }
-                          nativeID="38"
                           style={
                             [
                               {
@@ -16106,7 +16061,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                                 },
                               ]
                             }
-                            nativeID="39"
                             style={
                               [
                                 {
@@ -16883,7 +16837,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                               },
                             ]
                           }
-                          nativeID="36"
                           style={
                             [
                               {
@@ -16927,7 +16880,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                                 },
                               ]
                             }
-                            nativeID="37"
                             style={
                               [
                                 {

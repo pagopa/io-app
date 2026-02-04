@@ -221,7 +221,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                             "value": {},
                           }
                         }
-                        nativeID="0"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -360,7 +359,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                     },
                                   ]
                                 }
-                                nativeID="1"
                                 style={
                                   [
                                     {
@@ -638,7 +636,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                         },
                                       ]
                                     }
-                                    nativeID="2"
                                     style={
                                       [
                                         {
@@ -679,7 +676,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                           },
                                         ]
                                       }
-                                      nativeID="3"
                                       style={
                                         [
                                           {
@@ -877,7 +873,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                         },
                                       ]
                                     }
-                                    nativeID="4"
                                     style={
                                       [
                                         {
@@ -918,7 +913,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                           },
                                         ]
                                       }
-                                      nativeID="5"
                                       style={
                                         [
                                           {
@@ -1116,7 +1110,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                         },
                                       ]
                                     }
-                                    nativeID="6"
                                     style={
                                       [
                                         {
@@ -1157,7 +1150,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                           },
                                         ]
                                       }
-                                      nativeID="7"
                                       style={
                                         [
                                           {
@@ -1355,7 +1347,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                         },
                                       ]
                                     }
-                                    nativeID="8"
                                     style={
                                       [
                                         {
@@ -1396,7 +1387,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                           },
                                         ]
                                       }
-                                      nativeID="9"
                                       style={
                                         [
                                           {
@@ -1594,7 +1584,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                         },
                                       ]
                                     }
-                                    nativeID="10"
                                     style={
                                       [
                                         {
@@ -1635,7 +1624,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                           },
                                         ]
                                       }
-                                      nativeID="11"
                                       style={
                                         [
                                           {
@@ -1839,7 +1827,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                     },
                                   ]
                                 }
-                                nativeID="12"
                                 style={
                                   [
                                     {
@@ -1883,7 +1870,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                       },
                                     ]
                                   }
-                                  nativeID="13"
                                   style={
                                     [
                                       {
@@ -2052,7 +2038,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                     },
                                   ]
                                 }
-                                nativeID="14"
                                 style={
                                   [
                                     {
@@ -2096,7 +2081,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                       },
                                     ]
                                   }
-                                  nativeID="15"
                                   style={
                                     [
                                       {
@@ -3315,7 +3299,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                     },
                                   ]
                                 }
-                                nativeID="16"
                                 style={
                                   [
                                     {
@@ -3356,7 +3339,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                       },
                                     ]
                                   }
-                                  nativeID="17"
                                   style={
                                     [
                                       {
@@ -3633,7 +3615,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                               {},
                             ]
                           }
-                          nativeID="18"
                           style={
                             [
                               {
@@ -3674,7 +3655,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                 },
                               ]
                             }
-                            nativeID="19"
                             style={
                               [
                                 {
@@ -3755,7 +3735,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                     },
                                   ]
                                 }
-                                nativeID="20"
                                 style={
                                   [
                                     {
@@ -3803,7 +3782,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
-                                  nativeID="21"
                                   style={
                                     [
                                       {
@@ -3888,7 +3866,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                   ]
                                 }
                                 maxFontSizeMultiplier={1.5}
-                                nativeID="22"
                                 numberOfLines={1}
                                 style={
                                   [
@@ -3990,7 +3967,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                       },
                                     ]
                                   }
-                                  nativeID="23"
                                   style={
                                     [
                                       {
@@ -4038,7 +4014,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
-                                    nativeID="24"
                                     style={
                                       [
                                         {

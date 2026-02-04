@@ -650,7 +650,6 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                         {},
                                       ]
                                     }
-                                    nativeID="0"
                                     style={
                                       [
                                         {
@@ -711,7 +710,6 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                           false,
                                         ]
                                       }
-                                      nativeID="1"
                                       style={
                                         [
                                           {
@@ -756,7 +754,6 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="2"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -893,7 +890,6 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                         {},
                                       ]
                                     }
-                                    nativeID="3"
                                     style={
                                       [
                                         {
@@ -952,7 +948,6 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                           false,
                                         ]
                                       }
-                                      nativeID="4"
                                       style={
                                         [
                                           {
@@ -997,7 +992,6 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="5"
                                         numberOfLines={1}
                                         style={
                                           [

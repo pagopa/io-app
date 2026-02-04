@@ -1075,7 +1075,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                         {},
                                       ]
                                     }
-                                    nativeID="18"
                                     style={
                                       [
                                         {
@@ -1136,7 +1135,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           false,
                                         ]
                                       }
-                                      nativeID="19"
                                       style={
                                         [
                                           {
@@ -1181,7 +1179,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="20"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -1318,7 +1315,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                         {},
                                       ]
                                     }
-                                    nativeID="21"
                                     style={
                                       [
                                         {
@@ -1377,7 +1373,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           false,
                                         ]
                                       }
-                                      nativeID="22"
                                       style={
                                         [
                                           {
@@ -1422,7 +1417,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="23"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -2195,7 +2189,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                         {},
                                       ]
                                     }
-                                    nativeID="0"
                                     style={
                                       [
                                         {
@@ -2256,7 +2249,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           false,
                                         ]
                                       }
-                                      nativeID="1"
                                       style={
                                         [
                                           {
@@ -2301,7 +2293,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="2"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -2438,7 +2429,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                         {},
                                       ]
                                     }
-                                    nativeID="3"
                                     style={
                                       [
                                         {
@@ -2497,7 +2487,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           false,
                                         ]
                                       }
-                                      nativeID="4"
                                       style={
                                         [
                                           {
@@ -2542,7 +2531,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="5"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -3242,7 +3230,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                         {},
                                       ]
                                     }
-                                    nativeID="6"
                                     style={
                                       [
                                         {
@@ -3303,7 +3290,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           false,
                                         ]
                                       }
-                                      nativeID="7"
                                       style={
                                         [
                                           {
@@ -3348,7 +3334,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="8"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -3485,7 +3470,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                         {},
                                       ]
                                     }
-                                    nativeID="9"
                                     style={
                                       [
                                         {
@@ -3544,7 +3528,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           false,
                                         ]
                                       }
-                                      nativeID="10"
                                       style={
                                         [
                                           {
@@ -3589,7 +3572,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="11"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -4682,7 +4664,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                         {},
                                       ]
                                     }
-                                    nativeID="12"
                                     style={
                                       [
                                         {
@@ -4743,7 +4724,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           false,
                                         ]
                                       }
-                                      nativeID="13"
                                       style={
                                         [
                                           {
@@ -4788,7 +4768,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="14"
                                         numberOfLines={1}
                                         style={
                                           [
@@ -4925,7 +4904,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                         {},
                                       ]
                                     }
-                                    nativeID="15"
                                     style={
                                       [
                                         {
@@ -4984,7 +4962,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           false,
                                         ]
                                       }
-                                      nativeID="16"
                                       style={
                                         [
                                           {
@@ -5029,7 +5006,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           ]
                                         }
                                         maxFontSizeMultiplier={1.5}
-                                        nativeID="17"
                                         numberOfLines={1}
                                         style={
                                           [

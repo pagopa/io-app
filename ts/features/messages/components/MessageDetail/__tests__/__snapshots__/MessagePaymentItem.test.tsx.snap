@@ -878,7 +878,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                 false,
                               ]
                             }
-                            nativeID="0"
                             style={
                               [
                                 {
@@ -1490,7 +1489,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable-wi
                                 false,
                               ]
                             }
-                            nativeID="1"
                             style={
                               [
                                 {
@@ -2081,7 +2079,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                 false,
                               ]
                             }
-                            nativeID="2"
                             style={
                               [
                                 {
