@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.23.0-rc.7](https://github.com/pagopa/io-app/compare/3.23.0-rc.6...3.23.0-rc.7) (2026-02-04)
+
+
+### Chores
+
+* [[IOPLT-1589](https://pagopa.atlassian.net/browse/IOPLT-1589)] Upgrades react-native-blob-util to latest version ([955895a](https://github.com/pagopa/io-app/commit/955895a0f907998c3c3aee0eb6781265902dedbb))
+
 ## [3.23.0-rc.6](https://github.com/pagopa/io-app/compare/3.23.0-rc.5...3.23.0-rc.6) (2026-01-29)
 
 
