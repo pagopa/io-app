@@ -4551,7 +4551,6 @@
           "loading": "Stiamo nascondendo la ricevuta...",
           "title": "Ricevuta pagoPA",
           "shareButton": "Salva o condividi",
-          "error": "Non è stato possibile recuperare la ricevuta.",
           "download": "Ottieni ricevuta",
           "hideFromList": "Nascondi dalla lista",
           "delete": {
@@ -4567,7 +4566,24 @@
             "content": "L’operazione è irreversibile. La ricevuta non verrà più mostrata nell’elenco delle tue ricevute.",
             "accept": "Sì, nascondi"
           },
-          "debtorCartBanner": "Questo avviso è stato pagato insieme ad altri in un'unica transazione. Per informazioni sui costi di commissione, consulta il documento ricevuto in fase di pagamento."
+          "debtorCartBanner": "Questo avviso è stato pagato insieme ad altri in un'unica transazione. Per informazioni sui costi di commissione, consulta il documento ricevuto in fase di pagamento.",
+          "error": {
+            "banner": {
+              "label": "Stiamo generando la ricevuta, torna tra un po’."
+            },
+            "400": {
+              "title": "I dati della ricevuta non sono corretti",
+              "subtitle": "Il Codice Fiscale non corrisponde a quello indicato in fase di pagamento."
+            },
+            "404": {
+              "title": "Non siamo riusciti a generare la ricevuta, riprova più tardi",
+              "subtitle": "Se il problema persiste, contatta l’assistenza."
+            },
+            "500": {
+              "title": "Stiamo riscontrando alcuni problemi sui nostri sistemi",
+              "subtitle": "Riprova più tardi."
+            }
+          }
         },
         "details": {
           "totalFeeUnknown": "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}",
