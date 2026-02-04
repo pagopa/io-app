@@ -1,9 +1,9 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import { NetworkError } from "../../../../../utils/errors";
-import { NoticeListWrapResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeListWrapResponse";
 import { NoticeDetailResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
-import { ReceiptsCategoryFilter } from "../../types";
+import { NoticeListWrapResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeListWrapResponse";
+import { NetworkError } from "../../../../../utils/errors";
 import { HideReceiptTrigger } from "../../analytics";
+import { ReceiptDownloadFailure, ReceiptsCategoryFilter } from "../../types";
 
 type PaymentsReceiptPayload = {
   firstLoad?: boolean;
@@ -53,6 +53,7 @@ type PaymentsTransactionReceiptPayload = {
   transactionId: string;
   onSuccess?: () => void;
   onError?: () => void;
+  onErrorGeneration?: () => void;
 };
 
 export type PaymentsTransactionReceiptInfoPayload = {
@@ -71,7 +72,7 @@ export const getPaymentsReceiptDownloadAction = createAsyncAction(
 )<
   PaymentsTransactionReceiptPayload,
   PaymentsTransactionReceiptInfoPayload,
-  NetworkError,
+  NetworkError | ReceiptDownloadFailure,
   void
 >();
 
