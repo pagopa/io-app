@@ -22,6 +22,11 @@ type PaymentsReceiptSuccessPayload = {
   appendElements?: boolean;
 };
 
+type PaymentsLatestReceiptSuccessPayload = {
+  data: NoticeListWrapResponse["notices"];
+  continuationToken?: string;
+};
+
 export const getPaymentsReceiptAction = createAsyncAction(
   "PAYMENTS_RECEIPT_LIST_REQUEST",
   "PAYMENTS_RECEIPT_LIST_SUCCESS",
@@ -34,7 +39,7 @@ export const getPaymentsLatestReceiptAction = createAsyncAction(
   "PAYMENTS_LATEST_RECEIPT_LIST_SUCCESS",
   "PAYMENTS_LATEST_RECEIPT_LIST_FAILURE",
   "PAYMENTS_LATEST_RECEIPT_LIST_CANCEL"
-)<void, NoticeListWrapResponse["notices"], NetworkError, void>();
+)<void, PaymentsLatestReceiptSuccessPayload, NetworkError, void>();
 
 type PaymentsTransactionDetailsPayload = {
   transactionId: string;

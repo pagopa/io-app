@@ -1,4 +1,5 @@
 import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
@@ -6,6 +7,7 @@ import { getPaymentsLatestReceiptAction } from "../store/actions";
 import { TransactionClient } from "../../common/api/client";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
+import { ReceiptsHeaders } from "../utils/types";
 
 const DEFAULT_LATEST_TRANSACTION_LIST_SIZE = 5;
 
@@ -34,13 +36,25 @@ export function* handleGetLatestReceipt(
       return;
     }
     if (getTransactionListResult.right.status === 200) {
+      const continuationToken = pipe(
+        getTransactionListResult.right.headers,
+        ReceiptsHeaders.decode,
+        E.map(headers => headers.map["x-continuation-token"]),
+        E.getOrElseW(() => undefined)
+      );
       yield* put(
-        getPaymentsLatestReceiptAction.success(
-          getTransactionListResult.right.value.notices
-        )
+        getPaymentsLatestReceiptAction.success({
+          data: getTransactionListResult.right.value.notices,
+          continuationToken
+        })
       );
     } else if (getTransactionListResult.right.status === 404) {
-      yield* put(getPaymentsLatestReceiptAction.success([]));
+      yield* put(
+        getPaymentsLatestReceiptAction.success({
+          data: [],
+          continuationToken: undefined
+        })
+      );
     } else if (getTransactionListResult.right.status !== 401) {
       // The 401 status is handled by the withPaymentsSessionToken
       yield* put(

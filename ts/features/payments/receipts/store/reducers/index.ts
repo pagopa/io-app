@@ -31,6 +31,7 @@ type CancelTransactionRecord = {
 export type ReceiptTransactionState = {
   transactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>;
   latestTransactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>;
+  latestTransactionsContinuationToken?: string;
   details: pot.Pot<NoticeDetailResponse, NetworkError>;
   receiptDocument: pot.Pot<
     PaymentsTransactionReceiptInfoPayload,
@@ -43,6 +44,7 @@ export type ReceiptTransactionState = {
 const INITIAL_STATE: ReceiptTransactionState = {
   transactions: pot.noneLoading,
   latestTransactions: pot.none,
+  latestTransactionsContinuationToken: undefined,
   details: pot.noneLoading,
   receiptDocument: pot.none,
   cancelTransactionRecord: pot.none,
@@ -63,7 +65,8 @@ const reducer = (
     case getType(getPaymentsLatestReceiptAction.success):
       return {
         ...state,
-        latestTransactions: pot.some(action.payload || [])
+        latestTransactions: pot.some(action.payload.data || []),
+        latestTransactionsContinuationToken: action.payload.continuationToken
       };
     case getType(getPaymentsLatestReceiptAction.failure):
       return {
