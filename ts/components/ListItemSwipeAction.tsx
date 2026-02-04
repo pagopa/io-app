@@ -8,7 +8,7 @@ import {
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { RefObject, ReactNode, useCallback, useRef } from "react";
+import { ReactNode, RefObject, useCallback, useRef } from "react";
 import { StyleSheet, useWindowDimensions, View } from "react-native";
 import {
   Gesture,
@@ -18,13 +18,13 @@ import {
 import HapticFeedback from "react-native-haptic-feedback";
 import Animated, {
   interpolateColor,
-  runOnJS,
   SharedValue,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
   withTiming
 } from "react-native-reanimated";
+import { scheduleOnRN } from "react-native-worklets";
 
 // Props for the right action icon
 type RightActionsProps = {
@@ -162,7 +162,7 @@ const ListItemSwipeAction = ({
         }
 
         if (translationX < -200 && !hapticTriggered.current) {
-          runOnJS(triggerHaptic)();
+          scheduleOnRN(triggerHaptic);
           hapticTriggered.current = true;
         } else if (translationX >= -200) {
           hapticTriggered.current = false;
@@ -172,7 +172,7 @@ const ListItemSwipeAction = ({
     .onEnd(event => {
       const { translationX, velocityX } = event;
       if (translationX < -200 || velocityX < -800) {
-        runOnJS(onRightActionPressed)({
+        scheduleOnRN(onRightActionPressed, {
           resetSwipePosition,
           triggerSwipeAction
         });
