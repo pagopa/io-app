@@ -12,7 +12,7 @@ import { ButtonBlockProps } from "../../../../components/ui/utils/buttons";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import {
-  trackItwTapDiscoveryBanner,
+  trackItwDiscoveryBannerTap,
   trackWalletStartDeactivation
 } from "../../analytics";
 import { ItwEidLifecycleAlert } from "../../common/components/ItwEidLifecycleAlert";
@@ -52,7 +52,7 @@ const ItwSettingsScreen = () => {
 
   const handleObtainItwOnPress = useCallback(() => {
     // TODO SIW-3572: deletion of ITW_TAP_BANNER
-    trackItwTapDiscoveryBanner({
+    trackItwDiscoveryBannerTap({
       banner_id: "itwDiscoveryItWalletNewUser",
       banner_page: routeName,
       banner_landing: ITW_SCREENVIEW_EVENTS.ITW_INTRO
