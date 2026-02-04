@@ -97,7 +97,7 @@ const ReceiptDetailsScreen = () => {
     );
   };
 
-  const handleOnDownloadPdfReceiptError = () => {
+  const handlePdfReceiptGenerationError = () => {
     analytics.trackPaymentsDownloadReceiptError({
       organization_name: paymentAnalyticsData?.receiptOrganizationName,
       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
@@ -105,12 +105,21 @@ const ReceiptDetailsScreen = () => {
       organization_fiscal_code:
         paymentAnalyticsData?.receiptOrganizationFiscalCode
     });
-    toast.error(I18n.t("features.payments.transactions.receipt.error"));
+
+    toast.info(
+      I18n.t("features.payments.transactions.receipt.error.banner.label")
+    );
   };
 
   const handleOnDownloadPdfReceiptSuccess = () => {
     navigation.navigate(PaymentsReceiptRoutes.PAYMENT_RECEIPT_NAVIGATOR, {
       screen: PaymentsReceiptRoutes.PAYMENT_RECEIPT_PREVIEW_SCREEN
+    });
+  };
+
+  const navigateToPdfErrorScreen = () => {
+    navigation.navigate(PaymentsReceiptRoutes.PAYMENT_RECEIPT_NAVIGATOR, {
+      screen: PaymentsReceiptRoutes.PAYMENT_RECEIPT_ERROR_SCREEN
     });
   };
 
@@ -125,8 +134,9 @@ const ReceiptDetailsScreen = () => {
     dispatch(
       getPaymentsReceiptDownloadAction.request({
         transactionId,
-        onError: handleOnDownloadPdfReceiptError,
-        onSuccess: handleOnDownloadPdfReceiptSuccess
+        onErrorGeneration: handlePdfReceiptGenerationError,
+        onSuccess: handleOnDownloadPdfReceiptSuccess,
+        onError: navigateToPdfErrorScreen
       })
     );
   };
