@@ -465,7 +465,8 @@ describe("mapDownloadReceiptErrorToOutcomeProps", () => {
       pictogram: "attention",
       action: {
         label: I18n.t("wallet.payment.support.supportTitle"),
-        onPress: expect.any(Function)
+        onPress: expect.any(Function),
+        testID: "contact-support-button"
       },
       secondaryAction: {
         label: I18n.t("global.buttons.close"),
@@ -493,7 +494,8 @@ describe("mapDownloadReceiptErrorToOutcomeProps", () => {
         },
         secondaryAction: {
           label: I18n.t("wallet.payment.support.supportTitle"),
-          onPress: expect.any(Function)
+          onPress: expect.any(Function),
+          testID: "contact-support-button"
         }
       });
     });
