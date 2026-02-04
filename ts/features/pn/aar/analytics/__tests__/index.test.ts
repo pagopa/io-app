@@ -685,7 +685,6 @@ describe("index", () => {
       });
     });
   });
-  // Generate tests for simple tracking
   describe.each(simpleTrackingTests)(
     "$name",
     ({ fn, eventName, eventProps }) => {
@@ -699,7 +698,6 @@ describe("index", () => {
       });
     }
   );
-  // Generate tests for tracking events with error property
   describe.each(trackingTestsWithError)(
     "$name",
     ({ fn, eventName, eventProps }) => {
