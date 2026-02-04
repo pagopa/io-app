@@ -6,6 +6,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import { constNull } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { ComponentProps } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
@@ -96,7 +97,9 @@ export const ItwWalletIdStatus = ({
           {/* Content  */}
           {pidStatus === "jwtExpiring" && (
             <Body style={styles.content}>
-              Conferma la tua identità entro il{" "}
+              {I18n.t(
+                "features.itWallet.presentation.itWalletId.status.expiringPrefix"
+              )}
               <Body weight="Semibold">
                 {format(pidExpiration || "", "DD/MM/YYYY")}
               </Body>
@@ -104,14 +107,22 @@ export const ItwWalletIdStatus = ({
           )}
           {pidStatus === "jwtExpired" && (
             <Body style={styles.content}>
-              Conferma la tua identità per continuare con i tuoi documenti
+              {I18n.t(
+                "features.itWallet.presentation.itWalletId.status.expired"
+              )}
             </Body>
           )}
 
           {/* Optional Action Button  */}
           {pidStatus === "jwtExpired" && (
             <View pointerEvents="none">
-              <IOButton variant="link" label="Inizia" onPress={constNull} />
+              <IOButton
+                variant="link"
+                label={I18n.t(
+                  "features.itWallet.presentation.itWalletId.status.action"
+                )}
+                onPress={constNull}
+              />
             </View>
           )}
         </ItwBrandedBox>
