@@ -111,11 +111,9 @@ const FciQtspClausesScreen = () => {
       renderItem={({ item }) => (
         <QtspClauseListItem
           clause={item}
-          onChange={value =>
-            value
-              ? setClausesChecked(clausesChecked + 1)
-              : setClausesChecked(clausesChecked - 1)
-          }
+          onChange={value => {
+            setClausesChecked(prev => (value ? prev + 1 : prev - 1));
+          }}
           onLinkPress={openUrl}
         />
       )}

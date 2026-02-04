@@ -39,6 +39,7 @@ export type ReceiptDetailsScreenParams = {
   transactionId: string;
   isPayer?: boolean;
   isCart?: boolean;
+  isDebtor?: boolean;
 };
 
 type ReceiptDetailsScreenProps = RouteProp<
@@ -68,7 +69,7 @@ const ReceiptDetailsScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const route = useRoute<ReceiptDetailsScreenProps>();
-  const { transactionId, isPayer, isCart } = route.params;
+  const { transactionId, isPayer, isCart, isDebtor } = route.params;
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const transactionDetailsPot = useIOSelector(walletReceiptDetailsPotSelector);
   const transactionReceiptPot = useIOSelector(walletReceiptPotSelector);
@@ -194,7 +195,7 @@ const ReceiptDetailsScreen = () => {
           showUnavailableReceiptBanner={!showGenerateReceiptButton}
           loading={isLoading}
         />
-        {isCart && !isPayer && (
+        {isCart && isDebtor && (
           <ContentWrapper>
             <Alert
               content={I18n.t(

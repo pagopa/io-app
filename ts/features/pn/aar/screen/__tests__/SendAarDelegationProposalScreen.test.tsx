@@ -1,26 +1,25 @@
 import { act, fireEvent, waitFor } from "@testing-library/react-native";
 import { createStore } from "redux";
-import * as NAVIGATION from "../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import * as USEIO_HOOKS from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import PN_ROUTES from "../../../navigation/routes";
+import {
+  trackSendAarNotificationOpeningMandateBottomSheet,
+  trackSendAarNotificationOpeningMandateDisclaimer,
+  trackSendAarNotificationOpeningMandateDisclaimerAccepted,
+  trackSendAarNotificationOpeningMandateDisclaimerClosure
+} from "../../analytics";
 import * as NFC_AVAILABLE from "../../hooks/useIsNfcFeatureAvailable";
 import * as BS_HOOK from "../../hooks/useSendAarDelegationProposalScreenBottomSheet";
+import * as FLOW_MANAGER from "../../hooks/useSendAarFlowManager";
 import { setAarFlowState } from "../../store/actions";
 import { sendAARFlowStates } from "../../utils/stateUtils";
 import {
   sendAarMockStateFactory,
   sendAarMockStates
 } from "../../utils/testUtils";
-import * as FLOW_MANAGER from "../../hooks/useSendAarFlowManager";
-import {
-  trackSendAarNotificationOpeningMandateDisclaimer,
-  trackSendAarNotificationOpeningMandateDisclaimerAccepted,
-  trackSendAarNotificationOpeningMandateDisclaimerClosure,
-  trackSendAarNotificationOpeningMandateBottomSheet
-} from "../../analytics";
 import { SendAarDelegationProposalScreen } from "../SendAarDelegationProposalScreen";
 
 // react-native-gesture-handler keeps a global state for Gesture Handlers (e.g. handlerTag)
@@ -43,6 +42,18 @@ const currentStateMockData = sendAarMockStateFactory.notAddressee();
 const mockPresent = jest.fn();
 const mockDispatch = jest.fn();
 const mockReplace = jest.fn();
+const mockShouldNeverCall = jest.fn();
+jest.mock("@react-navigation/native", () => {
+  const actualNav = jest.requireActual("@react-navigation/native");
+  return {
+    ...actualNav,
+    useNavigation: () =>
+      new Proxy(actualNav.useNavigation?.(), {
+        get: (_target, prop) =>
+          prop === "replace" ? mockReplace : mockShouldNeverCall
+      })
+  };
+});
 const mockBottomSheet = (_props: {
   citizenName: string;
   onIdentificationSuccess?: () => void;
@@ -81,7 +92,6 @@ describe("SendAarDelegationProposalScreen", () => {
     NFC_AVAILABLE,
     "useIsNfcFeatureAvailable"
   );
-  const useIONavigationSpy = jest.spyOn(NAVIGATION, "useIONavigation");
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -90,12 +100,6 @@ describe("SendAarDelegationProposalScreen", () => {
       .mockImplementation(mockBottomSheet);
     useIODispatchSpy.mockImplementation(() => mockDispatch);
     useIsNfcFeatureAvailableSpy.mockImplementation();
-    useIONavigationSpy.mockImplementation(
-      () =>
-        ({
-          replace: mockReplace
-        } as unknown as ReturnType<typeof NAVIGATION.useIONavigation>)
-    );
   });
 
   describe("Delegation screen content", () => {
@@ -239,7 +243,7 @@ describe("SendAarDelegationProposalScreen", () => {
         shouldNavigate ? "" : "not "
       }navigate to the SEND AAR error screen when the state is ${
         state.type
-      }`, () => {
+      }, and never call any non-replace actions`, () => {
         jest
           .spyOn(FLOW_MANAGER, "useSendAarFlowManager")
           .mockImplementation(() => ({
@@ -260,6 +264,7 @@ describe("SendAarDelegationProposalScreen", () => {
           expect(mockReplace).not.toHaveBeenCalled();
           expect(mockToastHideAll).not.toHaveBeenCalled();
         }
+        expect(mockShouldNeverCall).not.toHaveBeenCalled();
       });
     });
   });
