@@ -12,6 +12,7 @@ import {
 } from "../../../lifecycle/store/selectors";
 import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/selectors";
 import {
+  itwIsBannerHiddenSelector,
   itwIsDiscoveryBannerHiddenSelector,
   itwIsWalletDiscoveryBannerHiddenSelector,
   itwIsWalletUpgradeMDLDetailsBannerHiddenSelector
@@ -134,14 +135,30 @@ export const itwShouldHideEidLifecycleAlert = (state: GlobalState): boolean =>
  * - The wallet is not offline
  * - The L3 feature flag is enabled
  * - The wallet is not valid (not yet active)
- * - The banner was not dismissed by the user
  */
 export const itwShouldRenderDiscoveryBannerSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
   !offlineAccessReasonSelector(state) &&
   itwIsL3EnabledSelector(state) &&
-  !itwLifecycleIsValidSelector(state) &&
-  !itwIsWalletDiscoveryBannerHiddenSelector(state);
+  !itwLifecycleIsValidSelector(state);
+
+/**
+ * Returns whether the new IT-Wallet activation banner in the messages inbox screen should be rendered
+ */
+export const itwShouldRenderInboxDiscoveryBannerSelector = (
+  state: GlobalState
+) =>
+  itwShouldRenderDiscoveryBannerSelector(state) &&
+  !itwIsBannerHiddenSelector("discovery_messages_inbox")(state);
+
+/**
+ * Returns whether the new IT-Wallet activation banner in the messages inbox screen should be rendered
+ */
+export const itwShouldRenderWalletDiscoveryBannerSelector = (
+  state: GlobalState
+) =>
+  itwShouldRenderDiscoveryBannerSelector(state) &&
+  !itwIsBannerHiddenSelector("discovery_wallet")(state);
 
 /**
  * Returns whether the new IT-Wallet upgrade banner should be rendered.

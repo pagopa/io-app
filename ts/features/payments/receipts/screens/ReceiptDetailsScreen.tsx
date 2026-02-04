@@ -1,4 +1,11 @@
-import { IOColors, useIOTheme, useIOToast } from "@pagopa/io-app-design-system";
+import {
+  Alert,
+  ContentWrapper,
+  IOColors,
+  useIOTheme,
+  useIOToast,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { Dimensions, StyleSheet, View } from "react-native";
@@ -32,6 +39,7 @@ export type ReceiptDetailsScreenParams = {
   transactionId: string;
   isPayer?: boolean;
   isCart?: boolean;
+  isDebtor?: boolean;
 };
 
 type ReceiptDetailsScreenProps = RouteProp<
@@ -61,7 +69,7 @@ const ReceiptDetailsScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const route = useRoute<ReceiptDetailsScreenProps>();
-  const { transactionId, isPayer, isCart } = route.params;
+  const { transactionId, isPayer, isCart, isDebtor } = route.params;
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const transactionDetailsPot = useIOSelector(walletReceiptDetailsPotSelector);
   const transactionReceiptPot = useIOSelector(walletReceiptPotSelector);
@@ -153,7 +161,7 @@ const ReceiptDetailsScreen = () => {
   }
 
   const showGenerateReceiptButton =
-    transactionDetails?.infoNotice?.origin !== OriginEnum.PM && !isCart;
+    transactionDetails?.infoNotice?.origin !== OriginEnum.PM;
 
   return (
     <IOScrollView
@@ -187,7 +195,18 @@ const ReceiptDetailsScreen = () => {
           showUnavailableReceiptBanner={!showGenerateReceiptButton}
           loading={isLoading}
         />
-        <HideReceiptButton transactionId={transactionId} />
+        {isCart && isDebtor && (
+          <ContentWrapper>
+            <Alert
+              content={I18n.t(
+                "features.payments.transactions.receipt.debtorCartBanner"
+              )}
+              variant="info"
+            />
+            <VSpacer size={16} />
+          </ContentWrapper>
+        )}
+        <HideReceiptButton transactionId={transactionId} isCart={isCart} />
       </View>
     </IOScrollView>
   );

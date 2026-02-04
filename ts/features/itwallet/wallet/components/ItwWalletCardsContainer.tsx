@@ -136,7 +136,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         header={sectionHeader}
         topElement={
           <VStack space={16}>
-            {shouldRenderUpgradeBanner && <ItwDiscoveryBanner />}
+            {shouldRenderUpgradeBanner && <ItwDiscoveryBanner flow="wallet" />}
             <ItwWalletReadyBanner />
             {!shouldHideEidAlert && (
               <ItwEidLifecycleAlert
