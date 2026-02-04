@@ -42,7 +42,6 @@ const testRestartHandlerCalled = (
 ) => {
   const { iun, recipientInfo, mandateId, can, verificationCode } =
     cieCardReadingComponentProps;
-  expect(mockStopReading).toHaveBeenCalledTimes(1);
   expect(mockDispatch).toHaveBeenCalledTimes(1);
   switch (restartType) {
     case "canAdvisory":
@@ -211,7 +210,6 @@ describe("SendAARCieCardReadingComponent", () => {
       const closeButton = getByTestId("idleCloseButton");
 
       expect(closeButton).toBeTruthy();
-      expect(mockStopReading).not.toHaveBeenCalled();
 
       fireEvent.press(closeButton);
       testRestartHandlerCalled("scanningAdvisory");
@@ -248,7 +246,6 @@ describe("SendAARCieCardReadingComponent", () => {
       const closeButton = getByTestId("readingCloseButton");
 
       expect(closeButton).toBeTruthy();
-      expect(mockStopReading).not.toHaveBeenCalled();
 
       fireEvent.press(closeButton);
       testRestartHandlerCalled("scanningAdvisory");
@@ -297,11 +294,9 @@ describe("SendAARCieCardReadingComponent", () => {
       );
       expect(title).toBeTruthy();
     });
-    it("should update the AAR flow state and call 'stopReading'", () => {
-      expect(mockStopReading).not.toHaveBeenCalled();
+    it("should update the AAR flow state", () => {
       renderComponent();
 
-      expect(mockStopReading).toHaveBeenCalledTimes(1);
       expect(mockDispatch).toHaveBeenCalledTimes(1);
       expect(mockDispatch).toHaveBeenCalledWith(
         setAarFlowState({
@@ -361,14 +356,12 @@ describe("SendAARCieCardReadingComponent", () => {
         });
 
         expect(mockStartReading).toHaveBeenCalledTimes(1);
-        expect(mockStopReading).not.toHaveBeenCalled();
       });
       it("should go back to the scanning advisory screen when the cancel action is triggered", () => {
         const { getByTestId } = renderComponent();
 
         const retryButton = getByTestId("tagLostCloseButton");
         expect(retryButton).toBeTruthy();
-        expect(mockStopReading).not.toHaveBeenCalled();
 
         fireEvent.press(retryButton);
         testRestartHandlerCalled("scanningAdvisory");
@@ -387,7 +380,6 @@ describe("SendAARCieCardReadingComponent", () => {
 
         const retryButton = getByTestId("wrongCanRetryButton");
         expect(retryButton).toBeTruthy();
-        expect(mockStopReading).not.toHaveBeenCalled();
 
         fireEvent.press(retryButton);
         testRestartHandlerCalled("canAdvisory");
@@ -430,7 +422,6 @@ describe("SendAARCieCardReadingComponent", () => {
         const closeButton = getByTestId("genericErrorPrimaryAction");
 
         expect(closeButton).toBeTruthy();
-        expect(mockStopReading).not.toHaveBeenCalled();
 
         act(() => {
           fireEvent.press(closeButton);
@@ -504,7 +495,6 @@ function testCancelErrorAction() {
   const { queryByText } = renderComponent();
 
   expect(mockStartReading).toHaveBeenCalledTimes(1);
-  expect(mockStopReading).not.toHaveBeenCalled();
 
   const cancelAction = queryByText("global.buttons.close");
 
@@ -515,7 +505,6 @@ function testCancelErrorAction() {
   // If passes the previous check we can assume it exists
   fireEvent.press(cancelAction!);
 
-  expect(mockStopReading).toHaveBeenCalledTimes(1);
   expect(mockStartReading).not.toHaveBeenCalled();
   expect(mockTerminateFlow).toHaveBeenCalledTimes(1);
 }

@@ -42,8 +42,7 @@ export const SendAARCieCardReadingComponent = ({
 }: SendAARCieCardReadingComponentProps) => {
   const dispatch = useIODispatch();
   const theme = useIOTheme();
-  const { startReading, stopReading, readState } =
-    useCieInternalAuthAndMrtdReading();
+  const { startReading, readState } = useCieInternalAuthAndMrtdReading();
 
   useTrackCieReadingEvents(readState);
 
@@ -70,7 +69,6 @@ export const SendAARCieCardReadingComponent = ({
   useEffect(() => {
     if (isDefined(data)) {
       const { signedChallenge, ...nisData } = data.nis_data;
-      stopReading();
 
       dispatch(
         setAarFlowState({
@@ -85,22 +83,13 @@ export const SendAARCieCardReadingComponent = ({
         })
       );
     }
-  }, [
-    data,
-    iun,
-    recipientInfo,
-    mandateId,
-    dispatch,
-    verificationCode,
-    stopReading
-  ]);
+  }, [data, iun, recipientInfo, mandateId, dispatch, verificationCode]);
 
   useEffect(() => {
     handleStartReading();
   }, [handleStartReading]);
 
   const restartToCanAdvisory = useCallback(() => {
-    stopReading();
     dispatch(
       setAarFlowState({
         type: sendAARFlowStates.cieCanAdvisory,
@@ -110,15 +99,11 @@ export const SendAARCieCardReadingComponent = ({
         verificationCode
       })
     );
-  }, [dispatch, iun, mandateId, recipientInfo, stopReading, verificationCode]);
+  }, [dispatch, iun, mandateId, recipientInfo, verificationCode]);
 
-  const errorCloseHandler = useCallback(() => {
-    stopReading();
-    terminateFlow();
-  }, [stopReading, terminateFlow]);
+  const errorCloseHandler = useCallback(terminateFlow, [terminateFlow]);
 
   const restartToScanningAdvisory = useCallback(() => {
-    stopReading();
     dispatch(
       setAarFlowState({
         type: sendAARFlowStates.cieScanningAdvisory,
@@ -129,15 +114,7 @@ export const SendAARCieCardReadingComponent = ({
         verificationCode
       })
     );
-  }, [
-    can,
-    dispatch,
-    iun,
-    mandateId,
-    recipientInfo,
-    stopReading,
-    verificationCode
-  ]);
+  }, [can, dispatch, iun, mandateId, recipientInfo, verificationCode]);
 
   const contentMap: {
     [K in ReadStatus]: ScreenContentProps;
