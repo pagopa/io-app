@@ -91,7 +91,6 @@ export const useCieInternalAuthAndMrtdReading = () => {
       // Start listening for errors
       CieManager.addListener("onError", error => {
         setReadState({ status: ReadStatus.ERROR, error });
-
         stopReading();
       }),
       // Start listening for attributes success
