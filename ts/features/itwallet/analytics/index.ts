@@ -76,7 +76,7 @@ export const trackItwDismissalContext = (
   );
 };
 
-export const trackItwUpgradeBanner = (
+export const trackItwDiscoveryBanner = (
   properties: TrackITWalletBannerProperties
 ) => {
   void mixpanelTrack(
@@ -212,7 +212,7 @@ export const trackItwDismissalAction = (
   );
 };
 
-export const trackItwTapUpgradeBanner = (
+export const trackItwTapDiscoveryBanner = (
   properties: TrackITWalletBannerProperties
 ) => {
   void mixpanelTrack(
@@ -221,7 +221,7 @@ export const trackItwTapUpgradeBanner = (
   );
 };
 
-export const trackItwCloseUpgradeBanner = (
+export const trackItwCloseDiscoveryBanner = (
   properties: TrackITWalletBannerProperties
 ) => {
   void mixpanelTrack(

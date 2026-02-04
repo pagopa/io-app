@@ -12,9 +12,9 @@ import {
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import {
-  trackItwCloseUpgradeBanner,
-  trackItwTapUpgradeBanner,
-  trackItwUpgradeBanner
+  trackItwCloseDiscoveryBanner,
+  trackItwTapDiscoveryBanner,
+  trackItwDiscoveryBanner
 } from "../../analytics";
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
 
@@ -75,12 +75,12 @@ export const ItwDiscoveryBanner = ({
 
   useFocusEffect(
     useCallback(() => {
-      trackItwUpgradeBanner(trackBannerProperties);
+      trackItwDiscoveryBanner(trackBannerProperties);
     }, [trackBannerProperties])
   );
 
   const navigateToDiscoveryScreen = () => {
-    trackItwTapUpgradeBanner(trackBannerProperties);
+    trackItwTapDiscoveryBanner(trackBannerProperties);
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
       params: { level: "l3" }
@@ -88,14 +88,14 @@ export const ItwDiscoveryBanner = ({
   };
 
   const navigateToDocumentOnboardingScreen = () => {
-    trackItwTapUpgradeBanner(trackBannerProperties);
+    trackItwTapDiscoveryBanner(trackBannerProperties);
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.ONBOARDING
     });
   };
 
   const handleOnDismiss = () => {
-    trackItwCloseUpgradeBanner(trackBannerProperties);
+    trackItwCloseDiscoveryBanner(trackBannerProperties);
     onDismiss?.();
     dispatch(itwCloseBanner(`discovery_${flow}`));
   };
