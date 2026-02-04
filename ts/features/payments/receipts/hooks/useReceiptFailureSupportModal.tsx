@@ -27,14 +27,14 @@ import {
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import { ReceiptDownloadFailure } from "../types";
 
-type IDPayFailureSupportModal = {
+type Props = {
   bottomSheet: JSX.Element;
   present: () => void;
 };
 
 const useReceiptFailureSupportModal = (
   error: NetworkError | ReceiptDownloadFailure | undefined
-): IDPayFailureSupportModal => {
+): Props => {
   const dispatch = useIODispatch();
 
   const getFaultCodeDetail = (): string =>
