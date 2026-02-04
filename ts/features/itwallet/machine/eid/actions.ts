@@ -319,7 +319,11 @@ export const createEidIssuanceActionsImplementation = (
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     const doneEvent = event as unknown as DoneActorEvent<Output>;
     store.dispatch(
-      itwSetCredentialUpgradeFailed(doneEvent.output.failedCredentials)
+      itwSetCredentialUpgradeFailed(
+        doneEvent.output.failedCredentials.map(
+          failedCredential => failedCredential.credentialId
+        )
+      )
     );
   },
 

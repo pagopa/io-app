@@ -63,8 +63,8 @@ describe("IT Wallet preferences reducer", () => {
   });
 
   it("should override credential upgrade failures", () => {
-    const initialFailures = [ItwStoredCredentialsMocks.L3.mdl];
-    const updatedFailures = [ItwStoredCredentialsMocks.L3.ts];
+    const initialFailures = [ItwStoredCredentialsMocks.L3.mdl.credentialId];
+    const updatedFailures = [ItwStoredCredentialsMocks.L3.ts.credentialId];
 
     const stateAfterInitial = reducer(
       INITIAL_STATE,
