@@ -17,7 +17,8 @@ import * as AAR_SELECTORS from "../../store/selectors";
 import {
   trackSendAarMandateCieReadingClosureAlert,
   trackSendAarMandateCieReadingClosureAlertAccepted,
-  trackSendAarMandateCieReadingClosureAlertContinue
+  trackSendAarMandateCieReadingClosureAlertContinue,
+  trackSendAarMandateCieNfcActivation
 } from "../../analytics";
 
 const mockReplace = jest.fn();
@@ -27,7 +28,8 @@ const mockTerminateFlow = jest.fn();
 jest.mock("../../analytics", () => ({
   trackSendAarMandateCieReadingClosureAlert: jest.fn(),
   trackSendAarMandateCieReadingClosureAlertAccepted: jest.fn(),
-  trackSendAarMandateCieReadingClosureAlertContinue: jest.fn()
+  trackSendAarMandateCieReadingClosureAlertContinue: jest.fn(),
+  trackSendAarMandateCieNfcActivation: jest.fn()
 }));
 
 jest.mock("i18next", () => ({
@@ -47,6 +49,12 @@ describe("SendAarActivateNfcScreen", () => {
     const component = renderComponent();
 
     expect(component.toJSON()).toMatchSnapshot();
+  });
+
+  it('should call "trackSendAarMandateCieNfcActivation" when the component is focused', () => {
+    renderComponent();
+
+    expect(trackSendAarMandateCieNfcActivation).toHaveBeenCalledTimes(1);
   });
 
   sendAarMockStates.forEach(aarState => {
