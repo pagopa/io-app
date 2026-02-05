@@ -8,34 +8,25 @@ import {
   ContentWrapper,
   H3,
   IOButton,
-  IOColors,
   IOPictograms,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
-
 import { useFocusEffect } from "@react-navigation/native";
-import {
-  PureComponent,
-  ReactNode,
-  createRef,
-  useCallback,
-  useRef
-} from "react";
+import { PureComponent, ReactNode, useCallback, useRef } from "react";
 import {
   AccessibilityInfo,
   Platform,
   ScrollView,
   StyleSheet,
-  Text,
-  Vibration,
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { connect } from "react-redux";
 import I18n from "i18next";
+import HapticFeedback, {
+  HapticFeedbackTypes
+} from "react-native-haptic-feedback";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { ReduxProps } from "../../../../../store/actions/types";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
@@ -68,7 +59,6 @@ import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { getCieUatEndpoint } from "../utils/endpoints";
 import {
   analyticActions,
-  VIBRATION,
   WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY,
   WAIT_TIMEOUT_NAVIGATION,
   accessibityTimeout,
@@ -94,8 +84,7 @@ type Props = CieCardReaderNavigationProps &
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: IOColors.white
+    flex: 1
   },
   centerText: {
     textAlign: "center"
@@ -143,7 +132,6 @@ const getPictogramName = (state: ReadingState): IOPictograms => {
  *  This screen shown while reading the card
  */
 class CieCardReaderScreen extends PureComponent<Props, State> {
-  private subTitleRef = createRef<Text>();
   private choosenTool = assistanceToolRemoteConfig(
     this.props.assistanceToolConfig
   );
@@ -180,12 +168,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
     navigation
   }: setErrorParameter) => {
     const cieDescription =
-      errorDescription ??
-      pipe(
-        analyticActions.get(eventReason),
-        O.fromNullable,
-        O.getOrElse(() => "")
-      );
+      errorDescription ?? analyticActions.get(eventReason) ?? "";
 
     this.dispatchAnalyticEvent({
       reason: eventReason,
@@ -199,7 +182,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
         errorMessage: cieDescription
       },
       () => {
-        Vibration.vibrate(VIBRATION);
+        HapticFeedback.trigger(HapticFeedbackTypes.notificationError);
         navigation?.();
       }
     );
@@ -216,7 +199,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
       case "ON_TAG_DISCOVERED":
         if (this.state.readingState !== ReadingState.reading) {
           this.setState({ readingState: ReadingState.reading }, () => {
-            Vibration.vibrate(VIBRATION);
+            HapticFeedback.trigger(HapticFeedbackTypes.impactLight);
           });
         }
         break;
@@ -445,7 +428,9 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
   }
 
   public async componentWillUnmount() {
-    await cieManager.stopListeningNFC();
+    await cieManager.stopListeningNFC().catch(() => {
+      // Ignore errors on stop listening NFC
+    });
     cieManager.removeAllListeners();
   }
 
@@ -513,9 +498,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
             />
             <VSpacer size={8} />
             {this.state.subtitle && (
-              <Body style={styles.centerText} ref={this.subTitleRef}>
-                {this.state.subtitle}
-              </Body>
+              <Body style={styles.centerText}>{this.state.subtitle}</Body>
             )}
             <VSpacer size={24} />
             {this.state.readingState !== ReadingState.completed &&
