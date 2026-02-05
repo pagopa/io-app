@@ -1,8 +1,5 @@
 import { useCallback, useMemo, useRef, useEffect } from "react";
-import {
-  trackITWalletBannerVisualized,
-  trackItWalletBannerTap
-} from "../../analytics";
+import { trackItwBannerVisualized, trackItwBannerTap } from "../../analytics";
 import { ITW_IDENTIFICATION_SCREENVIEW_EVENTS } from "../../identification/analytics/enum";
 import { ItwJwtCredentialStatus } from "../utils/itwTypesUtils";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -72,7 +69,7 @@ export const useItwEidLifecycleAlertTracking = ({
     }
     const onFocus = () => {
       if (!hasTrackedRef.current) {
-        trackITWalletBannerVisualized(trackingProperties);
+        trackItwBannerVisualized(trackingProperties);
         // eslint-disable-next-line functional/immutable-data
         hasTrackedRef.current = true;
       }
@@ -96,7 +93,7 @@ export const useItwEidLifecycleAlertTracking = ({
 
   const trackAlertTap = useCallback(() => {
     if (!isItw) {
-      trackItWalletBannerTap(trackingProperties);
+      trackItwBannerTap(trackingProperties);
     }
   }, [isItw, trackingProperties]);
 
