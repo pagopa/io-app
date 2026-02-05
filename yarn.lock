@@ -12742,7 +12742,6 @@ __metadata:
     react-native-notifications-utils: ^0.3.0
     react-native-pager-view: ^7.0.1
     react-native-pdf: 7.0.3
-    react-native-pdf-thumbnail: ^1.3.1
     react-native-permissions: ^5.3.0
     react-native-push-notification: ^8.1.1
     react-native-qrcode-svg: ^6.3.12
@@ -17990,26 +17989,6 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: b49b88548f33dcad1467cf696d622b54243eed4687150347401c3128c7b4eae71538bba35afc213d8804bcf0eab770a28ded891b9a9f8b5f810320414e4de893
-  languageName: node
-  linkType: hard
-
-"react-native-pdf-thumbnail@npm:1.3.1":
-  version: 1.3.1
-  resolution: "react-native-pdf-thumbnail@npm:1.3.1"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: c147435d74a677add6cfcad6590f76e9af044291a5a9582ffd82d544cf8147fea8337fb8a97824b84acba3d8b029ec610259dbbee8df32e3898923a99fc205f6
-  languageName: node
-  linkType: hard
-
-"react-native-pdf-thumbnail@patch:react-native-pdf-thumbnail@npm%3A1.3.1#./.yarn/patches/react-native-pdf-thumbnail-npm-1.3.1-27dd544c32.patch::locator=io%40workspace%3A.":
-  version: 1.3.1
-  resolution: "react-native-pdf-thumbnail@patch:react-native-pdf-thumbnail@npm%3A1.3.1#./.yarn/patches/react-native-pdf-thumbnail-npm-1.3.1-27dd544c32.patch::version=1.3.1&hash=8b3cd5&locator=io%40workspace%3A."
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 220e8e71ac3b8206659002d89fd87f91961fcbc1681133afca58b7b19d73670a006cdf5c7cd38a83c7c9a0614d5766b42a22c5111cae31977c576a501754a294
   languageName: node
   linkType: hard
 
