@@ -97,6 +97,7 @@
     "date-fns": "^1.29.0",
     "eslint-plugin-react-native": "^4.0.0",
     "expo": "^54.0.33",
+    "expo-screen-capture": "~8.0.9",
     "fp-ts": "^2.12.1",
     "front-matter": "^4.0.2",
     "hastscript": "^7.0.2",

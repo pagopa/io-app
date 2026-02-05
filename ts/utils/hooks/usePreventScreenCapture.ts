@@ -1,6 +1,6 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useMemo, useRef } from "react";
-import RNScreenshotPrevent from "react-native-screenshot-prevent";
+import * as ScreenCapture from "expo-screen-capture";
 import { v4 as uuidv4 } from "uuid";
 import { isDevEnv } from "../environment";
 
@@ -9,14 +9,14 @@ const activeTags: Set<string> = new Set();
 const preventScreenCapture = (tag: string) => {
   if (!activeTags.has(tag)) {
     activeTags.add(tag);
-    RNScreenshotPrevent.enableSecureView();
+    void ScreenCapture.preventScreenCaptureAsync();
   }
 };
 
 const allowScreenCapture = (tag: string) => {
   activeTags.delete(tag);
   if (activeTags.size === 0) {
-    RNScreenshotPrevent.disableSecureView();
+    void ScreenCapture.allowScreenCaptureAsync();
   }
 };
 
@@ -38,9 +38,9 @@ export function usePreventScreenCapture(key?: string) {
 
   useFocusEffect(
     useCallback(() => {
-      if (isDevEnv) {
-        return;
-      }
+      // if (isDevEnv) {
+      //   return;
+      // }
 
       clearTimeout(timeoutRef.current);
 
