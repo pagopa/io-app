@@ -12,6 +12,7 @@ type PaymentReceiptAnalyticsProps = {
   user: PaymentsAnalyticsReceiptUser;
   organization_fiscal_code: string;
   trigger: HideReceiptTrigger;
+  reason?: string;
 };
 
 export const trackPaymentsReceiptListing = () => {
