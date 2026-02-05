@@ -84,6 +84,7 @@ export const itwEidIssuanceMachine = setup({
     storeWalletInstanceAttestation: notImplemented,
     storeAuthLevel: notImplemented,
     storeEidCredential: notImplemented,
+    storeCredentialUpgradeFailures: notImplemented,
     handleSessionExpired: notImplemented,
     resetWalletInstance: notImplemented,
     freezeSimplifiedActivationRequirements: notImplemented,
@@ -1152,6 +1153,7 @@ export const itwEidIssuanceMachine = setup({
           entry: "navigateToSuccessScreen",
           tags: [ItwTags.Loading],
           invoke: {
+            id: "credentialUpgradeMachine",
             src: "credentialUpgradeMachine",
             input: ({ context }) => {
               assert(context.eid, "PID must be defined for credential upgrade");
@@ -1171,9 +1173,12 @@ export const itwEidIssuanceMachine = setup({
             },
             onDone: {
               description: "Credentials upgrade completed successfully",
-              actions: assign(({ event }) => ({
-                failedCredentials: event.output.failedCredentials
-              })),
+              actions: [
+                assign(({ event }) => ({
+                  failedCredentials: event.output.failedCredentials
+                })),
+                "storeCredentialUpgradeFailures"
+              ],
               target: "#itwEidIssuanceMachine.Success"
             },
             onError: {
