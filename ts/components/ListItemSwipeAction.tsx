@@ -8,8 +8,8 @@ import {
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { ReactNode, RefObject, useCallback, useRef } from "react";
-import { StyleSheet, useWindowDimensions, View } from "react-native";
+import { ReactNode, RefObject, memo, useCallback, useMemo } from "react";
+import { StyleSheet, useWindowDimensions } from "react-native";
 import {
   Gesture,
   GestureDetector,
@@ -17,67 +17,78 @@ import {
 } from "react-native-gesture-handler";
 import HapticFeedback from "react-native-haptic-feedback";
 import Animated, {
-  interpolateColor,
   SharedValue,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
   withTiming
 } from "react-native-reanimated";
-import { scheduleOnRN } from "react-native-worklets";
+import { scheduleOnRN, scheduleOnUI } from "react-native-worklets";
+
+const ACTION_WIDTH = 60;
+const HAPTIC_THRESHOLD = -200;
+const SNAP_THRESHOLD = -50;
+
+const styles = StyleSheet.create({
+  gestureHandlerRoot: {
+    flex: 1
+  },
+  contentWrapper: {
+    flex: 1,
+    position: "relative"
+  },
+  rightActionsContainer: {
+    justifyContent: "center",
+    alignItems: "flex-end",
+    paddingRight: 18,
+    flex: 1,
+    position: "absolute",
+    right: 0,
+    top: 0,
+    bottom: 0,
+    width: ACTION_WIDTH
+  }
+});
 
 // Props for the right action icon
 type RightActionsProps = {
   onRightActionPressed: () => void;
   accessibilityLabel: string;
   translateX: SharedValue<number>;
-  backgroundColor: string;
 } & Pick<IconButton, "color" | "icon">;
 
-const RightActions = ({
-  onRightActionPressed,
-  accessibilityLabel,
-  translateX,
-  backgroundColor,
-  icon,
-  color
-}: RightActionsProps) => {
-  const animatedIconStyle = useAnimatedStyle(() => {
-    const clamped = Math.max(-translateX.value, 0);
-    const progress = Math.min(clamped / 60, 1);
+const RightActions = memo(
+  ({
+    onRightActionPressed,
+    accessibilityLabel,
+    translateX,
+    icon,
+    color
+  }: RightActionsProps) => {
+    const animatedIconStyle = useAnimatedStyle(() => {
+      const clamped = Math.max(-translateX.value, 0);
+      const progress = Math.min(clamped / ACTION_WIDTH, 1);
 
-    return {
-      transform: [{ scale: progress }],
-      opacity: progress
-    };
-  });
+      return {
+        transform: [{ scale: progress }],
+        opacity: progress
+      };
+    });
 
-  return (
-    <View
-      style={{
-        backgroundColor,
-        justifyContent: "center",
-        alignItems: "flex-end",
-        paddingRight: 18,
-        flex: 1,
-        position: "absolute",
-        right: 0,
-        top: 0,
-        bottom: 0,
-        width: 60
-      }}
-    >
-      <Animated.View style={animatedIconStyle}>
-        <IconButton
-          accessibilityLabel={accessibilityLabel}
-          icon={icon}
-          color={color}
-          onPress={onRightActionPressed}
-        />
+    return (
+      <Animated.View style={styles.rightActionsContainer}>
+        <Animated.View style={animatedIconStyle}>
+          <IconButton
+            accessibilityLabel={accessibilityLabel}
+            icon={icon}
+            color={color}
+            onPress={onRightActionPressed}
+          />
+        </Animated.View>
       </Animated.View>
-    </View>
-  );
-};
+    );
+  }
+);
 
 export type SwipeControls = {
   resetSwipePosition: () => void;
@@ -102,83 +113,103 @@ const ListItemSwipeAction = ({
   onRightActionPressed,
   openedItemRef
 }: ListItemSwipeActionProps) => {
-  const hapticTriggered = useRef(false);
   const translateX = useSharedValue(0);
+  const startX = useSharedValue(0);
+  const hapticTriggered = useSharedValue(false);
+  const swipeStartHandled = useSharedValue(false);
   const { theme } = useIOThemeContext();
   const { width } = useWindowDimensions();
-  const gestureContext = useRef({ startX: 0 });
 
-  const resetSwipePosition = () => {
+  const maxSwipeDistance = width * 0.9;
+
+  const resetSwipePositionWorklet = useCallback(() => {
+    "worklet";
     translateX.value = withSpring(0, IOSpringValues.accordion);
-  };
+  }, [translateX]);
 
-  const triggerSwipeAction = () => {
+  const triggerSwipeActionWorklet = useCallback(() => {
+    "worklet";
     translateX.value = withTiming(-500, { duration: 300 });
-  };
+  }, [translateX]);
 
-  const backgroundStyle = useAnimatedStyle(() => {
-    const interpolatedColor =
-      translateX.value === 0
-        ? IOColors[theme["appBackground-primary"]]
-        : interpolateColor(
-            translateX.value,
-            [-width * 0.9, -width * 0.2],
-            [IOColors["error-600"], IOColors["error-600"]]
-          );
+  const resetSwipePosition = useCallback(() => {
+    scheduleOnUI(resetSwipePositionWorklet);
+  }, [resetSwipePositionWorklet]);
 
-    return {
-      backgroundColor: interpolatedColor
-    };
-  });
+  const triggerSwipeAction = useCallback(() => {
+    scheduleOnUI(triggerSwipeActionWorklet);
+  }, [triggerSwipeActionWorklet]);
+
+  const backgroundStyle = useAnimatedStyle(() => ({
+    backgroundColor:
+      translateX.value < 0 ? IOColors["error-600"] : "transparent"
+  }));
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: translateX.value }]
   }));
 
-  const triggerHaptic = () => HapticFeedback.trigger("impactLight");
+  const triggerHaptic = () => {
+    HapticFeedback.trigger("impactLight");
+  };
+
+  const handleSwipeStart = () => {
+    if (openedItemRef?.current) {
+      scheduleOnUI(openedItemRef.current);
+    }
+    if (openedItemRef) {
+      openedItemRef.current = resetSwipePositionWorklet;
+    }
+  };
+
+  const handleSwipeEnd = () => {
+    onRightActionPressed({ resetSwipePosition, triggerSwipeAction });
+  };
 
   // Define the gesture action and props
   const panGesture = Gesture.Pan()
     .activeOffsetX([-10, 10])
     .failOffsetY([-5, 5])
     .onBegin(() => {
-      gestureContext.current.startX = translateX.value;
+      "worklet";
+      startX.value = translateX.value;
+      swipeStartHandled.value = false;
     })
     .onUpdate(event => {
+      "worklet";
       const translationX = event.translationX;
       if (translationX < 0) {
-        const newTranslateX = gestureContext.current.startX + translationX;
-        translateX.value = Math.max(newTranslateX, -width * 0.9);
+        translateX.value = Math.max(
+          startX.value + translationX,
+          -maxSwipeDistance
+        );
 
+        // Close other opened items when starting to swipe (only once)
         if (
-          openedItemRef?.current &&
-          openedItemRef.current !== resetSwipePosition
+          startX.value === 0 &&
+          translationX < -10 &&
+          !swipeStartHandled.value
         ) {
-          openedItemRef.current();
+          swipeStartHandled.value = true;
+          scheduleOnRN(handleSwipeStart);
         }
 
-        if (openedItemRef) {
-          openedItemRef.current = resetSwipePosition;
-        }
-
-        if (translationX < -200 && !hapticTriggered.current) {
+        if (translationX < HAPTIC_THRESHOLD && !hapticTriggered.value) {
           scheduleOnRN(triggerHaptic);
-          hapticTriggered.current = true;
-        } else if (translationX >= -200) {
-          hapticTriggered.current = false;
+          hapticTriggered.value = true;
+        } else if (translationX >= HAPTIC_THRESHOLD) {
+          hapticTriggered.value = false;
         }
       }
     })
     .onEnd(event => {
+      "worklet";
       const { translationX, velocityX } = event;
-      if (translationX < -200 || velocityX < -800) {
-        scheduleOnRN(onRightActionPressed, {
-          resetSwipePosition,
-          triggerSwipeAction
-        });
+      if (translationX < HAPTIC_THRESHOLD || velocityX < -800) {
+        scheduleOnRN(handleSwipeEnd);
       } else {
         translateX.value = withSpring(
-          translationX < -50 ? -60 : 0,
+          translationX < SNAP_THRESHOLD ? -ACTION_WIDTH : 0,
           IOSpringValues.accordion
         );
       }
@@ -189,39 +220,40 @@ const ListItemSwipeAction = ({
   useFocusEffect(
     useCallback(
       () => () => {
-        translateX.value = withSpring(0, IOSpringValues.accordion);
+        scheduleOnUI(resetSwipePositionWorklet);
       },
-      [translateX]
+      [resetSwipePositionWorklet]
     )
   );
 
+  const swipeableContentStyle = useMemo(
+    () => ({
+      flex: 1,
+      backgroundColor: IOColors[theme["appBackground-primary"]],
+      marginHorizontal: IOVisualCostants.appMarginDefault * -1
+    }),
+    [theme]
+  );
+
+  const handleRightActionPressed = useCallback(() => {
+    onRightActionPressed({ resetSwipePosition, triggerSwipeAction });
+  }, [onRightActionPressed, resetSwipePosition, triggerSwipeAction]);
+
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <ContentWrapper style={{ flex: 1, position: "relative" }}>
+    <GestureHandlerRootView style={styles.gestureHandlerRoot}>
+      <ContentWrapper style={styles.contentWrapper}>
         <Animated.View
           style={[StyleSheet.absoluteFillObject, backgroundStyle]}
         />
         <RightActions
           icon={icon}
           color={color}
-          backgroundColor={backgroundStyle.backgroundColor}
           translateX={translateX}
-          onRightActionPressed={() =>
-            onRightActionPressed({ resetSwipePosition, triggerSwipeAction })
-          }
+          onRightActionPressed={handleRightActionPressed}
           accessibilityLabel={accessibilityLabel}
         />
         <GestureDetector gesture={panGesture}>
-          <Animated.View
-            style={[
-              {
-                flex: 1,
-                backgroundColor: IOColors[theme["appBackground-primary"]],
-                marginHorizontal: IOVisualCostants.appMarginDefault * -1
-              },
-              animatedStyle
-            ]}
-          >
+          <Animated.View style={[swipeableContentStyle, animatedStyle]}>
             <ContentWrapper>{children}</ContentWrapper>
           </Animated.View>
         </GestureDetector>
