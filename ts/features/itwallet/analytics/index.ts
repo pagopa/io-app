@@ -8,7 +8,7 @@ import {
   ITW_TECH_EVENTS
 } from "./enum";
 import {
-  TrackITWalletBannerClosureProperties,
+  TrackItwBannerProperties,
   ItwFlow,
   ItwWalletDataShare,
   ItwScreenFlowContext,
@@ -28,8 +28,8 @@ import {
 
 // Screen view events
 
-export const trackITWalletBannerVisualized = (
-  properties: TrackITWalletBannerClosureProperties
+export const trackItwBannerVisualized = (
+  properties: TrackItwBannerProperties
 ) => {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.BANNER,
@@ -76,10 +76,12 @@ export const trackItwDismissalContext = (
   );
 };
 
-export const trackItwUpgradeBanner = (banner_page: string) => {
+export const trackItwDiscoveryBanner = (
+  properties: TrackItwBannerProperties
+) => {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_BANNER,
-    buildEventProperties("UX", "screen_view", { banner_page })
+    buildEventProperties("UX", "screen_view", properties)
   );
 };
 
@@ -92,18 +94,14 @@ export const trackItwSurveyRequest = (properties: TrackQualtricsSurvey) => {
 
 // Actions events
 
-export const trackItWalletBannerTap = (
-  properties: TrackITWalletBannerClosureProperties
-) => {
+export const trackItwBannerTap = (properties: TrackItwBannerProperties) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.TAP_BANNER,
     buildEventProperties("UX", "action", properties)
   );
 };
 
-export const trackItWalletBannerClosure = (
-  properties: TrackITWalletBannerClosureProperties
-) => {
+export const trackItwBannerClosure = (properties: TrackItwBannerProperties) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.CLOSE_BANNER,
     buildEventProperties("UX", "action", properties)
@@ -210,10 +208,21 @@ export const trackItwDismissalAction = (
   );
 };
 
-export const trackItwTapUpgradeBanner = (banner_page: string) => {
+export const trackItwDiscoveryBannerTap = (
+  properties: TrackItwBannerProperties
+) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_TAP_BANNER,
-    buildEventProperties("UX", "action", { banner_page })
+    buildEventProperties("UX", "action", properties)
+  );
+};
+
+export const trackItwDiscoveryBannerClosure = (
+  properties: TrackItwBannerProperties
+) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CLOSE_BANNER,
+    buildEventProperties("UX", "action", properties)
   );
 };
 
