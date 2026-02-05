@@ -31,10 +31,7 @@ import { IOStackNavigationRouteProps } from "../../../../../navigation/params/Ap
 import { ReduxProps } from "../../../../../store/actions/types";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
-import {
-  isScreenReaderEnabled,
-  setAccessibilityFocus
-} from "../../../../../utils/accessibility";
+import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { isDevEnv } from "../../../../../utils/environment";
 import {
   assistanceToolRemoteConfig,
@@ -64,6 +61,7 @@ import {
   accessibityTimeout,
   getTextForState
 } from "../../../activeSessionLogin/shared/utils";
+import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
 
 export type CieCardReaderScreenNavigationParams = {
   ciePin: string;
@@ -103,7 +101,6 @@ type State = {
   subtitle?: string;
   content?: string;
   errorMessage?: string;
-  isScreenReaderEnabled: boolean;
 };
 
 type setErrorParameter = {
@@ -147,8 +144,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
       - completed (the reading has been completed)
       */
       readingState: ReadingState.waiting_card,
-      ...getTextForState(ReadingState.waiting_card),
-      isScreenReaderEnabled: false
+      ...getTextForState(ReadingState.waiting_card)
     };
     this.startCieiOS = this.startCieiOS.bind(this);
     this.startCieAndroid = this.startCieAndroid.bind(this);
@@ -303,14 +299,14 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
         break;
       case ReadingState.completed:
         this.setState(
-          state => ({
+          {
             title: I18n.t("authentication.cie.card.cieCardValid"),
             subtitle: "",
             // duplicate message so screen reader can read the updated message
-            content: state.isScreenReaderEnabled
+            content: this.props.isScreenReaderEnabled
               ? I18n.t("authentication.cie.card.cieCardValid")
               : undefined
-          }),
+          },
           this.announceUpdate
         );
         break;
@@ -348,7 +344,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
           });
           // if screen reader is enabled, give more time to read the success message
         },
-        this.state.isScreenReaderEnabled
+        this.props.isScreenReaderEnabled
           ? WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
           : // if is iOS don't wait. The thank you page is shown natively
             Platform.select({ ios: 0, default: WAIT_TIMEOUT_NAVIGATION })
@@ -423,8 +419,6 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
       default: this.startCieAndroid
     });
     await startCie(this.props.isCieUatEnabled);
-    const srEnabled = await isScreenReaderEnabled();
-    this.setState({ isScreenReaderEnabled: srEnabled });
   }
 
   public async componentWillUnmount() {
@@ -512,7 +506,8 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
 
 const mapStateToProps = (state: GlobalState) => ({
   assistanceToolConfig: assistanceToolConfigSelector(state),
-  isCieUatEnabled: isCieLoginUatEnabledSelector(state)
+  isCieUatEnabled: isCieLoginUatEnabledSelector(state),
+  isScreenReaderEnabled: isScreenReaderEnabledSelector(state)
 });
 
 const ReaderScreen = (props: Props) => (
