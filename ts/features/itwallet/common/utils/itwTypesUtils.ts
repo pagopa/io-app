@@ -1,5 +1,6 @@
 import {
   Credential,
+  SdJwt,
   Trust,
   WalletInstance
 } from "@pagopa/io-react-native-wallet";
@@ -84,6 +85,13 @@ export type WalletInstanceStatus = Awaited<
 export type WalletInstanceRevocationReason =
   WalletInstanceStatus["revocation_reason"];
 
+/**
+ * Alias for the Verification type
+ */
+export type Verification = NonNullable<
+  ReturnType<typeof SdJwt.getVerification>
+>;
+
 export type StoredStatusAssertion =
   | {
       credentialStatus: "valid";
@@ -117,6 +125,8 @@ export type StoredCredential = {
     expiration: string;
     issuedAt?: string;
   };
+  spec_version?: string;
+  verification?: Verification;
 };
 
 // Digital credential status

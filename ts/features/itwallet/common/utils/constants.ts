@@ -21,6 +21,12 @@ export const itwGradientColors = [
 ];
 
 /**
+ * The current wallet specification version.
+ * TODO: [SIW-XXXX] Retrieve this value from the io-react-native-wallet package
+ */
+export const WALLET_SPEC_VERSION = "1.0.0";
+
+/**
  * Qualtrics survey URLs
  */
 export const IT_WALLET_SURVEY_EID_REISSUANCE_SUCCESS =

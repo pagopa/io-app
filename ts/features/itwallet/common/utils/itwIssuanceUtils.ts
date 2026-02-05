@@ -17,6 +17,8 @@ import {
   regenerateCryptoKey,
   WIA_KEYTAG
 } from "./itwCryptoContextUtils";
+import { WALLET_SPEC_VERSION } from "./constants";
+import { extractVerification } from "./itwCredentialUtils";
 import { Env } from "./environment";
 
 const CREDENTIAL_TYPE = "PersonIdentificationData";
@@ -194,7 +196,7 @@ const getPid = async ({
       { credentialCryptoContext, ignoreMissingAttributes: true }
     );
 
-  return {
+  const baseCredential = {
     parsedCredential,
     issuerConf,
     keyTag: credentialKeyTag,
@@ -205,7 +207,13 @@ const getPid = async ({
     jwt: {
       expiration: expiration.toISOString(),
       issuedAt: issuedAt?.toISOString()
-    }
+    },
+    spec_version: WALLET_SPEC_VERSION
+  };
+
+  return {
+    ...baseCredential,
+    verification: extractVerification(baseCredential)
   };
 };
 
