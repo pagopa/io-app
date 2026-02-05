@@ -35,7 +35,7 @@ export const itwSetPidReissuingSurveyHidden = createStandardAction(
 
 export const itwSetCredentialUpgradeFailed = createStandardAction(
   "ITW_SET_CREDENTIAL_UPGRADE_FAILED"
-)<ReadonlyArray<StoredCredential["credentialId"]>>();
+)<ReadonlyArray<StoredCredential["credentialType"]>>();
 
 export const itwDisableItwActivation = createStandardAction(
   "ITW_DISABLE_ITW_ACTIVATION"

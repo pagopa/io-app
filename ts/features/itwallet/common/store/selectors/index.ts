@@ -2,7 +2,6 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { isConnectedSelector } from "../../../../connectivity/store/selectors";
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import {
-  itwCredentialsAllSelector,
   itwCredentialsEidStatusSelector,
   itwCredentialsEidIssuedAtSelector,
   itwIsWalletEmptySelector
@@ -102,8 +101,7 @@ export const itwShouldUpgradeCredentialSelector =
 
     const hasUpgradeFailed = upgradeFailures.includes(credentialType);
     const isIssuedBeforePid =
-      isItwPid &&
-      isCredentialIssuedBeforePid(issuedAt, pidIssuedAt);
+      isItwPid && isCredentialIssuedBeforePid(issuedAt, pidIssuedAt);
 
     return isIssuedBeforePid || hasUpgradeFailed;
   };

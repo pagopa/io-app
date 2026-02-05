@@ -40,7 +40,6 @@ import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/ac
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { itwIsPidReissuingSurveyHiddenSelector } from "../../common/store/selectors/preferences";
-import { Output } from "../upgrade/output";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -320,8 +319,8 @@ export const createEidIssuanceActionsImplementation = (
     assertEvent(event, "xstate.done.actor.credentialUpgradeMachine");
     store.dispatch(
       itwSetCredentialUpgradeFailed(
-        doneEvent.output.failedCredentials.map(
-          failedCredential => failedCredential.credentialId
+        event.output.failedCredentials.map(
+          failedCredential => failedCredential.credentialType
         )
       )
     );

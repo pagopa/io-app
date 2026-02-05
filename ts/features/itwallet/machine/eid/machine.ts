@@ -1153,6 +1153,7 @@ export const itwEidIssuanceMachine = setup({
           entry: "navigateToSuccessScreen",
           tags: [ItwTags.Loading],
           invoke: {
+            id: "credentialUpgradeMachine",
             src: "credentialUpgradeMachine",
             input: ({ context }) => {
               assert(context.eid, "PID must be defined for credential upgrade");

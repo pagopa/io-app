@@ -33,8 +33,8 @@ export type ItwPreferencesState = {
   // Indicates whether the bottom sheet survey is visible when the user quits
   // the reissuing flow only for the first time
   isPidReissuingSurveyHidden?: boolean;
-  // Credential IDs that failed to upgrade
-  credentialUpgradeFailed?: ReadonlyArray<StoredCredential["credentialId"]>;
+  // Credential that failed to upgrade by type
+  credentialUpgradeFailed?: ReadonlyArray<StoredCredential["credentialType"]>;
   // Indicates whether the IT-Wallet activation should be disabled
   // because the user's device does not support NFC
   isItwActivationDisabled?: boolean;
