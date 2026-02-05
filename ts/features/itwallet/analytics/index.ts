@@ -253,19 +253,6 @@ export const trackItwSurveyRequestDeclined = (
 
 // Errors events
 
-// TODO: Track IPZS timeout on eID flow
-export const trackItwIdRequestTimeout = (
-  ITW_ID_method?: ItwIdMethod,
-  itw_flow: ItwFlow = "not_available"
-) => {
-  if (ITW_ID_method) {
-    void mixpanelTrack(
-      ITW_ERRORS_EVENTS.ITW_ID_REQUEST_TIMEOUT,
-      buildEventProperties("KO", "error", { ITW_ID_method, itw_flow })
-    );
-  }
-};
-
 export const trackItwStatusCredentialAssertionFailure = ({
   credential,
   credential_status,
