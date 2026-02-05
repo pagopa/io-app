@@ -13,6 +13,7 @@ import {
   getPaymentsReceiptAction,
   getPaymentsLatestReceiptAction,
   hidePaymentsReceiptAction,
+  setNeedsHomeListRefreshAction,
   PaymentsTransactionReceiptInfoPayload
 } from "../actions";
 import {
@@ -30,20 +31,24 @@ type CancelTransactionRecord = {
 export type ReceiptTransactionState = {
   transactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>;
   latestTransactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>;
+  latestTransactionsContinuationToken?: string;
   details: pot.Pot<NoticeDetailResponse, NetworkError>;
   receiptDocument: pot.Pot<
     PaymentsTransactionReceiptInfoPayload,
     NetworkError | ReceiptDownloadFailure
   >;
   cancelTransactionRecord: pot.Pot<CancelTransactionRecord, NetworkError>;
+  needsHomeListRefresh: boolean;
 };
 
 const INITIAL_STATE: ReceiptTransactionState = {
   transactions: pot.noneLoading,
   latestTransactions: pot.none,
+  latestTransactionsContinuationToken: undefined,
   details: pot.noneLoading,
   receiptDocument: pot.none,
-  cancelTransactionRecord: pot.none
+  cancelTransactionRecord: pot.none,
+  needsHomeListRefresh: false
 };
 
 const reducer = (
@@ -60,7 +65,8 @@ const reducer = (
     case getType(getPaymentsLatestReceiptAction.success):
       return {
         ...state,
-        latestTransactions: pot.some(action.payload || [])
+        latestTransactions: pot.some(action.payload.data || []),
+        latestTransactionsContinuationToken: action.payload.continuationToken
       };
     case getType(getPaymentsLatestReceiptAction.failure):
       return {
@@ -91,7 +97,8 @@ const reducer = (
         ...state,
         transactions: !action.payload.appendElements
           ? pot.some([...previousTransactions, ...maybeTransactions])
-          : pot.some(maybeTransactions)
+          : pot.some(maybeTransactions),
+        needsHomeListRefresh: false
       };
     case getType(getPaymentsReceiptAction.failure):
       return {
@@ -221,6 +228,12 @@ const reducer = (
         transactions: pot.some(restoredTransactions),
         latestTransactions: pot.some(restoredLatestTransactions),
         cancelTransactionRecord: pot.none
+      };
+    }
+    case getType(setNeedsHomeListRefreshAction): {
+      return {
+        ...state,
+        needsHomeListRefresh: action.payload
       };
     }
   }
