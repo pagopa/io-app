@@ -484,7 +484,6 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-IO/Pods-IO-frameworks.sh",
-				"${PODS_ROOT}/../../node_modules/@pagopa/react-native-cie/ios/iociesdkios.framework",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/CieSDK/CieSDK.framework/CieSDK",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/IOWalletCBOR/IOWalletCBOR.framework/IOWalletCBOR",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/IOWalletProximity/IOWalletProximity.framework/IOWalletProximity",
@@ -504,7 +503,6 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iociesdkios.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CieSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IOWalletCBOR.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IOWalletProximity.framework",

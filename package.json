@@ -33,8 +33,8 @@
     "lint": "eslint . -c .eslintrc.js --ext .ts,.tsx",
     "lint-autofix": "eslint . -c .eslintrc.js --ext .ts,.tsx --fix",
     "check_urls": "python3 scripts/check_urls.py",
-    "cie-ios:prod": "mv node_modules/@pagopa/react-native-cie/.ios node_modules/@pagopa/react-native-cie/ios && mv node_modules/@pagopa/react-native-cie/.react-native-cie.podspec node_modules/@pagopa/react-native-cie/react-native-cie.podspec && cd ios && bundle exec pod install",
-    "cie-ios:dev": "mv node_modules/@pagopa/react-native-cie/ios node_modules/@pagopa/react-native-cie/.ios && mv node_modules/@pagopa/react-native-cie/react-native-cie.podspec node_modules/@pagopa/react-native-cie/.react-native-cie.podspec && cd ios && rm -rf Pods && bundle exec pod install",
+    "cie-ios:prod": "mv node_modules/@pagopa/react-native-cie/.ios node_modules/@pagopa/react-native-cie/ios && mv node_modules/@pagopa/react-native-cie/.react-native-cie.podspec node_modules/@pagopa/react-native-cie/react-native-cie.podspec && cd ios && bundle exec pod install && cd ..",
+    "cie-ios:dev": "mv node_modules/@pagopa/react-native-cie/ios node_modules/@pagopa/react-native-cie/.ios && mv node_modules/@pagopa/react-native-cie/react-native-cie.podspec node_modules/@pagopa/react-native-cie/.react-native-cie.podspec && cd ios && rm -rf Pods && NO_INTERNAL_MODULE=1 bundle exec pod install && cd ..",
     "cie-ios:ci": "mv node_modules/@pagopa/react-native-cie/.ios node_modules/@pagopa/react-native-cie/ios && mv node_modules/@pagopa/react-native-cie/.react-native-cie.podspec node_modules/@pagopa/react-native-cie/react-native-cie.podspec",
     "bundle:android-release": "node node_modules/react-native/local-cli/cli.js bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
     "generate": "./scripts/generate-api-models.sh",
@@ -43,7 +43,8 @@
     "remove_unused_locales": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/remove-unused-locales.ts",
     "lollipop_checks:comment": "./scripts/toggle-comments-on-lollipop-checks.sh comment ./ts/sagas/startup.ts",
     "lollipop_checks:uncomment": "./scripts/toggle-comments-on-lollipop-checks.sh uncomment ./ts/sagas/startup.ts",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "dev:pod-install": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod install && cd .."
   },
   "lint-staged": {
     "*.{ts,tsx}": [
