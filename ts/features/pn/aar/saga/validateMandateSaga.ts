@@ -9,8 +9,7 @@ import { unknownToReason } from "../../../messages/utils";
 import {
   aarProblemJsonAnalyticsReport,
   trackSendAARFailure,
-  trackSendAarMandateCieExpiredError,
-  trackSendAarMandateCieNotRelatedToDelegatorError
+  trackSendAarMandateCieDataError
 } from "../analytics";
 import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
@@ -20,6 +19,7 @@ import {
   sendAARFlowStates
 } from "../utils/stateUtils";
 import { isDevEnv } from "../../../../utils/environment";
+import { aarProblemJsonErrorTrackingMap } from "../utils/aarErrorMappings";
 
 const sendAARFailurePhase: SendAARFailurePhase = "Validate Mandate";
 
@@ -103,7 +103,12 @@ export function* validateMandateSaga(
           status,
           value
         )})`;
-        yield* call(handleMixPanelCustomTrackingIfNeeded, status, value);
+        yield* call(
+          handleMixPanelCustomTrackingIfNeeded,
+          status,
+          value,
+          reason
+        );
         yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
         const errorState: AARFlowState = {
           type: sendAARFlowStates.ko,
@@ -143,30 +148,24 @@ function handleMixPanelCustomTrackingIfNeeded<
   value: Extract<
     AcceptMandateSuccessfulResponse["right"],
     { status: S }
-  >["value"]
+  >["value"],
+  reason: string
 ) {
-  switch (status) {
-    case 422:
-      {
-        const maybeErrorKey = value.errors
-          ?.map(({ code }) => code)
-          .find(code =>
-            /^(CIE_EXPIRED_ERROR|CIE_NOT_RELATED_TO_DELEGATOR_ERROR)$/i.test(
-              code
-            )
-          );
+  if (status === 422) {
+    const maybeErrorKey = value.errors
+      ?.map(({ code }) => code.toUpperCase())
+      .find(
+        (code): code is keyof typeof aarProblemJsonErrorTrackingMap =>
+          code in aarProblemJsonErrorTrackingMap
+      );
 
-        if (/^CIE_EXPIRED_ERROR$/i.test(`${maybeErrorKey}`)) {
-          trackSendAarMandateCieExpiredError();
-        }
-        if (/^CIE_NOT_RELATED_TO_DELEGATOR_ERROR$/i.test(`${maybeErrorKey}`)) {
-          trackSendAarMandateCieNotRelatedToDelegatorError();
-        }
-      }
-      break;
-    default:
-      break;
+    if (maybeErrorKey) {
+      aarProblemJsonErrorTrackingMap[maybeErrorKey]();
+      return;
+    }
   }
+
+  trackSendAarMandateCieDataError(reason);
 }
 
 export const testable = isDevEnv

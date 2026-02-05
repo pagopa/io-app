@@ -338,3 +338,45 @@ export const trackSendAarMandateCieNotRelatedToDelegatorError = () => {
   const eventProps = buildEventProperties("KO", undefined);
   void mixpanelTrack(eventName, eventProps);
 };
+
+export const trackSendAarMandateCieDataError = (reason: string) => {
+  const eventName = "SEND_MANDATE_CIE_DATA_ERROR";
+  const eventProps = buildEventProperties("KO", undefined, { reason });
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarMandateCieErrorCac = () => {
+  const eventName = "SEND_MANDATE_CIE_ERROR_CAC";
+  const eventProps = buildEventProperties("UX", "exit");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarMandateCieErrorRetry = (error: string) => {
+  const eventName = "SEND_MANDATE_CIE_ERROR_RETRY";
+  const eventProps = buildEventProperties("UX", "action", { error });
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarMandateCieErrorClosure = (error: string) => {
+  const eventName = "SEND_MANDATE_CIE_ERROR_CLOSURE";
+  const eventProps = buildEventProperties("UX", "exit", { error });
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarMandateCieErrorDetail = (error: string) => {
+  const eventName = "SEND_MANDATE_CIE_ERROR_DETAIL";
+  const eventProps = buildEventProperties("UX", "screen_view", { error });
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarMandateCieErrorDetailHelp = (error: string) => {
+  const eventName = "SEND_MANDATE_CIE_ERROR_DETAIL_HELP";
+  const eventProps = buildEventProperties("UX", "action", { error });
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarMandateCieErrorDetailCode = (error: string) => {
+  const eventName = "SEND_MANDATE_CIE_ERROR_DETAIL_CODE";
+  const eventProps = buildEventProperties("UX", "action", { error });
+  void mixpanelTrack(eventName, eventProps);
+};
