@@ -16,11 +16,11 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Platform, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
-  useSharedValue,
+  useDerivedValue,
   withSpring
 } from "react-native-reanimated";
 import { CircularProgress } from "../../../../components/ui/CircularProgress";
@@ -134,7 +134,6 @@ const LinearProgressBar = (
 ) => {
   const { progress = 0 } = props;
   const [width, setWidth] = useState(0);
-  const progressWidth = useSharedValue(0);
 
   const backgroundColor = IOColors["grey-200"];
   const foregroundColor = IOColors["turquoise-500"];
@@ -144,16 +143,15 @@ const LinearProgressBar = (
     Math.max(Math.min(progress, 1.0), 0) * 100
   );
 
-  useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
-    progressWidth.value = withSpring(
+  const animatedWidth = useDerivedValue(() =>
+    withSpring(
       Math.round((progressPercent * width) / 100),
       IOSpringValues.accordion
-    );
-  }, [progressWidth, progressPercent, width]);
+    )
+  );
 
   const animatedStyle = useAnimatedStyle(() => ({
-    width: progressWidth.value
+    width: animatedWidth.value
   }));
 
   return (
