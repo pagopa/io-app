@@ -99,14 +99,11 @@ export const itwShouldUpgradeCredentialSelector =
     const isItwPid = itwLifecycleIsITWalletValidSelector(state);
     const pidIssuedAt = itwCredentialsEidIssuedAtSelector(state);
     const upgradeFailures = itwCredentialUpgradeFailedSelector(state);
-    const credentialsByType = itwCredentialsAllSelector(state);
-    const credential = credentialsByType[credentialType];
 
-    const hasUpgradeFailed = Boolean(
-      credential && upgradeFailures?.includes(credential.credentialId)
-    );
+    const hasUpgradeFailed = upgradeFailures.includes(credentialType);
     const isIssuedBeforePid =
-      isItwPid && isCredentialIssuedBeforePid(issuedAt, pidIssuedAt);
+      isItwPid &&
+      isCredentialIssuedBeforePid(issuedAt, pidIssuedAt);
 
     return isIssuedBeforePid || hasUpgradeFailed;
   };
