@@ -167,14 +167,10 @@ export const extractVerification = ({
 export const isItwCredential = (
   storedCredential: StoredCredential
 ): boolean => {
-  const verification =
-    storedCredential.verification ?? extractVerification(storedCredential);
-  if (!verification) {
-    return false;
-  }
+  const verification = storedCredential.verification;
   return (
-    verification.assurance_level === "high" ||
-    verification.trust_framework === "it_l2+document_proof"
+    verification?.assurance_level === "high" ||
+    verification?.trust_framework === "it_l2+document_proof"
   );
 };
 

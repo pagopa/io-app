@@ -125,7 +125,7 @@ export type StoredCredential = {
     expiration: string;
     issuedAt?: string;
   };
-  spec_version?: string;
+  spec_version: string;
   verification?: Verification;
 };
 
