@@ -8,7 +8,9 @@ import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils
 import { unknownToReason } from "../../../messages/utils";
 import {
   aarProblemJsonAnalyticsReport,
-  trackSendAARFailure
+  trackSendAARFailure,
+  trackSendAarMandateCieExpiredError,
+  trackSendAarMandateCieNotRelatedToDelegatorError
 } from "../analytics";
 import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
@@ -17,8 +19,14 @@ import {
   SendAARFailurePhase,
   sendAARFlowStates
 } from "../utils/stateUtils";
+import { isDevEnv } from "../../../../utils/environment";
 
 const sendAARFailurePhase: SendAARFailurePhase = "Validate Mandate";
+
+export type AcceptMandateSuccessfulResponse = Extract<
+  Awaited<ReturnType<SendAARClient["acceptAARMandate"]>>,
+  { _tag: "Right" }
+>;
 
 export function* validateMandateSaga(
   acceptMandate: SendAARClient["acceptAARMandate"],
@@ -90,12 +98,12 @@ export function* validateMandateSaga(
           "Fast login expiration"
         );
         return;
-      // TODO: [IOCOM-2844] Map 400 and 422 errors
       default:
         const reason = `HTTP request failed (${aarProblemJsonAnalyticsReport(
           status,
           value
         )})`;
+        yield* call(handleMixPanelCustomTrackingIfNeeded, status, value);
         yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
         const errorState: AARFlowState = {
           type: sendAARFlowStates.ko,
@@ -124,3 +132,43 @@ export function* validateMandateSaga(
     );
   }
 }
+
+function handleMixPanelCustomTrackingIfNeeded<
+  S extends Exclude<
+    AcceptMandateSuccessfulResponse["right"]["status"],
+    204 | 401
+  >
+>(
+  status: S,
+  value: Extract<
+    AcceptMandateSuccessfulResponse["right"],
+    { status: S }
+  >["value"]
+) {
+  switch (status) {
+    case 422:
+      {
+        const maybeErrorKey = value.errors
+          ?.map(({ code }) => code)
+          .find(code =>
+            /^(CIE_EXPIRED_ERROR|CIE_NOT_RELATED_TO_DELEGATOR_ERROR)$/i.test(
+              code
+            )
+          );
+
+        if (/^CIE_EXPIRED_ERROR$/i.test(`${maybeErrorKey}`)) {
+          trackSendAarMandateCieExpiredError();
+        }
+        if (/^CIE_NOT_RELATED_TO_DELEGATOR_ERROR$/i.test(`${maybeErrorKey}`)) {
+          trackSendAarMandateCieNotRelatedToDelegatorError();
+        }
+      }
+      break;
+    default:
+      break;
+  }
+}
+
+export const testable = isDevEnv
+  ? { handleMixPanelCustomTrackingIfNeeded }
+  : undefined;
