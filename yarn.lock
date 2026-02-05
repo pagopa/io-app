@@ -12760,7 +12760,6 @@ __metadata:
     react-native-safe-area-context: ^5.5.2
     react-native-screen-brightness: ^2.0.0-alpha
     react-native-screens: 4.16.0
-    react-native-screenshot-prevent: ^1.2.1
     react-native-share: ^12.0.9
     react-native-splash-screen: ^3.2.0
     react-native-svg: ^15.15.1
@@ -18149,26 +18148,6 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 71bebbead1d8f886b80b70cf9d69b0179e035fb425fae84fbcbb2930167220cb90c2ee70b26d3fd94f940fa3e6ce325b0ec2e283d039d5abb29bf6898c58e485
-  languageName: node
-  linkType: hard
-
-"react-native-screenshot-prevent@npm:1.2.1":
-  version: 1.2.1
-  resolution: "react-native-screenshot-prevent@npm:1.2.1"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 5563adea419627ce1a066495c7779ffdfa85bdb9c180b47eb25215175a02fc4af402bf24cea684d208ae18651df9396fb545998dd3c566afe67f119ecfa62a4a
-  languageName: node
-  linkType: hard
-
-"react-native-screenshot-prevent@patch:react-native-screenshot-prevent@npm%3A1.2.1#./.yarn/patches/react-native-screenshot-prevent-npm-1.2.1-d115315590.patch::locator=io%40workspace%3A.":
-  version: 1.2.1
-  resolution: "react-native-screenshot-prevent@patch:react-native-screenshot-prevent@npm%3A1.2.1#./.yarn/patches/react-native-screenshot-prevent-npm-1.2.1-d115315590.patch::version=1.2.1&hash=7682fa&locator=io%40workspace%3A."
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 2b17f9e11946507d401d17b551fc794ea48df1b7b33203e7fddfcd31a9d31f49f5b8d13579980cb8448ceb5462480097f34b81891f6ade4f86a33f3319138b09
   languageName: node
   linkType: hard
 

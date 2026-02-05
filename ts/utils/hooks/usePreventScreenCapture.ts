@@ -1,6 +1,9 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useMemo, useRef } from "react";
-import * as ScreenCapture from "expo-screen-capture";
+import {
+  preventScreenCaptureAsync,
+  allowScreenCaptureAsync
+} from "expo-screen-capture";
 import { v4 as uuidv4 } from "uuid";
 import { isDevEnv } from "../environment";
 
@@ -9,14 +12,14 @@ const activeTags: Set<string> = new Set();
 const preventScreenCapture = (tag: string) => {
   if (!activeTags.has(tag)) {
     activeTags.add(tag);
-    void ScreenCapture.preventScreenCaptureAsync();
+    void preventScreenCaptureAsync();
   }
 };
 
 const allowScreenCapture = (tag: string) => {
   activeTags.delete(tag);
   if (activeTags.size === 0) {
-    void ScreenCapture.allowScreenCaptureAsync();
+    void allowScreenCaptureAsync();
   }
 };
 
@@ -38,9 +41,9 @@ export function usePreventScreenCapture(key?: string) {
 
   useFocusEffect(
     useCallback(() => {
-      // if (isDevEnv) {
-      //   return;
-      // }
+      if (isDevEnv) {
+        return;
+      }
 
       clearTimeout(timeoutRef.current);
 

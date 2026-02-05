@@ -13,7 +13,7 @@ import { PNActivationReminderBanner } from "../PNActivationReminderBanner";
 import { renderComponentWithStoreAndNavigationContextForFocus } from "../../../../messages/utils/__tests__/testUtils.test";
 
 jest.mock("rn-qr-generator", () => ({}));
-jest.mock("react-native-screenshot-prevent", () => ({}));
+jest.mock("expo-screen-capture", () => ({}));
 
 describe("pnActivationBanner", () => {
   it("should match snapshot", () => {
