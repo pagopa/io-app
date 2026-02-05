@@ -317,7 +317,7 @@ export const createEidIssuanceActionsImplementation = (
   storeCredentialUpgradeFailures: ({
     event
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    const doneEvent = event as unknown as DoneActorEvent<Output>;
+    assertEvent(event, "xstate.done.actor.credentialUpgradeMachine");
     store.dispatch(
       itwSetCredentialUpgradeFailed(
         doneEvent.output.failedCredentials.map(
