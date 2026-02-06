@@ -1,8 +1,8 @@
 import { MessageCategory } from "../../../../definitions/backend/communication/MessageCategory";
 import { TimeToLiveSeconds } from "../../../../definitions/backend/communication/TimeToLiveSeconds";
-import { ServiceId } from "../../../../definitions/backend/services/ServiceId";
 import { OrganizationFiscalCode } from "../../../../definitions/services/OrganizationFiscalCode";
 import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import {
   NextPageMessagesSuccessPayload,
   PreviousPageMessagesSuccessPayload,

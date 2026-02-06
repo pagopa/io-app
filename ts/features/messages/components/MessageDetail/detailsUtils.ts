@@ -4,7 +4,7 @@ import { serviceDetailsByIdSelector } from "../../../services/details/store/sele
 import { trackCTAPressed, trackPaymentStart } from "../../analytics";
 import { CTA } from "../../../../types/LocalizedCTAs";
 import { isReady, RemoteValue } from "../../../../common/model/RemoteValue";
-import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
+import { PaymentInfoResponse } from "../../../../../definitions/backend/communication/PaymentInfoResponse";
 import {
   isTimeoutOrGenericOrOngoingPaymentError,
   MessagePaymentError

@@ -2,7 +2,6 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
@@ -10,6 +9,7 @@ import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils
 import { IDPayClient } from "../../common/api/client";
 import { idPayUnsubscribeAction } from "../store/actions";
 import { walletRemoveCards } from "../../../wallet/store/actions/cards";
+import { PreferredLanguageEnum } from "../../../../../definitions/backend/identity/PreferredLanguage";
 
 export function* handleUnsubscribe(
   unsubscribe: IDPayClient["unsubscribe"],

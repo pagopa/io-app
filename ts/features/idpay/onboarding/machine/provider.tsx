@@ -19,10 +19,10 @@ import {
 } from "../../../../store/reducers/persistedPreferences";
 import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
 import { createIDPayClient } from "../../common/api/client";
+import { PreferredLanguageEnum } from "../../../../../definitions/backend/identity/PreferredLanguage";
 import { createActionsImplementation } from "./actions";
 import { createActorsImplementation } from "./actors";
 import { idPayOnboardingMachine } from "./machine";
-import { PreferredLanguageEnum } from "../../../../../definitions/backend/identity/PreferredLanguage";
 
 type Props = {
   children: ReactNode;

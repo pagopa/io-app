@@ -14,9 +14,9 @@ import {
   OnboardingFailure,
   OnboardingFailureEnum
 } from "../types/OnboardingFailure";
+import { PreferredLanguage } from "../../../../../definitions/backend/identity/PreferredLanguage";
 import * as Context from "./context";
 import { getBooleanSelfDeclarationListFromContext } from "./selectors";
-import { PreferredLanguage } from "../../../../../definitions/backend/identity/PreferredLanguage";
 
 /**
  * Checks if the error is a 429 Too Many Requests error that exhausted retries.

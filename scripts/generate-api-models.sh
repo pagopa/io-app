@@ -12,10 +12,8 @@ SEND_FUNC_VERSION=1.4.3
 
 declare -a apis=(
   # Backend APIs
-  "./definitions/backend/old https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_backend.yaml"
   "./definitions/backend/communication https://raw.githubusercontent.com/pagopa/io-backend/fix-api_communication.yaml/openapi/generated/api_communication.yaml"
   "./definitions/backend/identity      https://raw.githubusercontent.com/pagopa/io-backend/fix-api_communication.yaml/openapi/generated/api_identity.yaml"
-  "./definitions/backend/services https://raw.githubusercontent.com/pagopa/io-backend/refs/heads/master/openapi/generated/api_services_app_backend.yaml"
   # pagoPA APIs
   "./definitions/pagopa assets/paymentManager/spec.json"
   "./definitions/pagopa/walletv2 https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/bonus/specs/bpd/pm/walletv2.json"

@@ -9,7 +9,6 @@ import { isDevEnv } from "../utils/environment";
 import { createClient as createSMClient } from "../../definitions/session_manager/client";
 import { defaultRetryingFetch } from "../utils/fetch";
 import { createClient as createIDClient } from "../../definitions/backend/identity/client";
-import { createClient as createSEClient } from "../../definitions/backend/services/client";
 /* eslint-disable functional/immutable-data */
 
 export const createComClientWithLollipop = (
@@ -39,18 +38,9 @@ export const createIDClientWithLollipop = (baseUrl: string) =>
 
 export type IDBackendClient = ReturnType<typeof createIDClientWithLollipop>;
 
-export const createSEClientWithLollipop = (baseUrl: string) =>
-  createSEClient({
-    baseUrl,
-    fetchApi: defaultRetryingFetch()
-  });
-
-export type SEBackendClient = ReturnType<typeof createSEClientWithLollipop>;
-
 class BackendClientManager {
   private comClient: Nullable<ComBackendClient> = null;
   private idClient: Nullable<IDBackendClient> = null;
-  private seClient: Nullable<SEBackendClient> = null;
   private smClient: Nullable<SMBackendClient> = null;
 
   private keyInfo: KeyInfo | undefined = undefined;
@@ -86,14 +76,6 @@ class BackendClientManager {
     }
 
     return (this.idClient = createIDClientWithLollipop(baseUrl));
-  }
-
-  getSEBackendClient(baseUrl: string, token: SessionToken): SEBackendClient {
-    if (this.seClient !== null && token === this.sessionToken) {
-      return this.seClient;
-    }
-
-    return (this.seClient = createSEClientWithLollipop(baseUrl));
   }
 }
 

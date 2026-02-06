@@ -9,7 +9,7 @@ import { pipe } from "fp-ts/lib/function";
 import { useCallback, useEffect } from "react";
 import { View } from "react-native";
 import I18n from "i18next";
-import { PaymentAmount } from "../../../../../definitions/backend/PaymentAmount";
+import { PaymentAmount } from "../../../../../definitions/backend/communication/PaymentAmount";
 import {
   useIODispatch,
   useIOSelector,
@@ -21,7 +21,6 @@ import {
   paymentStatusForUISelector,
   shouldRetrievePaymentDataSelector
 } from "../../store/reducers/payments";
-import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
 import { RemoteValue, fold } from "../../../../common/model/RemoteValue";
 import {
   cleanTransactionDescription,
@@ -37,6 +36,7 @@ import { formatPaymentNoticeNumber } from "../../../payments/common/utils";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { trackPNPaymentStart } from "../../../pn/analytics";
 import { formatAndValidateDueDate } from "../../../payments/checkout/utils";
+import { PaymentInfoResponse } from "../../../../../definitions/backend/communication/PaymentInfoResponse";
 import {
   isMessagePaymentSpecificError,
   MessagePaymentError

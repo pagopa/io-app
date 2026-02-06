@@ -6,8 +6,8 @@ import { convertUnknownToError } from "../../../../utils/errors";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { loadServiceDetail } from "../store/actions/details";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { SEBackendClient } from "../../../../api/BackendClientManager";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { ServicesClient } from "../../common/api/servicesClient";
 
 /**
  * saga to handle the loading of a service detail
@@ -15,7 +15,7 @@ import { ServiceId } from "../../../../../definitions/services/ServiceId";
  * @param action
  */
 export function* handleServiceDetails(
-  getServiceById: SEBackendClient["getServiceById"],
+  getServiceById: ServicesClient["getServiceById"],
   action: ActionType<typeof loadServiceDetail.request>
 ) {
   try {
@@ -34,7 +34,6 @@ export function* handleServiceDetails(
     const response = (yield* call(
       withRefreshApiCall,
       getServiceById({
-        Bearer: "",
         serviceId: action.payload
       }),
       action

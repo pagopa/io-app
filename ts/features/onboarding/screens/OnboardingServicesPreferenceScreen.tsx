@@ -7,7 +7,6 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ReactElement, useCallback, useEffect, useState } from "react";
 import I18n from "i18next";
-import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import {
   IOStackNavigationRouteProps,
@@ -34,6 +33,7 @@ import {
 import { useManualConfigBottomSheet } from "../../settings/preferences/shared/hooks/useManualConfigBottomSheet";
 import ServicesContactComponent from "../../settings/preferences/shared/components/ServicesContactComponent";
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
+import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/identity/ServicesPreferencesMode";
 
 export type OnboardingServicesPreferenceScreenNavigationParams = {
   isFirstOnboarding: boolean;

@@ -27,11 +27,11 @@ import {
   isStrictSomeError
 } from "../../../../utils/pot";
 import { isArchivingInProcessingModeSelector } from "../../store/reducers/archiving";
-import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import NavigationService from "../../../../navigation/NavigationService";
 import { trackMessageListEndReached, trackMessagesPage } from "../../analytics";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { areMessageSagasRegisteredSelector } from "../../store/reducers/messageSectionStatus";
+import { TagEnum } from "../../../../../definitions/backend/communication/MessageCategoryPN";
 import {
   ListItemMessageEnhancedHeight,
   ListItemMessageStandardHeight
