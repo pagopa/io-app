@@ -1158,7 +1158,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                     </View>
                                   </View>
                                   <View
-                                    accessibilityLabel="Codice errore; EID_EXPIRED"
+                                    accessibilityLabel="Codice errore EID_EXPIRED : Copia"
                                     accessibilityRole="button"
                                     accessibilityState={
                                       {
@@ -2384,7 +2384,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                     </View>
                                   </View>
                                   <View
-                                    accessibilityLabel="Codice errore; INVALID_CREDENTIALS_STATUS"
+                                    accessibilityLabel="Codice errore INVALID_CREDENTIALS_STATUS : Copia"
                                     accessibilityRole="button"
                                     accessibilityState={
                                       {
@@ -3610,7 +3610,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                     </View>
                                   </View>
                                   <View
-                                    accessibilityLabel="Codice errore; INVALID_CREDENTIALS_STATUS"
+                                    accessibilityLabel="Codice errore INVALID_CREDENTIALS_STATUS : Copia"
                                     accessibilityRole="button"
                                     accessibilityState={
                                       {
@@ -5967,7 +5967,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                     </View>
                                   </View>
                                   <View
-                                    accessibilityLabel="Codice errore; MISSING_CREDENTIALS"
+                                    accessibilityLabel="Codice errore MISSING_CREDENTIALS : Copia"
                                     accessibilityRole="button"
                                     accessibilityState={
                                       {
@@ -7323,7 +7323,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                     </View>
                                   </View>
                                   <View
-                                    accessibilityLabel="Codice errore; MISSING_CREDENTIALS"
+                                    accessibilityLabel="Codice errore MISSING_CREDENTIALS : Copia"
                                     accessibilityRole="button"
                                     accessibilityState={
                                       {
@@ -12402,7 +12402,7 @@ continuare
                                     </View>
                                   </View>
                                   <View
-                                    accessibilityLabel="Codice errore; WALLET_INACTIVE"
+                                    accessibilityLabel="Codice errore WALLET_INACTIVE : Copia"
                                     accessibilityRole="button"
                                     accessibilityState={
                                       {
