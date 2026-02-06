@@ -4,7 +4,6 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 
 import { ReactNode } from "react";
-import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { PaymentManagerClient } from "../../../../api/pagopa";
 import {
   fetchPaymentManagerLongTimeout,
@@ -28,6 +27,7 @@ import {
 } from "../../../../store/reducers/persistedPreferences";
 import { SessionManager } from "../../../../utils/SessionManager";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
+import { PreferredLanguageEnum } from "../../../../../definitions/backend/identity/PreferredLanguage";
 import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
 import { createIDPayClient } from "../../common/api/client";
 import { createActionsImplementation } from "./actions";

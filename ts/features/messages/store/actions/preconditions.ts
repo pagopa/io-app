@@ -1,6 +1,6 @@
 import { createStandardAction } from "typesafe-actions";
-import { ThirdPartyMessagePrecondition } from "../../../../../definitions/backend/ThirdPartyMessagePrecondition";
-import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
+import { ThirdPartyMessagePrecondition } from "../../../../../definitions/backend/communication/ThirdPartyMessagePrecondition";
+import { MessageCategory } from "../../../../../definitions/backend/communication/MessageCategory";
 
 // NPS stands for Next Precondition Status
 export type NPSError = {

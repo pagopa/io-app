@@ -3,8 +3,6 @@ import * as E from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeEvery } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { UserDataProcessingChoiceEnum } from "../../../../../definitions/backend/UserDataProcessingChoice";
-import { BackendClient } from "../../../../api/backend";
 import {
   deleteUserDataProcessing,
   loadUserDataProcessing,
@@ -13,6 +11,8 @@ import {
 import { SagaCallReturnType } from "../../../../types/utils";
 import { convertUnknownToError, getError } from "../../../../utils/errors";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { IDBackendClient } from "../../../../api/BackendClientManager";
+import { UserDataProcessingChoiceEnum } from "../../../../../definitions/backend/identity/UserDataProcessingChoice";
 
 /**
  * The following logic:
@@ -20,9 +20,7 @@ import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils
  * - sumbits a new request if the state is ClOSED or if this is the first request
  */
 export function* loadUserDataProcessingSaga(
-  getUserDataProcessingRequest: ReturnType<
-    typeof BackendClient
-  >["getUserDataProcessingRequest"],
+  getUserDataProcessingRequest: IDBackendClient["getUserDataProcessing"],
   action: ActionType<(typeof loadUserDataProcessing)["request"]>
 ): SagaIterator {
   const choice = action.payload;
@@ -30,6 +28,7 @@ export function* loadUserDataProcessingSaga(
     const response = (yield* call(
       withRefreshApiCall,
       getUserDataProcessingRequest({
+        Bearer: "",
         choice
       }),
       action
@@ -66,9 +65,7 @@ export function* loadUserDataProcessingSaga(
 }
 
 export function* upsertUserDataProcessingSaga(
-  postUserDataProcessingRequest: ReturnType<
-    typeof BackendClient
-  >["postUserDataProcessingRequest"],
+  postUserDataProcessingRequest: IDBackendClient["upsertUserDataProcessing"],
   action: ActionType<(typeof upsertUserDataProcessing)["request"]>
 ): SagaIterator {
   const choice = action.payload;
@@ -76,6 +73,7 @@ export function* upsertUserDataProcessingSaga(
     const response = (yield* call(
       withRefreshApiCall,
       postUserDataProcessingRequest({
+        Bearer: "",
         body: { choice }
       }),
       action
@@ -104,9 +102,7 @@ export function* upsertUserDataProcessingSaga(
 }
 
 export function* deleteUserDataProcessingSaga(
-  deleteUserDataProcessingRequest: ReturnType<
-    typeof BackendClient
-  >["deleteUserDataProcessingRequest"],
+  deleteUserDataProcessingRequest: IDBackendClient["abortUserDataProcessing"],
   action: ActionType<(typeof deleteUserDataProcessing)["request"]>
 ): SagaIterator {
   const choice = action.payload;
@@ -115,6 +111,7 @@ export function* deleteUserDataProcessingSaga(
     const response = (yield* call(
       withRefreshApiCall,
       deleteUserDataProcessingRequest({
+        Bearer: "",
         choice
       }),
       action
@@ -155,15 +152,9 @@ export function* deleteUserDataProcessingSaga(
  * Listen for requests related to the user data processing (profile deletion or profile-related data downloading)
  */
 export function* watchUserDataProcessingSaga(
-  getUserDataProcessingRequest: ReturnType<
-    typeof BackendClient
-  >["getUserDataProcessingRequest"],
-  postUserDataProcessingRequest: ReturnType<
-    typeof BackendClient
-  >["postUserDataProcessingRequest"],
-  deleteUserDataProcessingRequest: ReturnType<
-    typeof BackendClient
-  >["deleteUserDataProcessingRequest"]
+  getUserDataProcessingRequest: IDBackendClient["getUserDataProcessing"],
+  postUserDataProcessingRequest: IDBackendClient["upsertUserDataProcessing"],
+  deleteUserDataProcessingRequest: IDBackendClient["abortUserDataProcessing"]
 ): SagaIterator {
   yield* takeEvery(
     loadUserDataProcessing.request,

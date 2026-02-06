@@ -5,11 +5,11 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { MessageBodyMarkdown } from "../../../../../../definitions/backend/MessageBodyMarkdown";
-import { MessageSubject } from "../../../../../../definitions/backend/MessageSubject";
 import { ThirdPartyMessage } from "../../../../../../definitions/pn/aar/ThirdPartyMessage";
 import { AARFlowState, AARFlowStateName } from "../../utils/stateUtils";
 import { MandateCreationResponse } from "../../../../../../definitions/pn/aar/MandateCreationResponse";
+import { MessageBodyMarkdown } from "../../../../../../definitions/backend/communication/MessageBodyMarkdown";
+import { MessageSubject } from "../../../../../../definitions/backend/communication/MessageSubject";
 
 export type EphemeralAarMessageDataActionPayload = {
   iun: NonEmptyString;

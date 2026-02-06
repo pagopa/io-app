@@ -1,16 +1,16 @@
 import { IOButton } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { MessageDetailsAttachmentItem } from "../../messages/components/MessageDetail/MessageDetailsAttachmentItem";
 import { trackPNShowF24 } from "../analytics";
 import { useIODispatch } from "../../../store/hooks";
 import { cancelPreviousAttachmentDownload } from "../../messages/store/actions";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import {
   SendOpeningSource,
   SendUserType
 } from "../../pushNotifications/analytics";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
+import { ThirdPartyAttachment } from "../../../../definitions/backend/communication/ThirdPartyAttachment";
 
 export type F24ListBottomSheetLinkProps = {
   f24List: ReadonlyArray<ThirdPartyAttachment>;

@@ -8,11 +8,6 @@ import {
 } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import I18n from "i18next";
-import { MessageStatusArchivingChange } from "../../../../definitions/backend/MessageStatusArchivingChange";
-import { MessageStatusBulkChange } from "../../../../definitions/backend/MessageStatusBulkChange";
-import { MessageStatusChange } from "../../../../definitions/backend/MessageStatusChange";
-import { MessageStatusReadingChange } from "../../../../definitions/backend/MessageStatusReadingChange";
-import { BackendClient } from "../../../api/backend";
 import {
   upsertMessageStatusAttributes,
   UpsertMessageStatusAttributesPayload
@@ -38,8 +33,15 @@ import { nextQueuedMessageDataUncachedSelector } from "../store/reducers/archivi
 import { paginatedMessageFromIdForCategorySelector } from "../store/reducers/allPaginated";
 import { MessageListCategory } from "../types/messageListCategory";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
-import { backendClientManager } from "../../../api/BackendClientManager";
+import {
+  backendClientManager,
+  ComBackendClient
+} from "../../../api/BackendClientManager";
 import { apiUrlPrefix } from "../../../config";
+import { MessageStatusChange } from "../../../../definitions/backend/communication/MessageStatusChange";
+import { MessageStatusArchivingChange } from "../../../../definitions/backend/communication/MessageStatusArchivingChange";
+import { MessageStatusReadingChange } from "../../../../definitions/backend/communication/MessageStatusReadingChange";
+import { MessageStatusBulkChange } from "../../../../definitions/backend/communication/MessageStatusBulkChange";
 
 /**
  * @throws invalid payload
@@ -194,7 +196,10 @@ export function* raceUpsertMessageStatusAttributes(
   }
 
   const { upsertMessageStatusAttributes: putMessage } =
-    backendClientManager.getBackendClient(apiUrlPrefix, sessionToken);
+    backendClientManager.getCommunicationBackendClient(
+      apiUrlPrefix,
+      sessionToken
+    );
 
   yield* race({
     task: call(handleUpsertMessageStatusAttributes, putMessage, action),
@@ -203,14 +208,14 @@ export function* raceUpsertMessageStatusAttributes(
 }
 
 export function* handleUpsertMessageStatusAttributes(
-  putMessage: BackendClient["upsertMessageStatusAttributes"],
+  putMessage: ComBackendClient["upsertMessageStatusAttributes"],
   action: ActionType<typeof upsertMessageStatusAttributes.request>
 ) {
   try {
     const body = validatePayload(action.payload);
     const response = (yield* call(
       withRefreshApiCall,
-      putMessage({ id: action.payload.message.id, body }),
+      putMessage({ Bearer: "", id: action.payload.message.id, body }),
       action
     )) as SagaCallReturnType<typeof putMessage>;
 

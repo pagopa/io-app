@@ -13,12 +13,12 @@ import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useRef } from "react";
 import { ScrollView } from "react-native";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { MessageDetailsAttachments } from "../../messages/components/MessageDetail/MessageDetailsAttachments";
 import { MessageDetailsHeader } from "../../messages/components/MessageDetail/MessageDetailsHeader";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
+import { ThirdPartyAttachment } from "../../../../definitions/backend/communication/ThirdPartyAttachment";
 import { PNMessage } from "../store/types/types";
 import {
   maxVisiblePaymentCount,

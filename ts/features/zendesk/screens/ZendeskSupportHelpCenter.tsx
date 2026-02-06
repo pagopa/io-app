@@ -25,7 +25,7 @@ import {
 } from "react";
 import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
-import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
+
 import IOMarkdown from "../../../components/IOMarkdown";
 import {
   IOScrollView,
@@ -87,6 +87,7 @@ import {
   ZendeskTokenStatusEnum
 } from "../store/reducers";
 import { handleContactSupport } from "../utils";
+import { InitializedProfile } from "../../../../definitions/backend/identity/InitializedProfile";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,

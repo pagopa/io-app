@@ -2,7 +2,6 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { SagaIterator } from "redux-saga";
 import { fork, select } from "typed-redux-saga/macro";
-import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import {
   idPayApiBaseUrl,
   idPayApiUatBaseUrl,
@@ -24,6 +23,7 @@ import { watchIDPayInitiativeConfigurationSaga } from "../../configuration/saga"
 import { watchIDPayBarcodeSaga } from "../../barcode/saga";
 import { watchIdPayUnsubscriptionSaga } from "../../unsubscription/saga";
 import { isIdPayCiePaymentCodeEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { PreferredLanguageEnum } from "../../../../../definitions/backend/identity/PreferredLanguage";
 
 export function* watchIDPaySaga(bpdToken: string): SagaIterator {
   const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);

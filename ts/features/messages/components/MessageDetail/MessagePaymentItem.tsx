@@ -34,7 +34,7 @@ import {
 import { initializeAndNavigateToWalletForPayment } from "../../utils";
 import { getBadgeTextByPaymentNoticeStatus } from "../../utils/strings";
 import { formatPaymentNoticeNumber } from "../../../payments/common/utils";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { trackPNPaymentStart } from "../../../pn/analytics";
 import { formatAndValidateDueDate } from "../../../payments/checkout/utils";
 import {

@@ -6,7 +6,6 @@ import {
 } from "../store/actions";
 import { SagaCallReturnType } from "../../../types/utils";
 import { toUIMessage } from "../store/reducers/transformers";
-import { PaginatedPublicMessagesCollection } from "../../../../definitions/backend/PaginatedPublicMessagesCollection";
 import { getError } from "../../../utils/errors";
 import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { errorToReason, unknownToReason } from "../utils";
@@ -19,6 +18,7 @@ import { handleResponse } from "../utils/responseHandling";
 import { backendClientManager } from "../../../api/BackendClientManager";
 import { apiUrlPrefix } from "../../../config";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { PaginatedPublicMessagesCollection } from "../../../../definitions/backend/communication/PaginatedPublicMessagesCollection";
 
 export function* handleReloadAllMessages(
   action: ActionType<typeof reloadAllMessages.request>
@@ -34,21 +34,23 @@ export function* handleReloadAllMessages(
     return;
   }
 
-  const { getMessages } = backendClientManager.getBackendClient(
-    apiUrlPrefix,
-    sessionToken
-  );
+  const { getUserMessages } =
+    backendClientManager.getCommunicationBackendClient(
+      apiUrlPrefix,
+      sessionToken
+    );
 
   try {
-    const response: SagaCallReturnType<typeof getMessages> = (yield* call(
+    const response: SagaCallReturnType<typeof getUserMessages> = (yield* call(
       withRefreshApiCall,
-      getMessages({
+      getUserMessages({
+        Bearer: "",
         enrich_result_data: true,
         page_size: pageSize,
         archived: filter.getArchived
       }),
       action
-    )) as unknown as SagaCallReturnType<typeof getMessages>;
+    )) as unknown as SagaCallReturnType<typeof getUserMessages>;
     const nextAction = handleResponse<PaginatedPublicMessagesCollection>(
       response,
       ({ items, next, prev }: PaginatedPublicMessagesCollection) =>

@@ -9,7 +9,6 @@ import I18n from "i18next";
 import { isEqual } from "lodash";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { AccessibilityInfo, View } from "react-native";
-import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
@@ -41,6 +40,7 @@ import {
 import { setIsBlockingScreen, setOfflineAccessReason } from "../store/actions";
 import { OfflineAccessReasonEnum } from "../store/reducer";
 import { checkSessionErrorSelector } from "../store/selectors";
+import { InitializedProfile } from "../../../../definitions/backend/identity/InitializedProfile";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (25 * 1000) as Millisecond;

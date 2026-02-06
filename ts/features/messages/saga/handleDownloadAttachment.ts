@@ -19,7 +19,6 @@ import {
   cancelPreviousAttachmentDownload,
   downloadAttachment
 } from "../store/actions";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import {
   trackThirdPartyMessageAttachmentBadFormat,
   trackThirdPartyMessageAttachmentDownloadFailed,
@@ -39,6 +38,7 @@ import { isEphemeralAARThirdPartyMessage } from "../utils/thirdPartyById";
 import { downloadAARAttachmentSaga } from "../../pn/aar/saga/downloadAARAttachmentSaga";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 import { getKeyInfo } from "../../lollipop/saga";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { handleRequestInit } from "./handleRequestInit";
 
 /**

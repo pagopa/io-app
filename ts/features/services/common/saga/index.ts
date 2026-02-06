@@ -8,13 +8,13 @@ import { watchSearchSaga } from "../../search/saga";
 import { createServicesClient } from "../api/servicesClient";
 import { watchServicesDetailsSaga } from "../../details/saga";
 import { watchFavouriteServicesSaga } from "../../favouriteServices/saga";
-import { BackendClient } from "../../../../api/backend";
+import { IDBackendClient } from "../../../../api/BackendClientManager";
 import { loadServicePreference } from "../../details/store/actions/preference";
 import { isFavouriteServicesEnabledSelector } from "../store/selectors/remoteConfig";
 import { specialServicePreferencesSaga } from "./specialServicePreferencesSaga";
 
 export function* watchServicesSaga(
-  backendClient: BackendClient,
+  backendClient: IDBackendClient,
   bearerToken: SessionToken
 ): SagaIterator {
   const servicesClient = yield* call(

@@ -6,7 +6,6 @@ import { SagaIterator } from "redux-saga";
 import { call, put, select, takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 import { GetSessionStateT } from "../../../../../definitions/session_manager/requestTypes";
-import { BackendClient } from "../../../../api/backend";
 import {
   checkCurrentSession,
   sessionInformationLoadSuccess
@@ -17,9 +16,10 @@ import { convertUnknownToError } from "../../../../utils/errors";
 import { handleSessionExpiredSaga } from "../../fastLogin/saga/utils";
 import { getOnlyNotAlreadyExistentValues } from "../../../zendesk/utils";
 import { sessionInfoSelector } from "../store/selectors";
+import { SMBackendClient } from "../../../../api/BackendClientManager";
 
 export function* checkSession(
-  getSessionValidity: ReturnType<typeof BackendClient>["getSession"],
+  getSessionValidity: SMBackendClient["getSessionState"],
   fields?: string, // the `fields` parameter is optional and it defaults to an empty object
   mergeOldAndNewValues: boolean = false
 ): Generator<
@@ -30,7 +30,7 @@ export function* checkSession(
   try {
     const response: SagaCallReturnType<typeof getSessionValidity> = yield* call(
       getSessionValidity,
-      { fields } // Pass the optional params
+      { Bearer: "", fields } // Pass the optional params
     );
     if (E.isLeft(response)) {
       throw Error(readableReport(response.left));
@@ -77,7 +77,7 @@ export function* checkSessionResult(
 
 // Saga that listen to check session dispatch and returns it's validity
 export function* watchCheckSessionSaga(
-  getSessionValidity: ReturnType<typeof BackendClient>["getSession"],
+  getSessionValidity: SMBackendClient["getSessionState"],
   fields?: string
 ): SagaIterator {
   yield* takeLatest(getType(checkCurrentSession.request), function* () {

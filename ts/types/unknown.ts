@@ -1,6 +1,5 @@
 import { AmountInEuroCents } from "@pagopa/io-pagopa-commons/lib/pagopa";
 
-import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
 import { TypeEnum } from "../../definitions/pagopa/Wallet";
 import {
   CreditCardCVC,
@@ -11,22 +10,8 @@ import {
 import { Amount, Wallet } from "./pagopa";
 
 const UNKNOWN_STRING = "?";
-const UNKNOWN_EMPTY_STRING = "";
 const UNKNOWN_NUMBER = -1;
 const UNKNOWN_DATE = new Date("?");
-
-export const UNKNOWN_RECIPIENT: EnteBeneficiario = {
-  identificativoUnivocoBeneficiario: UNKNOWN_EMPTY_STRING,
-  denominazioneBeneficiario: UNKNOWN_EMPTY_STRING,
-  codiceUnitOperBeneficiario: UNKNOWN_EMPTY_STRING,
-  denomUnitOperBeneficiario: UNKNOWN_EMPTY_STRING,
-  indirizzoBeneficiario: UNKNOWN_EMPTY_STRING,
-  civicoBeneficiario: UNKNOWN_EMPTY_STRING,
-  capBeneficiario: UNKNOWN_EMPTY_STRING,
-  localitaBeneficiario: UNKNOWN_EMPTY_STRING,
-  provinciaBeneficiario: UNKNOWN_EMPTY_STRING,
-  nazioneBeneficiario: UNKNOWN_EMPTY_STRING
-};
 
 const UNKNOWN_CARD_PAN = "****************" as CreditCardPan;
 const UNKNOWN_CARD_HOLDER = "NO HOLDER";

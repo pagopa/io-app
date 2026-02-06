@@ -1,4 +1,3 @@
-import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
@@ -9,6 +8,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { FlowType, buildEventProperties } from "../../../../utils/analytics";
 import { SETTINGS_ROUTES } from "../navigation/routes";
 import { ColorModeChoice } from "../../../../hooks/useAppThemeConfiguration";
+import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/identity/ServicesPreferencesMode";
 
 export async function trackProfileLoadSuccess(state: GlobalState) {
   await updateMixpanelSuperProperties(state);

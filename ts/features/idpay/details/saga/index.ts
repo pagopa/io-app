@@ -1,6 +1,5 @@
 import { SagaIterator } from "redux-saga";
 import { takeLatest } from "typed-redux-saga/macro";
-import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { IDPayClient } from "../../common/api/client";
 import {
   idPayBeneficiaryDetailsGet,
@@ -8,6 +7,7 @@ import {
   idpayInitiativeGet,
   idpayTimelinePageGet
 } from "../store/actions";
+import { PreferredLanguageEnum } from "../../../../../definitions/backend/identity/PreferredLanguage";
 import { handleGetBeneficiaryDetails } from "./handleGetBeneficiaryDetails";
 import { handleGetInitiativeDetails } from "./handleGetInitiativeDetails";
 import { handleGetOnboardingStatus } from "./handleGetOnboardingStatus";

@@ -1,7 +1,7 @@
 import { CommonActions, StackActions } from "@react-navigation/native";
 import { call, put, select, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
+import { InitializedProfile } from "../../../../definitions/backend/identity/InitializedProfile";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
 import NavigationService from "../../../navigation/NavigationService";

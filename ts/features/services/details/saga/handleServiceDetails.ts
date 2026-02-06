@@ -1,13 +1,13 @@
 import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { PathTraversalSafePathParam } from "../../../../../definitions/backend/PathTraversalSafePathParam";
-import { ServicesClient } from "../../common/api/servicesClient";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { convertUnknownToError } from "../../../../utils/errors";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { loadServiceDetail } from "../store/actions/details";
 import { readablePrivacyReport } from "../../../../utils/reporters";
+import { SEBackendClient } from "../../../../api/BackendClientManager";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 
 /**
  * saga to handle the loading of a service detail
@@ -15,11 +15,11 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
  * @param action
  */
 export function* handleServiceDetails(
-  getServiceById: ServicesClient["getServiceById"],
+  getServiceById: SEBackendClient["getServiceById"],
   action: ActionType<typeof loadServiceDetail.request>
 ) {
   try {
-    if (!PathTraversalSafePathParam.is(action.payload)) {
+    if (!ServiceId.is(action.payload)) {
       yield* put(
         loadServiceDetail.failure({
           service_id: action.payload,
@@ -34,6 +34,7 @@ export function* handleServiceDetails(
     const response = (yield* call(
       withRefreshApiCall,
       getServiceById({
+        Bearer: "",
         serviceId: action.payload
       }),
       action

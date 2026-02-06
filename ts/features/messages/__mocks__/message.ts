@@ -1,8 +1,8 @@
-import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { FiscalCode } from "../../../../definitions/backend/FiscalCode";
-import { PaymentDataWithRequiredPayee } from "../../../../definitions/backend/PaymentDataWithRequiredPayee";
 import { UIMessageDetails } from "../types";
 import { toUIMessageDetails } from "../store/reducers/transformers";
+import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/communication/CreatedMessageWithContentAndAttachments";
+import { FiscalCode } from "../../../../definitions/backend/identity/FiscalCode";
+import { PaymentDataWithRequiredPayee } from "../../../../definitions/backend/communication/PaymentDataWithRequiredPayee";
 import { service_1 } from "./messages";
 
 export const messageId_1 = "FAT00001";

@@ -1,6 +1,5 @@
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { loadMessageDetails } from "../store/actions";
 import { SagaCallReturnType } from "../../../types/utils";
 import { getError } from "../../../utils/errors";
@@ -16,6 +15,7 @@ import { handleResponse } from "../utils/responseHandling";
 import { backendClientManager } from "../../../api/BackendClientManager";
 import { apiUrlPrefix } from "../../../config";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/communication/CreatedMessageWithContentAndAttachments";
 
 export function* handleLoadMessageDetails(
   action: ActionType<typeof loadMessageDetails.request>
@@ -29,7 +29,7 @@ export function* handleLoadMessageDetails(
     return;
   }
 
-  const { getMessage } = backendClientManager.getBackendClient(
+  const { getUserMessage } = backendClientManager.getCommunicationBackendClient(
     apiUrlPrefix,
     sessionToken
   );
@@ -37,9 +37,9 @@ export function* handleLoadMessageDetails(
   try {
     const response = (yield* call(
       withRefreshApiCall,
-      getMessage({ id }),
+      getUserMessage({ Bearer: "", id }),
       action
-    )) as unknown as SagaCallReturnType<typeof getMessage>;
+    )) as unknown as SagaCallReturnType<typeof getUserMessage>;
     const nextAction = handleResponse<CreatedMessageWithContentAndAttachments>(
       response,
       (message: CreatedMessageWithContentAndAttachments) =>

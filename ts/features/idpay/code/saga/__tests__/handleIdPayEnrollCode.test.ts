@@ -1,12 +1,13 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
-import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
+
 import { getGenericError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { idPayEnrollCode } from "../../store/actions";
 import { handleIdPayEnrollCode } from "../handleIdPayEnrollCode";
+import { PreferredLanguageEnum } from "../../../../../../definitions/backend/identity/PreferredLanguage";
 
 const tInitiativeId = "123abc";
 const tBearerToken = "12345678";

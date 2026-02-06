@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { ContentWrapper, useIOToast } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { PushNotificationsContentTypeEnum } from "../../../../../definitions/backend/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../../../definitions/backend/ReminderStatus";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { profileUpsert } from "../../common/store/actions";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -20,6 +18,8 @@ import {
   trackNotificationsPreferencesPreviewStatus,
   trackNotificationsPreferencesReminderStatus
 } from "../../common/analytics";
+import { PushNotificationsContentTypeEnum } from "../../../../../definitions/backend/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "../../../../../definitions/backend/identity/ReminderStatus";
 
 export const NotificationsPreferencesScreen = () => {
   const dispatch = useIODispatch();

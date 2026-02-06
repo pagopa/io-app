@@ -8,10 +8,9 @@ import {
   sessionInformationLoadFailure,
   sessionInformationLoadSuccess
 } from "../store/actions";
-
-import { BackendClient } from "../../../../api/backend";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
 import { convertUnknownToError } from "../../../../utils/errors";
+import { SMBackendClient } from "../../../../api/BackendClientManager";
 
 /**
  * Load session info from the Backend
@@ -21,7 +20,7 @@ import { convertUnknownToError } from "../../../../utils/errors";
  *        a saga.
  */
 export function* loadSessionInformationSaga(
-  getSession: ReturnType<typeof BackendClient>["getSession"],
+  getSession: SMBackendClient["getSessionState"],
   fields?: string
 ): Generator<
   ReduxSagaEffect,
@@ -30,7 +29,7 @@ export function* loadSessionInformationSaga(
 > {
   try {
     // Call the Backend service
-    const response = yield* call(getSession, { fields });
+    const response = yield* call(getSession, { Bearer: "", fields });
     // Ko we got an error
     if (E.isLeft(response)) {
       throw readableReport(response.left);

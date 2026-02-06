@@ -4,7 +4,6 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { fromPromise } from "xstate";
 import { TransientError } from "@pagopa/ts-commons/lib/tasks";
-import { PreferredLanguage } from "../../../../../definitions/backend/PreferredLanguage";
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
 import { CodeEnum as OnboardingErrorCodeEnum } from "../../../../../definitions/idpay/OnboardingErrorDTO";
 import { OnboardingInitiativeDTO } from "../../../../../definitions/idpay/OnboardingInitiativeDTO";
@@ -17,6 +16,7 @@ import {
 } from "../types/OnboardingFailure";
 import * as Context from "./context";
 import { getBooleanSelfDeclarationListFromContext } from "./selectors";
+import { PreferredLanguage } from "../../../../../definitions/backend/identity/PreferredLanguage";
 
 /**
  * Checks if the error is a 429 Too Many Requests error that exhausted retries.

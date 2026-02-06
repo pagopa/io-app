@@ -10,7 +10,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ComponentProps, useCallback, useEffect, useMemo } from "react";
 import { AccessibilityInfo } from "react-native";
 import I18n from "i18next";
-import { UserDataProcessingChoiceEnum } from "../../../../../definitions/backend/UserDataProcessingChoice";
 import { BulletList, BulletListItem } from "../../../../components/BulletList";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -21,6 +20,7 @@ import { userDataProcessingSelector } from "../../common/store/selectors/userDat
 import { usePrevious } from "../../../../utils/hooks/usePrevious";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import { isScreenReaderEnabledSelector } from "../../../../store/reducers/preferences";
+import { UserDataProcessingChoiceEnum } from "../../../../../definitions/backend/identity/UserDataProcessingChoice";
 
 /**
  * A screen to explain how profile data export works.

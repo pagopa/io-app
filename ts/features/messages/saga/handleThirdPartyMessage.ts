@@ -19,8 +19,6 @@ import {
 import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../types/utils";
 import { unknownToReason } from "../utils";
-import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
-import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
 import { serviceDetailsByIdSelector } from "../../services/details/store/selectors";
 import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
 import { thirdPartyKind } from "../types/thirdPartyById";
@@ -29,6 +27,8 @@ import { apiUrlPrefix } from "../../../config";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 import { isTestEnv } from "../../../utils/environment";
 import { getKeyInfo } from "../../lollipop/saga";
+import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/communication/ThirdPartyMessageWithContent";
+import { TagEnum } from "../../../../definitions/backend/communication/MessageCategoryPN";
 
 export function* handleThirdPartyMessage(
   action: ActionType<typeof loadThirdPartyMessage.request>
@@ -46,11 +46,12 @@ export function* handleThirdPartyMessage(
 
   const keyInfo = yield* call(getKeyInfo);
 
-  const { getThirdPartyMessage } = backendClientManager.getBackendClient(
-    apiUrlPrefix,
-    sessionToken,
-    keyInfo
-  );
+  const { getThirdPartyMessage } =
+    backendClientManager.getCommunicationBackendClient(
+      apiUrlPrefix,
+      sessionToken,
+      keyInfo
+    );
 
   // This method is called by `handleLoadMessageData` saga, which makes
   // sure that the service details are properly retrieved and loaded
@@ -64,12 +65,12 @@ export function* handleThirdPartyMessage(
     tag
   );
 
-  const getThirdPartyMessageRequest = getThirdPartyMessage();
+  const getThirdPartyMessageRequest = getThirdPartyMessage;
 
   try {
     const result = (yield* call(
       withRefreshApiCall,
-      getThirdPartyMessageRequest({ id }),
+      getThirdPartyMessageRequest({ Bearer: "", id }),
       action
     )) as unknown as SagaCallReturnType<typeof getThirdPartyMessageRequest>;
     if (E.isLeft(result)) {

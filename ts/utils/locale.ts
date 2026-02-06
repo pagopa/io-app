@@ -2,7 +2,6 @@ import * as AR from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import { PreferredLanguageEnum } from "../../definitions/backend/PreferredLanguage";
 import { Locales } from "../../locales/locales";
 import {
   availableTranslations,
@@ -12,6 +11,7 @@ import {
   LocalizedMessageKeys
 } from "../i18n";
 import { LanguageEnum } from "../../definitions/pagopa/ecommerce/RequestAuthorizationRequest";
+import { PreferredLanguageEnum } from "../../definitions/backend/identity/PreferredLanguage";
 /**
  * Helpers for handling locales
  */

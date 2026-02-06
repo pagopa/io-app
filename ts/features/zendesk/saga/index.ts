@@ -21,7 +21,7 @@ import { zendeskGetSessionPollingRunningSelector } from "../store/reducers";
 import { startTimer } from "../../../utils/timer";
 import { checkSession } from "../../../features/authentication/common/saga/watchCheckSessionSaga";
 import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
-import { BackendClient } from "../../../api/backend";
+import { SMBackendClient } from "../../../api/BackendClientManager";
 import { SagaCallReturnType } from "../../../types/utils";
 import {
   formatRequestedTokenString,
@@ -40,7 +40,7 @@ const ZENDESK_GET_SESSION_POLLING_INTERVAL = ((isDevEnv ? 10 : 60) *
   1000) as Millisecond;
 
 function* zendeskGetSessionPollingLoop(
-  getSession: ReturnType<typeof BackendClient>["getSession"]
+  getSession: SMBackendClient["getSessionState"]
 ) {
   // eslint-disable-next-line functional/no-let
   let zendeskPollingIsRunning = true;
@@ -66,7 +66,7 @@ function* zendeskGetSessionPollingLoop(
 }
 
 export function* watchZendeskGetSessionSaga(
-  getSession: ReturnType<typeof BackendClient>["getSession"]
+  getSession: SMBackendClient["getSessionState"]
 ) {
   const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
   if (isFastLoginEnabled) {
@@ -109,9 +109,7 @@ export function* watchZendeskSupportSaga() {
  * @param getSession is the API call to get the session tokens.
  * The goal of this saga is to take Zendesk token from the BE in order to properly report to support.
  */
-function* getZendeskTokenSaga(
-  getSession: ReturnType<typeof BackendClient>["getSession"]
-) {
+function* getZendeskTokenSaga(getSession: SMBackendClient["getSessionState"]) {
   try {
     // Define the fields needed for the token request, in this case, the needed field is only 'zendeskToken'
     const fields = formatRequestedTokenString(false, ["zendeskToken"]);
@@ -119,7 +117,7 @@ function* getZendeskTokenSaga(
 
     const response = (yield* call(
       withRefreshApiCall,
-      getSession({ fields }),
+      getSession({ Bearer: "", fields }),
       getZendeskToken.request()
     )) as SagaCallReturnType<typeof getSession>;
 
@@ -148,7 +146,7 @@ function* getZendeskTokenSaga(
 }
 
 export function* watchGetZendeskTokenSaga(
-  getSession: ReturnType<typeof BackendClient>["getSession"]
+  getSession: SMBackendClient["getSessionState"]
 ) {
   yield* takeLatest(getZendeskToken.request, getZendeskTokenSaga, getSession);
 }

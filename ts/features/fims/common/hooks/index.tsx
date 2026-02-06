@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo } from "react";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+
 import {
   useIODispatch,
   useIOSelector,
@@ -24,6 +24,7 @@ import {
   fimsServiceIdInCookieDisabledListSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../store/reducers/types";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 
 export type FIMSServiceData = {
   organizationFiscalCode?: string;

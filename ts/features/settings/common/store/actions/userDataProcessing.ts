@@ -3,8 +3,8 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { UserDataProcessing } from "../../../../../../definitions/backend/UserDataProcessing";
-import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/UserDataProcessingChoice";
+import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/identity/UserDataProcessingChoice";
+import { UserDataProcessing } from "../../../../../../definitions/backend/identity/UserDataProcessing";
 
 export const loadUserDataProcessing = createAsyncAction(
   "LOAD_USER_DATA_PROCESSING_REQUEST",

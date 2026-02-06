@@ -4,14 +4,14 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { UIMessage, UIMessageDetails } from "../../types";
 import { MessageListCategory } from "../../types/messageListCategory";
 import { ThirdPartyMessageUnion } from "../../types/thirdPartyById";
 import { MessageGetStatusFailurePhaseType } from "../reducers/messageGetStatus";
 import { MessagePaymentError } from "../../types/paymentErrors";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/communication/ThirdPartyAttachment";
+import { PaymentInfoResponse } from "../../../../../definitions/backend/communication/PaymentInfoResponse";
 import {
   interruptMessageArchivingProcessingAction,
   removeScheduledMessageArchivingAction,

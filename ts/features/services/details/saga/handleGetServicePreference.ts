@@ -1,7 +1,6 @@
 import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { BackendClient } from "../../../../api/backend";
 import { loadServicePreference } from "../store/actions/preference";
 import { ServicePreferenceResponseFailure } from "../types/ServicePreferenceResponse";
 import { SagaCallReturnType } from "../../../../types/utils";
@@ -9,6 +8,7 @@ import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { tryLoadSENDPreferences } from "../../../pn/store/sagas/watchPnSaga";
+import { IDBackendClient } from "../../../../api/BackendClientManager";
 
 export const mapKinds: Record<
   number,
@@ -25,14 +25,14 @@ export const mapKinds: Record<
  * @param action
  */
 export function* handleGetServicePreference(
-  getServicePreference: BackendClient["getServicePreference"],
+  getServicePreference: IDBackendClient["getServicePreferences"],
   action: ActionType<typeof loadServicePreference.request>
 ) {
   try {
     const response: SagaCallReturnType<typeof getServicePreference> =
       (yield* call(
         withRefreshApiCall,
-        getServicePreference({ service_id: action.payload }),
+        getServicePreference({ Bearer: "", service_id: action.payload }),
         action
       )) as unknown as SagaCallReturnType<typeof getServicePreference>;
 

@@ -2,8 +2,8 @@ import { useIOToast } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import RNFS from "react-native-fs";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
+import { ThirdPartyAttachment } from "../../../../definitions/backend/communication/ThirdPartyAttachment";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import { MESSAGES_ROUTES } from "../navigation/routes";
 import {

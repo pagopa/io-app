@@ -1,7 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { UserDataProcessing } from "../../../../../../definitions/backend/UserDataProcessing";
-import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/UserDataProcessingChoice";
 import { computedProp } from "../../../../../types/utils";
 import { clearCache } from "../actions";
 import { Action } from "../../../../../store/actions/types";
@@ -12,6 +10,8 @@ import {
   resetUserDataProcessingRequest,
   upsertUserDataProcessing
 } from "../actions/userDataProcessing";
+import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/identity/UserDataProcessingChoice";
+import { UserDataProcessing } from "../../../../../../definitions/backend/identity/UserDataProcessing";
 
 export type UserDataProcessingState = {
   [key in keyof typeof UserDataProcessingChoiceEnum]: pot.Pot<

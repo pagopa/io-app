@@ -2,10 +2,10 @@ import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useSpecialCtaCgn } from "../../../bonus/cgn/hooks/useSpecialCtaCgn";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { getServiceActionsProps } from "../utils";
 import { ServiceDetailsScreenBase } from "../types";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 
 export type ServiceDetailsScreenCgnProps = ServiceDetailsScreenBase & {
   serviceId: ServiceId;

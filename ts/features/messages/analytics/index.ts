@@ -1,8 +1,6 @@
 import * as t from "io-ts";
 import * as S from "fp-ts/lib/string";
 import { getType } from "typesafe-actions";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
 import {
   enqueueMixpanelEvent,
   isMixpanelInstanceInitialized,
@@ -28,6 +26,8 @@ import {
   shownMessageCategorySelector
 } from "../store/reducers/allPaginated";
 import { pageSize } from "../../../config";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
+import { MessageCategory } from "../../../../definitions/backend/communication/MessageCategory";
 
 export const trackMessagesActionsPostDispatch = (
   action: Action,

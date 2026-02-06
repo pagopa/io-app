@@ -2,8 +2,6 @@ import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
 import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import { call, put, select } from "typed-redux-saga/macro";
-import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageBodyMarkdown";
-import { MessageSubject } from "../../../../../definitions/backend/MessageSubject";
 import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../types/SessionToken";
@@ -28,6 +26,8 @@ import {
   trackSendAARFailure
 } from "../analytics";
 import { unknownToReason } from "../../../messages/utils";
+import { MessageBodyMarkdown } from "../../../../../definitions/backend/communication/MessageBodyMarkdown";
+import { MessageSubject } from "../../../../../definitions/backend/communication/MessageSubject";
 
 const sendAARFailurePhase: SendAARFailurePhase = "Fetch Notification";
 

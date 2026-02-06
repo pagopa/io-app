@@ -15,8 +15,6 @@ import {
 } from "react";
 import { Alert, AlertButton, FlatList, ListRenderItemInfo } from "react-native";
 import I18n from "i18next";
-import { UserDataProcessingChoiceEnum } from "../../../../../definitions/backend/UserDataProcessingChoice";
-import { UserDataProcessingStatusEnum } from "../../../../../definitions/backend/UserDataProcessingStatus";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
@@ -30,6 +28,8 @@ import { userDataProcessingSelector } from "../../common/store/selectors/userDat
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../../../utils/hooks/usePrevious";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
+import { UserDataProcessingChoiceEnum } from "../../../../../definitions/backend/identity/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "../../../../../definitions/backend/identity/UserDataProcessingStatus";
 
 type Props = {
   navigation: IOStackNavigationProp<SettingsParamsList, "PROFILE_PRIVACY_MAIN">;

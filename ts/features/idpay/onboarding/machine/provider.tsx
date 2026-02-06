@@ -3,7 +3,6 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 
 import { ReactNode } from "react";
-import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import {
   idPayApiBaseUrl,
   idPayApiUatBaseUrl,
@@ -23,6 +22,7 @@ import { createIDPayClient } from "../../common/api/client";
 import { createActionsImplementation } from "./actions";
 import { createActorsImplementation } from "./actors";
 import { idPayOnboardingMachine } from "./machine";
+import { PreferredLanguageEnum } from "../../../../../definitions/backend/identity/PreferredLanguage";
 
 type Props = {
   children: ReactNode;

@@ -1,7 +1,6 @@
 import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import { useState } from "react";
 import I18n from "i18next";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -11,6 +10,7 @@ import { usePnPreferencesFetcher } from "../../hooks/usePnPreferencesFetcher";
 import { pnActivationUpsert } from "../../store/actions";
 import { isLoadingPnActivationSelector } from "../../store/reducers/activation";
 import { PnBannerFlowComponents } from "../components/PnBannerFlowComponents";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 
 export const pnBannerFlowStateEnum = {
   FAILURE_DETAILS_FETCH: "FAILURE_DETAILS_FETCH",

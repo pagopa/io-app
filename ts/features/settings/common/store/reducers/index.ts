@@ -5,7 +5,7 @@
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
+
 import {
   profileLoadFailure,
   profileLoadRequest,
@@ -18,6 +18,7 @@ import { ProfileError } from "../types";
 import { isProfileFirstOnBoarding } from "../utils/guards";
 import { isDevEnv } from "../../../../../utils/environment";
 import { loginSuccess } from "../../../../authentication/common/store/actions";
+import { InitializedProfile } from "../../../../../../definitions/backend/identity/InitializedProfile";
 
 export type ProfileState = pot.Pot<InitializedProfile, ProfileError>;
 

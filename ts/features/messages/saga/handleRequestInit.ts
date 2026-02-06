@@ -3,9 +3,9 @@ import { call } from "typed-redux-saga/macro";
 import { LollipopConfig } from "../../lollipop";
 import { lollipopRequestInit } from "../../lollipop/utils/fetch";
 import { isTestEnv } from "../../../utils/environment";
-import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { attachmentDownloadUrl } from "../utils/attachments";
 import { KeyInfo } from "../../lollipop/utils/crypto";
+import { ThirdPartyAttachment } from "../../../../definitions/backend/communication/ThirdPartyAttachment";
 
 type HeaderType = Record<string, string>;
 

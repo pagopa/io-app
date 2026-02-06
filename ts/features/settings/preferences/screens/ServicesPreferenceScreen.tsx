@@ -2,7 +2,6 @@ import { useIOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ReactElement, useCallback, useEffect } from "react";
 import I18n from "i18next";
-import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
 import { profileUpsert } from "../../common/store/actions";
 import {
   profileSelector,
@@ -25,6 +24,7 @@ import {
 } from "../../common/analytics";
 import { useManualConfigBottomSheet } from "../shared/hooks/useManualConfigBottomSheet";
 import ServicesContactComponent from "../shared/components/ServicesContactComponent";
+import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/identity/ServicesPreferencesMode";
 
 /**
  * Display the current profile services preference mode (auto or manual)

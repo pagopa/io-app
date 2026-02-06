@@ -1,4 +1,4 @@
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { GlobalState } from "../../../../store/reducers/types";
 import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";
 import { trackCTAPressed, trackPaymentStart } from "../../analytics";

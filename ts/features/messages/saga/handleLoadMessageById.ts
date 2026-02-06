@@ -3,7 +3,7 @@ import { ActionType } from "typesafe-actions";
 import { convertUnknownToError } from "../../../utils/errors";
 import { loadMessageById } from "../store/actions";
 import { toUIMessage } from "../store/reducers/transformers";
-import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+
 import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../types/utils";
 import { errorToReason, unknownToReason } from "../utils";
@@ -16,6 +16,7 @@ import { handleResponse } from "../utils/responseHandling";
 import { backendClientManager } from "../../../api/BackendClientManager";
 import { apiUrlPrefix } from "../../../config";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/communication/CreatedMessageWithContentAndAttachments";
 
 export function* handleLoadMessageById(
   action: ActionType<typeof loadMessageById.request>
@@ -29,7 +30,7 @@ export function* handleLoadMessageById(
     return;
   }
 
-  const { getMessage } = backendClientManager.getBackendClient(
+  const { getUserMessage } = backendClientManager.getCommunicationBackendClient(
     apiUrlPrefix,
     sessionToken
   );
@@ -37,12 +38,13 @@ export function* handleLoadMessageById(
   try {
     const response = (yield* call(
       withRefreshApiCall,
-      getMessage({
+      getUserMessage({
+        Bearer: ``,
         id,
         public_message: true
       }),
       action
-    )) as unknown as SagaCallReturnType<typeof getMessage>;
+    )) as unknown as SagaCallReturnType<typeof getUserMessage>;
     const nextAction = handleResponse(
       response,
       (message: CreatedMessageWithContentAndAttachments) =>

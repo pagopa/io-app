@@ -9,10 +9,7 @@ import { startApplicationInitialization } from "../../../../store/actions/applic
 import { SagaCallReturnType, ReduxSagaEffect } from "../../../../types/utils";
 import { convertUnknownToError } from "../../../../utils/errors";
 import { resetAssistanceData } from "../../../../utils/supportAssistance";
-import {
-  getKeyInfo,
-  deleteCurrentLollipopKeyAndGenerateNewKeyTag
-} from "../../../lollipop/saga";
+import { deleteCurrentLollipopKeyAndGenerateNewKeyTag } from "../../../lollipop/saga";
 import { trackLogoutSuccess, trackLogoutFailure } from "../../common/analytics";
 import { sessionCorrupted } from "../../common/store/actions";
 import { sessionTokenSelector } from "../../common/store/selectors";
@@ -32,7 +29,6 @@ export function* logoutUserAfterActiveSessionLoginSaga(
     | ActionType<typeof logoutBeforeSessionCorrupted>
 ) {
   const sessionToken = yield* select(sessionTokenSelector);
-  const keyInfo = yield* call(getKeyInfo);
 
   if (!sessionToken) {
     trackUndefinedBearerToken(
@@ -41,14 +37,15 @@ export function* logoutUserAfterActiveSessionLoginSaga(
     return;
   }
 
-  const { logout } = backendClientManager.getBackendClient(
+  const { logout } = backendClientManager.getSMBackendClient(
     apiUrlPrefix,
-    sessionToken,
-    keyInfo
+    sessionToken
   );
 
   try {
-    const response: SagaCallReturnType<typeof logout> = yield* call(logout, {});
+    const response: SagaCallReturnType<typeof logout> = yield* call(logout, {
+      Bearer: ""
+    });
     if (E.isRight(response)) {
       if (response.right.status === 200) {
         trackLogoutSuccess("reauth");

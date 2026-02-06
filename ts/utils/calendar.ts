@@ -6,7 +6,7 @@ import { identity, pipe } from "fp-ts/lib/function";
 import { Platform } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import I18n from "i18next";
-import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/communication/CreatedMessageWithContentAndAttachments";
 import { TranslationKeys } from "../../locales/locales";
 import { AddCalendarEventPayload } from "../store/actions/calendarEvents";
 import { CalendarEvent } from "../store/reducers/entities/calendarEvents/calendarEventsByMessageId";

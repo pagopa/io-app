@@ -3,7 +3,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import _ from "lodash";
 import { RefObject, useCallback, useEffect, useMemo, useRef } from "react";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import { useOfflineToastGuard } from "../../../hooks/useOfflineToastGuard";

@@ -6,10 +6,6 @@ import * as B from "fp-ts/lib/boolean";
 import { constUndefined, pipe } from "fp-ts/lib/function";
 import { call, delay, put, race, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
-import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
-import { RemoteContentDetails } from "../../../../definitions/backend/RemoteContentDetails";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
 import { isPnRemoteEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { isTestEnv } from "../../../utils/environment";
@@ -44,6 +40,10 @@ import {
   localizedCTAsFromFrontMatter
 } from "../utils/ctas";
 import { getServiceDetails } from "../../services/common/saga/getServiceDetails";
+import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/communication/ThirdPartyMessageWithContent";
+import { TagEnum } from "../../../../definitions/backend/communication/MessageCategoryPN";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
+import { RemoteContentDetails } from "../../../../definitions/backend/communication/RemoteContentDetails";
 
 export function* handleLoadMessageData(
   action: ActionType<typeof getMessageDataAction.request>

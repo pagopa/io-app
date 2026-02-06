@@ -24,7 +24,6 @@ import {
   reloadAllMessages,
   updatePaymentForMessage
 } from "../actions";
-import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
 import { isProfileEmailValidatedSelector } from "../../../settings/common/store/selectors";
 import { isPagoPaSupportedSelector } from "../../../../common/versionInfo/store/reducers/versionInfo";
 import {
@@ -43,6 +42,7 @@ import {
   isTimeoutOrGenericOrOngoingPaymentError,
   MessagePaymentError
 } from "../../types/paymentErrors";
+import { PaymentInfoResponse } from "../../../../../definitions/backend/communication/PaymentInfoResponse";
 import { messagePaymentDataSelector } from "./detailsById";
 
 export type MultiplePaymentState = {

@@ -4,13 +4,13 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { PathTraversalSafePathParam } from "../../../../../definitions/backend/PathTraversalSafePathParam";
-import { ServicePreference } from "../../../../../definitions/backend/ServicePreference";
-import { BackendClient } from "../../../../api/backend";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
+import { IDBackendClient } from "../../../../api/BackendClientManager";
 import { readablePrivacyReport } from "../../../../utils/reporters";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { ServicePreference } from "../../../../../definitions/backend/identity/ServicePreference";
 import { trackPNPushSettings } from "../../../pn/analytics";
 import { upsertServicePreference } from "../store/actions/preference";
 import { ServicePreferencePot } from "../store/reducers";
@@ -91,7 +91,7 @@ export function* trackPNPushNotificationSettings(
  * @param action
  */
 export function* handleUpsertServicePreference(
-  upsertServicePreferences: BackendClient["upsertServicePreference"],
+  upsertServicePreferences: IDBackendClient["upsertServicePreferences"],
   action: ActionType<typeof upsertServicePreference.request>
 ) {
   yield* call(trackPNPushNotificationSettings, action);
@@ -106,7 +106,7 @@ export function* handleUpsertServicePreference(
   );
 
   try {
-    if (!PathTraversalSafePathParam.is(action.payload.id)) {
+    if (!ServiceId.is(action.payload.id)) {
       yield* put(
         upsertServicePreference.failure({
           id: action.payload.id,
@@ -124,6 +124,7 @@ export function* handleUpsertServicePreference(
       (yield* call(
         withRefreshApiCall,
         upsertServicePreferences({
+          Bearer: "",
           service_id: action.payload.id,
           body: updatingPreference
         }),

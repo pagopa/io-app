@@ -9,13 +9,6 @@ import * as S from "fp-ts/lib/string";
 import { call, put, select, take, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import I18n from "i18next";
-import { AppVersion } from "../../../../../definitions/backend/AppVersion";
-import { ExtendedProfile } from "../../../../../definitions/backend/ExtendedProfile";
-import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
-import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
-import { UpdateProfile412ErrorTypesEnum } from "../../../../../definitions/backend/UpdateProfile412ErrorTypes";
-import { UserDataProcessingChoiceEnum } from "../../../../../definitions/backend/UserDataProcessingChoice";
-import { BackendClient } from "../../../../api/backend";
 import { cgnDetails } from "../../../bonus/cgn/store/actions/details";
 import { cgnDetailSelector } from "../../../bonus/cgn/store/reducers/details";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
@@ -53,10 +46,17 @@ import {
 } from "../../../../utils/locale";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { tosConfigSelector } from "../../../tos/store/selectors";
+import { IDBackendClient } from "../../../../api/BackendClientManager";
+import { InitializedProfile } from "../../../../../definitions/backend/identity/InitializedProfile";
+import { AppVersion } from "../../../../../definitions/backend/identity/AppVersion";
+import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/identity/ServicesPreferencesMode";
+import { UserDataProcessingChoiceEnum } from "../../../../../definitions/backend/identity/UserDataProcessingChoice";
+import { UpdateProfile412ErrorTypesEnum } from "../../../../../definitions/backend/identity/UpdateProfile412ErrorTypes";
+import { Profile } from "../../../../../definitions/backend/identity/Profile";
 
 // A saga to load the Profile.
 export function* loadProfile(
-  getProfile: ReturnType<typeof BackendClient>["getProfile"]
+  getProfile: IDBackendClient["getUserProfile"]
 ): Generator<
   ReduxSagaEffect,
   O.Option<InitializedProfile>,
@@ -65,7 +65,7 @@ export function* loadProfile(
   try {
     const response = (yield* call(
       withRefreshApiCall,
-      getProfile({})
+      getProfile({ Bearer: "" })
     )) as unknown as SagaCallReturnType<typeof getProfile>;
     // we got an error, throw it
     if (E.isLeft(response)) {
@@ -93,9 +93,7 @@ export function* loadProfile(
 // A saga to update the Profile.
 // eslint-disable-next-line sonarjs/cognitive-complexity
 function* createOrUpdateProfileSaga(
-  createOrUpdateProfile: ReturnType<
-    typeof BackendClient
-  >["createOrUpdateProfile"],
+  createOrUpdateProfile: IDBackendClient["updateProfile"],
   action: ActionType<(typeof profileUpsert)["request"]>
 ): Generator<ReduxSagaEffect, void, any> {
   // Get the current Profile from the state
@@ -131,14 +129,12 @@ function* createOrUpdateProfileSaga(
   // If we already have a profile, merge it with the new updated attributes
   // or else, create a new profile from the provided object
   // FIXME: perhaps this is responsibility of the caller?
-  const newProfile: ExtendedProfile = currentProfile.has_profile
+  const newProfile: Profile = currentProfile.has_profile
     ? {
         service_preferences_settings:
           currentProfile.service_preferences_settings,
         is_inbox_enabled: currentProfile.is_inbox_enabled,
         is_webhook_enabled: currentProfile.is_webhook_enabled,
-        is_email_validated: currentProfile.is_email_validated || false,
-        is_email_already_taken: !!currentProfile.is_email_already_taken,
         is_email_enabled: currentProfile.is_email_enabled,
         version: currentProfile.version,
         email: currentProfile.email,
@@ -158,9 +154,7 @@ function* createOrUpdateProfileSaga(
         },
         is_inbox_enabled: false,
         is_webhook_enabled: false,
-        is_email_validated: action.payload.is_email_validated || false,
         is_email_enabled: action.payload.is_email_enabled || false,
-        is_email_already_taken: !!currentProfile.is_email_already_taken,
         last_app_version: currentProfile.last_app_version ?? appVersion,
         ...action.payload,
         accepted_tos_version: tosVersion,
@@ -170,6 +164,7 @@ function* createOrUpdateProfileSaga(
     const response = (yield* call(
       withRefreshApiCall,
       createOrUpdateProfile({
+        Bearer: "",
         body: newProfile
       }),
       { skipThrowingError: true }
@@ -272,9 +267,7 @@ function* handleProfileChangesSaga(
 
 // This function listens for Profile upsert requests and calls the needed saga.
 export function* watchProfileUpsertRequestsSaga(
-  createOrUpdateProfile: ReturnType<
-    typeof BackendClient
-  >["createOrUpdateProfile"]
+  createOrUpdateProfile: IDBackendClient["updateProfile"]
 ): Iterator<ReduxSagaEffect> {
   yield* takeLatest(
     getType(profileUpsert.request),
@@ -287,7 +280,7 @@ export function* watchProfileUpsertRequestsSaga(
 
 // This function listens for Profile refresh requests and calls the needed saga.
 export function* watchProfileRefreshRequestsSaga(
-  getProfile: ReturnType<typeof BackendClient>["getProfile"]
+  getProfile: IDBackendClient["getUserProfile"]
 ): Iterator<ReduxSagaEffect> {
   yield* takeLatest(getType(profileLoadRequest), loadProfile, getProfile);
 }
@@ -295,9 +288,7 @@ export function* watchProfileRefreshRequestsSaga(
 // make a request to start the email validation process that sends to the user
 // an email with a link to validate it
 function* startEmailValidationProcessSaga(
-  startEmailValidationProcess: ReturnType<
-    typeof BackendClient
-  >["startEmailValidationProcess"]
+  startEmailValidationProcess: IDBackendClient["startEmailValidationProcess"]
 ): Generator<
   ReduxSagaEffect,
   void,
@@ -306,7 +297,7 @@ function* startEmailValidationProcessSaga(
   try {
     const response = (yield* call(
       withRefreshApiCall,
-      startEmailValidationProcess({})
+      startEmailValidationProcess({ Bearer: "" })
     )) as unknown as SagaCallReturnType<typeof startEmailValidationProcess>;
     // we got an error, throw it
     if (E.isLeft(response)) {
@@ -416,9 +407,7 @@ function* checkLoadedProfile(
 
 // watch for some actions about profile
 export function* watchProfile(
-  startEmailValidationProcess: ReturnType<
-    typeof BackendClient
-  >["startEmailValidationProcess"]
+  startEmailValidationProcess: IDBackendClient["startEmailValidationProcess"]
 ): Iterator<ReduxSagaEffect> {
   // user requests to send again the email validation to profile email
   yield* takeLatest(

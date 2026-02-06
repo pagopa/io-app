@@ -8,9 +8,9 @@ import { isServiceDetailNavigationLink } from "../../../utils/internalLink";
 import { GlobalState } from "../../../store/reducers/types";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { TimelineStatus } from "../components/Timeline";
 import { SendOpeningSource } from "../../pushNotifications/analytics";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 
 export const maxVisiblePaymentCount = 5;
 

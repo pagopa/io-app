@@ -3,7 +3,6 @@ import { isLeft } from "fp-ts/lib/Either";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { call, cancelled, delay, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { apiUrlPrefix, fetchTimeout } from "../../../../config";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../types/SessionToken";
@@ -23,6 +22,7 @@ import {
   trackSendAARFailure
 } from "../analytics";
 import { createSendAARClientWithLollipop } from "../api/client";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/communication/ThirdPartyAttachment";
 
 const fastLoginType = "FAST_LOGIN_EXPIRED";
 const fastLoginError = Error(fastLoginType);

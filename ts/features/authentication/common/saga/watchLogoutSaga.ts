@@ -3,10 +3,7 @@ import * as E from "fp-ts/lib/Either";
 
 import { call, put, takeLatest, select } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import {
-  deleteCurrentLollipopKeyAndGenerateNewKeyTag,
-  getKeyInfo
-} from "../../../lollipop/saga";
+import { deleteCurrentLollipopKeyAndGenerateNewKeyTag } from "../../../lollipop/saga";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import { logoutFailure, logoutRequest, logoutSuccess } from "../store/actions";
 import { startupLoadSuccess } from "../../../../store/actions/startup";
@@ -27,17 +24,15 @@ import { setMainNavigatorReady } from "../../../../navigation/NavigationService"
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export function* logoutSaga({ payload }: ActionType<typeof logoutRequest>) {
   const sessionToken = yield* select(bareSessionTokenSelector);
-  const keyInfo = yield* call(getKeyInfo);
 
   if (!sessionToken) {
     trackUndefinedBearerToken(UndefinedBearerTokenPhase.logoutStandard);
     return;
   }
 
-  const { logout } = backendClientManager.getBackendClient(
+  const { logout } = backendClientManager.getSMBackendClient(
     apiUrlPrefix,
-    sessionToken,
-    keyInfo
+    sessionToken
   );
 
   // Issue a logout request to the backend, asking to delete the session
@@ -45,10 +40,9 @@ export function* logoutSaga({ payload }: ActionType<typeof logoutRequest>) {
   //        block for a while.
   try {
     if (payload.withApiCall) {
-      const response: SagaCallReturnType<typeof logout> = yield* call(
-        logout,
-        {}
-      );
+      const response: SagaCallReturnType<typeof logout> = yield* call(logout, {
+        Bearer: ""
+      });
       if (E.isRight(response)) {
         if (response.right.status === 200) {
           yield* put(logoutSuccess());

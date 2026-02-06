@@ -8,11 +8,11 @@ import {
   isReady,
   RemoteValue
 } from "../../../../common/model/RemoteValue";
-import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import { getRptIdStringFromPayment } from "../../../pn/utils/rptId";
 import { SinglePaymentState } from "../../../messages/store/reducers/payments";
 import { MessagePaymentError } from "../../../messages/types/paymentErrors";
+import { PaymentInfoResponse } from "../../../../../definitions/backend/communication/PaymentInfoResponse";
 
 export const paymentsButtonStateSelector = (
   state: GlobalState,

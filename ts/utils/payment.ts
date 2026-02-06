@@ -3,7 +3,7 @@ import { ITuple2, Tuple2 } from "@pagopa/ts-commons/lib/tuples";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import { Detail_v2Enum } from "../../definitions/backend/PaymentProblemJson";
+import { PaymentFaultV2Enum } from "../../definitions/backend/communication/PaymentFaultV2";
 import { maybeNotNullyString } from "./strings";
 
 /**
@@ -75,7 +75,7 @@ export type ErrorTypes =
   | "NOT_FOUND"
   | "UNCOVERED";
 
-export type DetailV2Keys = keyof typeof Detail_v2Enum;
+export type DetailV2Keys = keyof typeof PaymentFaultV2Enum;
 
 /**
  * This function is used to convert the raw error code to the main error type.
@@ -120,13 +120,13 @@ export const getTransactionIUV = (
   return splitted.length > 1 ? O.some(splitted[1]) : O.none;
 };
 
-export const isPaidPaymentFromDetailV2Enum = (details: Detail_v2Enum) =>
-  details === Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO ||
-  details === Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO;
-export const isRevokedPaymentFromDetailV2Enum = (details: Detail_v2Enum) =>
-  details === Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO;
-export const isExpiredPaymentFromDetailV2Enum = (details: Detail_v2Enum) =>
-  details === Detail_v2Enum.PAA_PAGAMENTO_SCADUTO;
-export const isOngoingPaymentFromDetailV2Enum = (details: Detail_v2Enum) =>
-  details === Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO ||
-  details === Detail_v2Enum.PPT_PAGAMENTO_IN_CORSO;
+export const isPaidPaymentFromDetailV2Enum = (details: PaymentFaultV2Enum) =>
+  details === PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO ||
+  details === PaymentFaultV2Enum.PPT_PAGAMENTO_DUPLICATO;
+export const isRevokedPaymentFromDetailV2Enum = (details: PaymentFaultV2Enum) =>
+  details === PaymentFaultV2Enum.PAA_PAGAMENTO_ANNULLATO;
+export const isExpiredPaymentFromDetailV2Enum = (details: PaymentFaultV2Enum) =>
+  details === PaymentFaultV2Enum.PAA_PAGAMENTO_SCADUTO;
+export const isOngoingPaymentFromDetailV2Enum = (details: PaymentFaultV2Enum) =>
+  details === PaymentFaultV2Enum.PAA_PAGAMENTO_IN_CORSO ||
+  details === PaymentFaultV2Enum.PPT_PAGAMENTO_IN_CORSO;

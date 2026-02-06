@@ -11,8 +11,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "i18next";
-import { PushNotificationsContentTypeEnum } from "../../../../definitions/backend/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../../definitions/backend/ReminderStatus";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { OnboardingParamsList } from "../../onboarding/navigation/params/OnboardingParamsList";
 import { profileUpsert } from "../../settings/common/store/actions";
@@ -32,6 +30,8 @@ import {
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import { ProfileNotificationSettings } from "../components/ProfileNotificationsSettings";
+import { ReminderStatusEnum } from "../../../../definitions/backend/identity/ReminderStatus";
+import { PushNotificationsContentTypeEnum } from "../../../../definitions/backend/identity/PushNotificationsContentType";
 
 export type OnboardingNotificationsPreferencesScreenNavigationParams = {
   isFirstOnboarding: boolean;

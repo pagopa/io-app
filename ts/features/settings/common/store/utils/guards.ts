@@ -1,7 +1,7 @@
 import * as O from "fp-ts/lib/Option";
-import { EmailAddress } from "../../../../../../definitions/backend/EmailAddress";
-import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/ServicesPreferencesMode";
+import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/identity/ServicesPreferencesMode";
+import { InitializedProfile } from "../../../../../../definitions/backend/identity/InitializedProfile";
+import { EmailAddress } from "../../../../../../definitions/backend/identity/EmailAddress";
 
 // return true if the profile services preference mode is set (mode is set only when AUTO or MANUAL is the current mode)
 export const isServicesPreferenceModeSet = (

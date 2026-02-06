@@ -2,7 +2,6 @@ import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { call, put, race, select, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { BackendClient } from "../../../api/backend";
 import { convertUnknownToError } from "../../../utils/errors";
 import { isTestEnv } from "../../../utils/environment";
 import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
@@ -20,16 +19,19 @@ import {
   toErrorPayload,
   toLoadingContentPayload
 } from "../store/actions/preconditions";
-import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
 import {
   preconditionsCategoryTagSelector,
   preconditionsMessageIdSelector
 } from "../store/reducers/messagePrecondition";
 import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../store/reducers/backendStatus/remoteConfig";
-import { backendClientManager } from "../../../api/BackendClientManager";
+import {
+  backendClientManager,
+  ComBackendClient
+} from "../../../api/BackendClientManager";
 import { apiUrlPrefix } from "../../../config";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 import { getKeyInfo } from "../../lollipop/saga";
+import { MessageCategory } from "../../../../definitions/backend/communication/MessageCategory";
 
 export function* handleMessagePrecondition(
   action: ActionType<typeof retrievingDataPreconditionStatusAction>
@@ -46,12 +48,16 @@ export function* handleMessagePrecondition(
   const keyInfo = yield* call(getKeyInfo);
 
   const { getThirdPartyMessagePrecondition } =
-    backendClientManager.getBackendClient(apiUrlPrefix, sessionToken, keyInfo);
+    backendClientManager.getCommunicationBackendClient(
+      apiUrlPrefix,
+      sessionToken,
+      keyInfo
+    );
 
   yield* race({
     response: call(
       messagePreconditionWorker,
-      getThirdPartyMessagePrecondition(),
+      getThirdPartyMessagePrecondition,
       action
     ),
     cancel: take(idlePreconditionStatusAction)
@@ -59,9 +65,7 @@ export function* handleMessagePrecondition(
 }
 
 function* messagePreconditionWorker(
-  getThirdPartyMessagePrecondition: ReturnType<
-    BackendClient["getThirdPartyMessagePrecondition"]
-  >,
+  getThirdPartyMessagePrecondition: ComBackendClient["getThirdPartyMessagePrecondition"],
   action: ActionType<typeof retrievingDataPreconditionStatusAction>
 ) {
   const messageIdAndCategoryTag = yield* call(getMessageIdAndCategoryTag);
@@ -73,6 +77,7 @@ function* messagePreconditionWorker(
     const result = (yield* call(
       withRefreshApiCall,
       getThirdPartyMessagePrecondition({
+        Bearer: "",
         id: messageIdAndCategoryTag.messageId
       }),
       action

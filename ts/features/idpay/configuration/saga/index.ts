@@ -7,7 +7,6 @@ import {
   take,
   put
 } from "typed-redux-saga/macro";
-import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { IDPayClient } from "../../common/api/client";
 import {
   IdPayInitiativeInstrumentsGetPayloadType,
@@ -16,6 +15,7 @@ import {
   idpayInitiativeInstrumentDelete,
   idpayInitiativeInstrumentsGet
 } from "../store/actions";
+import { PreferredLanguageEnum } from "../../../../../definitions/backend/identity/PreferredLanguage";
 import {
   handleGetInitiativeInstruments,
   handleInitiativeInstrumentsRefresh

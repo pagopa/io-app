@@ -2,7 +2,6 @@ import { call, put, take } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { startApplicationInitialization } from "../../store/actions/application";
 import {
   profileFirstLogin,
@@ -13,6 +12,7 @@ import {
   isProfileFirstOnBoarding
 } from "../../features/settings/common/store/utils/guards";
 import { ReduxSagaEffect } from "../../types/utils";
+import { InitializedProfile } from "../../../definitions/backend/identity/InitializedProfile";
 
 function* enableProfileInboxWebhook() {
   yield* put(

@@ -12,7 +12,6 @@ import {
   take
 } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
-import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import { backendClientManager } from "../../../api/BackendClientManager";
 import { apiUrlPrefix } from "../../../config";
 import { Action } from "../../../store/actions/types";
@@ -38,6 +37,7 @@ import {
   toSpecificMessagePaymentError,
   toTimeoutMessagePaymentError
 } from "../types/paymentErrors";
+import { PaymentFaultV2Enum } from "../../../../definitions/backend/communication/PaymentFaultV2";
 
 const PaymentUpdateWorkerCount = 5;
 
@@ -117,9 +117,13 @@ function* updatePaymentInfo(
   }
 
   const { getPaymentInfoV2: getPaymentDataRequestFactory } =
-    backendClientManager.getBackendClient(apiUrlPrefix, sessionToken);
+    backendClientManager.getCommunicationBackendClient(
+      apiUrlPrefix,
+      sessionToken
+    );
 
   const getPaymentDataRequest = getPaymentDataRequestFactory({
+    Bearer: "",
     rptId: paymentId,
     test: isPagoPATestEnabled
   });
@@ -167,8 +171,8 @@ const unknownErrorToPaymentError = (e: unknown): MessagePaymentError => {
   if (lowerCaseReason === "max-retries" || lowerCaseReason === "aborted") {
     return toTimeoutMessagePaymentError();
   }
-  if (reason in Detail_v2Enum) {
-    return toSpecificMessagePaymentError(reason as Detail_v2Enum);
+  if (reason in PaymentFaultV2Enum) {
+    return toSpecificMessagePaymentError(reason as PaymentFaultV2Enum);
   }
   return toGenericMessagePaymentError(reason);
 };

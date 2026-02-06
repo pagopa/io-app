@@ -10,8 +10,8 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
 import { ProfileError } from "../types";
+import { InitializedProfile } from "../../../../../../definitions/backend/identity/InitializedProfile";
 
 export const resetProfileState = createStandardAction("RESET_PROFILE_STATE")();
 

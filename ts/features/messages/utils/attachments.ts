@@ -1,6 +1,6 @@
 import RNFS from "react-native-fs";
-import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { apiUrlPrefix } from "../../../config";
+import { ThirdPartyAttachment } from "../../../../definitions/backend/communication/ThirdPartyAttachment";
 
 export const AttachmentsDirectoryPath =
   RNFS.CachesDirectoryPath + "/attachments";

@@ -4,8 +4,6 @@ import { Predicate } from "fp-ts/lib/Predicate";
 import { identity, pipe } from "fp-ts/lib/function";
 import FM from "front-matter";
 import { Linking } from "react-native";
-import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ServiceMetadata } from "../../../../definitions/services/ServiceMetadata";
 import { Locales } from "../../../../locales/locales";
 import {
@@ -27,6 +25,8 @@ import {
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { isTestEnv } from "../../../utils/environment";
 import { isFIMSLink } from "../../fims/singleSignOn/utils";
+import { MessageBodyMarkdown } from "../../../../definitions/backend/communication/MessageBodyMarkdown";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 
 export type CTAActionType =
   | "io_handled_link"

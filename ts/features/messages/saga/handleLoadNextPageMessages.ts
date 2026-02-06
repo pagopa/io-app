@@ -1,6 +1,5 @@
 import { put, call, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { PaginatedPublicMessagesCollection } from "../../../../definitions/backend/PaginatedPublicMessagesCollection";
 import {
   loadNextPageMessages,
   loadNextPageMessages as loadNextPageMessagesAction
@@ -19,6 +18,7 @@ import { handleResponse } from "../utils/responseHandling";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 import { backendClientManager } from "../../../api/BackendClientManager";
 import { apiUrlPrefix } from "../../../config";
+import { PaginatedPublicMessagesCollection } from "../../../../definitions/backend/communication/PaginatedPublicMessagesCollection";
 
 export function* handleLoadNextPageMessages(
   action: ActionType<typeof loadNextPageMessages.request>
@@ -34,22 +34,24 @@ export function* handleLoadNextPageMessages(
     return;
   }
 
-  const { getMessages } = backendClientManager.getBackendClient(
-    apiUrlPrefix,
-    sessionToken
-  );
+  const { getUserMessages } =
+    backendClientManager.getCommunicationBackendClient(
+      apiUrlPrefix,
+      sessionToken
+    );
 
   try {
     const response = (yield* call(
       withRefreshApiCall,
-      getMessages({
+      getUserMessages({
+        Bearer: "",
         enrich_result_data: true,
         page_size: pageSize,
         maximum_id: cursor,
         archived: filter.getArchived
       }),
       action
-    )) as unknown as SagaCallReturnType<typeof getMessages>;
+    )) as unknown as SagaCallReturnType<typeof getUserMessages>;
     const nextAction = handleResponse<PaginatedPublicMessagesCollection>(
       response,
       ({ items, next }: PaginatedPublicMessagesCollection) =>

@@ -23,7 +23,6 @@ import I18n from "i18next";
 import { ComponentProps, useCallback, useLayoutEffect, useState } from "react";
 import { AccessibilityInfo, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
 import IOMarkdown from "../../../../components/IOMarkdown";
@@ -62,6 +61,7 @@ import { WalletPaymentStepEnum } from "../types";
 import { FaultCodeCategoryEnum as FaultCodeSlowdownCategoryEnum } from "../types/PaymentSlowdownErrorProblemJson";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 import { formatAndValidateDueDate } from "../utils";
+import { OrganizationFiscalCode } from "../../../../../definitions/services/OrganizationFiscalCode";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;

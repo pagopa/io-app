@@ -1,6 +1,6 @@
 import { isLeft } from "fp-ts/lib/Either";
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { ThirdPartyMessage } from "../../../../../definitions/pn/ThirdPartyMessage";
+import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/communication/ThirdPartyMessageWithContent";
 import { PNMessage } from "./types";
 
 export const toSENDMessage = (

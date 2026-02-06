@@ -1,5 +1,5 @@
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { GlobalState } from "../../../../store/reducers/types";
 import { buildEventProperties } from "../../../../utils/analytics";

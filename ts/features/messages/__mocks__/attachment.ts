@@ -1,6 +1,6 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { ATTACHMENT_CATEGORY } from "../types/attachmentCategory";
+import { ThirdPartyAttachment } from "../../../../definitions/backend/communication/ThirdPartyAttachment";
 
 export const mockPdfAttachment: ThirdPartyAttachment = {
   id: "1" as NonEmptyString,

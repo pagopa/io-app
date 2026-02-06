@@ -1,10 +1,10 @@
-import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
-import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
-import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
-import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { TimeToLiveSeconds } from "../../../../definitions/backend/TimeToLiveSeconds";
-import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
+import { MessageBodyMarkdown } from "../../../../definitions/backend/communication/MessageBodyMarkdown";
+import { MessageCategory } from "../../../../definitions/backend/communication/MessageCategory";
+import { OrganizationFiscalCode } from "../../../../definitions/backend/communication/OrganizationFiscalCode";
+import { PaymentAmount } from "../../../../definitions/backend/communication/PaymentAmount";
+import { PaymentNoticeNumber } from "../../../../definitions/backend/communication/PaymentNoticeNumber";
+import { TimeToLiveSeconds } from "../../../../definitions/backend/communication/TimeToLiveSeconds";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 /**
  * Domain-specific representation of a Message with aggregated data.
  */
