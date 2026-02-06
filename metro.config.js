@@ -26,7 +26,18 @@ const config = {
   },
   resolver: {
     sourceExts: [...sourceExts, "svg"],
-    assetExts: assetExts.filter(ext => ext !== "svg")
+    assetExts: assetExts.filter(ext => ext !== "svg"),
+
+    resolveRequest: (context, moduleName, platform) => {
+      if (moduleName === "crypto") {
+        return context.resolveRequest(
+          context,
+          "react-native-quick-crypto",
+          platform
+        );
+      }
+      return context.resolveRequest(context, moduleName, platform);
+    }
   }
 };
 

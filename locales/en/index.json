@@ -4400,7 +4400,7 @@
       "transactions": {
         "multiplePayment": "Pagamento multiplo",
         "title": "Ricevute pagoPA",
-        "button": "Mostra tutte",
+        "button": "Show all",
         "empty": {
           "title": "Qui vedrai le tue ricevute pagoPA",
           "content": "Paga un avviso in app o presso un qualsiasi canale abilitato a pagoPA."
@@ -4416,7 +4416,6 @@
           "loading": "We are hiding your receipt...",
           "title": "pagoPA Receipt",
           "shareButton": "Save or share",
-          "error": "Unable to retrieve the receipt.",
           "download": "Get receipt",
           "hideFromList": "Hide from list",
           "delete": {

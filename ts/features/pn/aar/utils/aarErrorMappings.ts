@@ -7,6 +7,10 @@ import {
   UnrelatedCieComponent
 } from "../components/errors/SendAarCieValidationErrorComponent";
 import { isTestEnv } from "../../../../utils/environment";
+import {
+  trackSendAarMandateCieExpiredError,
+  trackSendAarMandateCieNotRelatedToDelegatorError
+} from "../analytics";
 
 const cieErrors = [
   "PN_MANDATE_BADREQUEST",
@@ -46,6 +50,14 @@ export const getSendAarErrorComponent = (
     aarErrorMap.get(maybeErrorKey as SendAarErrorCodes) ??
     SendAarGenericErrorComponent
   );
+};
+
+export const aarProblemJsonErrorTrackingMap = {
+  CIE_EXPIRED_ERROR: trackSendAarMandateCieExpiredError,
+  CIE_NOT_RELATED_TO_DELEGATOR_ERROR:
+    trackSendAarMandateCieNotRelatedToDelegatorError
+} satisfies {
+  [K in SendAarErrorCodes]?: () => void;
 };
 
 export const testable = isTestEnv ? { aarErrorMap } : {};
