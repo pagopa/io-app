@@ -196,7 +196,7 @@ const getPid = async ({
       { credentialCryptoContext, ignoreMissingAttributes: true }
     );
 
-  const baseCredential = {
+  return {
     parsedCredential,
     issuerConf,
     keyTag: credentialKeyTag,
@@ -208,12 +208,8 @@ const getPid = async ({
       expiration: expiration.toISOString(),
       issuedAt: issuedAt?.toISOString()
     },
-    spec_version: WALLET_SPEC_VERSION
-  };
-
-  return {
-    ...baseCredential,
-    verification: extractVerification(baseCredential)
+    spec_version: WALLET_SPEC_VERSION,
+    verification: extractVerification({ format, credential, parsedCredential })
   };
 };
 
