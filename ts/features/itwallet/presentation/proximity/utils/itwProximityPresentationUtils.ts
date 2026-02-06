@@ -4,10 +4,7 @@ import {
   WellKnownClaim
 } from "../../../common/utils/itwClaimsUtils";
 import { WIA_KEYTAG } from "../../../common/utils/itwCryptoContextUtils";
-import {
-  CredentialBundle,
-  CredentialMetadata
-} from "../../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { TimeoutError, UntrustedRpError } from "./itwProximityErrors";
 import type {
   AcceptedFields,
@@ -40,7 +37,7 @@ export const promiseWithTimeout = <T>(
  */
 export const getProximityDetails = (
   request: VerifierRequest["request"],
-  credentialsByType: Record<string, CredentialMetadata | undefined>
+  credentialsByType: Record<string, CredentialMetadata>
 ): ProximityDetails => {
   // Exclude the WIA document type from the request
   const { [WIA_DOC_TYPE]: _, ...rest } = request;
@@ -88,26 +85,34 @@ export const getProximityDetails = (
  * @param wiaMdoc The WIA in mdoc format
  * @returns The requested documents
  */
-export const getDocuments = (
+export const getDocuments = async (
   request: VerifierRequest["request"],
-  credentialsByType: Record<string, CredentialBundle | undefined>,
-  wiaMdoc: string
-): Array<RequestedDocument> => {
+  credentials: Record<string, CredentialMetadata>,
+  wiaMdoc: string,
+  getCredential: (credentialId: string) => Promise<string | undefined>
+): Promise<Array<RequestedDocument>> => {
   // Exclude the WIA document type from the request
   const { [WIA_DOC_TYPE]: _, ...rest } = request;
 
-  const documents = Object.entries(rest).map(([docType]) => {
-    const credential = credentialsByType[docType];
+  const documents = await Promise.all(
+    Object.entries(rest).map(async ([docType]) => {
+      const credential = credentials[docType];
+      // This should be guaranteed by getProximityDetails having already validated credentials
+      assert(credential, `Credential not found for docType: ${docType}`);
 
-    // This should be guaranteed by getProximityDetails having already validated credentials
-    assert(credential, `Credential not found for docType: ${docType}`);
+      const signedContent = await getCredential(credential.credentialId);
+      assert(
+        signedContent,
+        `Credential not found in secure store for id: ${credential.credentialId}`
+      );
 
-    return {
-      alias: credential.metadata.keyTag,
-      docType,
-      issuerSignedContent: credential.credential
-    };
-  });
+      return {
+        alias: credential.keyTag,
+        docType,
+        issuerSignedContent: signedContent
+      };
+    })
+  );
 
   return [
     ...documents,

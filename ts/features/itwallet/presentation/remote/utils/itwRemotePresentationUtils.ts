@@ -139,7 +139,7 @@ export const groupCredentialsByPurpose = (
  */
 export const getInvalidCredentials = (
   presentationDetails: PresentationDetails,
-  credentialsByType: Record<string, CredentialMetadata | undefined>
+  credentialsByType: Record<string, CredentialMetadata>
 ) =>
   presentationDetails
     // Retries the type from the VCT map

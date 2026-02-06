@@ -398,14 +398,14 @@ describe("itwCredentialIssuanceMachine", () => {
       itwCredentialIssuanceMachine
     ).getSnapshot();
 
-    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+    const snapshot = _.merge(undefined, initialSnapshot, {
       value: "DisplayingCredentialPreview",
       context: {
         credentials: [
           { credential: "", metadata: ItwStoredCredentialsMocks.mdl }
         ]
       }
-    } as MachineSnapshot);
+    });
 
     const actor = createActor(mockedMachine, {
       snapshot

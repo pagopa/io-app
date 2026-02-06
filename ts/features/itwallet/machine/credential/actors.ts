@@ -154,7 +154,7 @@ export const createCredentialIssuanceActorsImplementation = (
   });
 
   const obtainStatusAssertion = fromPromise<
-    Array<CredentialBundle>,
+    ReadonlyArray<CredentialBundle>,
     ObtainStatusAssertionActorInput
   >(async ({ input }) => {
     assert(input.credentials, "credentials are undefined");

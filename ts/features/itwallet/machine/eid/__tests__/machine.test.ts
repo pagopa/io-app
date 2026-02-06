@@ -2,7 +2,6 @@
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
 import {
-  assign,
   createActor,
   fromPromise,
   StateFrom,
