@@ -67,6 +67,14 @@ const FciDocumentsScreen = () => {
   );
   const dispatch = useIODispatch();
   const isFocused = useIsFocused();
+  const [focusEpoch, setFocusEpoch] = useState(0);
+
+  useEffect(() => {
+    if (isFocused) {
+      // needed to re-trigger pdf load when opening the same document twice
+      setFocusEpoch(e => e + 1);
+    }
+  }, [isFocused]);
 
   useEffect(() => {
     if (documents.length !== 0 && isFocused) {
@@ -95,7 +103,7 @@ const FciDocumentsScreen = () => {
       setTotalPages(0);
       setCurrentPage(1);
     }
-  }, [currentDoc, downloadPath, isFocused]);
+  }, [isFocused]);
 
   useEffect(() => {
     // with a document opened, we can track the opening success event
@@ -177,7 +185,9 @@ const FciDocumentsScreen = () => {
      * onPageChanged, which is called to report that the first page
      * has loaded */
     <Pdf
-      key={`${documents[currentDoc]?.id ?? "doc"}:${downloadPath}`}
+      key={`${
+        documents[currentDoc]?.id ?? "doc"
+      }:${downloadPath}:${focusEpoch}`}
       ref={pdfRef}
       source={{
         uri: `${downloadPath}`
@@ -252,11 +262,11 @@ const FciDocumentsScreen = () => {
           currentPage,
           totalPages
         })}
-        iconLeftDisabled={currentPage === 1}
-        iconRightDisabled={currentPage === totalPages}
+        iconLeftDisabled={totalPages === 0 || currentPage === 1}
+        iconRightDisabled={currentPage >= totalPages}
         onPrevious={onPrevious}
         onNext={onNext}
-        disabled={totalPages === 0}
+        disabled={false}
         testID={"FciDocumentsNavBarTestID"}
       />
       <View style={{ flex: 1 }} testID={"FciDocumentsScreenTestID"}>
