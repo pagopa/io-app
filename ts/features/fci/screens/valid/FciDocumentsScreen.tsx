@@ -70,13 +70,6 @@ const FciDocumentsScreen = () => {
   const [focusEpoch, setFocusEpoch] = useState(0);
 
   useEffect(() => {
-    if (isFocused) {
-      // needed to re-trigger pdf load when opening the same document twice
-      setFocusEpoch(e => e + 1);
-    }
-  }, [isFocused]);
-
-  useEffect(() => {
     if (documents.length !== 0 && isFocused) {
       dispatch(fciDownloadPreview.request({ url: documents[currentDoc].url }));
     }
@@ -100,6 +93,9 @@ const FciDocumentsScreen = () => {
 
   useEffect(() => {
     if (isFocused) {
+      // needed to re-trigger pdf load when opening the same document twice
+      setFocusEpoch(e => e + 1);
+
       setTotalPages(0);
       setCurrentPage(1);
     }
@@ -262,8 +258,12 @@ const FciDocumentsScreen = () => {
           currentPage,
           totalPages
         })}
-        iconLeftDisabled={totalPages === 0 || currentPage === 1}
+        /**
+         * buttons have to be disabled when totalPages is not ready yet (zero value) OR
+         * when corresponding limit is reached
+         */
         iconRightDisabled={currentPage >= totalPages}
+        iconLeftDisabled={totalPages === 0 || currentPage === 1}
         onPrevious={onPrevious}
         onNext={onNext}
         disabled={false}
