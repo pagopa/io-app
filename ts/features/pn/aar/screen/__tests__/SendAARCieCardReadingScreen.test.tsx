@@ -5,13 +5,13 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import PN_ROUTES from "../../../navigation/routes";
+import * as AAR_SELECTORS from "../../store/selectors";
+import { AARFlowStateName, sendAARFlowStates } from "../../utils/stateUtils";
+import { sendAarMockStates } from "../../utils/testUtils";
 import {
   SendAARCieCardReadingScreen,
   SendAARCieCardReadingScreenProps
 } from "../SendAARCieCardReadingScreen";
-import * as AAR_SELECTORS from "../../store/selectors";
-import { sendAarMockStates } from "../../utils/testUtils";
-import { sendAARFlowStates } from "../../utils/stateUtils";
 
 const mockReplace = jest.fn();
 const mockShouldNeverCall = jest.fn();
@@ -33,18 +33,40 @@ describe("SendAARCieCardReadingScreen", () => {
 
   sendAarMockStates.forEach(aarState => {
     const { type } = aarState;
-    const shouldNavigate =
-      type === sendAARFlowStates.ko ||
-      type === sendAARFlowStates.displayingNotificationData;
+    const shouldNavigate = (
+      [
+        sendAARFlowStates.ko,
+        sendAARFlowStates.displayingNotificationData,
+        sendAARFlowStates.cieCanAdvisory,
+        sendAARFlowStates.cieScanningAdvisory
+      ] as Array<AARFlowStateName>
+    ).includes(type);
+    const shouldNavigateBack = (
+      [
+        sendAARFlowStates.cieCanAdvisory,
+        sendAARFlowStates.cieScanningAdvisory
+      ] as Array<AARFlowStateName>
+    ).includes(type);
 
-    it(`${
-      shouldNavigate ? "should" : "should not"
-    } call "replace", and never call any non-replace actions when type is: "${type}"`, () => {
+    it(`${shouldNavigate ? "should" : "should not"} call "replace"${
+      shouldNavigateBack ? ' with "pop" as animation parameter' : ""
+    } and never call any non-replace actions when type is: "${type}"`, () => {
       jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
       renderComponent();
 
       if (shouldNavigate) {
         expect(mockReplace).toHaveBeenCalledTimes(1);
+        if (shouldNavigateBack) {
+          const replaceParams = mockReplace.mock.calls[0][1] as Record<
+            string,
+            unknown
+          >;
+          const hasAnimationTypeForReplace =
+            "animationTypeForReplace" in replaceParams;
+          expect(hasAnimationTypeForReplace).toBe(true);
+          const animationTypeForReplace = replaceParams.animationTypeForReplace;
+          expect(animationTypeForReplace).toBe("pop");
+        }
       } else {
         expect(mockReplace).not.toHaveBeenCalled();
       }
