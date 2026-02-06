@@ -8,6 +8,13 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { currentAARFlowData } from "../store/selectors";
 import { sendAARFlowStates } from "../utils/stateUtils";
 import { setAarFlowState } from "../store/actions";
+import {
+  trackSendAarMandateCieNfcActivationContinue,
+  trackSendAarMandateCieNfcActivationControlAlert,
+  trackSendAarMandateCieNfcActivationControlAlertClosure,
+  trackSendAarMandateCieNfcActivationControlAlertGoToSettings,
+  trackSendAarMandateCieNfcGoToSettings
+} from "../analytics";
 
 export const SendAarActivateNfcComponent = () => {
   const dispatch = useIODispatch();
@@ -15,9 +22,12 @@ export const SendAarActivateNfcComponent = () => {
   const { isNfcEnabled, openNFCSettings } = useIsNfcFeatureEnabled();
 
   const onContinue = useCallback(async () => {
+    trackSendAarMandateCieNfcActivationContinue();
     const isEnabled = await isNfcEnabled();
 
     if (!isEnabled) {
+      trackSendAarMandateCieNfcActivationControlAlert();
+
       Alert.alert(
         i18n.t(
           "features.pn.aar.flow.androidNfcActivation.alertOnContinue.title"
@@ -26,13 +36,17 @@ export const SendAarActivateNfcComponent = () => {
         [
           {
             text: i18n.t("global.buttons.close"),
-            style: "cancel"
+            style: "cancel",
+            onPress: trackSendAarMandateCieNfcActivationControlAlertClosure
           },
           {
             text: i18n.t(
               "features.pn.aar.flow.androidNfcActivation.alertOnContinue.confirm"
             ),
-            onPress: openNFCSettings
+            onPress: () => {
+              trackSendAarMandateCieNfcActivationControlAlertGoToSettings();
+              openNFCSettings();
+            }
           }
         ]
       );
@@ -93,7 +107,10 @@ export const SendAarActivateNfcComponent = () => {
           label: i18n.t(
             "features.pn.aar.flow.androidNfcActivation.primaryAction"
           ),
-          onPress: openNFCSettings
+          onPress: () => {
+            trackSendAarMandateCieNfcGoToSettings();
+            openNFCSettings();
+          }
         },
         secondary: {
           testID: "secondaryActionID",

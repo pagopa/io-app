@@ -67,7 +67,8 @@ const ReceiptListScreen = () => {
       params: {
         transactionId: transaction.eventId,
         isPayer: transaction.isPayer,
-        isCart: transaction.isCart
+        isCart: transaction.isCart,
+        isDebtor: transaction.isDebtor
       }
     });
   };
