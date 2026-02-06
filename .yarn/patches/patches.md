@@ -97,3 +97,15 @@ Created on **15/01/2026**
 #### Reason:
 
 - Patch to fix RefreshControl issues on Fabric enablement
+
+
+### react-native-reanimated-npm-4.2.1-8be3b216b9.patch
+
+Created on **04/02/2026**
+
+#### Reason:
+
+- **Temporary patch** until Reanimated 4.2.2 is released. Backports the fix from [PR #8881](https://github.com/software-mansion/react-native-reanimated/pull/8881)
+- Prevents `nativeID` from being assigned to animated components during Jest tests, avoiding unstable snapshots with random IDs
+- This restores the behavior from Reanimated v3 where `nativeID` remained `undefined` in test environments
+- **Remove this patch** once Reanimated 4.2.2+ is released and upgrade to that version

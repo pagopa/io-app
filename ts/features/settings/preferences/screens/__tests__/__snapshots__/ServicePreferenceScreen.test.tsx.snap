@@ -231,6 +231,16 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                               ]
                             }
                             decelerationRate="normal"
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {},
+                              }
+                            }
                             onScroll={[Function]}
                             scrollEventThrottle={8}
                             snapToEnd={false}
@@ -368,6 +378,31 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                   testID="RadioItemTestID_AUTO"
                                 >
                                   <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "backgroundColor": "rgba(244, 245, 248, 0)",
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "marginHorizontal": -24,
+                                          "paddingHorizontal": 24,
+                                          "paddingVertical": 12,
+                                        },
+                                        {
+                                          "opacity": 1,
+                                        },
+                                      ]
+                                    }
                                     needsOffscreenAlphaCompositing={true}
                                     style={
                                       [
@@ -377,7 +412,7 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                           "paddingVertical": 12,
                                         },
                                         {
-                                          "backgroundColor": undefined,
+                                          "backgroundColor": "rgba(244, 245, 248, 0)",
                                         },
                                         {
                                           "opacity": 1,
@@ -386,14 +421,34 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                     }
                                   >
                                     <View
-                                      style={
+                                      collapsable={false}
+                                      jestAnimatedProps={
                                         {
-                                          "transform": [
-                                            {
-                                              "scale": undefined,
-                                            },
-                                          ],
+                                          "value": {},
                                         }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {
+                                            "transform": [
+                                              {
+                                                "scale": 1,
+                                              },
+                                            ],
+                                          },
+                                        }
+                                      }
+                                      jestInlineStyle={{}}
+                                      style={
+                                        [
+                                          {
+                                            "transform": [
+                                              {
+                                                "scale": 1,
+                                              },
+                                            ],
+                                          },
+                                        ]
                                       }
                                     >
                                       <View
@@ -509,6 +564,41 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                               }
                                             />
                                             <View
+                                              collapsable={false}
+                                              jestAnimatedProps={
+                                                {
+                                                  "value": {},
+                                                }
+                                              }
+                                              jestAnimatedStyle={
+                                                {
+                                                  "value": {
+                                                    "opacity": 0,
+                                                    "transform": [
+                                                      {
+                                                        "scale": 0.5,
+                                                      },
+                                                    ],
+                                                  },
+                                                }
+                                              }
+                                              jestInlineStyle={
+                                                [
+                                                  {
+                                                    "left": 0,
+                                                    "position": "absolute",
+                                                    "top": 0,
+                                                  },
+                                                  {
+                                                    "borderRadius": 18,
+                                                    "height": 36,
+                                                    "width": 36,
+                                                  },
+                                                  {
+                                                    "backgroundColor": "#0B3EE3",
+                                                  },
+                                                ]
+                                              }
                                               style={
                                                 [
                                                   {
@@ -528,7 +618,7 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                                     "opacity": 0,
                                                     "transform": [
                                                       {
-                                                        "scale": undefined,
+                                                        "scale": 0.5,
                                                       },
                                                     ],
                                                   },
@@ -653,6 +743,31 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                   testID="RadioItemTestID_MANUAL"
                                 >
                                   <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "backgroundColor": "rgba(244, 245, 248, 0)",
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "marginHorizontal": -24,
+                                          "paddingHorizontal": 24,
+                                          "paddingVertical": 12,
+                                        },
+                                        {
+                                          "opacity": 1,
+                                        },
+                                      ]
+                                    }
                                     needsOffscreenAlphaCompositing={true}
                                     style={
                                       [
@@ -662,7 +777,7 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                           "paddingVertical": 12,
                                         },
                                         {
-                                          "backgroundColor": undefined,
+                                          "backgroundColor": "rgba(244, 245, 248, 0)",
                                         },
                                         {
                                           "opacity": 1,
@@ -671,14 +786,34 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                     }
                                   >
                                     <View
-                                      style={
+                                      collapsable={false}
+                                      jestAnimatedProps={
                                         {
-                                          "transform": [
-                                            {
-                                              "scale": undefined,
-                                            },
-                                          ],
+                                          "value": {},
                                         }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {
+                                            "transform": [
+                                              {
+                                                "scale": 1,
+                                              },
+                                            ],
+                                          },
+                                        }
+                                      }
+                                      jestInlineStyle={{}}
+                                      style={
+                                        [
+                                          {
+                                            "transform": [
+                                              {
+                                                "scale": 1,
+                                              },
+                                            ],
+                                          },
+                                        ]
                                       }
                                     >
                                       <View
@@ -794,6 +929,41 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                               }
                                             />
                                             <View
+                                              collapsable={false}
+                                              jestAnimatedProps={
+                                                {
+                                                  "value": {},
+                                                }
+                                              }
+                                              jestAnimatedStyle={
+                                                {
+                                                  "value": {
+                                                    "opacity": 0,
+                                                    "transform": [
+                                                      {
+                                                        "scale": 0.5,
+                                                      },
+                                                    ],
+                                                  },
+                                                }
+                                              }
+                                              jestInlineStyle={
+                                                [
+                                                  {
+                                                    "left": 0,
+                                                    "position": "absolute",
+                                                    "top": 0,
+                                                  },
+                                                  {
+                                                    "borderRadius": 18,
+                                                    "height": 36,
+                                                    "width": 36,
+                                                  },
+                                                  {
+                                                    "backgroundColor": "#0B3EE3",
+                                                  },
+                                                ]
+                                              }
                                               style={
                                                 [
                                                   {
@@ -813,7 +983,7 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                                     "opacity": 0,
                                                     "transform": [
                                                       {
-                                                        "scale": undefined,
+                                                        "scale": 0.5,
                                                       },
                                                     ],
                                                   },
@@ -874,6 +1044,29 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                       >
                         <View
                           accessibilityRole="header"
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(255, 255, 255, 1)",
+                                "borderColor": "rgba(210, 214, 227, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "borderBottomWidth": 1,
+                                "borderColor": "rgba(210,214,227,0)",
+                              },
+                              {},
+                            ]
+                          }
                           style={
                             [
                               {
@@ -882,13 +1075,38 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                               },
                               {},
                               {
-                                "backgroundColor": undefined,
-                                "borderColor": undefined,
+                                "backgroundColor": "rgba(255, 255, 255, 1)",
+                                "borderColor": "rgba(210, 214, 227, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "marginTop": 0,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "flexGrow": 1,
+                                  "height": 56,
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 24,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -940,6 +1158,35 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                               onStartShouldSetResponder={[Function]}
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "height": 24,
+                                      "width": 24,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -950,7 +1197,13 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                       "height": 24,
                                       "width": 24,
                                     },
-                                    false,
+                                    {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
                                   ]
                                 }
                               >
@@ -959,17 +1212,25 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                   accessibilityLabel=""
                                   accessible={false}
                                   align="xMidYMid"
-                                  animatedProps={
-                                    {
-                                      "color": undefined,
-                                    }
-                                  }
                                   bbHeight={36}
                                   bbWidth={36}
+                                  collapsable={false}
                                   color="#0E0F13"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {
+                                        "color": "rgba(14, 15, 19, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
@@ -1035,6 +1296,27 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                               <Text
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "opacity": 0,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "color": "#0E0F13",
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
@@ -1054,7 +1336,7 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                         "textAlign": "center",
                                       },
                                       {
-                                        "opacity": undefined,
+                                        "opacity": 0,
                                       },
                                     ],
                                   ]
@@ -1108,6 +1390,35 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -1118,7 +1429,13 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                         "height": 24,
                                         "width": 24,
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                     ]
                                   }
                                 >
@@ -1127,17 +1444,25 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    animatedProps={
-                                      {
-                                        "color": undefined,
-                                      }
-                                    }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    collapsable={false}
                                     color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {
+                                          "color": "rgba(14, 15, 19, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}

@@ -68,6 +68,7 @@ const mockToastHideAll = jest.fn();
 
 jest.mock("@pagopa/io-app-design-system", () => ({
   ...jest.requireActual("@pagopa/io-app-design-system"),
+  LoadingSpinner: jest.fn(),
   useIOToast: () => ({
     show: (_message: string, _options?: unknown) => jest.fn(),
     error: jest.fn(),

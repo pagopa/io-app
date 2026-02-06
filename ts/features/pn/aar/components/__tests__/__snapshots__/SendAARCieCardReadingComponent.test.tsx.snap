@@ -119,7 +119,29 @@ exports[`SendAARCieCardReadingComponent SendAARCieCardReadingComponent: ReadStat
   >
     <View
       accessibilityElementsHidden={true}
+      collapsable={false}
       importantForAccessibility="no-hide-descendants"
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "backgroundColor": "rgba(244, 245, 248, 0)",
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "marginHorizontal": -24,
+            "paddingHorizontal": 24,
+            "paddingVertical": 12,
+          },
+        ]
+      }
       style={
         [
           {
@@ -128,12 +150,41 @@ exports[`SendAARCieCardReadingComponent SendAARCieCardReadingComponent: ReadStat
             "paddingVertical": 12,
           },
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "rgba(244, 245, 248, 0)",
           },
         ]
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            },
+            {
+              "columnGap": 18,
+            },
+          ]
+        }
         style={
           [
             {
@@ -147,7 +198,7 @@ exports[`SendAARCieCardReadingComponent SendAARCieCardReadingComponent: ReadStat
             {
               "transform": [
                 {
-                  "scale": undefined,
+                  "scale": 1,
                 },
               ],
             },
@@ -340,7 +391,29 @@ exports[`SendAARCieCardReadingComponent SendAARCieCardReadingComponent: ReadStat
   >
     <View
       accessibilityElementsHidden={true}
+      collapsable={false}
       importantForAccessibility="no-hide-descendants"
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "backgroundColor": "rgba(244, 245, 248, 0)",
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "marginHorizontal": -24,
+            "paddingHorizontal": 24,
+            "paddingVertical": 12,
+          },
+        ]
+      }
       style={
         [
           {
@@ -349,12 +422,41 @@ exports[`SendAARCieCardReadingComponent SendAARCieCardReadingComponent: ReadStat
             "paddingVertical": 12,
           },
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "rgba(244, 245, 248, 0)",
           },
         ]
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            },
+            {
+              "columnGap": 18,
+            },
+          ]
+        }
         style={
           [
             {
@@ -368,7 +470,7 @@ exports[`SendAARCieCardReadingComponent SendAARCieCardReadingComponent: ReadStat
             {
               "transform": [
                 {
-                  "scale": undefined,
+                  "scale": 1,
                 },
               ],
             },
@@ -908,6 +1010,28 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "width": 0,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "backgroundColor": "#00C5CA",
+                                      "borderRadius": 4,
+                                      "height": 4,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -1779,6 +1903,48 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               testID="genericErrorPrimaryAction"
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "backgroundColor": "rgba(11, 62, 227, 1)",
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "borderCurve": "continuous",
+                                      "elevation": 0,
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                      "overflow": "hidden",
+                                      "textAlignVertical": "center",
+                                    },
+                                    {
+                                      "paddingHorizontal": 16,
+                                    },
+                                    {
+                                      "backgroundColor": "#0B3EE3",
+                                      "borderColor": "#FFFFFF",
+                                      "borderRadius": 8,
+                                      "borderWidth": 0,
+                                      "height": 48,
+                                    },
+                                    {},
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -1790,9 +1956,15 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
-                                    false,
                                     {
-                                      "backgroundColor": undefined,
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                    {
+                                      "backgroundColor": "rgba(11, 62, 227, 1)",
                                     },
                                     {
                                       "paddingHorizontal": 16,
@@ -1809,6 +1981,30 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "columnGap": 8,
+                                      },
+                                      false,
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -1827,8 +2023,31 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     accessibilityElementsHidden={true}
                                     accessible={false}
                                     allowFontScaling={true}
+                                    collapsable={false}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "color": "rgba(255, 255, 255, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#FFFFFF",
+                                        },
+                                      ]
+                                    }
                                     maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
@@ -1850,7 +2069,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                             "color": "#FFFFFF",
                                           },
                                           {
-                                            "color": undefined,
+                                            "color": "rgba(255, 255, 255, 1)",
                                           },
                                         ],
                                       ]
@@ -1916,6 +2135,47 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                 testID="genericErrorSecondaryAction"
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "elevation": 0,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "overflow": "hidden",
+                                        "textAlignVertical": "center",
+                                      },
+                                      {
+                                        "paddingHorizontal": 0,
+                                      },
+                                      {
+                                        "backgroundColor": "transparent",
+                                        "borderColor": "#0B3EE3",
+                                        "borderRadius": 8,
+                                        "borderWidth": 0,
+                                        "height": undefined,
+                                      },
+                                      {},
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -1927,7 +2187,13 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         "overflow": "hidden",
                                         "textAlignVertical": "center",
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                       {},
                                       {
                                         "paddingHorizontal": 0,
@@ -1944,6 +2210,30 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 >
                                   <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "flexDirection": "row",
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "columnGap": 8,
+                                        },
+                                        false,
+                                      ]
+                                    }
                                     style={
                                       [
                                         {
@@ -1962,8 +2252,31 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       accessibilityElementsHidden={true}
                                       accessible={false}
                                       allowFontScaling={true}
+                                      collapsable={false}
                                       ellipsizeMode="tail"
                                       importantForAccessibility="no-hide-descendants"
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {
+                                            "color": "rgba(11, 62, 227, 1)",
+                                          },
+                                        }
+                                      }
+                                      jestInlineStyle={
+                                        [
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
+                                          },
+                                        ]
+                                      }
                                       maxFontSizeMultiplier={1.5}
                                       numberOfLines={1}
                                       style={
@@ -1985,7 +2298,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                               "color": "#0B3EE3",
                                             },
                                             {
-                                              "color": undefined,
+                                              "color": "rgba(11, 62, 227, 1)",
                                             },
                                           ],
                                         ]
@@ -2681,6 +2994,48 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               testID="genericErrorPrimaryAction"
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "backgroundColor": "rgba(11, 62, 227, 1)",
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "borderCurve": "continuous",
+                                      "elevation": 0,
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                      "overflow": "hidden",
+                                      "textAlignVertical": "center",
+                                    },
+                                    {
+                                      "paddingHorizontal": 16,
+                                    },
+                                    {
+                                      "backgroundColor": "#0B3EE3",
+                                      "borderColor": "#FFFFFF",
+                                      "borderRadius": 8,
+                                      "borderWidth": 0,
+                                      "height": 48,
+                                    },
+                                    {},
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -2692,9 +3047,15 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
-                                    false,
                                     {
-                                      "backgroundColor": undefined,
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                    {
+                                      "backgroundColor": "rgba(11, 62, 227, 1)",
                                     },
                                     {
                                       "paddingHorizontal": 16,
@@ -2711,6 +3072,30 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "columnGap": 8,
+                                      },
+                                      false,
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -2729,8 +3114,31 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     accessibilityElementsHidden={true}
                                     accessible={false}
                                     allowFontScaling={true}
+                                    collapsable={false}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "color": "rgba(255, 255, 255, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#FFFFFF",
+                                        },
+                                      ]
+                                    }
                                     maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
@@ -2752,7 +3160,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                             "color": "#FFFFFF",
                                           },
                                           {
-                                            "color": undefined,
+                                            "color": "rgba(255, 255, 255, 1)",
                                           },
                                         ],
                                       ]
@@ -2818,6 +3226,47 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                 testID="genericErrorSecondaryAction"
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "elevation": 0,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "overflow": "hidden",
+                                        "textAlignVertical": "center",
+                                      },
+                                      {
+                                        "paddingHorizontal": 0,
+                                      },
+                                      {
+                                        "backgroundColor": "transparent",
+                                        "borderColor": "#0B3EE3",
+                                        "borderRadius": 8,
+                                        "borderWidth": 0,
+                                        "height": undefined,
+                                      },
+                                      {},
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -2829,7 +3278,13 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         "overflow": "hidden",
                                         "textAlignVertical": "center",
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                       {},
                                       {
                                         "paddingHorizontal": 0,
@@ -2846,6 +3301,30 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 >
                                   <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "flexDirection": "row",
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "columnGap": 8,
+                                        },
+                                        false,
+                                      ]
+                                    }
                                     style={
                                       [
                                         {
@@ -2864,8 +3343,31 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       accessibilityElementsHidden={true}
                                       accessible={false}
                                       allowFontScaling={true}
+                                      collapsable={false}
                                       ellipsizeMode="tail"
                                       importantForAccessibility="no-hide-descendants"
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {
+                                            "color": "rgba(11, 62, 227, 1)",
+                                          },
+                                        }
+                                      }
+                                      jestInlineStyle={
+                                        [
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
+                                          },
+                                        ]
+                                      }
                                       maxFontSizeMultiplier={1.5}
                                       numberOfLines={1}
                                       style={
@@ -2887,7 +3389,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                               "color": "#0B3EE3",
                                             },
                                             {
-                                              "color": undefined,
+                                              "color": "rgba(11, 62, 227, 1)",
                                             },
                                           ],
                                         ]
@@ -3583,6 +4085,48 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               testID="genericErrorPrimaryAction"
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "backgroundColor": "rgba(11, 62, 227, 1)",
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "borderCurve": "continuous",
+                                      "elevation": 0,
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                      "overflow": "hidden",
+                                      "textAlignVertical": "center",
+                                    },
+                                    {
+                                      "paddingHorizontal": 16,
+                                    },
+                                    {
+                                      "backgroundColor": "#0B3EE3",
+                                      "borderColor": "#FFFFFF",
+                                      "borderRadius": 8,
+                                      "borderWidth": 0,
+                                      "height": 48,
+                                    },
+                                    {},
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -3594,9 +4138,15 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
-                                    false,
                                     {
-                                      "backgroundColor": undefined,
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                    {
+                                      "backgroundColor": "rgba(11, 62, 227, 1)",
                                     },
                                     {
                                       "paddingHorizontal": 16,
@@ -3613,6 +4163,30 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "columnGap": 8,
+                                      },
+                                      false,
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -3631,8 +4205,31 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     accessibilityElementsHidden={true}
                                     accessible={false}
                                     allowFontScaling={true}
+                                    collapsable={false}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "color": "rgba(255, 255, 255, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#FFFFFF",
+                                        },
+                                      ]
+                                    }
                                     maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
@@ -3654,7 +4251,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                             "color": "#FFFFFF",
                                           },
                                           {
-                                            "color": undefined,
+                                            "color": "rgba(255, 255, 255, 1)",
                                           },
                                         ],
                                       ]
@@ -3720,6 +4317,47 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                 testID="genericErrorSecondaryAction"
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "elevation": 0,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "overflow": "hidden",
+                                        "textAlignVertical": "center",
+                                      },
+                                      {
+                                        "paddingHorizontal": 0,
+                                      },
+                                      {
+                                        "backgroundColor": "transparent",
+                                        "borderColor": "#0B3EE3",
+                                        "borderRadius": 8,
+                                        "borderWidth": 0,
+                                        "height": undefined,
+                                      },
+                                      {},
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -3731,7 +4369,13 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         "overflow": "hidden",
                                         "textAlignVertical": "center",
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                       {},
                                       {
                                         "paddingHorizontal": 0,
@@ -3748,6 +4392,30 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 >
                                   <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "flexDirection": "row",
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "columnGap": 8,
+                                        },
+                                        false,
+                                      ]
+                                    }
                                     style={
                                       [
                                         {
@@ -3766,8 +4434,31 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       accessibilityElementsHidden={true}
                                       accessible={false}
                                       allowFontScaling={true}
+                                      collapsable={false}
                                       ellipsizeMode="tail"
                                       importantForAccessibility="no-hide-descendants"
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {
+                                            "color": "rgba(11, 62, 227, 1)",
+                                          },
+                                        }
+                                      }
+                                      jestInlineStyle={
+                                        [
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
+                                          },
+                                        ]
+                                      }
                                       maxFontSizeMultiplier={1.5}
                                       numberOfLines={1}
                                       style={
@@ -3789,7 +4480,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                               "color": "#0B3EE3",
                                             },
                                             {
-                                              "color": undefined,
+                                              "color": "rgba(11, 62, 227, 1)",
                                             },
                                           ],
                                         ]
@@ -4436,6 +5127,48 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "backgroundColor": "rgba(11, 62, 227, 1)",
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "borderCurve": "continuous",
+                                      "elevation": 0,
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                      "overflow": "hidden",
+                                      "textAlignVertical": "center",
+                                    },
+                                    {
+                                      "paddingHorizontal": 16,
+                                    },
+                                    {
+                                      "backgroundColor": "#0B3EE3",
+                                      "borderColor": "#FFFFFF",
+                                      "borderRadius": 8,
+                                      "borderWidth": 0,
+                                      "height": 48,
+                                    },
+                                    {},
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -4447,9 +5180,15 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
-                                    false,
                                     {
-                                      "backgroundColor": undefined,
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                    {
+                                      "backgroundColor": "rgba(11, 62, 227, 1)",
                                     },
                                     {
                                       "paddingHorizontal": 16,
@@ -4466,6 +5205,30 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "columnGap": 8,
+                                      },
+                                      false,
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -4484,8 +5247,31 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     accessibilityElementsHidden={true}
                                     accessible={false}
                                     allowFontScaling={true}
+                                    collapsable={false}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "color": "rgba(255, 255, 255, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#FFFFFF",
+                                        },
+                                      ]
+                                    }
                                     maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
@@ -4507,7 +5293,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                             "color": "#FFFFFF",
                                           },
                                           {
-                                            "color": undefined,
+                                            "color": "rgba(255, 255, 255, 1)",
                                           },
                                         ],
                                       ]
@@ -4573,6 +5359,47 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                 testID="tagLostCloseButton"
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "elevation": 0,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "overflow": "hidden",
+                                        "textAlignVertical": "center",
+                                      },
+                                      {
+                                        "paddingHorizontal": 0,
+                                      },
+                                      {
+                                        "backgroundColor": "transparent",
+                                        "borderColor": "#0B3EE3",
+                                        "borderRadius": 8,
+                                        "borderWidth": 0,
+                                        "height": undefined,
+                                      },
+                                      {},
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -4584,7 +5411,13 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         "overflow": "hidden",
                                         "textAlignVertical": "center",
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                       {},
                                       {
                                         "paddingHorizontal": 0,
@@ -4601,6 +5434,30 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 >
                                   <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "flexDirection": "row",
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "columnGap": 8,
+                                        },
+                                        false,
+                                      ]
+                                    }
                                     style={
                                       [
                                         {
@@ -4619,8 +5476,31 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       accessibilityElementsHidden={true}
                                       accessible={false}
                                       allowFontScaling={true}
+                                      collapsable={false}
                                       ellipsizeMode="tail"
                                       importantForAccessibility="no-hide-descendants"
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {
+                                            "color": "rgba(11, 62, 227, 1)",
+                                          },
+                                        }
+                                      }
+                                      jestInlineStyle={
+                                        [
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
+                                          },
+                                        ]
+                                      }
                                       maxFontSizeMultiplier={1.5}
                                       numberOfLines={1}
                                       style={
@@ -4642,7 +5522,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                               "color": "#0B3EE3",
                                             },
                                             {
-                                              "color": undefined,
+                                              "color": "rgba(11, 62, 227, 1)",
                                             },
                                           ],
                                         ]
@@ -5080,6 +5960,28 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "width": 0,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "backgroundColor": "#00C5CA",
+                                      "borderRadius": 4,
+                                      "height": 4,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -5421,6 +6323,47 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                 testID="idleCloseButton"
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "elevation": 0,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "overflow": "hidden",
+                                        "textAlignVertical": "center",
+                                      },
+                                      {
+                                        "paddingHorizontal": 0,
+                                      },
+                                      {
+                                        "backgroundColor": "transparent",
+                                        "borderColor": "#0B3EE3",
+                                        "borderRadius": 8,
+                                        "borderWidth": 0,
+                                        "height": undefined,
+                                      },
+                                      {},
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -5432,7 +6375,13 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         "overflow": "hidden",
                                         "textAlignVertical": "center",
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                       {},
                                       {
                                         "paddingHorizontal": 0,
@@ -5449,6 +6398,30 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 >
                                   <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "flexDirection": "row",
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "columnGap": 8,
+                                        },
+                                        false,
+                                      ]
+                                    }
                                     style={
                                       [
                                         {
@@ -5467,8 +6440,31 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       accessibilityElementsHidden={true}
                                       accessible={false}
                                       allowFontScaling={true}
+                                      collapsable={false}
                                       ellipsizeMode="tail"
                                       importantForAccessibility="no-hide-descendants"
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {
+                                            "color": "rgba(11, 62, 227, 1)",
+                                          },
+                                        }
+                                      }
+                                      jestInlineStyle={
+                                        [
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
+                                          },
+                                        ]
+                                      }
                                       maxFontSizeMultiplier={1.5}
                                       numberOfLines={1}
                                       style={
@@ -5490,7 +6486,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                               "color": "#0B3EE3",
                                             },
                                             {
-                                              "color": undefined,
+                                              "color": "rgba(11, 62, 227, 1)",
                                             },
                                           ],
                                         ]
@@ -5928,6 +6924,28 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "width": 0,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "backgroundColor": "#00C5CA",
+                                      "borderRadius": 4,
+                                      "height": 4,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -6289,6 +7307,47 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                 testID="readingCloseButton"
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "elevation": 0,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "overflow": "hidden",
+                                        "textAlignVertical": "center",
+                                      },
+                                      {
+                                        "paddingHorizontal": 0,
+                                      },
+                                      {
+                                        "backgroundColor": "transparent",
+                                        "borderColor": "#0B3EE3",
+                                        "borderRadius": 8,
+                                        "borderWidth": 0,
+                                        "height": undefined,
+                                      },
+                                      {},
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -6300,7 +7359,13 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         "overflow": "hidden",
                                         "textAlignVertical": "center",
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                       {},
                                       {
                                         "paddingHorizontal": 0,
@@ -6317,6 +7382,30 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 >
                                   <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "flexDirection": "row",
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "columnGap": 8,
+                                        },
+                                        false,
+                                      ]
+                                    }
                                     style={
                                       [
                                         {
@@ -6335,8 +7424,31 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       accessibilityElementsHidden={true}
                                       accessible={false}
                                       allowFontScaling={true}
+                                      collapsable={false}
                                       ellipsizeMode="tail"
                                       importantForAccessibility="no-hide-descendants"
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {
+                                            "color": "rgba(11, 62, 227, 1)",
+                                          },
+                                        }
+                                      }
+                                      jestInlineStyle={
+                                        [
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
+                                          },
+                                        ]
+                                      }
                                       maxFontSizeMultiplier={1.5}
                                       numberOfLines={1}
                                       style={
@@ -6358,7 +7470,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                               "color": "#0B3EE3",
                                             },
                                             {
-                                              "color": undefined,
+                                              "color": "rgba(11, 62, 227, 1)",
                                             },
                                           ],
                                         ]
@@ -6796,6 +7908,28 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "width": 0,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "backgroundColor": "#00C5CA",
+                                      "borderRadius": 4,
+                                      "height": 4,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -7157,6 +8291,47 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                 testID="readingCloseButton"
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "elevation": 0,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "overflow": "hidden",
+                                        "textAlignVertical": "center",
+                                      },
+                                      {
+                                        "paddingHorizontal": 0,
+                                      },
+                                      {
+                                        "backgroundColor": "transparent",
+                                        "borderColor": "#0B3EE3",
+                                        "borderRadius": 8,
+                                        "borderWidth": 0,
+                                        "height": undefined,
+                                      },
+                                      {},
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -7168,7 +8343,13 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         "overflow": "hidden",
                                         "textAlignVertical": "center",
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                       {},
                                       {
                                         "paddingHorizontal": 0,
@@ -7185,6 +8366,30 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 >
                                   <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "flexDirection": "row",
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "columnGap": 8,
+                                        },
+                                        false,
+                                      ]
+                                    }
                                     style={
                                       [
                                         {
@@ -7203,8 +8408,31 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       accessibilityElementsHidden={true}
                                       accessible={false}
                                       allowFontScaling={true}
+                                      collapsable={false}
                                       ellipsizeMode="tail"
                                       importantForAccessibility="no-hide-descendants"
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {
+                                            "color": "rgba(11, 62, 227, 1)",
+                                          },
+                                        }
+                                      }
+                                      jestInlineStyle={
+                                        [
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
+                                          },
+                                        ]
+                                      }
                                       maxFontSizeMultiplier={1.5}
                                       numberOfLines={1}
                                       style={
@@ -7226,7 +8454,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                               "color": "#0B3EE3",
                                             },
                                             {
-                                              "color": undefined,
+                                              "color": "rgba(11, 62, 227, 1)",
                                             },
                                           ],
                                         ]
@@ -7664,6 +8892,28 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "width": 0,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "backgroundColor": "#00C5CA",
+                                      "borderRadius": 4,
+                                      "height": 4,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -8025,6 +9275,47 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                 testID="readingCloseButton"
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "elevation": 0,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "overflow": "hidden",
+                                        "textAlignVertical": "center",
+                                      },
+                                      {
+                                        "paddingHorizontal": 0,
+                                      },
+                                      {
+                                        "backgroundColor": "transparent",
+                                        "borderColor": "#0B3EE3",
+                                        "borderRadius": 8,
+                                        "borderWidth": 0,
+                                        "height": undefined,
+                                      },
+                                      {},
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -8036,7 +9327,13 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         "overflow": "hidden",
                                         "textAlignVertical": "center",
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                       {},
                                       {
                                         "paddingHorizontal": 0,
@@ -8053,6 +9350,30 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 >
                                   <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "flexDirection": "row",
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "columnGap": 8,
+                                        },
+                                        false,
+                                      ]
+                                    }
                                     style={
                                       [
                                         {
@@ -8071,8 +9392,31 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       accessibilityElementsHidden={true}
                                       accessible={false}
                                       allowFontScaling={true}
+                                      collapsable={false}
                                       ellipsizeMode="tail"
                                       importantForAccessibility="no-hide-descendants"
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {
+                                            "color": "rgba(11, 62, 227, 1)",
+                                          },
+                                        }
+                                      }
+                                      jestInlineStyle={
+                                        [
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
+                                          },
+                                        ]
+                                      }
                                       maxFontSizeMultiplier={1.5}
                                       numberOfLines={1}
                                       style={
@@ -8094,7 +9438,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                               "color": "#0B3EE3",
                                             },
                                             {
-                                              "color": undefined,
+                                              "color": "rgba(11, 62, 227, 1)",
                                             },
                                           ],
                                         ]
