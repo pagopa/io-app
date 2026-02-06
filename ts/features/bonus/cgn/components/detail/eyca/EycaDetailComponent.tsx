@@ -9,6 +9,7 @@ import {
   LoadingSpinner
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { View } from "react-native";
 import { CardPending } from "../../../../../../../definitions/cgn/CardPending";
 import { EycaCard } from "../../../../../../../definitions/cgn/EycaCard";
 import { Dispatch } from "../../../../../../store/actions/types";
@@ -82,7 +83,7 @@ const EycaDetailComponent = (props: Props) => {
     }
   };
   return (
-    <>
+    <View>
       {props.isLoading ? (
         <LoadingSpinner size={48} />
       ) : (
@@ -106,7 +107,7 @@ const EycaDetailComponent = (props: Props) => {
         </>
       )}
       {bottomSheet}
-    </>
+    </View>
   );
 };
 
