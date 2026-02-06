@@ -2,8 +2,8 @@ import { createMigrate, PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { isDevEnv } from "../../../../../utils/environment";
-import itwCreateSecureStorage from "../../../common/store/storages/itwSecureStorage";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
+import createSecureStorage from "../../../../../store/storages/secureStorage";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { itwCredentialsRemove, itwCredentialsStore } from "../actions";
 import {
@@ -67,7 +67,7 @@ const reducer = (
 
 const itwCredentialsPersistConfig: PersistConfig = {
   key: "itWalletCredentials",
-  storage: itwCreateSecureStorage(),
+  storage: createSecureStorage(),
   version: CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION,
   migrate: createMigrate(itwCredentialsStateMigrations, { debug: isDevEnv })
 };

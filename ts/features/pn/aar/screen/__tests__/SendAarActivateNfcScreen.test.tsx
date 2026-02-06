@@ -1,6 +1,7 @@
-import { createStore } from "redux";
-import { Alert } from "react-native";
 import { act, fireEvent } from "@testing-library/react-native";
+import _ from "lodash";
+import { Alert } from "react-native";
+import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -13,10 +14,23 @@ import {
 import { sendAarMockStates } from "../../utils/testUtils";
 import { sendAARFlowStates } from "../../utils/stateUtils";
 import * as AAR_SELECTORS from "../../store/selectors";
-import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import {
+  trackSendAarMandateCieReadingClosureAlert,
+  trackSendAarMandateCieReadingClosureAlertAccepted,
+  trackSendAarMandateCieReadingClosureAlertContinue,
+  trackSendAarMandateCieNfcActivation
+} from "../../analytics";
 
 const mockReplace = jest.fn();
+const mockShouldNeverCall = jest.fn();
 const mockTerminateFlow = jest.fn();
+
+jest.mock("../../analytics", () => ({
+  trackSendAarMandateCieReadingClosureAlert: jest.fn(),
+  trackSendAarMandateCieReadingClosureAlertAccepted: jest.fn(),
+  trackSendAarMandateCieReadingClosureAlertContinue: jest.fn(),
+  trackSendAarMandateCieNfcActivation: jest.fn()
+}));
 
 jest.mock("i18next", () => ({
   t: (path: string) => path
@@ -37,6 +51,12 @@ describe("SendAarActivateNfcScreen", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
 
+  it('should call "trackSendAarMandateCieNfcActivation" when the component is focused', () => {
+    renderComponent();
+
+    expect(trackSendAarMandateCieNfcActivation).toHaveBeenCalledTimes(1);
+  });
+
   sendAarMockStates.forEach(aarState => {
     const isCieScanning = aarState.type === sendAARFlowStates.cieScanning;
 
@@ -49,37 +69,45 @@ describe("SendAarActivateNfcScreen", () => {
       renderComponent();
 
       if (isCieScanning) {
-        const { type: _, ...params } = aarState;
+        const { type: _T, ...params } = aarState;
 
         expect(mockReplace).toHaveBeenCalledTimes(1);
         expect(mockReplace).toHaveBeenCalledWith(
-          MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
-          {
-            screen: PN_ROUTES.MAIN,
-            params: {
-              screen: PN_ROUTES.SEND_AAR_CIE_CARD_READING,
-              params
-            }
-          }
+          PN_ROUTES.SEND_AAR_CIE_CARD_READING,
+          params
         );
       } else {
         expect(mockReplace).not.toHaveBeenCalled();
       }
       expect(spyOnAlert).not.toHaveBeenCalled();
     });
+
+    it(`should never call any non-replace navigation action when type is "${aarState.type}"`, () => {
+      jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
+      renderComponent();
+
+      expect(mockShouldNeverCall).not.toHaveBeenCalled();
+    });
   });
 
-  it("should invoke the Alert on close press", () => {
+  it('should prompt the system Alert and invoke "trackSendAarMandateCieReadingClosureAlert" when the close button is pressed', () => {
     const spyOnAlert = jest.spyOn(Alert, "alert");
 
     const { getByTestId } = renderComponent();
 
     const closeAction = getByTestId("closeActionID");
 
+    expect(trackSendAarMandateCieReadingClosureAlert).not.toHaveBeenCalled();
+    expect(spyOnAlert).not.toHaveBeenCalled();
+
     act(() => {
       fireEvent.press(closeAction);
     });
 
+    expect(trackSendAarMandateCieReadingClosureAlert).toHaveBeenCalledTimes(1);
+    expect(trackSendAarMandateCieReadingClosureAlert).toHaveBeenCalledWith(
+      "NFC_ACTIVATION"
+    );
     expect(spyOnAlert).toHaveBeenCalledTimes(1);
     expect(spyOnAlert).toHaveBeenCalledWith(
       "features.pn.aar.flow.androidNfcActivation.alertOnClose.title",
@@ -88,23 +116,79 @@ describe("SendAarActivateNfcScreen", () => {
         {
           text: "features.pn.aar.flow.androidNfcActivation.alertOnClose.confirm",
           style: "destructive",
-          onPress: mockTerminateFlow
+          onPress: expect.any(Function)
         },
         {
-          text: "features.pn.aar.flow.androidNfcActivation.alertOnClose.cancel"
+          text: "features.pn.aar.flow.androidNfcActivation.alertOnClose.cancel",
+          onPress: expect.any(Function)
         }
       ]
     );
+  });
 
-    const terminateFlowAction = spyOnAlert.mock.calls[0][2]![0];
+  it('should invoke "terminateFlow" and "trackSendAarMandateCieReadingClosureAlertAccepted" when the Alert confirm button is pressed', () => {
+    const spyOnAlert = jest.spyOn(Alert, "alert");
+    const { getByTestId } = renderComponent();
 
-    expect(mockTerminateFlow).not.toHaveBeenCalled();
+    const closeAction = getByTestId("closeActionID");
 
     act(() => {
-      terminateFlowAction.onPress!();
+      fireEvent.press(closeAction);
+    });
+
+    expect(mockTerminateFlow).not.toHaveBeenCalled();
+    expect(
+      trackSendAarMandateCieReadingClosureAlertAccepted
+    ).not.toHaveBeenCalled();
+
+    const confirmAction = spyOnAlert.mock.calls[0][2]?.[0];
+
+    act(() => {
+      confirmAction?.onPress?.();
     });
 
     expect(mockTerminateFlow).toHaveBeenCalledTimes(1);
+    expect(
+      trackSendAarMandateCieReadingClosureAlertAccepted
+    ).toHaveBeenCalledTimes(1);
+    expect(
+      trackSendAarMandateCieReadingClosureAlertAccepted
+    ).toHaveBeenCalledWith("NFC_ACTIVATION");
+    expect(
+      trackSendAarMandateCieReadingClosureAlertContinue
+    ).not.toHaveBeenCalled();
+  });
+
+  it('should invoke "trackSendAarMandateCieReadingClosureAlertContinue" when the Alert cancel button is pressed', () => {
+    const spyOnAlert = jest.spyOn(Alert, "alert");
+    const { getByTestId } = renderComponent();
+
+    const closeAction = getByTestId("closeActionID");
+
+    act(() => {
+      fireEvent.press(closeAction);
+    });
+
+    expect(
+      trackSendAarMandateCieReadingClosureAlertContinue
+    ).not.toHaveBeenCalled();
+
+    const confirmAction = spyOnAlert.mock.calls[0][2]?.[1];
+
+    act(() => {
+      confirmAction?.onPress?.();
+    });
+
+    expect(
+      trackSendAarMandateCieReadingClosureAlertContinue
+    ).toHaveBeenCalledTimes(1);
+    expect(
+      trackSendAarMandateCieReadingClosureAlertContinue
+    ).toHaveBeenCalledWith("NFC_ACTIVATION");
+    expect(
+      trackSendAarMandateCieReadingClosureAlertAccepted
+    ).not.toHaveBeenCalled();
+    expect(mockTerminateFlow).not.toHaveBeenCalled();
   });
 });
 
@@ -116,7 +200,11 @@ function renderComponent() {
     ({ navigation, route }: SendAarActivateNfcScreenProps) => (
       <SendAarActivateNfcScreen
         route={route}
-        navigation={{ ...navigation, replace: mockReplace }}
+        navigation={{
+          ..._.mapValues(navigation, () => mockShouldNeverCall),
+          setOptions: navigation.setOptions,
+          replace: mockReplace
+        }}
       />
     ),
     PN_ROUTES.SEND_AAR_NFC_ACTIVATION,

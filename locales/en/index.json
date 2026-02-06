@@ -740,6 +740,10 @@
         "preferred_language": {
           "title": "Favourite language",
           "subtitle": "In which language do you want to use the application?",
+          "headers": {
+            "services": "Services",
+            "app": "Application"
+          },
           "alert": {
             "title": "Do you want to change the language to",
             "subtitle": "You'll need to restart the application to make this happen"
@@ -4395,7 +4399,7 @@
       "transactions": {
         "multiplePayment": "Pagamento multiplo",
         "title": "Ricevute pagoPA",
-        "button": "Vedi tutte",
+        "button": "Show all",
         "empty": {
           "title": "Qui vedrai le tue ricevute pagoPA",
           "content": "Paga un avviso in app o presso un qualsiasi canale abilitato a pagoPA."
@@ -4411,7 +4415,6 @@
           "loading": "We are hiding your receipt...",
           "title": "pagoPA Receipt",
           "shareButton": "Save or share",
-          "error": "Unable to retrieve the receipt.",
           "download": "Get receipt",
           "hideFromList": "Hide from list",
           "delete": {

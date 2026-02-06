@@ -304,7 +304,9 @@
   "locales": {
     "it": "Italiano",
     "en": "Inglese",
-    "de": "Tedesco"
+    "de": "Tedesco",
+    "fr": "Francese",
+    "sl": "Sloveno"
   },
   "clipboard": {
     "copyIntoClipboard": "copia negli appunti",
@@ -740,6 +742,10 @@
         "preferred_language": {
           "title": "Lingua preferita",
           "subtitle": "In quale lingua vuoi usare l'applicazione?",
+          "headers": {
+            "services": "Servizi",
+            "app": "Applicazione"
+          },
           "alert": {
             "title": "Vuoi cambiare la lingua in",
             "subtitle": "Dovrai riavviare l'applicazione per applicare il cambiamento"
@@ -3954,6 +3960,26 @@
                 "additionalDataTitle": "Dati aggiuntivi",
                 "errorCode": "Codice errore"
               }
+            },
+            "cieValidation": {
+              "expired": {
+                "title": "La CIE risulta scaduta",
+                "body": "Consulta le altre modalità per accedere a questa notifica SEND.",
+                "actions": {
+                  "primary": "Cosa posso fare?"
+                }
+              },
+              "unrelated": {
+                "title": "La CIE non corrisponde alla persona destinataria",
+                "body": "Per consultare una notifica SEND per conto di un’altra persona devi utilizzare la sua Carta di Identità Elettronica."
+              },
+              "generic": {
+                "title": "Non siamo riusciti a verificare i dati dalla carta",
+                "body": "Attendi qualche minuto e riprova.",
+                "actions": {
+                  "secondary": "Mostra dettagli"
+                }
+              }
             }
           },
           "displayingNotificationData": {
@@ -4041,6 +4067,16 @@
               "TAG_LOST": {
                 "title": "Hai rimosso il telefono troppo presto!",
                 "subtitle": "Riprova e tieni fermo il telefono per la lettura."
+              },
+              "WRONG_CAN": {
+                "title": "Il codice inserito non è corretto",
+                "subtitleAndroid": "Controllalo e riprova. È il codice a 6 cifre (CAN) stampato sul fronte della Carta di Identità Elettronica, in basso a destra.",
+                "subtitleIos": "Controllalo e riprova."
+              },
+              "GENERIC": {
+                "title": "Non siamo riusciti a recuperare i dati dalla carta",
+                "subtitle": "Attendi qualche minuto e riprova.",
+                "secondaryAction": "Mostra dettagli"
               }
             }
           },
@@ -4499,7 +4535,7 @@
       "transactions": {
         "multiplePayment": "Pagamento multiplo",
         "title": "Ricevute pagoPA",
-        "button": "Vedi tutte",
+        "button": "Mostra tutte",
         "empty": {
           "title": "Qui vedrai le tue ricevute pagoPA",
           "content": "Paga un avviso in app o presso un qualsiasi canale abilitato a pagoPA."
@@ -4515,7 +4551,6 @@
           "loading": "Stiamo nascondendo la ricevuta...",
           "title": "Ricevuta pagoPA",
           "shareButton": "Salva o condividi",
-          "error": "Non è stato possibile recuperare la ricevuta.",
           "download": "Ottieni ricevuta",
           "hideFromList": "Nascondi dalla lista",
           "delete": {
@@ -4523,9 +4558,31 @@
             "failed": "C’è stato un errore, riprova"
           },
           "hideBanner": {
+            "isCart": {
+              "title": "Vuoi nascondere queste ricevute dalla tua lista?",
+              "content": "Stai per nascondere definitivamente tutte le ricevute collegate a questa transazione. Non compariranno più nell’elenco."
+            },
             "title": "Vuoi nascondere questa ricevuta dalla tua lista?",
             "content": "L’operazione è irreversibile. La ricevuta non verrà più mostrata nell’elenco delle tue ricevute.",
             "accept": "Sì, nascondi"
+          },
+          "debtorCartBanner": "Questo avviso è stato pagato insieme ad altri in un'unica transazione. Per informazioni sui costi di commissione, consulta il documento ricevuto in fase di pagamento.",
+          "error": {
+            "banner": {
+              "label": "Stiamo generando la ricevuta, torna tra un po’."
+            },
+            "400": {
+              "title": "I dati della ricevuta non sono corretti",
+              "subtitle": "Il Codice Fiscale non corrisponde a quello indicato in fase di pagamento."
+            },
+            "404": {
+              "title": "Non siamo riusciti a generare la ricevuta, riprova più tardi",
+              "subtitle": "Se il problema persiste, contatta l’assistenza."
+            },
+            "500": {
+              "title": "Stiamo riscontrando alcuni problemi sui nostri sistemi",
+              "subtitle": "Riprova più tardi."
+            }
           }
         },
         "details": {
@@ -4833,11 +4890,11 @@
         "modeSelection": {
           "section": {
             "issuance": "Ottieni {{ feature }}",
-            "reissuance": "Conferma identità"
+            "reissuance": "Conferma periodica dell'identità"
           },
           "title": {
             "issuance": "Conferma la tua identità",
-            "reissuance": "Scegli come identificarti"
+            "reissuance": "Scegli come continuare"
           },
           "description": {
             "issuance": "È un passaggio di sicurezza necessario per associare i documenti digitali alla tua identità. ",
@@ -4848,6 +4905,7 @@
             "ciePin": {
               "title": "Continua con CIE + PIN",
               "subtitle": "Ha una durata di 12 mesi",
+              "reissuanceBadge": "Consigliato",
               "badge": "consigliato",
               "bottomSheet": {
                 "title": "Continua con CIE + PIN",
@@ -4886,6 +4944,10 @@
                 "warning": "Se scegli questo metodo dovrai ripetere il passaggio di sicurezza ogni 90 giorni."
               }
             }
+          },
+          "frequency": {
+            "every12Months": "Ogni 12 mesi",
+            "every90Days": "Ogni 90 giorni"
           }
         },
         "cie": {
@@ -5716,16 +5778,16 @@
           "closeButton": "Chiudi",
           "closeButtonAlt": "Ho capito",
           "revokedByWalletProvider": {
-            "title": "Documenti su IO è stata disattivata",
+            "title": "La funzionalità Documenti è stata disattivata",
             "content": "Per verificare i requisiti richiesti per continuare a usare la funzionalità sul tuo dispositivo, premi \"Scopri di più\"."
           },
           "newWalletInstanceCreated": {
-            "title": "Documenti su IO è stata disattivata su questo dispositivo",
-            "content": "Puoi usare i tuoi documenti su IO su un solo dispositivo alla volta per ragioni di sicurezza."
+            "title": "La funzionalità Documenti è stata disattivata su questo dispositivo",
+            "content": "Puoi usare i documenti digitali su un solo dispositivo alla volta per ragioni di sicurezza."
           },
           "revokedByUser": {
-            "title": "Hai disattivato Documenti su IO",
-            "content": "Se cambi idea, potrai riattivare Documenti su IO in futuro."
+            "title": "Hai rimosso i tuoi documenti digitali da IO",
+            "content": "Se cambi idea, potrai riattivare la funzionalità in futuro."
           }
         }
       },
@@ -5795,20 +5857,32 @@
         "action": "Ricarica l'app IO",
         "failure": "Nessuna connessione. Collegati a internet e riprova."
       },
-      "upgrade": {
-        "banner": {
-          "documents": {
-            "active": {
-              "title": "Passa a IT-Wallet",
-              "description": "Aggiorna i tuoi documenti digitali e passa a funzionalità evolute con l’unico portafoglio digitale di Stato: pubblico, sicuro e gratuito. Garantito dallo Stato, accessibile solo a te.",
-              "action": "Passa a IT-Wallet"
-            },
-            "inactive": {
-              "title": "IT-Wallet per i tuoi documenti",
-              "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**. Garantito dallo Stato, accessibile solo a te.",
-              "action": "Ottieni IT-Wallet"
-            }
-          }
+      "engagementBanner": {
+        "activation": {
+          "title": "Porta su IO i tuoi documenti digitali",
+          "description": "Con piena validità ufficiale, digitali e sempre a portata di mano!",
+          "action": "Aggiungi un documento"
+        },
+        "upgrade_empty": {
+          "title": "Il tuo Portafoglio è ora parte di IT-Wallet",
+          "description": "Scopri le funzionalità evolute dei documenti digitali su IO.",
+          "action": "Aggiungi documento"
+        },
+        "upgrade": {
+          "title": "IO dà il benvenuto a IT-Wallet",
+          "description": "Il tuo portafoglio digitale pubblico: semplice, sicuro, tuo. Scopri i nuovi documenti ora disponibili!",
+          "action": "Inizia"
+        },
+        "upgrade_with_mdl": {
+          "title": "Dimostra chi sei col tuo dispositivo",
+          "description": "Usa la tua Patente digitale anche come documento di riconoscimento, in modo facile e sicuro!",
+          "action": "Inizia"
+        },
+        "dismissAlert": {
+          "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?",
+          "description": "Potrai ottenere IT-Wallet in qualsiasi altro momento, andando in Impostazioni > IT-Wallet.",
+          "confirm": "Sì, rinuncia",
+          "cancel": "Indietro"
         }
       },
       "settings": {

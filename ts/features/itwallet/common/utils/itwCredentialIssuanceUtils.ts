@@ -103,8 +103,7 @@ export type ObtainCredential = (args: {
   clientId: string;
   codeVerifier: string;
   issuerConf: IssuerConfiguration;
-  operationType?: "reissuing";
-}) => Promise<ReadonlyArray<CredentialBundle>>;
+};
 
 /**
  * Obtains a credential from the issuer.
@@ -117,7 +116,6 @@ export type ObtainCredential = (args: {
  * @param clientId - The client ID
  * @param codeVerifier - The code verifier
  * @param issuerConf - The issuer configuration
- * @param operationType - The operation type, e.g., "reissuing"
  * @returns The obtained credential
  */
 export const obtainCredential: ObtainCredential = async ({
@@ -129,9 +127,8 @@ export const obtainCredential: ObtainCredential = async ({
   walletInstanceAttestation,
   clientId,
   codeVerifier,
-  issuerConf,
-  operationType
-}) => {
+  issuerConf
+}: ObtainCredentialParams) => {
   // Get WIA crypto context
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
@@ -169,8 +166,7 @@ export const obtainCredential: ObtainCredential = async ({
     credentialType,
     env,
     dPopCryptoContext,
-    issuerConf,
-    operationType
+    issuerConf
   };
 
   if (SEQUENTIAL_ISSUANCE_CREDENTIALS.includes(credentialType)) {
@@ -231,8 +227,7 @@ type RequestAndParseCredential = (args: {
   clientId: string;
   env: Env;
   dPopCryptoContext: CryptoContext;
-  operationType?: "reissuing";
-}) => Promise<CredentialBundle>;
+};
 
 const requestAndParseCredential: RequestAndParseCredential = async ({
   issuerConf,
@@ -241,9 +236,8 @@ const requestAndParseCredential: RequestAndParseCredential = async ({
   authDetails,
   clientId,
   dPopCryptoContext,
-  env,
-  operationType
-}) => {
+  env
+}: RequestAndParseCredentialParams) => {
   const { credential_configuration_id, credential_identifiers } = authDetails;
   const credentialKeyTag = uuidv4().toString();
   await generate(credentialKeyTag);
@@ -261,8 +255,7 @@ const requestAndParseCredential: RequestAndParseCredential = async ({
     {
       dPopCryptoContext,
       credentialCryptoContext
-    },
-    operationType
+    }
   ).catch(
     enrichErrorWithMetadata({
       credentialId: credential_configuration_id

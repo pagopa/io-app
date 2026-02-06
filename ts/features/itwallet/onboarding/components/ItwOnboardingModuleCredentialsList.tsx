@@ -1,25 +1,23 @@
-import { useCallback } from "react";
 import * as O from "fp-ts/lib/Option";
 import { constFalse, pipe } from "fp-ts/lib/function";
+import { useCallback } from "react";
 import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
-import { ITW_ROUTES } from "../../navigation/routes";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { itwDisabledCredentialsSelector } from "../../common/store/selectors/remoteConfig";
 import {
   isNewCredential,
   isUpcomingCredential
 } from "../../common/utils/itwCredentialUtils";
 import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
-import {
-  itwLifecycleIsITWalletValidSelector,
-  itwLifecycleIsValidSelector
-} from "../../lifecycle/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
   selectCredentialTypeOption,
   selectIsLoading
 } from "../../machine/credential/selectors";
-import { itwDisabledCredentialsSelector } from "../../common/store/selectors/remoteConfig";
+import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwOnboardingModuleCredential } from "./ItwOnboardingModuleCredential";
 
 type Props = {
@@ -36,8 +34,8 @@ export const ItwOnboardingModuleCredentialsList = ({
     itwDisabledCredentialsSelector
   );
   const itwCredentialsTypes = useIOSelector(itwCredentialsTypesSelector);
-  const isITWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
+  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
+  const isItWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const isCredentialIssuancePending =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
@@ -48,18 +46,26 @@ export const ItwOnboardingModuleCredentialsList = ({
     useCallback(
       (type: string) => {
         if (isUpcomingCredential(type)) {
+          /**
+           * The credential is an upcoming one, navigate to the screens which displays
+           * more information about the upcoming credential
+           */
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL
           });
-        } else if (
-          !isWalletValid ||
-          (!isITWalletValid && isNewCredential(type))
-        ) {
+        } else if (isL3Enabled && !isItWalletValid) {
+          /**
+           * User has a whitelisted fiscal code but has not yet obtained an IT Wallet.
+           * If he requests an ITW credential, start the credential issuance flow with contextual PID issuance
+           */
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.DISCOVERY.INFO,
             params: { level: "l3", credentialType: type }
           });
         } else {
+          /**
+           * Standard credential issuance
+           */
           machineRef.send({
             type: "select-credential",
             credentialType: type,
@@ -67,7 +73,7 @@ export const ItwOnboardingModuleCredentialsList = ({
           });
         }
       },
-      [isITWalletValid, machineRef, navigation, isWalletValid]
+      [machineRef, navigation, isL3Enabled, isItWalletValid]
     )
   );
 

@@ -1,4 +1,4 @@
-import { fireEvent } from "@testing-library/react-native";
+import { act, fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import * as DISPATCH from "../../../../../../store/hooks";
@@ -17,13 +17,11 @@ import * as FLOW_MANAGER from "../../../hooks/useSendAarFlowManager";
 import * as SELECTORS from "../../../store/selectors";
 import { sendAarMockStateFactory } from "../../../utils/testUtils";
 import {
-  SendAARErrorComponent,
-  testable
+  SendAarGenericErrorComponent,
+  sendAarErrorSupportBottomSheetComponent
 } from "../../errors/SendAARErrorComponent";
 import * as debugHooks from "../../../../../../hooks/useDebugInfo";
 import * as ANALYTICS from "../../../analytics";
-
-const { bottomComponent } = testable!;
 
 const managerSpy = jest.spyOn(FLOW_MANAGER, "useSendAarFlowManager");
 
@@ -99,7 +97,7 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
   });
 
   it("calls the primary callback on assistance button press", () => {
-    const renderedBottomComponent = bottomComponent(
+    const renderedBottomComponent = sendAarErrorSupportBottomSheetComponent(
       mockAssistance,
       assistanceErrorCode
     );
@@ -118,6 +116,36 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
     fireEvent.press(button);
 
     expect(mockAssistance).toHaveBeenCalledTimes(1);
+  });
+
+  it('should call "onCopyToClipboardPress" when the assistanceErrorCode is copied', () => {
+    const mockOnCopyToClipboardPress = jest.fn();
+    const renderedBottomComponent = sendAarErrorSupportBottomSheetComponent(
+      mockAssistance,
+      assistanceErrorCode,
+      mockOnCopyToClipboardPress
+    );
+
+    const presentMock = jest.fn();
+    const dismissMock = jest.fn();
+    jest.spyOn(BOTTOM_SHEET, "useIOBottomSheetModal").mockReturnValue({
+      bottomSheet: renderedBottomComponent,
+      present: presentMock,
+      dismiss: dismissMock
+    });
+
+    const { getByTestId } = renderComponent();
+
+    const copyCta = getByTestId("error_code_value");
+
+    expect(mockOnCopyToClipboardPress).not.toHaveBeenCalled();
+
+    act(() => {
+      fireEvent.press(copyCta);
+    });
+
+    expect(mockAssistance).not.toHaveBeenCalled();
+    expect(mockOnCopyToClipboardPress).toHaveBeenCalledTimes(1);
   });
 
   it("renders error codes when flow is 'ko'", () => {
@@ -294,7 +322,7 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
 const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => <SendAARErrorComponent />,
+    () => <SendAarGenericErrorComponent />,
     PN_ROUTES.QR_SCAN_FLOW,
     {},
     createStore(appReducer, globalState as any)

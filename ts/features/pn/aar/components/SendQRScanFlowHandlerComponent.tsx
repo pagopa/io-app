@@ -1,12 +1,15 @@
 import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
+import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector, useIOStore } from "../../../../store/hooks";
+import { isAarRemoteEnabled } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { openWebUrl } from "../../../../utils/url";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import { NOTIFICATIONS_ROUTES } from "../../../pushNotifications/navigation/routes";
 import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
+import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
 import { isPnServiceEnabled } from "../../reminderBanner/reducer/bannerDismiss";
 import {
@@ -15,8 +18,6 @@ import {
   trackSendQRCodeScanRedirectDismissed
 } from "../analytics";
 import { SendAARInitialFlowScreen } from "../screen/SendAARInitialFlowScreen";
-import { NOTIFICATIONS_ROUTES } from "../../../pushNotifications/navigation/routes";
-import { isAarRemoteEnabled } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 export type SendQRScanHandlerScreenProps = {
   aarUrl: string;
@@ -36,7 +37,8 @@ export const SendQRScanFlowHandlerComponent = ({
 
 const SendQrScanRedirect = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
   const store = useIOStore();
-  const navigation = useIONavigation();
+  const navigation =
+    useNavigation<IOStackNavigationProp<PnParamsList, "PN_QR_SCAN_FLOW">>();
 
   const handleCloseScreen = useCallback(() => {
     trackSendQRCodeScanRedirectDismissed();
@@ -72,15 +74,9 @@ const SendQrScanRedirect = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
     // the service engagement (activation) screen
     const isSendServiceEnabled = isPnServiceEnabled(state) ?? false;
     if (!isSendServiceEnabled) {
-      navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-        screen: PN_ROUTES.MAIN,
-        params: {
-          screen: PN_ROUTES.ENGAGEMENT_SCREEN,
-          params: {
-            sendOpeningSource: "aar",
-            sendUserType: "not_set"
-          }
-        }
+      navigation.replace(PN_ROUTES.ENGAGEMENT_SCREEN, {
+        sendOpeningSource: "aar",
+        sendUserType: "not_set"
       });
       return;
     }

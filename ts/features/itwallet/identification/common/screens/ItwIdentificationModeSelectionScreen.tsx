@@ -2,6 +2,7 @@ import {
   Badge,
   ContentWrapper,
   IOButton,
+  ListItemHeader,
   ModuleNavigationAlt,
   VSpacer,
   VStack
@@ -57,7 +58,7 @@ export const ItwIdentificationModeSelectionScreen = ({
   );
   const mode = ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
-
+  const isReissuanceMode = mode === "reissuance";
   const disabledIdentificationMethods = useIOSelector(
     itwDisabledIdentificationMethodsSelector
   );
@@ -138,6 +139,7 @@ export const ItwIdentificationModeSelectionScreen = ({
   }, [mode, machineRef, routeName]);
 
   const dismissalDialog = useItwDismissalDialog({
+    enabled: eidReissuing,
     customLabels: {
       body: ""
     },
@@ -163,9 +165,44 @@ export const ItwIdentificationModeSelectionScreen = ({
       <ContentWrapper>
         <VSpacer size={8} />
         <VStack space={16}>
-          {!isCiePinDisabled && <CiePinMethodModule />}
-          {!isSpidDisabled && <SpidMethodModule />}
-          {!isCieIdDisabled && <CieIdMethodModule />}
+          {isReissuanceMode ? (
+            <>
+              {(!isCiePinDisabled || !isCieIdDisabled) && (
+                <VStack space={8}>
+                  <ListItemHeader
+                    label={I18n.t(`${i18nNs}.frequency.every12Months`)}
+                    endElement={{
+                      type: "badge",
+                      componentProps: {
+                        text: I18n.t(`${i18nNs}.mode.ciePin.reissuanceBadge`),
+                        variant: "highlight",
+                        outline: false,
+                        testID: "CiePinReissuanceBadgeTestID"
+                      }
+                    }}
+                  />
+                  <VStack space={16}>
+                    {!isCiePinDisabled && <CiePinMethodModule />}
+                    {!isCieIdDisabled && <CieIdMethodModule />}
+                  </VStack>
+                </VStack>
+              )}
+              {!isSpidDisabled && (
+                <VStack space={8}>
+                  <ListItemHeader
+                    label={I18n.t(`${i18nNs}.frequency.every90Days`)}
+                  />
+                  <SpidMethodModule />
+                </VStack>
+              )}
+            </>
+          ) : (
+            <>
+              {!isCiePinDisabled && <CiePinMethodModule />}
+              {!isCieIdDisabled && <CieIdMethodModule />}
+              {!isSpidDisabled && <SpidMethodModule />}
+            </>
+          )}
           {isL3 && !eidReissuing && (
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <IOButton
@@ -187,6 +224,7 @@ const CiePinMethodModule = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
   const mode = ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
+  const isL3 = level === "l3";
 
   const handleOnPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "ciePin" });
@@ -194,12 +232,13 @@ const CiePinMethodModule = () => {
 
   const ciePinBottomSheet = useContinueWithBottomSheet({
     type: "ciePin",
-    onPrimaryAction: handleOnPress
+    onPrimaryAction: handleOnPress,
+    isL3
   });
 
   const badgeProps: Badge | undefined = useMemo(() => {
-    if (level === "l2" && mode === "issuance") {
-      // Should not display the recommended badge for L2 issuance
+    if (mode === "reissuance" || (level === "l2" && mode === "issuance")) {
+      // Should not display the recommended badge for reissuance or L2 issuance
       return undefined;
     }
 
@@ -219,17 +258,15 @@ const CiePinMethodModule = () => {
         testID="CiePinMethodModuleTestID"
         icon="cieCard"
         onPress={() => {
-          if (level === "l3") {
-            ciePinBottomSheet.present({
-              skipTracking: false
-            });
+          if (isL3) {
+            ciePinBottomSheet.present();
           } else {
             handleOnPress();
           }
         }}
         badge={badgeProps}
       />
-      {level === "l3" && ciePinBottomSheet.bottomSheet}
+      {isL3 && ciePinBottomSheet.bottomSheet}
     </>
   );
 };
@@ -237,6 +274,7 @@ const CiePinMethodModule = () => {
 const SpidMethodModule = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
+  const isL3 = level === "l3";
 
   const handleOnPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "spid" });
@@ -244,11 +282,12 @@ const SpidMethodModule = () => {
 
   const spidBottomSheet = useContinueWithBottomSheet({
     type: "spid",
-    onPrimaryAction: handleOnPress
+    onPrimaryAction: handleOnPress,
+    isL3
   });
 
   const { title, subtitle } = useMemo(() => {
-    if (level === "l3") {
+    if (isL3) {
       return {
         title: I18n.t(`${i18nNs}.mode.spid.title.l3`),
         subtitle: I18n.t(`${i18nNs}.mode.spid.subtitle.l3`)
@@ -259,7 +298,7 @@ const SpidMethodModule = () => {
       title: I18n.t(`${i18nNs}.mode.spid.title.default`),
       subtitle: I18n.t(`${i18nNs}.mode.spid.subtitle.default`)
     };
-  }, [level]);
+  }, [isL3]);
 
   return (
     <>
@@ -269,16 +308,14 @@ const SpidMethodModule = () => {
         testID="SpidMethodModuleTestID"
         icon="spid"
         onPress={() => {
-          if (level === "l3") {
-            spidBottomSheet.present({
-              skipTracking: false
-            });
+          if (isL3) {
+            spidBottomSheet.present();
           } else {
             handleOnPress();
           }
         }}
       />
-      {level === "l3" && spidBottomSheet.bottomSheet}
+      {isL3 && spidBottomSheet.bottomSheet}
     </>
   );
 };
@@ -286,6 +323,7 @@ const SpidMethodModule = () => {
 const CieIdMethodModule = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
+  const isL3 = level === "l3";
 
   const handleOnPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "cieId" });
@@ -293,11 +331,12 @@ const CieIdMethodModule = () => {
 
   const cieIdBottomSheet = useContinueWithBottomSheet({
     type: "cieId",
-    onPrimaryAction: handleOnPress
+    onPrimaryAction: handleOnPress,
+    isL3
   });
 
   const { title, subtitle } = useMemo(() => {
-    if (level === "l3") {
+    if (isL3) {
       return {
         title: I18n.t(`${i18nNs}.mode.cieId.title`),
         subtitle: I18n.t(`${i18nNs}.mode.cieId.subtitle.l3`)
@@ -308,7 +347,7 @@ const CieIdMethodModule = () => {
       title: I18n.t(`${i18nNs}.mode.cieId.title`),
       subtitle: I18n.t(`${i18nNs}.mode.cieId.subtitle.default`)
     };
-  }, [level]);
+  }, [isL3]);
 
   return (
     <>
@@ -318,16 +357,14 @@ const CieIdMethodModule = () => {
         icon={"cie"}
         testID="CieIDMethodModuleTestID"
         onPress={() => {
-          if (level === "l3") {
-            cieIdBottomSheet.present({
-              skipTracking: false
-            });
+          if (isL3) {
+            cieIdBottomSheet.present();
           } else {
             handleOnPress();
           }
         }}
       />
-      {level === "l3" && cieIdBottomSheet.bottomSheet}
+      {isL3 && cieIdBottomSheet.bottomSheet}
     </>
   );
 };
