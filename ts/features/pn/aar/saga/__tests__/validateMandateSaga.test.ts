@@ -16,7 +16,8 @@ import {
   aarProblemJsonAnalyticsReport,
   trackSendAARFailure,
   trackSendAarMandateCieExpiredError,
-  trackSendAarMandateCieNotRelatedToDelegatorError
+  trackSendAarMandateCieNotRelatedToDelegatorError,
+  trackSendAarMandateCieDataError
 } from "../../analytics";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
@@ -52,7 +53,8 @@ const getMockKoState = (
 jest.mock("../../analytics", () => ({
   ...jest.requireActual("../../analytics"),
   trackSendAarMandateCieExpiredError: jest.fn(),
-  trackSendAarMandateCieNotRelatedToDelegatorError: jest.fn()
+  trackSendAarMandateCieNotRelatedToDelegatorError: jest.fn(),
+  trackSendAarMandateCieDataError: jest.fn()
 }));
 
 describe("validateMandateSaga", () => {
@@ -200,7 +202,8 @@ describe("validateMandateSaga", () => {
         .call(
           handleMixPanelCustomTrackingIfNeeded,
           res.right.status,
-          res.right.value
+          res.right.value,
+          reason
         )
         .next()
         .call(trackSendAARFailure, "Validate Mandate", reason)
@@ -313,16 +316,21 @@ describe("handleMixPanelCustomTrackingIfNeeded", () => {
   ])(
     'should call "trackSendAarMandateCieExpiredError" event for status 422 and errorCode "%s"',
     code => {
-      handleMixPanelCustomTrackingIfNeeded(422, {
-        detail: "A detail",
-        status: 422 as HttpStatusCode,
-        errors: [{ code }]
-      });
+      handleMixPanelCustomTrackingIfNeeded(
+        422,
+        {
+          detail: "A detail",
+          status: 422 as HttpStatusCode,
+          errors: [{ code }]
+        },
+        "Some reason"
+      );
 
       expect(trackSendAarMandateCieExpiredError).toHaveBeenCalledTimes(1);
       expect(
         trackSendAarMandateCieNotRelatedToDelegatorError
       ).not.toHaveBeenCalled();
+      expect(trackSendAarMandateCieDataError).not.toHaveBeenCalled();
     }
   );
 
@@ -334,16 +342,21 @@ describe("handleMixPanelCustomTrackingIfNeeded", () => {
   ])(
     'should call "trackSendAarMandateCieNotRelatedToDelegatorError" event for status 422 and errorCode "%s"',
     code => {
-      handleMixPanelCustomTrackingIfNeeded(422, {
-        detail: "A detail",
-        status: 422 as HttpStatusCode,
-        errors: [{ code }]
-      });
+      handleMixPanelCustomTrackingIfNeeded(
+        422,
+        {
+          detail: "A detail",
+          status: 422 as HttpStatusCode,
+          errors: [{ code }]
+        },
+        "Some reason"
+      );
 
       expect(
         trackSendAarMandateCieNotRelatedToDelegatorError
       ).toHaveBeenCalledTimes(1);
       expect(trackSendAarMandateCieExpiredError).not.toHaveBeenCalled();
+      expect(trackSendAarMandateCieDataError).not.toHaveBeenCalled();
     }
   );
 
@@ -387,14 +400,22 @@ describe("handleMixPanelCustomTrackingIfNeeded", () => {
       errors: [{ code: "CIE_EXPIRED_ERROR" }]
     }
   ] as Array<{ status: 400 | 422 | 500; errors?: Array<{ code: string }> }>)(
-    "should not track any event for %o",
+    'should track "trackSendAarMandateCieDataError" event for %o',
     ({ status, errors }) => {
-      handleMixPanelCustomTrackingIfNeeded(status, {
-        detail: "A detail",
-        status: status as HttpStatusCode,
-        errors
-      });
+      const reason = "Some reason";
 
+      handleMixPanelCustomTrackingIfNeeded(
+        status,
+        {
+          detail: "A detail",
+          status: status as HttpStatusCode,
+          errors
+        },
+        reason
+      );
+
+      expect(trackSendAarMandateCieDataError).toHaveBeenCalledTimes(1);
+      expect(trackSendAarMandateCieDataError).toHaveBeenCalledWith(reason);
       expect(
         trackSendAarMandateCieNotRelatedToDelegatorError
       ).not.toHaveBeenCalled();
