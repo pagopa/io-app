@@ -26,7 +26,8 @@ const mockCredential: CredentialMetadata = {
   jwt: {
     issuedAt: "2024-09-30T07:32:49.000Z",
     expiration: "2025-09-30T07:32:50.000Z"
-  }
+  },
+  spec_version: "1.0.0"
 };
 
 describe("getProximityDetails", () => {

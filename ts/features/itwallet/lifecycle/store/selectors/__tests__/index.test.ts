@@ -77,7 +77,10 @@ describe("IT Wallet lifecycle selectors", () => {
           {
             credentialType: CredentialType.PID,
             credentialId: "dc_sd_jwt_PersonIdentificationData",
-            format: "dc+sd-jwt"
+            format: "dc+sd-jwt",
+            verification: {
+              assurance_level: "high"
+            }
           }
         ] as Array<CredentialMetadata>)
       ]);

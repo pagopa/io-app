@@ -17,6 +17,8 @@ import {
   IssuerConfiguration,
   RequestObject
 } from "./itwTypesUtils";
+import { WALLET_SPEC_VERSION } from "./constants";
+import { extractVerification } from "./itwCredentialUtils";
 import { Env } from "./environment";
 import { enrichErrorWithMetadata } from "./itwFailureUtils";
 
@@ -103,7 +105,7 @@ export type ObtainCredential = (args: {
   clientId: string;
   codeVerifier: string;
   issuerConf: IssuerConfiguration;
-};
+}) => Promise<ReadonlyArray<CredentialBundle>>;
 
 /**
  * Obtains a credential from the issuer.
@@ -128,7 +130,7 @@ export const obtainCredential: ObtainCredential = async ({
   clientId,
   codeVerifier,
   issuerConf
-}: ObtainCredentialParams) => {
+}) => {
   // Get WIA crypto context
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
@@ -227,7 +229,7 @@ type RequestAndParseCredential = (args: {
   clientId: string;
   env: Env;
   dPopCryptoContext: CryptoContext;
-};
+}) => Promise<CredentialBundle>;
 
 const requestAndParseCredential: RequestAndParseCredential = async ({
   issuerConf,
@@ -237,7 +239,7 @@ const requestAndParseCredential: RequestAndParseCredential = async ({
   clientId,
   dPopCryptoContext,
   env
-}: RequestAndParseCredentialParams) => {
+}) => {
   const { credential_configuration_id, credential_identifiers } = authDetails;
   const credentialKeyTag = uuidv4().toString();
   await generate(credentialKeyTag);
@@ -287,7 +289,13 @@ const requestAndParseCredential: RequestAndParseCredential = async ({
       jwt: {
         expiration: expiration.toISOString(),
         issuedAt: issuedAt?.toISOString()
-      }
+      },
+      spec_version: WALLET_SPEC_VERSION,
+      verification: extractVerification({
+        format,
+        credential,
+        parsedCredential
+      })
     },
     credential
   };

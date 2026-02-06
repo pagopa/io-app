@@ -133,6 +133,7 @@ export const MOCK_CREDENTIALS: Record<string, CredentialBundle> = {
           name: "verification.trust_framework"
         }
       }
-    }
+    },
+    spec_version: "1.0.0"
   }
 };
