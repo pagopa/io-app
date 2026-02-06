@@ -17,7 +17,7 @@ import {
   handleCredentialStoredAnalytics,
   handleCredentialRemovedAnalytics
 } from "../credentialAnalyticsHandlers";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 
 jest.mock("../../properties/propertyUpdaters", () => ({
@@ -27,8 +27,7 @@ jest.mock("../../properties/propertyUpdaters", () => ({
 
 const expirationClaim = { value: "2100-09-04", name: "exp" };
 const jwtExpiration = "2100-09-04T00:00:00.000Z";
-const mockedEid: StoredCredential = {
-  credential: "",
+const mockedEid: CredentialMetadata = {
   credentialType: CredentialType.PID,
   credentialId: "dc_sd_jwt_PersonIdentificationData",
   parsedCredential: {
@@ -36,14 +35,15 @@ const mockedEid: StoredCredential = {
   },
   format: "dc+sd-jwt",
   keyTag: "1",
-  issuerConf: {} as StoredCredential["issuerConf"],
+  issuerConf: {} as CredentialMetadata["issuerConf"],
   jwt: {
     issuedAt: "2024-09-30T07:32:49.000Z",
     expiration: jwtExpiration
-  }
+  },
+  spec_version: "1.0.0"
 };
-const mockedMdl: StoredCredential = {
-  credential: "",
+
+const mockedMdl: CredentialMetadata = {
   credentialType: CredentialType.DRIVING_LICENSE,
   credentialId: "dc_sd_jwt_mDL",
   parsedCredential: {
@@ -51,11 +51,12 @@ const mockedMdl: StoredCredential = {
   },
   format: "dc+sd-jwt",
   keyTag: "2",
-  issuerConf: {} as StoredCredential["issuerConf"],
+  issuerConf: {} as CredentialMetadata["issuerConf"],
   jwt: {
     issuedAt: "2024-09-30T07:32:49.000Z",
     expiration: jwtExpiration
-  }
+  },
+  spec_version: "1.0.0"
 };
 
 const store: DeepPartial<GlobalState> = {

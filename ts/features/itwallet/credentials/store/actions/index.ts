@@ -1,13 +1,17 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 
 /**
- * This action stores one or multiple credentials using the credential ID as key.
- * The new credential completely overwrites the previous one.
+ * This actions stores one or multiple credentials using the CredentialBundle payload:
+ * the metadata is stored in the Redux store and the raw credential is stored in the
+ * secure storage.
+ *
+ * Credentials are stored using the credential ID as key, the new credential completely
+ * overwrites the previous one.
  */
 export const itwCredentialsStore = createStandardAction(
   "ITW_CREDENTIALS_STORE"
-)<ReadonlyArray<StoredCredential>>();
+)<ReadonlyArray<CredentialMetadata>>();
 
 /**
  * @internal To properly remove a credential, dispatch `itwCredentialsRemoveByType`.
@@ -17,7 +21,7 @@ export const itwCredentialsStore = createStandardAction(
  */
 export const itwCredentialsRemove = createStandardAction(
   "ITW_CREDENTIALS_REMOVE"
-)<ReadonlyArray<StoredCredential>>();
+)<ReadonlyArray<CredentialMetadata>>();
 
 /**
  * Remove all credentials of the specified type. Used to fully clean
@@ -26,7 +30,7 @@ export const itwCredentialsRemove = createStandardAction(
  */
 export const itwCredentialsRemoveByType = createStandardAction(
   "ITW_CREDENTIALS_REMOVE_BY_TYPE"
-)<string>();
+)<CredentialMetadata["credentialType"]>();
 
 export type ItwCredentialsActions =
   | ActionType<typeof itwCredentialsStore>

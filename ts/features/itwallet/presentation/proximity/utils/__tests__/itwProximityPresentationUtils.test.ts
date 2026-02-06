@@ -4,16 +4,15 @@ import {
   getProximityDetails
 } from "../itwProximityPresentationUtils";
 import type { VerifierRequest } from "../itwProximityTypeUtils";
-import { StoredCredential } from "../../../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
 
 const mockDocType = "org.iso.18013.5.1.mDL";
-const mockCredential: StoredCredential = {
-  credential: "",
+const mockCredential: CredentialMetadata = {
   credentialType: "MDL",
   credentialId: "mso_mdoc_mDL",
   format: "mso_mdoc",
   keyTag: "ee1576b6-f5ba-4f49-94c4-507e62786ebc",
-  issuerConf: {} as StoredCredential["issuerConf"],
+  issuerConf: {} as CredentialMetadata["issuerConf"],
   parsedCredential: {
     "org.iso.18013.5.1.aamva:family_name": {
       name: { "en-US": "Family name", "it-IT": "Cognome" },
@@ -27,7 +26,8 @@ const mockCredential: StoredCredential = {
   jwt: {
     issuedAt: "2024-09-30T07:32:49.000Z",
     expiration: "2025-09-30T07:32:50.000Z"
-  }
+  },
+  spec_version: "1.0.0"
 };
 
 describe("getProximityDetails", () => {
@@ -53,7 +53,7 @@ describe("getProximityDetails", () => {
       }
     } as unknown as VerifierRequest;
 
-    const credentials: Record<string, StoredCredential> = {
+    const credentials: Record<string, CredentialMetadata> = {
       [mockDocType]: mockCredential
     };
 
@@ -93,7 +93,7 @@ describe("getProximityDetails", () => {
       }
     } as unknown as VerifierRequest;
 
-    const credentials: Record<string, StoredCredential> = {
+    const credentials: Record<string, CredentialMetadata> = {
       [mockDocType]: mockCredential
     };
 

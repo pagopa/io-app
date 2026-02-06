@@ -1,4 +1,3 @@
-import { useCallback, useRef } from "react";
 import {
   ContentWrapper,
   FeatureInfo,
@@ -13,6 +12,7 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
+import { useCallback, useRef } from "react";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
@@ -38,8 +38,8 @@ import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { ISSUER_MOCK_NAME } from "../../common/utils/itwMocksUtils";
 import {
-  RequestObject,
-  StoredCredential
+  CredentialMetadata,
+  RequestObject
 } from "../../common/utils/itwTypesUtils";
 import { generateItwIOMarkdownRules } from "../../common/utils/markdown";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
@@ -123,7 +123,7 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
 type ContentViewProps = {
   credentialType: string;
   requestedCredential: RequestObject;
-  eid: StoredCredential;
+  eid: CredentialMetadata;
 };
 
 /**

@@ -6,15 +6,14 @@ import {
 import { memo, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar.tsx";
-import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard.tsx";
 
 type ItwPresentationDetailsHeaderProps = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
 };
 
 /**
@@ -33,13 +32,9 @@ const ItwPresentationDetailsHeader = ({
   credential
 }: ItwPresentationDetailsHeaderProps) => {
   const { isExperimental } = useIOExperimentalDesign();
-  const itwFeaturesEnabled = useItwFeaturesEnabled(credential);
 
   const { backgroundColor, textColor, statusBarStyle } =
-    useThemeColorByCredentialType(
-      credential.credentialType as CredentialType,
-      itwFeaturesEnabled
-    );
+    useThemeColorByCredentialType(credential.credentialType as CredentialType);
 
   const headerContent = useMemo(() => {
     if (credentialsWithSkeumorphicCard.includes(credential.credentialType)) {

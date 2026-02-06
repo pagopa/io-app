@@ -1,14 +1,16 @@
 import { IOColors, Tag, useIOTheme } from "@pagopa/io-app-design-system";
-import { constNull, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { SdJwt, Mdoc } from "@pagopa/io-react-native-wallet";
 import I18n from "i18next";
 import { isBefore } from "date-fns";
 import { CredentialType } from "./itwMocksUtils";
 import {
+  CredentialBundle,
   CredentialFormat,
+  CredentialMetadata,
   ItwCredentialStatus,
-  StoredCredential
+  Verification
 } from "./itwTypesUtils";
 
 // Credentials that can be actively requested and obtained by the user
@@ -126,37 +128,52 @@ export const validCredentialStatuses: Array<ItwCredentialStatus> = [
   "jwtExpiring"
 ];
 
+type ExtractVerification = (args: {
+  format: CredentialMetadata["format"];
+  parsedCredential: CredentialMetadata["parsedCredential"];
+  credential: CredentialBundle["credential"];
+}) => Verification | undefined;
+
 /**
- * Extracts the verification claim from the SD-JWT,
- * checks whether the `assurance_level` field is equal to `"high"` or the
+ * Extracts the verification object from a stored credential based on its format.
+ * @param credential - The stored credential fields needed to extract verification
+ * @returns The verification object or undefined if extraction fails
+ */
+export const extractVerification: ExtractVerification = ({
+  format,
+  parsedCredential,
+  credential
+}) => {
+  try {
+    switch (format) {
+      case CredentialFormat.SD_JWT:
+        return SdJwt.getVerification(credential);
+      case CredentialFormat.MDOC:
+        return Mdoc.getVerificationFromParsedCredential(parsedCredential);
+      default:
+        return undefined;
+    }
+  } catch {
+    return undefined;
+  }
+};
+
+/**
+ * Checks whether the `assurance_level` field is equal to `"high"` or the
  * `trust_framework` field is equal to `"it_l2+document_proof"`,
  * and returns `true` only if one of these conditions is met.
  *
  * `"it_l2+document_proof"` indicates that the credential has been issued with
  * a substantial authentication (SPID, CieID) plus an MRTD PoP verification,
  *
- * @param sdJwt - The SD-JWT string to check
+ * @param metadata - The metadata of the credential to check
  * @returns boolean indicating if the credential is an ITW credential (L3)
  */
-export const isItwCredential = ({
-  format,
-  credential,
-  parsedCredential
-}: StoredCredential): boolean => {
-  const getVerificationByFormat = {
-    [CredentialFormat.SD_JWT]: () => SdJwt.getVerification(credential),
-    [CredentialFormat.MDOC]: () =>
-      Mdoc.getVerificationFromParsedCredential(parsedCredential),
-    [CredentialFormat.LEGACY_SD_JWT]: constNull
-  };
-  return pipe(
-    O.tryCatch(getVerificationByFormat[format as CredentialFormat]),
-    O.chain(O.fromNullable),
-    O.chainNullableK(
-      ({ assurance_level, trust_framework }) =>
-        assurance_level === "high" || trust_framework === "it_l2+document_proof"
-    ),
-    O.getOrElse(() => false)
+export const isItwCredential = (metadata: CredentialMetadata): boolean => {
+  const verification = metadata.verification;
+  return (
+    verification?.assurance_level === "high" ||
+    verification?.trust_framework === "it_l2+document_proof"
   );
 };
 

@@ -13,15 +13,13 @@ import {
   isMixpanelInstanceInitialized,
   registerSuperProperties
 } from "../../../../mixpanel";
-import { isItwAnalyticsCredential } from "../utils";
+import { isItwAnalyticsCredential, mapPIDStatusToMixpanel } from "../utils";
+import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
 import {
   ItwProfileProperties,
   forceUpdateItwProfileProperties
 } from "./profileProperties";
-import {
-  buildItwBaseProperties,
-  getPIDMixpanelStatus
-} from "./basePropertyBuilder";
+import { buildItwBaseProperties } from "./basePropertyBuilder";
 import {
   ItwSuperProperties,
   buildItwSuperProperties,
@@ -66,14 +64,15 @@ export const updateItwStatusAndPIDProperties = (state: GlobalState) => {
     return;
   }
 
-  const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
-  const eIDStatus = !isItwL3 ? getPIDMixpanelStatus(state, false) : undefined;
-  const pidStatus = getPIDMixpanelStatus(state, true);
+  const pidStatus = itwCredentialsEidStatusSelector(state);
 
   const baseProps = {
     ITW_STATUS_V2: authLevel,
-    ITW_PID: pidStatus
+    ITW_PID: mapPIDStatusToMixpanel(pidStatus)
   };
+
+  const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
+  const eIDStatus = !isItwL3 ? mapPIDStatusToMixpanel(pidStatus) : undefined;
 
   forceUpdateItwProfileProperties({
     ...baseProps,

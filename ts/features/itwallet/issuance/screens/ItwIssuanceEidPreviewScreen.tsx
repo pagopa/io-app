@@ -20,22 +20,22 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { identificationRequest } from "../../../identification/store/actions";
-import {
-  trackCredentialPreview,
-  trackItwExit,
-  trackItwRequestSuccess,
-  trackSaveCredentialToWallet
-} from "../analytics";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { isItwCredential } from "../../common/utils/itwCredentialUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
   selectEidOption,
   selectIdentification
 } from "../../machine/eid/selectors";
+import {
+  trackCredentialPreview,
+  trackItwExit,
+  trackItwRequestSuccess,
+  trackSaveCredentialToWallet
+} from "../analytics";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 
 export const ItwIssuanceEidPreviewScreen = () => {
@@ -51,13 +51,13 @@ export const ItwIssuanceEidPreviewScreen = () => {
       // A None eID cannot be stored in the context, as any issuance failure causes the machine to transition
       // to the Failure state.
       () => <LoadingScreenContent title={I18n.t("global.genericWaiting")} />,
-      eid => <ContentView eid={eid} />
+      eid => <ContentView eid={eid.metadata} />
     )
   );
 };
 
 type ContentViewProps = {
-  eid: StoredCredential;
+  eid: CredentialMetadata;
 };
 
 /**

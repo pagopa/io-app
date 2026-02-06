@@ -11,14 +11,15 @@ import {
 } from "../../../../../components/ui/IOScrollView.tsx";
 import { ButtonBlockProps } from "../../../../../components/ui/utils/buttons.ts";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
-import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
+import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useHeaderPropsByCredentialType } from "../../../common/utils/itwStyleUtils";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors/index.ts";
 
 export type CredentialCtaProps = ButtonBlockProps;
 
 export type ItwPresentationDetailsScreenBaseProps = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
   children?: ReactNode;
   ctaProps?: CredentialCtaProps;
 };
@@ -30,15 +31,12 @@ const ItwPresentationDetailsScreenBase = ({
   children,
   ctaProps
 }: ItwPresentationDetailsScreenBaseProps) => {
+  const itwFeaturesEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
-  const itwFeaturesEnabled = useItwFeaturesEnabled(credential);
   const toast = useIOToast();
   const scrollTranslationY = useSharedValue(0);
 
-  const headerProps = useHeaderPropsByCredentialType(
-    credential.credentialType,
-    itwFeaturesEnabled
-  );
+  const headerProps = useHeaderPropsByCredentialType(credential.credentialType);
 
   // Support requests for ITW credentials are temporarily disabled until
   // final release.

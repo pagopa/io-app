@@ -1,12 +1,12 @@
 import { WalletCard } from "../../../wallet/types";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 import {
-  isMultiLevelCredential,
-  StoredCredential
+  CredentialMetadata,
+  isMultiLevelCredential
 } from "../../common/utils/itwTypesUtils";
 
 export const mapCredentialToWalletCard = (
-  credential: StoredCredential
+  credential: CredentialMetadata
 ): WalletCard => ({
   key: `ITW_${credential.credentialType}`,
   type: "itw",

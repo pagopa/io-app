@@ -13,9 +13,10 @@ import {
   ItwStoredCredentialsMocks
 } from "../../../common/utils/itwMocksUtils";
 import {
+  CredentialBundle,
+  CredentialMetadata,
   IssuerConfiguration,
-  RequestObject,
-  StoredCredential
+  RequestObject
 } from "../../../common/utils/itwTypesUtils";
 import { ItwTags } from "../../tags";
 import {
@@ -91,7 +92,7 @@ const T_REQUESTED_CREDENTIAL: RequestObject = {
   scope: "",
   state: ""
 };
-const T_STORED_STATUS_ASSERTION: StoredCredential["storedStatusAssertion"] = {
+const T_STORED_STATUS_ASSERTION: CredentialMetadata["storedStatusAssertion"] = {
   credentialStatus: "valid",
   statusAssertion: "abcdefghijklmnopqrstuvwxyz",
   parsedStatusAssertion: ItwStatusAssertionMocks.mdl
@@ -156,7 +157,7 @@ describe("itwCredentialIssuanceMachine", () => {
         ObtainCredentialActorInput
       >(obtainCredential),
       obtainStatusAssertion: fromPromise<
-        Array<StoredCredential>,
+        ReadonlyArray<CredentialBundle>,
         ObtainStatusAssertionActorInput
       >(obtainStatusAssertion)
     },
@@ -301,8 +302,11 @@ describe("itwCredentialIssuanceMachine", () => {
       expect.objectContaining<Partial<Context>>({
         credentials: [
           {
-            ...ItwStoredCredentialsMocks.mdl,
-            storedStatusAssertion: T_STORED_STATUS_ASSERTION
+            credential: "",
+            metadata: {
+              ...ItwStoredCredentialsMocks.mdl,
+              storedStatusAssertion: T_STORED_STATUS_ASSERTION
+            }
           }
         ]
       })
@@ -394,12 +398,14 @@ describe("itwCredentialIssuanceMachine", () => {
       itwCredentialIssuanceMachine
     ).getSnapshot();
 
-    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+    const snapshot = _.merge(undefined, initialSnapshot, {
       value: "DisplayingCredentialPreview",
       context: {
-        credentials: [ItwStoredCredentialsMocks.mdl]
+        credentials: [
+          { credential: "", metadata: ItwStoredCredentialsMocks.mdl }
+        ]
       }
-    } as MachineSnapshot);
+    });
 
     const actor = createActor(mockedMachine, {
       snapshot
@@ -410,7 +416,7 @@ describe("itwCredentialIssuanceMachine", () => {
       "DisplayingCredentialPreview"
     );
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
-      credentials: [ItwStoredCredentialsMocks.mdl]
+      credentials: [{ credential: "", metadata: ItwStoredCredentialsMocks.mdl }]
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([]));
 

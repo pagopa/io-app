@@ -4,35 +4,35 @@ import {
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useState, useLayoutEffect, memo, useCallback } from "react";
-import { StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
+import { memo, useCallback, useLayoutEffect, useState } from "react";
+import { StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
+import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
 import {
   ItwSkeumorphicCard,
   SKEUMORPHIC_CARD_ASPECT_RATIO
 } from "../../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCard/FlipGestureDetector.tsx";
-import {
-  ItwCredentialStatus,
-  StoredCredential
-} from "../../../common/utils/itwTypesUtils.ts";
-import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
-import { ItwPresentationCredentialCardFlipButton } from "../components/ItwPresentationCredentialCardFlipButton.tsx";
-import { trackCredentialCardModal } from "../analytics";
-import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
-import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
-import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import { itwSetClaimValuesHidden } from "../../../common/store/actions/preferences.ts";
-import { ItwPresentationCredentialCardHideValuesButton } from "../components/ItwPresentationCredentialCardHideValuesButton.tsx";
+import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
+import {
+  CredentialMetadata,
+  ItwCredentialStatus
+} from "../../../common/utils/itwTypesUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
+import { trackCredentialCardModal } from "../analytics";
+import { ItwPresentationCredentialCardFlipButton } from "../components/ItwPresentationCredentialCardFlipButton.tsx";
+import { ItwPresentationCredentialCardHideValuesButton } from "../components/ItwPresentationCredentialCardHideValuesButton.tsx";
 
 export type ItwPresentationCredentialCardModalNavigationParams = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
   status: ItwCredentialStatus;
 };
 

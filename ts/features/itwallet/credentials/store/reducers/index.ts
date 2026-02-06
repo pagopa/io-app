@@ -2,8 +2,8 @@ import { createMigrate, PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { isDevEnv } from "../../../../../utils/environment";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import createSecureStorage from "../../../../../store/storages/secureStorage";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { itwCredentialsRemove, itwCredentialsStore } from "../actions";
 import {
@@ -11,7 +11,7 @@ import {
   itwCredentialsStateMigrations
 } from "./migrations";
 
-type CredentialsRecord = { [credentialKey: string]: StoredCredential };
+type CredentialsRecord = { [credentialKey: string]: CredentialMetadata };
 
 export type ItwCredentialsState = {
   credentials: CredentialsRecord;

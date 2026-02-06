@@ -1,4 +1,4 @@
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { EidIssuanceMode } from "../eid/context";
 import { Input } from "./input";
 
@@ -10,11 +10,11 @@ export type Context = {
   /**
    * The upgrade PID credential
    */
-  pid: StoredCredential;
+  pid: CredentialMetadata;
   /**
    * Credentials that must be upgraded to L3
    */
-  credentials: ReadonlyArray<StoredCredential>;
+  credentials: ReadonlyArray<CredentialMetadata>;
   /**
    * The index of the current credential being processed
    */
@@ -22,7 +22,7 @@ export type Context = {
   /**
    * Credentials that failed the upgrade process
    */
-  failedCredentials: ReadonlyArray<StoredCredential>;
+  failedCredentials: ReadonlyArray<CredentialMetadata>;
   /**
    * The issuance mode considered by the credential upgrade machine.
    * - "upgrade": upgrade from Documenti su IO to IT Wallet, upgrading also owned credentials.

@@ -1,26 +1,25 @@
+import { IOColors } from "@pagopa/io-app-design-system";
 import { fireEvent } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
-import configureMockStore from "redux-mock-store";
-import { IOColors } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import configureMockStore from "redux-mock-store";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { Config } from "../../../../definitions/content/Config";
 import {
   LevelEnum,
   SectionStatus
 } from "../../../../definitions/content/SectionStatus";
-
+import { PersistedFeaturesState } from "../../../features/common/store/reducers";
+import { ItWalletState } from "../../../features/itwallet/common/store/reducers";
+import { CredentialType } from "../../../features/itwallet/common/utils/itwMocksUtils";
+import { CredentialMetadata } from "../../../features/itwallet/common/utils/itwTypesUtils";
+import { ItwCredentialsState } from "../../../features/itwallet/credentials/store/reducers";
+import { setLocale } from "../../../i18n";
 import { SectionStatusKey } from "../../../store/reducers/backendStatus/sectionStatus";
+import { GlobalState } from "../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import { openWebUrl } from "../../../utils/url";
 import SectionStatusComponent from "../index";
-import { PersistedFeaturesState } from "../../../features/common/store/reducers";
-import { ItWalletState } from "../../../features/itwallet/common/store/reducers";
-import { GlobalState } from "../../../store/reducers/types";
-import { CredentialType } from "../../../features/itwallet/common/utils/itwMocksUtils";
-import { StoredCredential } from "../../../features/itwallet/common/utils/itwTypesUtils";
-import { ItwCredentialsState } from "../../../features/itwallet/credentials/store/reducers";
-import { setLocale } from "../../../i18n";
 
 jest.mock("../../../utils/url");
 
@@ -65,7 +64,7 @@ const mockSectionStatusState = (
     features: {
       itWallet: {
         credentials: {
-          credentials: { [CredentialType.PID]: {} as StoredCredential }
+          credentials: { [CredentialType.PID]: {} as CredentialMetadata }
         } as ItwCredentialsState,
         issuance: { integrityKeyTag: O.some("key-tag") }
       } as ItWalletState
@@ -187,7 +186,7 @@ describe("Section Status Component should return null", () => {
         features: {
           itWallet: {
             credentials: {
-              credentials: { [CredentialType.PID]: {} as StoredCredential }
+              credentials: { [CredentialType.PID]: {} as CredentialMetadata }
             } as ItwCredentialsState,
             issuance: { integrityKeyTag: O.some("key-tag") }
           } as ItWalletState

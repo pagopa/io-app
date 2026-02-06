@@ -19,11 +19,11 @@ import {
 import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import {
   ParsedCredential,
-  StoredCredential
+  CredentialMetadata
 } from "../../../../common/utils/itwTypesUtils";
 
 const getStateWithCredentials = (credentials: {
-  [key: string]: Partial<StoredCredential>;
+  [key: string]: Partial<CredentialMetadata>;
 }) => {
   const defaultState = appReducer(undefined, applicationChangeState("active"));
   return _.merge(undefined, defaultState, {
@@ -37,8 +37,7 @@ const getStateWithCredentials = (credentials: {
   });
 };
 
-const mockedEid: StoredCredential = {
-  credential: "",
+const mockedEid: CredentialMetadata = {
   credentialType: CredentialType.PID,
   credentialId: "dc_sd_jwt_PersonIdentificationData",
   parsedCredential: {
@@ -52,53 +51,54 @@ const mockedEid: StoredCredential = {
   },
   format: "dc+sd-jwt",
   keyTag: "9020c6f8-01be-4236-9b6f-834af9dcbc63",
-  issuerConf: {} as StoredCredential["issuerConf"],
+  issuerConf: {} as CredentialMetadata["issuerConf"],
   jwt: {
     issuedAt: "2024-09-30T07:32:49.000Z",
     expiration: "2025-09-30T07:32:50.000Z"
-  }
+  },
+  spec_version: "1.0.0"
 };
 
-const mockedDrivingLicense: StoredCredential = {
-  credential: "",
+const mockedDrivingLicense: CredentialMetadata = {
   credentialType: CredentialType.DRIVING_LICENSE,
   credentialId: "dc_sd_jwt_mDL",
   parsedCredential: {},
   format: "dc+sd-jwt",
   keyTag: "d191ad52-2674-46f3-9610-6eb7bd9146a3",
-  issuerConf: {} as StoredCredential["issuerConf"],
+  issuerConf: {} as CredentialMetadata["issuerConf"],
   jwt: {
     issuedAt: "2024-09-30T07:32:49.000Z",
     expiration: "2025-09-30T07:32:50.000Z"
-  }
+  },
+  spec_version: "1.0.0"
 };
 
-const mockedMdocDrivingLicense: StoredCredential = {
-  credential: "",
+const mockedMdocDrivingLicense: CredentialMetadata = {
   credentialType: CredentialType.DRIVING_LICENSE,
   credentialId: "mso_mdoc_mDL",
   parsedCredential: {},
   format: "mso_mdoc",
   keyTag: "d191ad52-2674-46f3-9610-6eb7bd9146a3",
-  issuerConf: {} as StoredCredential["issuerConf"],
+  issuerConf: {} as CredentialMetadata["issuerConf"],
   jwt: {
     issuedAt: "2024-09-30T07:32:49.000Z",
     expiration: "2025-09-30T07:32:50.000Z"
-  }
+  },
+  spec_version: "1.0.0"
 };
 
-const mockedDisabilityCard: StoredCredential = {
-  credential: "",
+const mockedDisabilityCard: CredentialMetadata = {
   credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
   credentialId: "dc_sd_jwt_EuropeanDisabilityCard",
   parsedCredential: {},
   format: "dc+sd-jwt",
   keyTag: "07ccc69a-d1b5-4c3c-9955-6a436d0c3710",
-  issuerConf: {} as StoredCredential["issuerConf"],
+  issuerConf: {} as CredentialMetadata["issuerConf"],
   jwt: {
     issuedAt: "2024-09-30T07:32:49.000Z",
     expiration: "2025-09-30T07:32:50.000Z"
-  }
+  },
+  spec_version: "1.0.0"
 };
 
 describe("itwCredentialsByTypeSelector", () => {

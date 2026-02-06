@@ -12,7 +12,7 @@ import {
 import { assert } from "../../../../utils/assert.ts";
 import { trackItWalletIntroScreen } from "../../analytics";
 import {
-  StoredCredential,
+  CredentialBundle,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
@@ -103,7 +103,7 @@ export const itwEidIssuanceMachine = setup({
      */
 
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
-    loadPidIntoContext: notImplemented,
+
     /**
      * Save the final redirect url in the machine context for later reuse.
      * This action is the same for the three identification methods.
@@ -178,7 +178,7 @@ export const itwEidIssuanceMachine = setup({
      * PID issuance actors
      */
 
-    requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
+    requestEid: fromPromise<CredentialBundle, RequestEidActorParams>(
       notImplemented
     ),
 
@@ -473,7 +473,6 @@ export const itwEidIssuanceMachine = setup({
       always: [
         {
           guard: "hasLegacyCredentials",
-          actions: "loadPidIntoContext",
           target: "#itwEidIssuanceMachine.CredentialsUpgrade"
         },
         {
@@ -1162,7 +1161,7 @@ export const itwEidIssuanceMachine = setup({
               assert(context.mode, "Issuance mode must be defined");
 
               return {
-                pid: context.eid,
+                pid: context.eid.metadata,
                 walletInstanceAttestation:
                   context.walletInstanceAttestation?.jwt,
                 credentials: context.legacyCredentials,
