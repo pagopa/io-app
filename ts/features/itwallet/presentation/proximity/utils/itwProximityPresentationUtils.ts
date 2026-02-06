@@ -1,17 +1,20 @@
+import { assert } from "../../../../../utils/assert";
 import {
   parseClaims,
   WellKnownClaim
 } from "../../../common/utils/itwClaimsUtils";
-import { assert } from "../../../../../utils/assert";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { WIA_KEYTAG } from "../../../common/utils/itwCryptoContextUtils";
+import {
+  CredentialBundle,
+  CredentialMetadata
+} from "../../../common/utils/itwTypesUtils";
+import { TimeoutError, UntrustedRpError } from "./itwProximityErrors";
 import type {
   AcceptedFields,
   ProximityDetails,
   RequestedDocument,
   VerifierRequest
 } from "./itwProximityTypeUtils";
-import { TimeoutError, UntrustedRpError } from "./itwProximityErrors";
 
 const WIA_DOC_TYPE = "org.iso.18013.5.1.IT.WalletAttestation";
 
@@ -37,7 +40,7 @@ export const promiseWithTimeout = <T>(
  */
 export const getProximityDetails = (
   request: VerifierRequest["request"],
-  credentialsByType: Record<string, StoredCredential | undefined>
+  credentialsByType: Record<string, CredentialMetadata | undefined>
 ): ProximityDetails => {
   // Exclude the WIA document type from the request
   const { [WIA_DOC_TYPE]: _, ...rest } = request;
@@ -87,7 +90,7 @@ export const getProximityDetails = (
  */
 export const getDocuments = (
   request: VerifierRequest["request"],
-  credentialsByType: Record<string, StoredCredential | undefined>,
+  credentialsByType: Record<string, CredentialBundle | undefined>,
   wiaMdoc: string
 ): Array<RequestedDocument> => {
   // Exclude the WIA document type from the request
@@ -100,7 +103,7 @@ export const getDocuments = (
     assert(credential, `Credential not found for docType: ${docType}`);
 
     return {
-      alias: credential.keyTag,
+      alias: credential.metadata.keyTag,
       docType,
       issuerSignedContent: credential.credential
     };

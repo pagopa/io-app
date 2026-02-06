@@ -1,17 +1,17 @@
-import { memo } from "react";
 import { Alert } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { memo } from "react";
 import { useIOSelector } from "../../../../../store/hooks.ts";
-import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import {
-  ItwCredentialStatus,
-  StoredCredential
+  CredentialMetadata,
+  ItwCredentialStatus
 } from "../../../common/utils/itwTypesUtils.ts";
+import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 
 type Props = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
 };
 
 const validStates: Array<ItwCredentialStatus | undefined> = [

@@ -11,7 +11,8 @@ import {
 import { idps } from "../../../../../utils/idps";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import {
-  StoredCredential,
+  CredentialBundle,
+  CredentialMetadata,
   WalletInstanceAttestations
 } from "../../../common/utils/itwTypesUtils";
 import { ItwTags } from "../../tags";
@@ -146,8 +147,7 @@ describe("itwEidIssuanceMachine", () => {
       freezeSimplifiedActivationRequirements,
       clearSimplifiedActivationRequirements,
       trackItwIdAuthenticationCompleted,
-      trackItwIdVerifiedDocument,
-      loadPidIntoContext: assign(loadPidIntoContext)
+      trackItwIdVerifiedDocument
     },
     actors: {
       verifyTrustFederation: fromPromise<void>(verifyTrustFederation),
@@ -158,7 +158,7 @@ describe("itwEidIssuanceMachine", () => {
         GetWalletAttestationActorParams
       >(getWalletAttestation),
       getCieStatus: fromPromise<CieContext>(getCieStatus),
-      requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
+      requestEid: fromPromise<CredentialBundle, RequestEidActorParams>(
         requestEid
       ),
       startAuthFlow: fromPromise<
@@ -438,7 +438,7 @@ describe("itwEidIssuanceMachine", () => {
       authenticationContext: expect.objectContaining({
         callbackUrl: "http://test.it"
       }),
-      eid: ItwStoredCredentialsMocks.eid
+      eid: { credential: "", metadata: ItwStoredCredentialsMocks.eid }
     });
 
     /**
@@ -1393,7 +1393,7 @@ describe("itwEidIssuanceMachine", () => {
       authenticationContext: expect.objectContaining({
         callbackUrl: "http://test.it"
       }),
-      eid: ItwStoredCredentialsMocks.eid
+      eid: { credential: "", metadata: ItwStoredCredentialsMocks.eid }
     });
   });
 
@@ -1499,10 +1499,10 @@ describe("itwEidIssuanceMachine", () => {
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
-      eid: ItwStoredCredentialsMocks.eid,
+      eid: { credential: "", metadata: ItwStoredCredentialsMocks.eid },
       legacyCredentials: [
         ItwStoredCredentialsMocks.mdl
-      ] as ReadonlyArray<StoredCredential>
+      ] as ReadonlyArray<CredentialMetadata>
     };
 
     const baseSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
@@ -1796,13 +1796,13 @@ describe("itwEidIssuanceMachine", () => {
       value: { Issuance: "DisplayingPreview" },
       context: {
         mode: "upgrade",
-        eid: ItwStoredCredentialsMocks.eid,
+        eid: { credential: "", metadata: ItwStoredCredentialsMocks.eid },
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
         level: "l3",
         legacyCredentials: [
           ItwStoredCredentialsMocks.mdl
-        ] as ReadonlyArray<StoredCredential>
+        ] as ReadonlyArray<CredentialMetadata>
       }
     } as MachineSnapshot);
 
@@ -1837,7 +1837,7 @@ describe("itwEidIssuanceMachine", () => {
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
         level: "l3",
-        legacyCredentials: [] as ReadonlyArray<StoredCredential>
+        legacyCredentials: [] as ReadonlyArray<CredentialMetadata>
       }
     } as MachineSnapshot);
 
@@ -1933,7 +1933,7 @@ describe("itwEidIssuanceMachine", () => {
         level: "l3",
         legacyCredentials: [
           ItwStoredCredentialsMocks.mdl
-        ] as ReadonlyArray<StoredCredential>
+        ] as ReadonlyArray<CredentialMetadata>
       }
     });
 

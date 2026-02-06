@@ -13,6 +13,7 @@ import {
   ItwStoredCredentialsMocks
 } from "../../../common/utils/itwMocksUtils";
 import {
+  CredentialBundle,
   CredentialMetadata,
   IssuerConfiguration,
   RequestObject
@@ -156,7 +157,7 @@ describe("itwCredentialIssuanceMachine", () => {
         ObtainCredentialActorInput
       >(obtainCredential),
       obtainStatusAssertion: fromPromise<
-        Array<CredentialMetadata>,
+        ReadonlyArray<CredentialBundle>,
         ObtainStatusAssertionActorInput
       >(obtainStatusAssertion)
     },
@@ -301,8 +302,11 @@ describe("itwCredentialIssuanceMachine", () => {
       expect.objectContaining<Partial<Context>>({
         credentials: [
           {
-            ...ItwStoredCredentialsMocks.mdl,
-            storedStatusAssertion: T_STORED_STATUS_ASSERTION
+            credential: "",
+            metadata: {
+              ...ItwStoredCredentialsMocks.mdl,
+              storedStatusAssertion: T_STORED_STATUS_ASSERTION
+            }
           }
         ]
       })
@@ -397,7 +401,9 @@ describe("itwCredentialIssuanceMachine", () => {
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: "DisplayingCredentialPreview",
       context: {
-        credentials: [ItwStoredCredentialsMocks.mdl]
+        credentials: [
+          { credential: "", metadata: ItwStoredCredentialsMocks.mdl }
+        ]
       }
     } as MachineSnapshot);
 
@@ -410,7 +416,7 @@ describe("itwCredentialIssuanceMachine", () => {
       "DisplayingCredentialPreview"
     );
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
-      credentials: [ItwStoredCredentialsMocks.mdl]
+      credentials: [{ credential: "", metadata: ItwStoredCredentialsMocks.mdl }]
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([]));
 

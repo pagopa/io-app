@@ -12,6 +12,7 @@ import {
   RelyingPartyConfiguration
 } from "../utils/itwRemoteTypeUtils";
 import {
+  CredentialBundle,
   CredentialFormat,
   RequestObject,
   WalletInstanceAttestations
@@ -267,6 +268,9 @@ export const createRemoteActorsImplementation = (
 };
 
 const prepareCredentialsForDcqlEvaluation = (
-  credentials: Array<Pick<StoredCredential, "keyTag" | "credential">>
+  credentials: ReadonlyArray<CredentialBundle>
 ): CredentialsSdJwt =>
-  credentials.map(c => [createCryptoContextFor(c.keyTag), c.credential]);
+  credentials.map(c => [
+    createCryptoContextFor(c.metadata.keyTag),
+    c.credential
+  ]);

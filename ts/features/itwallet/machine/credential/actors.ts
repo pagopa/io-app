@@ -148,7 +148,8 @@ export const createCredentialIssuanceActorsImplementation = (
       issuerConf,
       clientId,
       codeVerifier,
-      pid: eid.value
+      pidKeyTag: eid.value.keyTag,
+      pid: pidCredential
     });
   });
 

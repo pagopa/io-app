@@ -50,7 +50,7 @@ export type Context = {
   /**
    * Obtained credentials from the issuer.
    */
-  credentials: Array<CredentialBundle> | undefined;
+  credentials: ReadonlyArray<CredentialBundle> | undefined;
   /**
    * The failure that occurred during the credential issuance process, if any.
    */

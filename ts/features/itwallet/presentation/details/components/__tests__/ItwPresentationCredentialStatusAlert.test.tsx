@@ -5,8 +5,8 @@ import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import {
-  ItwCredentialStatus,
-  StoredCredential
+  CredentialMetadata,
+  ItwCredentialStatus
 } from "../../../../common/utils/itwTypesUtils";
 import * as selectors from "../../../../credentials/store/selectors";
 import { ItwCredentialIssuanceMachineProvider } from "../../../../machine/credential/provider";
@@ -100,8 +100,7 @@ describe("ItwPresentationCredentialStatusAlert", () => {
 });
 
 function renderComponent() {
-  const mockedMdl: StoredCredential = {
-    credential: "",
+  const mockedMdl: CredentialMetadata = {
     credentialType: "mDL",
     credentialId: "dc_sd_jwt_mDL",
     parsedCredential: {
@@ -109,7 +108,7 @@ function renderComponent() {
     },
     format: "dc+sd-jwt",
     keyTag: "1",
-    issuerConf: {} as StoredCredential["issuerConf"],
+    issuerConf: {} as CredentialMetadata["issuerConf"],
     jwt: {
       issuedAt: "2024-09-30T07:32:49.000Z",
       expiration: "2100-09-04T00:00:00.000Z"

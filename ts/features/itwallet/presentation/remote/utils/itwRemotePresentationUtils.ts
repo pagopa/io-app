@@ -75,7 +75,7 @@ export const enrichPresentationDetails = (
     const credentialType = getCredentialTypeByVct(details.vct);
     const credential = credentialType && credentialsByType[credentialType];
 
-    // When the credential is not found, it is not available as a `StoredCredential`, so we hide it from the user.
+    // When the credential is not found, it is not available as a `CredentialMetadata`, so we hide it from the user.
     // The raw credential is still used for the presentation. Currently this only happens for the Wallet Attestation.
     if (!credential) {
       return {

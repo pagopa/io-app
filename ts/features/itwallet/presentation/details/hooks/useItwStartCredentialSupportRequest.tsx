@@ -1,20 +1,20 @@
 import { useCallback } from "react";
-import { trackWalletCredentialSupport } from "../analytics";
-import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
 import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
 import { useStartSupportRequest } from "../../../../../hooks/useStartSupportRequest.ts";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
-import { FAQsCategoriesType } from "../../../../../utils/faq.ts";
 import { useIOSelector } from "../../../../../store/hooks";
+import { FAQsCategoriesType } from "../../../../../utils/faq.ts";
+import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { trackWalletCredentialSupport } from "../analytics";
 /**
  *
- * @param {StoredCredential} credential A valid wallet credential
+ * @param {CredentialMetadata} credential A valid wallet credential
  * @param {Array<FAQsCategoriesType>} faqCategories An array of FAQ categories (defaults to [])
  * @returns A utility function which tracks and starts the support request
  */
 export const useItwStartCredentialSupportRequest = (
-  credential: StoredCredential,
+  credential: CredentialMetadata,
   faqCategories: Array<FAQsCategoriesType> = []
 ) => {
   const startSupportRequest = useOfflineToastGuard(

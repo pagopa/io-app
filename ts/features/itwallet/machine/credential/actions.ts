@@ -127,11 +127,13 @@ export const createCredentialIssuanceActionsImplementation = (
     CredentialIssuanceEvents
   >) => {
     assert(context.credentialType, "credentialType is undefined");
-    assert(context.credentials, "credential is undefined");
+    assert(context.credentials, "credentials is undefined");
     // Removes any credentials with thye same type stored in the wallet
     store.dispatch(itwCredentialsRemoveByType(context.credentialType));
     // Stores the new obtained credentials
-    store.dispatch(itwCredentialsStore(context.credentials));
+    store.dispatch(
+      itwCredentialsStore(context.credentials.map(c => c.metadata))
+    );
   },
 
   trackStartAddCredential: ({

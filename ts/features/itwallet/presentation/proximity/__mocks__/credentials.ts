@@ -132,8 +132,8 @@ export const MOCK_CREDENTIALS: Record<string, CredentialBundle> = {
           value: "eidas",
           name: "verification.trust_framework"
         }
-      }
-    },
-    spec_version: "1.0.0"
+      },
+      spec_version: "1.0.0"
+    }
   }
 };

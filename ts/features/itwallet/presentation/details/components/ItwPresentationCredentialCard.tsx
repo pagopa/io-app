@@ -14,7 +14,7 @@ import { ItwSkeumorphicCard } from "../../../common/components/ItwSkeumorphicCar
 import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCard/FlipGestureDetector.tsx";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
@@ -23,7 +23,7 @@ import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialS
 import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton.tsx";
 
 type Props = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
 };
 
 /**
