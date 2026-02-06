@@ -744,7 +744,7 @@ type ClaimDisplayValue =
 /**
  * Converts a driving privilege claim into a list of displayable claims.
  * This is used to present detailed information in the claim details bottom sheet.
- * @param p - The driving privilege claim to convert.
+ * @param drivingPrivilege - The driving privilege claim to convert.
  * @returns A list of claims formatted for display purposes.
  */
 export const drivingPrivilegeToClaims = (
