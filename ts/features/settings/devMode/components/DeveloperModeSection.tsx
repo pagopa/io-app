@@ -25,15 +25,13 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { setDebugModeEnabled } from "../../../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
-  preferencesPagoPaTestEnvironmentSetEnabled,
-  preferencesPnTestEnvironmentSetEnabled
+  preferencesPagoPaTestEnvironmentSetEnabled
 } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
 import {
   isIdPayLocallyEnabledSelector,
-  isPagoPATestEnabledSelector,
-  isPnTestEnabledSelector
+  isPagoPATestEnabledSelector
 } from "../../../../store/reducers/persistedPreferences";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { getDeviceId } from "../../../../utils/device";
@@ -412,6 +410,13 @@ const PlaygroundsSection = () => {
           screen: AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN
         });
       }
+    },
+    {
+      value: "SEND",
+      onPress: () =>
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.SEND_PLAYGROUND
+        })
     }
   ];
 
@@ -462,7 +467,6 @@ const DeveloperTestEnvironmentSection = ({
 }) => {
   const dispatch = useIODispatch();
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
-  const isPnTestEnabled = useIOSelector(isPnTestEnabledSelector);
   const isIdPayTestEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
   const isActiveSessionLoginLocallyEnabled = useIOSelector(
     isActiveSessionLoginLocallyEnabledSelector
@@ -501,12 +505,6 @@ const DeveloperTestEnvironmentSection = ({
       );
       handleShowModal();
     }
-  };
-
-  const onPnEnvironmentToggle = (enabled: boolean) => {
-    dispatch(
-      preferencesPnTestEnvironmentSetEnabled({ isPnTestEnabled: enabled })
-    );
   };
 
   const onIdPayTestToggle = (enabled: boolean) => {
@@ -551,11 +549,6 @@ const DeveloperTestEnvironmentSection = ({
       value: isPagoPATestEnabled,
       onSwitchValueChange: onPagoPAEnvironmentToggle,
       disabled: isLocalEnv
-    },
-    {
-      label: I18n.t("profile.main.pnEnvironment.pnEnv"),
-      value: isPnTestEnabled,
-      onSwitchValueChange: onPnEnvironmentToggle
     },
     {
       label: I18n.t("profile.main.idpay.idpayTest"),
