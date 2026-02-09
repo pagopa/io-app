@@ -341,7 +341,6 @@ exports[`CieCardReaderScreenWrapper Should match the snapshot 1`] = `
                       <View
                         style={
                           {
-                            "backgroundColor": "#FFFFFF",
                             "flex": 1,
                           }
                         }
