@@ -67,6 +67,10 @@ export interface SmartBackendOptions {
   localResources: typeof resources; // La struttura standard delle risorse i18next
 }
 
+const DEFAULT_SMART_BACKEND_OPTIONS: SmartBackendOptions = {
+  localResources: resources
+};
+
 // Custom backend plugin for i18next that first loads translations from local resources and then tries to fetch updated translations from a remote repository.
 // If the remote fetch fails, it falls back to the local resources without affecting the user experience.
 class SmartI18nextBackend implements BackendModule<SmartBackendOptions> {
@@ -78,7 +82,7 @@ class SmartI18nextBackend implements BackendModule<SmartBackendOptions> {
 
   constructor(
     services: Services,
-    options: SmartBackendOptions = { localResources: resources }
+    options: SmartBackendOptions = DEFAULT_SMART_BACKEND_OPTIONS
   ) {
     this.init(services, options, {});
   }
