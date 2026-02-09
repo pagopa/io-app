@@ -2,6 +2,7 @@ import {
   Avatar,
   BodySmall,
   H2,
+  hexToRgba,
   HSpacer,
   IOColors,
   IOSkeleton,
@@ -16,7 +17,7 @@ import {
   useLayoutEffect,
   useMemo
 } from "react";
-import { ImageURISource, StyleSheet, View } from "react-native";
+import { ColorValue, ImageURISource, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { BonusCardCounter } from "./BonusCardCounter";
@@ -27,6 +28,27 @@ type BaseProps = {
   // For devices with small screens you may need to hide the logo to get more space
   hideLogo?: boolean;
   isCGNType?: ReactNode;
+  // Custom colors for both loading and loaded states, supporting light and dark modes
+  colors?: {
+    background?: {
+      light: ColorValue;
+      dark: ColorValue;
+    };
+    skeleton?: {
+      light: ColorValue;
+      dark: ColorValue;
+    };
+  };
+};
+
+const DEFAULT_BACKGROUND_COLOR: Record<string, ColorValue> = {
+  light: IOColors["blueItalia-50"],
+  dark: "#35364C"
+};
+
+const DEFAULT_SKELETON_COLOR: Record<string, ColorValue> = {
+  light: IOColors["blueItalia-100"],
+  dark: hexToRgba(IOColors["blueIO-300"], 0.3)
 };
 
 type ContentProps = {
@@ -123,6 +145,8 @@ const BonusCardContent = (props: BonusCard) => {
 
 export const BonusCard = (props: BonusCard) => {
   const safeAreaInsets = useSafeAreaInsets();
+  const { themeType } = useIOThemeContext();
+  const isDark = themeType === "dark";
 
   // If the logo is hidden, this margin prevents content shift when mutating from a loading state
   const hiddenLogoLoadingMargin = props.hideLogo && props.isLoading ? 8 : 0;
@@ -137,6 +161,14 @@ export const BonusCard = (props: BonusCard) => {
     [props.isLoading]
   );
 
+  const backgroundColor = props.colors?.background
+    ? isDark
+      ? props.colors.background.dark
+      : props.colors.background.light
+    : isDark
+    ? DEFAULT_BACKGROUND_COLOR.dark
+    : DEFAULT_BACKGROUND_COLOR.light;
+
   return (
     <View style={[styles.container, { paddingTop }]}>
       {!props.isLoading && props.cardBackground ? (
@@ -144,10 +176,18 @@ export const BonusCard = (props: BonusCard) => {
           <View style={{ ...StyleSheet.absoluteFillObject }}>
             {props.cardBackground}
           </View>
-          <BonusCardShape key={shapeKey} mode="draw-on-top" />
+          <BonusCardShape
+            key={shapeKey}
+            mode="draw-on-top"
+            backgroundColor={backgroundColor}
+          />
         </>
       ) : (
-        <BonusCardShape key={shapeKey} mode="mask" />
+        <BonusCardShape
+          key={shapeKey}
+          mode="mask"
+          backgroundColor={backgroundColor}
+        />
       )}
       <BonusCardContent {...props} />
     </View>
@@ -155,7 +195,16 @@ export const BonusCard = (props: BonusCard) => {
 };
 
 const BonusCardSkeleton = (props: BaseProps) => {
-  const placeholderColor = IOColors["blueItalia-100"];
+  const { themeType } = useIOThemeContext();
+  const isDark = themeType === "dark";
+
+  const placeholderColor = props.colors?.skeleton
+    ? isDark
+      ? props.colors.skeleton.dark
+      : props.colors.skeleton.light
+    : isDark
+    ? DEFAULT_SKELETON_COLOR.dark
+    : DEFAULT_SKELETON_COLOR.light;
 
   return (
     <View style={styles.content} testID="BonusCardSkeletonTestID">
@@ -186,12 +235,20 @@ const BonusCardSkeleton = (props: BaseProps) => {
         radius={28}
       />
       <VSpacer size={16} />
-      <BonusCardStatus isLoading={true} />
+      <BonusCardStatus isLoading={true} skeletonColor={placeholderColor} />
       <VSpacer size={16} />
       <View style={styles.counters}>
-        <BonusCardCounter type="ValueWithProgress" isLoading={true} />
+        <BonusCardCounter
+          type="ValueWithProgress"
+          isLoading={true}
+          skeletonColor={placeholderColor}
+        />
         <HSpacer size={16} />
-        <BonusCardCounter type="Value" isLoading={true} />
+        <BonusCardCounter
+          type="Value"
+          isLoading={true}
+          skeletonColor={placeholderColor}
+        />
       </View>
     </View>
   );
