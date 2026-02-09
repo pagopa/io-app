@@ -1,4 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { ResponseHeaders } from "@pagopa/ts-commons/lib/requests";
+import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
@@ -12,6 +14,7 @@ import {
   DownloadReceiptOutcomeErrorEnum,
   ReceiptDownloadFailure
 } from "../types";
+import { ReceiptsHeaders } from "./types";
 
 export const RECEIPT_DOCUMENT_TYPE_PREFIX = "data:application/pdf;base64,";
 
@@ -256,3 +259,13 @@ export const mapDownloadReceiptErrorToOutcomeProps = (
       };
   }
 };
+
+export const getReceiptContinuationToken = (
+  responseHeaders: ResponseHeaders<"x-continuation-token" | "X-Request-Id">
+) =>
+  pipe(
+    responseHeaders,
+    ReceiptsHeaders.decode,
+    E.map(headers => headers.map["x-continuation-token"]),
+    E.getOrElseW(() => undefined)
+  );
