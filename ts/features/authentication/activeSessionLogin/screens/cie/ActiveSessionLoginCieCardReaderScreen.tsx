@@ -131,11 +131,10 @@ const ActiveSessionLoginCieCardReaderScreen = ({
   );
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
 
+  // To avoid re-triggering effects, we keep a ref to the reading state for the success handler
   const readingStateRef = useRef(readingState);
-  useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
-    readingStateRef.current = readingState;
-  }, [readingState]);
+  // eslint-disable-next-line functional/immutable-data
+  readingStateRef.current = readingState;
 
   const choosenTool = useMemo(
     () => assistanceToolRemoteConfig(assistanceToolConfig),
