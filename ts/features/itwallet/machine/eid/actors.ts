@@ -16,8 +16,12 @@ import {
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
 import { pollForStoreValue } from "../../common/utils/itwStoreUtils";
-import { WalletInstanceAttestations } from "../../common/utils/itwTypesUtils";
+import {
+  CredentialBundle,
+  WalletInstanceAttestations
+} from "../../common/utils/itwTypesUtils";
 import * as mrtdUtils from "../../common/utils/mrtd";
+import { CredentialsVault } from "../../credentials/utils/vault";
 import {
   itwIntegrityKeyTagSelector,
   itwIntegrityServiceStatusSelector
@@ -163,6 +167,10 @@ export const createEidIssuanceActorsImplementation = (
     assert(sessionToken, "sessionToken is undefined");
 
     await revokeCurrentWalletInstance(env, sessionToken, integrityKeyTag.value);
+
+    // Removes all credentials stored in the secure storage, as they are all linked
+    // to the revoked wallet instance
+    await CredentialsVault.clear();
   }),
 
   startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
@@ -260,6 +268,10 @@ export const createEidIssuanceActorsImplementation = (
       });
     }
   ),
+
+  storeEidCredential: fromPromise<void, CredentialBundle>(async ({ input }) => {
+    await CredentialsVault.store(input.metadata.credentialId, input.credential);
+  }),
 
   credentialUpgradeMachine: itwCredentialUpgradeMachine.provide({
     actors: createCredentialUpgradeActorsImplementation(env),
