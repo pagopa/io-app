@@ -53,7 +53,8 @@ import {
   WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY,
   WAIT_TIMEOUT_NAVIGATION,
   accessibityTimeout,
-  getTextForState
+  getTextForState,
+  TextForState
 } from "../../shared/utils";
 import {
   trackLoginCieCardReaderScreen,
@@ -141,7 +142,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
     [assistanceToolConfig]
   );
 
-  const textState = useMemo(() => {
+  const textState = useMemo<TextForState>(() => {
     switch (readingState) {
       case ReadingState.completed:
         return {

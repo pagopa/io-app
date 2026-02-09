@@ -44,7 +44,7 @@ export const analyticActions = new Map<CieAuthenticationErrorReason, string>([
 export type TextForState = {
   title: string;
   subtitle?: string;
-  content: string;
+  content?: string;
 };
 
 // some texts changes depending on current running Platform
