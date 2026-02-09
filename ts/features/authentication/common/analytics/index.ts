@@ -190,18 +190,16 @@ export function trackLoginInfoResourceTap(
     buildEventProperties("UX", "action", { resource_selected })
   );
 }
+
 export function trackLoginFailure(props: {
-  reason: Error;
+  reason: string;
   idp: keyof IdpData | undefined;
   flow: LoginType;
 }) {
-  const propsWithDefaultFlow = {
-    ...props,
-    flow: props.flow || "auth"
-  };
+  const { flow = "auth", ...rest } = props;
   void mixpanelTrack(
     "LOGIN_FAILURE",
-    buildEventProperties("TECH", "error", propsWithDefaultFlow)
+    buildEventProperties("TECH", "error", { flow, ...rest })
   );
 }
 
