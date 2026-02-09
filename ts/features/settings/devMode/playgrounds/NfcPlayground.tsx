@@ -4,116 +4,110 @@ import {
   ListItemInfo,
   Pictogram
 } from "@pagopa/io-app-design-system";
+import { constNull } from "fp-ts/lib/function";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import {
-  convertUnknownToError,
-  serializeError
-} from "../../../../utils/errors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { getNfcAntennaInfo, NfcAntennaInfo } from "../../../../utils/nfc";
+import {
+  getNfcAntennaInfo,
+  isHceSupported,
+  NfcAntennaInfo
+} from "../../../../utils/nfc";
 
 export const NfcPlayground = () => {
-  const [failure, setFailure] = useState<Error>();
   const [nfcAntennaInfo, setNfcAntennaInfo] = useState<NfcAntennaInfo>();
+  const [hasHce, setHasHce] = useState<boolean>();
 
   useHeaderSecondLevel({
     title: "NFC Playground"
   });
 
   useOnFirstRender(async () => {
-    try {
-      const info = await getNfcAntennaInfo();
-      setNfcAntennaInfo(info);
-    } catch (e) {
-      setFailure(serializeError(convertUnknownToError(e)));
-    }
+    getNfcAntennaInfo().then(setNfcAntennaInfo).catch(constNull);
+    isHceSupported().then(setHasHce).catch(constNull);
   });
 
   useDebugInfo({
     nfcAntennaInfo,
-    failure
+    hasHce
   });
-
-  if (failure !== undefined) {
-    return (
-      <OperationResultScreenContent
-        isHeaderVisible={true}
-        pictogram="attention"
-        title="NFC Antenna Info not available on this device"
-      />
-    );
-  }
-
-  if (!nfcAntennaInfo) {
-    return <LoadingScreenContent title="Getting NFC info" />;
-  }
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.pictogramContainer}>
         <Pictogram name="nfcScanAndroid" size={180} />
       </View>
-      <View style={styles.infoContainer}>
-        <ListItemInfo
-          value="Device Width (mm)"
-          endElement={{
-            type: "badge",
-            componentProps: {
-              text: nfcAntennaInfo.deviceWidth.toString(),
-              variant: "default"
-            }
-          }}
-        />
-        <Divider />
-        <ListItemInfo
-          value="Device Height (mm)"
-          endElement={{
-            type: "badge",
-            componentProps: {
-              text: nfcAntennaInfo.deviceHeight.toString(),
-              variant: "default"
-            }
-          }}
-        />
-        <Divider />
-        <ListItemInfo
-          value="Is Device Foldable"
-          endElement={{
-            type: "badge",
-            componentProps: {
-              text: nfcAntennaInfo.isDeviceFoldable
-                ? "\u{1F7E2} YES"
-                : "\u{1F534} NO",
-              variant: nfcAntennaInfo.isDeviceFoldable ? "success" : "error"
-            }
-          }}
-        />
-        <Divider />
-        <Body style={styles.antennaHeader}>Available NFC Antennas:</Body>
-        {nfcAntennaInfo.availableNfcAntennas.map((antenna, index) => (
-          <View key={index}>
-            <ListItemInfo
-              value={`Antenna ${index + 1} Location (mm)`}
-              endElement={{
-                type: "badge",
-                componentProps: {
-                  text: `X: ${antenna.locationX}, Y: ${antenna.locationY}`,
-                  variant: "default"
-                }
-              }}
-            />
-            {index < nfcAntennaInfo.availableNfcAntennas.length - 1 && (
-              <Divider />
-            )}
-          </View>
-        ))}
-      </View>
+      <ListItemInfo
+        value="Supports Host Card Emulation (HCE)"
+        endElement={{
+          type: "badge",
+          componentProps: {
+            text: hasHce ? "\u{1F7E2} YES" : "\u{1F534} NO",
+            variant: hasHce ? "success" : "error"
+          }
+        }}
+      />
+      <Divider />
+      {nfcAntennaInfo ? (
+        <View style={styles.infoContainer}>
+          <ListItemInfo
+            value="Device Width (mm)"
+            endElement={{
+              type: "badge",
+              componentProps: {
+                text: nfcAntennaInfo.deviceWidth.toString(),
+                variant: "default"
+              }
+            }}
+          />
+          <Divider />
+          <ListItemInfo
+            value="Device Height (mm)"
+            endElement={{
+              type: "badge",
+              componentProps: {
+                text: nfcAntennaInfo.deviceHeight.toString(),
+                variant: "default"
+              }
+            }}
+          />
+          <Divider />
+          <ListItemInfo
+            value="Is Device Foldable"
+            endElement={{
+              type: "badge",
+              componentProps: {
+                text: nfcAntennaInfo.isDeviceFoldable
+                  ? "\u{1F7E2} YES"
+                  : "\u{1F534} NO",
+                variant: nfcAntennaInfo.isDeviceFoldable ? "success" : "error"
+              }
+            }}
+          />
+          <Divider />
+          <Body style={styles.antennaHeader}>Available NFC Antennas:</Body>
+          {nfcAntennaInfo.availableNfcAntennas.map((antenna, index) => (
+            <View key={index}>
+              <ListItemInfo
+                value={`Antenna ${index + 1} Location (mm)`}
+                endElement={{
+                  type: "badge",
+                  componentProps: {
+                    text: `X: ${antenna.locationX}, Y: ${antenna.locationY}`,
+                    variant: "default"
+                  }
+                }}
+              />
+              {index < nfcAntennaInfo.availableNfcAntennas.length - 1 && (
+                <Divider />
+              )}
+            </View>
+          ))}
+        </View>
+      ) : null}
     </SafeAreaView>
   );
 };
