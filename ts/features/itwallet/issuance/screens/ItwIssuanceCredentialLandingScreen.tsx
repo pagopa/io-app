@@ -103,7 +103,7 @@ export const ItwIssuanceCredentialLandingScreen = ({
   if (isEidExpiredOrExpiring) {
     return (
       <OperationResultScreenContent
-        pictogram="success"
+        pictogram="identity"
         title={I18n.t(`features.itWallet.issuance.confirmIdentity.title`, {
           credential: getCredentialNameFromType(credentialType)
         })}
