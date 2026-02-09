@@ -20,7 +20,7 @@ jobs:
     environment: prod-cd
     permissions:
       id-token: write
-      pull-requests: write
+      contents: read
     env:
       EXCLUDED_PATTERN: 'README.md;.gitignore;'
       EXCLUDED_PATH: ''
