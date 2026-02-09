@@ -1,6 +1,7 @@
 import { act, fireEvent } from "@testing-library/react-native";
 import { ComponentType } from "react";
 import { createStore } from "redux";
+import { Text, View } from "react-native";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import * as REMOTE_CONFIG from "../../../../../../store/reducers/backendStatus/remoteConfig";
@@ -17,7 +18,6 @@ import { sendAarMockStateFactory } from "../../../utils/testUtils";
 import { setAarFlowState } from "../../../store/actions";
 import { AarStatesByName, sendAARFlowStates } from "../../../utils/stateUtils";
 import * as USE_DEBUGINFO from "../../../../../../hooks/useDebugInfo";
-import * as USE_BOTTOMSHEET from "../../../../../../utils/hooks/bottomSheet";
 import * as AAR_SELECTORS from "../../../store/selectors";
 import {
   trackSendAarMandateCieErrorRetry,
@@ -27,11 +27,12 @@ import {
   trackSendAarMandateCieErrorDetailCode,
   trackSendAarMandateCieErrorDetailHelp
 } from "../../../analytics";
-import * as SendAAARErrorComponentModule from "../SendAARErrorComponent";
+import { useAarCieErrorBottomSheet } from "../hooks/useAarCieErrorBottomSheet";
 
 const mockTerminateFlow = jest.fn();
 const mockSendAarFlowManager = jest.fn();
 const mockDispatch = jest.fn();
+const mockPresent = jest.fn();
 
 jest.mock("../../../hooks/useSendAarFlowManager", () => ({
   useSendAarFlowManager: () => mockSendAarFlowManager()
@@ -51,6 +52,12 @@ jest.mock("../../../analytics", () => ({
   trackSendAarMandateCieErrorDetailHelp: jest.fn()
 }));
 
+jest.mock("../hooks/useAarCieErrorBottomSheet");
+const mockUseAarCieErrorBottomSheet = useAarCieErrorBottomSheet as jest.Mock<
+  ReturnType<typeof useAarCieErrorBottomSheet>,
+  Parameters<typeof useAarCieErrorBottomSheet>
+>;
+
 const testingCenterUrl = "https://help.center.url";
 
 const assistanceErrorCodes = [
@@ -60,13 +67,23 @@ const assistanceErrorCodes = [
   "PN_GENERIC_INVALIDPARAMETER",
   "PN_MANDATE_NOTFOUND",
   "PN_MANDATE_INVALIDVERIFICATIONCODE",
-  "ANY_ERROR_CODE"
+  "ANY_ERROR_CODE",
+  undefined
 ];
 
 describe("SendAarCieValidationErrors", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest.restoreAllMocks();
+
+    mockUseAarCieErrorBottomSheet.mockReturnValue({
+      bottomSheet: (
+        <View>
+          <Text>Bottom Sheet content</Text>
+        </View>
+      ),
+      present: mockPresent
+    });
   });
   describe("CieExpiredComponent", () => {
     const openWebUrlSpy = jest.fn();
@@ -115,7 +132,7 @@ describe("SendAarCieValidationErrors", () => {
 
         expect(trackSendAarMandateCieErrorClosure).toHaveBeenCalledTimes(1);
         expect(trackSendAarMandateCieErrorClosure).toHaveBeenCalledWith(
-          errorCode
+          errorCode ?? ""
         );
         expect(mockTerminateFlow).toHaveBeenCalled();
         expect(trackSendAarMandateCieErrorCac).not.toHaveBeenCalled();
@@ -205,7 +222,7 @@ describe("SendAarCieValidationErrors", () => {
 
         expect(trackSendAarMandateCieErrorRetry).toHaveBeenCalledTimes(1);
         expect(trackSendAarMandateCieErrorRetry).toHaveBeenCalledWith(
-          errorCode
+          errorCode ?? ""
         );
         expect(trackSendAarMandateCieErrorClosure).not.toHaveBeenCalled();
       }
@@ -231,7 +248,7 @@ describe("SendAarCieValidationErrors", () => {
 
         expect(trackSendAarMandateCieErrorClosure).toHaveBeenCalledTimes(1);
         expect(trackSendAarMandateCieErrorClosure).toHaveBeenCalledWith(
-          errorCode
+          errorCode ?? ""
         );
         expect(mockTerminateFlow).toHaveBeenCalled();
         expect(trackSendAarMandateCieErrorRetry).not.toHaveBeenCalled();
@@ -240,20 +257,9 @@ describe("SendAarCieValidationErrors", () => {
   });
 
   describe("GenericCieValidationErrorComponent", () => {
-    const mockBottomSheetPresent = jest.fn();
-    const mockBottomSheet = () => <></>;
-    const mockBottomSheetDismiss = jest.fn();
-    const mockUseBottomSheet = jest.fn().mockReturnValue({
-      present: mockBottomSheetPresent,
-      dismiss: mockBottomSheetDismiss,
-      bottomSheet: mockBottomSheet
-    });
     const mockAssistanceErrorCode = "ASSISTANCE_CODE_1234";
     beforeEach(() => {
       jest.spyOn(USE_DEBUGINFO, "useDebugInfo").mockImplementation();
-      jest
-        .spyOn(USE_BOTTOMSHEET, "useIOBottomSheetModal")
-        .mockImplementation(mockUseBottomSheet);
       jest
         .spyOn(AAR_SELECTORS, "currentAARFlowStateErrorDebugInfoSelector")
         .mockImplementation();
@@ -271,7 +277,6 @@ describe("SendAarCieValidationErrors", () => {
       const component = getByTestId("GenericCieValidationErrorComponent");
       expect(component).toBeDefined();
       expect(toJSON()).toMatchSnapshot();
-      expect(mockBottomSheetPresent).not.toHaveBeenCalled();
     });
 
     it.each(assistanceErrorCodes)(
@@ -280,22 +285,16 @@ describe("SendAarCieValidationErrors", () => {
         jest
           .spyOn(AAR_SELECTORS, "currentAARFlowStateAssistanceErrorCode")
           .mockReturnValue(errorCode);
-        const spyOnSendAarErrorSupportBottomSheetComponent = jest.spyOn(
-          SendAAARErrorComponentModule,
-          "sendAarErrorSupportBottomSheetComponent"
-        );
+
         renderComponent(GenericCieValidationErrorComponent);
 
-        expect(
-          spyOnSendAarErrorSupportBottomSheetComponent
-        ).toHaveBeenCalledTimes(1);
-        expect(
-          spyOnSendAarErrorSupportBottomSheetComponent
-        ).toHaveBeenCalledWith(
-          expect.any(Function),
-          errorCode,
-          expect.any(Function)
-        );
+        expect(mockUseAarCieErrorBottomSheet).toHaveBeenCalledTimes(1);
+        expect(mockUseAarCieErrorBottomSheet).toHaveBeenCalledWith({
+          errorName: errorCode,
+          zendeskSecondLevelTag: "io_problema_notifica_send_qr_altra_persona",
+          onCopyToClipboard: expect.any(Function),
+          onStartAssistance: expect.any(Function)
+        });
         expect(trackSendAarMandateCieErrorDetailCode).not.toHaveBeenCalled();
         expect(trackSendAarMandateCieErrorDetailHelp).not.toHaveBeenCalled();
       }
@@ -307,28 +306,22 @@ describe("SendAarCieValidationErrors", () => {
         jest
           .spyOn(AAR_SELECTORS, "currentAARFlowStateAssistanceErrorCode")
           .mockReturnValue(errorCode);
-        const spyOnSendAarErrorSupportBottomSheetComponent = jest.spyOn(
-          SendAAARErrorComponentModule,
-          "sendAarErrorSupportBottomSheetComponent"
-        );
 
         renderComponent(GenericCieValidationErrorComponent);
 
-        expect(mockBottomSheetDismiss).not.toHaveBeenCalled();
         expect(trackSendAarMandateCieErrorDetailHelp).not.toHaveBeenCalled();
 
-        const handleZendeskAssistance =
-          spyOnSendAarErrorSupportBottomSheetComponent.mock.calls[0][0];
+        const { onStartAssistance } =
+          mockUseAarCieErrorBottomSheet.mock.calls[0][0];
 
         act(() => {
-          handleZendeskAssistance();
+          onStartAssistance!(errorCode ?? "");
         });
 
         expect(trackSendAarMandateCieErrorDetailHelp).toHaveBeenCalledTimes(1);
         expect(trackSendAarMandateCieErrorDetailHelp).toHaveBeenCalledWith(
-          errorCode
+          errorCode ?? ""
         );
-        expect(mockBottomSheetDismiss).toHaveBeenCalledTimes(1);
         expect(trackSendAarMandateCieErrorDetailCode).not.toHaveBeenCalled();
       }
     );
@@ -339,54 +332,59 @@ describe("SendAarCieValidationErrors", () => {
         jest
           .spyOn(AAR_SELECTORS, "currentAARFlowStateAssistanceErrorCode")
           .mockReturnValue(errorCode);
-        const spyOnSendAarErrorSupportBottomSheetComponent = jest.spyOn(
-          SendAAARErrorComponentModule,
-          "sendAarErrorSupportBottomSheetComponent"
-        );
 
         renderComponent(GenericCieValidationErrorComponent);
 
         expect(trackSendAarMandateCieErrorDetailCode).not.toHaveBeenCalled();
 
-        const onCopyToClipboard =
-          spyOnSendAarErrorSupportBottomSheetComponent.mock.calls[0][2]!;
+        const { onCopyToClipboard } =
+          mockUseAarCieErrorBottomSheet.mock.calls[0][0];
 
         act(() => {
-          onCopyToClipboard();
+          onCopyToClipboard!(errorCode ?? "");
         });
 
         expect(trackSendAarMandateCieErrorDetailCode).toHaveBeenCalledTimes(1);
         expect(trackSendAarMandateCieErrorDetailCode).toHaveBeenCalledWith(
-          errorCode
+          errorCode ?? ""
         );
-        expect(mockBottomSheetDismiss).not.toHaveBeenCalled();
         expect(trackSendAarMandateCieErrorDetailHelp).not.toHaveBeenCalled();
       }
     );
 
-    it('should call "present" bottom sheet and "trackSendAarMandateCieErrorDetail" on secondary action press', () => {
-      const { getByTestId } = renderComponent(
-        GenericCieValidationErrorComponent
-      );
-      const secondaryActionButton = getByTestId(
-        "GenericCieValidationErrorSupportButton"
-      );
-      expect(mockBottomSheetPresent).not.toHaveBeenCalled();
-      expect(trackSendAarMandateCieErrorDetail).not.toHaveBeenCalled();
-      expect(secondaryActionButton).toBeDefined();
+    it.each(assistanceErrorCodes)(
+      'should call "present" bottom sheet and "trackSendAarMandateCieErrorDetail" with "%s" on secondary action press',
+      errorCode => {
+        jest
+          .spyOn(AAR_SELECTORS, "currentAARFlowStateAssistanceErrorCode")
+          .mockReturnValue(errorCode);
 
-      act(() => {
-        fireEvent.press(secondaryActionButton);
-      });
+        const { getByTestId } = renderComponent(
+          GenericCieValidationErrorComponent
+        );
+        const secondaryActionButton = getByTestId(
+          "GenericCieValidationErrorSupportButton"
+        );
 
-      expect(mockBottomSheetPresent).toHaveBeenCalled();
-      expect(trackSendAarMandateCieErrorDetail).toHaveBeenCalledTimes(1);
+        expect(trackSendAarMandateCieErrorDetail).not.toHaveBeenCalled();
+        expect(secondaryActionButton).toBeDefined();
 
-      // Unexpected events
-      expect(trackSendAarMandateCieErrorClosure).not.toHaveBeenCalled();
-      expect(trackSendAarMandateCieErrorDetailCode).not.toHaveBeenCalled();
-      expect(trackSendAarMandateCieErrorDetailHelp).not.toHaveBeenCalled();
-    });
+        act(() => {
+          fireEvent.press(secondaryActionButton);
+        });
+
+        expect(trackSendAarMandateCieErrorDetail).toHaveBeenCalledTimes(1);
+        expect(trackSendAarMandateCieErrorDetail).toHaveBeenCalledWith(
+          errorCode ?? ""
+        );
+        expect(mockPresent).toHaveBeenCalledTimes(1);
+
+        // Unexpected events
+        expect(trackSendAarMandateCieErrorClosure).not.toHaveBeenCalled();
+        expect(trackSendAarMandateCieErrorDetailCode).not.toHaveBeenCalled();
+        expect(trackSendAarMandateCieErrorDetailHelp).not.toHaveBeenCalled();
+      }
+    );
 
     it.each(assistanceErrorCodes)(
       'should call "terminateFlow" and "trackSendAarMandateCieErrorClosure" with "%s" on primary action press',
@@ -412,7 +410,7 @@ describe("SendAarCieValidationErrors", () => {
         expect(mockTerminateFlow).toHaveBeenCalled();
         expect(trackSendAarMandateCieErrorClosure).toHaveBeenCalledTimes(1);
         expect(trackSendAarMandateCieErrorClosure).toHaveBeenCalledWith(
-          errorCode
+          errorCode ?? ""
         );
 
         // Unexpected events
