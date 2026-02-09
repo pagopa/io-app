@@ -3,7 +3,6 @@ import { OperationResultScreenContent } from "../../../../../components/screens/
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { sendAarInAppDelegationUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../../utils/url";
 import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
 import { setAarFlowState } from "../../store/actions";
@@ -20,7 +19,7 @@ import {
   trackSendAarMandateCieErrorDetailHelp,
   trackSendAarMandateCieErrorRetry
 } from "../../analytics";
-import { sendAarErrorSupportBottomSheetComponent } from "./SendAARErrorComponent";
+import { useAarCieErrorBottomSheet } from "./hooks/useAarCieErrorBottomSheet";
 
 export const CieExpiredComponent = () => {
   const { terminateFlow } = useSendAarFlowManager();
@@ -115,18 +114,11 @@ export const GenericCieValidationErrorComponent = () => {
   const assistanceErrorCode = useIOSelector(
     currentAARFlowStateAssistanceErrorCode
   );
-  const handleZendeskAssistance = () => {
-    trackSendAarMandateCieErrorDetailHelp(assistanceErrorCode ?? "");
-    dismiss();
-  };
-
-  const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
-    component: sendAarErrorSupportBottomSheetComponent(
-      handleZendeskAssistance,
-      assistanceErrorCode,
-      () => trackSendAarMandateCieErrorDetailCode(assistanceErrorCode ?? "")
-    ),
-    title: ""
+  const { bottomSheet, present } = useAarCieErrorBottomSheet({
+    errorName: assistanceErrorCode,
+    zendeskSecondLevelTag: "io_problema_notifica_send_qr_altra_persona",
+    onCopyToClipboard: trackSendAarMandateCieErrorDetailCode,
+    onStartAssistance: trackSendAarMandateCieErrorDetailHelp
   });
 
   useDebugInfo(debugInfo);

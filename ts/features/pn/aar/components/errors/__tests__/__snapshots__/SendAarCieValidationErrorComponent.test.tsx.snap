@@ -1837,6 +1837,11 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
                           </View>
                         </RCTScrollView>
                       </RNCSafeAreaView>
+                      <View>
+                        <Text>
+                          Bottom Sheet content
+                        </Text>
+                      </View>
                     </View>
                   </View>
                 </View>
