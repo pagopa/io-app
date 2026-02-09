@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+    path:
+      - locales
     paths-ignore:
       - "CODEOWNERS"
       - "**.md"
