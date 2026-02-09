@@ -170,12 +170,11 @@ export const contentRepoUrl = pipe(
   E.getOrElse(() => DEFAULT_CONTENT_REPO_URL)
 );
 
-export const newContentRepoUrl = "http://127.0.0.1:3000/static_contents";
-// pipe(
-//   Config.NEW_CONTENT_REPO_URL,
-//   NonEmptyString.decode,
-//   E.getOrElse(() => NEW_DEFAULT_CONTENT_REPO_URL)
-// );
+export const newContentRepoUrl = pipe(
+  Config.NEW_CONTENT_REPO_URL,
+  NonEmptyString.decode,
+  E.getOrElse(() => NEW_DEFAULT_CONTENT_REPO_URL)
+);
 
 export const totMessageFetchWorkers = pipe(
   parseInt(Config.TOT_MESSAGE_FETCH_WORKERS, 10),
