@@ -57,7 +57,7 @@ class NfcInfoModule(reactContext: ReactApplicationContext) :
 
       promise.resolve(hasHceFeature)
     } catch (e: Exception) {
-      promise.reject("ERROR", e.message, e)
+      promise.reject("HCE_INFO_UNAVAILABLE", e.message, e)
     }
   }
 
