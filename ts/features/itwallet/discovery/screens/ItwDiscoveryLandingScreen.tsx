@@ -3,7 +3,10 @@ import { useEffect } from "react";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import {
+  itwLifecycleIsITWalletValidSelector,
+  itwLifecycleIsValidSelector
+} from "../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 
@@ -12,11 +15,12 @@ import { ITW_ROUTES } from "../../navigation/routes";
  */
 export const ItwDiscoveryLandingScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
-  const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
+  const isWalletActive = useIOSelector(itwLifecycleIsValidSelector);
+  const isItWalletActive = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isWhitelisted = useIOSelector(itwIsL3EnabledSelector);
 
   useEffect(() => {
-    if (isItwValid) {
+    if (isItWalletActive || (isWalletActive && !isWhitelisted)) {
       navigation.replace(ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN);
       return;
     }
@@ -25,7 +29,7 @@ export const ItwDiscoveryLandingScreen = () => {
       animationEnabled: false,
       level: isWhitelisted ? "l3" : "l2"
     });
-  }, [navigation, isItwValid, isWhitelisted]);
+  }, [navigation, isWalletActive, isItWalletActive, isWhitelisted]);
 
   return null;
 };
