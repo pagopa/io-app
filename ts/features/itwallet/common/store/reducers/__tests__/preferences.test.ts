@@ -1,8 +1,5 @@
-import { addMonths } from "date-fns";
-import MockDate from "mockdate";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import {
-  itwCloseDiscoveryBanner,
   itwSetAuthLevel,
   itwSetClaimValuesHidden
 } from "../../actions/preferences";
@@ -21,30 +18,13 @@ describe("IT Wallet preferences reducer", () => {
     );
   });
 
-  it("should handle itwCloseDiscoveryBanner action", () => {
-    const mockDate = "2024-11-14T20:43:21.361Z";
-    MockDate.set(mockDate);
-
-    const expectedDate = addMonths(mockDate, 6);
-    const action = itwCloseDiscoveryBanner();
-    const newState = reducer(INITIAL_STATE, action);
-
-    expect(newState).toEqual({
-      ...newState,
-      hideDiscoveryBannerUntilDate: expectedDate.toISOString()
-    });
-    MockDate.reset();
-  });
-
   it("should handle itwLifecycleStoresReset action and ensure some values are not reset", () => {
     const initialState: ItwPreferencesState = {
-      hideDiscoveryBannerUntilDate: "2024-11-14T20:43:21.361Z",
       isPendingReview: true,
       authLevel: "L2",
       claimValuesHidden: true,
       isWalletInstanceRemotelyActive: true,
-      isFiscalCodeWhitelisted: true,
-      walletUpgradeMDLDetailsBannerHidden: true
+      isFiscalCodeWhitelisted: true
     };
 
     const expectedState: ItwPreferencesState = {
@@ -84,12 +64,11 @@ describe("IT Wallet preferences reducer", () => {
     const action = itwLifecycleStoresReset();
     const newState = reducer(
       {
-        hideDiscoveryBannerUntilDate: "abcd",
         isPendingReview: true,
         authLevel: "L2",
         claimValuesHidden: true,
         isWalletInstanceRemotelyActive: true,
-        walletUpgradeMDLDetailsBannerHidden: true
+        isItwActivationDisabled: true
       },
       action
     );
@@ -97,7 +76,8 @@ describe("IT Wallet preferences reducer", () => {
     expect(newState).toEqual({
       ...itwPreferencesInitialState,
       claimValuesHidden: true,
-      isWalletInstanceRemotelyActive: true
+      isWalletInstanceRemotelyActive: true,
+      isItwActivationDisabled: true
     });
   });
 });

@@ -1,16 +1,23 @@
-import { useEffect, useLayoutEffect } from "react";
-import { Alert } from "react-native";
-import i18n from "i18next";
 import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
+import i18n from "i18next";
+import { useCallback, useEffect, useLayoutEffect } from "react";
+import { Alert } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../store/hooks";
 import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
+import {
+  trackSendAarMandateCieNfcActivation,
+  trackSendAarMandateCieReadingClosureAlert,
+  trackSendAarMandateCieReadingClosureAlertAccepted,
+  trackSendAarMandateCieReadingClosureAlertContinue
+} from "../analytics";
+import { SendAarActivateNfcComponent } from "../components/SendAarActivateNfcComponent";
 import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
-import { useIOSelector } from "../../../../store/hooks";
 import { currentAARFlowData } from "../store/selectors";
 import { sendAARFlowStates } from "../utils/stateUtils";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import { SendAarActivateNfcComponent } from "../components/SendAarActivateNfcComponent";
 
 export type SendAarActivateNfcScreenProps = IOStackNavigationRouteProps<
   PnParamsList,
@@ -27,15 +34,43 @@ export const SendAarActivateNfcScreen = ({
     if (currentAarData.type === sendAARFlowStates.cieScanning) {
       const { type: _, ...params } = currentAarData;
 
-      navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-        screen: PN_ROUTES.MAIN,
-        params: {
-          screen: PN_ROUTES.SEND_AAR_CIE_CARD_READING,
-          params
-        }
-      });
+      navigation.replace(PN_ROUTES.SEND_AAR_CIE_CARD_READING, params);
     }
   }, [currentAarData, navigation]);
+
+  useFocusEffect(
+    useCallback(() => {
+      trackSendAarMandateCieNfcActivation();
+    }, [])
+  );
+
+  const handleClose = useCallback(() => {
+    trackSendAarMandateCieReadingClosureAlert("NFC_ACTIVATION");
+    Alert.alert(
+      i18n.t("features.pn.aar.flow.androidNfcActivation.alertOnClose.title"),
+      i18n.t("features.pn.aar.flow.androidNfcActivation.alertOnClose.message"),
+      [
+        {
+          text: i18n.t(
+            "features.pn.aar.flow.androidNfcActivation.alertOnClose.confirm"
+          ),
+          style: "destructive",
+          onPress: () => {
+            trackSendAarMandateCieReadingClosureAlertAccepted("NFC_ACTIVATION");
+            terminateFlow();
+          }
+        },
+        {
+          text: i18n.t(
+            "features.pn.aar.flow.androidNfcActivation.alertOnClose.cancel"
+          ),
+          onPress: () => {
+            trackSendAarMandateCieReadingClosureAlertContinue("NFC_ACTIVATION");
+          }
+        }
+      ]
+    );
+  }, [terminateFlow]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -46,37 +81,19 @@ export const SendAarActivateNfcScreen = ({
           type="singleAction"
           firstAction={{
             icon: "closeLarge",
-            onPress: () => {
-              Alert.alert(
-                i18n.t(
-                  "features.pn.aar.flow.androidNfcActivation.alertOnClose.title"
-                ),
-                i18n.t(
-                  "features.pn.aar.flow.androidNfcActivation.alertOnClose.message"
-                ),
-                [
-                  {
-                    text: i18n.t(
-                      "features.pn.aar.flow.androidNfcActivation.alertOnClose.confirm"
-                    ),
-                    style: "destructive",
-                    onPress: terminateFlow
-                  },
-                  {
-                    text: i18n.t(
-                      "features.pn.aar.flow.androidNfcActivation.alertOnClose.cancel"
-                    )
-                  }
-                ]
-              );
-            },
+            onPress: handleClose,
             accessibilityLabel: i18n.t("global.buttons.close"),
             testID: "closeActionID"
           }}
         />
       )
     });
-  }, [navigation, terminateFlow]);
+  }, [navigation, handleClose]);
+
+  useHardwareBackButtonWhenFocused(() => {
+    handleClose();
+    return true;
+  });
 
   return <SendAarActivateNfcComponent />;
 };

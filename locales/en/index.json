@@ -740,6 +740,10 @@
         "preferred_language": {
           "title": "Favourite language",
           "subtitle": "In which language do you want to use the application?",
+          "headers": {
+            "services": "Services",
+            "app": "Application"
+          },
           "alert": {
             "title": "Do you want to change the language to",
             "subtitle": "You'll need to restart the application to make this happen"
@@ -4317,7 +4321,7 @@
     "wallet": {
       "home": {
         "toast": {
-          "newMethod": "Elemento aggiunto!"
+          "newMethod": "Metodo aggiunto!"
         },
         "paymentsBanner": {
           "title": "Vuoi pagare un avviso?",
@@ -4378,10 +4382,6 @@
       "methods": {
         "title": "Metodi di pagamento",
         "button": "Aggiungi",
-        "banner": {
-          "content": "Aggiungi al portafoglio un metodo di pagamento, così non dovrai inserire ogni volta i dati.",
-          "action": "Aggiungi un metodo"
-        },
         "status": {
           "expired": "Scaduta"
         },
@@ -4390,12 +4390,17 @@
             "label": "The loading of the payment methods failed.",
             "retryButton": "Retry"
           }
+        },
+        "banner": {
+          "title": "How do you want to pay?",
+          "content": "Find out which payment methods you can use in the IO app to pay pagoPA notices.",
+          "action": "Discover available payment methods"
         }
       },
       "transactions": {
         "multiplePayment": "Pagamento multiplo",
         "title": "Ricevute pagoPA",
-        "button": "Vedi tutte",
+        "button": "Show all",
         "empty": {
           "title": "Qui vedrai le tue ricevute pagoPA",
           "content": "Paga un avviso in app o presso un qualsiasi canale abilitato a pagoPA."
@@ -4411,7 +4416,6 @@
           "loading": "We are hiding your receipt...",
           "title": "pagoPA Receipt",
           "shareButton": "Save or share",
-          "error": "Unable to retrieve the receipt.",
           "download": "Get receipt",
           "hideFromList": "Hide from list",
           "delete": {
@@ -4617,7 +4621,7 @@
         },
         "ipzsPrivacy": {
           "title": "I tuoi Documenti su IO sono al sicuro",
-          "titleL3": "I tuoi Documenti sono al sicuro",
+          "titleL3": "IT-Wallet: Informativa Privacy e Termini e Condizioni d’uso",
           "warning": "Premendo **Continua** dichiari di aver letto e compreso l’**Informativa Privacy**.",
           "button": {
             "label": "Continua"

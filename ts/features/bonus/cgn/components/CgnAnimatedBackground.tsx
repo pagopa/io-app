@@ -28,7 +28,7 @@ const ORBIT_DURATION = 30000; // 30 seconds per orbit
 const MORPH_SPEED = 1; // 1 wobble cycle per orbit
 const SCALE_RANGE = [0.95, 1.5] as const;
 const OPACITY_RANGE = [0.4, 0.5] as const;
-const SEED_RANGE = [1.0, 7.0] as const;
+const SEED_RANGE = [1, 7] as const;
 
 interface AnimatedBlobProps {
   index: number;

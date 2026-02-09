@@ -221,3 +221,17 @@ export function trackLogoutFailure(
     buildEventProperties("TECH", "error", { reason, flow })
   );
 }
+
+export function trackSessionTokenSource(source: "fragment" | "queryParam") {
+  void mixpanelTrack(
+    "SESSION_TOKEN_SOURCE",
+    buildEventProperties("TECH", undefined, { source })
+  );
+}
+
+export function trackSessionTokenFragmentFailure(reason: string) {
+  void mixpanelTrack(
+    "SESSION_TOKEN_FRAGMENT_FAILURE",
+    buildEventProperties("TECH", undefined, { reason })
+  );
+}

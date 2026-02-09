@@ -1,28 +1,33 @@
 /* eslint-disable sonarjs/cognitive-complexity */
-import { createStore } from "redux";
-import { fireEvent, waitFor, act } from "@testing-library/react-native";
+import { act, fireEvent, waitFor } from "@testing-library/react-native";
+import _ from "lodash";
 import { RefObject } from "react";
 import { Keyboard, TextInput, View } from "react-native";
+import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
+import * as ACCESSIBILITY_UTILS from "../../../../../utils/accessibility";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import PN_ROUTES from "../../../navigation/routes";
+import { trackSendAarMandateCieCanEnter } from "../../analytics";
+import { setAarFlowState } from "../../store/actions";
+import * as AAR_SELECTORS from "../../store/selectors";
+import { sendAARFlowStates } from "../../utils/stateUtils";
+import { sendAarMockStates } from "../../utils/testUtils";
 import {
   CIE_CAN_LENGTH,
   SendAarCieCanInsertionScreen,
   SendAarCieCanInsertionScreenProps
 } from "../SendAarCieCanInsertionScreen";
-import * as ACCESSIBILITY_UTILS from "../../../../../utils/accessibility";
-import { sendAarMockStates } from "../../utils/testUtils";
-import { sendAARFlowStates } from "../../utils/stateUtils";
-import * as AAR_SELECTORS from "../../store/selectors";
-import { setAarFlowState } from "../../store/actions";
-import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 
 const mockDispatch = jest.fn();
-const mockGoBack = jest.fn();
-const mockNavigate = jest.fn();
+const mockReplace = jest.fn();
+const mockShouldNeverCall = jest.fn();
+
+jest.mock("../../analytics", () => ({
+  trackSendAarMandateCieCanEnter: jest.fn()
+}));
 
 jest.mock("../../../../../store/hooks", () => ({
   ...jest.requireActual("../../../../../store/hooks"),
@@ -41,7 +46,7 @@ describe("SendAarCieCanInsertionScreen", () => {
 
     expect(component.toJSON()).toMatchSnapshot();
   });
-  it('should call "setAccessibilityFocus" when component is focussed', async () => {
+  it('should call "setAccessibilityFocus" when component is focused', async () => {
     const spyOnSetAccessibilityFocus = jest.spyOn(
       ACCESSIBILITY_UTILS,
       "setAccessibilityFocus"
@@ -58,7 +63,16 @@ describe("SendAarCieCanInsertionScreen", () => {
     });
 
     expect(mockDispatch).not.toHaveBeenCalled();
-    expect(mockGoBack).not.toHaveBeenCalled();
+  });
+
+  it('should call "trackSendAarMandateCieCanEnter" when component is focused', async () => {
+    renderComponent();
+
+    await waitFor(() => {
+      expect(trackSendAarMandateCieCanEnter).toHaveBeenCalledTimes(1);
+    });
+
+    expect(mockDispatch).not.toHaveBeenCalled();
   });
 
   sendAarMockStates.forEach(aarState => {
@@ -67,6 +81,7 @@ describe("SendAarCieCanInsertionScreen", () => {
     const isCieScanningAdvisory =
       aarState.type === sendAARFlowStates.cieScanningAdvisory;
     const isCieCanAdvisory = aarState.type === sendAARFlowStates.cieCanAdvisory;
+    const shouldNavigate = isCieCanAdvisory || isCieScanningAdvisory;
 
     it(`${
       isCieCanInsertion ? "should" : "should not"
@@ -136,44 +151,27 @@ describe("SendAarCieCanInsertionScreen", () => {
     });
 
     it(`${
-      isCieScanningAdvisory ? "should" : "should not"
-    } navigate into the "SEND_AAR_CIE_CARD_READING_EDUCATIONAL" route when type is: ${
-      aarState.type
-    }`, () => {
+      shouldNavigate ? "should" : "should not"
+    } replace, and never navigate when type is: ${aarState.type}`, () => {
       jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
       renderComponent();
-
-      if (isCieScanningAdvisory) {
-        expect(mockNavigate).toHaveBeenCalledTimes(1);
-        expect(mockNavigate).toHaveBeenCalledWith(
-          MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
-          {
-            screen: PN_ROUTES.MAIN,
-            params: {
-              screen: PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL
-            }
-          }
-        );
-        expect(mockGoBack).not.toHaveBeenCalled();
-      } else {
-        expect(mockNavigate).not.toHaveBeenCalled();
-      }
-      expect(mockDispatch).not.toHaveBeenCalled();
-    });
-
-    it(`${
-      isCieCanAdvisory ? "should" : "should not"
-    } navigate back when type is: ${aarState.type}`, () => {
-      jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
-      renderComponent();
-
       if (isCieCanAdvisory) {
-        expect(mockGoBack).toHaveBeenCalledTimes(1);
-        expect(mockNavigate).not.toHaveBeenCalled();
-      } else {
-        expect(mockGoBack).not.toHaveBeenCalled();
+        expect(mockReplace).toHaveBeenCalledTimes(1);
+        expect(mockReplace).toHaveBeenCalledWith(
+          PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL,
+          { animationTypeForReplace: "pop" }
+        );
       }
+      if (isCieScanningAdvisory) {
+        expect(mockReplace).toHaveBeenCalledTimes(1);
+        expect(mockReplace).toHaveBeenCalledWith(
+          PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL,
+          { animationTypeForReplace: "push" }
+        );
+      }
+
       expect(mockDispatch).not.toHaveBeenCalled();
+      expect(mockShouldNeverCall).not.toHaveBeenCalled();
     });
   });
 });
@@ -187,9 +185,8 @@ function renderComponent() {
       <SendAarCieCanInsertionScreen
         route={route}
         navigation={{
-          ...navigation,
-          goBack: mockGoBack,
-          navigate: mockNavigate
+          ..._.mapValues(navigation, () => mockShouldNeverCall),
+          replace: mockReplace
         }}
       />
     ),

@@ -25,12 +25,6 @@ const IdPayCompletionScreen = () => {
 
   const initiative = useSelector(selectInitiative);
 
-  const initiativeName = pipe(
-    initiative,
-    O.map(i => i.initiativeName),
-    O.toUndefined
-  );
-
   const initiativeId = pipe(
     initiative,
     O.map(i => i.initiativeId),
@@ -61,8 +55,7 @@ const IdPayCompletionScreen = () => {
     });
 
     trackIDPayOnboardingSuccess({
-      initiativeId,
-      initiativeName
+      initiativeId
     });
   });
 

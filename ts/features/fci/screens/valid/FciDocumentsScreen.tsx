@@ -12,7 +12,7 @@ import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as S from "fp-ts/lib/string";
 import { useRef, useState, useEffect, ComponentProps } from "react";
 import { StyleSheet, View } from "react-native";
-import Pdf from "react-native-pdf";
+import Pdf, { PdfRef } from "react-native-pdf";
 import I18n from "i18next";
 import { TypeEnum as ClauseType } from "../../../../../definitions/fci/Clause";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
@@ -53,7 +53,7 @@ export type FciDocumentsScreenNavigationParams = Readonly<{
 }>;
 
 const FciDocumentsScreen = () => {
-  const pdfRef = useRef<Pdf>(null);
+  const pdfRef = useRef<PdfRef>(null);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const route = useRoute<RouteProp<FciParamsList, "FCI_DOCUMENTS">>();
@@ -67,6 +67,7 @@ const FciDocumentsScreen = () => {
   );
   const dispatch = useIODispatch();
   const isFocused = useIsFocused();
+  const [focusEpoch, setFocusEpoch] = useState(0);
 
   useEffect(() => {
     if (documents.length !== 0 && isFocused) {
@@ -89,6 +90,16 @@ const FciDocumentsScreen = () => {
       );
     }
   }, [dispatch, documentSignaturesSelector, documents, currentDoc, isFocused]);
+
+  useEffect(() => {
+    if (isFocused) {
+      // needed to re-trigger pdf load when opening the same document twice
+      setFocusEpoch(e => e + 1);
+
+      setTotalPages(0);
+      setCurrentPage(1);
+    }
+  }, [isFocused]);
 
   useEffect(() => {
     // with a document opened, we can track the opening success event
@@ -170,17 +181,24 @@ const FciDocumentsScreen = () => {
      * onPageChanged, which is called to report that the first page
      * has loaded */
     <Pdf
+      key={`${
+        documents[currentDoc]?.id ?? "doc"
+      }:${downloadPath}:${focusEpoch}`}
       ref={pdfRef}
       source={{
         uri: `${downloadPath}`
       }}
       onLoadComplete={(numberOfPages, _) => {
+        if (!isFocused) {
+          return;
+        }
         setTotalPages(numberOfPages);
       }}
       onPageChanged={(page, numberOfPages) => {
-        if (totalPages === 0) {
-          setTotalPages(numberOfPages);
+        if (!isFocused) {
+          return;
         }
+        setTotalPages(numberOfPages);
         setCurrentPage(page);
       }}
       enablePaging
@@ -240,8 +258,12 @@ const FciDocumentsScreen = () => {
           currentPage,
           totalPages
         })}
-        iconLeftDisabled={currentPage === 1}
-        iconRightDisabled={currentPage === totalPages}
+        /**
+         * buttons have to be disabled when totalPages is not ready yet (zero value) OR
+         * when corresponding limit is reached
+         */
+        iconRightDisabled={currentPage >= totalPages}
+        iconLeftDisabled={totalPages === 0 || currentPage === 1}
         onPrevious={onPrevious}
         onNext={onNext}
         disabled={false}

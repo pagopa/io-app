@@ -7,9 +7,9 @@ import {
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
-import { isTestEnv } from "../../../../../utils/environment";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import {
   addTicketCustomField,
@@ -23,22 +23,22 @@ import {
   zendeskSelectedCategory,
   zendeskSupportStart
 } from "../../../../zendesk/store/actions";
-import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
-import {
-  currentAARFlowStateAssistanceErrorCode,
-  currentAARFlowStateErrorDebugInfoSelector
-} from "../../store/selectors";
-import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import {
   trackSendAarErrorScreenClosure,
   trackSendAarErrorScreenDetails,
   trackSendAarErrorScreenDetailsCode,
   trackSendAarErrorScreenDetailsHelp
 } from "../../analytics";
+import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
+import {
+  currentAARFlowStateAssistanceErrorCode,
+  currentAARFlowStateErrorDebugInfoSelector
+} from "../../store/selectors";
 
-const bottomComponent = (
+export const sendAarErrorSupportBottomSheetComponent = (
   onAssistancePress: () => void,
-  assistanceErrorCode?: string
+  assistanceErrorCode?: string,
+  onCopyToClipboardPress?: () => void
 ) => (
   <>
     <Body>{I18n.t("features.pn.aar.flow.ko.GENERIC.detail.subTitle")}</Body>
@@ -73,6 +73,7 @@ const bottomComponent = (
           numberOfLines={2}
           onPress={() => {
             trackSendAarErrorScreenDetailsCode();
+            onCopyToClipboardPress?.();
             clipboardSetStringWithFeedback(assistanceErrorCode);
           }}
           testID="error_code_value"
@@ -83,7 +84,7 @@ const bottomComponent = (
   </>
 );
 
-export const SendAARErrorComponent = () => {
+export const SendAarGenericErrorComponent = () => {
   const dispatch = useIODispatch();
   const { terminateFlow } = useSendAarFlowManager();
   const assistanceErrorCode = useIOSelector(
@@ -115,7 +116,7 @@ export const SendAARErrorComponent = () => {
   };
 
   const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
-    component: bottomComponent(
+    component: sendAarErrorSupportBottomSheetComponent(
       zendeskAssistanceLogAndStart,
       assistanceErrorCode
     ),
@@ -154,5 +155,3 @@ export const SendAARErrorComponent = () => {
     </>
   );
 };
-
-export const testable = isTestEnv ? { bottomComponent } : undefined;

@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { act, waitFor } from "@testing-library/react-native";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -5,28 +6,35 @@ import * as HOOKS from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import { renderComponentWithStoreAndNavigationContextForFocus } from "../../../../messages/utils/__tests__/testUtils.test";
 import PN_ROUTES from "../../../navigation/routes";
-import { setAarFlowState } from "../../store/actions";
-import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
-import { SendAARInitialFlowScreen } from "../SendAARInitialFlowScreen";
-import * as SELECTORS from "../../store/selectors";
-import { sendAarMockStates } from "../../utils/testUtils";
 import * as ANALYTICS from "../../analytics";
+import { setAarFlowState } from "../../store/actions";
+import * as SELECTORS from "../../store/selectors";
+import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
+import { sendAarMockStates } from "../../utils/testUtils";
+import { SendAARInitialFlowScreen } from "../SendAARInitialFlowScreen";
 
 const mockReplace = jest.fn();
 const mockSetOptions = jest.fn();
+const mockShouldNeverCall = jest.fn();
 
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
   return {
     ...actualNav,
-    useNavigation: () => ({
-      ...actualNav.useNavigation?.(),
-      replace: mockReplace,
-      setOptions: mockSetOptions
-    })
+    useNavigation: () =>
+      new Proxy(actualNav.useNavigation?.(), {
+        get: (_target, prop) => {
+          if (prop === "replace") {
+            return mockReplace;
+          }
+          if (prop === "setOptions") {
+            return mockSetOptions;
+          }
+          return mockShouldNeverCall;
+        }
+      })
   };
 });
 
@@ -78,6 +86,15 @@ describe("SendAARInitialFlowScreen", () => {
       } else {
         expect(spiedOnMockedTrackSendAARToS.mock.calls.length).toBe(0);
       }
+    });
+
+    it(`should never call any non-replace navigation action when type is "${state.type}"`, () => {
+      flowStateSelectorSpy.mockReturnValue(state);
+      dispatchSpy.mockReturnValue(mockDispatch);
+
+      renderComponent();
+
+      expect(mockShouldNeverCall).not.toHaveBeenCalled();
     });
   });
 
@@ -133,15 +150,7 @@ describe("SendAARInitialFlowScreen", () => {
         renderComponent();
 
         await waitFor(() => {
-          expect(mockReplace).toHaveBeenCalledWith(
-            MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
-            {
-              screen: PN_ROUTES.MAIN,
-              params: {
-                screen: PN_ROUTES.SEND_AAR_ERROR
-              }
-            }
-          );
+          expect(mockReplace).toHaveBeenCalledWith(PN_ROUTES.SEND_AAR_ERROR);
         });
       });
     }
@@ -155,13 +164,7 @@ describe("SendAARInitialFlowScreen", () => {
 
     await waitFor(() => {
       expect(mockReplace).toHaveBeenCalledWith(
-        MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
-        {
-          screen: PN_ROUTES.MAIN,
-          params: {
-            screen: PN_ROUTES.SEND_AAR_DELEGATION_PROPOSAL
-          }
-        }
+        PN_ROUTES.SEND_AAR_DELEGATION_PROPOSAL
       );
     });
   });
@@ -177,22 +180,13 @@ describe("SendAARInitialFlowScreen", () => {
       renderComponent();
 
       await waitFor(() => {
-        expect(mockReplace).toHaveBeenCalledWith(
-          MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
-          {
-            screen: PN_ROUTES.MAIN,
-            params: {
-              screen: PN_ROUTES.MESSAGE_DETAILS,
-              params: {
-                messageId: "TEST_IUN",
-                firstTimeOpening: undefined,
-                serviceId: "SERVICE_ID",
-                sendOpeningSource: "aar",
-                sendUserType: mandateId != null ? "mandatory" : "recipient"
-              }
-            }
-          }
-        );
+        expect(mockReplace).toHaveBeenCalledWith(PN_ROUTES.MESSAGE_DETAILS, {
+          messageId: "TEST_IUN",
+          firstTimeOpening: undefined,
+          serviceId: "SERVICE_ID",
+          sendOpeningSource: "aar",
+          sendUserType: mandateId != null ? "mandatory" : "recipient"
+        });
       });
     });
   });

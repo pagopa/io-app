@@ -1,23 +1,33 @@
 import { useIOToast } from "@pagopa/io-app-design-system";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import i18n from "i18next";
 import { useCallback, useEffect } from "react";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
 import { useIsNfcFeatureAvailable } from "../hooks/useIsNfcFeatureAvailable";
 import { useSendAarDelegationProposalScreenBottomSheet } from "../hooks/useSendAarDelegationProposalScreenBottomSheet";
 import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
 import { setAarFlowState } from "../store/actions";
 import { AarStatesByName, sendAARFlowStates } from "../utils/stateUtils";
+import {
+  trackSendAarNotificationOpeningMandateBottomSheet,
+  trackSendAarNotificationOpeningMandateDisclaimer,
+  trackSendAarNotificationOpeningMandateDisclaimerAccepted,
+  trackSendAarNotificationOpeningMandateDisclaimerClosure
+} from "../analytics";
 
 export const SendAarDelegationProposalScreen = () => {
   const { terminateFlow, currentFlowData } = useSendAarFlowManager();
   const { type } = currentFlowData;
-  const navigation = useIONavigation();
+  const navigation =
+    useNavigation<
+      StackNavigationProp<PnParamsList, "SEND_AAR_DELEGATION_PROPOSAL">
+    >();
   const { warning, hideAll } = useIOToast();
 
   useOnFirstRender(() => {
@@ -29,22 +39,12 @@ export const SendAarDelegationProposalScreen = () => {
       case sendAARFlowStates.ko:
       case sendAARFlowStates.nfcNotSupportedFinal: {
         hideAll();
-        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-          screen: PN_ROUTES.MAIN,
-          params: {
-            screen: PN_ROUTES.SEND_AAR_ERROR
-          }
-        });
+        navigation.replace(PN_ROUTES.SEND_AAR_ERROR);
         break;
       }
       case sendAARFlowStates.cieCanAdvisory: {
         hideAll();
-        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-          screen: PN_ROUTES.MAIN,
-          params: {
-            screen: PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL
-          }
-        });
+        navigation.replace(PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL);
         break;
       }
     }
@@ -84,6 +84,10 @@ const DelegationProposalContent = ({
 
   const { denomination } = notAdresseeData.recipientInfo;
 
+  useEffect(() => {
+    trackSendAarNotificationOpeningMandateDisclaimer();
+  }, []);
+
   const handleIdentificationSuccess = useCallback(() => {
     dispatch(
       setAarFlowState({
@@ -101,7 +105,10 @@ const DelegationProposalContent = ({
       onIdentificationSuccess: handleIdentificationSuccess
     });
   const handleContinuePress = useCallback(() => {
+    trackSendAarNotificationOpeningMandateDisclaimerAccepted();
+
     if (isNfcAvailable) {
+      trackSendAarNotificationOpeningMandateBottomSheet();
       present();
     } else {
       dispatch(
@@ -112,6 +119,11 @@ const DelegationProposalContent = ({
       );
     }
   }, [isNfcAvailable, present, dispatch, notAdresseeData]);
+
+  const handleClose = useCallback(() => {
+    trackSendAarNotificationOpeningMandateDisclaimerClosure();
+    terminateFlow();
+  }, [terminateFlow]);
 
   return (
     <>
@@ -131,7 +143,7 @@ const DelegationProposalContent = ({
         }}
         secondaryAction={{
           label: i18n.t("global.buttons.close"),
-          onPress: terminateFlow,
+          onPress: handleClose,
           testID: "close-button"
         }}
       />
