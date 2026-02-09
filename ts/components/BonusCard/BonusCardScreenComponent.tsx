@@ -89,20 +89,18 @@ const BonusCardScreenComponent = ({
   });
 
   return (
-    <>
-      <IOScrollView
-        animatedRef={animatedScrollViewRef}
-        actions={actions}
-        includeContentMargins={false}
-      >
-        <BonusCard
-          hideLogo={isDeviceScreenSmall}
-          cardColorSchemeValues={cardColorSchemeValues}
-          {...cardProps}
-        />
-        {children}
-      </IOScrollView>
-    </>
+    <IOScrollView
+      animatedRef={animatedScrollViewRef}
+      actions={actions}
+      includeContentMargins={false}
+    >
+      <BonusCard
+        hideLogo={isDeviceScreenSmall}
+        cardColorSchemeValues={cardColorSchemeValues}
+        {...cardProps}
+      />
+      {children}
+    </IOScrollView>
   );
 };
 
