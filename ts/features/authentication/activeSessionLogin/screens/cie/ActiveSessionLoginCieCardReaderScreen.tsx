@@ -150,7 +150,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
           subtitle: "",
           content: isScreenReaderEnabled
             ? I18n.t("authentication.cie.card.cieCardValid")
-            : undefined
+            : ""
         };
       case ReadingState.error:
         return getTextForState(ReadingState.error, errorMessage);
