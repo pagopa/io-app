@@ -1,11 +1,20 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { ResponseHeaders } from "@pagopa/ts-commons/lib/requests";
+import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import { SectionListData } from "react-native";
 import { InfoNotice } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
+import { OperationResultScreenContentProps } from "../../../../components/screens/OperationResultScreenContent";
 import { NetworkError } from "../../../../utils/errors";
 import { capitalizeTextName } from "../../../../utils/strings";
+import {
+  DownloadReceiptOutcomeErrorEnum,
+  ReceiptDownloadFailure
+} from "../types";
+import { ReceiptsHeaders } from "./types";
 
 export const RECEIPT_DOCUMENT_TYPE_PREFIX = "data:application/pdf;base64,";
 
@@ -191,4 +200,72 @@ export const isValidPspName = (pspName: string | undefined): boolean =>
     O.fromNullable,
     O.map(name => name !== "-"),
     O.getOrElse(() => false)
+  );
+
+export const mapDownloadReceiptErrorToOutcomeProps = (
+  error: NetworkError | ReceiptDownloadFailure | undefined,
+  onClose: () => void,
+  handleContactSupport: () => void
+): OperationResultScreenContentProps => {
+  const errorCode = error && "code" in error ? error.code : undefined;
+
+  const supportAction = {
+    label: I18n.t("wallet.payment.support.supportTitle"),
+    onPress: handleContactSupport,
+    testID: "contact-support-button"
+  };
+
+  const closeAction = {
+    label: I18n.t("global.buttons.close"),
+    onPress: onClose
+  };
+
+  switch (errorCode) {
+    case DownloadReceiptOutcomeErrorEnum.GN_400_003:
+      return {
+        title: I18n.t("features.payments.transactions.receipt.error.400.title"),
+        subtitle: I18n.t(
+          "features.payments.transactions.receipt.error.400.subtitle"
+        ),
+        pictogram: "attention",
+        action: supportAction,
+        secondaryAction: closeAction
+      };
+    case DownloadReceiptOutcomeErrorEnum.AT_404_001:
+    case DownloadReceiptOutcomeErrorEnum.BZ_404_003:
+      return {
+        title: I18n.t("features.payments.transactions.receipt.error.404.title"),
+        subtitle: I18n.t(
+          "features.payments.transactions.receipt.error.404.subtitle"
+        ),
+        pictogram: "searchLens",
+        action: closeAction,
+        secondaryAction: supportAction
+      };
+    case DownloadReceiptOutcomeErrorEnum.UN_500_000:
+    case DownloadReceiptOutcomeErrorEnum.GN_500_001:
+    case DownloadReceiptOutcomeErrorEnum.GN_500_002:
+    case DownloadReceiptOutcomeErrorEnum.GN_500_003:
+    case DownloadReceiptOutcomeErrorEnum.GN_500_004:
+    case DownloadReceiptOutcomeErrorEnum.FG_000_001:
+    default:
+      return {
+        title: I18n.t("features.payments.transactions.receipt.error.500.title"),
+        subtitle: I18n.t(
+          "features.payments.transactions.receipt.error.500.subtitle"
+        ),
+        pictogram: "umbrella",
+        action: closeAction
+      };
+  }
+};
+
+export const getReceiptContinuationToken = (
+  responseHeaders: ResponseHeaders<"x-continuation-token" | "X-Request-Id">
+) =>
+  pipe(
+    responseHeaders,
+    ReceiptsHeaders.decode,
+    E.map(headers => headers.map["x-continuation-token"]),
+    E.getOrElseW(() => undefined)
   );

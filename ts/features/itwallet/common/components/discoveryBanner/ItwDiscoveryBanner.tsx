@@ -7,9 +7,9 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import { useIODispatch } from "../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
-  trackItWalletBannerClosure,
-  trackItWalletBannerTap,
-  trackITWalletBannerVisualized
+  trackItwBannerVisualized,
+  trackItwBannerClosure,
+  trackItwBannerTap
 } from "../../../analytics";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { useItwDiscoveryBannerType } from "../../hooks/useItwDiscoveryBannerType";
@@ -64,18 +64,18 @@ export const ItwDiscoveryBannerLegacy = ({
     [bannerType, route.name]
   );
   const handleOnPress = () => {
-    trackItWalletBannerTap(trackBannerProperties);
+    trackItwBannerTap(trackBannerProperties);
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
       params: {}
     });
   };
   useOnFirstRender(() => {
-    trackITWalletBannerVisualized(trackBannerProperties);
+    trackItwBannerVisualized(trackBannerProperties);
   });
 
   const handleClose = () => {
-    trackItWalletBannerClosure(trackBannerProperties);
+    trackItwBannerClosure(trackBannerProperties);
     handleOnClose?.();
     dispatch(itwCloseBanner("discovery"));
   };
