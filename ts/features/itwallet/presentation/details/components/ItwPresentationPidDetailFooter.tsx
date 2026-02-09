@@ -8,7 +8,7 @@ import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailable
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { useItwStartCredentialSupportRequest } from "../hooks/useItwStartCredentialSupportRequest";
-import { ITW_SCREENVIEW_EVENTS } from "../../../analytics/enum";
+import { ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS } from "../analytics/enum";
 
 type Props = {
   credential: StoredCredential;
@@ -26,7 +26,7 @@ const ItwPresentationPidDetailFooter = ({ credential }: Props) => {
   const handleRevokePress = () => {
     trackItwStartDeactivation({
       credential: "ITW_PID",
-      screen_name: ITW_SCREENVIEW_EVENTS.WALLET
+      screen_name: ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS.ITW_CREDENTIAL_DETAIL
     });
     Alert.alert(
       I18n.t("features.itWallet.presentation.itWalletId.dialog.revoke.title"),

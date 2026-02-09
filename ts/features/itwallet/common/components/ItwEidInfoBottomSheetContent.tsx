@@ -26,9 +26,10 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { useItwStatusIconColor } from "../hooks/useItwStatusIconColor";
 import { parseClaims, WellKnownClaim } from "../utils/itwClaimsUtils";
 import { StoredCredential } from "../utils/itwTypesUtils";
-import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
+import { ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS } from "../../presentation/details/analytics/enum";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
 import { ItwEidLifecycleAlert } from "./ItwEidLifecycleAlert";
+
 
 type ItwEidInfoBottomSheetTitleProps = {
   isExpired: boolean;
@@ -72,7 +73,7 @@ const ItwEidInfoBottomSheetContent = ({
     const navigateToWalletRevocationScreen = () => {
       trackItwStartDeactivation({
         credential: "ITW_ID_V2",
-        screen_name: ITW_SCREENVIEW_EVENTS.WALLET
+        screen_name: ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS.ITW_CREDENTIAL_DETAIL
       });
       navigation.navigate(ITW_ROUTES.MAIN, {
         screen: ITW_ROUTES.WALLET_REVOCATION_SCREEN
