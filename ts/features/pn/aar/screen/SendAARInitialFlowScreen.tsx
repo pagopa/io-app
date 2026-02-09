@@ -1,11 +1,12 @@
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import i18n from "i18next";
 import { useEffect } from "react";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { SendUserType } from "../../../pushNotifications/analytics";
+import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
 import { trackSendAARToS } from "../analytics";
 import { SendAARTosComponent } from "../components/SendAARTosComponent";
@@ -21,7 +22,8 @@ export const SendAARInitialFlowScreen = ({
 }: SendAarInitialFlowScreenT) => {
   const flowData = useIOSelector(currentAARFlowData);
   const dispatch = useIODispatch();
-  const navigation = useIONavigation();
+  const navigation =
+    useNavigation<StackNavigationProp<PnParamsList, "PN_QR_SCAN_FLOW">>();
   const flowStateType = flowData.type;
 
   useEffect(() => {
@@ -45,36 +47,20 @@ export const SendAARInitialFlowScreen = ({
     switch (flowStateType) {
       case sendAARFlowStates.notAddresseeFinal:
       case sendAARFlowStates.ko:
-        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-          screen: PN_ROUTES.MAIN,
-          params: {
-            screen: PN_ROUTES.SEND_AAR_ERROR
-          }
-        });
+        navigation.replace(PN_ROUTES.SEND_AAR_ERROR);
         break;
       case sendAARFlowStates.notAddressee:
-        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-          screen: PN_ROUTES.MAIN,
-          params: {
-            screen: PN_ROUTES.SEND_AAR_DELEGATION_PROPOSAL
-          }
-        });
+        navigation.replace(PN_ROUTES.SEND_AAR_DELEGATION_PROPOSAL);
         break;
       case sendAARFlowStates.displayingNotificationData: {
         const sendUserType: SendUserType =
           flowData.mandateId != null ? "mandatory" : "recipient";
-        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-          screen: PN_ROUTES.MAIN,
-          params: {
-            screen: PN_ROUTES.MESSAGE_DETAILS,
-            params: {
-              messageId: flowData.iun,
-              firstTimeOpening: undefined,
-              serviceId: flowData.pnServiceId,
-              sendOpeningSource: "aar",
-              sendUserType
-            }
-          }
+        navigation.replace(PN_ROUTES.MESSAGE_DETAILS, {
+          messageId: flowData.iun,
+          firstTimeOpening: undefined,
+          serviceId: flowData.pnServiceId,
+          sendOpeningSource: "aar",
+          sendUserType
         });
         break;
       }

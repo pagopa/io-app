@@ -71,6 +71,10 @@ export const bonusApiUrlPrefix: string = Config.BONUS_API_URL_PREFIX;
 export const isPlaygroundsEnabled: boolean =
   Config.PLAYGROUNDS_ENABLED === "YES";
 
+// New locale selection
+export const isAppLocaleSelectionEnabled: boolean =
+  Config.APP_LOCALE_SELECTION_ENABLED === "YES";
+
 // Zendesk Feature Flag
 export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
 

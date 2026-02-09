@@ -54,7 +54,7 @@ const itwNestedCredentialSummaryMap: Record<
  * @param singleItemClaims The array of claims for the one nested item.
  * @returns An object with the summaryLabel and summaryValue.
  */
-const getNestedItemSummary = (
+export const getNestedItemSummary = (
   claimId: string,
   singleItemClaims: Array<ClaimDisplayFormat>
 ): { summaryLabel?: string; summaryValue?: string } => {
