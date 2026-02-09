@@ -39,7 +39,7 @@ describe("ItwSettingsScreen", () => {
 
     // Spy analytics tracker
     jest
-      .spyOn(analytics, "trackWalletStartDeactivation")
+      .spyOn(analytics, "trackItwStartDeactivation")
       .mockImplementation(jest.fn());
   });
 
@@ -86,9 +86,7 @@ describe("ItwSettingsScreen", () => {
     expect(getByTestId("itwEidLifecycleAlertTestID_valid")).toBeTruthy();
 
     fireEvent.press(getByTestId("itwRevokeButtonTestID"));
-    expect(analytics.trackWalletStartDeactivation).toHaveBeenCalledWith(
-      "ITW_PID"
-    );
+    expect(analytics.trackItwStartDeactivation).toHaveBeenCalledWith("ITW_PID");
 
     expect(Alert.alert).toHaveBeenCalled();
 
