@@ -88,7 +88,9 @@ function getLogoUris(card: Card | undefined, eycaDetails: EycaDetailsState) {
   ];
 }
 
-export const cgnCardColors: BonusScreenComponentProps["cardColors"] = {
+export const cgnCardColors: NonNullable<
+  BonusScreenComponentProps["cardColors"]
+> = {
   light: {
     background: "#f4f5f8",
     foreground: "#c8c3dc",
@@ -237,7 +239,7 @@ const CgnDetailScreen = (props: Props): ReactElement => {
       name={I18n.t("bonus.cgn.name")}
       title={I18n.t("bonus.cgn.name")}
       organizationName={I18n.t("bonus.cgn.departmentName")}
-      cardBackground={<CgnAnimatedBackground colors={cgnCardColors} />}
+      cardBackground={<CgnAnimatedBackground />}
       actions={footerActions}
       status={
         props.cgnDetails ? <CgnCardStatus card={props.cgnDetails} /> : undefined

@@ -11,7 +11,7 @@ import {
   withRepeat,
   withTiming
 } from "react-native-reanimated";
-import { BonusScreenComponentProps } from "../../../../components/BonusCard/BonusCardScreenComponent";
+import { cgnCardColors } from "../screens/CgnDetailScreen";
 
 // Blob configuration
 const NUM_BLOB_POINTS = 7;
@@ -185,11 +185,7 @@ const AnimatedBlob = ({ index, canvasSize, color }: AnimatedBlobProps) => {
   return <Path path={blobPath} color={foregroundColor} opacity={opacity} />;
 };
 
-export const CgnAnimatedBackground = ({
-  colors
-}: {
-  colors: NonNullable<BonusScreenComponentProps["cardColors"]>;
-}) => {
+export const CgnAnimatedBackground = () => {
   // Canvas size is provided via onSize callback and updated on the UI thread
   const canvasSize = useSharedValue({ width: 0, height: 0 });
   const { themeType } = useIOThemeContext();
@@ -197,11 +193,11 @@ export const CgnAnimatedBackground = ({
   const isDark = themeType === "dark";
 
   const backgroundColor = isDark
-    ? colors.dark.background
-    : colors.light.background;
+    ? cgnCardColors.dark.background
+    : cgnCardColors.light.background;
   const foregroundColor = isDark
-    ? colors.dark.foreground
-    : colors.light.foreground;
+    ? cgnCardColors.dark.foreground
+    : cgnCardColors.light.foreground;
 
   return (
     <Canvas
