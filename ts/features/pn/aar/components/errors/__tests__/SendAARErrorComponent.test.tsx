@@ -1,4 +1,4 @@
-import { fireEvent } from "@testing-library/react-native";
+import { act, fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import * as DISPATCH from "../../../../../../store/hooks";
@@ -116,6 +116,36 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
     fireEvent.press(button);
 
     expect(mockAssistance).toHaveBeenCalledTimes(1);
+  });
+
+  it('should call "onCopyToClipboardPress" when the assistanceErrorCode is copied', () => {
+    const mockOnCopyToClipboardPress = jest.fn();
+    const renderedBottomComponent = sendAarErrorSupportBottomSheetComponent(
+      mockAssistance,
+      assistanceErrorCode,
+      mockOnCopyToClipboardPress
+    );
+
+    const presentMock = jest.fn();
+    const dismissMock = jest.fn();
+    jest.spyOn(BOTTOM_SHEET, "useIOBottomSheetModal").mockReturnValue({
+      bottomSheet: renderedBottomComponent,
+      present: presentMock,
+      dismiss: dismissMock
+    });
+
+    const { getByTestId } = renderComponent();
+
+    const copyCta = getByTestId("error_code_value");
+
+    expect(mockOnCopyToClipboardPress).not.toHaveBeenCalled();
+
+    act(() => {
+      fireEvent.press(copyCta);
+    });
+
+    expect(mockAssistance).not.toHaveBeenCalled();
+    expect(mockOnCopyToClipboardPress).toHaveBeenCalledTimes(1);
   });
 
   it("renders error codes when flow is 'ko'", () => {

@@ -34,6 +34,7 @@ import {
   walletReceiptDetailsPotSelector,
   walletReceiptPotSelector
 } from "../store/selectors";
+import { DownloadReceiptOutcomeErrorEnum } from "../types";
 
 export type ReceiptDetailsScreenParams = {
   transactionId: string;
@@ -103,7 +104,9 @@ const ReceiptDetailsScreen = () => {
       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
       user: paymentAnalyticsData?.receiptUser,
       organization_fiscal_code:
-        paymentAnalyticsData?.receiptOrganizationFiscalCode
+        paymentAnalyticsData?.receiptOrganizationFiscalCode,
+      // This callback is only called when the generation fails due to a 404_002 error from the backend
+      reason: DownloadReceiptOutcomeErrorEnum.AT_404_002
     });
 
     toast.info(
