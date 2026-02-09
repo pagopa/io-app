@@ -30,7 +30,6 @@ import { ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS } from "../../presentation/d
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
 import { ItwEidLifecycleAlert } from "./ItwEidLifecycleAlert";
 
-
 type ItwEidInfoBottomSheetTitleProps = {
   isExpired: boolean;
 };
@@ -73,7 +72,8 @@ const ItwEidInfoBottomSheetContent = ({
     const navigateToWalletRevocationScreen = () => {
       trackItwStartDeactivation({
         credential: "ITW_ID_V2",
-        screen_name: ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS.ITW_CREDENTIAL_DETAIL
+        screen_name:
+          ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS.ITW_CREDENTIAL_DETAIL
       });
       navigation.navigate(ITW_ROUTES.MAIN, {
         screen: ITW_ROUTES.WALLET_REVOCATION_SCREEN

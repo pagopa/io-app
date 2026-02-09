@@ -86,7 +86,10 @@ describe("ItwSettingsScreen", () => {
     expect(getByTestId("itwEidLifecycleAlertTestID_valid")).toBeTruthy();
 
     fireEvent.press(getByTestId("itwRevokeButtonTestID"));
-    expect(analytics.trackItwStartDeactivation).toHaveBeenCalledWith("ITW_PID");
+    expect(analytics.trackItwStartDeactivation).toHaveBeenCalledWith({
+      credential: "ITW_PID",
+      screen_name: "ITW_SETTINGS"
+    });
 
     expect(Alert.alert).toHaveBeenCalled();
 

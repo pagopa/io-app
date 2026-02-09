@@ -26,7 +26,8 @@ const ItwPresentationPidDetailFooter = ({ credential }: Props) => {
   const handleRevokePress = () => {
     trackItwStartDeactivation({
       credential: "ITW_PID",
-      screen_name: ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS.ITW_CREDENTIAL_DETAIL
+      screen_name:
+        ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS.ITW_CREDENTIAL_DETAIL
     });
     Alert.alert(
       I18n.t("features.itWallet.presentation.itWalletId.dialog.revoke.title"),
