@@ -4,11 +4,11 @@ import * as RN from "react-native";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { renderComponentWithStoreAndNavigationContextForFocus } from "../../../../messages/utils/__tests__/testUtils.test";
 import PN_ROUTES from "../../../navigation/routes";
 import {
+  isErrorState,
   ReadStatus,
   useCieInternalAuthAndMrtdReading
 } from "../../hooks/useCieInternalAuthAndMrtdReading";
@@ -19,6 +19,7 @@ import {
   SendAARCieCardReadingComponentProps
 } from "../SendAARCieCardReadingComponent";
 import { useTrackCieReadingEvents } from "../../hooks/useTrackCieReadingEvents";
+import { useAarCieErrorBottomSheet } from "../errors/hooks/useAarCieErrorBottomSheet";
 type ReadState = ReturnType<
   typeof useCieInternalAuthAndMrtdReading
 >["readState"];
@@ -29,13 +30,13 @@ const mockStopReading = jest.fn();
 const mockDispatch = jest.fn();
 const mockTerminateFlow = jest.fn();
 const mockPresentBottomSheet = jest.fn();
-const mockDismissBottomSheet = jest.fn();
 
 jest.mock("react-redux", () => ({
   ...jest.requireActual("react-redux"),
   useDispatch: () => mockDispatch
 }));
-jest.mock("../../../../../utils/hooks/bottomSheet");
+
+jest.mock("../errors/hooks/useAarCieErrorBottomSheet");
 
 const testRestartHandlerCalled = (
   restartType: "canAdvisory" | "scanningAdvisory"
@@ -70,12 +71,12 @@ const testRestartHandlerCalled = (
   }
 };
 
-const mockedUseIOBottomSheetModal = useIOBottomSheetModal as jest.Mock;
-mockedUseIOBottomSheetModal.mockImplementation(() => ({
+const mockUseAarCieErrorBottomSheet = useAarCieErrorBottomSheet as jest.Mock;
+mockUseAarCieErrorBottomSheet.mockImplementation(({ bottomSheet }) => ({
   present: mockPresentBottomSheet,
-  dismiss: mockDismissBottomSheet,
-  bottomSheet: null
+  bottomSheet
 }));
+
 jest.mock("i18next", () => ({
   t: (path: string) => path
 }));
@@ -171,6 +172,22 @@ describe("SendAARCieCardReadingComponent", () => {
       expect(useTrackCieReadingEvents).toHaveBeenCalledTimes(1);
     }
   );
+
+  it.each<ReadState>(mockReadStates)(
+    'should invoke "useAarCieErrorBottomSheet" for readState: %o',
+    readState => {
+      mockReadState(readState);
+
+      renderComponent();
+
+      expect(useAarCieErrorBottomSheet).toHaveBeenCalledTimes(1);
+      expect(useAarCieErrorBottomSheet).toHaveBeenCalledWith({
+        zendeskSecondLevelTag: "io_problema_notifica_send_qr_altra_persona",
+        errorName: isErrorState(readState) ? readState.error.name : undefined
+      });
+    }
+  );
+
   describe("SendAARCieCardReadingComponent: ReadState is IDLE", () => {
     beforeEach(() => {
       mockReadState({ status: ReadStatus.IDLE });
@@ -356,6 +373,7 @@ describe("SendAARCieCardReadingComponent", () => {
         });
 
         expect(mockStartReading).toHaveBeenCalledTimes(1);
+        expect(mockPresentBottomSheet).not.toHaveBeenCalled();
       });
       it("should go back to the scanning advisory screen when the cancel action is triggered", () => {
         const { getByTestId } = renderComponent();
@@ -364,7 +382,9 @@ describe("SendAARCieCardReadingComponent", () => {
         expect(retryButton).toBeTruthy();
 
         fireEvent.press(retryButton);
+
         testRestartHandlerCalled("scanningAdvisory");
+        expect(mockPresentBottomSheet).not.toHaveBeenCalled();
       });
     });
     describe("WRONG_CAN error", () => {
@@ -382,7 +402,9 @@ describe("SendAARCieCardReadingComponent", () => {
         expect(retryButton).toBeTruthy();
 
         fireEvent.press(retryButton);
+
         testRestartHandlerCalled("canAdvisory");
+        expect(mockPresentBottomSheet).not.toHaveBeenCalled();
       });
       test.each(["ios", "android"] as const)(
         "should output the right subtitle for platform %s",
@@ -428,6 +450,7 @@ describe("SendAARCieCardReadingComponent", () => {
         });
 
         testRestartHandlerCalled("canAdvisory");
+        expect(mockPresentBottomSheet).not.toHaveBeenCalled();
       });
       it("should present the bottom sheet when the secondary action is triggered", () => {
         const { getByTestId } = renderComponent();
@@ -443,41 +466,6 @@ describe("SendAARCieCardReadingComponent", () => {
         });
 
         expect(mockPresentBottomSheet).toHaveBeenCalledTimes(1);
-      });
-    });
-    describe("generic error bottomSheet", () => {
-      beforeAll(() => {
-        mockErrorState({
-          name: "NON_MAPPED_ERROR"
-        } as unknown as (typeof unmappedErrors)[number]);
-      });
-      it("should match snapshot", () => {
-        expect(mockedUseIOBottomSheetModal).toHaveBeenCalledTimes(0);
-        renderComponent();
-        expect(mockedUseIOBottomSheetModal).toHaveBeenCalledTimes(1);
-
-        const bottomSheetComponent =
-          mockedUseIOBottomSheetModal.mock.calls[0][0].component;
-        expect(bottomSheetComponent).toBeDefined();
-        const { toJSON } = render(bottomSheetComponent);
-        expect(toJSON()).toMatchSnapshot();
-      });
-      it('should invoke "dismiss" on assistance press', () => {
-        renderComponent();
-
-        const bottomSheetComponent =
-          mockedUseIOBottomSheetModal.mock.calls[0][0].component;
-        expect(bottomSheetComponent).toBeDefined();
-        const { getByTestId } = render(bottomSheetComponent);
-        const assistanceButton = getByTestId("button_assistance");
-        expect(assistanceButton).toBeTruthy();
-        expect(mockDismissBottomSheet).not.toHaveBeenCalled();
-
-        act(() => {
-          fireEvent.press(assistanceButton);
-        });
-
-        expect(mockDismissBottomSheet).toHaveBeenCalledTimes(1);
       });
     });
   });
@@ -506,6 +494,7 @@ function testCancelErrorAction() {
   fireEvent.press(cancelAction!);
 
   expect(mockStartReading).not.toHaveBeenCalled();
+  expect(mockPresentBottomSheet).not.toHaveBeenCalled();
   expect(mockTerminateFlow).toHaveBeenCalledTimes(1);
 }
 
