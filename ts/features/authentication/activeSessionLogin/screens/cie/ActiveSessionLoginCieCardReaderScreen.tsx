@@ -181,6 +181,8 @@ const ActiveSessionLoginCieCardReaderScreen = ({
       errorDescription?: string;
       navigation?: () => void;
     }) => {
+      trackLoginCieCardReadingError("reauth");
+
       const cieDescription =
         errorDescription ?? analyticActions.get(eventReason) ?? "";
 
@@ -191,7 +193,6 @@ const ActiveSessionLoginCieCardReaderScreen = ({
           flow: "reauth"
         })
       );
-      trackLoginCieCardReadingError("reauth");
 
       setErrorMessage(cieDescription);
       setReadingState(ReadingState.error);
