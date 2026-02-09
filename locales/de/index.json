@@ -3288,10 +3288,6 @@
       "methods": {
         "title": "Zahlungsmethoden",
         "button": "Hinzufügen",
-        "banner": {
-          "content": "Füge dem Konto eine Zahlungsmethode hinzu, damit du nicht jedes Mal die Daten eingeben musst.",
-          "action": "Zahlungsmethode hinzufügen"
-        },
         "status": {
           "expired": "Abgelaufen"
         },
@@ -3300,6 +3296,11 @@
             "label": "Das Laden der Zahlungsmethoden ist fehlgeschlagen.",
             "retryButton": "Erneut versuchen"
           }
+        },
+        "banner": {
+          "title": "Wie möchten Sie bezahlen?",
+          "content": "Entdecken Sie, welche Zahlungsmethoden Sie in der IO-App nutzen können, um pagoPA-Zahlungsaufforderungen zu bezahlen.",
+          "action": "Verfügbare Zahlungsmethoden entdecken"
         }
       },
       "transactions": {
