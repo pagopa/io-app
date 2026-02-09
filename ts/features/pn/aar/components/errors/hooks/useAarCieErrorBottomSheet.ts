@@ -40,7 +40,7 @@ export const useAarCieErrorBottomSheet = ({
 
   const handleCopyToClipboard = () => {
     if (isFunction(onCopyToClipboard)) {
-      onCopyToClipboard?.(errorName ?? "");
+      onCopyToClipboard(errorName ?? "");
     }
   };
 
