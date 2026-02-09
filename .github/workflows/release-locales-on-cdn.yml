@@ -1,10 +1,9 @@
 name: Release locales on CDN
 
 on:
-  pull_request: #added to register workflow
   push:
     branches:
-      - IOPLT-1318-GHA-release-locales # to be switched to master
+      - master
     paths-ignore:
       - "CODEOWNERS"
       - "**.md"
@@ -20,7 +19,7 @@ jobs:
   publish:
     name: Release locales to production assets CDN
     runs-on: ubuntu-24.04
-    environment: prod-cd # to be changed to prod
+    environment: prod-cd
     permissions:
       id-token: write
       pull-requests: write
@@ -68,6 +67,7 @@ jobs:
               --recursive
      
       - name: Purge AFD locales endpoint
+        id: purge_locales_endpoint
         run: |
             az afd endpoint purge \
               --content-paths '/$STORAGE_ACCOUNT_PATH/*' \
