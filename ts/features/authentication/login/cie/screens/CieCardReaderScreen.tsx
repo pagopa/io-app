@@ -8,42 +8,30 @@ import {
   ContentWrapper,
   H3,
   IOButton,
-  IOColors,
   IOPictograms,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
-
 import { useFocusEffect } from "@react-navigation/native";
-import {
-  PureComponent,
-  ReactNode,
-  createRef,
-  useCallback,
-  useRef
-} from "react";
+import { PureComponent, ReactNode, useCallback, useRef } from "react";
 import {
   AccessibilityInfo,
   Platform,
   ScrollView,
   StyleSheet,
-  Text,
-  Vibration,
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { connect } from "react-redux";
 import I18n from "i18next";
+import HapticFeedback, {
+  HapticFeedbackTypes
+} from "react-native-haptic-feedback";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { ReduxProps } from "../../../../../store/actions/types";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
-import {
-  isScreenReaderEnabled,
-  setAccessibilityFocus
-} from "../../../../../utils/accessibility";
+import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { isDevEnv } from "../../../../../utils/environment";
 import {
   assistanceToolRemoteConfig,
@@ -68,12 +56,12 @@ import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { getCieUatEndpoint } from "../utils/endpoints";
 import {
   analyticActions,
-  VIBRATION,
   WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY,
   WAIT_TIMEOUT_NAVIGATION,
   accessibityTimeout,
   getTextForState
 } from "../../../activeSessionLogin/shared/utils";
+import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
 
 export type CieCardReaderScreenNavigationParams = {
   ciePin: string;
@@ -94,8 +82,7 @@ type Props = CieCardReaderNavigationProps &
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: IOColors.white
+    flex: 1
   },
   centerText: {
     textAlign: "center"
@@ -114,7 +101,6 @@ type State = {
   subtitle?: string;
   content?: string;
   errorMessage?: string;
-  isScreenReaderEnabled: boolean;
 };
 
 type setErrorParameter = {
@@ -143,7 +129,6 @@ const getPictogramName = (state: ReadingState): IOPictograms => {
  *  This screen shown while reading the card
  */
 class CieCardReaderScreen extends PureComponent<Props, State> {
-  private subTitleRef = createRef<Text>();
   private choosenTool = assistanceToolRemoteConfig(
     this.props.assistanceToolConfig
   );
@@ -159,8 +144,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
       - completed (the reading has been completed)
       */
       readingState: ReadingState.waiting_card,
-      ...getTextForState(ReadingState.waiting_card),
-      isScreenReaderEnabled: false
+      ...getTextForState(ReadingState.waiting_card)
     };
     this.startCieiOS = this.startCieiOS.bind(this);
     this.startCieAndroid = this.startCieAndroid.bind(this);
@@ -180,12 +164,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
     navigation
   }: setErrorParameter) => {
     const cieDescription =
-      errorDescription ??
-      pipe(
-        analyticActions.get(eventReason),
-        O.fromNullable,
-        O.getOrElse(() => "")
-      );
+      errorDescription ?? analyticActions.get(eventReason) ?? "";
 
     this.dispatchAnalyticEvent({
       reason: eventReason,
@@ -199,7 +178,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
         errorMessage: cieDescription
       },
       () => {
-        Vibration.vibrate(VIBRATION);
+        HapticFeedback.trigger(HapticFeedbackTypes.notificationError);
         navigation?.();
       }
     );
@@ -216,7 +195,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
       case "ON_TAG_DISCOVERED":
         if (this.state.readingState !== ReadingState.reading) {
           this.setState({ readingState: ReadingState.reading }, () => {
-            Vibration.vibrate(VIBRATION);
+            HapticFeedback.trigger(HapticFeedbackTypes.impactLight);
           });
         }
         break;
@@ -320,14 +299,14 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
         break;
       case ReadingState.completed:
         this.setState(
-          state => ({
+          {
             title: I18n.t("authentication.cie.card.cieCardValid"),
             subtitle: "",
             // duplicate message so screen reader can read the updated message
-            content: state.isScreenReaderEnabled
+            content: this.props.isScreenReaderEnabled
               ? I18n.t("authentication.cie.card.cieCardValid")
               : undefined
-          }),
+          },
           this.announceUpdate
         );
         break;
@@ -365,7 +344,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
           });
           // if screen reader is enabled, give more time to read the success message
         },
-        this.state.isScreenReaderEnabled
+        this.props.isScreenReaderEnabled
           ? WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
           : // if is iOS don't wait. The thank you page is shown natively
             Platform.select({ ios: 0, default: WAIT_TIMEOUT_NAVIGATION })
@@ -440,12 +419,12 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
       default: this.startCieAndroid
     });
     await startCie(this.props.isCieUatEnabled);
-    const srEnabled = await isScreenReaderEnabled();
-    this.setState({ isScreenReaderEnabled: srEnabled });
   }
 
   public async componentWillUnmount() {
-    await cieManager.stopListeningNFC();
+    await cieManager.stopListeningNFC().catch(() => {
+      // Ignore errors on stop listening NFC
+    });
     cieManager.removeAllListeners();
   }
 
@@ -513,9 +492,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
             />
             <VSpacer size={8} />
             {this.state.subtitle && (
-              <Body style={styles.centerText} ref={this.subTitleRef}>
-                {this.state.subtitle}
-              </Body>
+              <Body style={styles.centerText}>{this.state.subtitle}</Body>
             )}
             <VSpacer size={24} />
             {this.state.readingState !== ReadingState.completed &&
@@ -529,7 +506,8 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
 
 const mapStateToProps = (state: GlobalState) => ({
   assistanceToolConfig: assistanceToolConfigSelector(state),
-  isCieUatEnabled: isCieLoginUatEnabledSelector(state)
+  isCieUatEnabled: isCieLoginUatEnabledSelector(state),
+  isScreenReaderEnabled: isScreenReaderEnabledSelector(state)
 });
 
 const ReaderScreen = (props: Props) => (

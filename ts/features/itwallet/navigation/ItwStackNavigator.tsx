@@ -5,8 +5,9 @@ import { isGestureEnabled } from "../../../utils/navigation";
 import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorContent";
 import { isItwEnabledSelector } from "../common/store/selectors/remoteConfig";
 import { ItwDiscoveryInfoFallbackComponent } from "../discovery/components/ItwDiscoveryInfoFallbackComponent.tsx";
-import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScreen";
+import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScreen.tsx";
 import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScreen";
+import { ItwDiscoveryLandingScreen } from "../discovery/screens/ItwDiscoveryLandingScreen.tsx";
 import ItwIpzsPrivacyScreen from "../discovery/screens/ItwIpzsPrivacyScreen";
 import { ItwActivateNfcScreen } from "../identification/cie/screens/ItwActivateNfcScreen.tsx";
 import { ItwCieAuthenticationScreen } from "../identification/cie/screens/ItwCieAuthenticationScreen.tsx";
@@ -24,6 +25,8 @@ import { ItwIdentificationIdpSelectionScreen } from "../identification/spid/scre
 import ItwSpidIdpLoginScreen from "../identification/spid/screens/ItwSpidIdpLoginScreen.tsx";
 import { ItwIssuanceCredentialAsyncContinuationScreen } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
 import { ItwIssuanceCredentialFailureScreen } from "../issuance/screens/ItwIssuanceCredentialFailureScreen";
+import { ItwIssuanceCredentialIntroductionScreen } from "../issuance/screens/ItwIssuanceCredentialIntroductionScreen";
+import { ItwIssuanceCredentialLandingScreen } from "../issuance/screens/ItwIssuanceCredentialLandingScreen";
 import { ItwIssuanceCredentialPreviewScreen } from "../issuance/screens/ItwIssuanceCredentialPreviewScreen";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "../issuance/screens/ItwIssuanceCredentialTrustIssuerScreen";
 import { ItwIssuanceEidFailureScreen } from "../issuance/screens/ItwIssuanceEidFailureScreen";
@@ -31,7 +34,7 @@ import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidP
 import { ItwIssuanceEidReissuanceLandingScreen } from "../issuance/screens/ItwIssuanceEidReissuanceLandingScreen";
 import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
 import { ItwIssuanceUpcomingCredentialScreen } from "../issuance/screens/ItwIssuanceUpcomingCredentialScreen";
-import { ItwIssuanceCredentialIntroductionScreen } from "../issuance/screens/ItwIssuanceCredentialIntroductionScreen";
+import { ItwIssuanceUpgradeCredentialsScreen } from "../issuance/screens/ItwIssuanceUpdateCredentialsScreen.tsx";
 import { ItwIdentityNotMatchingScreen } from "../lifecycle/screens/ItwIdentityNotMatchingScreen.tsx";
 import { ItwLifecycleWalletRevocationScreen } from "../lifecycle/screens/ItwLifecycleWalletRevocationScreen.tsx";
 import {
@@ -63,7 +66,6 @@ import { ItwProximitySendDocumentsResponseScreen } from "../presentation/proximi
 import { ItwSettingsScreen } from "../settings/screens/ItwSettingsScreen.tsx";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
-import { ItwIssuanceUpgradeCredentialsScreen } from "../issuance/screens/ItwIssuanceUpdateCredentialsScreen.tsx";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -114,12 +116,33 @@ const InnerNavigator = memo(() => {
           headerShown: false
         }}
       />
+      {/* Landing screens from deep links */}
+      <Stack.Screen
+        name={ITW_ROUTES.LANDING.DISCOVERY}
+        component={ItwDiscoveryLandingScreen}
+        options={hiddenHeader}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.LANDING.CREDENTIAL_ISSUANCE}
+        component={ItwIssuanceCredentialLandingScreen}
+        options={hiddenHeader}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.LANDING.CREDENTIAL_ASYNC_FLOW_CONTINUATION}
+        component={withItwEnabled(ItwIssuanceCredentialAsyncContinuationScreen)}
+        options={hiddenHeader}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.LANDING.EID_REISSUANCE}
+        component={withItwEnabled(ItwIssuanceEidReissuanceLandingScreen)}
+        options={hiddenHeader}
+      />
       {/* DISCOVERY */}
       <Stack.Screen
         name={ITW_ROUTES.DISCOVERY.INFO}
         component={withItwEnabled(ItwDiscoveryInfoScreen)}
         options={({ route }) => ({
-          headerShown: false,
+          ...hiddenHeader,
           animationEnabled: route.params?.animationEnabled
         })}
       />
@@ -130,7 +153,7 @@ const InnerNavigator = memo(() => {
       <Stack.Screen
         name={ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN}
         component={withItwEnabled(ItwAlreadyActiveScreen)}
-        options={hiddenHeader}
+        options={{ ...hiddenHeader, animationEnabled: false }}
       />
       {/* IDENTIFICATION */}
       <Stack.Screen
@@ -209,7 +232,10 @@ const InnerNavigator = memo(() => {
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER}
         component={ItwIssuanceCredentialTrustIssuerScreen}
-        options={hiddenHeader}
+        options={({ route }) => ({
+          ...hiddenHeader,
+          animationEnabled: route.params?.animationEnabled
+        })}
       />
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW}
@@ -289,17 +315,6 @@ const InnerNavigator = memo(() => {
         name={ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED}
         component={ItwPresentationEidVerificationExpiredScreen}
         options={{ headerShown: false }}
-      />
-      {/* Landing screens from deep links */}
-      <Stack.Screen
-        name={ITW_ROUTES.LANDING.CREDENTIAL_ASYNC_FLOW_CONTINUATION}
-        component={withItwEnabled(ItwIssuanceCredentialAsyncContinuationScreen)}
-        options={hiddenHeader}
-      />
-      <Stack.Screen
-        name={ITW_ROUTES.LANDING.EID_REISSUANCE}
-        component={withItwEnabled(ItwIssuanceEidReissuanceLandingScreen)}
-        options={hiddenHeader}
       />
       {/* Proximity's flow routes */}
       <Stack.Group screenOptions={hiddenHeader}>
