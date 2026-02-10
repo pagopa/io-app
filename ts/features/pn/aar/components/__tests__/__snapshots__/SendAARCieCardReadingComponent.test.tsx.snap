@@ -1763,7 +1763,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                             }
                           >
                             <View
-                              accessibilityLabel="global.buttons.close"
+                              accessibilityLabel="global.buttons.retry"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1880,7 +1880,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       ]
                                     }
                                   >
-                                    global.buttons.close
+                                    global.buttons.retry
                                   </Text>
                                 </View>
                               </View>
@@ -2677,7 +2677,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                             }
                           >
                             <View
-                              accessibilityLabel="global.buttons.close"
+                              accessibilityLabel="global.buttons.retry"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -2794,7 +2794,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       ]
                                     }
                                   >
-                                    global.buttons.close
+                                    global.buttons.retry
                                   </Text>
                                 </View>
                               </View>
@@ -3591,7 +3591,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                             }
                           >
                             <View
-                              accessibilityLabel="global.buttons.close"
+                              accessibilityLabel="global.buttons.retry"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -3708,7 +3708,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       ]
                                     }
                                   >
-                                    global.buttons.close
+                                    global.buttons.retry
                                   </Text>
                                 </View>
                               </View>
@@ -5490,6 +5490,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     "alignSelf": "flex-start",
                                   }
                                 }
+                                testID="idleCloseButton"
                               >
                                 <View
                                   style={
@@ -6369,6 +6370,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     "alignSelf": "flex-start",
                                   }
                                 }
+                                testID="readingCloseButton"
                               >
                                 <View
                                   style={
@@ -7248,6 +7250,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     "alignSelf": "flex-start",
                                   }
                                 }
+                                testID="readingCloseButton"
                               >
                                 <View
                                   style={
@@ -8127,6 +8130,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     "alignSelf": "flex-start",
                                   }
                                 }
+                                testID="readingCloseButton"
                               >
                                 <View
                                   style={
