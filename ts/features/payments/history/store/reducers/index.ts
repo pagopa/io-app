@@ -242,10 +242,10 @@ const reducer = (
         ...state,
         analyticsData: {
           ...state.analyticsData,
-          transactionsHomeLength: action.payload?.length ?? 0,
+          transactionsHomeLength: action.payload?.data.length ?? 0,
           paymentsHomeStatus: getPaymentsHomeStatus(
             state.analyticsData?.savedPaymentMethods?.length ?? 0,
-            action.payload?.length ?? 0
+            action.payload?.data.length ?? 0
           )
         }
       };
