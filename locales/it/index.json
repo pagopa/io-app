@@ -4890,7 +4890,7 @@
         },
         "modeSelection": {
           "section": {
-            "issuance": "Ottieni {{ feature }}",
+            "issuance": "Attiva {{ feature }}",
             "reissuance": "Conferma periodica dell'identità"
           },
           "title": {
