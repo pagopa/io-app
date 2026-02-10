@@ -12,11 +12,22 @@ import {
   currentAARFlowStateErrorDebugInfoSelector
 } from "../../store/selectors";
 import { sendAARFlowStates } from "../../utils/stateUtils";
+import {
+  trackSendAarMandateCieErrorCac,
+  trackSendAarMandateCieErrorClosure,
+  trackSendAarMandateCieErrorDetail,
+  trackSendAarMandateCieErrorDetailCode,
+  trackSendAarMandateCieErrorDetailHelp,
+  trackSendAarMandateCieErrorRetry
+} from "../../analytics";
 import { sendAarErrorSupportBottomSheetComponent } from "./SendAARErrorComponent";
 
 export const CieExpiredComponent = () => {
   const { terminateFlow } = useSendAarFlowManager();
   const helpCenterUrl = useIOSelector(sendAarInAppDelegationUrlSelector);
+  const assistanceErrorCode = useIOSelector(
+    currentAARFlowStateAssistanceErrorCode
+  );
 
   return (
     <OperationResultScreenContent
@@ -29,13 +40,19 @@ export const CieExpiredComponent = () => {
         label: i18n.t(
           "features.pn.aar.flow.ko.cieValidation.expired.actions.primary"
         ),
-        onPress: () => openWebUrl(helpCenterUrl),
+        onPress: () => {
+          trackSendAarMandateCieErrorCac();
+          openWebUrl(helpCenterUrl);
+        },
         icon: "instruction"
       }}
       secondaryAction={{
         testID: "CieExpiredCloseButton",
         label: i18n.t("global.buttons.close"),
-        onPress: terminateFlow
+        onPress: () => {
+          trackSendAarMandateCieErrorClosure(assistanceErrorCode ?? "");
+          terminateFlow();
+        }
       }}
     />
   );
@@ -43,8 +60,11 @@ export const CieExpiredComponent = () => {
 export const UnrelatedCieComponent = () => {
   const dispatch = useIODispatch();
   const { currentFlowData, terminateFlow } = useSendAarFlowManager();
+  const assistanceErrorCode =
+    useIOSelector(currentAARFlowStateAssistanceErrorCode) ?? "";
 
   const handleRetry = () => {
+    trackSendAarMandateCieErrorRetry(assistanceErrorCode);
     if (
       currentFlowData.type === "ko" &&
       currentFlowData.previousState.type === sendAARFlowStates.validatingMandate
@@ -81,7 +101,10 @@ export const UnrelatedCieComponent = () => {
       secondaryAction={{
         testID: "UnrelatedCieCloseButton",
         label: i18n.t("global.buttons.close"),
-        onPress: terminateFlow
+        onPress: () => {
+          trackSendAarMandateCieErrorClosure(assistanceErrorCode);
+          terminateFlow();
+        }
       }}
     />
   );
@@ -93,13 +116,15 @@ export const GenericCieValidationErrorComponent = () => {
     currentAARFlowStateAssistanceErrorCode
   );
   const handleZendeskAssistance = () => {
+    trackSendAarMandateCieErrorDetailHelp(assistanceErrorCode ?? "");
     dismiss();
   };
 
   const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
     component: sendAarErrorSupportBottomSheetComponent(
       handleZendeskAssistance,
-      assistanceErrorCode
+      assistanceErrorCode,
+      () => trackSendAarMandateCieErrorDetailCode(assistanceErrorCode ?? "")
     ),
     title: ""
   });
@@ -115,14 +140,20 @@ export const GenericCieValidationErrorComponent = () => {
         action={{
           testID: "GenericCieValidationErrorCloseButton",
           label: i18n.t("global.buttons.close"),
-          onPress: terminateFlow
+          onPress: () => {
+            trackSendAarMandateCieErrorClosure(assistanceErrorCode ?? "");
+            terminateFlow();
+          }
         }}
         secondaryAction={{
           testID: "GenericCieValidationErrorSupportButton",
           label: i18n.t(
             "features.pn.aar.flow.ko.cieValidation.generic.actions.secondary"
           ),
-          onPress: present
+          onPress: () => {
+            trackSendAarMandateCieErrorDetail(assistanceErrorCode ?? "");
+            present();
+          }
         }}
       />
       {bottomSheet}
