@@ -11,6 +11,7 @@ import {
   CheckPermissionsInput,
   CloseActorOutput,
   GetQrCodeStringActorOutput,
+  ProximityCommunicationLogicInput,
   SendDocumentsActorInput,
   SendDocumentsActorOutput,
   SendErrorResponseActorOutput,
@@ -102,9 +103,10 @@ describe("itwProximityMachine", () => {
       closeProximityFlow: fromPromise<CloseActorOutput, void>(
         closeProximityFlow
       ),
-      proximityCommunicationLogic: fromCallback<ProximityEvents>(
-        proximityCommunicationLogic
-      ),
+      proximityCommunicationLogic: fromCallback<
+        ProximityEvents,
+        ProximityCommunicationLogicInput
+      >(proximityCommunicationLogic),
       terminateProximitySession: fromPromise<SendErrorResponseActorOutput>(
         terminateProximitySession
       ),

@@ -1,14 +1,14 @@
 import { memo } from "react";
-import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
-import { itwShouldRenderWalletUpgradeMDLDetailsBannerSelector } from "../../../common/store/selectors";
 import { useIOSelector } from "../../../../../store/hooks";
-import { ItwPresentationNewCredentialValidityAlert } from "./ItwPresentationNewCredentialValidityAlert";
+import { itwShouldRenderWalletUpgradeMDLDetailsBannerSelector } from "../../../common/store/selectors";
+import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import { ItwPresentationFiscalCode } from "./ItwPresentationFiscalCode.tsx";
+import { ItwPresentationNewCredentialValidityAlert } from "./ItwPresentationNewCredentialValidityAlert";
 import { ItwPresentationWalletUpgradeMDLDetailsBanner } from "./ItwPresentationWalletUpgradeMDLDetailsBanner";
 
 type Props = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
 };
 
 /**

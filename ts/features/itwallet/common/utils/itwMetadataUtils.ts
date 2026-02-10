@@ -1,7 +1,7 @@
 import { pipe } from "fp-ts/function";
 import * as O from "fp-ts/Option";
-import { StoredCredential } from "./itwTypesUtils.ts";
 import { DigitalCredentialMetadata } from "./itwCredentialsCatalogueUtils.ts";
+import { CredentialMetadata } from "./itwTypesUtils.ts";
 
 export const getItwAuthSource = (credential: DigitalCredentialMetadata) =>
   pipe(
@@ -16,10 +16,14 @@ export const getItwAuthSource = (credential: DigitalCredentialMetadata) =>
  * This is only valid for legacy credentials (Documenti su IO)
  * @param credential - The credential to get the authentication source for.
  */
-export const getAuthSource = (credential: StoredCredential) =>
+export const getAuthSource = ({
+  credentialId,
+  issuerConf
+}: CredentialMetadata) =>
   pipe(
-    credential.issuerConf.openid_credential_issuer
-      .credential_configurations_supported?.[credential.credentialId],
+    issuerConf.openid_credential_issuer.credential_configurations_supported?.[
+      credentialId
+    ],
     O.fromNullable,
     O.map(config => config.authentic_source),
     O.toUndefined

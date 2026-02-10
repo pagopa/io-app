@@ -1,19 +1,19 @@
 import { createActor, fromPromise, waitFor } from "xstate";
 import { itwCredentialUpgradeMachine } from "../machine";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { UpgradeCredentialParams, UpgradeCredentialOutput } from "../actors";
 
 const makeCredential = (
-  overrides: Partial<StoredCredential> = {}
-): StoredCredential => ({
+  overrides: Partial<CredentialMetadata> = {}
+): CredentialMetadata => ({
   keyTag: "tag",
-  credential: "credential-data",
   format: "format",
   parsedCredential: {} as any,
   credentialType: "TYPE",
   credentialId: "id",
   issuerConf: {} as any,
   jwt: { expiration: new Date().toISOString() },
+  spec_version: "1.0.0",
   ...overrides
 });
 

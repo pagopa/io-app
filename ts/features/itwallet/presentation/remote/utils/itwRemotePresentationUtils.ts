@@ -4,11 +4,11 @@ import {
   WellKnownClaim,
   parseClaims
 } from "../../../common/utils/itwClaimsUtils";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils";
 import { validCredentialStatuses } from "../../../common/utils/itwCredentialUtils";
 import { isDefined } from "../../../../../utils/guards";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import {
   EnrichedPresentationDetails,
   ItwRemoteQrRawPayload,
@@ -72,13 +72,13 @@ export const validateItwPresentationQrCodeParams = (
  */
 export const enrichPresentationDetails = (
   presentationDetails: PresentationDetails,
-  credentialsByType: Record<string, StoredCredential | undefined>
+  credentialsByType: Record<string, CredentialMetadata | undefined>
 ): EnrichedPresentationDetails =>
   presentationDetails.map(details => {
     const credentialType = getCredentialTypeByVct(details.vct);
     const credential = credentialType && credentialsByType[credentialType];
 
-    // When the credential is not found, it is not available as a `StoredCredential`, so we hide it from the user.
+    // When the credential is not found, it is not available as a `CredentialMetadata`, so we hide it from the user.
     // The raw credential is still used for the presentation. Currently this only happens for the Wallet Attestation.
     if (!credential) {
       return {
@@ -142,7 +142,7 @@ export const groupCredentialsByPurpose = (
  */
 export const getInvalidCredentials = (
   presentationDetails: PresentationDetails,
-  credentialsByType: Record<string, StoredCredential | undefined>
+  credentialsByType: Record<string, CredentialMetadata>
 ) =>
   presentationDetails
     // Retries the type from the VCT map

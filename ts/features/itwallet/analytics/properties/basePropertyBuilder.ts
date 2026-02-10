@@ -3,20 +3,16 @@ import { pipe } from "fp-ts/lib/function";
 import { GlobalState } from "../../../../store/reducers/types";
 import { itwAuthLevelSelector } from "../../common/store/selectors/preferences";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
-import { isItwCredential } from "../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import {
   itwCredentialsEidStatusSelector,
   itwCredentialsSelector
 } from "../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils";
 import { mapPIDStatusToMixpanel } from "../utils";
 import {
-  ItwStatus,
-  ItwPIDStatus,
-  ItwCredentialMixpanelStatus,
-  CREDENTIAL_STATUS_MAP
+  CREDENTIAL_STATUS_MAP,
+  ItwCredentialMixpanelStatus
 } from "../utils/types";
 import { ItwBaseProperties } from "./propertyTypes";
 
@@ -27,9 +23,10 @@ export const buildItwBaseProperties = (
   state: GlobalState
 ): ItwBaseProperties => {
   const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
+  const pidStatus = itwCredentialsEidStatusSelector(state);
 
-  const ITW_STATUS_V2 = getWalletStatus(state);
-  const ITW_PID = getPIDMixpanelStatus(state, true);
+  const ITW_STATUS_V2 = itwAuthLevelSelector(state) ?? "not_active";
+  const ITW_PID = mapPIDStatusToMixpanel(pidStatus);
 
   const ITW_PG_V3 = getMixpanelCredentialStatus(
     CredentialType.DRIVING_LICENSE,
@@ -53,7 +50,7 @@ export const buildItwBaseProperties = (
    */
   const v2Props = !isItwL3
     ? {
-        ITW_ID_V2: getPIDMixpanelStatus(state, false),
+        ITW_ID_V2: mapPIDStatusToMixpanel(pidStatus),
         ITW_PG_V2: getMixpanelCredentialStatus(
           CredentialType.DRIVING_LICENSE,
           state
@@ -79,32 +76,6 @@ export const buildItwBaseProperties = (
   };
 };
 
-const getWalletStatus = (state: GlobalState): ItwStatus => {
-  const authLevel = itwAuthLevelSelector(state);
-  return authLevel ? authLevel : "not_active";
-};
-
-/**
- * Returns the PID status for Mixpanel analytics.
- * - If `isL3` is true → we consider the status from the current L3 PID (IT Wallet).
- * - If `isL3` is false → we use the current eID status.
- */
-export const getPIDMixpanelStatus = (
-  state: GlobalState,
-  isL3: boolean
-): ItwPIDStatus =>
-  pipe(
-    isL3
-      ? pipe(
-          itwLifecycleIsITWalletValidSelector(state),
-          O.fromPredicate(Boolean),
-          O.chain(() => O.fromNullable(itwCredentialsEidStatusSelector(state)))
-        )
-      : O.fromNullable(itwCredentialsEidStatusSelector(state)),
-    O.map<ItwJwtCredentialStatus, ItwPIDStatus>(mapPIDStatusToMixpanel),
-    O.getOrElse((): ItwPIDStatus => "not_available")
-  );
-
 /**
  * Returns the Mixpanel status for a credential type, considering IT Wallet.
  * - If `isItwL3` is explicitly false, returns `"not_available"`.
@@ -121,9 +92,6 @@ const getMixpanelCredentialStatus = (
     return "not_available";
   }
   const credential = itwCredentialsSelector(state)[type];
-  if (isItwL3 && credential && !isItwCredential(credential)) {
-    return "not_available";
-  }
 
   return pipe(
     O.fromNullable(credential),

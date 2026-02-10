@@ -3,7 +3,7 @@ import { appReducer } from "../../../../../../store/reducers";
 import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import {
   ParsedStatusAssertion,
-  StoredCredential
+  CredentialMetadata
 } from "../../../../common/utils/itwTypesUtils";
 import { itwCredentialsRemove, itwCredentialsStore } from "../../actions";
 import { Action } from "../../../../../../store/actions/types";
@@ -11,46 +11,46 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
 import { reproduceSequence } from "../../../../../../utils/tests";
 
-const mockedEid: StoredCredential = {
-  credential: "",
+const mockedEid: CredentialMetadata = {
   credentialType: CredentialType.PID,
   credentialId: "dc_sd_jwt_PersonIdentificationData",
   parsedCredential: {},
   format: "dc+sd-jwt",
   keyTag: "9020c6f8-01be-4236-9b6f-834af9dcbc63",
-  issuerConf: {} as StoredCredential["issuerConf"],
+  issuerConf: {} as CredentialMetadata["issuerConf"],
   jwt: {
     issuedAt: "2024-09-30T07:32:49.000Z",
     expiration: "2025-09-30T07:32:50.000Z"
-  }
+  },
+  spec_version: "1.0.0"
 };
 
-const mockedCredential: StoredCredential = {
-  credential: "",
+const mockedCredential: CredentialMetadata = {
   credentialType: CredentialType.DRIVING_LICENSE,
   credentialId: "dc_sd_jwt_mDL",
   parsedCredential: {},
   format: "dc+sd-jwt",
   keyTag: "d191ad52-2674-46f3-9610-6eb7bd9146a3",
-  issuerConf: {} as StoredCredential["issuerConf"],
+  issuerConf: {} as CredentialMetadata["issuerConf"],
   jwt: {
     issuedAt: "2024-09-30T07:32:49.000Z",
     expiration: "2025-09-30T07:32:50.000Z"
-  }
+  },
+  spec_version: "1.0.0"
 };
 
-const mockedCredential2: StoredCredential = {
-  credential: "",
+const mockedCredential2: CredentialMetadata = {
   credentialType: CredentialType.DRIVING_LICENSE,
   credentialId: "mso_mdoc",
   parsedCredential: {},
   format: "mso_mdoc_mDL",
   keyTag: "07ccc69a-d1b5-4c3c-9955-6a436d0c3710",
-  issuerConf: {} as StoredCredential["issuerConf"],
+  issuerConf: {} as CredentialMetadata["issuerConf"],
   jwt: {
     issuedAt: "2024-09-30T07:32:49.000Z",
     expiration: "2025-09-30T07:32:50.000Z"
-  }
+  },
+  spec_version: "1.0.0"
 };
 
 describe("ITW credentials reducer", () => {
@@ -155,7 +155,7 @@ describe("ITW credentials reducer", () => {
   });
 
   it("should update existing credentials overwriting the previous instances", () => {
-    const updatedCredential: StoredCredential = {
+    const updatedCredential: CredentialMetadata = {
       ...mockedCredential,
       storedStatusAssertion: {
         credentialStatus: "valid" as const,

@@ -1,18 +1,20 @@
-import type { ActionArgs, DoneActorEvent } from "xstate";
-import { pipe } from "fp-ts/lib/function";
 import * as A from "fp-ts/lib/Array";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
-import type { WalletInstanceAttestations } from "../../../common/utils/itwTypesUtils.ts";
+import { assign, type ActionArgs, type DoneActorEvent } from "xstate";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
-import { ITW_REMOTE_ROUTES } from "../navigation/routes.ts";
-import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import ROUTES from "../../../../../navigation/routes.ts";
-import { trackItwRemoteDataShare } from "../analytics";
-import { groupCredentialsByPurpose } from "../utils/itwRemotePresentationUtils";
 import { useIOStore } from "../../../../../store/hooks.ts";
-import { itwWalletInstanceAttestationStore } from "../../../walletInstance/store/actions/index.ts";
 import { checkCurrentSession } from "../../../../authentication/common/store/actions/index.ts";
+import type { WalletInstanceAttestations } from "../../../common/utils/itwTypesUtils.ts";
+import { itwCredentialsAllSelector } from "../../../credentials/store/selectors/index.ts";
+import { ITW_ROUTES } from "../../../navigation/routes.ts";
+import { itwWalletInstanceAttestationStore } from "../../../walletInstance/store/actions/index.ts";
+import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors/index.ts";
+import { trackItwRemoteDataShare } from "../analytics";
+import { ITW_REMOTE_ROUTES } from "../navigation/routes.ts";
+import { groupCredentialsByPurpose } from "../utils/itwRemotePresentationUtils";
 import { Context } from "./context.ts";
 import { RemoteEvents } from "./events.ts";
 
@@ -20,6 +22,15 @@ export const createRemoteActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
   store: ReturnType<typeof useIOStore>
 ) => ({
+  onInit: assign<Context, RemoteEvents, unknown, RemoteEvents, any>(() => {
+    const state = store.getState();
+
+    return {
+      walletInstanceAttestation: itwWalletInstanceAttestationSelector(state),
+      credentials: itwCredentialsAllSelector(state)
+    };
+  }),
+
   navigateToFailureScreen: () => {
     navigation.navigate(ITW_REMOTE_ROUTES.MAIN, {
       screen: ITW_REMOTE_ROUTES.FAILURE

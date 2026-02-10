@@ -1,8 +1,8 @@
 import { CryptoContext } from "@pagopa/io-react-native-jwt";
 import {
+  CredentialBundle,
   IssuerConfiguration,
   RequestObject,
-  StoredCredential,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import { DigitalCredentialMetadata } from "../../common/utils/itwCredentialsCatalogueUtils";
@@ -50,7 +50,7 @@ export type Context = {
   /**
    * Obtained credentials from the issuer.
    */
-  credentials: Array<StoredCredential> | undefined;
+  credentials: ReadonlyArray<CredentialBundle> | undefined;
   /**
    * The failure that occurred during the credential issuance process, if any.
    */

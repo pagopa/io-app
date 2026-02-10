@@ -8,30 +8,33 @@ import * as itwAttestationUtils from "../../common/utils/itwAttestationUtils";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
 import { getCredentialStatusAssertion } from "../../common/utils/itwCredentialStatusAssertionUtils";
 import {
-  CredentialFormat,
-  StoredCredential
+  CredentialBundle,
+  CredentialFormat
 } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { Env } from "../../common/utils/environment";
 import { enrichErrorWithMetadata } from "../../common/utils/itwFailureUtils";
+import { CredentialsVault } from "../../credentials/utils/vault";
 import { type Context } from "./context";
 
 export type GetWalletAttestationActorOutput = Awaited<
   ReturnType<typeof itwAttestationUtils.getAttestation>
 >;
 
-export type RequestCredentialActorInput =
-  Partial<credentialIssuanceUtils.RequestCredentialParams> & {
-    skipMdocIssuance: boolean;
-  };
+export type RequestCredentialActorInput = Partial<
+  credentialIssuanceUtils.RequestCredential["arguments"]
+> & {
+  skipMdocIssuance: boolean;
+};
 
 export type RequestCredentialActorOutput = Awaited<
   ReturnType<typeof credentialIssuanceUtils.requestCredential>
 >;
 
-export type ObtainCredentialActorInput =
-  Partial<credentialIssuanceUtils.ObtainCredentialParams>;
+export type ObtainCredentialActorInput = Partial<
+  credentialIssuanceUtils.ObtainCredential["arguments"]
+>;
 
 export type ObtainCredentialActorOutput = Awaited<
   ReturnType<typeof credentialIssuanceUtils.obtainCredential>
@@ -131,6 +134,12 @@ export const createCredentialIssuanceActorsImplementation = (
     assert(codeVerifier, "codeVerifier is undefined");
     assert(O.isSome(eid), "eID is undefined");
 
+    // Retrieve the PID credential from the vault
+    const pidCredential = await CredentialsVault.get(eid.value.credentialId);
+    if (!pidCredential) {
+      throw new Error("PID credential not found in secure storage");
+    }
+
     return await credentialIssuanceUtils.obtainCredential({
       env,
       credentialType,
@@ -139,35 +148,41 @@ export const createCredentialIssuanceActorsImplementation = (
       issuerConf,
       clientId,
       codeVerifier,
-      pid: eid.value
+      pidKeyTag: eid.value.keyTag,
+      pid: pidCredential
     });
   });
 
   const obtainStatusAssertion = fromPromise<
-    Array<StoredCredential>,
+    ReadonlyArray<CredentialBundle>,
     ObtainStatusAssertionActorInput
   >(async ({ input }) => {
     assert(input.credentials, "credentials are undefined");
 
     const requestStatusAssertionOrSkip = async (
-      credential: StoredCredential
-    ): Promise<StoredCredential> => {
+      credential: CredentialBundle
+    ): Promise<CredentialBundle> => {
       // Status assertions for mDoc credentials are not supported yet
-      if (credential.format === CredentialFormat.MDOC) {
+      if (credential.metadata.format === CredentialFormat.MDOC) {
         return credential;
       }
 
       const { statusAssertion, parsedStatusAssertion } =
         await getCredentialStatusAssertion(credential, env).catch(
-          enrichErrorWithMetadata({ credentialId: credential.credentialId })
+          enrichErrorWithMetadata({
+            credentialId: credential.metadata.credentialId
+          })
         );
 
       return {
         ...credential,
-        storedStatusAssertion: {
-          credentialStatus: "valid",
-          statusAssertion,
-          parsedStatusAssertion: parsedStatusAssertion.payload
+        metadata: {
+          ...credential.metadata,
+          storedStatusAssertion: {
+            credentialStatus: "valid",
+            statusAssertion,
+            parsedStatusAssertion: parsedStatusAssertion.payload
+          }
         }
       };
     };
@@ -177,11 +192,22 @@ export const createCredentialIssuanceActorsImplementation = (
     );
   });
 
+  const storeCredentials = fromPromise<void, ReadonlyArray<CredentialBundle>>(
+    async ({ input }) => {
+      await Promise.all(
+        input.map(({ metadata, credential }) =>
+          CredentialsVault.store(metadata.credentialId, credential)
+        )
+      );
+    }
+  );
+
   return {
     verifyTrustFederation,
     getWalletAttestation,
     requestCredential,
     obtainCredential,
-    obtainStatusAssertion
+    obtainStatusAssertion,
+    storeCredentials
   };
 };

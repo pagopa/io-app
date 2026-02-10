@@ -17,10 +17,11 @@ import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
 import { pollForStoreValue } from "../../common/utils/itwStoreUtils";
 import {
-  StoredCredential,
+  CredentialBundle,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import * as mrtdUtils from "../../common/utils/mrtd";
+import { CredentialsVault } from "../../credentials/utils/vault";
 import {
   itwIntegrityKeyTagSelector,
   itwIntegrityServiceStatusSelector
@@ -43,6 +44,10 @@ export type RequestEidActorParams = {
   authenticationContext: AuthenticationContext | undefined;
   level: EidIssuanceLevel | undefined;
 };
+
+export type RequestEidActorOutput = Awaited<
+  ReturnType<typeof issuanceUtils.getPid>
+>;
 
 export type StartAuthFlowActorParams = {
   walletInstanceAttestation: string | undefined;
@@ -162,6 +167,10 @@ export const createEidIssuanceActorsImplementation = (
     assert(sessionToken, "sessionToken is undefined");
 
     await revokeCurrentWalletInstance(env, sessionToken, integrityKeyTag.value);
+
+    // Removes all credentials stored in the secure storage, as they are all linked
+    // to the revoked wallet instance
+    await CredentialsVault.clear();
   }),
 
   startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
@@ -229,7 +238,7 @@ export const createEidIssuanceActorsImplementation = (
     return callbackUrl;
   }),
 
-  requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
+  requestEid: fromPromise<RequestEidActorOutput, RequestEidActorParams>(
     async ({ input }) => {
       assert(input.identification, "identification is undefined");
       assert(
@@ -253,12 +262,16 @@ export const createEidIssuanceActorsImplementation = (
         input.level === "l3" ? "L3" : "L2"
       );
 
-      return issuanceUtils.getPid({
+      return await issuanceUtils.getPid({
         ...authParams,
         ...input.authenticationContext
       });
     }
   ),
+
+  storeEidCredential: fromPromise<void, CredentialBundle>(async ({ input }) => {
+    await CredentialsVault.store(input.metadata.credentialId, input.credential);
+  }),
 
   credentialUpgradeMachine: itwCredentialUpgradeMachine.provide({
     actors: createCredentialUpgradeActorsImplementation(env),

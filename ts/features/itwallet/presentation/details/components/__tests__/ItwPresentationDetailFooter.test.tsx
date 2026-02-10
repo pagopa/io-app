@@ -3,6 +3,7 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types.ts";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper.tsx";
+import * as remoteConfigSelectors from "../../../../common/store/selectors/remoteConfig.ts";
 import {
   CredentialType,
   ItwStoredCredentialsMocks
@@ -11,7 +12,6 @@ import { itwCredentialIssuanceMachine } from "../../../../machine/credential/mac
 import { ItwCredentialIssuanceMachineContext } from "../../../../machine/credential/provider.tsx";
 import { ITW_ROUTES } from "../../../../navigation/routes.ts";
 import { ItwPresentationDetailsFooter } from "../ItwPresentationDetailsFooter.tsx";
-import * as remoteConfigSelectors from "../../../../common/store/selectors/remoteConfig.ts";
 
 describe("ItwPresentationDetailsFooter", () => {
   it("should render actions", () => {

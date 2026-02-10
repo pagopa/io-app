@@ -2,11 +2,11 @@ import { IOColors } from "@pagopa/io-app-design-system";
 import { memo } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import { AnimatedImage } from "../../../../../components/AnimatedImage";
-import { StoredCredential } from "../../utils/itwTypesUtils";
+import { CredentialMetadata } from "../../utils/itwTypesUtils";
 import { CardSide } from "./types";
 
 type CardBackgroundProps = {
-  credentialType: StoredCredential["credentialType"];
+  credentialType: CredentialMetadata["credentialType"];
   side: CardSide;
 };
 

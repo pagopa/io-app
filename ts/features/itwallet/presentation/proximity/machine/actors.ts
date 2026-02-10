@@ -1,6 +1,7 @@
+import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
 import { constUndefined } from "fp-ts/lib/function";
-import { fromCallback, fromPromise } from "xstate";
 import { Platform } from "react-native";
+import BluetoothStateManager from "react-native-bluetooth-state-manager";
 import {
   checkMultiple,
   Permission,
@@ -8,27 +9,24 @@ import {
   requestMultiple,
   RESULTS
 } from "react-native-permissions";
-import BluetoothStateManager from "react-native-bluetooth-state-manager";
-import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
+import { fromCallback, fromPromise } from "xstate";
+import { assert } from "../../../../../utils/assert";
+import { Env } from "../../../common/utils/environment";
+import { CredentialFormat } from "../../../common/utils/itwTypesUtils";
+import { CredentialsVault } from "../../../credentials/utils/vault";
+import {
+  trackItwProximityBluetoothBlock,
+  trackItwProximityBluetoothBlockAction
+} from "../analytics";
 import {
   generateAcceptedFields,
   getDocuments,
   getProximityDetails,
   promiseWithTimeout
 } from "../utils/itwProximityPresentationUtils";
-import { assert } from "../../../../../utils/assert";
-import {
-  trackItwProximityBluetoothBlock,
-  trackItwProximityBluetoothBlockAction
-} from "../analytics";
 import type { EventsPayload } from "../utils/itwProximityTypeUtils";
-import { useIOStore } from "../../../../../store/hooks";
-import { itwCredentialsByTypeSelector } from "../store/selectors";
-import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors";
-import { CredentialFormat } from "../../../common/utils/itwTypesUtils";
-import { Env } from "../../../common/utils/environment";
-import { ProximityEvents } from "./events";
 import { Context } from "./context";
+import { ProximityEvents } from "./events";
 
 const PERMISSIONS_TO_CHECK: Array<Permission> =
   Platform.OS === "android"
@@ -61,16 +59,21 @@ export type SendErrorResponseActorOutput = Awaited<
 
 export type CloseActorOutput = Awaited<ReturnType<typeof ISO18013_5.close>>;
 
-export type SendDocumentsActorInput = Pick<Context, "verifierRequest">;
+export type ProximityCommunicationLogicInput = {
+  credentials: NonNullable<Context["credentials"]>;
+};
+
+export type SendDocumentsActorInput = {
+  walletInstanceAttestation: NonNullable<Context["walletInstanceAttestation"]>;
+  credentials: NonNullable<Context["credentials"]>;
+  verifierRequest: NonNullable<Context["verifierRequest"]>;
+};
 
 export type SendDocumentsActorOutput = Awaited<
   ReturnType<typeof ISO18013_5.sendResponse>
 >;
 
-export const createProximityActorsImplementation = (
-  env: Env,
-  store: ReturnType<typeof useIOStore>
-) => {
+export const createProximityActorsImplementation = (env: Env) => {
   const checkPermissions = fromPromise<boolean, CheckPermissionsInput>(
     async ({ input }) => {
       const isSilent = input?.isSilent || false;
@@ -126,102 +129,95 @@ export const createProximityActorsImplementation = (
     ISO18013_5.getQrCodeString
   );
 
-  const proximityCommunicationLogic = fromCallback<ProximityEvents>(
-    ({ sendBack }) => {
-      const handleDeviceConnecting = () => {
-        sendBack({ type: "device-connecting" });
-      };
+  const proximityCommunicationLogic = fromCallback<
+    ProximityEvents,
+    ProximityCommunicationLogicInput
+  >(({ sendBack, input }) => {
+    const handleDeviceConnecting = () => {
+      sendBack({ type: "device-connecting" });
+    };
 
-      const handleDeviceConnected = () => {
-        sendBack({ type: "device-connected" });
-      };
+    const handleDeviceConnected = () => {
+      sendBack({ type: "device-connected" });
+    };
 
-      const handleDeviceDisconnected = () => {
-        sendBack({ type: "device-disconnected" });
-      };
+    const handleDeviceDisconnected = () => {
+      sendBack({ type: "device-disconnected" });
+    };
 
-      const handleError = (eventPayload: EventsPayload["onError"]) => {
-        const { error } = eventPayload ?? {};
+    const handleError = (eventPayload: EventsPayload["onError"]) => {
+      const { error } = eventPayload ?? {};
+      sendBack({
+        type: "device-error",
+        error
+      });
+    };
+
+    const handleDocumentRequestReceived = (
+      eventPayload: EventsPayload["onDocumentRequestReceived"]
+    ) => {
+      const { data } = eventPayload ?? {};
+
+      try {
+        assert(data, "Missing required data");
+
+        const parsedRequest = ISO18013_5.parseVerifierRequest(JSON.parse(data));
+        // const credentials = itwCredentialsByTypeSelector(store.getState());
+        const proximityDetails = getProximityDetails(
+          parsedRequest.request,
+          input.credentials
+        );
+
         sendBack({
-          type: "device-error",
-          error
+          type: "device-document-request-received",
+          proximityDetails,
+          verifierRequest: parsedRequest
         });
-      };
-
-      const handleDocumentRequestReceived = (
-        eventPayload: EventsPayload["onDocumentRequestReceived"]
-      ) => {
-        const { data } = eventPayload ?? {};
-
-        try {
-          assert(data, "Missing required data");
-
-          const parsedRequest = ISO18013_5.parseVerifierRequest(
-            JSON.parse(data)
-          );
-          const credentials = itwCredentialsByTypeSelector(store.getState());
-          const proximityDetails = getProximityDetails(
-            parsedRequest.request,
-            credentials
-          );
-
+      } catch (error) {
+        // Give some time to show the loading message
+        // and avoid glitches in the UI.
+        setTimeout(() => {
           sendBack({
-            type: "device-document-request-received",
-            proximityDetails,
-            verifierRequest: parsedRequest
+            type: "device-error",
+            error
           });
-        } catch (error) {
-          // Give some time to show the loading message
-          // and avoid glitches in the UI.
-          setTimeout(() => {
-            sendBack({
-              type: "device-error",
-              error
-            });
-          }, 500);
-        }
-      };
+        }, 500);
+      }
+    };
 
-      const listeners = [
-        ISO18013_5.addListener("onDeviceConnecting", handleDeviceConnecting),
-        ISO18013_5.addListener("onDeviceConnected", handleDeviceConnected),
-        ISO18013_5.addListener(
-          "onDocumentRequestReceived",
-          handleDocumentRequestReceived
-        ),
-        ISO18013_5.addListener(
-          "onDeviceDisconnected",
-          handleDeviceDisconnected
-        ),
-        ISO18013_5.addListener("onError", handleError)
-      ];
+    const listeners = [
+      ISO18013_5.addListener("onDeviceConnecting", handleDeviceConnecting),
+      ISO18013_5.addListener("onDeviceConnected", handleDeviceConnected),
+      ISO18013_5.addListener(
+        "onDocumentRequestReceived",
+        handleDocumentRequestReceived
+      ),
+      ISO18013_5.addListener("onDeviceDisconnected", handleDeviceDisconnected),
+      ISO18013_5.addListener("onError", handleError)
+    ];
 
-      return () => {
-        // Remove event listeners
-        listeners.forEach(listener => listener.remove());
-        // Close the Bluetooth connection and clear all resources
-        void ISO18013_5.close().catch(constUndefined);
-      };
-    }
-  );
+    return () => {
+      // Remove event listeners
+      listeners.forEach(listener => listener.remove());
+      // Close the Bluetooth connection and clear all resources
+      void ISO18013_5.close().catch(constUndefined);
+    };
+  });
 
   const sendDocuments = fromPromise<
     SendDocumentsActorOutput,
     SendDocumentsActorInput
   >(async ({ input }) => {
-    const { verifierRequest } = input;
-    assert(verifierRequest, "Missing required verifierRequest");
+    const { verifierRequest, walletInstanceAttestation, credentials } = input;
 
-    const credentials = itwCredentialsByTypeSelector(store.getState());
-    const wiaMdoc = itwWalletInstanceAttestationSelector(store.getState())?.[
-      CredentialFormat.MDOC
-    ];
+    const wiaMdoc = walletInstanceAttestation[CredentialFormat.MDOC];
     assert(wiaMdoc, "Missing Wallet Attestation in MDOC format");
 
-    const documents = getDocuments(
+    const documents = await getDocuments(
       verifierRequest.request,
       credentials,
-      wiaMdoc
+      wiaMdoc,
+      CredentialsVault.get
     );
     // We accept all the fields requested by the verifier app
     const acceptedFields = generateAcceptedFields(verifierRequest.request);

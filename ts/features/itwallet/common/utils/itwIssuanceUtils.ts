@@ -9,24 +9,33 @@ import { v4 as uuidv4 } from "uuid";
 import { type IdentificationContext } from "../../machine/eid/context";
 import {
   CredentialAccessToken,
-  IssuerConfiguration,
-  StoredCredential
+  CredentialBundle,
+  IssuerConfiguration
 } from "./itwTypesUtils";
 import {
   DPOP_KEYTAG,
   regenerateCryptoKey,
   WIA_KEYTAG
 } from "./itwCryptoContextUtils";
+import { WALLET_SPEC_VERSION } from "./constants";
+import { extractVerification } from "./itwCredentialUtils";
 import { Env } from "./environment";
 
 const CREDENTIAL_TYPE = "PersonIdentificationData";
 
-type StartAuthFlowParams = {
+type StartAuthFlow = (params: {
   env: Env;
   walletAttestation: string;
   identification: IdentificationContext;
   withMRTDPoP: boolean;
-};
+}) => Promise<{
+  authUrl: string;
+  issuerConf: IssuerConfiguration;
+  clientId: string;
+  codeVerifier: string;
+  credentialDefinition: AuthorizationDetail;
+  redirectUri: string;
+}>;
 
 /**
  * Function to start the authentication flow. It must be invoked before
@@ -39,12 +48,12 @@ type StartAuthFlowParams = {
  * @param withMRTDPoP - Whether to use MRTD PoP proof or not.
  * @returns Authentication params to use when completing the flow.
  */
-const startAuthFlow = async ({
+const startAuthFlow: StartAuthFlow = async ({
   env,
   walletAttestation,
   identification,
   withMRTDPoP
-}: StartAuthFlowParams) => {
+}) => {
   const startFlow: Credential.Issuance.StartFlow = () => ({
     issuerUrl: env.WALLET_PID_PROVIDER_BASE_URL,
     credentialId: "dc_sd_jwt_PersonIdentificationData"
@@ -92,18 +101,17 @@ const startAuthFlow = async ({
   };
 };
 
-export type CompleteAuthFlowParams = {
+export type CompleteAuthFlow = (args: {
   callbackUrl: string;
   issuerConf: IssuerConfiguration;
   clientId: string;
   codeVerifier: string;
   walletAttestation: string;
   redirectUri: string;
-};
-
-export type CompleteAuthFlowResult = Awaited<
-  ReturnType<typeof completeAuthFlow>
->;
+}) => Promise<{
+  accessToken: CredentialAccessToken;
+  dPoPContext: CryptoContext;
+}>;
 
 /**
  * Function to complete the authentication flow. It must be invoked after `startAuthFlow`
@@ -113,14 +121,14 @@ export type CompleteAuthFlowResult = Awaited<
  * @param callbackUrl - The callback url from which the code to get the access token is extracted.
  * @returns Authentication tokens.
  */
-const completeAuthFlow = async ({
+const completeAuthFlow: CompleteAuthFlow = async ({
   callbackUrl,
   clientId,
   codeVerifier,
   issuerConf,
   walletAttestation,
   redirectUri
-}: CompleteAuthFlowParams) => {
+}) => {
   const { code } =
     await Credential.Issuance.completeUserAuthorizationWithQueryMode(
       callbackUrl
@@ -146,26 +154,26 @@ const completeAuthFlow = async ({
   return { accessToken, dPoPContext: dPopCryptoContext };
 };
 
-export type PidIssuanceParams = {
+export type GetPid = (args: {
   issuerConf: IssuerConfiguration;
   accessToken: CredentialAccessToken;
   clientId: string;
   dPoPContext: CryptoContext;
   credentialDefinition: AuthorizationDetail;
-};
+}) => Promise<CredentialBundle>;
 
 /**
- * Function to get the PID, parse it and return it in {@link StoredCredential} format.
+ * Function to get the PID, parse it and return it in {@link CredentialBundle} format.
  * It must be called after `startAuthFlow` and `completeAuthFlow`.
  * @returns The stored credential.
  */
-const getPid = async ({
+const getPid: GetPid = async ({
   issuerConf,
   clientId,
   accessToken,
   dPoPContext,
   credentialDefinition
-}: PidIssuanceParams): Promise<StoredCredential> => {
+}) => {
   const credentialKeyTag = uuidv4().toString();
   await generate(credentialKeyTag);
   const credentialCryptoContext = createCryptoContextFor(credentialKeyTag);
@@ -195,17 +203,26 @@ const getPid = async ({
     );
 
   return {
-    parsedCredential,
-    issuerConf,
-    keyTag: credentialKeyTag,
-    credentialType: CREDENTIAL_TYPE,
-    credentialId: credentialIdentifierDefinition.credential_configuration_id,
-    format,
-    credential,
-    jwt: {
-      expiration: expiration.toISOString(),
-      issuedAt: issuedAt?.toISOString()
-    }
+    metadata: {
+      parsedCredential,
+      issuerConf,
+      keyTag: credentialKeyTag,
+      credentialType: CREDENTIAL_TYPE,
+      credentialId: credentialIdentifierDefinition.credential_configuration_id,
+      format,
+      credential,
+      jwt: {
+        expiration: expiration.toISOString(),
+        issuedAt: issuedAt?.toISOString()
+      },
+      spec_version: WALLET_SPEC_VERSION,
+      verification: extractVerification({
+        format,
+        credential,
+        parsedCredential
+      })
+    },
+    credential
   };
 };
 

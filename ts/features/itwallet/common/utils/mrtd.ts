@@ -5,27 +5,22 @@ import {
 import { WIA_KEYTAG } from "./itwCryptoContextUtils";
 import { IssuerConfiguration } from "./itwTypesUtils";
 
-export type InitMrtdPoPChallengeParams = {
+export type InitMrtdPoPChallenge = (args: {
   issuerConf: IssuerConfiguration;
   walletInstanceAttestation: string;
   authRedirectUrl: string;
-};
-
-export type ValidateMrtdPoPChallengeParams = {
-  issuerConf: IssuerConfiguration;
-  walletInstanceAttestation: string;
-  validationUrl: string;
+}) => Promise<{
+  challenge: string;
   mrtd_auth_session: string;
   mrtd_pop_nonce: string;
-  mrtd: Credential.Issuance.MRTDPoP.MrtdPayload;
-  ias: Credential.Issuance.MRTDPoP.IasPayload;
-};
+  validationUrl: string;
+}>;
 
-export const initMrtdPoPChallenge = async ({
+export const initMrtdPoPChallenge: InitMrtdPoPChallenge = async ({
   authRedirectUrl,
   issuerConf,
   walletInstanceAttestation
-}: InitMrtdPoPChallengeParams) => {
+}) => {
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
   const { challenge_info } =
@@ -66,7 +61,17 @@ export const initMrtdPoPChallenge = async ({
   };
 };
 
-export const validateMrtdPoPChallenge = async ({
+export type ValidateMrtdPoPChallenge = (args: {
+  issuerConf: IssuerConfiguration;
+  walletInstanceAttestation: string;
+  validationUrl: string;
+  mrtd_auth_session: string;
+  mrtd_pop_nonce: string;
+  mrtd: Credential.Issuance.MRTDPoP.MrtdPayload;
+  ias: Credential.Issuance.MRTDPoP.IasPayload;
+}) => Promise<{ callbackUrl: string }>;
+
+export const validateMrtdPoPChallenge: ValidateMrtdPoPChallenge = async ({
   validationUrl,
   mrtd_auth_session,
   mrtd_pop_nonce,
@@ -74,7 +79,7 @@ export const validateMrtdPoPChallenge = async ({
   walletInstanceAttestation,
   ias,
   mrtd
-}: ValidateMrtdPoPChallengeParams) => {
+}) => {
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
   const { mrtd_val_pop_nonce, redirect_uri } =

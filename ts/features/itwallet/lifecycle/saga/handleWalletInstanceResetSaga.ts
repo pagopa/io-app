@@ -7,7 +7,7 @@ import { all, put, select } from "typed-redux-saga/macro";
 import { isIos } from "../../../../utils/platform";
 import { walletRemoveCardsByCategory } from "../../../wallet/store/actions/cards";
 import { itwSetWalletInstanceRemotelyActive } from "../../common/store/actions/preferences.ts";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import {
   itwCredentialsSelector,
   itwCredentialsEidSelector
@@ -16,7 +16,7 @@ import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../store/actions";
 import { updatePropertiesWalletRevoked } from "../../analytics/properties/propertyUpdaters.ts";
 
-const getKeyTag = (credential: O.Option<StoredCredential>) =>
+const getKeyTag = (credential: O.Option<CredentialMetadata>) =>
   pipe(
     credential,
     O.map(x => x.keyTag)
