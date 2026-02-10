@@ -108,6 +108,14 @@ class SmartI18nextBackend implements BackendModule<SmartBackendOptions> {
     try {
       const url = `${newContentRepoUrl}/locales/${language}/${namespace}.json`;
       const response = await fetch(url);
+      if (!response.ok) {
+        captureException(
+          new Error(
+            `Failed to load remote translations: ${response.status} ${response.statusText} for ${url}`
+          )
+        );
+        return;
+      }
       const remoteData = await response.json();
 
       i18next.addResourceBundle(language, namespace, remoteData, true, true);
