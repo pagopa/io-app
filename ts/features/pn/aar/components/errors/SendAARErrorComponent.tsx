@@ -13,6 +13,7 @@ import {
   currentAARFlowStateErrorDebugInfoSelector
 } from "../../store/selectors";
 import { useAarGenericErrorBottomSheet } from "./hooks/useAarGenericErrorBottomSheet";
+import { SendAarZendeskSecondLevelTag } from "./hooks/useAarStartSendZendeskSupport";
 
 export const SendAarGenericErrorComponent = () => {
   const { terminateFlow } = useSendAarFlowManager();
@@ -22,8 +23,9 @@ export const SendAarGenericErrorComponent = () => {
 
   const { bottomSheet, present } = useAarGenericErrorBottomSheet({
     errorName: assistanceErrorCode,
-    zendeskSecondLevelTag: "io_problema_notifica_send_qr",
-    onStartAssistance: () => trackSendAarErrorScreenDetailsHelp()
+    zendeskSecondLevelTag:
+      SendAarZendeskSecondLevelTag.IO_PROBLEMA_NOTIFICA_SEND_QR,
+    onStartAssistance: trackSendAarErrorScreenDetailsHelp
   });
 
   const debugInfo = useIOSelector(currentAARFlowStateErrorDebugInfoSelector);

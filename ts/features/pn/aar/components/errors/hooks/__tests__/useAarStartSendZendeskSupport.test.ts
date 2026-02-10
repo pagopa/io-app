@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react-native";
 import {
   AAR_SUB_CATEGORY_ID,
+  SendAarZendeskSecondLevelTag,
   useAarStartSendZendeskSupport
 } from "../useAarStartSendZendeskSupport";
 import {
@@ -37,9 +38,9 @@ describe("AAR_SUB_CATEGORY_ID", () => {
 });
 
 describe("useAarStartSendZendeskSupport", () => {
-  describe.each<Parameters<typeof useAarStartSendZendeskSupport>[0]>([
-    "io_problema_notifica_send_qr",
-    "io_problema_notifica_send_qr_altra_persona"
+  describe.each<SendAarZendeskSecondLevelTag>([
+    SendAarZendeskSecondLevelTag.IO_PROBLEMA_NOTIFICA_SEND_QR,
+    SendAarZendeskSecondLevelTag.IO_PROBLEMA_NOTIFICA_SEND_QR_ALTRA_PERSONA
   ])('Zendesk second level tag: "%s"', secondLevelTag => {
     afterEach(jest.clearAllMocks);
 

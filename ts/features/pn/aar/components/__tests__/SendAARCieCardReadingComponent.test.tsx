@@ -20,6 +20,7 @@ import {
   SendAARCieCardReadingComponent,
   SendAARCieCardReadingComponentProps
 } from "../SendAARCieCardReadingComponent";
+import { SendAarZendeskSecondLevelTag } from "../errors/hooks/useAarStartSendZendeskSupport";
 type ReadState = ReturnType<
   typeof useCieInternalAuthAndMrtdReading
 >["readState"];
@@ -183,7 +184,8 @@ describe("SendAARCieCardReadingComponent", () => {
 
       expect(useAarGenericErrorBottomSheet).toHaveBeenCalledTimes(1);
       expect(useAarGenericErrorBottomSheet).toHaveBeenCalledWith({
-        zendeskSecondLevelTag: "io_problema_notifica_send_qr_altra_persona",
+        zendeskSecondLevelTag:
+          SendAarZendeskSecondLevelTag.IO_PROBLEMA_NOTIFICA_SEND_QR_ALTRA_PERSONA,
         errorName: isErrorState(readState) ? readState.error.name : undefined
       });
     }

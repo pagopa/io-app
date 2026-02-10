@@ -28,6 +28,7 @@ import {
   trackSendAarMandateCieErrorDetailHelp
 } from "../../../analytics";
 import { useAarGenericErrorBottomSheet } from "../hooks/useAarGenericErrorBottomSheet";
+import { SendAarZendeskSecondLevelTag } from "../hooks/useAarStartSendZendeskSupport";
 
 const mockTerminateFlow = jest.fn();
 const mockSendAarFlowManager = jest.fn();
@@ -292,7 +293,8 @@ describe("SendAarCieValidationErrors", () => {
         expect(mockUseAarGenericErrorBottomSheet).toHaveBeenCalledTimes(1);
         expect(mockUseAarGenericErrorBottomSheet).toHaveBeenCalledWith({
           errorName: errorCode,
-          zendeskSecondLevelTag: "io_problema_notifica_send_qr_altra_persona",
+          zendeskSecondLevelTag:
+            SendAarZendeskSecondLevelTag.IO_PROBLEMA_NOTIFICA_SEND_QR_ALTRA_PERSONA,
           onCopyToClipboard: expect.any(Function),
           onStartAssistance: expect.any(Function)
         });
@@ -316,7 +318,7 @@ describe("SendAarCieValidationErrors", () => {
           mockUseAarGenericErrorBottomSheet.mock.calls[0][0];
 
         act(() => {
-          onStartAssistance!(errorCode ?? "");
+          onStartAssistance!();
         });
 
         expect(trackSendAarMandateCieErrorDetailHelp).toHaveBeenCalledTimes(1);
@@ -342,7 +344,7 @@ describe("SendAarCieValidationErrors", () => {
           mockUseAarGenericErrorBottomSheet.mock.calls[0][0];
 
         act(() => {
-          onCopyToClipboard!(errorCode ?? "");
+          onCopyToClipboard!();
         });
 
         expect(trackSendAarMandateCieErrorDetailCode).toHaveBeenCalledTimes(1);

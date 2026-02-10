@@ -15,9 +15,10 @@ import {
 
 export const AAR_SUB_CATEGORY_ID = "39752564743313";
 
-type SendAarZendeskSecondLevelTag =
-  | "io_problema_notifica_send_qr"
-  | "io_problema_notifica_send_qr_altra_persona";
+export const enum SendAarZendeskSecondLevelTag {
+  IO_PROBLEMA_NOTIFICA_SEND_QR = "io_problema_notifica_send_qr",
+  IO_PROBLEMA_NOTIFICA_SEND_QR_ALTRA_PERSONA = "io_problema_notifica_send_qr_altra_persona"
+}
 
 /**
  * Returns a callback that starts a Zendesk support flow for the AAR "send" assistance.

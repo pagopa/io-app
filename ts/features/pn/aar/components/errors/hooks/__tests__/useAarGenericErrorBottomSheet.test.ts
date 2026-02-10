@@ -1,11 +1,10 @@
 import { act, render, renderHook } from "@testing-library/react-native";
-import { useAarStartSendZendeskSupport } from "../useAarStartSendZendeskSupport";
+import {
+  SendAarZendeskSecondLevelTag,
+  useAarStartSendZendeskSupport
+} from "../useAarStartSendZendeskSupport";
 import { useAarGenericErrorBottomSheet } from "../useAarGenericErrorBottomSheet";
 import * as SendAarErrorSupportBottomSheetComponentModule from "../../sendAarErrorSupportBottomSheetComponent";
-
-type SendAarZendeskSecondLevelTag = Parameters<
-  typeof useAarGenericErrorBottomSheet
->[0]["zendeskSecondLevelTag"];
 
 const errorNames = ["ANY_ERROR", "GENERIC_ERROR", "SOME_ERROR", undefined];
 
@@ -16,6 +15,7 @@ const mockOnCopyToClipboard = jest.fn();
 const mockStartZendeskSupport = jest.fn();
 
 jest.mock("../useAarStartSendZendeskSupport", () => ({
+  ...jest.requireActual("../useAarStartSendZendeskSupport"),
   useAarStartSendZendeskSupport: jest.fn(() => mockStartZendeskSupport)
 }));
 
@@ -33,8 +33,8 @@ jest.mock("i18next", () => ({
 
 describe("useAarGenericErrorBottomSheet", () => {
   describe.each<SendAarZendeskSecondLevelTag>([
-    "io_problema_notifica_send_qr",
-    "io_problema_notifica_send_qr_altra_persona"
+    SendAarZendeskSecondLevelTag.IO_PROBLEMA_NOTIFICA_SEND_QR,
+    SendAarZendeskSecondLevelTag.IO_PROBLEMA_NOTIFICA_SEND_QR_ALTRA_PERSONA
   ])('ZendeskSecondLevelTag: "%s"', secondLevelTag => {
     afterEach(jest.clearAllMocks);
 
@@ -134,7 +134,7 @@ describe("useAarGenericErrorBottomSheet", () => {
           });
 
           expect(mockOnStartAssistance).toHaveBeenCalledTimes(1);
-          expect(mockOnStartAssistance).toHaveBeenCalledWith(errorName ?? "");
+          expect(mockOnStartAssistance).toHaveBeenCalledWith();
           expect(mockDismiss).toHaveBeenCalledTimes(1);
           expect(mockStartZendeskSupport).toHaveBeenCalledTimes(1);
           expect(mockStartZendeskSupport).toHaveBeenCalledWith(errorName);
@@ -150,7 +150,7 @@ describe("useAarGenericErrorBottomSheet", () => {
           });
 
           expect(mockOnCopyToClipboard).toHaveBeenCalledTimes(1);
-          expect(mockOnCopyToClipboard).toHaveBeenCalledWith(errorName ?? "");
+          expect(mockOnCopyToClipboard).toHaveBeenCalledWith();
           expect(mockOnStartAssistance).not.toHaveBeenCalled();
           expect(mockStartZendeskSupport).not.toHaveBeenCalled();
           expect(mockDismiss).not.toHaveBeenCalled();

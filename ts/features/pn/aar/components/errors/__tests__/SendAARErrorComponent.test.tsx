@@ -122,7 +122,7 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
       mockUseAarGenericErrorBottomSheet.mock.calls[0][0];
 
     act(() => {
-      onStartAssistance!("");
+      onStartAssistance!();
     });
 
     expect(

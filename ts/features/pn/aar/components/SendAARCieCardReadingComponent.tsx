@@ -21,6 +21,7 @@ import { useTrackCieReadingEvents } from "../hooks/useTrackCieReadingEvents";
 import { setAarFlowState } from "../store/actions";
 import { RecipientInfo, sendAARFlowStates } from "../utils/stateUtils";
 import { useAarGenericErrorBottomSheet } from "./errors/hooks/useAarGenericErrorBottomSheet";
+import { SendAarZendeskSecondLevelTag } from "./errors/hooks/useAarStartSendZendeskSupport";
 
 type ScreenContentProps = Omit<CieCardReadContentProps, "progress">;
 
@@ -52,7 +53,8 @@ export const SendAARCieCardReadingComponent = ({
   const { terminateFlow } = useSendAarFlowManager();
   const { bottomSheet, present } = useAarGenericErrorBottomSheet({
     errorName,
-    zendeskSecondLevelTag: "io_problema_notifica_send_qr_altra_persona"
+    zendeskSecondLevelTag:
+      SendAarZendeskSecondLevelTag.IO_PROBLEMA_NOTIFICA_SEND_QR_ALTRA_PERSONA
   });
   const handleStartReading = useCallback(() => {
     void startReading(can, verificationCode, "base64url");

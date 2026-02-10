@@ -2,13 +2,16 @@ import { Optional } from "@pagopa/io-app-design-system";
 import { isFunction } from "lodash";
 import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 import { sendAarErrorSupportBottomSheetComponent } from "../sendAarErrorSupportBottomSheetComponent";
-import { useAarStartSendZendeskSupport } from "./useAarStartSendZendeskSupport";
+import {
+  SendAarZendeskSecondLevelTag,
+  useAarStartSendZendeskSupport
+} from "./useAarStartSendZendeskSupport";
 
 type Props = {
   errorName: Optional<string>;
-  zendeskSecondLevelTag: Parameters<typeof useAarStartSendZendeskSupport>[0];
-  onCopyToClipboard?: (errorName: string) => void;
-  onStartAssistance?: (errorName: string) => void;
+  zendeskSecondLevelTag: SendAarZendeskSecondLevelTag;
+  onCopyToClipboard?: () => void;
+  onStartAssistance?: () => void;
 };
 
 /**
@@ -31,7 +34,7 @@ export const useAarGenericErrorBottomSheet = ({
 
   const handleAssistance = () => {
     if (isFunction(onStartAssistance)) {
-      onStartAssistance(errorName ?? "");
+      onStartAssistance();
     }
 
     dismiss();
@@ -40,7 +43,7 @@ export const useAarGenericErrorBottomSheet = ({
 
   const handleCopyToClipboard = () => {
     if (isFunction(onCopyToClipboard)) {
-      onCopyToClipboard(errorName ?? "");
+      onCopyToClipboard();
     }
   };
 
