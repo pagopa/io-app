@@ -8,7 +8,7 @@ IO_SESSION_MANAGER_VERSION=1.8.0
 # IO Wallet Backend version
 IO_WALLET_BACKEND_VERSION=v16.14.0
 # Send function version
-SEND_FUNC_VERSION=1.4.3
+SEND_FUNC_VERSION=1.5.5
 
 declare -a apis=(
   # Backend APIs
@@ -41,6 +41,7 @@ declare -a apis=(
   # PN APIs
   "./definitions/pn https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_pn.yaml"
   "./definitions/pn/aar https://raw.githubusercontent.com/pagopa/io-messages/refs/tags/send-func@$SEND_FUNC_VERSION/apps/send-func/openapi/aar-notification.yaml"
+  "./definitions/pn/lollipop-lambda https://raw.githubusercontent.com/pagopa/io-messages/refs/tags/send-func@$SEND_FUNC_VERSION/apps/send-func/openapi/lollipop-integration-check.yaml"
   # FCI APIs
   "./definitions/fci https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_io_sign.yaml"
   # ITW APIs

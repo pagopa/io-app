@@ -137,6 +137,7 @@ import { showSessionExpirationBlockingScreenSelector } from "../features/authent
 import { watchCdcSaga } from "../features/bonus/cdc/common/saga";
 import { watchMessagesSaga } from "../features/messages/saga";
 import { watchWalletSaga } from "../features/wallet/saga";
+import { watchSendLollipopLambda } from "../features/pn/lollipopLambda/saga";
 import { maybeHandlePendingBackgroundActions } from "./backgroundActions";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -626,8 +627,9 @@ export function* initializeApplicationSaga(
     // Start watching for PN actions
     yield* fork(watchPnSaga, sessionToken);
 
-    const aarRemoteEnabled = yield* select(isAarRemoteEnabled);
+    yield* fork(watchSendLollipopLambda, sessionToken, keyInfo);
 
+    const aarRemoteEnabled = yield* select(isAarRemoteEnabled);
     if (aarRemoteEnabled) {
       yield* fork(watchAarFlowSaga, sessionToken, keyInfo);
     }

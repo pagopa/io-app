@@ -40,7 +40,7 @@ import EmailInsertScreen from "../../userData/shared/screens/EmailInsertScreen";
 import EmailValidationSendEmailScreen from "../../userData/shared/screens/EmailValidationSendEmailScreen";
 import LogoutScreen from "../screens/LogoutScreen";
 import ProfileMainScreen from "../screens/ProfileMainScreen";
-import { SendPlayground } from "../../devMode/playgrounds/SendPlayground";
+import { SendPlaygroundScreen } from "../../devMode/playgrounds/SendPlaygroundScreen";
 import { SettingsParamsList } from "./params/SettingsParamsList";
 import { SETTINGS_ROUTES } from "./routes";
 
@@ -230,7 +230,7 @@ const SettingsStackNavigator = () => (
     />
     <Stack.Screen
       name={SETTINGS_ROUTES.SEND_PLAYGROUND}
-      component={SendPlayground}
+      component={SendPlaygroundScreen}
     />
 
     <Stack.Screen

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   StyleSheet,
   TextInput as RNTextInput,
@@ -15,7 +15,7 @@ import {
   ListItemInfo,
   ListItemInfoCopy,
   ListItemSwitch,
-  TextInput,
+  useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
@@ -23,6 +23,14 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { preferencesPnTestEnvironmentSetEnabled } from "../../../../store/actions/persistedPreferences";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import {
+  isSendLollipopLambdaLoading,
+  sendLollipopLambdaErrorReason,
+  sendLollipopLambdaResponseBodyString,
+  sendLollipopLambdaResponseStatusCode
+} from "../../../pn/lollipopLambda/store/selectors";
+import { sendLollipopLambdaAction } from "../../../pn/lollipopLambda/store/actions";
+import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 
 const styles = StyleSheet.create({
   textInput: {
@@ -36,9 +44,12 @@ const styles = StyleSheet.create({
   }
 });
 
-export const SendPlayground = () => {
+export const SendPlaygroundScreen = () => {
   const dispatch = useIODispatch();
-  const [uiDisabled, _setUIDisabled] = useState<boolean>(false);
+  const toast = useIOToast();
+
+  const [requestBody, setRequestBody] = useState<string>("");
+
   const darkModeEnabled = Appearance.getColorScheme() === "dark";
   const bodyTextColor = darkModeEnabled ? IOColors.white : IOColors["grey-850"];
   const bodyBorderColor = darkModeEnabled
@@ -48,18 +59,49 @@ export const SendPlayground = () => {
     ? IOColors["grey-450"]
     : IOColors["grey-650"];
 
+  const errorReasonOrUndefined = useIOSelector(sendLollipopLambdaErrorReason);
+  const isSagaLoading = useIOSelector(isSendLollipopLambdaLoading);
   const sendUATEnvironmentEnabled = useIOSelector(isPnTestEnabledSelector);
+  const responseBodyStringOrUndefined = useIOSelector(
+    sendLollipopLambdaResponseBodyString
+  );
+  const responseStatusCodeOrUndefined = useIOSelector(
+    sendLollipopLambdaResponseStatusCode
+  );
+
+  const sendLollipopLambdaRequest = (httpVerb: "Get" | "Post") => {
+    dispatch(
+      sendLollipopLambdaAction.request({
+        httpVerb,
+        body: requestBody
+      })
+    );
+  };
+
   useHeaderSecondLevel({
     title: "",
     supportRequest: false
   });
+
+  useEffect(() => {
+    if (errorReasonOrUndefined) {
+      toast.error(errorReasonOrUndefined);
+    }
+  }, [errorReasonOrUndefined, toast]);
+
+  useEffect(
+    () => () => {
+      dispatch(sendLollipopLambdaAction.cancel());
+    },
+    [dispatch]
+  );
   return (
     <IOScrollView>
       <ListItemHeader label="Environment" />
       <ListItemSwitch
         label="Use UAT"
         description="Sends Service Activation and AAR requests to the UAT environment"
-        disabled={uiDisabled}
+        disabled={isSagaLoading}
         value={sendUATEnvironmentEnabled}
         onSwitchValueChange={enabled =>
           dispatch(
@@ -70,50 +112,50 @@ export const SendPlayground = () => {
       <Divider />
       <ListItemHeader label="Lollipop Playground" />
       <View>
-        <Body>Query params</Body>
-        <VSpacer size={4} />
-        <TextInput
-          accessibilityLabel="Query params"
-          disabled={uiDisabled}
-          value={""}
-          placeholder={"p1=v1&p2=v2&..."}
-          onChangeText={() => undefined}
-        />
-        <VSpacer size={16} />
         <Body>Post Body</Body>
         <VSpacer size={4} />
         <RNTextInput
           accessibilityLabel="Post Body"
-          editable={!uiDisabled}
+          editable={!isSagaLoading}
           submitBehavior="newline"
           multiline={true}
           placeholder={'{\n  p1: "a string",\n  p2: {\n    p3: true\n  }\n}'}
           style={{
             ...styles.textInput,
-            opacity: uiDisabled ? 0.5 : 1.0,
+            opacity: isSagaLoading ? 0.5 : 1.0,
             color: bodyTextColor,
             borderColor: bodyBorderColor
           }}
           placeholderTextColor={placeholderTextColor}
-          onChangeText={() => undefined}
-          value={""}
+          onChangeText={value => setRequestBody(value)}
+          value={requestBody}
           scrollEnabled={false}
         />
         <VSpacer size={16} />
-        <ListItemInfo value="" label="Response Status Code" numberOfLines={1} />
+        <ListItemInfo
+          value={`${responseStatusCodeOrUndefined ?? ""}`}
+          label="Response Status Code"
+          numberOfLines={1}
+        />
         <ListItemInfoCopy
           label="Response Body"
-          value=""
+          value={responseBodyStringOrUndefined ?? ""}
           numberOfLines={1000}
-          onPress={() => undefined}
+          onPress={() =>
+            clipboardSetStringWithFeedback(responseBodyStringOrUndefined ?? "")
+          }
         />
         <VSpacer size={32} />
-        <IOButton label="GET" onPress={() => undefined} disabled={uiDisabled} />
+        <IOButton
+          label="GET"
+          onPress={() => sendLollipopLambdaRequest("Get")}
+          disabled={isSagaLoading}
+        />
         <VSpacer size={8} />
         <IOButton
           label="POST"
-          onPress={() => undefined}
-          disabled={uiDisabled}
+          onPress={() => sendLollipopLambdaRequest("Post")}
+          disabled={isSagaLoading}
         />
       </View>
       <VSpacer size={16} />
