@@ -530,3 +530,29 @@ export const paragraphNodeToReactNative = (
 export const strNodeToReactNative = (content: string, node: AnyTxtNode) => (
   <Fragment key={getTxtNodeKey(node)}>{content}</Fragment>
 );
+
+export const accessibleLinkNodeToReactNative = (
+  link: TxtLinkNode,
+  options: { onPress: () => void; size?: ParagraphSize },
+  render: Renderer
+) => {
+  const BodyComponent = options.size === "small" ? BodySmall : Body;
+  return (
+    <Pressable
+      focusable
+      accessible
+      accessibilityRole="link"
+      key={getTxtNodeKey(link)}
+      style={{ height: 19 }}
+    >
+      <BodyComponent
+        weight="Semibold"
+        asLink
+        avoidPressable
+        onPress={options.onPress}
+      >
+        {link.children.map(render)}
+      </BodyComponent>
+    </Pressable>
+  );
+};
