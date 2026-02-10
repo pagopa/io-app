@@ -13,6 +13,8 @@ import {
 } from "../../machine/eid/selectors";
 import ItwPrivacyWebViewComponent from "../components/ItwPrivacyWebViewComponent";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { useIOSelector } from "../../../../store/hooks";
+import { itwIPatentePrivacyUrlSelector } from "../../common/store/selectors/remoteConfig";
 
 const ItwIpzsPrivacyScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -24,8 +26,7 @@ const ItwIpzsPrivacyScreen = () => {
     isL3FeaturesEnabledSelector
   );
 
-  // TODO [SIW-2992] add this url to remote config
-  const privacyUrl = "https://util.wallet.ipzs.it/privacy.html";
+  const privacyUrl = useIOSelector(itwIPatentePrivacyUrlSelector);
 
   const handleContinuePress = () => {
     trackOpenItwTosAccepted(isL3 ? "L3" : "L2");
@@ -89,7 +90,7 @@ const ItwIpzsPrivacyScreen = () => {
         </ContentWrapper>
         <ItwPrivacyWebViewComponent
           source={{
-            uri: privacyUrl
+            uri: privacyUrl ?? ""
           }}
           onLoadEnd={onLoadEnd}
           onError={onError}
