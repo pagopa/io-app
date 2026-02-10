@@ -9,6 +9,7 @@ import {
   IOColors,
   IOIcons,
   useIOTheme,
+  useIOThemeContext,
   useIOToast,
   VSpacer,
   VStack
@@ -36,13 +37,8 @@ import { setAccessibilityFocus } from "../../../../utils/accessibility.ts";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import { tosConfigSelector } from "../../../tos/store/selectors/index.ts";
-import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum.ts";
-import {
-  trackItwIntroBack,
-  trackItWalletActivationStart,
-  trackItwDiscoveryPlus
-} from "../analytics";
 import { trackOpenItwTos } from "../../analytics";
+import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum.ts";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog.tsx";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
@@ -50,6 +46,11 @@ import { generateItwIOMarkdownRules } from "../../common/utils/markdown.tsx";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors/index.ts";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
 import { selectIsLoading } from "../../machine/eid/selectors.ts";
+import {
+  trackItWalletActivationStart,
+  trackItwDiscoveryPlus,
+  trackItwIntroBack
+} from "../analytics";
 
 // Offset to avoid to scroll to the block without margins
 const scrollOffset: number = 12;
@@ -178,10 +179,7 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
         }
       }}
     >
-      <AnimatedImage
-        source={require("../../../../../img/features/itWallet/discovery/itw_hero.png")}
-        style={styles.hero}
-      />
+      <HeroImage />
       <VSpacer size={24} />
       <ContentWrapper>
         <H2>{I18n.t("features.itWallet.discovery.screen.itw.title")}</H2>
@@ -284,6 +282,20 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
         </ContentWrapper>
       </View>
     </IOScrollViewWithReveal>
+  );
+};
+
+const HeroImage = () => {
+  const { themeType } = useIOThemeContext();
+  return (
+    <AnimatedImage
+      source={
+        themeType === "light"
+          ? require("../../../../../img/features/itWallet/discovery/itw_hero.png")
+          : require("../../../../../img/features/itWallet/discovery/itw_hero_dark.png")
+      }
+      style={styles.hero}
+    />
   );
 };
 
