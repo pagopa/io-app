@@ -96,9 +96,9 @@ describe("useItwFailureSupportModal", () => {
     expect(queryByTestId("contact-method-website")).toBeTruthy();
   });
 
-  it("renders the error code with copy action in the accessibility label", () => {
+  it("renders the error code and copy action accessibility hint", () => {
     const errorCode = "RX-123";
-    const { getByLabelText } = renderHook({
+    const { getByLabelText, getByA11yHint } = renderHook({
       supportChatEnabled: false,
       zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
       failure: {
@@ -109,8 +109,9 @@ describe("useItwFailureSupportModal", () => {
 
     const expectedLabel = `${I18n.t(
       "features.itWallet.support.errorCode"
-    )} ${errorCode} : ${I18n.t("global.buttons.copy")}`;
+    )}; ${errorCode}`;
     expect(getByLabelText(expectedLabel)).toBeTruthy();
+    expect(getByA11yHint(I18n.t("clipboard.copyIntoClipboard"))).toBeTruthy();
   });
 });
 
