@@ -64,7 +64,7 @@ export const availableTranslations: ReadonlyArray<Locales> = Object.keys(
 ).map(k => k as Locales);
 
 export interface SmartBackendOptions {
-  localResources: typeof resources; // La struttura standard delle risorse i18next
+  localResources: typeof resources;
 }
 
 const DEFAULT_SMART_BACKEND_OPTIONS: SmartBackendOptions = {
@@ -95,7 +95,7 @@ class SmartI18nextBackend implements BackendModule<SmartBackendOptions> {
   }
 
   read(language: Locales, namespace: "index", callback: ReadCallback) {
-    if (!this.options || this.options.localResources[language] === undefined) {
+    if (this.options?.localResources[language] === undefined) {
       callback(null, resources.it[namespace]);
     } else {
       const localData = this.options.localResources[language][namespace] || {};
