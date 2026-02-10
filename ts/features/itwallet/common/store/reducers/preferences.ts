@@ -10,6 +10,7 @@ import {
   itwClearSimplifiedActivationRequirements,
   itwSetPidReissuingSurveyHidden,
   itwSetCredentialUpgradeFailed,
+  itwClearCredentialUpgradeFailed,
   itwDisableItwActivation
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
@@ -104,6 +105,13 @@ const reducer = (
       return {
         ...state,
         credentialUpgradeFailed: action.payload
+      };
+    case getType(itwClearCredentialUpgradeFailed):
+      return {
+        ...state,
+        credentialUpgradeFailed: state.credentialUpgradeFailed?.filter(
+          type => type !== action.payload
+        )
       };
 
     case getType(itwDisableItwActivation): {

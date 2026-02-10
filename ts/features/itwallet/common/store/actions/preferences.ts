@@ -37,6 +37,10 @@ export const itwSetCredentialUpgradeFailed = createStandardAction(
   "ITW_SET_CREDENTIAL_UPGRADE_FAILED"
 )<ReadonlyArray<StoredCredential["credentialType"]>>();
 
+export const itwClearCredentialUpgradeFailed = createStandardAction(
+  "ITW_CLEAR_CREDENTIAL_UPGRADE_FAILED"
+)<StoredCredential["credentialType"]>();
+
 export const itwDisableItwActivation = createStandardAction(
   "ITW_DISABLE_ITW_ACTIVATION"
 )();
@@ -51,4 +55,5 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwClearSimplifiedActivationRequirements>
   | ActionType<typeof itwSetPidReissuingSurveyHidden>
   | ActionType<typeof itwSetCredentialUpgradeFailed>
+  | ActionType<typeof itwClearCredentialUpgradeFailed>
   | ActionType<typeof itwDisableItwActivation>;

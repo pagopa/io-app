@@ -2,7 +2,8 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import {
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
-  itwSetCredentialUpgradeFailed
+  itwSetCredentialUpgradeFailed,
+  itwClearCredentialUpgradeFailed
 } from "../../actions/preferences";
 import reducer, {
   itwPreferencesInitialState,
@@ -79,6 +80,20 @@ describe("IT Wallet preferences reducer", () => {
       ...stateAfterInitial,
       credentialUpgradeFailed: updatedFailures
     });
+  });
+
+  it("should remove a credential type from upgrade failures", () => {
+    const mdl = ItwStoredCredentialsMocks.L3.mdl.credentialType;
+    const ts = ItwStoredCredentialsMocks.L3.ts.credentialType;
+
+    const state = reducer(
+      INITIAL_STATE,
+      itwSetCredentialUpgradeFailed([mdl, ts])
+    );
+
+    const updatedState = reducer(state, itwClearCredentialUpgradeFailed(mdl));
+
+    expect(updatedState.credentialUpgradeFailed).toEqual([ts]);
   });
 
   it("should persist preferences when the wallet is being reset", () => {
