@@ -27,7 +27,7 @@ import {
   trackSendAarMandateCieErrorDetailCode,
   trackSendAarMandateCieErrorDetailHelp
 } from "../../../analytics";
-import { useAarCieErrorBottomSheet } from "../hooks/useAarCieErrorBottomSheet";
+import { useAarGenericErrorBottomSheet } from "../hooks/useAarGenericErrorBottomSheet";
 
 const mockTerminateFlow = jest.fn();
 const mockSendAarFlowManager = jest.fn();
@@ -52,11 +52,12 @@ jest.mock("../../../analytics", () => ({
   trackSendAarMandateCieErrorDetailHelp: jest.fn()
 }));
 
-jest.mock("../hooks/useAarCieErrorBottomSheet");
-const mockUseAarCieErrorBottomSheet = useAarCieErrorBottomSheet as jest.Mock<
-  ReturnType<typeof useAarCieErrorBottomSheet>,
-  Parameters<typeof useAarCieErrorBottomSheet>
->;
+jest.mock("../hooks/useAarGenericErrorBottomSheet");
+const mockUseAarGenericErrorBottomSheet =
+  useAarGenericErrorBottomSheet as jest.Mock<
+    ReturnType<typeof useAarGenericErrorBottomSheet>,
+    Parameters<typeof useAarGenericErrorBottomSheet>
+  >;
 
 const testingCenterUrl = "https://help.center.url";
 
@@ -76,7 +77,7 @@ describe("SendAarCieValidationErrors", () => {
     jest.clearAllMocks();
     jest.restoreAllMocks();
 
-    mockUseAarCieErrorBottomSheet.mockReturnValue({
+    mockUseAarGenericErrorBottomSheet.mockReturnValue({
       bottomSheet: (
         <View>
           <Text>Bottom Sheet content</Text>
@@ -288,8 +289,8 @@ describe("SendAarCieValidationErrors", () => {
 
         renderComponent(GenericCieValidationErrorComponent);
 
-        expect(mockUseAarCieErrorBottomSheet).toHaveBeenCalledTimes(1);
-        expect(mockUseAarCieErrorBottomSheet).toHaveBeenCalledWith({
+        expect(mockUseAarGenericErrorBottomSheet).toHaveBeenCalledTimes(1);
+        expect(mockUseAarGenericErrorBottomSheet).toHaveBeenCalledWith({
           errorName: errorCode,
           zendeskSecondLevelTag: "io_problema_notifica_send_qr_altra_persona",
           onCopyToClipboard: expect.any(Function),
@@ -312,7 +313,7 @@ describe("SendAarCieValidationErrors", () => {
         expect(trackSendAarMandateCieErrorDetailHelp).not.toHaveBeenCalled();
 
         const { onStartAssistance } =
-          mockUseAarCieErrorBottomSheet.mock.calls[0][0];
+          mockUseAarGenericErrorBottomSheet.mock.calls[0][0];
 
         act(() => {
           onStartAssistance!(errorCode ?? "");
@@ -338,7 +339,7 @@ describe("SendAarCieValidationErrors", () => {
         expect(trackSendAarMandateCieErrorDetailCode).not.toHaveBeenCalled();
 
         const { onCopyToClipboard } =
-          mockUseAarCieErrorBottomSheet.mock.calls[0][0];
+          mockUseAarGenericErrorBottomSheet.mock.calls[0][0];
 
         act(() => {
           onCopyToClipboard!(errorCode ?? "");

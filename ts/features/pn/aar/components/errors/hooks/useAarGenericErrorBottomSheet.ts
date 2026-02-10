@@ -1,7 +1,7 @@
 import { Optional } from "@pagopa/io-app-design-system";
 import { isFunction } from "lodash";
 import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
-import { sendAarErrorSupportBottomSheetComponent } from "../SendAARErrorComponent";
+import { sendAarErrorSupportBottomSheetComponent } from "../sendAarErrorSupportBottomSheetComponent";
 import { useAarStartSendZendeskSupport } from "./useAarStartSendZendeskSupport";
 
 type Props = {
@@ -19,7 +19,7 @@ type Props = {
  * @param onCopyToClipboard - Optional callback invoked when the error code is copied
  * @param onStartAssistance - Optional callback invoked before starting the Zendesk flow
  */
-export const useAarCieErrorBottomSheet = ({
+export const useAarGenericErrorBottomSheet = ({
   errorName,
   zendeskSecondLevelTag,
   onCopyToClipboard,

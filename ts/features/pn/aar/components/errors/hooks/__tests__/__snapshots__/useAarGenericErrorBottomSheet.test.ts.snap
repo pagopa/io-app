@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`useAarCieErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notifica_send_qr" should match the snapshot for error: "ANY_ERROR" 1`] = `
+exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notifica_send_qr" should match the snapshot for error: "ANY_ERROR" 1`] = `
 [
   <Text
     allowFontScaling={true}
@@ -498,7 +498,7 @@ exports[`useAarCieErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notifica_
 ]
 `;
 
-exports[`useAarCieErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notifica_send_qr" should match the snapshot for error: "GENERIC_ERROR" 1`] = `
+exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notifica_send_qr" should match the snapshot for error: "GENERIC_ERROR" 1`] = `
 [
   <Text
     allowFontScaling={true}
@@ -996,7 +996,7 @@ exports[`useAarCieErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notifica_
 ]
 `;
 
-exports[`useAarCieErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notifica_send_qr" should match the snapshot for error: "SOME_ERROR" 1`] = `
+exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notifica_send_qr" should match the snapshot for error: "SOME_ERROR" 1`] = `
 [
   <Text
     allowFontScaling={true}
@@ -1494,7 +1494,7 @@ exports[`useAarCieErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notifica_
 ]
 `;
 
-exports[`useAarCieErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notifica_send_qr" should match the snapshot for error: "undefined" 1`] = `
+exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notifica_send_qr" should match the snapshot for error: "undefined" 1`] = `
 [
   <Text
     allowFontScaling={true}
@@ -1748,7 +1748,7 @@ exports[`useAarCieErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notifica_
 ]
 `;
 
-exports[`useAarCieErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notifica_send_qr_altra_persona" should match the snapshot for error: "ANY_ERROR" 1`] = `
+exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notifica_send_qr_altra_persona" should match the snapshot for error: "ANY_ERROR" 1`] = `
 [
   <Text
     allowFontScaling={true}
@@ -2246,7 +2246,7 @@ exports[`useAarCieErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notifica_
 ]
 `;
 
-exports[`useAarCieErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notifica_send_qr_altra_persona" should match the snapshot for error: "GENERIC_ERROR" 1`] = `
+exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notifica_send_qr_altra_persona" should match the snapshot for error: "GENERIC_ERROR" 1`] = `
 [
   <Text
     allowFontScaling={true}
@@ -2744,7 +2744,7 @@ exports[`useAarCieErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notifica_
 ]
 `;
 
-exports[`useAarCieErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notifica_send_qr_altra_persona" should match the snapshot for error: "SOME_ERROR" 1`] = `
+exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notifica_send_qr_altra_persona" should match the snapshot for error: "SOME_ERROR" 1`] = `
 [
   <Text
     allowFontScaling={true}
@@ -3242,7 +3242,7 @@ exports[`useAarCieErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notifica_
 ]
 `;
 
-exports[`useAarCieErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notifica_send_qr_altra_persona" should match the snapshot for error: "undefined" 1`] = `
+exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notifica_send_qr_altra_persona" should match the snapshot for error: "undefined" 1`] = `
 [
   <Text
     allowFontScaling={true}

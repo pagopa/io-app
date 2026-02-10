@@ -20,7 +20,7 @@ import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
 import { useTrackCieReadingEvents } from "../hooks/useTrackCieReadingEvents";
 import { setAarFlowState } from "../store/actions";
 import { RecipientInfo, sendAARFlowStates } from "../utils/stateUtils";
-import { useAarCieErrorBottomSheet } from "./errors/hooks/useAarCieErrorBottomSheet";
+import { useAarGenericErrorBottomSheet } from "./errors/hooks/useAarGenericErrorBottomSheet";
 
 type ScreenContentProps = Omit<CieCardReadContentProps, "progress">;
 
@@ -50,7 +50,7 @@ export const SendAARCieCardReadingComponent = ({
   const errorName = isError ? readState.error.name : undefined;
   const progress = isReadingState(readState) ? readState.progress : 0;
   const { terminateFlow } = useSendAarFlowManager();
-  const { bottomSheet, present } = useAarCieErrorBottomSheet({
+  const { bottomSheet, present } = useAarGenericErrorBottomSheet({
     errorName,
     zendeskSecondLevelTag: "io_problema_notifica_send_qr_altra_persona"
   });

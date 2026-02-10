@@ -1,10 +1,10 @@
 import { act, render, renderHook } from "@testing-library/react-native";
-import { useAarCieErrorBottomSheet } from "../useAarCieErrorBottomSheet";
 import { useAarStartSendZendeskSupport } from "../useAarStartSendZendeskSupport";
-import * as SendAarErrorModule from "../../SendAARErrorComponent";
+import { useAarGenericErrorBottomSheet } from "../useAarGenericErrorBottomSheet";
+import * as SendAarErrorSupportBottomSheetComponentModule from "../../sendAarErrorSupportBottomSheetComponent";
 
 type SendAarZendeskSecondLevelTag = Parameters<
-  typeof useAarCieErrorBottomSheet
+  typeof useAarGenericErrorBottomSheet
 >[0]["zendeskSecondLevelTag"];
 
 const errorNames = ["ANY_ERROR", "GENERIC_ERROR", "SOME_ERROR", undefined];
@@ -31,7 +31,7 @@ jest.mock("i18next", () => ({
   t: (s: string) => s
 }));
 
-describe("useAarCieErrorBottomSheet", () => {
+describe("useAarGenericErrorBottomSheet", () => {
   describe.each<SendAarZendeskSecondLevelTag>([
     "io_problema_notifica_send_qr",
     "io_problema_notifica_send_qr_altra_persona"
@@ -41,7 +41,7 @@ describe("useAarCieErrorBottomSheet", () => {
     it.each(errorNames)(
       'should match the snapshot for error: "%s"',
       async errorName => {
-        const { result } = renderHook(useAarCieErrorBottomSheet, {
+        const { result } = renderHook(useAarGenericErrorBottomSheet, {
           initialProps: {
             zendeskSecondLevelTag: secondLevelTag,
             errorName
@@ -54,7 +54,7 @@ describe("useAarCieErrorBottomSheet", () => {
     );
 
     it('should call "useAarStartSendZendeskSupport" with the right zendeskSecondLevelTag value', () => {
-      renderHook(useAarCieErrorBottomSheet, {
+      renderHook(useAarGenericErrorBottomSheet, {
         initialProps: {
           zendeskSecondLevelTag: secondLevelTag,
           errorName: undefined
@@ -68,7 +68,7 @@ describe("useAarCieErrorBottomSheet", () => {
     });
 
     it('should call the bottom-sheet "present" function once when the returned "present" is pressed', () => {
-      const { result } = renderHook(useAarCieErrorBottomSheet, {
+      const { result } = renderHook(useAarGenericErrorBottomSheet, {
         initialProps: {
           zendeskSecondLevelTag: secondLevelTag,
           errorName: undefined
@@ -89,25 +89,21 @@ describe("useAarCieErrorBottomSheet", () => {
     describe.each(errorNames)(
       'sendAarErrorSupportBottomSheetComponent for errorName: "%s"',
       errorName => {
-        const spyOnSendAarErrorSupportBottomSheetComponent = jest.spyOn(
-          SendAarErrorModule,
+        const spiedComponent = jest.spyOn(
+          SendAarErrorSupportBottomSheetComponentModule,
           "sendAarErrorSupportBottomSheetComponent"
         );
 
         it('should call "sendAarErrorSupportBottomSheetComponent" with the correct parameters', () => {
-          renderHook(useAarCieErrorBottomSheet, {
+          renderHook(useAarGenericErrorBottomSheet, {
             initialProps: {
               zendeskSecondLevelTag: secondLevelTag,
               errorName
             }
           });
 
-          expect(
-            spyOnSendAarErrorSupportBottomSheetComponent
-          ).toHaveBeenCalledTimes(1);
-          expect(
-            spyOnSendAarErrorSupportBottomSheetComponent
-          ).toHaveBeenCalledWith(
+          expect(spiedComponent).toHaveBeenCalledTimes(1);
+          expect(spiedComponent).toHaveBeenCalledWith(
             expect.any(Function),
             errorName,
             expect.any(Function)
@@ -115,7 +111,7 @@ describe("useAarCieErrorBottomSheet", () => {
         });
 
         it('should call "onStartAssistance" and "onCopyToClipboard" when they are defined', () => {
-          renderHook(useAarCieErrorBottomSheet, {
+          renderHook(useAarGenericErrorBottomSheet, {
             initialProps: {
               zendeskSecondLevelTag: secondLevelTag,
               errorName,
@@ -124,18 +120,14 @@ describe("useAarCieErrorBottomSheet", () => {
             }
           });
 
-          expect(
-            spyOnSendAarErrorSupportBottomSheetComponent
-          ).toHaveBeenCalledTimes(1);
+          expect(spiedComponent).toHaveBeenCalledTimes(1);
           expect(mockOnCopyToClipboard).not.toHaveBeenCalled();
           expect(mockOnStartAssistance).not.toHaveBeenCalled();
           expect(mockStartZendeskSupport).not.toHaveBeenCalled();
           expect(mockDismiss).not.toHaveBeenCalled();
 
-          const onStartAssistance =
-            spyOnSendAarErrorSupportBottomSheetComponent.mock.calls[0][0];
-          const onCopyToClipboard =
-            spyOnSendAarErrorSupportBottomSheetComponent.mock.calls[0][2]!;
+          const onStartAssistance = spiedComponent.mock.calls[0][0];
+          const onCopyToClipboard = spiedComponent.mock.calls[0][2]!;
 
           act(() => {
             onStartAssistance();
@@ -165,25 +157,21 @@ describe("useAarCieErrorBottomSheet", () => {
         });
 
         it('should not call "onStartAssistance" and "onCopyToClipboard" when they are not defined', () => {
-          renderHook(useAarCieErrorBottomSheet, {
+          renderHook(useAarGenericErrorBottomSheet, {
             initialProps: {
               zendeskSecondLevelTag: secondLevelTag,
               errorName
             }
           });
 
-          expect(
-            spyOnSendAarErrorSupportBottomSheetComponent
-          ).toHaveBeenCalledTimes(1);
+          expect(spiedComponent).toHaveBeenCalledTimes(1);
           expect(mockOnCopyToClipboard).not.toHaveBeenCalled();
           expect(mockOnStartAssistance).not.toHaveBeenCalled();
           expect(mockStartZendeskSupport).not.toHaveBeenCalled();
           expect(mockDismiss).not.toHaveBeenCalled();
 
-          const onStartAssistance =
-            spyOnSendAarErrorSupportBottomSheetComponent.mock.calls[0][0];
-          const onCopyToClipboard =
-            spyOnSendAarErrorSupportBottomSheetComponent.mock.calls[0][2]!;
+          const onStartAssistance = spiedComponent.mock.calls[0][0];
+          const onCopyToClipboard = spiedComponent.mock.calls[0][2]!;
 
           act(() => {
             onStartAssistance();

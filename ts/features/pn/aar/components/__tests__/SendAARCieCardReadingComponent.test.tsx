@@ -1,4 +1,4 @@
-import { act, fireEvent, render } from "@testing-library/react-native";
+import { act, fireEvent } from "@testing-library/react-native";
 import { omit } from "lodash";
 import * as RN from "react-native";
 import { createStore } from "redux";
@@ -12,14 +12,14 @@ import {
   ReadStatus,
   useCieInternalAuthAndMrtdReading
 } from "../../hooks/useCieInternalAuthAndMrtdReading";
+import { useTrackCieReadingEvents } from "../../hooks/useTrackCieReadingEvents";
 import { setAarFlowState } from "../../store/actions";
 import { sendAARFlowStates } from "../../utils/stateUtils";
+import { useAarGenericErrorBottomSheet } from "../errors/hooks/useAarGenericErrorBottomSheet";
 import {
   SendAARCieCardReadingComponent,
   SendAARCieCardReadingComponentProps
 } from "../SendAARCieCardReadingComponent";
-import { useTrackCieReadingEvents } from "../../hooks/useTrackCieReadingEvents";
-import { useAarCieErrorBottomSheet } from "../errors/hooks/useAarCieErrorBottomSheet";
 type ReadState = ReturnType<
   typeof useCieInternalAuthAndMrtdReading
 >["readState"];
@@ -36,7 +36,7 @@ jest.mock("react-redux", () => ({
   useDispatch: () => mockDispatch
 }));
 
-jest.mock("../errors/hooks/useAarCieErrorBottomSheet");
+jest.mock("../errors/hooks/useAarGenericErrorBottomSheet");
 
 const testRestartHandlerCalled = (
   restartType: "canAdvisory" | "scanningAdvisory"
@@ -71,7 +71,8 @@ const testRestartHandlerCalled = (
   }
 };
 
-const mockUseAarCieErrorBottomSheet = useAarCieErrorBottomSheet as jest.Mock;
+const mockUseAarCieErrorBottomSheet =
+  useAarGenericErrorBottomSheet as jest.Mock;
 mockUseAarCieErrorBottomSheet.mockImplementation(({ bottomSheet }) => ({
   present: mockPresentBottomSheet,
   bottomSheet
@@ -180,8 +181,8 @@ describe("SendAARCieCardReadingComponent", () => {
 
       renderComponent();
 
-      expect(useAarCieErrorBottomSheet).toHaveBeenCalledTimes(1);
-      expect(useAarCieErrorBottomSheet).toHaveBeenCalledWith({
+      expect(useAarGenericErrorBottomSheet).toHaveBeenCalledTimes(1);
+      expect(useAarGenericErrorBottomSheet).toHaveBeenCalledWith({
         zendeskSecondLevelTag: "io_problema_notifica_send_qr_altra_persona",
         errorName: isErrorState(readState) ? readState.error.name : undefined
       });

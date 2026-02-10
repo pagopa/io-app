@@ -19,7 +19,7 @@ import {
   trackSendAarMandateCieErrorDetailHelp,
   trackSendAarMandateCieErrorRetry
 } from "../../analytics";
-import { useAarCieErrorBottomSheet } from "./hooks/useAarCieErrorBottomSheet";
+import { useAarGenericErrorBottomSheet } from "./hooks/useAarGenericErrorBottomSheet";
 
 export const CieExpiredComponent = () => {
   const { terminateFlow } = useSendAarFlowManager();
@@ -114,7 +114,7 @@ export const GenericCieValidationErrorComponent = () => {
   const assistanceErrorCode = useIOSelector(
     currentAARFlowStateAssistanceErrorCode
   );
-  const { bottomSheet, present } = useAarCieErrorBottomSheet({
+  const { bottomSheet, present } = useAarGenericErrorBottomSheet({
     errorName: assistanceErrorCode,
     zendeskSecondLevelTag: "io_problema_notifica_send_qr_altra_persona",
     onCopyToClipboard: trackSendAarMandateCieErrorDetailCode,
