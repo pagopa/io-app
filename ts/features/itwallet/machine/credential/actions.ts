@@ -19,6 +19,8 @@ import {
   itwCredentialsRemoveByType,
   itwCredentialsStore
 } from "../../credentials/store/actions";
+import { itwSetCredentialUpgradeFailed } from "../../common/store/actions/preferences";
+import { itwCredentialUpgradeFailedSelector } from "../../common/store/selectors/preferences";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
@@ -128,10 +130,19 @@ export const createCredentialIssuanceActionsImplementation = (
   >) => {
     assert(context.credentialType, "credentialType is undefined");
     assert(context.credentials, "credential is undefined");
+    const upgradeFailures = itwCredentialUpgradeFailedSelector(
+      store.getState()
+    );
     // Removes any credentials with thye same type stored in the wallet
     store.dispatch(itwCredentialsRemoveByType(context.credentialType));
     // Stores the new obtained credentials
     store.dispatch(itwCredentialsStore(context.credentials));
+    // Clear older upgrade-failed flag for this credential after a successful issuance/upgrade.
+    store.dispatch(
+      itwSetCredentialUpgradeFailed(
+        upgradeFailures.filter(type => type !== context.credentialType)
+      )
+    );
   },
 
   trackStartAddCredential: ({
