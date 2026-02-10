@@ -1256,8 +1256,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpiring
           ]
         }
       >
-        Conferma la tua identità entro il
-         
+        Conferma la tua identità entro il 
         <Text
           allowFontScaling={true}
           dynamicTypeRamp="body"
