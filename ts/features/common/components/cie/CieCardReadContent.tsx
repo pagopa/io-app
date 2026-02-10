@@ -14,7 +14,7 @@ import {
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { AccessibilityInfo, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
