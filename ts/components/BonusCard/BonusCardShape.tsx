@@ -1,23 +1,18 @@
-import {
-  IOColors,
-  useIOTheme,
-  useIOThemeContext
-} from "@pagopa/io-app-design-system";
-import { StyleSheet, View } from "react-native";
+import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
+import { ColorValue, StyleSheet, View } from "react-native";
 import { Circle, ClipPath, Defs, Path, Rect, Svg } from "react-native-svg";
 
 const CIRCLE_MASK_SIZE = 32;
 
 type Props = {
   mode: "mask" | "draw-on-top";
+  backgroundColor: ColorValue;
 };
 
-const BonusCardShape = (props: Props) => {
+const BonusCardShape = ({ mode, backgroundColor }: Props) => {
   const theme = useIOTheme();
-  const { themeType } = useIOThemeContext();
-  const isDark = themeType === "dark";
 
-  switch (props.mode) {
+  switch (mode) {
     case "mask": {
       return (
         <View style={styles.container}>
@@ -32,7 +27,7 @@ const BonusCardShape = (props: Props) => {
             <Rect
               width="100%"
               height="100%"
-              fill={isDark ? "#35364C" : IOColors["blueItalia-50"]}
+              fill={backgroundColor}
               clipPath="url(#clip)"
               rx={24}
               ry={24}

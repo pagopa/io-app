@@ -1,28 +1,56 @@
 import {
   HeaderActionProps,
+  hexToRgba,
   IOColors,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { ReactNode } from "react";
+import { ColorSchemeName } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { useDetectSmallScreen } from "../../hooks/useDetectSmallScreen";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
 import { useIOSelector } from "../../store/hooks";
 import { isScreenReaderEnabledSelector } from "../../store/reducers/preferences";
-import { isAndroid } from "../../utils/platform";
-import FocusAwareStatusBar from "../ui/FocusAwareStatusBar";
 import { IOScrollView, IOScrollViewActions } from "../ui/IOScrollView";
 import { BonusCard } from "./BonusCard";
+
+export type BonusCardColorSchemeValues = {
+  background: string;
+  // Skeleton or other visual elements
+  foreground: string;
+  text: IOColors;
+};
+
+type CardThemeColors = Record<
+  NonNullable<ColorSchemeName>,
+  BonusCardColorSchemeValues
+>;
 
 type BaseProps = {
   title?: string;
   headerAction?: HeaderActionProps;
   children?: ReactNode;
   actions?: IOScrollViewActions;
+  cardColors?: CardThemeColors;
 };
 
-type BonusScreenComponentProps = BaseProps & SupportRequestParams & BonusCard;
+export type BonusScreenComponentProps = BaseProps &
+  SupportRequestParams &
+  Exclude<BonusCard, "cardSpecificColors">;
+
+export const defaultBonusCardColors: CardThemeColors = {
+  light: {
+    background: IOColors["blueItalia-50"],
+    foreground: IOColors["blueItalia-100"],
+    text: "blueItalia-850"
+  },
+  dark: {
+    background: "#35364C",
+    foreground: hexToRgba(IOColors["blueIO-300"], 0.3),
+    text: "blueIO-50"
+  }
+};
 
 const BonusCardScreenComponent = ({
   title,
@@ -32,31 +60,25 @@ const BonusCardScreenComponent = ({
   contextualHelpMarkdown,
   contextualHelp,
   children,
+  cardColors,
   ...cardProps
 }: BonusScreenComponentProps) => {
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const { isDeviceScreenSmall } = useDetectSmallScreen();
-
   const screenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
-
   const { themeType } = useIOThemeContext();
 
   const isDark = themeType === "dark";
-  // We need to check if the card is a CGN type to set the background color
-  const isCGNType = !cardProps.isLoading && cardProps.cardBackground;
-  // Custom background color for CGN based on the platform
-  const cgnBackgroundColor = isAndroid ? IOColors.white : IOColors["grey-50"];
-  // If the card is not a CGN type, we set the default header background color as card color
-  const idPayBackgroundColor = isDark ? "#35364C" : IOColors["blueIO-50"];
-
-  const backgroundColor = isCGNType ? cgnBackgroundColor : idPayBackgroundColor;
+  const cardThemeColorPalette = cardColors ?? defaultBonusCardColors;
+  const cardColorSchemeValues = isDark
+    ? cardThemeColorPalette.dark
+    : cardThemeColorPalette.light;
 
   useHeaderSecondLevel({
     title: title || "",
     transparent: !screenReaderEnabled,
     supportRequest: true,
-    variant: isCGNType ? "neutral" : undefined,
-    backgroundColor,
+    backgroundColor: cardColorSchemeValues.background,
     faqCategories,
     contextualHelpMarkdown,
     contextualHelp,
@@ -67,25 +89,18 @@ const BonusCardScreenComponent = ({
   });
 
   return (
-    <>
-      {isCGNType && (
-        <FocusAwareStatusBar
-          barStyle={isAndroid && isDark ? "light-content" : "dark-content"}
-        />
-      )}
-      <IOScrollView
-        animatedRef={animatedScrollViewRef}
-        actions={actions}
-        includeContentMargins={false}
-      >
-        <BonusCard
-          hideLogo={isDeviceScreenSmall}
-          {...cardProps}
-          isCGNType={isCGNType}
-        />
-        {children}
-      </IOScrollView>
-    </>
+    <IOScrollView
+      animatedRef={animatedScrollViewRef}
+      actions={actions}
+      includeContentMargins={false}
+    >
+      <BonusCard
+        hideLogo={isDeviceScreenSmall}
+        cardColorSchemeValues={cardColorSchemeValues}
+        {...cardProps}
+      />
+      {children}
+    </IOScrollView>
   );
 };
 
