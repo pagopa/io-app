@@ -21,12 +21,14 @@ import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPre
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { unknownToReason } from "../../../messages/utils";
+import { isTestEnv } from "../../../../utils/environment";
 
 export function* watchSendLollipopLambda(
   sessionToken: SessionToken,
   keyInfo: KeyInfo
 ) {
-  const lollipopLambdaClient = createSendLollipopLambdaClient(
+  const lollipopLambdaClient = yield* call(
+    createSendLollipopLambdaClient,
     apiUrlPrefix,
     sessionToken,
     keyInfo
@@ -162,3 +164,12 @@ const bodyStringToObject = (
     return left(`Bad JSON for request body (${reason})`);
   }
 };
+
+export const testable = isTestEnv
+  ? {
+      bodyStringToObject,
+      buildLambdaLollipopRequest,
+      lollipopLambdaSaga,
+      raceLollipopLambdaWithCancellation
+    }
+  : undefined;
