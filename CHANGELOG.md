@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.24.0-rc.1](https://github.com/pagopa/io-app/compare/3.24.0-rc.0...3.24.0-rc.1) (2026-02-09)
+
+
+### Bug Fixes
+
+* [[IEL-29](https://pagopa.atlassian.net/browse/IEL-29)] state handling when navigating between FCI documents ([#7834](https://github.com/pagopa/io-app/issues/7834)) ([982f9d7](https://github.com/pagopa/io-app/commit/982f9d7d7fe4761932066c14dfbf2589c416cc9c))
+* [[IOPID-3731](https://pagopa.atlassian.net/browse/IOPID-3731)] update CIE card reader screen to support dark mode ([#7841](https://github.com/pagopa/io-app/issues/7841)) ([c2f4d0c](https://github.com/pagopa/io-app/commit/c2f4d0c8305b4661e451bf57d55d9aa91e3e8b72))
+
+
+### Chores
+
+* [[IOPLT-1522](https://pagopa.atlassian.net/browse/IOPLT-1522)] Add dark mode support to CGN card ([#7783](https://github.com/pagopa/io-app/issues/7783)) ([9e71aad](https://github.com/pagopa/io-app/commit/9e71aadc23d2bd1851c04ac2900cb91402ebbdbd))
+* **IT-Wallet:** [[SIW-3348](https://pagopa.atlassian.net/browse/SIW-3348)] Update claim visualization for remote and proximity presentation ([#7797](https://github.com/pagopa/io-app/issues/7797)) ([f1ffe62](https://github.com/pagopa/io-app/commit/f1ffe626c5d02f4e959b0d9d23e8a821ed653ec5))
+* [[IOPLT-1395](https://pagopa.atlassian.net/browse/IOPLT-1395)] Replace CGN `WebView` with custom animation made with RN `skia` ([#7775](https://github.com/pagopa/io-app/issues/7775)) ([1c09bc8](https://github.com/pagopa/io-app/commit/1c09bc839adee56007f480b6d684151bd70eeec2))
+
 ## [3.24.0-rc.0](https://github.com/pagopa/io-app/compare/3.23.0-rc.6...3.24.0-rc.0) (2026-02-05)
 
 
