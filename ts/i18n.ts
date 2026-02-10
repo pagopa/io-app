@@ -95,8 +95,12 @@ class SmartI18nextBackend implements BackendModule<SmartBackendOptions> {
   }
 
   read(language: Locales, namespace: "index", callback: ReadCallback) {
-    const localData = this.options?.localResources[language][namespace] || {};
-    callback(null, localData);
+    if (!this.options || this.options.localResources[language] === undefined) {
+      callback(null, resources.it[namespace]);
+    } else {
+      const localData = this.options.localResources[language][namespace] || {};
+      callback(null, localData);
+    }
     void this.loadRemote(language, namespace);
   }
 
@@ -120,6 +124,7 @@ export const initI18n = async () =>
     .init({
       lng: "it",
       fallbackLng: "it",
+      supportedLngs: Object.keys(resources),
       initAsync: false,
       ns: ["index"],
       defaultNS: "index",
