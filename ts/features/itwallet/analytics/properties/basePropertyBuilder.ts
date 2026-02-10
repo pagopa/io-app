@@ -22,10 +22,42 @@ import { ItwBaseProperties } from "./propertyTypes";
 export const buildItwBaseProperties = (
   state: GlobalState
 ): ItwBaseProperties => {
-  const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
-
-  const ITW_STATUS_V2 = itwAuthLevelSelector(state) ?? "not_active";
   const pidProps = buildPidProperties(state);
+  const credentialProps = buildCredentialProperties(state);
+
+  return {
+    ITW_STATUS_V2: itwAuthLevelSelector(state) ?? "not_active",
+    ...pidProps,
+    ...credentialProps
+  };
+};
+
+/**
+ * Builds PID properties for Mixpanel analytics
+ * IT-Wallet (L3) -> PID status is mapped to ITW_PID, while ITW_ID_V2 is not sent to preserve historical data.
+ * Documenti su IO (L2) -> PID status is mapped to ITW_ID_V2, while ITW_PID shoul be "not_available".
+ */
+export const buildPidProperties = (state: GlobalState) => {
+  const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
+  const pidStatus = itwCredentialsEidStatusSelector(state);
+
+  const v2Props = {
+    ITW_ID_V2: mapPIDStatusToMixpanel(pidStatus),
+    ITW_PID: "not_available"
+  } as const;
+
+  const v3Props = {
+    ITW_PID: mapPIDStatusToMixpanel(pidStatus)
+  };
+
+  return isItwL3 ? v3Props : v2Props;
+};
+
+/**
+ * IT-Wallet (L3) -> V2 properties are not sent to preserve historical data.
+ */
+export const buildCredentialProperties = (state: GlobalState) => {
+  const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
 
   const v3Props = {
     ITW_PG_V3: getMixpanelCredentialStatus(
@@ -60,35 +92,9 @@ export const buildItwBaseProperties = (
     )
   } as const;
 
-  return {
-    ITW_STATUS_V2,
-    ...pidProps,
-    ...v3Props,
-    /**
-     * IT-Wallet (L3) -> V2 properties are not sent to preserve historical data.
-     */
-    ...(isItwL3 ? {} : v2Props)
-  };
-};
-
-/**
- * IT-Wallet (L3) -> PID status is mapped to ITW_PID, while ITW_ID_V2 is not sent to preserve historical data.
- * Documenti su IO (L2) -> PID status is mapped to ITW_ID_V2, while ITW_PID shoul be "not_available".
- */
-export const buildPidProperties = (state: GlobalState) => {
-  const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
-  const pidStatus = itwCredentialsEidStatusSelector(state);
-
-  const v2Props = {
-    ITW_ID_V2: mapPIDStatusToMixpanel(pidStatus),
-    ITW_PID: "not_available"
-  } as const;
-
-  const v3Props = {
-    ITW_PID: mapPIDStatusToMixpanel(pidStatus)
-  };
-
-  return isItwL3 ? v3Props : v2Props;
+  // V3 props are always included, while V2 props are included only if IT-Wallet is not valid
+  // to preserve historical data consistency.
+  return isItwL3 ? { ...v3Props } : { ...v3Props, ...v2Props };
 };
 
 /**
