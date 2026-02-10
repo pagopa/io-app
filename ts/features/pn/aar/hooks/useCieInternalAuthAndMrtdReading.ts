@@ -39,19 +39,19 @@ type ErrorState = {
   error: NfcError;
 };
 
-type ReadState = IdleState | ReadingState | SuccessState | ErrorState;
+export type CieReadState = IdleState | ReadingState | SuccessState | ErrorState;
 
-export const isIdleState = (state: ReadState): state is IdleState =>
+export const isIdleState = (state: CieReadState): state is IdleState =>
   state.status === ReadStatus.IDLE;
-export const isReadingState = (state: ReadState): state is ReadingState =>
+export const isReadingState = (state: CieReadState): state is ReadingState =>
   state.status === ReadStatus.READING;
-export const isSuccessState = (state: ReadState): state is SuccessState =>
+export const isSuccessState = (state: CieReadState): state is SuccessState =>
   state.status === ReadStatus.SUCCESS;
-export const isErrorState = (state: ReadState): state is ErrorState =>
+export const isErrorState = (state: CieReadState): state is ErrorState =>
   state.status === ReadStatus.ERROR;
 
 export const useCieInternalAuthAndMrtdReading = () => {
-  const [readState, setReadState] = useState<ReadState>({
+  const [readState, setReadState] = useState<CieReadState>({
     status: ReadStatus.IDLE
   });
 
@@ -74,7 +74,7 @@ export const useCieInternalAuthAndMrtdReading = () => {
   );
 
   const stopReading = useCallback(() => {
-    void CieManager.stopReading();
+    void CieManager.stopReading().catch(constNull);
   }, []);
 
   useEffect(() => {
@@ -91,12 +91,12 @@ export const useCieInternalAuthAndMrtdReading = () => {
       // Start listening for errors
       CieManager.addListener("onError", error => {
         setReadState({ status: ReadStatus.ERROR, error });
-
-        void CieManager.stopReading().catch(constNull);
+        stopReading();
       }),
       // Start listening for attributes success
       CieManager.addListener("onInternalAuthAndMRTDWithPaceSuccess", result => {
         setReadState({ status: ReadStatus.SUCCESS, data: result });
+        stopReading();
       })
     ];
 
@@ -104,9 +104,9 @@ export const useCieInternalAuthAndMrtdReading = () => {
       // Remove the event listener on unmount
       registeredListeners.forEach(remove => remove());
       // Ensure the reading is stopped when the screen is unmounted
-      void CieManager.stopReading();
+      stopReading();
     };
-  }, []);
+  }, [stopReading]);
 
   useEffect(() => {
     if (Platform.OS === "ios") {
