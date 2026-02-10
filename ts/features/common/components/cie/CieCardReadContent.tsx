@@ -203,24 +203,16 @@ const ContentIos = (props: CieCardReadContentProps) => (
 
 const ContentAndroid = (props: CieCardReadContentProps) => {
   const announceStep = 30;
-  const lastAnnouncedRef = useRef<number | null>(null);
 
   const progressPercent = Math.round(
     Math.max(Math.min(props.progress ?? 0, 1.0), 0) * 100
   );
 
+  const stepped = Math.floor(progressPercent / announceStep) * announceStep;
+
   useEffect(() => {
-    const stepped = Math.floor(progressPercent / announceStep) * announceStep;
-
-    if (lastAnnouncedRef.current === stepped) {
-      return;
-    }
-
-    // eslint-disable-next-line functional/immutable-data
-    lastAnnouncedRef.current = stepped;
-
     AccessibilityInfo.announceForAccessibility(`${stepped}%`);
-  }, [progressPercent]);
+  }, [stepped]);
 
   return (
     <IOScrollView centerContent>
