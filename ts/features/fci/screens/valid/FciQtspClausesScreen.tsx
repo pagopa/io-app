@@ -86,7 +86,7 @@ const FciQtspClausesScreen = () => {
   };
 
   useHeaderSecondLevel({
-    title: I18n.t("features.fci.title"),
+    title: "",
     supportRequest: true,
     contextualHelp: emptyContextualHelp
   });
