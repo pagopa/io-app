@@ -110,7 +110,7 @@ export const CieInternalAuthMrtdScreen = () => {
   useEffect(() => {
     if (status === "success" && successResult) {
       setStatus("idle");
-      navigation.navigate(CIE_PLAYGROUNDS_ROUTES.RESULT, {
+      navigation.replace(CIE_PLAYGROUNDS_ROUTES.RESULT, {
         title: "Internal Authentication + MRTD Reading Result",
         data: {
           result: successResult,

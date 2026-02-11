@@ -6,7 +6,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import { CieManager, type NfcEvent } from "@pagopa/io-react-native-cie";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { StackActions } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import {
   Alert,
@@ -56,12 +55,10 @@ export const CieCertificateReadingScreen = () => {
       // Start listening for success
       CieManager.addListener("onCertificateSuccess", data => {
         setStatus("success");
-        navigation.dispatch(
-          StackActions.replace(CIE_PLAYGROUNDS_ROUTES.RESULT, {
-            title: "Certificate Data",
-            data
-          })
-        );
+        navigation.replace(CIE_PLAYGROUNDS_ROUTES.RESULT, {
+          title: "Certificate Data",
+          data
+        });
       })
     ];
 

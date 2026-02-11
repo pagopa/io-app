@@ -78,7 +78,7 @@ export const CieMrtdScreen = () => {
 
   useEffect(() => {
     if (status === "success" && successResult) {
-      navigation.navigate(CIE_PLAYGROUNDS_ROUTES.RESULT, {
+      navigation.replace(CIE_PLAYGROUNDS_ROUTES.RESULT, {
         title: "MRTD Reading Result",
         data: {
           result: successResult,

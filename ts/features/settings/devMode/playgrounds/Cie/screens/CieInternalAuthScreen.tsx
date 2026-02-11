@@ -10,7 +10,6 @@ import {
   type NfcEvent
 } from "@pagopa/io-react-native-cie";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { StackActions } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import {
   Alert,
@@ -78,20 +77,18 @@ export const CieInternalAuthScreen = () => {
 
   useEffect(() => {
     if (status === "success" && successResult) {
-      navigation.dispatch(
-        StackActions.replace(CIE_PLAYGROUNDS_ROUTES.RESULT, {
-          title: "Internal Authentication Result",
-          data: {
-            result: successResult,
+      navigation.replace(CIE_PLAYGROUNDS_ROUTES.RESULT, {
+        title: "Internal Authentication Result",
+        data: {
+          result: successResult,
+          challenge,
+          encodedChallenge: encodeChallenge(
             challenge,
-            encodedChallenge: encodeChallenge(
-              challenge,
-              isBase64Encoding ? "base64" : "hex"
-            ),
-            encoding: isBase64Encoding ? "base64" : "hex"
-          }
-        })
-      );
+            isBase64Encoding ? "base64" : "hex"
+          ),
+          encoding: isBase64Encoding ? "base64" : "hex"
+        }
+      });
     }
   }, [status, navigation, challenge, isBase64Encoding, successResult]);
 

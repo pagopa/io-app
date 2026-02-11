@@ -1,6 +1,5 @@
 import { IOButton, VSpacer } from "@pagopa/io-app-design-system";
 import { CieManager, type NfcEvent } from "@pagopa/io-react-native-cie";
-import { StackActions } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -34,12 +33,10 @@ export const CieAttributesScreen = () => {
       // Start listening for attributes success
       CieManager.addListener("onAttributesSuccess", attributes => {
         setStatus("success");
-        navigation.dispatch(
-          StackActions.replace(CIE_PLAYGROUNDS_ROUTES.RESULT, {
-            title: "Attributes",
-            data: attributes
-          })
-        );
+        navigation.replace(CIE_PLAYGROUNDS_ROUTES.RESULT, {
+          title: "Attributes",
+          data: attributes
+        });
       })
     ];
 
