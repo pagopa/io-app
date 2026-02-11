@@ -14,7 +14,7 @@ import {
 import ItwPrivacyWebViewComponent from "../components/ItwPrivacyWebViewComponent";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useIOSelector } from "../../../../store/hooks";
-import { itwIPatentePrivacyUrlSelector } from "../../common/store/selectors/remoteConfig";
+import { itwIpzsPrivacyUrlSelector } from "../../common/store/selectors/remoteConfig";
 
 const ItwIpzsPrivacyScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,7 +26,7 @@ const ItwIpzsPrivacyScreen = () => {
     isL3FeaturesEnabledSelector
   );
 
-  const privacyUrl = useIOSelector(itwIPatentePrivacyUrlSelector);
+  const privacyUrl = useIOSelector(itwIpzsPrivacyUrlSelector);
 
   const handleContinuePress = () => {
     trackOpenItwTosAccepted(isL3 ? "L3" : "L2");
