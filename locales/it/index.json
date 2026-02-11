@@ -5231,6 +5231,17 @@
           "body": "La versione digitale del documento è già presente nel tuo Portafoglio.",
           "primaryAction": "Vai al documento"
         },
+        "credentialAlreadyUpdated": {
+          "title": "Hai aggiornato il documento",
+          "subtitle": "La versione digitale di {{ credential }} è ora aggiornata su IO e puoi trovarla nel Portafoglio",
+          "action": "Vai al Portafoglio"
+        },
+        "confirmIdentity": {
+          "title": "Conferma la tua identità per aggiungere la {{ credential }}",
+          "subtitle": "È necessario confermare l’identità associata a {{ wallet }} per richiedere l’emissione della Patente digitale",
+          "primaryAction": "Conferma identità",
+          "secondaryAction": "Non ora"
+        },
         "walletInstanceNotActive": {
           "documentiSuIo": {
             "title": "Attiva Documenti su IO per continuare",
@@ -5723,6 +5734,11 @@
               "confirm": "Sì, disattiva",
               "cancel": "No, torna indietro"
             }
+          },
+          "status": {
+            "expiringPrefix": "Conferma la tua identità entro il ",
+            "expired": "Conferma la tua identità per continuare con i tuoi documenti",
+            "action": "Inizia"
           }
         }
       },
