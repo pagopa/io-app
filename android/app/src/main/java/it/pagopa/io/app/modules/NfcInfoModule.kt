@@ -1,9 +1,9 @@
 package it.pagopa.io.app.modules
 
+import android.content.pm.PackageManager
 import android.nfc.NfcAdapter
 import android.os.Build
 import com.facebook.react.bridge.*
-
 
 class NfcInfoModule(reactContext: ReactApplicationContext) :
   ReactContextBaseJavaModule(reactContext) {
