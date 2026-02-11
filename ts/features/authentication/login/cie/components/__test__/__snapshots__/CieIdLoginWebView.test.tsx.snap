@@ -79,7 +79,8 @@ exports[`CieIdLoginWebView Should match the snapshot 1`] = `
             testID="refreshIndicator"
           >
             <View
-              style={
+              collapsable={false}
+              jestAnimatedProps={
                 {
                   "value": {},
                 }

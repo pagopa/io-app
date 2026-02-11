@@ -1617,10 +1617,20 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                                         "value": {},
                                       }
                                     }
-                                    testID="LoadingSpinnerTestID"
-                                  >
-                                    <View
-                                      style={
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "0deg",
+                                            },
+                                          ],
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={{}}
+                                    style={
+                                      [
                                         {
                                           "transform": [
                                             {

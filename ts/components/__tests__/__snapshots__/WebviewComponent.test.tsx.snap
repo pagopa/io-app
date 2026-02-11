@@ -53,7 +53,8 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
         testID="refreshIndicator"
       >
         <View
-          style={
+          collapsable={false}
+          jestAnimatedProps={
             {
               "value": {},
             }

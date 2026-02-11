@@ -251,7 +251,8 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                               testID="refreshIndicator"
                             >
                               <View
-                                style={
+                                collapsable={false}
+                                jestAnimatedProps={
                                   {
                                     "value": {},
                                   }
