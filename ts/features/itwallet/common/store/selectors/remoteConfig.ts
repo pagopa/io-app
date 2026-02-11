@@ -121,7 +121,7 @@ export const itwIPatenteCtaConfigSelector = createSelector(
 /**
  * Return the remote config about ipzs privacy url for the IPZS privacy screen.
  */
-export const itwIPatentePrivacyUrlSelector = createSelector(
+export const itwIpzsPrivacyUrlSelector = createSelector(
   itwRemoteConfigSelector,
   itwConfig =>
     pipe(
