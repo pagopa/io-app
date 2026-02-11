@@ -6389,7 +6389,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     testID="LoadingSpinnerTestID"
                                   >
                                     <View
-                                      collapsable={false}
                                       style={
                                         {
                                           "transform": [
@@ -6757,7 +6756,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     testID="LoadingSpinnerTestID"
                                   >
                                     <View
-                                      collapsable={false}
                                       style={
                                         {
                                           "transform": [
@@ -7297,7 +7295,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   testID="LoadingSpinnerTestID"
                                 >
                                   <View
-                                    collapsable={false}
                                     style={
                                       {
                                         "transform": [

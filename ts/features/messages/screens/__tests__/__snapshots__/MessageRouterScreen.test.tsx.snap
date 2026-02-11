@@ -259,7 +259,6 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                 testID="LoadingIndicator"
                               >
                                 <View
-                                  collapsable={false}
                                   style={
                                     {
                                       "transform": [
@@ -1099,7 +1098,6 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                 testID="LoadingIndicator"
                               >
                                 <View
-                                  collapsable={false}
                                   style={
                                     {
                                       "transform": [
@@ -3018,7 +3016,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                 testID="LoadingIndicator"
                               >
                                 <View
-                                  collapsable={false}
                                   style={
                                     {
                                       "transform": [
@@ -3858,7 +3855,6 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                 testID="LoadingIndicator"
                               >
                                 <View
-                                  collapsable={false}
                                   style={
                                     {
                                       "transform": [
