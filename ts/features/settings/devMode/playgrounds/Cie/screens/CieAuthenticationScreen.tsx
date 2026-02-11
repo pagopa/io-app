@@ -1,13 +1,15 @@
 import {
   IOButton,
   ListItemHeader,
-  OTPInput
+  OTPInput,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { CieManager, NfcEvent } from "@pagopa/io-react-native-cie";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { createRef, useEffect, useState } from "react";
 import {
   Alert,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
@@ -15,11 +17,13 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import WebView, { WebViewNavigation } from "react-native-webview";
-import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { useScreenEndMargin } from "../../../../../hooks/useScreenEndMargin";
-import { ReadStatusComponent } from "./components/ReadStatusComponent";
-import { ReadStatus } from "./types/ReadStatus";
+import LoadingSpinnerOverlay from "../../../../../../components/LoadingSpinnerOverlay";
+import { useHeaderSecondLevel } from "../../../../../../hooks/useHeaderSecondLevel";
+import { useScreenEndMargin } from "../../../../../../hooks/useScreenEndMargin";
+import { ReadStatusComponent } from "../components/ReadStatusComponent";
+import { ReadStatus } from "../types/ReadStatus";
+
+const CIE_PIN_LENGTH = 8;
 
 const iOSUserAgent =
   "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1";
@@ -82,7 +86,7 @@ const AuthenticationUrlWebView = ({
   );
 };
 
-export const CiePlayground = () => {
+export const CieAuthenticationScreen = () => {
   const [authUrl, setAuthUrl] = useState<string>();
   const [authenticatedUrl, setAuthenticatedUrl] = useState<string>();
   const [code, setCode] = useState<string>("");
@@ -93,7 +97,7 @@ export const CiePlayground = () => {
   const { screenEndMargin } = useScreenEndMargin();
 
   useHeaderSecondLevel({
-    title: "CIE Playground"
+    title: "CIE Authentication"
   });
 
   useEffect(() => {
@@ -181,20 +185,25 @@ export const CiePlayground = () => {
     void CieManager.stopReading();
   };
 
+  const onPinChanged = (value: string) => {
+    setCode(value);
+
+    if (value.length === CIE_PIN_LENGTH) {
+      Keyboard.dismiss();
+    }
+  };
+
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.select({
-        ios: "padding",
-        android: undefined
-      })}
-      contentContainerStyle={{
-        flex: 1,
-        paddingBottom: 100 + screenEndMargin
-      }}
-      keyboardVerticalOffset={headerHeight}
-      style={styles.keyboardAvoidingView}
-    >
-      <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={["bottom"]}>
+      <KeyboardAvoidingView
+        behavior="padding"
+        contentContainerStyle={{
+          flex: 1,
+          paddingBottom: 100 + screenEndMargin
+        }}
+        keyboardVerticalOffset={headerHeight}
+        style={styles.keyboardAvoidingView}
+      >
         <View style={styles.progressContainer}>
           <ReadStatusComponent
             progress={event?.progress}
@@ -204,8 +213,14 @@ export const CiePlayground = () => {
         </View>
         <View>
           <ListItemHeader label="Insert card PIN" />
-          <OTPInput secret value={code} length={8} onValueChange={setCode} />
+          <OTPInput
+            secret
+            value={code}
+            length={CIE_PIN_LENGTH}
+            onValueChange={onPinChanged}
+          />
         </View>
+        <VSpacer size={16} />
         <IOButton
           variant="solid"
           label={status === "reading" ? "Stop reading" : "Start reading"}
@@ -214,8 +229,9 @@ export const CiePlayground = () => {
             status === "reading" ? handleStopReading() : handleStartReading()
           }
         />
-      </SafeAreaView>
-    </KeyboardAvoidingView>
+        <VSpacer size={16} />
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 

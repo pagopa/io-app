@@ -1,6 +1,8 @@
 import {
   IOButton,
+  ListItemHeader,
   ListItemSwitch,
+  OTPInput,
   TextInput,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -13,31 +15,33 @@ import { useHeaderHeight } from "@react-navigation/elements";
 import { useEffect, useState } from "react";
 import {
   Alert,
+  Keyboard,
   KeyboardAvoidingView,
-  Platform,
   StyleSheet,
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useDebugInfo } from "../../../../../../../hooks/useDebugInfo";
-import { useHeaderSecondLevel } from "../../../../../../../hooks/useHeaderSecondLevel";
-import { useScreenEndMargin } from "../../../../../../../hooks/useScreenEndMargin";
-import { useIONavigation } from "../../../../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../../../../store/hooks";
-import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../../../../store/reducers/backendStatus/remoteConfig";
-import { testAarCreateMandate } from "../../../../../../pn/aar/store/actions";
+import { useDebugInfo } from "../../../../../../hooks/useDebugInfo";
+import { useHeaderSecondLevel } from "../../../../../../hooks/useHeaderSecondLevel";
+import { useScreenEndMargin } from "../../../../../../hooks/useScreenEndMargin";
+import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
+import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../../../store/reducers/backendStatus/remoteConfig";
+import { testAarCreateMandate } from "../../../../../pn/aar/store/actions";
 import {
   isRequestingSendMandateSelector,
   sendMandateErrorSelector,
   sendVerificationCodeSelector
-} from "../../../../../../pn/aar/store/reducers/tempAarMandate";
-import { SETTINGS_ROUTES } from "../../../../../common/navigation/routes";
-import { ReadStatusComponent } from "../../components/ReadStatusComponent";
-import { ReadStatus } from "../../types/ReadStatus";
-import { encodeChallenge } from "../../utils/encoding";
+} from "../../../../../pn/aar/store/reducers/tempAarMandate";
+import { ReadStatusComponent } from "../components/ReadStatusComponent";
+import { useCieNavigation } from "../navigation/CiePlaygroundsNavigator";
+import { CIE_PLAYGROUNDS_ROUTES } from "../navigation/routes";
+import { ReadStatus } from "../types/ReadStatus";
+import { encodeChallenge } from "../utils/encoding";
 
-export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
-  const navigation = useIONavigation();
+const CAN_PIN_LENGTH = 6;
+
+export const CieInternalAuthMrtdScreen = () => {
+  const navigation = useCieNavigation();
   const [status, setStatus] = useState<ReadStatus>("idle");
   const [successResult, setSuccessResult] = useState<
     InternalAuthAndMrtdResponse | undefined
@@ -53,7 +57,7 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
     setIsBase64Encoding(previousState => !previousState);
 
   useHeaderSecondLevel({
-    title: "MRTD Reading"
+    title: "CIE IAS+MRT Reading"
   });
 
   const headerHeight = useHeaderHeight();
@@ -106,10 +110,9 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
   useEffect(() => {
     if (status === "success" && successResult) {
       setStatus("idle");
-      navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-        screen:
-          SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH_AND_MRTD_RESULTS,
-        params: {
+      navigation.navigate(CIE_PLAYGROUNDS_ROUTES.RESULT, {
+        title: "Internal Authentication + MRTD Reading Result",
+        data: {
           result: successResult,
           challenge: selectedChallenge,
           encodedChallenge: encodeChallenge(
@@ -147,13 +150,18 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
     void CieManager.stopReading();
   };
 
+  const onCanChanged = (value: string) => {
+    setCan(value);
+
+    if (value.length === CAN_PIN_LENGTH) {
+      Keyboard.dismiss();
+    }
+  };
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={["bottom"]}>
       <KeyboardAvoidingView
-        behavior={Platform.select({
-          ios: "padding",
-          android: undefined
-        })}
+        behavior="padding"
         contentContainerStyle={{
           flex: 1,
           paddingBottom: 100 + screenEndMargin
@@ -183,12 +191,6 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
               value={useSENDChallenge}
             />
           )}
-          <TextInput
-            accessibilityLabel="CAN text input field"
-            value={can}
-            placeholder={"CAN"}
-            onChangeText={setCan}
-          />
           {useSENDChallenge && (
             <>
               <VSpacer size={8} />
@@ -209,7 +211,15 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
             placeholder={"Challenge"}
             onChangeText={setChallenge}
           />
+          <ListItemHeader label="Insert card CAN" />
+          <OTPInput
+            accessibilityLabel="CAN text input field"
+            value={can}
+            onValueChange={onCanChanged}
+            length={CAN_PIN_LENGTH}
+          />
         </View>
+        <VSpacer size={16} />
         <IOButton
           variant="solid"
           label={status === "reading" ? "Stop" : "Start sign and reading"}
@@ -233,10 +243,11 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
             />
           </>
         )}
+        <VSpacer size={16} />
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
