@@ -4,7 +4,6 @@ import {
   ListItemInfo,
   VStack
 } from "@pagopa/io-app-design-system";
-import { constNull } from "fp-ts/lib/function";
 import { useState } from "react";
 import { Platform, View } from "react-native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
@@ -47,13 +46,15 @@ export const NfcPlayground = () => {
 
 const HostCardEmulationInfo = () => {
   const [hasHce, setHasHce] = useState<boolean>();
+  const [failure, setFailure] = useState<Error>();
 
   useOnFirstRender(async () => {
-    isHceSupported().then(setHasHce).catch(constNull);
+    isHceSupported().then(setHasHce).catch(setFailure);
   });
 
   useDebugInfo({
-    hasHce
+    hasHce,
+    hasHceFailure: failure
   });
 
   return (
@@ -75,13 +76,15 @@ const HostCardEmulationInfo = () => {
 
 const AntennaInfo = () => {
   const [nfcAntennaInfo, setNfcAntennaInfo] = useState<NfcAntennaInfo>();
+  const [failure, setFailure] = useState<Error>();
 
   useOnFirstRender(async () => {
-    getNfcAntennaInfo().then(setNfcAntennaInfo).catch(constNull);
+    getNfcAntennaInfo().then(setNfcAntennaInfo).catch(setFailure);
   });
 
   useDebugInfo({
-    nfcAntennaInfo
+    nfcAntennaInfo,
+    nfcAntennaInfoFailure: failure
   });
 
   if (!nfcAntennaInfo) {

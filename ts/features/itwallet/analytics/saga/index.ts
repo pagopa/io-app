@@ -53,7 +53,7 @@ export function* updateNfcInfoTrackingProperties() {
       NFC_AVAILABLE_ANTENNAS: antennaCount
     });
   } catch (e) {
-    const errorName = e instanceof Error ? e.name : String(e);
+    const errorName = e instanceof Error ? e.message : String(e);
     registerSuperProperties({
       NFC_ANTENNA_READ_FAILURE: errorName
     });
@@ -66,7 +66,7 @@ export function* updateNfcInfoTrackingProperties() {
       NFC_HAS_HCE_SUPPORT: isSupported
     });
   } catch (e) {
-    const errorName = e instanceof Error ? e.name : String(e);
+    const errorName = e instanceof Error ? e.message : String(e);
     registerSuperProperties({
       NFC_HCE_READ_FAILURE: errorName
     });
