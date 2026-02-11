@@ -1495,7 +1495,6 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                                     testID="LoadingSpinnerTestID"
                                   >
                                     <View
-                                      collapsable={false}
                                       style={
                                         {
                                           "transform": [

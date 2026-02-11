@@ -172,3 +172,8 @@ export type TrackSaveCredentialSuccess = {
   credential_details: ItwCredentialDetails;
   ITW_ID_method?: ItwIdMethod;
 };
+
+export type TrackItwDeactivation = {
+  credential: MixPanelCredential;
+  screen_name: string;
+};
