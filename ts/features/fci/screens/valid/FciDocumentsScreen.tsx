@@ -290,9 +290,7 @@ const FciDocumentsScreen = () => {
                   IOSpacing.screenEndMargin
               }}
             >
-              {footerActionsInlineMeasurements.safeBottomAreaHeight === 0
-                ? null
-                : renderPager()}
+              {renderPager()}
             </View>
             <FooterActionsInline
               onMeasure={handleFooterActionsInlineMeasurements}
