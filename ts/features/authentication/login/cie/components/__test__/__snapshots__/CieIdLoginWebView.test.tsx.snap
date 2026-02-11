@@ -79,7 +79,6 @@ exports[`CieIdLoginWebView Should match the snapshot 1`] = `
             testID="refreshIndicator"
           >
             <View
-              collapsable={false}
               style={
                 {
                   "transform": [

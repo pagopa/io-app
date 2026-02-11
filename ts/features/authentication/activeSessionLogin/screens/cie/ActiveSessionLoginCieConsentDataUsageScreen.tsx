@@ -109,9 +109,7 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
       setHasError(true);
       navigateToErrorScreen(code || message);
       trackLoginFailure({
-        reason: new Error(
-          `login CIE failure with code ${code || message || "n/a"}`
-        ),
+        reason: `login CIE failure with code ${code || message || "n/a"}`,
         idp: "cie",
         flow: "reauth"
       });
