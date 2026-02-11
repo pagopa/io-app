@@ -5,7 +5,7 @@
   "scripts": {
     "start": "react-native start",
     "setup": "yarn install && yarn postinstall && yarn prepare",
-    "sync": "yarn setup && bundle && (cd ios && bundle exec pod install) && yarn generate",
+    "sync": "yarn setup && bundle && yarn dev:pod-install && yarn generate",
     "run-ios": "react-native run-ios",
     "run-android": "react-native run-android",
     "dev:run-android": "yarn run-android --mode=productionDebug --active-arch-only",
