@@ -10,7 +10,13 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as S from "fp-ts/lib/string";
-import { useRef, useState, useEffect, ComponentProps } from "react";
+import {
+  useRef,
+  useState,
+  useEffect,
+  ComponentProps,
+  useLayoutEffect
+} from "react";
 import { StyleSheet, View } from "react-native";
 import Pdf, { PdfRef } from "react-native-pdf";
 import I18n from "i18next";
@@ -45,6 +51,11 @@ const styles = StyleSheet.create({
   pdf: {
     flex: 1,
     backgroundColor: IOColors["grey-700"]
+  },
+  pdfLoading: {
+    flex: 1,
+    backgroundColor: IOColors["grey-700"],
+    opacity: 0
   }
 });
 
@@ -174,6 +185,11 @@ const FciDocumentsScreen = () => {
       O.map(_ => _.setPage(page))
     );
 
+  const [isVisible, setIsVisible] = useState(true);
+  useLayoutEffect(() => {
+    setIsVisible(false);
+  }, [documents[currentDoc]?.id, downloadPath, focusEpoch]);
+
   const renderPager = () => (
     /** Be aware that, in react-native-pdf 6.7.7, on Android, there
      * is a bug where onLoadComplete callback is not called. So,
@@ -193,6 +209,7 @@ const FciDocumentsScreen = () => {
           return;
         }
         setTotalPages(numberOfPages);
+        setIsVisible(true);
       }}
       onPageChanged={(page, numberOfPages) => {
         if (!isFocused) {
@@ -202,7 +219,7 @@ const FciDocumentsScreen = () => {
         setCurrentPage(page);
       }}
       enablePaging
-      style={styles.pdf}
+      style={isVisible ? styles.pdf : styles.pdfLoading}
     />
   );
 
