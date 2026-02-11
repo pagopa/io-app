@@ -159,20 +159,20 @@ export const SendPlaygroundScreen = () => {
             <IOButton
               label="GET"
               onPress={() => sendLollipopLambdaRequest("Get")}
-              disabled={isSagaLoading}
+              loading={isSagaLoading}
             />
             <VSpacer size={8} />
             <IOButton
               label="POST"
               onPress={() => sendLollipopLambdaRequest("Post")}
-              disabled={isSagaLoading}
+              loading={isSagaLoading}
             />
           </View>
           <VSpacer size={16} />
           <Divider />
-          <VSpacer size={16} />
         </>
       )}
+      <VSpacer size={16} />
     </IOScrollView>
   );
 };

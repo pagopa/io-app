@@ -54,6 +54,7 @@ import { toThumbprint } from "../../../lollipop/utils/crypto";
 import { notificationsInstallationSelector } from "../../../pushNotifications/store/reducers/installation";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import { clearCache } from "../../common/store/actions";
+import { isPnRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig.ts";
 import ExperimentalDesignEnableSwitch from "./ExperimentalDesignEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -326,6 +327,7 @@ const PlaygroundsSection = () => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const isIdPayTestEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
+  const isSendEnabled = useIOSelector(isPnRemoteEnabledSelector);
 
   const playgroundsNavListItems: ReadonlyArray<PlaygroundsNavListItem> = [
     {
@@ -412,6 +414,7 @@ const PlaygroundsSection = () => {
       }
     },
     {
+      condition: isSendEnabled,
       value: "SEND",
       onPress: () =>
         navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
