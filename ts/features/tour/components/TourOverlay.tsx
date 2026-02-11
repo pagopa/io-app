@@ -1,11 +1,11 @@
 /* eslint-disable functional/immutable-data */
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
-import Svg, { Defs, Mask, Rect } from "react-native-svg";
+import { Canvas, DiffRect, rect, rrect } from "@shopify/react-native-skia";
 import Animated, {
   runOnJS,
-  useAnimatedProps,
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
@@ -20,12 +20,12 @@ import { TourItemMeasurement } from "../types";
 import { useTourContext } from "./TourProvider";
 import { TourTooltip } from "./TourTooltip";
 
-const AnimatedRect = Animated.createAnimatedComponent(Rect);
-
 const OVERLAY_COLOR = "rgba(0,0,0,0.7)";
 const CUTOUT_BORDER_RADIUS = 8;
 const CUTOUT_PADDING = 4;
 const ANIMATION_DURATION = 300;
+
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
 
 export const TourOverlay = () => {
   const { getMeasurement, getConfig } = useTourContext();
@@ -33,8 +33,6 @@ export const TourOverlay = () => {
   const groupId = useIOSelector(activeGroupIdSelector);
   const stepIndex = useIOSelector(activeStepIndexSelector);
   const items = useIOSelector(tourItemsForActiveGroupSelector);
-
-  const { width: screenWidth, height: screenHeight } = Dimensions.get("screen");
 
   const overlayRef = useRef<View>(null);
   const overlayOffsetRef = useRef({ x: 0, y: 0 });
@@ -156,12 +154,18 @@ export const TourOverlay = () => {
     }
   }, [visible, measureCurrentStep]);
 
-  const animatedCutoutProps = useAnimatedProps(() => ({
-    x: cutoutX.value,
-    y: cutoutY.value,
-    width: cutoutW.value,
-    height: cutoutH.value
-  }));
+  // Skia DiffRect: outer = full screen, inner = animated cutout (runs on UI thread)
+  const outerRect = useDerivedValue(() =>
+    rrect(rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), 0, 0)
+  );
+
+  const innerRect = useDerivedValue(() =>
+    rrect(
+      rect(cutoutX.value, cutoutY.value, cutoutW.value, cutoutH.value),
+      CUTOUT_BORDER_RADIUS,
+      CUTOUT_BORDER_RADIUS
+    )
+  );
 
   const animatedContainerStyle = useAnimatedStyle(() => ({
     opacity: opacity.value
@@ -177,39 +181,9 @@ export const TourOverlay = () => {
       style={[styles.container, animatedContainerStyle]}
       pointerEvents={isActive ? "box-none" : "none"}
     >
-      <View style={styles.overlay} pointerEvents="auto">
-        <Svg
-          width={screenWidth}
-          height={screenHeight}
-          style={StyleSheet.absoluteFill}
-        >
-          <Defs>
-            <Mask id="overlayMask">
-              <Rect
-                x={0}
-                y={0}
-                width={screenWidth}
-                height={screenHeight}
-                fill="white"
-              />
-              <AnimatedRect
-                fill="black"
-                rx={CUTOUT_BORDER_RADIUS}
-                ry={CUTOUT_BORDER_RADIUS}
-                animatedProps={animatedCutoutProps}
-              />
-            </Mask>
-          </Defs>
-          <Rect
-            x={0}
-            y={0}
-            width={screenWidth}
-            height={screenHeight}
-            fill={OVERLAY_COLOR}
-            mask="url(#overlayMask)"
-          />
-        </Svg>
-      </View>
+      <Canvas style={styles.overlay} pointerEvents="none">
+        <DiffRect outer={outerRect} inner={innerRect} color={OVERLAY_COLOR} />
+      </Canvas>
       {measurement && tooltipConfig && (
         <TourTooltip
           itemMeasurement={measurement}
