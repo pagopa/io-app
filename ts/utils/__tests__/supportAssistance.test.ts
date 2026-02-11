@@ -4,6 +4,7 @@ import {
   anonymousAssistanceAddressWithSubject,
   canShowHelp,
   handleSendAssistanceLog,
+  zendeskCategoryId,
   zendeskSendCategory
 } from "../supportAssistance";
 
@@ -51,5 +52,11 @@ describe("handleSendAssistanceLog", () => {
 describe("snapshots", () => {
   it("zendeskSendCategory", () => {
     expect(zendeskSendCategory).toMatchSnapshot();
+  });
+});
+
+describe("zendeskCategoryId", () => {
+  it("should match the right value", () => {
+    expect(zendeskCategoryId).toBe("1900004702053");
   });
 });

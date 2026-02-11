@@ -32,7 +32,6 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
     testID="LoadingIndicator"
   >
     <View
-      collapsable={false}
       style={
         {
           "transform": [
