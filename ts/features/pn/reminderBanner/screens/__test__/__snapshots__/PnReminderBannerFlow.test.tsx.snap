@@ -2900,8 +2900,7 @@ exports[`loading screens + error interop should render the correct loading scree
                           testID="LoadingIndicator"
                         >
                           <View
-                            collapsable={false}
-                            jestAnimatedProps={
+                            style={
                               {
                                 "value": {},
                               }
@@ -3529,8 +3528,7 @@ exports[`loading screens + error interop should render the correct loading scree
                           testID="LoadingIndicator"
                         >
                           <View
-                            collapsable={false}
-                            jestAnimatedProps={
+                            style={
                               {
                                 "value": {},
                               }
@@ -4158,8 +4156,7 @@ exports[`loading screens + error interop should render the correct loading scree
                           testID="LoadingIndicator"
                         >
                           <View
-                            collapsable={false}
-                            jestAnimatedProps={
+                            style={
                               {
                                 "value": {},
                               }
@@ -4787,8 +4784,7 @@ exports[`loading screens + error interop should render the correct loading scree
                           testID="LoadingIndicator"
                         >
                           <View
-                            collapsable={false}
-                            jestAnimatedProps={
+                            style={
                               {
                                 "value": {},
                               }
@@ -5416,8 +5412,7 @@ exports[`loading screens + error interop should render the correct loading scree
                           testID="LoadingIndicator"
                         >
                           <View
-                            collapsable={false}
-                            jestAnimatedProps={
+                            style={
                               {
                                 "value": {},
                               }

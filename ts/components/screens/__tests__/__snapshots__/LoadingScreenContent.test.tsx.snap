@@ -400,8 +400,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
                                 testID="LoadingIndicator"
                               >
                                 <View
-                                  collapsable={false}
-                                  jestAnimatedProps={
+                                  style={
                                     {
                                       "value": {},
                                     }
@@ -1058,8 +1057,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
                                 testID="LoadingIndicator"
                               >
                                 <View
-                                  collapsable={false}
-                                  jestAnimatedProps={
+                                  style={
                                     {
                                       "value": {},
                                     }
@@ -1716,8 +1714,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                 testID="LoadingIndicator"
                               >
                                 <View
-                                  collapsable={false}
-                                  jestAnimatedProps={
+                                  style={
                                     {
                                       "value": {},
                                     }
@@ -2351,8 +2348,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                 testID="LoadingIndicator"
                               >
                                 <View
-                                  collapsable={false}
-                                  jestAnimatedProps={
+                                  style={
                                     {
                                       "value": {},
                                     }

@@ -25,8 +25,7 @@ exports[`BoxedRefreshIndicator Should match all-properties snapshot 1`] = `
     testID="refreshIndicator"
   >
     <View
-      collapsable={false}
-      jestAnimatedProps={
+      style={
         {
           "value": {},
         }
@@ -242,8 +241,7 @@ exports[`BoxedRefreshIndicator Should match base snapshot 1`] = `
     testID="refreshIndicator"
   >
     <View
-      collapsable={false}
-      jestAnimatedProps={
+      style={
         {
           "value": {},
         }

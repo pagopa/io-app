@@ -251,8 +251,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                               testID="refreshIndicator"
                             >
                               <View
-                                collapsable={false}
-                                jestAnimatedProps={
+                                style={
                                   {
                                     "value": {},
                                   }
@@ -1824,8 +1823,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                               testID="refreshIndicator"
                             >
                               <View
-                                collapsable={false}
-                                jestAnimatedProps={
+                                style={
                                   {
                                     "value": {},
                                   }

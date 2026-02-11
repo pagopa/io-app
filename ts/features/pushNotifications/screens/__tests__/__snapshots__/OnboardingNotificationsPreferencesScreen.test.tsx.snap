@@ -7217,8 +7217,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     testID="LoadingSpinnerTestID"
                                   >
                                     <View
-                                      collapsable={false}
-                                      jestAnimatedProps={
+                                      style={
                                         {
                                           "value": {},
                                         }
@@ -7604,8 +7603,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     testID="LoadingSpinnerTestID"
                                   >
                                     <View
-                                      collapsable={false}
-                                      jestAnimatedProps={
+                                      style={
                                         {
                                           "value": {},
                                         }
@@ -8234,20 +8232,10 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                       "value": {},
                                     }
                                   }
-                                  jestAnimatedStyle={
-                                    {
-                                      "value": {
-                                        "transform": [
-                                          {
-                                            "rotateZ": "0deg",
-                                          },
-                                        ],
-                                      },
-                                    }
-                                  }
-                                  jestInlineStyle={{}}
-                                  style={
-                                    [
+                                  testID="LoadingSpinnerTestID"
+                                >
+                                  <View
+                                    style={
                                       {
                                         "transform": [
                                           {

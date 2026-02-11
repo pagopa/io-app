@@ -3241,8 +3241,7 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                                 testID="LoadingIndicator"
                               >
                                 <View
-                                  collapsable={false}
-                                  jestAnimatedProps={
+                                  style={
                                     {
                                       "value": {},
                                     }
@@ -5989,8 +5988,7 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                                 testID="LoadingIndicator"
                               >
                                 <View
-                                  collapsable={false}
-                                  jestAnimatedProps={
+                                  style={
                                     {
                                       "value": {},
                                     }

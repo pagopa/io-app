@@ -4008,20 +4008,10 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                                         "value": {},
                                       }
                                     }
-                                    jestAnimatedStyle={
-                                      {
-                                        "value": {
-                                          "transform": [
-                                            {
-                                              "rotateZ": "0deg",
-                                            },
-                                          ],
-                                        },
-                                      }
-                                    }
-                                    jestInlineStyle={{}}
-                                    style={
-                                      [
+                                    testID="LoadingSpinnerTestID"
+                                  >
+                                    <View
+                                      style={
                                         {
                                           "transform": [
                                             {

@@ -53,8 +53,7 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
         testID="refreshIndicator"
       >
         <View
-          collapsable={false}
-          jestAnimatedProps={
+          style={
             {
               "value": {},
             }
@@ -598,8 +597,7 @@ exports[`LoadingSpinnerOverlay Should match base loading snapshot 1`] = `
         testID="refreshIndicator"
       >
         <View
-          collapsable={false}
-          jestAnimatedProps={
+          style={
             {
               "value": {},
             }

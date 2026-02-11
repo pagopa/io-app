@@ -53,8 +53,7 @@ exports[`PdfViewer should match the snapshot 1`] = `
         testID="refreshIndicator"
       >
         <View
-          collapsable={false}
-          jestAnimatedProps={
+          style={
             {
               "value": {},
             }

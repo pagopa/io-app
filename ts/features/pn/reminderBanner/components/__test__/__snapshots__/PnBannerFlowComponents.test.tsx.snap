@@ -2342,8 +2342,7 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                           testID="LoadingIndicator"
                         >
                           <View
-                            collapsable={false}
-                            jestAnimatedProps={
+                            style={
                               {
                                 "value": {},
                               }
@@ -2971,8 +2970,7 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                           testID="LoadingIndicator"
                         >
                           <View
-                            collapsable={false}
-                            jestAnimatedProps={
+                            style={
                               {
                                 "value": {},
                               }

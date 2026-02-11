@@ -1611,20 +1611,10 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                         "value": {},
                                       }
                                     }
-                                    jestAnimatedStyle={
-                                      {
-                                        "value": {
-                                          "transform": [
-                                            {
-                                              "rotateZ": "0deg",
-                                            },
-                                          ],
-                                        },
-                                      }
-                                    }
-                                    jestInlineStyle={{}}
-                                    style={
-                                      [
+                                    testID="LoadingSpinnerTestID"
+                                  >
+                                    <View
+                                      style={
                                         {
                                           "transform": [
                                             {
@@ -3429,20 +3419,10 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                         "value": {},
                                       }
                                     }
-                                    jestAnimatedStyle={
-                                      {
-                                        "value": {
-                                          "transform": [
-                                            {
-                                              "rotateZ": "0deg",
-                                            },
-                                          ],
-                                        },
-                                      }
-                                    }
-                                    jestInlineStyle={{}}
-                                    style={
-                                      [
+                                    testID="LoadingSpinnerTestID"
+                                  >
+                                    <View
+                                      style={
                                         {
                                           "transform": [
                                             {
@@ -5147,20 +5127,10 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                                         "value": {},
                                       }
                                     }
-                                    jestAnimatedStyle={
-                                      {
-                                        "value": {
-                                          "transform": [
-                                            {
-                                              "rotateZ": "0deg",
-                                            },
-                                          ],
-                                        },
-                                      }
-                                    }
-                                    jestInlineStyle={{}}
-                                    style={
-                                      [
+                                    testID="LoadingSpinnerTestID"
+                                  >
+                                    <View
+                                      style={
                                         {
                                           "transform": [
                                             {
