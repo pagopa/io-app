@@ -3,7 +3,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import Svg, { Defs, Mask, Rect } from "react-native-svg";
 import Animated, {
+  runOnJS,
   useAnimatedProps,
+  useAnimatedStyle,
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
@@ -11,6 +13,7 @@ import { useIOSelector } from "../../../store/hooks";
 import {
   activeGroupIdSelector,
   activeStepIndexSelector,
+  isTourActiveSelector,
   tourItemsForActiveGroupSelector
 } from "../store/selectors";
 import { TourItemMeasurement } from "../types";
@@ -26,6 +29,7 @@ const ANIMATION_DURATION = 300;
 
 export const TourOverlay = () => {
   const { getMeasurement, getConfig } = useTourContext();
+  const isActive = useIOSelector(isTourActiveSelector);
   const groupId = useIOSelector(activeGroupIdSelector);
   const stepIndex = useIOSelector(activeStepIndexSelector);
   const items = useIOSelector(tourItemsForActiveGroupSelector);
@@ -34,11 +38,16 @@ export const TourOverlay = () => {
 
   const overlayRef = useRef<View>(null);
   const overlayOffsetRef = useRef({ x: 0, y: 0 });
+  const isFirstMeasurement = useRef(true);
+
+  // Local visibility state: stays true during fade-out
+  const [visible, setVisible] = useState(false);
 
   const cutoutX = useSharedValue(0);
   const cutoutY = useSharedValue(0);
   const cutoutW = useSharedValue(0);
   const cutoutH = useSharedValue(0);
+  const opacity = useSharedValue(0);
 
   const [measurement, setMeasurement] = useState<
     TourItemMeasurement | undefined
@@ -46,6 +55,23 @@ export const TourOverlay = () => {
   const [tooltipConfig, setTooltipConfig] = useState<
     { title: string; description: string } | undefined
   >(undefined);
+
+  // When tour becomes active, mount the overlay and reset first-measurement flag
+  useEffect(() => {
+    if (isActive) {
+      isFirstMeasurement.current = true;
+      setVisible(true);
+    }
+  }, [isActive]);
+
+  // When tour becomes inactive, fade out then unmount
+  useEffect(() => {
+    if (!isActive && visible) {
+      opacity.value = withTiming(0, { duration: ANIMATION_DURATION }, () => {
+        runOnJS(setVisible)(false);
+      });
+    }
+  }, [isActive, visible, opacity]);
 
   const measureOverlayOffset = useCallback(
     () =>
@@ -91,14 +117,25 @@ export const TourOverlay = () => {
     setMeasurement(padded);
     setTooltipConfig(getConfig(groupId, currentItem.index));
 
-    cutoutX.value = withTiming(padded.x, { duration: ANIMATION_DURATION });
-    cutoutY.value = withTiming(padded.y, { duration: ANIMATION_DURATION });
-    cutoutW.value = withTiming(padded.width, {
-      duration: ANIMATION_DURATION
-    });
-    cutoutH.value = withTiming(padded.height, {
-      duration: ANIMATION_DURATION
-    });
+    if (isFirstMeasurement.current) {
+      // First step: position cutout immediately, then fade the overlay in
+      isFirstMeasurement.current = false;
+      cutoutX.value = padded.x;
+      cutoutY.value = padded.y;
+      cutoutW.value = padded.width;
+      cutoutH.value = padded.height;
+      opacity.value = withTiming(1, { duration: ANIMATION_DURATION });
+    } else {
+      // Subsequent steps: animate cutout to the new position
+      cutoutX.value = withTiming(padded.x, { duration: ANIMATION_DURATION });
+      cutoutY.value = withTiming(padded.y, { duration: ANIMATION_DURATION });
+      cutoutW.value = withTiming(padded.width, {
+        duration: ANIMATION_DURATION
+      });
+      cutoutH.value = withTiming(padded.height, {
+        duration: ANIMATION_DURATION
+      });
+    }
   }, [
     groupId,
     items,
@@ -109,12 +146,15 @@ export const TourOverlay = () => {
     cutoutX,
     cutoutY,
     cutoutW,
-    cutoutH
+    cutoutH,
+    opacity
   ]);
 
   useEffect(() => {
-    void measureCurrentStep();
-  }, [measureCurrentStep]);
+    if (visible) {
+      void measureCurrentStep();
+    }
+  }, [visible, measureCurrentStep]);
 
   const animatedCutoutProps = useAnimatedProps(() => ({
     x: cutoutX.value,
@@ -123,12 +163,20 @@ export const TourOverlay = () => {
     height: cutoutH.value
   }));
 
-  if (!groupId || items.length === 0) {
+  const animatedContainerStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value
+  }));
+
+  if (!visible) {
     return null;
   }
 
   return (
-    <View ref={overlayRef} style={styles.container} pointerEvents="box-none">
+    <Animated.View
+      ref={overlayRef}
+      style={[styles.container, animatedContainerStyle]}
+      pointerEvents={isActive ? "box-none" : "none"}
+    >
       <View style={styles.overlay} pointerEvents="auto">
         <Svg
           width={screenWidth}
@@ -171,7 +219,7 @@ export const TourOverlay = () => {
           totalSteps={items.length}
         />
       )}
-    </View>
+    </Animated.View>
   );
 };
 

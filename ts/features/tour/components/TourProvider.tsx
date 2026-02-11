@@ -6,9 +6,7 @@ import {
   useRef
 } from "react";
 import { View } from "react-native";
-import { useIOSelector } from "../../../store/hooks";
 import { TourItemMeasurement } from "../types";
-import { isTourActiveSelector } from "../store/selectors";
 import { TourOverlay } from "./TourOverlay";
 
 type TourItemConfig = {
@@ -47,7 +45,6 @@ export const useTourContext = () => {
 
 export const TourProvider = ({ children }: PropsWithChildren) => {
   const itemsRef = useRef<Map<string, TourItemConfig>>(new Map());
-  const isActive = useIOSelector(isTourActiveSelector);
 
   const makeKey = (groupId: string, index: number) => `${groupId}::${index}`;
 
@@ -106,7 +103,7 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
       value={{ registerItem, unregisterItem, getMeasurement, getConfig }}
     >
       {children}
-      {isActive && <TourOverlay />}
+      <TourOverlay />
     </TourContext.Provider>
   );
 };
