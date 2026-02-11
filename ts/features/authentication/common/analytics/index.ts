@@ -196,10 +196,13 @@ export function trackLoginFailure(props: {
   idp: keyof IdpData | undefined;
   flow: LoginType;
 }) {
-  const { flow = "auth", ...rest } = props;
+  const propsWithDefaultFlow = {
+    ...props,
+    flow: props.flow || "auth"
+  };
   void mixpanelTrack(
     "LOGIN_FAILURE",
-    buildEventProperties("TECH", "error", { flow, ...rest })
+    buildEventProperties("TECH", "error", propsWithDefaultFlow)
   );
 }
 
