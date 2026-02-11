@@ -5476,6 +5476,12 @@
         "cta": "Attiva notifiche push",
         "toast": "Hai attivato le notifiche push"
       }
+    },
+    "tour": {
+      "next": "Next",
+      "back": "Back",
+      "skip": "Skip",
+      "done": "Done"
     }
   },
   "support": {

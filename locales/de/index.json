@@ -54,7 +54,10 @@
       "Nov.",
       "Dez."
     ],
-    "meridian": ["am", "pm"]
+    "meridian": [
+      "am",
+      "pm"
+    ]
   },
   "global": {
     "why": "Warum?",
@@ -3759,6 +3762,12 @@
           }
         }
       }
+    },
+    "tour": {
+      "next": "Weiter",
+      "back": "Zurück",
+      "skip": "Überspringen",
+      "done": "Fertig"
     }
   },
   "support": {

@@ -4,20 +4,28 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types.ts";
 import { TourItem } from "../../types/index.ts";
 import {
+  completeTourAction,
+  nextTourStepAction,
+  prevTourStepAction,
   registerTourItemAction,
+  resetTourCompletedAction,
+  startTourAction,
+  stopTourAction,
   unregisterTourItemAction
 } from "../actions/index.ts";
 
 export type TourState = {
-  // Registered items, indexed by their group id
   items: { [groupId: string]: ReadonlyArray<TourItem> };
-  // Stored the ids of completed groups to avoid showing them again
-  completed: Set<string>;
+  activeGroupId?: string;
+  activeStepIndex: number;
+  completed: ReadonlyArray<string>;
 };
 
 export const tourInitialState: TourState = {
   items: {},
-  completed: new Set()
+  activeGroupId: undefined,
+  activeStepIndex: 0,
+  completed: []
 };
 
 const reducer = (
@@ -51,12 +59,61 @@ const reducer = (
         }
       };
     }
+
+    case getType(startTourAction): {
+      if (state.completed.includes(action.payload.groupId)) {
+        return state;
+      }
+      return {
+        ...state,
+        activeGroupId: action.payload.groupId,
+        activeStepIndex: 0
+      };
+    }
+
+    case getType(stopTourAction):
+      return {
+        ...state,
+        activeGroupId: undefined,
+        activeStepIndex: 0
+      };
+
+    case getType(nextTourStepAction):
+      return {
+        ...state,
+        activeStepIndex: state.activeStepIndex + 1
+      };
+
+    case getType(prevTourStepAction):
+      return {
+        ...state,
+        activeStepIndex: Math.max(0, state.activeStepIndex - 1)
+      };
+
+    case getType(completeTourAction): {
+      const alreadyCompleted = state.completed.includes(action.payload.groupId);
+      return {
+        ...state,
+        activeGroupId: undefined,
+        activeStepIndex: 0,
+        completed: alreadyCompleted
+          ? state.completed
+          : [...state.completed, action.payload.groupId]
+      };
+    }
+
+    case getType(resetTourCompletedAction):
+      return {
+        ...state,
+        completed: state.completed.filter(id => id !== action.payload.groupId)
+      };
+
     default:
       return state;
   }
 };
 
-const CURRENT_REDUX_TOUR_STORE_VERSION = -1;
+const CURRENT_REDUX_TOUR_STORE_VERSION = 0;
 
 const persistConfig: PersistConfig = {
   key: "tour",

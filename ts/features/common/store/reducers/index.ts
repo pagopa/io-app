@@ -114,7 +114,7 @@ export type FeaturesState = {
   connectivityStatus: ConnectivityState;
   backgroundLinking: BackgroundLinkingState;
   cdc: CdcState;
-  tour: TourState;
+  tour: TourState & PersistPartial;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;

@@ -403,6 +403,13 @@ const PlaygroundsSection = () => {
         })
     },
     {
+      value: "Guided Tour",
+      onPress: () =>
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.GUIDED_TOUR_PLAYGROUND
+        })
+    },
+    {
       value: I18n.t(
         "profile.main.loginEnvironment.activeSession.playground.title"
       ),
