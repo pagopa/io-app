@@ -3177,7 +3177,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                                     testID="LoadingSpinnerTestID"
                                   >
                                     <View
-                                      collapsable={false}
                                       style={
                                         {
                                           "transform": [
