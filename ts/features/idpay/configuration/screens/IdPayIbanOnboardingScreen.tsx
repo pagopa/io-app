@@ -3,16 +3,15 @@ import {
   TextInputValidation,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useState } from "react";
 import I18n from "i18next";
-import { Iban } from "../../../../../definitions/backend/Iban";
+import { useState } from "react";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
+import { IbanSchema } from "../types";
 
 export const IdPayIbanOnboardingScreen = () => {
   const machine = IdPayConfigurationMachineContext.useActorRef();
@@ -64,19 +63,12 @@ export const IdPayIbanOnboardingScreen = () => {
       <TextInputValidation
         inputType="iban"
         errorMessage={I18n.t("idpay.configuration.iban.onboarding.error.iban")}
-        onValidate={value =>
-          pipe(
-            Iban.decode(value),
-            E.fold(
-              () => false,
-              () => true
-            )
-          )
-        }
+        onValidate={value => IbanSchema.safeParse(value).success}
         value={iban.text}
         onChangeText={text => {
+          const result = IbanSchema.safeParse(text);
           setIban({
-            value: pipe(Iban.decode(text), O.fromEither),
+            value: result.success ? O.some(result.data) : O.none,
             text
           });
         }}
