@@ -18,6 +18,7 @@ import {
   CieLoginConfigActions
 } from "../../features/authentication/login/cie/store/actions";
 import { SpidConfigActions } from "../../features/authentication/login/idp/store/actions";
+import { CdcActions } from "../../features/bonus/cdc/common/store/actions";
 import { BonusActions } from "../../features/bonus/common/store/actions";
 import { ConnectivityActions } from "../../features/connectivity/store/actions";
 import { FciActions } from "../../features/fci/store/actions";
@@ -35,6 +36,7 @@ import { MixpanelFeatureActions } from "../../features/mixpanel/store/actions";
 import { OnboardingActions } from "../../features/onboarding/store/actions";
 import { PaymentsActions as PaymentsFeatureActions } from "../../features/payments/common/store/actions";
 import { AARFlowStateActions } from "../../features/pn/aar/store/actions";
+import { SENDLoginEngagementActions } from "../../features/pn/loginEngagement/store/actions";
 import { PnActions } from "../../features/pn/store/actions";
 import { NotificationPermissionsActions } from "../../features/pushNotifications/store/actions/environment";
 import { NotificationsActions } from "../../features/pushNotifications/store/actions/installation";
@@ -45,13 +47,12 @@ import { ServicesActions } from "../../features/services/common/store/actions";
 import { ProfileActions } from "../../features/settings/common/store/actions";
 import { UserDataProcessingActions } from "../../features/settings/common/store/actions/userDataProcessing";
 import { PinSetActions } from "../../features/settings/security/store/actions/pinset";
+import { TourActions } from "../../features/tour/store/actions";
 import { UtmLinkActions } from "../../features/utmLink/store/actions";
 import { WalletActions } from "../../features/wallet/store/actions";
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 import { GlobalState } from "../reducers/types";
-import { SENDLoginEngagementActions } from "../../features/pn/loginEngagement/store/actions";
-import { CdcActions } from "../../features/bonus/cdc/common/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { BackendStatusActions } from "./backendStatus";
@@ -123,7 +124,8 @@ export type Action =
   | AARFlowStateActions
   | BackgroundLinkingActions
   | SENDLoginEngagementActions
-  | CdcActions;
+  | CdcActions
+  | TourActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
