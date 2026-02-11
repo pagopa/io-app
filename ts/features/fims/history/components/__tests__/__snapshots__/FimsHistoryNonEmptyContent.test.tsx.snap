@@ -1335,7 +1335,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     testID="LoadingSpinnerTestID"
                                   >
                                     <View
-                                      collapsable={false}
                                       style={
                                         {
                                           "transform": [
@@ -2865,7 +2864,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     testID="LoadingSpinnerTestID"
                                   >
                                     <View
-                                      collapsable={false}
                                       style={
                                         {
                                           "transform": [
@@ -4295,7 +4293,6 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                                     testID="LoadingSpinnerTestID"
                                   >
                                     <View
-                                      collapsable={false}
                                       style={
                                         {
                                           "transform": [

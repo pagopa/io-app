@@ -4382,10 +4382,6 @@
       "methods": {
         "title": "Metodi di pagamento",
         "button": "Aggiungi",
-        "banner": {
-          "content": "Aggiungi al portafoglio un metodo di pagamento, così non dovrai inserire ogni volta i dati.",
-          "action": "Aggiungi un metodo"
-        },
         "status": {
           "expired": "Scaduta"
         },
@@ -4394,6 +4390,11 @@
             "label": "The loading of the payment methods failed.",
             "retryButton": "Retry"
           }
+        },
+        "banner": {
+          "title": "How do you want to pay?",
+          "content": "Find out which payment methods you can use in the IO app to pay pagoPA notices.",
+          "action": "Discover available payment methods"
         }
       },
       "transactions": {

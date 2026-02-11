@@ -5,8 +5,8 @@ IO_BACKEND_VERSION=v17.5.2
 IO_SERVICES_METADATA_VERSION=1.0.93
 # Session manager version
 IO_SESSION_MANAGER_VERSION=1.8.0
-# IO Wallet Backend version
-IO_WALLET_BACKEND_VERSION=v16.14.0
+# IO Wallet user function version
+IO_WALLET_USER_FUNC_VERSION=4.1.11
 # Send function version
 SEND_FUNC_VERSION=1.4.3
 
@@ -44,7 +44,7 @@ declare -a apis=(
   # FCI APIs
   "./definitions/fci https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_io_sign.yaml"
   # ITW APIs
-  "./definitions/itw https://raw.githubusercontent.com/pagopa/io-backend/$IO_WALLET_BACKEND_VERSION/api_io_wallet.yaml"
+  "./definitions/itw https://raw.githubusercontent.com/pagopa/io-wallet/io-wallet-user-func@$IO_WALLET_USER_FUNC_VERSION/apps/io-wallet-user-func/openapi-external/user_v1/swagger.yaml"
   # Connectivity APIs (used for connectivity checks)
   "./definitions/connectivity https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_public.yaml"
   "./definitions/cdc https://raw.githubusercontent.com/pagopa/io-backend/refs/tags/$IO_BACKEND_VERSION/openapi/generated/api_cdc.yaml"
