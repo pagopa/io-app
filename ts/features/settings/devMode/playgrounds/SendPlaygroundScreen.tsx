@@ -31,6 +31,7 @@ import {
 } from "../../../pn/lollipopLambda/store/selectors";
 import { sendLollipopLambdaAction } from "../../../pn/lollipopLambda/store/actions";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
+import { isSendLollipopPlaygroundEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 const styles = StyleSheet.create({
   textInput: {
@@ -61,6 +62,9 @@ export const SendPlaygroundScreen = () => {
 
   const errorReasonOrUndefined = useIOSelector(sendLollipopLambdaErrorReason);
   const isSagaLoading = useIOSelector(isSendLollipopLambdaLoading);
+  const lollipopPlaygroundEnabled = useIOSelector(
+    isSendLollipopPlaygroundEnabledSelector
+  );
   const sendUATEnvironmentEnabled = useIOSelector(isPnTestEnabledSelector);
   const responseBodyStringOrUndefined = useIOSelector(
     sendLollipopLambdaResponseBodyString
@@ -110,57 +114,65 @@ export const SendPlaygroundScreen = () => {
         }
       />
       <Divider />
-      <ListItemHeader label="Lollipop Playground" />
-      <View>
-        <Body>Post Body</Body>
-        <VSpacer size={4} />
-        <RNTextInput
-          accessibilityLabel="Post Body"
-          editable={!isSagaLoading}
-          submitBehavior="newline"
-          multiline={true}
-          placeholder={'{\n  p1: "a string",\n  p2: {\n    p3: true\n  }\n}'}
-          style={{
-            ...styles.textInput,
-            opacity: isSagaLoading ? 0.5 : 1.0,
-            color: bodyTextColor,
-            borderColor: bodyBorderColor
-          }}
-          placeholderTextColor={placeholderTextColor}
-          onChangeText={value => setRequestBody(value)}
-          value={requestBody}
-          scrollEnabled={false}
-        />
-        <VSpacer size={16} />
-        <ListItemInfo
-          value={`${responseStatusCodeOrUndefined ?? ""}`}
-          label="Response Status Code"
-          numberOfLines={1}
-        />
-        <ListItemInfoCopy
-          label="Response Body"
-          value={responseBodyStringOrUndefined ?? ""}
-          numberOfLines={1000}
-          onPress={() =>
-            clipboardSetStringWithFeedback(responseBodyStringOrUndefined ?? "")
-          }
-        />
-        <VSpacer size={32} />
-        <IOButton
-          label="GET"
-          onPress={() => sendLollipopLambdaRequest("Get")}
-          disabled={isSagaLoading}
-        />
-        <VSpacer size={8} />
-        <IOButton
-          label="POST"
-          onPress={() => sendLollipopLambdaRequest("Post")}
-          disabled={isSagaLoading}
-        />
-      </View>
-      <VSpacer size={16} />
-      <Divider />
-      <VSpacer size={16} />
+      {lollipopPlaygroundEnabled && (
+        <>
+          <ListItemHeader label="Lollipop Playground" />
+          <View>
+            <Body>Post Body</Body>
+            <VSpacer size={4} />
+            <RNTextInput
+              accessibilityLabel="Post Body"
+              editable={!isSagaLoading}
+              submitBehavior="newline"
+              multiline={true}
+              placeholder={
+                '{\n  p1: "a string",\n  p2: {\n    p3: true\n  }\n}'
+              }
+              style={{
+                ...styles.textInput,
+                opacity: isSagaLoading ? 0.5 : 1.0,
+                color: bodyTextColor,
+                borderColor: bodyBorderColor
+              }}
+              placeholderTextColor={placeholderTextColor}
+              onChangeText={value => setRequestBody(value)}
+              value={requestBody}
+              scrollEnabled={false}
+            />
+            <VSpacer size={16} />
+            <ListItemInfo
+              value={`${responseStatusCodeOrUndefined ?? ""}`}
+              label="Response Status Code"
+              numberOfLines={1}
+            />
+            <ListItemInfoCopy
+              label="Response Body"
+              value={responseBodyStringOrUndefined ?? ""}
+              numberOfLines={1000}
+              onPress={() =>
+                clipboardSetStringWithFeedback(
+                  responseBodyStringOrUndefined ?? ""
+                )
+              }
+            />
+            <VSpacer size={32} />
+            <IOButton
+              label="GET"
+              onPress={() => sendLollipopLambdaRequest("Get")}
+              disabled={isSagaLoading}
+            />
+            <VSpacer size={8} />
+            <IOButton
+              label="POST"
+              onPress={() => sendLollipopLambdaRequest("Post")}
+              disabled={isSagaLoading}
+            />
+          </View>
+          <VSpacer size={16} />
+          <Divider />
+          <VSpacer size={16} />
+        </>
+      )}
     </IOScrollView>
   );
 };
