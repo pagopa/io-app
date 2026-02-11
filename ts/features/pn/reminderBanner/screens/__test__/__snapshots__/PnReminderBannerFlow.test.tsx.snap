@@ -2670,7 +2670,6 @@ exports[`loading screens + error interop should render the correct loading scree
                           testID="LoadingIndicator"
                         >
                           <View
-                            collapsable={false}
                             style={
                               {
                                 "transform": [
@@ -3280,7 +3279,6 @@ exports[`loading screens + error interop should render the correct loading scree
                           testID="LoadingIndicator"
                         >
                           <View
-                            collapsable={false}
                             style={
                               {
                                 "transform": [
@@ -3890,7 +3888,6 @@ exports[`loading screens + error interop should render the correct loading scree
                           testID="LoadingIndicator"
                         >
                           <View
-                            collapsable={false}
                             style={
                               {
                                 "transform": [
@@ -4500,7 +4497,6 @@ exports[`loading screens + error interop should render the correct loading scree
                           testID="LoadingIndicator"
                         >
                           <View
-                            collapsable={false}
                             style={
                               {
                                 "transform": [
@@ -5110,7 +5106,6 @@ exports[`loading screens + error interop should render the correct loading scree
                           testID="LoadingIndicator"
                         >
                           <View
-                            collapsable={false}
                             style={
                               {
                                 "transform": [

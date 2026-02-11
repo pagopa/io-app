@@ -400,7 +400,6 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
                                 testID="LoadingIndicator"
                               >
                                 <View
-                                  collapsable={false}
                                   style={
                                     {
                                       "transform": [
@@ -1039,7 +1038,6 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
                                 testID="LoadingIndicator"
                               >
                                 <View
-                                  collapsable={false}
                                   style={
                                     {
                                       "transform": [
@@ -1678,7 +1676,6 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                 testID="LoadingIndicator"
                               >
                                 <View
-                                  collapsable={false}
                                   style={
                                     {
                                       "transform": [
@@ -2294,7 +2291,6 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                 testID="LoadingIndicator"
                               >
                                 <View
-                                  collapsable={false}
                                   style={
                                     {
                                       "transform": [

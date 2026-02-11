@@ -59,7 +59,7 @@
     "@babel/plugin-transform-regenerator": "^7.18.6",
     "@craftzdog/react-native-buffer": "^6.1.1",
     "@gorhom/bottom-sheet": "^5.1.2",
-    "@pagopa/io-app-design-system": "5.12.2",
+    "@pagopa/io-app-design-system": "5.12.3",
     "@pagopa/io-pagopa-commons": "^3.1.0",
     "@pagopa/io-react-native-cie": "1.3.2",
     "@pagopa/io-react-native-cieid": "0.4.0",
