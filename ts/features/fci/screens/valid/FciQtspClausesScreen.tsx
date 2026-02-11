@@ -36,6 +36,7 @@ import {
   fciQtspPrivacyTextSelector,
   fciQtspPrivacyUrlSelector
 } from "../../store/reducers/fciQtspClauses";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 const FciQtspClausesScreen = () => {
   const dispatch = useIODispatch();
@@ -83,6 +84,12 @@ const FciQtspClausesScreen = () => {
       }
     });
   };
+
+  useHeaderSecondLevel({
+    title: I18n.t("features.fci.title"),
+    supportRequest: true,
+    contextualHelp: emptyContextualHelp
+  });
 
   if (fciPollFilledDocumentError && !isPollFilledDocumentReady) {
     return (
