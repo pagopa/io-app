@@ -91,7 +91,7 @@ export const useCieInfoBottomSheet = ({
             machineRef.send({
               type: "select-identification-mode",
               mode: "cieId",
-              source: "l3-requirements-ko"
+              source: "l3-missing-pin-ko"
             });
           },
           style: "default"
@@ -111,7 +111,7 @@ export const useCieInfoBottomSheet = ({
             machineRef.send({
               type: "select-identification-mode",
               mode: "spid",
-              source: "l3-requirements-ko"
+              source: "l3-missing-pin-ko"
             });
           },
           style: "default"

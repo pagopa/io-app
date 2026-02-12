@@ -344,7 +344,7 @@ export const createEidIssuanceActionsImplementation = (
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     assertEvent(event, "select-identification-mode");
 
-    if (event.source === "l3-requirements-ko") {
+    if (event.source === "l3-missing-pin-ko") {
       return;
     }
 

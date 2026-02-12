@@ -63,7 +63,7 @@ describe("itwEidIssuanceMachine actions", () => {
       event: {
         type: "select-identification-mode",
         mode: "spid",
-        source: "l3-requirements-ko"
+        source: "l3-missing-pin-ko"
       }
     } as ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>);
 
