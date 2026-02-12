@@ -86,7 +86,10 @@ export const TourTooltip = ({
 
   return (
     <View
-      style={[styles.container, { top: tooltipTop, left: tooltipLeft }]}
+      style={[
+        styles.container,
+        { top: tooltipTop, left: tooltipLeft, width: tooltipWidth }
+      ]}
       onLayout={e => setTooltipHeight(e.nativeEvent.layout.height)}
       pointerEvents="box-none"
     >
