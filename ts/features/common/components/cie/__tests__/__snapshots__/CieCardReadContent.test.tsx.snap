@@ -112,9 +112,21 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
           }
         }
       >
-        <View
-          accessible={true}
-        >
+        <View>
+          <View
+            accessibilityLabel="Title 2"
+            accessibilityLiveRegion="polite"
+            accessible={true}
+            importantForAccessibility="yes"
+            style={
+              {
+                "height": 1,
+                "opacity": 0,
+                "position": "absolute",
+                "width": 1,
+              }
+            }
+          />
           <Text
             allowFontScaling={true}
             dynamicTypeRamp="title2"
@@ -562,9 +574,21 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
           }
         }
       >
-        <View
-          accessible={true}
-        >
+        <View>
+          <View
+            accessibilityLabel="Title 3"
+            accessibilityLiveRegion="polite"
+            accessible={true}
+            importantForAccessibility="yes"
+            style={
+              {
+                "height": 1,
+                "opacity": 0,
+                "position": "absolute",
+                "width": 1,
+              }
+            }
+          />
           <Text
             allowFontScaling={true}
             dynamicTypeRamp="title2"
@@ -1349,9 +1373,21 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
           }
         }
       >
-        <View
-          accessible={true}
-        >
+        <View>
+          <View
+            accessibilityLabel="Title"
+            accessibilityLiveRegion="polite"
+            accessible={true}
+            importantForAccessibility="yes"
+            style={
+              {
+                "height": 1,
+                "opacity": 0,
+                "position": "absolute",
+                "width": 1,
+              }
+            }
+          />
           <Text
             allowFontScaling={true}
             dynamicTypeRamp="title2"
@@ -1646,9 +1682,21 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
           }
         }
       >
-        <View
-          accessible={true}
-        >
+        <View>
+          <View
+            accessibilityLabel="Title 2"
+            accessibilityLiveRegion="polite"
+            accessible={true}
+            importantForAccessibility="yes"
+            style={
+              {
+                "height": 1,
+                "opacity": 0,
+                "position": "absolute",
+                "width": 1,
+              }
+            }
+          />
           <Text
             allowFontScaling={true}
             dynamicTypeRamp="title3"
@@ -2091,9 +2139,21 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
           }
         }
       >
-        <View
-          accessible={true}
-        >
+        <View>
+          <View
+            accessibilityLabel="Title 3"
+            accessibilityLiveRegion="polite"
+            accessible={true}
+            importantForAccessibility="yes"
+            style={
+              {
+                "height": 1,
+                "opacity": 0,
+                "position": "absolute",
+                "width": 1,
+              }
+            }
+          />
           <Text
             allowFontScaling={true}
             dynamicTypeRamp="title3"
@@ -2863,9 +2923,21 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
           }
         }
       >
-        <View
-          accessible={true}
-        >
+        <View>
+          <View
+            accessibilityLabel="Title"
+            accessibilityLiveRegion="polite"
+            accessible={true}
+            importantForAccessibility="yes"
+            style={
+              {
+                "height": 1,
+                "opacity": 0,
+                "position": "absolute",
+                "width": 1,
+              }
+            }
+          />
           <Text
             allowFontScaling={true}
             dynamicTypeRamp="title3"
