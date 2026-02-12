@@ -9,7 +9,7 @@ import {
   CredentialFormat,
   ItwCredentialStatus,
   StoredCredential,
-  Verification
+  StoredVerification
 } from "./itwTypesUtils";
 
 // Credentials that can be actively requested and obtained by the user
@@ -129,25 +129,34 @@ export const validCredentialStatuses: Array<ItwCredentialStatus> = [
 
 /**
  * Extracts the verification object from a stored credential based on its format.
+ * Only persists `trust_framework` and `assurance_level`, excluding `evidence`
+ * which is being dropped in spec v1.3.3.
  * @param credential - The stored credential fields needed to extract verification
- * @returns The verification object or undefined if extraction fails
+ * @returns The slim verification object or undefined if extraction fails
  */
 export const extractVerification = ({
   format,
   credential,
   parsedCredential
 }: Pick<StoredCredential, "format" | "credential" | "parsedCredential">):
-  | Verification
+  | StoredVerification
   | undefined => {
   try {
-    switch (format) {
-      case CredentialFormat.SD_JWT:
-        return SdJwt.getVerification(credential);
-      case CredentialFormat.MDOC:
-        return Mdoc.getVerificationFromParsedCredential(parsedCredential);
-      default:
-        return undefined;
+    const verification = (() => {
+      switch (format) {
+        case CredentialFormat.SD_JWT:
+          return SdJwt.getVerification(credential);
+        case CredentialFormat.MDOC:
+          return Mdoc.getVerificationFromParsedCredential(parsedCredential);
+        default:
+          return undefined;
+      }
+    })();
+    if (!verification) {
+      return undefined;
     }
+    const { trust_framework, assurance_level } = verification;
+    return { trust_framework, assurance_level };
   } catch {
     return undefined;
   }
