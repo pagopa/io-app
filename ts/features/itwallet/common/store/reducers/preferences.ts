@@ -9,10 +9,12 @@ import {
   itwFreezeSimplifiedActivationRequirements,
   itwClearSimplifiedActivationRequirements,
   itwSetPidReissuingSurveyHidden,
+  itwSetCredentialUpgradeFailed,
+  itwClearCredentialUpgradeFailed,
   itwDisableItwActivation
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
-import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
+import { ItwAuthLevel, StoredCredential } from "../../utils/itwTypesUtils.ts";
 
 export type ItwPreferencesState = {
   // Indicates whether the user should see the modal to review the app.
@@ -32,6 +34,8 @@ export type ItwPreferencesState = {
   // Indicates whether the bottom sheet survey is visible when the user quits
   // the reissuing flow only for the first time
   isPidReissuingSurveyHidden?: boolean;
+  // Credential that failed to upgrade by type
+  credentialUpgradeFailed?: ReadonlyArray<StoredCredential["credentialType"]>;
   // Indicates whether the IT-Wallet activation should be disabled
   // because the user's device does not support NFC
   isItwActivationDisabled?: boolean;
@@ -97,6 +101,18 @@ const reducer = (
         isPidReissuingSurveyHidden: action.payload
       };
     }
+    case getType(itwSetCredentialUpgradeFailed):
+      return {
+        ...state,
+        credentialUpgradeFailed: action.payload
+      };
+    case getType(itwClearCredentialUpgradeFailed):
+      return {
+        ...state,
+        credentialUpgradeFailed: state.credentialUpgradeFailed?.filter(
+          type => type !== action.payload
+        )
+      };
 
     case getType(itwDisableItwActivation): {
       return {
