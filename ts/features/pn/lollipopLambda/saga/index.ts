@@ -91,24 +91,12 @@ function* lollipopLambdaSaga(
     }
 
     const response = responseEither.right;
-    switch (response.status) {
-      case 401:
-        yield* put(
-          sendLollipopLambdaAction.success({
-            statusCode: 401,
-            responseBody: undefined
-          })
-        );
-        break;
-      default:
-        yield* put(
-          sendLollipopLambdaAction.success({
-            statusCode: response.status,
-            responseBody: response.value
-          })
-        );
-        break;
-    }
+    yield* put(
+      sendLollipopLambdaAction.success({
+        statusCode: response.status,
+        responseBody: response.value
+      })
+    );
   } catch (e) {
     const reason = `An error was thrown (${unknownToReason(e)})`;
     yield* put(

@@ -5,7 +5,7 @@ import {
   View,
   Appearance
 } from "react-native";
-// import I18n from "i18next";
+import I18n from "i18next";
 import {
   Body,
   Divider,
@@ -101,10 +101,12 @@ export const SendPlaygroundScreen = () => {
   );
   return (
     <IOScrollView>
-      <ListItemHeader label="Environment" />
+      <ListItemHeader
+        label={I18n.t("features.pn.lollipopPlayground.environmentTitle")}
+      />
       <ListItemSwitch
-        label="Use UAT"
-        description="Sends Service Activation and AAR requests to the UAT environment"
+        label={I18n.t("features.pn.lollipopPlayground.uatLabel")}
+        description={I18n.t("features.pn.lollipopPlayground.uatDescription")}
         disabled={isSagaLoading}
         value={sendUATEnvironmentEnabled}
         onSwitchValueChange={enabled =>
@@ -116,18 +118,22 @@ export const SendPlaygroundScreen = () => {
       <Divider />
       {lollipopPlaygroundEnabled && (
         <>
-          <ListItemHeader label="Lollipop Playground" />
+          <ListItemHeader
+            label={I18n.t("features.pn.lollipopPlayground.playgroundTitle")}
+          />
           <View>
             <Body>Post Body</Body>
             <VSpacer size={4} />
             <RNTextInput
-              accessibilityLabel="Post Body"
+              accessibilityLabel={I18n.t(
+                "features.pn.lollipopPlayground.postBodyLabel"
+              )}
               editable={!isSagaLoading}
               submitBehavior="newline"
               multiline={true}
-              placeholder={
-                '{\n  p1: "a string",\n  p2: {\n    p3: true\n  }\n}'
-              }
+              placeholder={I18n.t(
+                "features.pn.lollipopPlayground.postBodyPlaceholder"
+              )}
               style={{
                 ...styles.textInput,
                 opacity: isSagaLoading ? 0.5 : 1.0,
@@ -142,11 +148,13 @@ export const SendPlaygroundScreen = () => {
             <VSpacer size={16} />
             <ListItemInfo
               value={`${responseStatusCodeOrUndefined ?? ""}`}
-              label="Response Status Code"
+              label={I18n.t(
+                "features.pn.lollipopPlayground.responseStatusCode"
+              )}
               numberOfLines={1}
             />
             <ListItemInfoCopy
-              label="Response Body"
+              label={I18n.t("features.pn.lollipopPlayground.responseBody")}
               value={responseBodyStringOrUndefined ?? ""}
               numberOfLines={1000}
               onPress={() =>
@@ -157,13 +165,13 @@ export const SendPlaygroundScreen = () => {
             />
             <VSpacer size={32} />
             <IOButton
-              label="GET"
+              label={I18n.t("features.pn.lollipopPlayground.requestGet")}
               onPress={() => sendLollipopLambdaRequest("Get")}
               loading={isSagaLoading}
             />
             <VSpacer size={8} />
             <IOButton
-              label="POST"
+              label={I18n.t("features.pn.lollipopPlayground.requestPost")}
               onPress={() => sendLollipopLambdaRequest("Post")}
               loading={isSagaLoading}
             />
