@@ -448,9 +448,21 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 }
                               >
-                                <View
-                                  accessible={true}
-                                >
+                                <View>
+                                  <View
+                                    accessibilityLabel="features.pn.aar.flow.cieScanning.success.title"
+                                    accessibilityLiveRegion="polite"
+                                    accessible={true}
+                                    importantForAccessibility="yes"
+                                    style={
+                                      {
+                                        "height": 1,
+                                        "opacity": 0,
+                                        "position": "absolute",
+                                        "width": 1,
+                                      }
+                                    }
+                                  />
                                   <Text
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title3"
@@ -1022,9 +1034,21 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 }
                               >
-                                <View
-                                  accessible={true}
-                                >
+                                <View>
+                                  <View
+                                    accessibilityLabel="features.pn.aar.flow.cieScanning.error.GENERIC.title"
+                                    accessibilityLiveRegion="polite"
+                                    accessible={true}
+                                    importantForAccessibility="yes"
+                                    style={
+                                      {
+                                        "height": 1,
+                                        "opacity": 0,
+                                        "position": "absolute",
+                                        "width": 1,
+                                      }
+                                    }
+                                  />
                                   <Text
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title3"
@@ -1924,9 +1948,21 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 }
                               >
-                                <View
-                                  accessible={true}
-                                >
+                                <View>
+                                  <View
+                                    accessibilityLabel="features.pn.aar.flow.cieScanning.error.GENERIC.title"
+                                    accessibilityLiveRegion="polite"
+                                    accessible={true}
+                                    importantForAccessibility="yes"
+                                    style={
+                                      {
+                                        "height": 1,
+                                        "opacity": 0,
+                                        "position": "absolute",
+                                        "width": 1,
+                                      }
+                                    }
+                                  />
                                   <Text
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title3"
@@ -2826,9 +2862,21 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 }
                               >
-                                <View
-                                  accessible={true}
-                                >
+                                <View>
+                                  <View
+                                    accessibilityLabel="features.pn.aar.flow.cieScanning.error.GENERIC.title"
+                                    accessibilityLiveRegion="polite"
+                                    accessible={true}
+                                    importantForAccessibility="yes"
+                                    style={
+                                      {
+                                        "height": 1,
+                                        "opacity": 0,
+                                        "position": "absolute",
+                                        "width": 1,
+                                      }
+                                    }
+                                  />
                                   <Text
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title3"
@@ -3728,9 +3776,21 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 }
                               >
-                                <View
-                                  accessible={true}
-                                >
+                                <View>
+                                  <View
+                                    accessibilityLabel="features.pn.aar.flow.cieScanning.error.TAG_LOST.title"
+                                    accessibilityLiveRegion="polite"
+                                    accessible={true}
+                                    importantForAccessibility="yes"
+                                    style={
+                                      {
+                                        "height": 1,
+                                        "opacity": 0,
+                                        "position": "absolute",
+                                        "width": 1,
+                                      }
+                                    }
+                                  />
                                   <Text
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title3"
@@ -4620,9 +4680,21 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 }
                               >
-                                <View
-                                  accessible={true}
-                                >
+                                <View>
+                                  <View
+                                    accessibilityLabel="features.pn.aar.flow.cieScanning.idle.title"
+                                    accessibilityLiveRegion="polite"
+                                    accessible={true}
+                                    importantForAccessibility="yes"
+                                    style={
+                                      {
+                                        "height": 1,
+                                        "opacity": 0,
+                                        "position": "absolute",
+                                        "width": 1,
+                                      }
+                                    }
+                                  />
                                   <Text
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title3"
@@ -5468,9 +5540,21 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 }
                               >
-                                <View
-                                  accessible={true}
-                                >
+                                <View>
+                                  <View
+                                    accessibilityLabel="features.pn.aar.flow.cieScanning.reading.title"
+                                    accessibilityLiveRegion="polite"
+                                    accessible={true}
+                                    importantForAccessibility="yes"
+                                    style={
+                                      {
+                                        "height": 1,
+                                        "opacity": 0,
+                                        "position": "absolute",
+                                        "width": 1,
+                                      }
+                                    }
+                                  />
                                   <Text
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title3"
@@ -6336,9 +6420,21 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 }
                               >
-                                <View
-                                  accessible={true}
-                                >
+                                <View>
+                                  <View
+                                    accessibilityLabel="features.pn.aar.flow.cieScanning.reading.title"
+                                    accessibilityLiveRegion="polite"
+                                    accessible={true}
+                                    importantForAccessibility="yes"
+                                    style={
+                                      {
+                                        "height": 1,
+                                        "opacity": 0,
+                                        "position": "absolute",
+                                        "width": 1,
+                                      }
+                                    }
+                                  />
                                   <Text
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title3"
@@ -7204,9 +7300,21 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 }
                               >
-                                <View
-                                  accessible={true}
-                                >
+                                <View>
+                                  <View
+                                    accessibilityLabel="features.pn.aar.flow.cieScanning.reading.title"
+                                    accessibilityLiveRegion="polite"
+                                    accessible={true}
+                                    importantForAccessibility="yes"
+                                    style={
+                                      {
+                                        "height": 1,
+                                        "opacity": 0,
+                                        "position": "absolute",
+                                        "width": 1,
+                                      }
+                                    }
+                                  />
                                   <Text
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title3"

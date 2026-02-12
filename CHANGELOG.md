@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.24.0-rc.3](https://github.com/pagopa/io-app/compare/3.24.0-rc.2...3.24.0-rc.3) (2026-02-11)
+
+
+### Features
+
+* [[IOPLT-1438](https://pagopa.atlassian.net/browse/IOPLT-1438)] App should stop startup if the version is not supported ([#7745](https://github.com/pagopa/io-app/issues/7745)) ([25c9c73](https://github.com/pagopa/io-app/commit/25c9c734af6486fa2a4137a4161eac5de78b622e))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-3552](https://pagopa.atlassian.net/browse/SIW-3552),[SIW-3651](https://pagopa.atlassian.net/browse/SIW-3651)] A11y issues while reading CIE ([#7806](https://github.com/pagopa/io-app/issues/7806)) ([a991ba4](https://github.com/pagopa/io-app/commit/a991ba490f2edc601bf961c09be8aa53a6dde108))
+* **IT-Wallet:** [[SIW-3660](https://pagopa.atlassian.net/browse/SIW-3660)] Add credential upgrade failure persist handling in IT wallet ([#7814](https://github.com/pagopa/io-app/issues/7814)) ([5d448e1](https://github.com/pagopa/io-app/commit/5d448e11ff7ccd7cc8651536b1e05aad5d83fb10))
+
 ## [3.24.0-rc.2](https://github.com/pagopa/io-app/compare/3.24.0-rc.1...3.24.0-rc.2) (2026-02-11)
 
 
