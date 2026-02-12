@@ -18,8 +18,8 @@ import { TourItemMeasurement } from "../types";
 import { useTourStepNavigation } from "../hooks/useTourStepNavigation";
 
 const TOOLTIP_MARGIN = 16;
-const ARROW_SIZE = 8;
-const TRANSPARENT = "transparent";
+const ARROW_SIZE = 10;
+const BORDER_RADIUS = 8;
 
 type Props = {
   itemMeasurement: TourItemMeasurement;
@@ -53,8 +53,11 @@ export const TourTooltip = ({
   const showAbove = spaceAbove > spaceBelow;
 
   const tooltipTop = showAbove
-    ? itemMeasurement.y - tooltipHeight - ARROW_SIZE - TOOLTIP_MARGIN
-    : itemMeasurement.y + itemMeasurement.height + ARROW_SIZE + TOOLTIP_MARGIN;
+    ? itemMeasurement.y - tooltipHeight - ARROW_SIZE / 2 - TOOLTIP_MARGIN
+    : itemMeasurement.y +
+      itemMeasurement.height +
+      ARROW_SIZE / 2 +
+      TOOLTIP_MARGIN;
 
   const itemCenterX = itemMeasurement.x + itemMeasurement.width / 2;
   const tooltipWidth = screenWidth - TOOLTIP_MARGIN * 2;
@@ -69,8 +72,8 @@ export const TourTooltip = ({
   const arrowLeft = Math.max(
     TOOLTIP_MARGIN + ARROW_SIZE,
     Math.min(
-      itemCenterX - tooltipLeft - ARROW_SIZE,
-      tooltipWidth - ARROW_SIZE * 3
+      itemCenterX - tooltipLeft - ARROW_SIZE / 2,
+      tooltipWidth - ARROW_SIZE * 2
     )
   );
 
@@ -96,26 +99,18 @@ export const TourTooltip = ({
       onLayout={e => setTooltipHeight(e.nativeEvent.layout.height)}
       pointerEvents="box-none"
     >
-      {showAbove && (
-        <View
-          style={[
-            styles.arrowDown,
-            { left: arrowLeft, borderTopColor: tooltipBgColor }
-          ]}
-        />
-      )}
-      {!showAbove && (
-        <View
-          style={[
-            styles.arrowUp,
-            {
-              left: arrowLeft,
-              top: -ARROW_SIZE,
-              borderBottomColor: tooltipBgColor
-            }
-          ]}
-        />
-      )}
+      <View
+        style={[
+          styles.arrow,
+          {
+            backgroundColor: tooltipBgColor,
+            left: arrowLeft,
+            ...(showAbove
+              ? { bottom: -ARROW_SIZE / 2 }
+              : { top: -ARROW_SIZE / 2 })
+          }
+        ]}
+      />
       <View style={[styles.tooltip, { backgroundColor: tooltipBgColor }]}>
         <H6>{title}</H6>
         <VSpacer size={4} />
@@ -165,9 +160,16 @@ const styles = StyleSheet.create({
     zIndex: 10000
   },
   tooltip: {
-    borderRadius: 8,
+    borderRadius: BORDER_RADIUS,
     borderCurve: "continuous",
     padding: 16
+  },
+  arrow: {
+    position: "absolute",
+    width: ARROW_SIZE,
+    height: ARROW_SIZE,
+    transform: [{ rotate: "45deg" }],
+    zIndex: -1
   },
   buttonsRow: {
     flexDirection: "row",
@@ -177,30 +179,5 @@ const styles = StyleSheet.create({
   rightButtons: {
     flexDirection: "row",
     alignItems: "center"
-  },
-  arrowUp: {
-    position: "absolute",
-    width: 0,
-    height: 0,
-    borderLeftWidth: ARROW_SIZE,
-    borderRightWidth: ARROW_SIZE,
-    borderBottomWidth: ARROW_SIZE,
-    borderLeftColor: TRANSPARENT,
-    borderRightColor: TRANSPARENT,
-    borderBottomColor: TRANSPARENT,
-    zIndex: 10001
-  },
-  arrowDown: {
-    position: "absolute",
-    bottom: -ARROW_SIZE,
-    width: 0,
-    height: 0,
-    borderLeftWidth: ARROW_SIZE,
-    borderRightWidth: ARROW_SIZE,
-    borderTopWidth: ARROW_SIZE,
-    borderLeftColor: TRANSPARENT,
-    borderRightColor: TRANSPARENT,
-    borderTopColor: TRANSPARENT,
-    zIndex: 10001
   }
 });
