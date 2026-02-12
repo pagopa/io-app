@@ -10,6 +10,7 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo } from "react";
 import { ListRenderItemInfo, RefreshControl } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import I18n from "i18next";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
@@ -48,6 +49,7 @@ export const InstitutionServicesScreen = ({
 }: InstitutionServicesScreen) => {
   const { institutionId, institutionName } = route.params;
 
+  const insets = useSafeAreaInsets();
   const theme = useIOTheme();
   const dispatch = useIODispatch();
   const animatedFlatListRef =
@@ -199,11 +201,9 @@ export const InstitutionServicesScreen = ({
         marginHorizontal: -IOVisualCostants.appMarginDefault
       }}
       ListFooterComponent={ListFooterComponent}
-      ListFooterComponentStyle={{
-        marginBottom: 16
-      }}
       contentContainerStyle={{
         flexGrow: 1,
+        paddingBottom: insets.bottom,
         paddingHorizontal: IOVisualCostants.appMarginDefault
       }}
       data={data?.services}
