@@ -4,6 +4,7 @@ import {
   HSpacer,
   IOButton,
   IOColors,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useCallback, useState } from "react";
@@ -36,8 +37,10 @@ export const TourTooltip = ({
   totalSteps
 }: Props) => {
   const dispatch = useIODispatch();
+  const theme = useIOTheme();
   const groupId = useIOSelector(activeGroupIdSelector);
   const insets = useSafeAreaInsets();
+  const tooltipBgColor = IOColors[theme["appBackground-primary"]];
   const { width: screenWidth, height: screenHeight } = Dimensions.get("screen");
   const { handleNext } = useTourStepNavigation();
 
@@ -93,23 +96,37 @@ export const TourTooltip = ({
       onLayout={e => setTooltipHeight(e.nativeEvent.layout.height)}
       pointerEvents="box-none"
     >
-      {showAbove && <View style={[styles.arrowDown, { left: arrowLeft }]} />}
-      {!showAbove && (
-        <View style={[styles.arrowUp, { left: arrowLeft, top: -ARROW_SIZE }]} />
+      {showAbove && (
+        <View
+          style={[
+            styles.arrowDown,
+            { left: arrowLeft, borderTopColor: tooltipBgColor }
+          ]}
+        />
       )}
-      <View style={styles.tooltip}>
-        <H6 color="white">{title}</H6>
+      {!showAbove && (
+        <View
+          style={[
+            styles.arrowUp,
+            {
+              left: arrowLeft,
+              top: -ARROW_SIZE,
+              borderBottomColor: tooltipBgColor
+            }
+          ]}
+        />
+      )}
+      <View style={[styles.tooltip, { backgroundColor: tooltipBgColor }]}>
+        <H6>{title}</H6>
         <VSpacer size={4} />
-        <Body color="white">{description}</Body>
+        <Body>{description}</Body>
         <VSpacer size={8} />
-        <Body color="white" weight="Semibold">
-          {`${stepIndex + 1} / ${totalSteps}`}
-        </Body>
+        <Body weight="Semibold">{`${stepIndex + 1} / ${totalSteps}`}</Body>
         <VSpacer size={16} />
         <View style={styles.buttonsRow}>
           <IOButton
             variant="link"
-            color="contrast"
+            color="primary"
             label={I18n.t("features.tour.skip")}
             onPress={handleSkip}
           />
@@ -118,7 +135,7 @@ export const TourTooltip = ({
               <>
                 <IOButton
                   variant="link"
-                  color="contrast"
+                  color="primary"
                   label={I18n.t("features.tour.back")}
                   onPress={handleBack}
                 />
@@ -126,8 +143,8 @@ export const TourTooltip = ({
               </>
             )}
             <IOButton
-              variant="solid"
-              color="contrast"
+              variant="link"
+              color="primary"
               label={
                 isLastStep
                   ? I18n.t("features.tour.done")
@@ -148,8 +165,8 @@ const styles = StyleSheet.create({
     zIndex: 10000
   },
   tooltip: {
-    backgroundColor: IOColors["blueIO-850"],
     borderRadius: 8,
+    borderCurve: "continuous",
     padding: 16
   },
   buttonsRow: {
@@ -170,7 +187,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: ARROW_SIZE,
     borderLeftColor: TRANSPARENT,
     borderRightColor: TRANSPARENT,
-    borderBottomColor: IOColors["blueIO-850"],
+    borderBottomColor: TRANSPARENT,
     zIndex: 10001
   },
   arrowDown: {
@@ -183,7 +200,7 @@ const styles = StyleSheet.create({
     borderTopWidth: ARROW_SIZE,
     borderLeftColor: TRANSPARENT,
     borderRightColor: TRANSPARENT,
-    borderTopColor: IOColors["blueIO-850"],
+    borderTopColor: TRANSPARENT,
     zIndex: 10001
   }
 });
