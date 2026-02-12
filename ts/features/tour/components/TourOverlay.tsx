@@ -1,11 +1,17 @@
 /* eslint-disable functional/immutable-data */
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
-import { Canvas, DiffRect, rect, rrect } from "@shopify/react-native-skia";
+import {
+  Canvas,
+  Group,
+  Paint,
+  Rect,
+  RoundedRect
+} from "@shopify/react-native-skia";
 import Animated, {
+  Easing,
   runOnJS,
   useAnimatedStyle,
-  useDerivedValue,
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
@@ -22,8 +28,9 @@ import { TourTooltip } from "./TourTooltip";
 
 const OVERLAY_COLOR = "rgba(0,0,0,0.5)";
 const CUTOUT_BORDER_RADIUS = 8;
-const CUTOUT_PADDING = 4;
-const ANIMATION_DURATION = 300;
+const CUTOUT_PADDING = 0;
+const ANIMATION_DURATION = 350;
+const STEP_EASING = Easing.inOut(Easing.exp);
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
 
@@ -46,6 +53,7 @@ export const TourOverlay = () => {
   const cutoutW = useSharedValue(0);
   const cutoutH = useSharedValue(0);
   const opacity = useSharedValue(0);
+  const cutoutOpacity = useSharedValue(1);
 
   const [measurement, setMeasurement] = useState<
     TourItemMeasurement | undefined
@@ -112,27 +120,39 @@ export const TourOverlay = () => {
       height: m.height + CUTOUT_PADDING * 2
     };
 
-    setMeasurement(padded);
-    setTooltipConfig(getConfig(groupId, currentItem.index));
+    const config = getConfig(groupId, currentItem.index);
 
     if (isFirstMeasurement.current) {
       // First step: position cutout immediately, then fade the overlay in
       isFirstMeasurement.current = false;
+      setMeasurement(padded);
+      setTooltipConfig(config);
       cutoutX.value = padded.x;
       cutoutY.value = padded.y;
       cutoutW.value = padded.width;
       cutoutH.value = padded.height;
+      cutoutOpacity.value = 1;
       opacity.value = withTiming(1, { duration: ANIMATION_DURATION });
     } else {
-      // Subsequent steps: animate cutout to the new position
-      cutoutX.value = withTiming(padded.x, { duration: ANIMATION_DURATION });
-      cutoutY.value = withTiming(padded.y, { duration: ANIMATION_DURATION });
-      cutoutW.value = withTiming(padded.width, {
-        duration: ANIMATION_DURATION
-      });
-      cutoutH.value = withTiming(padded.height, {
-        duration: ANIMATION_DURATION
-      });
+      // Subsequent steps: fade out cutout, reposition, then fade back in
+      const updateStepUI = () => {
+        setMeasurement(padded);
+        setTooltipConfig(config);
+      };
+      cutoutOpacity.value = withTiming(
+        0,
+        { duration: ANIMATION_DURATION },
+        () => {
+          cutoutX.value = padded.x;
+          cutoutY.value = padded.y;
+          cutoutW.value = padded.width;
+          cutoutH.value = padded.height;
+          runOnJS(updateStepUI)();
+          cutoutOpacity.value = withTiming(1, {
+            duration: ANIMATION_DURATION
+          });
+        }
+      );
     }
   }, [
     groupId,
@@ -145,6 +165,7 @@ export const TourOverlay = () => {
     cutoutY,
     cutoutW,
     cutoutH,
+    cutoutOpacity,
     opacity
   ]);
 
@@ -153,19 +174,6 @@ export const TourOverlay = () => {
       void measureCurrentStep();
     }
   }, [visible, measureCurrentStep]);
-
-  // Skia DiffRect: outer = full screen, inner = animated cutout (runs on UI thread)
-  const outerRect = useDerivedValue(() =>
-    rrect(rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), 0, 0)
-  );
-
-  const innerRect = useDerivedValue(() =>
-    rrect(
-      rect(cutoutX.value, cutoutY.value, cutoutW.value, cutoutH.value),
-      CUTOUT_BORDER_RADIUS,
-      CUTOUT_BORDER_RADIUS
-    )
-  );
 
   const animatedContainerStyle = useAnimatedStyle(() => ({
     opacity: opacity.value
@@ -182,7 +190,25 @@ export const TourOverlay = () => {
       pointerEvents={isActive ? "auto" : "none"}
     >
       <Canvas style={styles.overlay} pointerEvents="none">
-        <DiffRect outer={outerRect} inner={innerRect} color={OVERLAY_COLOR} />
+        <Group layer={<Paint />}>
+          <Rect
+            x={0}
+            y={0}
+            width={SCREEN_WIDTH}
+            height={SCREEN_HEIGHT}
+            color={OVERLAY_COLOR}
+          />
+          <Group blendMode="dstOut" opacity={cutoutOpacity}>
+            <RoundedRect
+              x={cutoutX}
+              y={cutoutY}
+              width={cutoutW}
+              height={cutoutH}
+              r={CUTOUT_BORDER_RADIUS}
+              color="black"
+            />
+          </Group>
+        </Group>
       </Canvas>
       {measurement && tooltipConfig && (
         <TourTooltip
@@ -191,6 +217,7 @@ export const TourOverlay = () => {
           description={tooltipConfig.description}
           stepIndex={stepIndex}
           totalSteps={items.length}
+          opacity={cutoutOpacity}
         />
       )}
     </Animated.View>

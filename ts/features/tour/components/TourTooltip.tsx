@@ -9,6 +9,10 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useCallback, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
+import Animated, {
+  SharedValue,
+  useAnimatedStyle
+} from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -27,6 +31,7 @@ type Props = {
   description: string;
   stepIndex: number;
   totalSteps: number;
+  opacity: SharedValue<number>;
 };
 
 export const TourTooltip = ({
@@ -34,7 +39,8 @@ export const TourTooltip = ({
   title,
   description,
   stepIndex,
-  totalSteps
+  totalSteps,
+  opacity
 }: Props) => {
   const dispatch = useIODispatch();
   const theme = useIOTheme();
@@ -90,11 +96,16 @@ export const TourTooltip = ({
     dispatch(prevTourStepAction());
   }, [dispatch]);
 
+  const animatedStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value
+  }));
+
   return (
-    <View
+    <Animated.View
       style={[
         styles.container,
-        { top: tooltipTop, left: tooltipLeft, width: tooltipWidth }
+        { top: tooltipTop, left: tooltipLeft, width: tooltipWidth },
+        animatedStyle
       ]}
       onLayout={e => setTooltipHeight(e.nativeEvent.layout.height)}
       pointerEvents="box-none"
@@ -150,7 +161,7 @@ export const TourTooltip = ({
           </View>
         </View>
       </View>
-    </View>
+    </Animated.View>
   );
 };
 
