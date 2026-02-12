@@ -85,12 +85,6 @@ const FciQtspClausesScreen = () => {
     });
   };
 
-  useHeaderSecondLevel({
-    title: "",
-    supportRequest: true,
-    contextualHelp: emptyContextualHelp
-  });
-
   if (fciPollFilledDocumentError && !isPollFilledDocumentReady) {
     return (
       <SignatureStatusComponent
