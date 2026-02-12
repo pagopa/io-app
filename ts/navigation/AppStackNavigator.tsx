@@ -9,7 +9,6 @@ import {
   NavigationContainer,
   NavigationContainerProps
 } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
 import { PropsWithChildren, ReactElement, useEffect, useRef } from "react";
 
 import { Linking, View } from "react-native";
@@ -21,7 +20,6 @@ import FocusAwareStatusBar from "../components/ui/FocusAwareStatusBar";
 import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
 import { fciLinkingOptions } from "../features/fci/navigation/FciStackNavigator";
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
-import { IngressScreen } from "../features/ingress/screens/IngressScreen";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
 import { storeLinkingUrl } from "../features/linking/actions";
@@ -46,6 +44,7 @@ import {
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
+import IngressStackNavigator from "./IngressStackNavigator";
 import NavigationService, {
   navigationRef,
   setMainNavigatorReady
@@ -55,7 +54,6 @@ import OfflineStackNavigator from "./OfflineStackNavigator";
 import { linkingSubscription } from "./linkingSubscription";
 import { AppParamsList } from "./params/AppParamsList";
 import ROUTES from "./routes";
-import IngressStackNavigator from "./IngressStackNavigator";
 
 type OnStateChangeStateType = Parameters<
   NonNullable<NavigationContainerProps["onStateChange"]>
