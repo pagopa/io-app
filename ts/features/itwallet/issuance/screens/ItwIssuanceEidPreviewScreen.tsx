@@ -1,4 +1,5 @@
 import {
+  BodySmall,
   ContentWrapper,
   ForceScrollDownView,
   H2,
@@ -193,6 +194,11 @@ const ContentView = ({ eid }: ContentViewProps) => {
             )}
           />
           <ItwCredentialPreviewClaimsList data={eid} releaserVisible={false} />
+          {isL3 && (
+            <BodySmall>
+              {I18n.t("features.itWallet.issuance.eidPreview.bottomTextL3")}
+            </BodySmall>
+          )}
         </VStack>
       </ContentWrapper>
     </ForceScrollDownView>
