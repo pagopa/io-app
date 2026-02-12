@@ -20,7 +20,7 @@ import { TourItemMeasurement } from "../types";
 import { useTourContext } from "./TourProvider";
 import { TourTooltip } from "./TourTooltip";
 
-const OVERLAY_COLOR = "rgba(0,0,0,0.7)";
+const OVERLAY_COLOR = "rgba(0,0,0,0.5)";
 const CUTOUT_BORDER_RADIUS = 8;
 const CUTOUT_PADDING = 4;
 const ANIMATION_DURATION = 300;

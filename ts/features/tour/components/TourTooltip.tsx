@@ -162,14 +162,15 @@ const styles = StyleSheet.create({
   tooltip: {
     borderRadius: BORDER_RADIUS,
     borderCurve: "continuous",
-    padding: 16
+    padding: 16,
+    boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.15)"
   },
   arrow: {
     position: "absolute",
     width: ARROW_SIZE,
     height: ARROW_SIZE,
     transform: [{ rotate: "45deg" }],
-    zIndex: -1
+    zIndex: 2
   },
   buttonsRow: {
     flexDirection: "row",
