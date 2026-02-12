@@ -179,7 +179,7 @@ export const TourOverlay = () => {
     <Animated.View
       ref={overlayRef}
       style={[styles.container, animatedContainerStyle]}
-      pointerEvents={isActive ? "box-none" : "none"}
+      pointerEvents={isActive ? "auto" : "none"}
     >
       <Canvas style={styles.overlay} pointerEvents="none">
         <DiffRect outer={outerRect} inner={innerRect} color={OVERLAY_COLOR} />
