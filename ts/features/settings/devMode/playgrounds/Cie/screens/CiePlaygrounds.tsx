@@ -3,6 +3,7 @@ import {
   ListItemHeader,
   ListItemInfo,
   ListItemNav,
+  useIOToast,
   VStack
 } from "@pagopa/io-app-design-system";
 import { CieLogger, CieUtils } from "@pagopa/io-react-native-cie";
@@ -16,6 +17,7 @@ import { CIE_PLAYGROUNDS_ROUTES } from "../navigation/routes";
 
 export const CiePlaygrounds = () => {
   const navigation = useCieNavigation();
+  const toast = useIOToast();
   const [hasNFC, setHasNFC] = useState<boolean | undefined>();
   const [isNFCEnabled, setIsNFCEnabled] = useState<boolean | undefined>();
   const [isCieAuthenticationSupported, setIsCieAuthenticationSupported] =
@@ -44,11 +46,7 @@ export const CiePlaygrounds = () => {
           data: logs
         });
       } catch (e) {
-        navigation.navigate(CIE_PLAYGROUNDS_ROUTES.RESULT, {
-          title: "Logs",
-          data: e,
-          isError: true
-        });
+        toast.error("Perform a test first to generate some logs");
       }
     }
   };

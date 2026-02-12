@@ -24,9 +24,9 @@ export const CiePlaygroundsNavigator = () => {
    * Set CIE logger to local file mode when the playground is mounted, and disable it when unmounted.
    */
   useEffect(() => {
-    CieLogger.setLogMode("localFile");
+    CieLogger.setLogMode("FILE");
     return () => {
-      CieLogger.setLogMode("disabled");
+      CieLogger.setLogMode("DISABLED");
     };
   }, []);
 

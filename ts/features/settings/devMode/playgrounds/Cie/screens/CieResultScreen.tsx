@@ -13,10 +13,10 @@ export type Props = IOStackNavigationRouteProps<
 >;
 
 export function CieResultScreen({ route }: Props) {
-  const { title, data, isError = false } = route.params;
+  const { title, data } = route.params;
 
   useHeaderSecondLevel({
-    title: `${isError ? "Error" : "Result"}: ${title}`
+    title
   });
 
   const handleCopy = async () => {
@@ -34,8 +34,8 @@ export function CieResultScreen({ route }: Props) {
           ...(Platform.OS === "ios" ? { url: title } : {})
         },
         {
-          subject: `${title} ${isError ? "Error" : "Result"}`,
-          dialogTitle: `Share ${title} ${isError ? "Error" : "Result"}`
+          subject: `${title} "Result"`,
+          dialogTitle: `Share ${title} "Result"`
         }
       );
     } catch (error) {
@@ -59,10 +59,7 @@ export function CieResultScreen({ route }: Props) {
           }
         }}
       >
-        <View
-          style={[styles.content, isError && styles.contentError]}
-          pointerEvents="box-only"
-        >
+        <View style={styles.content} pointerEvents="box-only">
           <IOText
             font="FiraCode"
             size={12}
@@ -91,8 +88,5 @@ const styles = StyleSheet.create({
   content: {
     backgroundColor: IOColors["grey-50"],
     padding: 8
-  },
-  contentError: {
-    backgroundColor: IOColors["error-100"]
   }
 });
