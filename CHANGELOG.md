@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.24.0-rc.4](https://github.com/pagopa/io-app/compare/3.24.0-rc.3...3.24.0-rc.4) (2026-02-12)
+
+
+### Features
+
+* [[IOCOM-2939](https://pagopa.atlassian.net/browse/IOCOM-2939)] SEND lollipop-lambda playground ([#7845](https://github.com/pagopa/io-app/issues/7845)) ([f451f69](https://github.com/pagopa/io-app/commit/f451f6979fca94ad62776bd698e77ab8a3334cf3))
+* **IT Wallet:** [[SIW-2992](https://pagopa.atlassian.net/browse/SIW-2992)] Remote management of the IPZS privacy URL ([#7853](https://github.com/pagopa/io-app/issues/7853)) ([d4fe7df](https://github.com/pagopa/io-app/commit/d4fe7dfe371193fdd25187c3e3ff22c79dfa9f00))
+* **IT Wallet:** [[SIW-3844](https://pagopa.atlassian.net/browse/SIW-3844),[SIW-3845](https://pagopa.atlassian.net/browse/SIW-3845)] Update copies in WI activation ([#7864](https://github.com/pagopa/io-app/issues/7864)) ([d0624cd](https://github.com/pagopa/io-app/commit/d0624cd38a0372c42a7ceae13262312e7fa04f5f))
+
+
+### Bug Fixes
+
+* [[IOPID-3738](https://pagopa.atlassian.net/browse/IOPID-3738)] Adjust list bottom padding to prevent navigation bar overlap ([#7865](https://github.com/pagopa/io-app/issues/7865)) ([e95d1aa](https://github.com/pagopa/io-app/commit/e95d1aa7ce14a10c96d5c0b960348c7d174114ee)), closes [/#diff-c4fd99f2a490e089161c025fc4b66909f09237a2b48a9a0074a1de6f4b48dd61R131-R134](https://github.com/pagopa///issues/diff-c4fd99f2a490e089161c025fc4b66909f09237a2b48a9a0074a1de6f4b48dd61R131-R134) [/#diff-1ee89d3e0af6594fb5618ea568c4bb28955946f8a56658051245b7dbf81ca02bL202-R206](https://github.com/pagopa///issues/diff-1ee89d3e0af6594fb5618ea568c4bb28955946f8a56658051245b7dbf81ca02bL202-R206) [/#diff-e6cd99af3eb52e146c573278e022ab72192ed1b3705ee1b947dc58a61e08231fR241-R242](https://github.com/pagopa///issues/diff-e6cd99af3eb52e146c573278e022ab72192ed1b3705ee1b947dc58a61e08231fR241-R242) [/#diff-1ee89d3e0af6594fb5618ea568c4bb28955946f8a56658051245b7dbf81ca02bR13](https://github.com/pagopa///issues/diff-1ee89d3e0af6594fb5618ea568c4bb28955946f8a56658051245b7dbf81ca02bR13) [/#diff-1ee89d3e0af6594fb5618ea568c4bb28955946f8a56658051245b7dbf81ca02bR52](https://github.com/pagopa///issues/diff-1ee89d3e0af6594fb5618ea568c4bb28955946f8a56658051245b7dbf81ca02bR52)
+
+
+### Chores
+
+* [[IEL-54](https://pagopa.atlassian.net/browse/IEL-54)] Adjusted pdf vertical positioning ([#7861](https://github.com/pagopa/io-app/issues/7861)) ([a853401](https://github.com/pagopa/io-app/commit/a853401fb0dc4e6fab0b98470a13006f5060cc2c)), closes [/github.com/pagopa/io-app/pull/7861/changes#diff-22a00a9883d0bdf296564791d8745fc2354d0cf4f0e42fe1a3dc85e9211bc988R66](https://github.com/pagopa//github.com/pagopa/io-app/pull/7861/changes/issues/diff-22a00a9883d0bdf296564791d8745fc2354d0cf4f0e42fe1a3dc85e9211bc988R66)
+* **IT-Wallet:** [[SIW-3850](https://pagopa.atlassian.net/browse/SIW-3850)] Align cie bottomsheet mixpanel tracking ([#7856](https://github.com/pagopa/io-app/issues/7856)) ([61892e7](https://github.com/pagopa/io-app/commit/61892e70825e160f900506dc44fe5f5fdd2d391b))
+
 ## [3.24.0-rc.3](https://github.com/pagopa/io-app/compare/3.24.0-rc.2...3.24.0-rc.3) (2026-02-11)
 
 
