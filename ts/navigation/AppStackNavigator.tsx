@@ -55,14 +55,7 @@ import OfflineStackNavigator from "./OfflineStackNavigator";
 import { linkingSubscription } from "./linkingSubscription";
 import { AppParamsList } from "./params/AppParamsList";
 import ROUTES from "./routes";
-
-const IngressStack = createStackNavigator();
-
-const IngressStackNavigator = (): ReactElement => (
-  <IngressStack.Navigator screenOptions={{ headerShown: false }}>
-    <IngressStack.Screen name="INGRESS" component={IngressScreen} />
-  </IngressStack.Navigator>
-);
+import IngressStackNavigator from "./IngressStackNavigator";
 
 type OnStateChangeStateType = Parameters<
   NonNullable<NavigationContainerProps["onStateChange"]>
