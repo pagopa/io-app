@@ -4902,7 +4902,7 @@
         },
         "modeSelection": {
           "section": {
-            "issuance": "Ottieni {{ feature }}",
+            "issuance": "Attiva {{ feature }}",
             "reissuance": "Conferma periodica dell'identità"
           },
           "title": {
@@ -5142,7 +5142,8 @@
           "title": "Identità verificata",
           "titleL3": "Ci siamo quasi!",
           "subtitle": "Stai attivando **Documenti su IO** come:",
-          "subtitleL3": "Hai verificato la tua identità. \nIl tuo portafoglio IT-Wallet sarà associato a questi dati:",
+          "subtitleL3": "Hai confermato la tua identità. \nIl tuo portafoglio IT-Wallet sarà associato a questi dati:",
+          "bottomTextL3": "Se hai già aggiunto documenti al Portafoglio, questi saranno aggiornati alle funzionalità IT-Wallet, senza modifiche ai tuoi dati.",
           "actions": {
             "primary": "Continua",
             "secondary": "Annulla"
