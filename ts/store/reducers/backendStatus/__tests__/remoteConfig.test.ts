@@ -24,7 +24,8 @@ import {
   sendCustomServiceCenterUrlSelector,
   sendEstimateTimelinesUrlSelector,
   sendShowAbstractSelector,
-  sendVisitTheWebsiteUrlSelector
+  sendVisitTheWebsiteUrlSelector,
+  isSendLollipopPlaygroundEnabledSelector
 } from "../remoteConfig";
 
 describe("remoteConfig", () => {
@@ -1269,5 +1270,49 @@ describe("sendVisitTheWebsiteUrlSelector", () => {
     } as GlobalState;
     const output = sendVisitTheWebsiteUrlSelector(state);
     expect(output).toBe(expectedOutput);
+  });
+});
+
+describe("isSendLollipopPlaygroundEnabledSelector", () => {
+  it("should return false if remoteConfig is not set", () => {
+    const state = {
+      remoteConfig: O.none
+    } as GlobalState;
+    const output = isSendLollipopPlaygroundEnabledSelector(state);
+    expect(output).toBe(false);
+  });
+
+  it("should return false if lollipopPlaygroundEnabled property is not set", () => {
+    const state = {
+      remoteConfig: O.some({
+        pn: {}
+      })
+    } as GlobalState;
+    const output = isSendLollipopPlaygroundEnabledSelector(state);
+    expect(output).toBe(false);
+  });
+
+  it("should return false if lollipopPlaygroundEnabled is false", () => {
+    const state = {
+      remoteConfig: O.some({
+        pn: {
+          lollipopPlaygroundEnabled: false
+        }
+      })
+    } as GlobalState;
+    const output = isSendLollipopPlaygroundEnabledSelector(state);
+    expect(output).toBe(false);
+  });
+
+  it("should return true if lollipopPlaygroundEnabled is true", () => {
+    const state = {
+      remoteConfig: O.some({
+        pn: {
+          lollipopPlaygroundEnabled: true
+        }
+      })
+    } as GlobalState;
+    const output = isSendLollipopPlaygroundEnabledSelector(state);
+    expect(output).toBe(true);
   });
 });
