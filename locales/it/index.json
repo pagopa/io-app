@@ -4485,8 +4485,8 @@
       "onboarding": {
         "title": "Cosa vuoi aggiungere al Portafoglio?",
         "sections": {
-          "itw": "Documenti su IO",
-          "other": "Altro"
+          "itw": "Documenti",
+          "other": "Bonus e altro"
         },
         "badge": {
           "active": "Già presente",

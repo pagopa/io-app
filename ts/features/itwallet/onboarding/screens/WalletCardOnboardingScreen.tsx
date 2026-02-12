@@ -1,15 +1,19 @@
 import {
   Badge,
   BannerErrorState,
+  H6,
   IOVisualCostants,
   ListItemHeader,
   ModuleCredential,
+  TabItem,
+  TabNavigation,
+  useIOTheme,
   VStack
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback, useMemo } from "react";
-import { StyleSheet, View } from "react-native";
 import I18n from "i18next";
+import { useCallback, useMemo, useState } from "react";
+import { StyleSheet, View } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -26,21 +30,22 @@ import {
   trackStartAddNewCredential
 } from "../../analytics";
 import { ItwDiscoveryBannerOnboarding } from "../../common/components/discoveryBanner/ItwDiscoveryBannerOnboarding";
+import { PoweredByItWalletText } from "../../common/components/PoweredByItWalletText.tsx";
+import { selectItwEnv } from "../../common/store/selectors/environment";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { isItwEnabledSelector } from "../../common/store/selectors/remoteConfig";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { selectItwEnv } from "../../common/store/selectors/environment";
 import {
   availableCredentials,
   newCredentials,
   upcomingCredentials
 } from "../../common/utils/itwCredentialUtils";
+import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions/index.ts";
 import {
   itwIsCredentialsCatalogueLoading,
   itwIsCredentialsCatalogueUnavailable
 } from "../../credentialsCatalogue/store/selectors/index.ts";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
-import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions/index.ts";
 
 /**
  * Local feature flag that enables catalogue loading/error handling.
@@ -58,6 +63,7 @@ const WalletCardOnboardingScreen = () => {
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
   const isFiscalCodeWhitelisted = useIOSelector(itwIsL3EnabledSelector);
   useFocusEffect(trackShowCredentialsList);
+  const [page, setPage] = useState(0);
 
   const isItwSectionVisible = useMemo(
     // IT Wallet credential catalog should be visible if
@@ -76,10 +82,36 @@ const WalletCardOnboardingScreen = () => {
       faqCategories={["wallet", "wallet_methods"]}
       headerActionsProp={{ showHelp: true }}
     >
+      <TabNavigation
+        tabAlignment="start"
+        selectedIndex={page}
+        onItemPress={setPage}
+      >
+        {isItwSectionVisible ? (
+          <TabItem
+            label={I18n.t("features.wallet.onboarding.sections.itw")}
+            accessibilityLabel={I18n.t(
+              "features.wallet.onboarding.sections.itw"
+            )}
+          />
+        ) : (
+          <></>
+        )}
+        <TabItem
+          label={I18n.t("features.wallet.onboarding.sections.other")}
+          accessibilityLabel={I18n.t(
+            "features.wallet.onboarding.sections.other"
+          )}
+        />
+      </TabNavigation>
       <View style={styles.wrapper}>
         <ItwDiscoveryBannerOnboarding />
-        {isItwSectionVisible ? <ItwCredentialOnboardingSection /> : null}
-        <OtherCardsOnboardingSection showTitle={isItwSectionVisible} />
+        {isItwSectionVisible && page === 0 ? (
+          <ItwCredentialOnboardingSection />
+        ) : null}
+        {page === 1 && (
+          <OtherCardsOnboardingSection showTitle={isItwSectionVisible} />
+        )}
       </View>
     </IOScrollViewWithLargeHeader>
   );
@@ -87,6 +119,7 @@ const WalletCardOnboardingScreen = () => {
 
 const ItwCredentialOnboardingSection = () => {
   const dispatch = useIODispatch();
+  const theme = useIOTheme();
 
   const env = useIOSelector(selectItwEnv);
   const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
@@ -140,9 +173,12 @@ const ItwCredentialOnboardingSection = () => {
 
   return (
     <View>
-      <ListItemHeader
-        label={I18n.t("features.wallet.onboarding.sections.itw")}
-      />
+      <View style={styles.header}>
+        <H6 role="heading" color={theme["textBody-tertiary"]}>
+          {I18n.t("features.wallet.onboarding.sections.itw")}
+        </H6>
+        <PoweredByItWalletText />
+      </View>
       <VStack space={8}>{renderContent()}</VStack>
     </View>
   );
@@ -209,6 +245,12 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: IOVisualCostants.appMarginDefault,
     gap: 16
+  },
+  header: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingBottom: 12
   }
 });
 
