@@ -7,7 +7,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { CieLogger, CieUtils } from "@pagopa/io-react-native-cie";
 import { Fragment, useCallback, useState } from "react";
-import { Alert, Platform } from "react-native";
+import { Platform } from "react-native";
 import { IOScrollView } from "../../../../../../components/ui/IOScrollView";
 import { useAppStateActive } from "../../../../../../hooks/useAppStateActive";
 import { useHeaderSecondLevel } from "../../../../../../hooks/useHeaderSecondLevel";
@@ -44,10 +44,11 @@ export const CiePlaygrounds = () => {
           data: logs
         });
       } catch (e) {
-        Alert.alert(
-          "Error while obtaining logs",
-          JSON.stringify(e, undefined, 2)
-        );
+        navigation.navigate(CIE_PLAYGROUNDS_ROUTES.RESULT, {
+          title: "Logs",
+          data: e,
+          isError: true
+        });
       }
     }
   };

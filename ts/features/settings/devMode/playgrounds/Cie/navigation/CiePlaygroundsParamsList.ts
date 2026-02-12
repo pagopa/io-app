@@ -8,5 +8,9 @@ export type CiePlaygroundsParamsList = {
   [CIE_PLAYGROUNDS_ROUTES.INTERNAL_AUTH]: undefined;
   [CIE_PLAYGROUNDS_ROUTES.MRTD]: undefined;
   [CIE_PLAYGROUNDS_ROUTES.INTERNAL_AUTH_MRTD]: undefined;
-  [CIE_PLAYGROUNDS_ROUTES.RESULT]: { title: string; data: any };
+  [CIE_PLAYGROUNDS_ROUTES.RESULT]: {
+    title: string;
+    data: any;
+    isError?: boolean;
+  };
 };
