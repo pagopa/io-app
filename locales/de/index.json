@@ -54,10 +54,7 @@
       "Nov.",
       "Dez."
     ],
-    "meridian": [
-      "am",
-      "pm"
-    ]
+    "meridian": ["am", "pm"]
   },
   "global": {
     "why": "Warum?",
