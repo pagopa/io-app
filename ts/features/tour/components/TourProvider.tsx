@@ -6,6 +6,11 @@ import {
   useRef
 } from "react";
 import { View } from "react-native";
+import { useIODispatch } from "../../../store/hooks";
+import {
+  registerTourItemAction,
+  unregisterTourItemAction
+} from "../store/actions";
 import { TourItemMeasurement } from "../types";
 import { TourOverlay } from "./TourOverlay";
 
@@ -43,10 +48,11 @@ export const useTourContext = () => {
   return ctx;
 };
 
-export const TourProvider = ({ children }: PropsWithChildren) => {
-  const itemsRef = useRef<Map<string, TourItemConfig>>(new Map());
+const makeKey = (groupId: string, index: number) => `${groupId}::${index}`;
 
-  const makeKey = (groupId: string, index: number) => `${groupId}::${index}`;
+export const TourProvider = ({ children }: PropsWithChildren) => {
+  const dispatch = useIODispatch();
+  const itemsRef = useRef<Map<string, TourItemConfig>>(new Map());
 
   const registerItem = useCallback(
     (
@@ -55,18 +61,23 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
       viewRef: React.RefObject<View | null>,
       config: { title: string; description: string }
     ) => {
+      dispatch(registerTourItemAction({ groupId, index }));
       itemsRef.current.set(makeKey(groupId, index), {
         ref: viewRef,
         title: config.title,
         description: config.description
       });
     },
-    []
+    [dispatch]
   );
 
-  const unregisterItem = useCallback((groupId: string, index: number) => {
-    itemsRef.current.delete(makeKey(groupId, index));
-  }, []);
+  const unregisterItem = useCallback(
+    (groupId: string, index: number) => {
+      dispatch(unregisterTourItemAction({ groupId, index }));
+      itemsRef.current.delete(makeKey(groupId, index));
+    },
+    [dispatch]
+  );
 
   const getMeasurement = useCallback(
     (
