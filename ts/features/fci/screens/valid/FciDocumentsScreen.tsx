@@ -1,4 +1,9 @@
-import { FooterActionsInline, IOColors } from "@pagopa/io-app-design-system";
+import {
+  FooterActionsInline,
+  IOColors,
+  IOSpacing,
+  useFooterActionsInlineMeasurements
+} from "@pagopa/io-app-design-system";
 import {
   RouteProp,
   StackActions,
@@ -68,6 +73,11 @@ const FciDocumentsScreen = () => {
   const dispatch = useIODispatch();
   const isFocused = useIsFocused();
   const [focusEpoch, setFocusEpoch] = useState(0);
+
+  const {
+    footerActionsInlineMeasurements,
+    handleFooterActionsInlineMeasurements
+  } = useFooterActionsInlineMeasurements();
 
   useEffect(() => {
     if (documents.length !== 0 && isFocused) {
@@ -272,8 +282,18 @@ const FciDocumentsScreen = () => {
       <View style={{ flex: 1 }} testID={"FciDocumentsScreenTestID"}>
         {documents.length > 0 && (
           <>
-            {renderPager()}
+            <View
+              style={{
+                flex: 1,
+                marginBottom:
+                  footerActionsInlineMeasurements.safeBottomAreaHeight -
+                  IOSpacing.screenEndMargin
+              }}
+            >
+              {renderPager()}
+            </View>
             <FooterActionsInline
+              onMeasure={handleFooterActionsInlineMeasurements}
               startAction={cancelButtonProps}
               endAction={endActionButtonProps}
             />

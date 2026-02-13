@@ -628,7 +628,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                   messagingModuleName=""
                                   newSource={
                                     {
-                                      "uri": "https://util.wallet.ipzs.it/privacy.html",
+                                      "uri": "",
                                     }
                                   }
                                   onContentProcessDidTerminate={[Function]}
@@ -642,7 +642,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                   scrollEnabled={false}
                                   source={
                                     {
-                                      "uri": "https://util.wallet.ipzs.it/privacy.html",
+                                      "uri": "",
                                     }
                                   }
                                   style={
@@ -2201,7 +2201,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                   messagingModuleName=""
                                   newSource={
                                     {
-                                      "uri": "https://util.wallet.ipzs.it/privacy.html",
+                                      "uri": "",
                                     }
                                   }
                                   onContentProcessDidTerminate={[Function]}
@@ -2215,7 +2215,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                   scrollEnabled={false}
                                   source={
                                     {
-                                      "uri": "https://util.wallet.ipzs.it/privacy.html",
+                                      "uri": "",
                                     }
                                   }
                                   style={
