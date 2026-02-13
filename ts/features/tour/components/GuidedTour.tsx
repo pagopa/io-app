@@ -31,9 +31,5 @@ export const GuidedTour = (props: PropsWithChildren<GuidedTourProps>) => {
     props.description
   ]);
 
-  return (
-    <View ref={viewRef} collapsable={false}>
-      {props.children}
-    </View>
-  );
+  return <View ref={viewRef}>{props.children}</View>;
 };
