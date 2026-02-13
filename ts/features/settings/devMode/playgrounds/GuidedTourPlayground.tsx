@@ -5,10 +5,17 @@ import {
   IOColors,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
+import Animated, {
+  useAnimatedRef,
+  useScrollViewOffset
+} from "react-native-reanimated";
+import { useHeaderHeight } from "@react-navigation/elements";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { GuidedTour } from "../../../tour/components/GuidedTour";
+import { useTourContext } from "../../../tour/components/TourProvider";
 import {
   resetTourCompletedAction,
   startTourAction
@@ -19,13 +26,32 @@ const PLAYGROUND_GROUP_ID = "playground";
 
 export const GuidedTourPlayground = () => {
   const dispatch = useIODispatch();
+  const { registerScrollRef, unregisterScrollRef } = useTourContext();
   const isCompleted = useIOSelector(
     isTourCompletedSelector(PLAYGROUND_GROUP_ID)
   );
 
+  const scrollRef = useAnimatedRef<Animated.ScrollView>();
+  const scrollY = useScrollViewOffset(scrollRef);
+  const headerHeight = useHeaderHeight();
+
+  useEffect(() => {
+    registerScrollRef(PLAYGROUND_GROUP_ID, scrollRef, scrollY, headerHeight);
+    return () => {
+      unregisterScrollRef(PLAYGROUND_GROUP_ID);
+    };
+  }, [
+    registerScrollRef,
+    unregisterScrollRef,
+    scrollRef,
+    scrollY,
+    headerHeight
+  ]);
+
   return (
     <IOScrollViewWithLargeHeader
       title={{ label: "Guided Tour Playground" }}
+      animatedRef={scrollRef}
       includeContentMargins
     >
       <IOButton
@@ -92,6 +118,41 @@ export const GuidedTourPlayground = () => {
           <Body>Some helpful text that explains what this section does.</Body>
         </View>
       </GuidedTour>
+
+      {/* Spacer to push items below the fold */}
+      <VSpacer size={48} />
+      <View style={styles.filler} />
+      <VSpacer size={48} />
+
+      <GuidedTour
+        groupId={PLAYGROUND_GROUP_ID}
+        index={3}
+        title="Below the Fold"
+        description="This item is below the fold. The tour should auto-scroll to reveal it."
+      >
+        <View style={styles.card}>
+          <H6>Below the Fold Card</H6>
+          <VSpacer size={4} />
+          <Body>You need to scroll to see this card.</Body>
+        </View>
+      </GuidedTour>
+
+      <VSpacer size={24} />
+
+      <GuidedTour
+        groupId={PLAYGROUND_GROUP_ID}
+        index={4}
+        title="Bottom Item"
+        description="This is the last item, far down the page."
+      >
+        <View style={styles.infoBox}>
+          <Body weight="Semibold">Bottom Item</Body>
+          <VSpacer size={4} />
+          <Body>The very last tour stop at the bottom of the page.</Body>
+        </View>
+      </GuidedTour>
+
+      <VSpacer size={48} />
     </IOScrollViewWithLargeHeader>
   );
 };
@@ -101,6 +162,11 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors["grey-50"],
     borderRadius: 8,
     padding: 16
+  },
+  filler: {
+    height: 600,
+    backgroundColor: IOColors["grey-100"],
+    borderRadius: 8
   },
   infoBox: {
     backgroundColor: IOColors["grey-50"],

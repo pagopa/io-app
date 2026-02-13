@@ -34,8 +34,11 @@ const STEP_EASING = Easing.inOut(Easing.quad);
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
 
+const SCROLL_SETTLE_MS = 400;
+const VISIBLE_MARGIN = 16;
+
 export const TourOverlay = () => {
-  const { getMeasurement, getConfig } = useTourContext();
+  const { getMeasurement, getConfig, getScrollRef } = useTourContext();
   const isActive = useIOSelector(isTourActiveSelector);
   const groupId = useIOSelector(activeGroupIdSelector);
   const stepIndex = useIOSelector(activeStepIndexSelector);
@@ -44,6 +47,7 @@ export const TourOverlay = () => {
   const overlayRef = useRef<View>(null);
   const overlayOffsetRef = useRef({ x: 0, y: 0 });
   const isFirstMeasurement = useRef(true);
+  const measureGeneration = useRef(0);
 
   // Local visibility state: stays true during fade-out
   const [visible, setVisible] = useState(false);
@@ -94,6 +98,119 @@ export const TourOverlay = () => {
     []
   );
 
+  const scrollIntoViewIfNeeded = useCallback(
+    async (
+      gId: string,
+      itemIndex: number,
+      m: TourItemMeasurement,
+      generation: number
+    ): Promise<
+      | { measurement: TourItemMeasurement; didScroll: boolean; stale: false }
+      | { stale: true }
+    > => {
+      const { height: windowHeight } = Dimensions.get("window");
+      const ref = getScrollRef(gId);
+      if (!ref) {
+        return { measurement: m, didScroll: false, stale: false };
+      }
+
+      const isAboveView = m.y + m.height < ref.headerHeight + VISIBLE_MARGIN;
+      const isBelowView = m.y > windowHeight - VISIBLE_MARGIN;
+      if (!isAboveView && !isBelowView) {
+        return { measurement: m, didScroll: false, stale: false };
+      }
+
+      // Fade out cutout before scrolling so it doesn't stay
+      // visible at the old position while content moves
+      if (!isFirstMeasurement.current) {
+        await new Promise<void>(resolve => {
+          cutoutOpacity.value = withTiming(
+            0,
+            { duration: ANIMATION_DURATION, easing: STEP_EASING },
+            () => runOnJS(resolve)()
+          );
+        });
+        if (measureGeneration.current !== generation) {
+          return { stale: true };
+        }
+      }
+
+      const currentScrollY = ref.scrollY.value as number;
+      const desiredWindowY = ref.headerHeight + VISIBLE_MARGIN;
+      const scrollTarget = Math.max(0, currentScrollY + (m.y - desiredWindowY));
+      ref.scrollViewRef.current?.scrollTo({ y: scrollTarget, animated: true });
+
+      await new Promise<void>(resolve => setTimeout(resolve, SCROLL_SETTLE_MS));
+      if (measureGeneration.current !== generation) {
+        return { stale: true };
+      }
+
+      const updated = await getMeasurement(gId, itemIndex);
+      if (measureGeneration.current !== generation) {
+        return { stale: true };
+      }
+      return updated
+        ? { measurement: updated, didScroll: true, stale: false }
+        : { measurement: m, didScroll: true, stale: false };
+    },
+    [getScrollRef, getMeasurement, cutoutOpacity]
+  );
+
+  const applyCutout = useCallback(
+    (
+      padded: TourItemMeasurement,
+      config: { title: string; description: string } | undefined,
+      didScroll: boolean
+    ) => {
+      if (isFirstMeasurement.current) {
+        // First step: position cutout immediately, then fade the overlay in
+        isFirstMeasurement.current = false;
+        setMeasurement(padded);
+        setTooltipConfig(config);
+        cutoutX.value = padded.x;
+        cutoutY.value = padded.y;
+        cutoutW.value = padded.width;
+        cutoutH.value = padded.height;
+        cutoutOpacity.value = 1;
+        opacity.value = withTiming(1, { duration: ANIMATION_DURATION });
+      } else if (didScroll) {
+        // Already faded out before scrolling — reposition and fade in
+        cutoutX.value = padded.x;
+        cutoutY.value = padded.y;
+        cutoutW.value = padded.width;
+        cutoutH.value = padded.height;
+        setMeasurement(padded);
+        setTooltipConfig(config);
+        cutoutOpacity.value = withTiming(1, {
+          duration: ANIMATION_DURATION,
+          easing: STEP_EASING
+        });
+      } else {
+        // Normal step transition: fade out cutout, reposition, then fade back in
+        const updateStepUI = () => {
+          setMeasurement(padded);
+          setTooltipConfig(config);
+        };
+        cutoutOpacity.value = withTiming(
+          0,
+          { duration: ANIMATION_DURATION, easing: STEP_EASING },
+          () => {
+            cutoutX.value = padded.x;
+            cutoutY.value = padded.y;
+            cutoutW.value = padded.width;
+            cutoutH.value = padded.height;
+            runOnJS(updateStepUI)();
+            cutoutOpacity.value = withTiming(1, {
+              duration: ANIMATION_DURATION,
+              easing: STEP_EASING
+            });
+          }
+        );
+      }
+    },
+    [cutoutX, cutoutY, cutoutW, cutoutH, cutoutOpacity, opacity]
+  );
+
   const measureCurrentStep = useCallback(async () => {
     if (groupId === undefined || items.length === 0) {
       return;
@@ -103,13 +220,31 @@ export const TourOverlay = () => {
       return;
     }
 
-    const m = await getMeasurement(groupId, currentItem.index);
-    if (!m) {
+    measureGeneration.current += 1;
+    const generation = measureGeneration.current;
+
+    const initial = await getMeasurement(groupId, currentItem.index);
+    if (measureGeneration.current !== generation) {
+      return;
+    }
+    if (!initial) {
       requestAnimationFrame(() => {
         void measureCurrentStep();
       });
       return;
     }
+
+    const scrollResult = await scrollIntoViewIfNeeded(
+      groupId,
+      currentItem.index,
+      initial,
+      generation
+    );
+    if (scrollResult.stale) {
+      return;
+    }
+
+    const { measurement: m, didScroll } = scrollResult;
 
     const offset = await measureOverlayOffset();
 
@@ -121,53 +256,16 @@ export const TourOverlay = () => {
     };
 
     const config = getConfig(groupId, currentItem.index);
-
-    if (isFirstMeasurement.current) {
-      // First step: position cutout immediately, then fade the overlay in
-      isFirstMeasurement.current = false;
-      setMeasurement(padded);
-      setTooltipConfig(config);
-      cutoutX.value = padded.x;
-      cutoutY.value = padded.y;
-      cutoutW.value = padded.width;
-      cutoutH.value = padded.height;
-      cutoutOpacity.value = 1;
-      opacity.value = withTiming(1, { duration: ANIMATION_DURATION });
-    } else {
-      // Subsequent steps: fade out cutout, reposition, then fade back in
-      const updateStepUI = () => {
-        setMeasurement(padded);
-        setTooltipConfig(config);
-      };
-      cutoutOpacity.value = withTiming(
-        0,
-        { duration: ANIMATION_DURATION, easing: STEP_EASING },
-        () => {
-          cutoutX.value = padded.x;
-          cutoutY.value = padded.y;
-          cutoutW.value = padded.width;
-          cutoutH.value = padded.height;
-          runOnJS(updateStepUI)();
-          cutoutOpacity.value = withTiming(1, {
-            duration: ANIMATION_DURATION,
-            easing: STEP_EASING
-          });
-        }
-      );
-    }
+    applyCutout(padded, config, didScroll);
   }, [
     groupId,
     items,
     stepIndex,
     getMeasurement,
     getConfig,
+    scrollIntoViewIfNeeded,
     measureOverlayOffset,
-    cutoutX,
-    cutoutY,
-    cutoutW,
-    cutoutH,
-    cutoutOpacity,
-    opacity
+    applyCutout
   ]);
 
   useEffect(() => {

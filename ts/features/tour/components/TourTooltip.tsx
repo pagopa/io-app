@@ -49,31 +49,39 @@ export const TourTooltip = ({
   const groupId = useIOSelector(activeGroupIdSelector);
   const insets = useSafeAreaInsets();
   const tooltipBgColor = IOColors[theme["appBackground-primary"]];
-  const { width: screenWidth, height: screenHeight } = Dimensions.get("screen");
+  const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
   const { handleNext } = useTourStepNavigation();
 
   const [tooltipHeight, setTooltipHeight] = useState(0);
 
   const spaceAbove = itemMeasurement.y - insets.top;
   const spaceBelow =
-    screenHeight - (itemMeasurement.y + itemMeasurement.height) - insets.bottom;
+    windowHeight - (itemMeasurement.y + itemMeasurement.height) - insets.bottom;
 
   const showAbove = spaceAbove > spaceBelow;
 
-  const tooltipTop = showAbove
+  const rawTooltipTop = showAbove
     ? itemMeasurement.y - tooltipHeight - ARROW_VISIBLE - TOOLTIP_MARGIN
     : itemMeasurement.y +
       itemMeasurement.height +
       ARROW_VISIBLE +
       TOOLTIP_MARGIN;
 
+  const tooltipTop = Math.max(
+    insets.top + TOOLTIP_MARGIN,
+    Math.min(
+      rawTooltipTop,
+      windowHeight - insets.bottom - tooltipHeight - TOOLTIP_MARGIN
+    )
+  );
+
   const itemCenterX = itemMeasurement.x + itemMeasurement.width / 2;
-  const tooltipWidth = screenWidth - TOOLTIP_MARGIN * 2;
+  const tooltipWidth = windowWidth - TOOLTIP_MARGIN * 2;
   const tooltipLeft = Math.max(
     TOOLTIP_MARGIN,
     Math.min(
       itemCenterX - tooltipWidth / 2,
-      screenWidth - tooltipWidth - TOOLTIP_MARGIN
+      windowWidth - tooltipWidth - TOOLTIP_MARGIN
     )
   );
 

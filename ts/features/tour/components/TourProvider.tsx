@@ -6,6 +6,7 @@ import {
   useRef
 } from "react";
 import { View } from "react-native";
+import Animated, { AnimatedRef, SharedValue } from "react-native-reanimated";
 import { useIODispatch } from "../../../store/hooks";
 import {
   registerTourItemAction,
@@ -18,6 +19,12 @@ type TourItemConfig = {
   ref: React.RefObject<View | null>;
   title: string;
   description: string;
+};
+
+type ScrollRef = {
+  scrollViewRef: AnimatedRef<Animated.ScrollView>;
+  scrollY: SharedValue<number>;
+  headerHeight: number;
 };
 
 type TourContextValue = {
@@ -36,6 +43,14 @@ type TourContextValue = {
     groupId: string,
     index: number
   ) => { title: string; description: string } | undefined;
+  registerScrollRef: (
+    groupId: string,
+    ref: AnimatedRef<Animated.ScrollView>,
+    scrollY: SharedValue<number>,
+    headerHeight: number
+  ) => void;
+  unregisterScrollRef: (groupId: string) => void;
+  getScrollRef: (groupId: string) => ScrollRef | undefined;
 };
 
 const TourContext = createContext<TourContextValue | undefined>(undefined);
@@ -53,6 +68,7 @@ const makeKey = (groupId: string, index: number) => `${groupId}::${index}`;
 export const TourProvider = ({ children }: PropsWithChildren) => {
   const dispatch = useIODispatch();
   const itemsRef = useRef<Map<string, TourItemConfig>>(new Map());
+  const scrollRefsRef = useRef<Map<string, ScrollRef>>(new Map());
 
   const registerItem = useCallback(
     (
@@ -109,9 +125,42 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
     return { title: item.title, description: item.description };
   }, []);
 
+  const registerScrollRef = useCallback(
+    (
+      groupId: string,
+      ref: AnimatedRef<Animated.ScrollView>,
+      scrollY: SharedValue<number>,
+      headerHeight: number
+    ) => {
+      scrollRefsRef.current.set(groupId, {
+        scrollViewRef: ref,
+        scrollY,
+        headerHeight
+      });
+    },
+    []
+  );
+
+  const unregisterScrollRef = useCallback((groupId: string) => {
+    scrollRefsRef.current.delete(groupId);
+  }, []);
+
+  const getScrollRef = useCallback(
+    (groupId: string) => scrollRefsRef.current.get(groupId),
+    []
+  );
+
   return (
     <TourContext.Provider
-      value={{ registerItem, unregisterItem, getMeasurement, getConfig }}
+      value={{
+        registerItem,
+        unregisterItem,
+        getMeasurement,
+        getConfig,
+        registerScrollRef,
+        unregisterScrollRef,
+        getScrollRef
+      }}
     >
       {children}
       <TourOverlay />
