@@ -23,7 +23,8 @@ import { TourItemMeasurement } from "../types";
 import { useTourStepNavigation } from "../hooks/useTourStepNavigation";
 
 const TOOLTIP_MARGIN = 16;
-const ARROW_SIZE = 10;
+const ARROW_SIZE = 20;
+const ARROW_VISIBLE = ARROW_SIZE / 3;
 const BORDER_RADIUS = 8;
 
 type Props = {
@@ -60,10 +61,10 @@ export const TourTooltip = ({
   const showAbove = spaceAbove > spaceBelow;
 
   const tooltipTop = showAbove
-    ? itemMeasurement.y - tooltipHeight - ARROW_SIZE / 2 - TOOLTIP_MARGIN
+    ? itemMeasurement.y - tooltipHeight - ARROW_VISIBLE - TOOLTIP_MARGIN
     : itemMeasurement.y +
       itemMeasurement.height +
-      ARROW_SIZE / 2 +
+      ARROW_VISIBLE +
       TOOLTIP_MARGIN;
 
   const itemCenterX = itemMeasurement.x + itemMeasurement.width / 2;
@@ -118,8 +119,8 @@ export const TourTooltip = ({
             backgroundColor: tooltipBgColor,
             left: arrowLeft,
             ...(showAbove
-              ? { bottom: -ARROW_SIZE / 2 }
-              : { top: -ARROW_SIZE / 2 })
+              ? { bottom: -ARROW_VISIBLE }
+              : { top: -ARROW_VISIBLE })
           }
         ]}
       />
@@ -189,6 +190,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: ARROW_SIZE,
     height: ARROW_SIZE,
+    borderRadius: 4,
+    borderCurve: "continuous",
     transform: [{ rotate: "45deg" }],
     zIndex: 2
   }
