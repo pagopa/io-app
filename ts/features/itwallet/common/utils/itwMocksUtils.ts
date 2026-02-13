@@ -7,8 +7,8 @@ import mdlL3 from "../../__mocks__/L3/mdlL3.json";
 import resL3 from "../../__mocks__/L3/resL3.json";
 import tsL3 from "../../__mocks__/L3/tsL3.json";
 import mdl from "../../__mocks__/mdl.json";
-// import edipL3 from "../../__mocks__/L3/edipL3.json";
-// import edatL3 from "../../__mocks__/L3/edatL3.json";
+import edipL3 from "../../__mocks__/L3/edipL3.json";
+import edatL3 from "../../__mocks__/L3/edatL3.json";
 import statusAssertion from "../../__mocks__/statusAssertion.json";
 import ts from "../../__mocks__/ts.json";
 import { DigitalCredentialMetadata } from "./itwCredentialsCatalogueUtils";
@@ -44,9 +44,9 @@ export const ItwStoredCredentialsMocks = {
     dc: dcL3 as unknown as StoredCredential,
     ed: edL3 as unknown as StoredCredential,
     ee: eeL3 as unknown as StoredCredential,
-    res: resL3 as unknown as StoredCredential
-    // edip: edipL3 as unknown as StoredCredential,
-    // edat: edatL3 as unknown as StoredCredential
+    res: resL3 as unknown as StoredCredential,
+    edip: edipL3 as unknown as StoredCredential,
+    edat: edatL3 as unknown as StoredCredential
   }
 };
 
