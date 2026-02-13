@@ -30,7 +30,7 @@ const OVERLAY_COLOR = "rgba(0,0,0,0.5)";
 const CUTOUT_BORDER_RADIUS = 8;
 const CUTOUT_PADDING = 0;
 const ANIMATION_DURATION = 350;
-const STEP_EASING = Easing.inOut(Easing.exp);
+const STEP_EASING = Easing.inOut(Easing.quad);
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
 
@@ -141,7 +141,7 @@ export const TourOverlay = () => {
       };
       cutoutOpacity.value = withTiming(
         0,
-        { duration: ANIMATION_DURATION },
+        { duration: ANIMATION_DURATION, easing: STEP_EASING },
         () => {
           cutoutX.value = padded.x;
           cutoutY.value = padded.y;
@@ -149,7 +149,8 @@ export const TourOverlay = () => {
           cutoutH.value = padded.height;
           runOnJS(updateStepUI)();
           cutoutOpacity.value = withTiming(1, {
-            duration: ANIMATION_DURATION
+            duration: ANIMATION_DURATION,
+            easing: STEP_EASING
           });
         }
       );

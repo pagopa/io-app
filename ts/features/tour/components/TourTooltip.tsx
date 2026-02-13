@@ -1,11 +1,12 @@
 import {
   Body,
   H6,
-  HSpacer,
+  HStack,
+  IconButton,
   IOButton,
   IOColors,
   useIOTheme,
-  VSpacer
+  VStack
 } from "@pagopa/io-app-design-system";
 import { useCallback, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
@@ -123,43 +124,51 @@ export const TourTooltip = ({
         ]}
       />
       <View style={[styles.tooltip, { backgroundColor: tooltipBgColor }]}>
-        <H6>{title}</H6>
-        <VSpacer size={4} />
-        <Body>{description}</Body>
-        <VSpacer size={8} />
-        <Body weight="Semibold">{`${stepIndex + 1} / ${totalSteps}`}</Body>
-        <VSpacer size={16} />
-        <View style={styles.buttonsRow}>
-          <IOButton
-            variant="link"
-            color="primary"
-            label={I18n.t("features.tour.skip")}
-            onPress={handleSkip}
-          />
-          <View style={styles.rightButtons}>
-            {!isFirstStep && (
-              <>
+        <VStack space={16}>
+          <VStack space={4}>
+            <HStack
+              space={8}
+              style={{
+                justifyContent: "space-between",
+                alignItems: "flex-start"
+              }}
+            >
+              <H6 style={{ flexShrink: 1 }}>{title}</H6>
+              <IconButton
+                icon="closeSmall"
+                color="neutral"
+                accessibilityLabel={I18n.t("features.tour.skip")}
+                onPress={handleSkip}
+              />
+            </HStack>
+            <Body>{description}</Body>
+          </VStack>
+          <HStack
+            style={{ justifyContent: "space-between", alignItems: "center" }}
+          >
+            <Body weight="Semibold">{`${stepIndex + 1} / ${totalSteps}`}</Body>
+            <HStack space={8} style={{ alignItems: "center" }}>
+              {!isFirstStep && (
                 <IOButton
                   variant="link"
                   color="primary"
                   label={I18n.t("features.tour.back")}
                   onPress={handleBack}
                 />
-                <HSpacer size={8} />
-              </>
-            )}
-            <IOButton
-              variant="link"
-              color="primary"
-              label={
-                isLastStep
-                  ? I18n.t("features.tour.done")
-                  : I18n.t("features.tour.next")
-              }
-              onPress={handleNext}
-            />
-          </View>
-        </View>
+              )}
+              <IOButton
+                variant="link"
+                color="primary"
+                label={
+                  isLastStep
+                    ? I18n.t("features.tour.done")
+                    : I18n.t("features.tour.next")
+                }
+                onPress={handleNext}
+              />
+            </HStack>
+          </HStack>
+        </VStack>
       </View>
     </Animated.View>
   );
@@ -168,13 +177,13 @@ export const TourTooltip = ({
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    zIndex: 10000
+    zIndex: 100
   },
   tooltip: {
     borderRadius: BORDER_RADIUS,
     borderCurve: "continuous",
-    padding: 16,
-    boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.15)"
+    boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.15)",
+    padding: 16
   },
   arrow: {
     position: "absolute",
@@ -182,14 +191,5 @@ const styles = StyleSheet.create({
     height: ARROW_SIZE,
     transform: [{ rotate: "45deg" }],
     zIndex: 2
-  },
-  buttonsRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
-  rightButtons: {
-    flexDirection: "row",
-    alignItems: "center"
   }
 });
