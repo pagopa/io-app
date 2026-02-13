@@ -171,9 +171,9 @@ export const contentRepoUrl = pipe(
 );
 
 export const newContentRepoUrl =
-  Config.NEW_CONTENT_REPO_URL && Config.NEW_CONTENT_REPO_URL.trim().length > 0
-    ? Config.NEW_CONTENT_REPO_URL.trim()
-    : NEW_DEFAULT_CONTENT_REPO_URL;
+  (typeof Config.NEW_CONTENT_REPO_URL === "string" &&
+    Config.NEW_CONTENT_REPO_URL.trim()) ||
+  NEW_DEFAULT_CONTENT_REPO_URL;
 
 export const totMessageFetchWorkers = pipe(
   parseInt(Config.TOT_MESSAGE_FETCH_WORKERS, 10),
