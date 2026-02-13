@@ -1,3 +1,4 @@
+/* eslint-disable functional/immutable-data */
 import {
   createContext,
   PropsWithChildren,
@@ -38,7 +39,7 @@ type TourContextValue = {
   getMeasurement: (
     groupId: string,
     index: number
-  ) => Promise<TourItemMeasurement | undefined>;
+  ) => TourItemMeasurement | undefined;
   getConfig: (
     groupId: string,
     index: number
@@ -96,23 +97,20 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
   );
 
   const getMeasurement = useCallback(
-    (
-      groupId: string,
-      index: number
-    ): Promise<TourItemMeasurement | undefined> => {
+    (groupId: string, index: number): TourItemMeasurement | undefined => {
       const item = itemsRef.current.get(makeKey(groupId, index));
       if (!item?.ref.current) {
-        return Promise.resolve(undefined);
+        return undefined;
       }
-      return new Promise(resolve => {
-        item.ref.current?.measureInWindow((x, y, width, height) => {
-          if (width === 0 && height === 0) {
-            resolve(undefined);
-          } else {
-            resolve({ x, y, width, height });
-          }
-        });
+      const result: { value: TourItemMeasurement | undefined } = {
+        value: undefined
+      };
+      item.ref.current.measureInWindow((x, y, width, height) => {
+        if (width !== 0 || height !== 0) {
+          result.value = { x, y, width, height };
+        }
       });
+      return result.value;
     },
     []
   );

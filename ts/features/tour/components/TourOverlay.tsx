@@ -9,6 +9,7 @@ import {
   RoundedRect
 } from "@shopify/react-native-skia";
 import Animated, {
+  cancelAnimation,
   Easing,
   runOnJS,
   useAnimatedStyle,
@@ -83,20 +84,18 @@ export const TourOverlay = () => {
     }
   }, [isActive, visible, opacity]);
 
-  const measureOverlayOffset = useCallback(
-    () =>
-      new Promise<{ x: number; y: number }>(resolve => {
-        if (!overlayRef.current) {
-          resolve({ x: 0, y: 0 });
-          return;
-        }
-        overlayRef.current.measureInWindow((x, y) => {
-          overlayOffsetRef.current = { x, y };
-          resolve({ x, y });
-        });
-      }),
-    []
-  );
+  const measureOverlayOffset = useCallback(() => {
+    if (!overlayRef.current) {
+      return { x: 0, y: 0 };
+    }
+    const result = { x: 0, y: 0 };
+    overlayRef.current.measureInWindow((x, y) => {
+      result.x = x;
+      result.y = y;
+    });
+    overlayOffsetRef.current = result;
+    return result;
+  }, []);
 
   const scrollIntoViewIfNeeded = useCallback(
     async (
@@ -145,7 +144,16 @@ export const TourOverlay = () => {
         return { stale: true };
       }
 
-      const updated = await getMeasurement(gId, itemIndex);
+      const updated =
+        getMeasurement(gId, itemIndex) ??
+        // If the layout hasn't committed yet after the scroll,
+        // wait one extra frame and retry before falling back
+        // to the stale pre-scroll measurement.
+        (await new Promise<TourItemMeasurement | undefined>(resolve => {
+          requestAnimationFrame(() => {
+            resolve(getMeasurement(gId, itemIndex));
+          });
+        }));
       if (measureGeneration.current !== generation) {
         return { stale: true };
       }
@@ -186,7 +194,10 @@ export const TourOverlay = () => {
           easing: STEP_EASING
         });
       } else {
-        // Normal step transition: fade out cutout, reposition, then fade back in
+        // Normal step transition: fade out cutout, reposition, then fade back in.
+        // Cancel any lingering animation on cutoutOpacity from a previous
+        // step to ensure the completion callback fires reliably.
+        cancelAnimation(cutoutOpacity);
         const updateStepUI = () => {
           setMeasurement(padded);
           setTooltipConfig(config);
@@ -223,10 +234,7 @@ export const TourOverlay = () => {
     measureGeneration.current += 1;
     const generation = measureGeneration.current;
 
-    const initial = await getMeasurement(groupId, currentItem.index);
-    if (measureGeneration.current !== generation) {
-      return;
-    }
+    const initial = getMeasurement(groupId, currentItem.index);
     if (!initial) {
       requestAnimationFrame(() => {
         void measureCurrentStep();
@@ -246,7 +254,7 @@ export const TourOverlay = () => {
 
     const { measurement: m, didScroll } = scrollResult;
 
-    const offset = await measureOverlayOffset();
+    const offset = measureOverlayOffset();
 
     const padded: TourItemMeasurement = {
       x: m.x - offset.x - CUTOUT_PADDING,
