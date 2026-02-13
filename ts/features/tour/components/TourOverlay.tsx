@@ -38,6 +38,22 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
 const SCROLL_SETTLE_MS = 400;
 const VISIBLE_MARGIN = 16;
 
+/**
+ * Synchronous on Fabric via JSI. The callback fires inline,
+ * so the return value is available immediately.
+ */
+const measureInWindow = (view: View): TourItemMeasurement | undefined => {
+  const result: { value: TourItemMeasurement | undefined } = {
+    value: undefined
+  };
+  view.measureInWindow((x, y, width, height) => {
+    if (width !== 0 || height !== 0) {
+      result.value = { x, y, width, height };
+    }
+  });
+  return result.value;
+};
+
 export const TourOverlay = () => {
   const { getMeasurement, getConfig, getScrollRef } = useTourContext();
   const isActive = useIOSelector(isTourActiveSelector);
@@ -46,19 +62,10 @@ export const TourOverlay = () => {
   const items = useIOSelector(tourItemsForActiveGroupSelector);
 
   const overlayRef = useRef<View>(null);
-  const overlayOffsetRef = useRef({ x: 0, y: 0 });
   const isFirstMeasurement = useRef(true);
   const measureGeneration = useRef(0);
 
-  // Local visibility state: stays true during fade-out
   const [visible, setVisible] = useState(false);
-
-  const cutoutX = useSharedValue(0);
-  const cutoutY = useSharedValue(0);
-  const cutoutW = useSharedValue(0);
-  const cutoutH = useSharedValue(0);
-  const opacity = useSharedValue(0);
-  const cutoutOpacity = useSharedValue(1);
 
   const [measurement, setMeasurement] = useState<
     TourItemMeasurement | undefined
@@ -66,6 +73,13 @@ export const TourOverlay = () => {
   const [tooltipConfig, setTooltipConfig] = useState<
     { title: string; description: string } | undefined
   >(undefined);
+
+  const cutoutX = useSharedValue(0);
+  const cutoutY = useSharedValue(0);
+  const cutoutW = useSharedValue(0);
+  const cutoutH = useSharedValue(0);
+  const opacity = useSharedValue(0);
+  const cutoutOpacity = useSharedValue(1);
 
   // When tour becomes active, mount the overlay and reset first-measurement flag
   useEffect(() => {
@@ -83,19 +97,6 @@ export const TourOverlay = () => {
       });
     }
   }, [isActive, visible, opacity]);
-
-  const measureOverlayOffset = useCallback(() => {
-    if (!overlayRef.current) {
-      return { x: 0, y: 0 };
-    }
-    const result = { x: 0, y: 0 };
-    overlayRef.current.measureInWindow((x, y) => {
-      result.x = x;
-      result.y = y;
-    });
-    overlayOffsetRef.current = result;
-    return result;
-  }, []);
 
   const scrollIntoViewIfNeeded = useCallback(
     async (
@@ -170,25 +171,29 @@ export const TourOverlay = () => {
       config: { title: string; description: string } | undefined,
       didScroll: boolean
     ) => {
-      if (isFirstMeasurement.current) {
-        // First step: position cutout immediately, then fade the overlay in
-        isFirstMeasurement.current = false;
+      const updateStep = () => {
         setMeasurement(padded);
         setTooltipConfig(config);
+      };
+
+      const positionCutout = () => {
         cutoutX.value = padded.x;
         cutoutY.value = padded.y;
         cutoutW.value = padded.width;
         cutoutH.value = padded.height;
+      };
+
+      if (isFirstMeasurement.current) {
+        // First step: position cutout immediately, then fade the overlay in
+        isFirstMeasurement.current = false;
+        updateStep();
+        positionCutout();
         cutoutOpacity.value = 1;
         opacity.value = withTiming(1, { duration: ANIMATION_DURATION });
       } else if (didScroll) {
         // Already faded out before scrolling — reposition and fade in
-        cutoutX.value = padded.x;
-        cutoutY.value = padded.y;
-        cutoutW.value = padded.width;
-        cutoutH.value = padded.height;
-        setMeasurement(padded);
-        setTooltipConfig(config);
+        positionCutout();
+        updateStep();
         cutoutOpacity.value = withTiming(1, {
           duration: ANIMATION_DURATION,
           easing: STEP_EASING
@@ -198,10 +203,6 @@ export const TourOverlay = () => {
         // Cancel any lingering animation on cutoutOpacity from a previous
         // step to ensure the completion callback fires reliably.
         cancelAnimation(cutoutOpacity);
-        const updateStepUI = () => {
-          setMeasurement(padded);
-          setTooltipConfig(config);
-        };
         cutoutOpacity.value = withTiming(
           0,
           { duration: ANIMATION_DURATION, easing: STEP_EASING },
@@ -210,7 +211,7 @@ export const TourOverlay = () => {
             cutoutY.value = padded.y;
             cutoutW.value = padded.width;
             cutoutH.value = padded.height;
-            runOnJS(updateStepUI)();
+            runOnJS(updateStep)();
             cutoutOpacity.value = withTiming(1, {
               duration: ANIMATION_DURATION,
               easing: STEP_EASING
@@ -254,11 +255,16 @@ export const TourOverlay = () => {
 
     const { measurement: m, didScroll } = scrollResult;
 
-    const offset = measureOverlayOffset();
+    // Measure overlay position to convert page coords → overlay-relative coords
+    const overlayOffset = overlayRef.current
+      ? measureInWindow(overlayRef.current)
+      : undefined;
+    const ox = overlayOffset?.x ?? 0;
+    const oy = overlayOffset?.y ?? 0;
 
     const padded: TourItemMeasurement = {
-      x: m.x - offset.x - CUTOUT_PADDING,
-      y: m.y - offset.y - CUTOUT_PADDING,
+      x: m.x - ox - CUTOUT_PADDING,
+      y: m.y - oy - CUTOUT_PADDING,
       width: m.width + CUTOUT_PADDING * 2,
       height: m.height + CUTOUT_PADDING * 2
     };
@@ -272,7 +278,6 @@ export const TourOverlay = () => {
     getMeasurement,
     getConfig,
     scrollIntoViewIfNeeded,
-    measureOverlayOffset,
     applyCutout
   ]);
 
