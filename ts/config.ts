@@ -170,11 +170,10 @@ export const contentRepoUrl = pipe(
   E.getOrElse(() => DEFAULT_CONTENT_REPO_URL)
 );
 
-export const newContentRepoUrl = pipe(
-  Config.NEW_CONTENT_REPO_URL,
-  NonEmptyString.decode,
-  E.getOrElse(() => NEW_DEFAULT_CONTENT_REPO_URL)
-);
+export const newContentRepoUrl =
+  Config.NEW_CONTENT_REPO_URL && Config.NEW_CONTENT_REPO_URL.trim().length > 0
+    ? Config.NEW_CONTENT_REPO_URL.trim()
+    : NEW_DEFAULT_CONTENT_REPO_URL;
 
 export const totMessageFetchWorkers = pipe(
   parseInt(Config.TOT_MESSAGE_FETCH_WORKERS, 10),
