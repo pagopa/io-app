@@ -119,10 +119,7 @@ export const ItwCredentialTrustmark = ({
     not an absolute one. Initial value is captured on first read. */
   const relativeRoll = useDerivedValue(() => {
     const { roll } = rotationSensor.sensor.value;
-    if (initialRoll.value === null) {
-      initialRoll.value = roll;
-    }
-    return initialRoll.value - roll;
+    return (initialRoll.value ??= roll) - roll;
   });
 
   /* Get button size to set the basic boundaries */
