@@ -19,6 +19,8 @@ import {
   shouldRenderWalletLoadingStateSelector
 } from "../store/selectors";
 import { withWalletCategoryFilter } from "../utils";
+import { itwRestrictedModeSelector } from "../../itwallet/identification/common/store/selectors";
+import { ItwRestrictedModeBanner } from "../../itwallet/discovery/components/ItwRestrictedModeBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
@@ -42,6 +44,9 @@ const WalletCardsContainer = () => {
   const shouldRenderItwDiscoveryBanner = useIOSelector(
     itwShouldRenderWalletDiscoveryBannerSelector
   );
+  const shouldRenderItwRestrictedModeBanner = useIOSelector(
+    itwRestrictedModeSelector
+  );
 
   useItwWalletInstanceRevocationAlert();
 
@@ -55,7 +60,12 @@ const WalletCardsContainer = () => {
     }
     return (
       <>
-        {shouldRenderItwDiscoveryBanner && <ItwDiscoveryBanner />}
+        {shouldRenderItwDiscoveryBanner &&
+          (shouldRenderItwRestrictedModeBanner ? (
+            <ItwRestrictedModeBanner />
+          ) : (
+            <ItwDiscoveryBanner />
+          ))}
         <View testID="walletCardsContainerTestID" style={styles.content}>
           {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
           <OtherWalletCardsContainer />
@@ -66,7 +76,8 @@ const WalletCardsContainer = () => {
     shouldRenderLoadingState,
     shouldRenderEmptyState,
     shouldRenderItwCardsContainer,
-    shouldRenderItwDiscoveryBanner
+    shouldRenderItwDiscoveryBanner,
+    shouldRenderItwRestrictedModeBanner
   ]);
 
   return (

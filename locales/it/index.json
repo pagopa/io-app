@@ -4453,7 +4453,12 @@
             "cta": "Aggiungi al Portafoglio"
           },
           "emptyMessage": "La tua Patente di guida, la tua Tessera Sanitaria e altri documenti digitali appariranno qui!",
-          "cta": "Aggiungi un documento"
+          "cta": "Aggiungi un documento",
+          "restrictedMode": {
+            "title": "I tuoi documenti digitali appariranno qui",
+            "description": "Al momento puoi aggiungere solo alcuni documenti, con funzionalità ridotte.",
+            "cta": "Aggiungi documento"
+          }
         },
         "toast": {
           "newMethod": "Metodo aggiunto!"
@@ -4848,15 +4853,19 @@
           "action": "Vai al Portafoglio"
         },
         "nfcNotSupported": {
-          "title": "IT-Wallet richiede un dispositivo con tecnologia NFC",
-          "subtitle": "Il tuo dispositivo non è dotato di tecnologia NFC, necessaria per il funzionamento dei portafogli digitali.",
+          "title": "Il tuo dispositivo non ha NFC",
+          "subtitle": "Il portafoglio IT-Wallet richiede la tecnologia NFC. Senza NFC puoi aggiungere solo alcuni documenti digitali, con funzionalità ridotte.",
           "actions": {
-            "continue": "Continua senza IT-Wallet",
-            "cancel": "Non ora",
-            "l3": {
-              "continue": "Scopri di più",
-              "cancel": "Chiudi"
-            }
+            "continue": "Scopri di più",
+            "cancel": "Chiudi"
+          }
+        },
+        "continueWithoutItw": {
+          "title": "Continua con Documenti su IO",
+          "subtitle": "Il tuo dispositivo non ha la tecnologia NFC. Senza NFC puoi aggiungere solo alcuni documenti digitali, con funzionalità ridotte.",
+          "actions": {
+            "continue": "Continua",
+            "cancel": "Chiudi"
           }
         },
         "ipzsPrivacy": {

@@ -30,6 +30,8 @@ import {
 } from "../../credentials/store/selectors";
 import { ItwDiscoveryBanner } from "../../discovery/components/ItwDiscoveryBanner.tsx";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
+import { itwRestrictedModeSelector } from "../../identification/common/store/selectors/index.ts";
+import { ItwRestrictedModeBanner } from "../../discovery/components/ItwRestrictedModeBanner.tsx";
 import { ItwWalletIdStatus } from "./ItwWalletIdStatus.tsx";
 
 const LIFECYCLE_STATUS: Array<ItwJwtCredentialStatus> = [
@@ -44,6 +46,9 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const shouldHideEidAlert = useIOSelector(itwShouldHideEidLifecycleAlert);
   const shouldRenderUpgradeBanner = useIOSelector(
     itwShouldRenderUpgradeBannerSelector
+  );
+  const shouldRenderItwRestrictedModeBanner = useIOSelector(
+    itwRestrictedModeSelector
   );
 
   const cards = useIOSelector(state =>
@@ -136,8 +141,15 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         header={sectionHeader}
         topElement={
           <VStack space={16}>
-            {shouldRenderUpgradeBanner && <ItwDiscoveryBanner flow="wallet" />}
-            <ItwWalletReadyBanner />
+            {shouldRenderUpgradeBanner &&
+              (shouldRenderItwRestrictedModeBanner ? (
+                <ItwRestrictedModeBanner />
+              ) : (
+                <>
+                  <ItwDiscoveryBanner flow="wallet" />
+                  <ItwWalletReadyBanner />
+                </>
+              ))}
             {!shouldHideEidAlert && (
               <ItwEidLifecycleAlert
                 lifecycleStatus={LIFECYCLE_STATUS}
