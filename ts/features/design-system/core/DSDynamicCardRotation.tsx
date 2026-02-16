@@ -98,18 +98,12 @@ export const DSDynamicCardRotation = () => {
     not absolute ones. Initial values are captured on first read. */
   const relativeRoll = useDerivedValue(() => {
     const { roll } = rotationSensor.sensor.value;
-    if (initialRoll.value === null) {
-      initialRoll.value = roll;
-    }
-    return -(initialRoll.value - roll);
+    return -((initialRoll.value ??= roll) - roll);
   });
 
   const relativePitch = useDerivedValue(() => {
     const { pitch } = rotationSensor.sensor.value;
-    if (initialPitch.value === null) {
-      initialPitch.value = pitch;
-    }
-    return initialPitch.value - pitch;
+    return (initialPitch.value ??= pitch) - pitch;
   });
 
   /* Get both card and light sizes to set the basic boundaries */
