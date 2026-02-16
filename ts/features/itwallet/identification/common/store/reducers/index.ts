@@ -1,9 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { PersistConfig, persistReducer } from "redux-persist";
 import { Action } from "../../../../../../store/actions/types";
 import { itwHasNfcFeature, itwRestrictedMode } from "../actions";
-import createSecureStorage from "../../../../../../store/storages/keychain";
 
 export type ItwIdentificationState = {
   hasNfcFeature: pot.Pot<boolean, Error>;
@@ -45,6 +43,8 @@ const reducer = (
 };
 
 export default reducer;
+
+// TODO: method to persist
 
 // const CURRENT_REDUX_ITW_IDENTIFICATION_STORE_VERSION = -1;
 
