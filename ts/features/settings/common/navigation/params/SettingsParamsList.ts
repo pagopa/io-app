@@ -37,6 +37,7 @@ export type SettingsParamsList = {
   [SETTINGS_ROUTES.APP_FEEDBACK_PLAYGROUND]: undefined;
   [SETTINGS_ROUTES.CIE_PLAYGROUND]: undefined;
   [SETTINGS_ROUTES.NFC_PLAYGROUND]: undefined;
+  [SETTINGS_ROUTES.SEND_PLAYGROUND]: undefined;
   [SETTINGS_ROUTES.SETTINGS_MAIN]: undefined;
   [SETTINGS_ROUTES.AUTHENTICATION]: NavigatorScreenParams<AuthenticationParamsList>;
 };
