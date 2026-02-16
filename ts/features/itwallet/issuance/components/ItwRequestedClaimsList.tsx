@@ -71,15 +71,27 @@ const ItwRequiredClaimsList = ({ items }: ItwRequiredClaimsListProps) => {
  * @returns An {@link H6} element with the claim value or multiple {@link H6} elements in case of an array
  */
 const ClaimText = ({ claim }: { claim: ClaimDisplayFormat }) => {
-  const displayValue = getClaimDisplayValue(claim);
-  return Array.isArray(displayValue) ? (
-    displayValue.map((value, index) => {
-      const safeValue = getSafeText(value);
-      return <H6 key={`${index}_${safeValue}`}>{safeValue}</H6>;
-    })
-  ) : isStringNullyOrEmpty(displayValue) ? null : ( // We want to exclude empty strings and null values
-    <H6>{getSafeText(displayValue)}</H6>
-  );
+  const display = getClaimDisplayValue(claim);
+
+  switch (display.renderAs) {
+    case "list":
+      return (
+        <>
+          {display.value.map((value, index) => {
+            const safeValue = getSafeText(value);
+            return <H6 key={`${index}_${safeValue}`}>{safeValue}</H6>;
+          })}
+        </>
+      );
+
+    case "text":
+      return isStringNullyOrEmpty(display.value) ? null : ( // We want to exclude empty strings and null values
+        <H6>{getSafeText(display.value)}</H6>
+      );
+
+    default:
+      return null;
+  }
 };
 
 const styles = StyleSheet.create({

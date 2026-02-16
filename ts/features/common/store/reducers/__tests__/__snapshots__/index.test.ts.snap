@@ -329,6 +329,8 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "latestTransactions": {
         "kind": "PotNone",
       },
+      "latestTransactionsContinuationToken": undefined,
+      "needsHomeListRefresh": false,
       "receiptDocument": {
         "kind": "PotNone",
       },
@@ -354,6 +356,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
     "loginEngagement": {
       "hasSendEngagementScreenBeenDismissed": false,
+    },
+    "lollipopLambda": {
+      "type": "idle",
     },
     "tempAarMandate": {
       "mandate": {
