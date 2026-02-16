@@ -2,6 +2,7 @@ import {
   Badge,
   ContentWrapper,
   IOButton,
+  ListItemHeader,
   ModuleNavigationAlt,
   VSpacer,
   VStack
@@ -14,13 +15,9 @@ import LoadingScreenContent from "../../../../../components/screens/LoadingScree
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
-import {
-  trackItWalletIDMethod,
-  trackItwUserWithoutL3Bottomsheet,
-  trackItwUserWithoutL3Requirements
-} from "../../../analytics";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { itwDisabledIdentificationMethodsSelector } from "../../../common/store/selectors/remoteConfig";
+import { EidIssuanceLevel } from "../../../machine/eid/context";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
@@ -29,9 +26,17 @@ import {
   selectIssuanceMode
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import {
+  trackItWalletIDMethod,
+  trackItwUserWithoutL3Bottomsheet,
+  trackItwUserWithoutL3Requirements
+} from "../../analytics";
+import { useContinueWithBottomSheet } from "../hooks/useContinueWithBottomSheet";
 
 export type ItwIdentificationNavigationParams = {
   eidReissuing?: boolean;
+  level?: EidIssuanceLevel;
+  credentialType?: string;
   animationEnabled?: boolean;
 };
 
@@ -47,7 +52,6 @@ export const ItwIdentificationModeSelectionScreen = ({
   route
 }: ItwIdentificationModeSelectionScreenProps) => {
   const { name: routeName, params } = route;
-  const { eidReissuing } = params;
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
@@ -56,7 +60,7 @@ export const ItwIdentificationModeSelectionScreen = ({
   );
   const mode = ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
-
+  const isReissuanceMode = mode === "reissuance";
   const disabledIdentificationMethods = useIOSelector(
     itwDisabledIdentificationMethodsSelector
   );
@@ -105,10 +109,15 @@ export const ItwIdentificationModeSelectionScreen = ({
 
   useFocusEffect(
     useCallback(() => {
-      if (eidReissuing) {
-        machineRef.send({ type: "start", mode: "reissuance", level: "l2" });
+      if (params.eidReissuing) {
+        machineRef.send({
+          type: "start",
+          mode: "reissuance",
+          level: params.level || "l2",
+          credentialType: params.credentialType
+        });
       }
-    }, [eidReissuing, machineRef])
+    }, [machineRef, params])
   );
 
   useFocusEffect(
@@ -137,6 +146,7 @@ export const ItwIdentificationModeSelectionScreen = ({
   }, [mode, machineRef, routeName]);
 
   const dismissalDialog = useItwDismissalDialog({
+    enabled: params.eidReissuing,
     customLabels: {
       body: ""
     },
@@ -157,15 +167,50 @@ export const ItwIdentificationModeSelectionScreen = ({
       }}
       description={description}
       headerActionsProp={{ showHelp: true }}
-      goBack={eidReissuing ? dismissalDialog.show : undefined}
+      goBack={params.eidReissuing ? dismissalDialog.show : undefined}
     >
       <ContentWrapper>
         <VSpacer size={8} />
         <VStack space={16}>
-          {!isCiePinDisabled && <CiePinMethodModule />}
-          {!isSpidDisabled && <SpidMethodModule />}
-          {!isCieIdDisabled && <CieIdMethodModule />}
-          {isL3 && !eidReissuing && (
+          {isReissuanceMode ? (
+            <>
+              {(!isCiePinDisabled || !isCieIdDisabled) && (
+                <VStack space={8}>
+                  <ListItemHeader
+                    label={I18n.t(`${i18nNs}.frequency.every12Months`)}
+                    endElement={{
+                      type: "badge",
+                      componentProps: {
+                        text: I18n.t(`${i18nNs}.mode.ciePin.reissuanceBadge`),
+                        variant: "highlight",
+                        outline: false,
+                        testID: "CiePinReissuanceBadgeTestID"
+                      }
+                    }}
+                  />
+                  <VStack space={16}>
+                    {!isCiePinDisabled && <CiePinMethodModule />}
+                    {!isCieIdDisabled && <CieIdMethodModule />}
+                  </VStack>
+                </VStack>
+              )}
+              {!isSpidDisabled && (
+                <VStack space={8}>
+                  <ListItemHeader
+                    label={I18n.t(`${i18nNs}.frequency.every90Days`)}
+                  />
+                  <SpidMethodModule />
+                </VStack>
+              )}
+            </>
+          ) : (
+            <>
+              {!isCiePinDisabled && <CiePinMethodModule />}
+              {!isCieIdDisabled && <CieIdMethodModule />}
+              {!isSpidDisabled && <SpidMethodModule />}
+            </>
+          )}
+          {isL3 && !params.eidReissuing && (
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <IOButton
                 variant="link"
@@ -186,14 +231,21 @@ const CiePinMethodModule = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
   const mode = ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
+  const isL3 = level === "l3";
 
   const handleOnPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "ciePin" });
   }, [machineRef]);
 
+  const ciePinBottomSheet = useContinueWithBottomSheet({
+    type: "ciePin",
+    onPrimaryAction: handleOnPress,
+    isL3
+  });
+
   const badgeProps: Badge | undefined = useMemo(() => {
-    if (level === "l2" && mode === "issuance") {
-      // Should not display the recommended badge for L2 issuance
+    if (mode === "reissuance" || (level === "l2" && mode === "issuance")) {
+      // Should not display the recommended badge for reissuance or L2 issuance
       return undefined;
     }
 
@@ -206,27 +258,43 @@ const CiePinMethodModule = () => {
   }, [level, mode]);
 
   return (
-    <ModuleNavigationAlt
-      title={I18n.t(`${i18nNs}.mode.ciePin.title`)}
-      subtitle={I18n.t(`${i18nNs}.mode.ciePin.subtitle`)}
-      testID="CiePinMethodModuleTestID"
-      icon="cieCard"
-      onPress={handleOnPress}
-      badge={badgeProps}
-    />
+    <>
+      <ModuleNavigationAlt
+        title={I18n.t(`${i18nNs}.mode.ciePin.title`)}
+        subtitle={I18n.t(`${i18nNs}.mode.ciePin.subtitle`)}
+        testID="CiePinMethodModuleTestID"
+        icon="cieCard"
+        onPress={() => {
+          if (isL3) {
+            ciePinBottomSheet.present();
+          } else {
+            handleOnPress();
+          }
+        }}
+        badge={badgeProps}
+      />
+      {isL3 && ciePinBottomSheet.bottomSheet}
+    </>
   );
 };
 
 const SpidMethodModule = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
+  const isL3 = level === "l3";
 
   const handleOnPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "spid" });
   }, [machineRef]);
 
+  const spidBottomSheet = useContinueWithBottomSheet({
+    type: "spid",
+    onPrimaryAction: handleOnPress,
+    isL3
+  });
+
   const { title, subtitle } = useMemo(() => {
-    if (level === "l3") {
+    if (isL3) {
       return {
         title: I18n.t(`${i18nNs}.mode.spid.title.l3`),
         subtitle: I18n.t(`${i18nNs}.mode.spid.subtitle.l3`)
@@ -237,29 +305,45 @@ const SpidMethodModule = () => {
       title: I18n.t(`${i18nNs}.mode.spid.title.default`),
       subtitle: I18n.t(`${i18nNs}.mode.spid.subtitle.default`)
     };
-  }, [level]);
+  }, [isL3]);
 
   return (
-    <ModuleNavigationAlt
-      title={title}
-      subtitle={subtitle}
-      testID="SpidMethodModuleTestID"
-      icon="spid"
-      onPress={handleOnPress}
-    />
+    <>
+      <ModuleNavigationAlt
+        title={title}
+        subtitle={subtitle}
+        testID="SpidMethodModuleTestID"
+        icon="spid"
+        onPress={() => {
+          if (isL3) {
+            spidBottomSheet.present();
+          } else {
+            handleOnPress();
+          }
+        }}
+      />
+      {isL3 && spidBottomSheet.bottomSheet}
+    </>
   );
 };
 
 const CieIdMethodModule = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
+  const isL3 = level === "l3";
 
   const handleOnPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "cieId" });
   }, [machineRef]);
 
+  const cieIdBottomSheet = useContinueWithBottomSheet({
+    type: "cieId",
+    onPrimaryAction: handleOnPress,
+    isL3
+  });
+
   const { title, subtitle } = useMemo(() => {
-    if (level === "l3") {
+    if (isL3) {
       return {
         title: I18n.t(`${i18nNs}.mode.cieId.title`),
         subtitle: I18n.t(`${i18nNs}.mode.cieId.subtitle.l3`)
@@ -270,15 +354,24 @@ const CieIdMethodModule = () => {
       title: I18n.t(`${i18nNs}.mode.cieId.title`),
       subtitle: I18n.t(`${i18nNs}.mode.cieId.subtitle.default`)
     };
-  }, [level]);
+  }, [isL3]);
 
   return (
-    <ModuleNavigationAlt
-      title={title}
-      subtitle={subtitle}
-      icon={"cie"}
-      testID="CieIDMethodModuleTestID"
-      onPress={handleOnPress}
-    />
+    <>
+      <ModuleNavigationAlt
+        title={title}
+        subtitle={subtitle}
+        icon={"cie"}
+        testID="CieIDMethodModuleTestID"
+        onPress={() => {
+          if (isL3) {
+            cieIdBottomSheet.present();
+          } else {
+            handleOnPress();
+          }
+        }}
+      />
+      {isL3 && cieIdBottomSheet.bottomSheet}
+    </>
   );
 };

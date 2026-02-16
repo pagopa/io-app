@@ -101,7 +101,6 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
                 "MakeVertices": [MockFunction],
               },
               "__typename__": "Point",
-              "dispose": [Function],
               "ref": Float32Array [
                 0,
                 0,
@@ -151,7 +150,6 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
                     "MakeVertices": [MockFunction],
                   },
                   "__typename__": "Point",
-                  "dispose": [Function],
                   "ref": Float32Array [
                     0,
                     0,
@@ -265,7 +263,6 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
                           "MakeVertices": [MockFunction],
                         },
                         "__typename__": "Point",
-                        "dispose": [Function],
                         "ref": Float32Array [
                           0,
                           0,
@@ -296,7 +293,6 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
                           "MakeVertices": [MockFunction],
                         },
                         "__typename__": "Point",
-                        "dispose": [Function],
                         "ref": Float32Array [
                           0,
                           0,
@@ -752,7 +748,6 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpiring
                 "MakeVertices": [MockFunction],
               },
               "__typename__": "Point",
-              "dispose": [Function],
               "ref": Float32Array [
                 0,
                 0,
@@ -802,7 +797,6 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpiring
                     "MakeVertices": [MockFunction],
                   },
                   "__typename__": "Point",
-                  "dispose": [Function],
                   "ref": Float32Array [
                     0,
                     0,
@@ -916,7 +910,6 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpiring
                           "MakeVertices": [MockFunction],
                         },
                         "__typename__": "Point",
-                        "dispose": [Function],
                         "ref": Float32Array [
                           0,
                           0,
@@ -947,7 +940,6 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpiring
                           "MakeVertices": [MockFunction],
                         },
                         "__typename__": "Point",
-                        "dispose": [Function],
                         "ref": Float32Array [
                           0,
                           0,
@@ -1164,8 +1156,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpiring
           ]
         }
       >
-        Conferma la tua identità entro il
-         
+        Conferma la tua identità entro il 
         <Text
           allowFontScaling={true}
           dynamicTypeRamp="body"
@@ -1293,7 +1284,6 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "valid" 1`] 
                 "MakeVertices": [MockFunction],
               },
               "__typename__": "Point",
-              "dispose": [Function],
               "ref": Float32Array [
                 0,
                 0,
@@ -1343,7 +1333,6 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "valid" 1`] 
                     "MakeVertices": [MockFunction],
                   },
                   "__typename__": "Point",
-                  "dispose": [Function],
                   "ref": Float32Array [
                     0,
                     0,
@@ -1457,7 +1446,6 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "valid" 1`] 
                           "MakeVertices": [MockFunction],
                         },
                         "__typename__": "Point",
-                        "dispose": [Function],
                         "ref": Float32Array [
                           0,
                           0,
@@ -1488,7 +1476,6 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "valid" 1`] 
                           "MakeVertices": [MockFunction],
                         },
                         "__typename__": "Point",
-                        "dispose": [Function],
                         "ref": Float32Array [
                           0,
                           0,

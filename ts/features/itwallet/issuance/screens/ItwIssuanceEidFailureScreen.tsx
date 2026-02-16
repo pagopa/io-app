@@ -25,7 +25,8 @@ import {
   useItwFailureSupportModal,
   ZendeskSubcategoryValue
 } from "../../common/hooks/useItwFailureSupportModal";
-import { KoState, trackItwKoStateAction } from "../../analytics";
+import { KoState } from "../../analytics/utils/types";
+import { trackItwKoStateAction } from "../../analytics";
 import { openWebUrl } from "../../../../utils/url";
 import { useEidEventsTracking } from "../hooks/useEidEventsTracking";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
@@ -247,13 +248,29 @@ const ContentView = ({ failure }: ContentViewProps) => {
               label: I18n.t(
                 `features.itWallet.issuance.issuerNotTrustedCommonError.primaryAction`
               ),
-              onPress: () => machineRef.send({ type: "close" })
+              onPress: () => {
+                trackItwKoStateAction({
+                  reason: failure.reason.message,
+                  cta_category: "custom_1",
+                  cta_id: I18n.t(
+                    "features.itWallet.issuance.issuerNotTrustedCommonError.primaryAction"
+                  )
+                });
+                machineRef.send({ type: "close" });
+              }
             },
             secondaryAction: {
               label: I18n.t(
                 `features.itWallet.issuance.issuerNotTrustedCommonError.secondaryAction`
               ),
               onPress: () => {
+                trackItwKoStateAction({
+                  reason: failure.reason.message,
+                  cta_category: "custom_2",
+                  cta_id: I18n.t(
+                    "features.itWallet.issuance.issuerNotTrustedCommonError.secondaryAction"
+                  )
+                });
                 supportModal.present();
               }
             }

@@ -5,6 +5,9 @@ import {
   HSpacer,
   IconButton,
   IOColors,
+  IOSpacing,
+  IOSpacingScale,
+  useFooterActionsMeasurements,
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -13,8 +16,8 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback, useRef, useState } from "react";
-import { StyleSheet } from "react-native";
-import Pdf from "react-native-pdf";
+import { StyleSheet, View } from "react-native";
+import Pdf, { PdfRef } from "react-native-pdf";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ExistingSignatureFieldAttrs } from "../../../../definitions/fci/ExistingSignatureFieldAttrs";
 import { SignatureFieldToBeCreatedAttrs } from "../../../../definitions/fci/SignatureFieldToBeCreatedAttrs";
@@ -51,7 +54,7 @@ const styles = StyleSheet.create({
 });
 
 const DocumentWithSignature = (props: Props) => {
-  const pdfRef = useRef<Pdf>(null);
+  const pdfRef = useRef<PdfRef>(null);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const documents = useIOSelector(fciSignatureDetailDocumentsSelector);
@@ -60,7 +63,12 @@ const DocumentWithSignature = (props: Props) => {
   const dispatch = useIODispatch();
   const onContinuePress = () => props.onClose();
 
+  const extraFooterActionsMargin: IOSpacingScale = 16;
+
   const theme = useIOTheme();
+
+  const { footerActionsMeasurements, handleFooterActionsMeasurements } =
+    useFooterActionsMeasurements();
 
   const continueButtonProps: ButtonBlockProps = {
     onPress: onContinuePress,
@@ -225,8 +233,19 @@ const DocumentWithSignature = (props: Props) => {
         disabled={false}
         testID={"FciDocumentsNavBarTestID"}
       />
-      <RenderMask />
+      <View
+        style={{
+          flex: 1,
+          marginBottom:
+            footerActionsMeasurements.safeBottomAreaHeight -
+            IOSpacing.screenEndMargin +
+            extraFooterActionsMargin
+        }}
+      >
+        <RenderMask />
+      </View>
       <FooterActions
+        onMeasure={handleFooterActionsMeasurements}
         actions={{
           type: "SingleButton",
           primary: continueButtonProps

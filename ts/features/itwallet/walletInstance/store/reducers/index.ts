@@ -8,7 +8,7 @@ import {
 import { getType } from "typesafe-actions";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Action } from "../../../../../store/actions/types";
-import itwCreateSecureStorage from "../../../common/store/storages/itwSecureStorage";
+import createSecureStorage from "../../../../../store/storages/secureStorage";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import {
   itwWalletInstanceAttestationStore,
@@ -99,7 +99,7 @@ const reducer = (
 
 const itwWalletInstancePersistConfig: PersistConfig = {
   key: "itwWalletInstance",
-  storage: itwCreateSecureStorage(),
+  storage: createSecureStorage(),
   version: CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION,
   migrate: createMigrate(migrations, { debug: isDevEnv })
 };

@@ -24,7 +24,15 @@
       "venerdì",
       "sabato"
     ],
-    "abbr_day_names": ["dom", "lun", "mar", "mer", "gio", "ven", "sab"],
+    "abbr_day_names": [
+      "dom",
+      "lun",
+      "mar",
+      "mer",
+      "gio",
+      "ven",
+      "sab"
+    ],
     "month_names": [
       " ",
       "gennaio",
@@ -55,7 +63,10 @@
       "nov",
       "dic"
     ],
-    "meridian": ["am", "pm"],
+    "meridian": [
+      "am",
+      "pm"
+    ],
     "time": {
       "minutes_zero": "0 minuti",
       "minutes_one": "1 minuto",
@@ -305,6 +316,7 @@
     "it": "Italiano",
     "en": "Inglese",
     "de": "Tedesco",
+    "fr": "Francese",
     "sl": "Sloveno"
   },
   "clipboard": {
@@ -741,6 +753,10 @@
         "preferred_language": {
           "title": "Lingua preferita",
           "subtitle": "In quale lingua vuoi usare l'applicazione?",
+          "headers": {
+            "services": "Servizi",
+            "app": "Applicazione"
+          },
           "alert": {
             "title": "Vuoi cambiare la lingua in",
             "subtitle": "Dovrai riavviare l'applicazione per applicare il cambiamento"
@@ -1602,10 +1618,13 @@
         "cta": "Scopri di più"
       },
       "error": {
-        "title": "Si è verificato un errore",
-        "subtitle": "Riprova o contatta l'assistenza",
-        "primaryButton": "Chiudi",
+        "title": "Questo metodo di pagamento non è disponibile",
+        "subtitle": "Chiudi l’app e riaprila per aggiornare il portafoglio",
+        "primaryButton": "Indietro",
         "secondaryButton": "Riprova"
+      },
+      "update": {
+        "primaryButton": "Aggiorna i dati"
       }
     },
     "wallet": "Portafoglio",
@@ -3033,7 +3052,8 @@
       },
       "metadata": {
         "a11y": {
-          "website": "Visita il sito dell'ente"
+          "website": "Visita il sito dell'ente",
+          "copyToClipboard": "Copia negli appunti"
         },
         "title": "Contatti ed informazioni",
         "website": "Visita il sito",
@@ -3043,7 +3063,6 @@
         "email": "Invia un'email",
         "pec": "Invia una PEC",
         "fiscalCode": "Codice fiscale ente",
-        "fiscalCodeAccessibilityHint": "Copia negli appunti",
         "address": "Indirizzo",
         "serviceId": "ID servizio"
       },
@@ -3952,6 +3971,26 @@
                 "additionalDataTitle": "Dati aggiuntivi",
                 "errorCode": "Codice errore"
               }
+            },
+            "cieValidation": {
+              "expired": {
+                "title": "La CIE risulta scaduta",
+                "body": "Consulta le altre modalità per accedere a questa notifica SEND.",
+                "actions": {
+                  "primary": "Cosa posso fare?"
+                }
+              },
+              "unrelated": {
+                "title": "La CIE non corrisponde alla persona destinataria",
+                "body": "Per consultare una notifica SEND per conto di un’altra persona devi utilizzare la sua Carta di Identità Elettronica."
+              },
+              "generic": {
+                "title": "Non siamo riusciti a verificare i dati dalla carta",
+                "body": "Attendi qualche minuto e riprova.",
+                "actions": {
+                  "secondary": "Mostra dettagli"
+                }
+              }
             }
           },
           "displayingNotificationData": {
@@ -4039,6 +4078,16 @@
               "TAG_LOST": {
                 "title": "Hai rimosso il telefono troppo presto!",
                 "subtitle": "Riprova e tieni fermo il telefono per la lettura."
+              },
+              "WRONG_CAN": {
+                "title": "Il codice inserito non è corretto",
+                "subtitleAndroid": "Controllalo e riprova. È il codice a 6 cifre (CAN) stampato sul fronte della Carta di Identità Elettronica, in basso a destra.",
+                "subtitleIos": "Controllalo e riprova."
+              },
+              "GENERIC": {
+                "title": "Non siamo riusciti a recuperare i dati dalla carta",
+                "subtitle": "Attendi qualche minuto e riprova.",
+                "secondaryAction": "Mostra dettagli"
               }
             }
           },
@@ -4268,6 +4317,18 @@
           "rateLimitToast": "Non riusciamo ad attivare il servizio SEND, riprova più tardi",
           "activationErrorMessage": "Non riusciamo ad attivare il servizio SEND"
         }
+      },
+      "lollipopPlayground": {
+        "environmentTitle": "Ambiente",
+        "uatLabel": "Usa UAT",
+        "uatDescription": "Manda le richieste AAR e quelle di attivazione servizio all'ambiente di UAT",
+        "playgroundTitle": "Lollipop Playground",
+        "postBodyLabel": "Body della post",
+        "postBodyPlaceholder": "{\n  p1: \"a string\",\n  p2: {\n    p3: true\n  }\n}",
+        "responseStatusCode": "Status Code risposta",
+        "responseBody": "Body della risposta",
+        "requestGet": "GET",
+        "requestPost": "POST"
       }
     },
     "fci": {
@@ -4418,7 +4479,7 @@
           "cta": "Aggiungi un documento"
         },
         "toast": {
-          "newMethod": "Elemento aggiunto!"
+          "newMethod": "Metodo aggiunto!"
         },
         "paymentsBanner": {
           "title": "Vuoi pagare un avviso?",
@@ -4481,8 +4542,9 @@
         "title": "Metodi di pagamento",
         "button": "Aggiungi",
         "banner": {
-          "content": "Aggiungi al portafoglio un metodo di pagamento, così non dovrai inserire ogni volta i dati.",
-          "action": "Aggiungi un metodo"
+          "content": "Scopri quali metodi di pagamento puoi usare su IO per pagare gli avvisi pagoPA.",
+          "action": "Scopri i metodi disponibili",
+          "title": "Come puoi pagare?"
         },
         "status": {
           "expired": "Scaduta"
@@ -4497,7 +4559,7 @@
       "transactions": {
         "multiplePayment": "Pagamento multiplo",
         "title": "Ricevute pagoPA",
-        "button": "Vedi tutte",
+        "button": "Mostra tutte",
         "empty": {
           "title": "Qui vedrai le tue ricevute pagoPA",
           "content": "Paga un avviso in app o presso un qualsiasi canale abilitato a pagoPA."
@@ -4513,7 +4575,6 @@
           "loading": "Stiamo nascondendo la ricevuta...",
           "title": "Ricevuta pagoPA",
           "shareButton": "Salva o condividi",
-          "error": "Non è stato possibile recuperare la ricevuta.",
           "download": "Ottieni ricevuta",
           "hideFromList": "Nascondi dalla lista",
           "delete": {
@@ -4521,9 +4582,31 @@
             "failed": "C’è stato un errore, riprova"
           },
           "hideBanner": {
+            "isCart": {
+              "title": "Vuoi nascondere queste ricevute dalla tua lista?",
+              "content": "Stai per nascondere definitivamente tutte le ricevute collegate a questa transazione. Non compariranno più nell’elenco."
+            },
             "title": "Vuoi nascondere questa ricevuta dalla tua lista?",
             "content": "L’operazione è irreversibile. La ricevuta non verrà più mostrata nell’elenco delle tue ricevute.",
             "accept": "Sì, nascondi"
+          },
+          "debtorCartBanner": "Questo avviso è stato pagato insieme ad altri in un'unica transazione. Per informazioni sui costi di commissione, consulta il documento ricevuto in fase di pagamento.",
+          "error": {
+            "banner": {
+              "label": "Stiamo generando la ricevuta, torna tra un po’."
+            },
+            "400": {
+              "title": "I dati della ricevuta non sono corretti",
+              "subtitle": "Il Codice Fiscale non corrisponde a quello indicato in fase di pagamento."
+            },
+            "404": {
+              "title": "Non siamo riusciti a generare la ricevuta, riprova più tardi",
+              "subtitle": "Se il problema persiste, contatta l’assistenza."
+            },
+            "500": {
+              "title": "Stiamo riscontrando alcuni problemi sui nostri sistemi",
+              "subtitle": "Riprova più tardi."
+            }
           }
         },
         "details": {
@@ -4801,7 +4884,7 @@
         },
         "ipzsPrivacy": {
           "title": "I tuoi Documenti su IO sono al sicuro",
-          "titleL3": "I tuoi Documenti sono al sicuro",
+          "titleL3": "IT-Wallet: Informativa Privacy e Termini e Condizioni d’uso",
           "warning": "Premendo **Continua** dichiari di aver letto e compreso l’**Informativa Privacy**.",
           "button": {
             "label": "Continua"
@@ -4830,12 +4913,12 @@
         },
         "modeSelection": {
           "section": {
-            "issuance": "Ottieni {{ feature }}",
-            "reissuance": "Conferma identità"
+            "issuance": "Attiva {{ feature }}",
+            "reissuance": "Conferma periodica dell'identità"
           },
           "title": {
             "issuance": "Conferma la tua identità",
-            "reissuance": "Scegli come identificarti"
+            "reissuance": "Scegli come continuare"
           },
           "description": {
             "issuance": "È un passaggio di sicurezza necessario per associare i documenti digitali alla tua identità. ",
@@ -4846,13 +4929,26 @@
             "ciePin": {
               "title": "Continua con CIE + PIN",
               "subtitle": "Ha una durata di 12 mesi",
-              "badge": "scelta consigliata"
+              "reissuanceBadge": "Consigliato",
+              "badge": "consigliato",
+              "bottomSheet": {
+                "title": "Continua con CIE + PIN",
+                "subtitle": "Hai bisogno di:",
+                "entry-1": "La tua Carta di Identità Elettronica (CIE)",
+                "entry-2": "Il PIN a 8 cifre della CIE"
+              }
             },
             "cieId": {
               "title": "Continua con l’app CieID",
               "subtitle": {
                 "default": "Dovrai usare credenziali e app CieID",
                 "l3": "Ha una durata di 12 mesi"
+              },
+              "bottomSheet": {
+                "title": "Continua con l’app CieID",
+                "subtitle": "Hai bisogno di:",
+                "entry-1": "La tua Carta di Identità Elettronica (CIE)",
+                "entry-2": "L’app CieID certificata sul tuo dispositivo"
               }
             },
             "spid": {
@@ -4863,8 +4959,19 @@
               "subtitle": {
                 "default": "Dovrai usare credenziali e app (o SMS)",
                 "l3": "Ha una durata di 90 giorni"
+              },
+              "bottomSheet": {
+                "title": "Continua con SPID + CIE",
+                "subtitle": "Hai bisogno di:",
+                "entry-1": "Un’identità SPID",
+                "entry-2": "La tua Carta di Identità Elettronica (CIE)",
+                "warning": "Se scegli questo metodo dovrai ripetere il passaggio di sicurezza ogni 90 giorni."
               }
             }
+          },
+          "frequency": {
+            "every12Months": "Ogni 12 mesi",
+            "every90Days": "Ogni 90 giorni"
           }
         },
         "cie": {
@@ -4974,7 +5081,14 @@
               "title": "PIN della CIE",
               "content": "Il PIN della CIE è un codice di 8 cifre che ti è stato comunicato in due momenti:\n * le prime 4 cifre le hai ricevute al momento della richiesta della CIE\n * le ultime 4 cifre le hai ricevute insieme alla CIE.",
               "primaryAction": "Ho capito",
-              "secondaryAction": "Non trovo il PIN della CIE"
+              "secondaryAction": "Non trovo il PIN della CIE",
+              "dialog": {
+                "title": "Usa SPID o CieID",
+                "body": "Se non trovi il PIN della CIE, puoi usare SPID o CieID per attivare IT-Wallet.",
+                "spidCieAction": "Continua con spid + CIE",
+                "cieIdAction": "Continua con app cieID",
+                "back": "Torna indietro"
+              }
             }
           },
           "failure": {
@@ -5017,6 +5131,11 @@
             "subtitle": "Autorizza l'accesso nell'app CieID per continuare oppure annulla la connessione",
             "cancel": "Annulla connessione"
           }
+        },
+        "updateCredential": {
+          "title": "I tuoi documenti saranno aggiornati",
+          "description": "Continuando, otterrai una versione digitale aggiornata dei tuoi documenti presenti nel Portafoglio di IO",
+          "button": "Continua"
         }
       },
       "issuance": {
@@ -5032,8 +5151,10 @@
         },
         "eidPreview": {
           "title": "Identità verificata",
+          "titleL3": "Ci siamo quasi!",
           "subtitle": "Stai attivando **Documenti su IO** come:",
-          "subtitleL3": "Ci siamo quasi! Stai per ottenere **IT-Wallet** come:",
+          "subtitleL3": "Hai confermato la tua identità. \nIl tuo portafoglio IT-Wallet sarà associato a questi dati:",
+          "bottomTextL3": "Se hai già aggiunto documenti al Portafoglio, questi saranno aggiornati alle funzionalità IT-Wallet, senza modifiche ai tuoi dati.",
           "actions": {
             "primary": "Continua",
             "secondary": "Annulla"
@@ -5129,6 +5250,17 @@
           "title": "Hai già questo documento",
           "body": "La versione digitale del documento è già presente nel tuo Portafoglio.",
           "primaryAction": "Vai al documento"
+        },
+        "credentialAlreadyUpdated": {
+          "title": "Hai aggiornato il documento",
+          "subtitle": "La versione digitale di {{ credential }} è ora aggiornata su IO e puoi trovarla nel Portafoglio",
+          "action": "Vai al Portafoglio"
+        },
+        "confirmIdentity": {
+          "title": "Conferma la tua identità per aggiungere la {{ credential }}",
+          "subtitle": "È necessario confermare l’identità associata a {{ wallet }} per richiedere l’emissione della Patente digitale",
+          "primaryAction": "Conferma identità",
+          "secondaryAction": "Non ora"
         },
         "walletInstanceNotActive": {
           "documentiSuIo": {
@@ -5383,7 +5515,8 @@
           "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}}).",
           "alert": {
             "message": "Non potrai completare l'accesso ai servizi online."
-          }
+          },
+          "bottomsheetTitle": "Dettaglio dati"
         },
         "remote": {
           "loadingScreen": {
@@ -5621,6 +5754,11 @@
               "confirm": "Sì, disattiva",
               "cancel": "No, torna indietro"
             }
+          },
+          "status": {
+            "expiringPrefix": "Conferma la tua identità entro il ",
+            "expired": "Conferma la tua identità per continuare con i tuoi documenti",
+            "action": "Inizia"
           }
         }
       },
@@ -5682,16 +5820,16 @@
           "closeButton": "Chiudi",
           "closeButtonAlt": "Ho capito",
           "revokedByWalletProvider": {
-            "title": "Documenti su IO è stata disattivata",
+            "title": "La funzionalità Documenti è stata disattivata",
             "content": "Per verificare i requisiti richiesti per continuare a usare la funzionalità sul tuo dispositivo, premi \"Scopri di più\"."
           },
           "newWalletInstanceCreated": {
-            "title": "Documenti su IO è stata disattivata su questo dispositivo",
-            "content": "Puoi usare i tuoi documenti su IO su un solo dispositivo alla volta per ragioni di sicurezza."
+            "title": "La funzionalità Documenti è stata disattivata su questo dispositivo",
+            "content": "Puoi usare i documenti digitali su un solo dispositivo alla volta per ragioni di sicurezza."
           },
           "revokedByUser": {
-            "title": "Hai disattivato Documenti su IO",
-            "content": "Se cambi idea, potrai riattivare Documenti su IO in futuro."
+            "title": "Hai rimosso i tuoi documenti digitali da IO",
+            "content": "Se cambi idea, potrai riattivare la funzionalità in futuro."
           }
         }
       },
@@ -5761,20 +5899,32 @@
         "action": "Ricarica l'app IO",
         "failure": "Nessuna connessione. Collegati a internet e riprova."
       },
-      "upgrade": {
-        "banner": {
-          "documents": {
-            "active": {
-              "title": "Passa a IT-Wallet",
-              "description": "Aggiorna i tuoi documenti digitali e passa a funzionalità evolute con l’unico portafoglio digitale di Stato: pubblico, sicuro e gratuito. Garantito dallo Stato, accessibile solo a te.",
-              "action": "Passa a IT-Wallet"
-            },
-            "inactive": {
-              "title": "IT-Wallet per i tuoi documenti",
-              "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**. Garantito dallo Stato, accessibile solo a te.",
-              "action": "Ottieni IT-Wallet"
-            }
-          }
+      "engagementBanner": {
+        "activation": {
+          "title": "Porta su IO i tuoi documenti digitali",
+          "description": "Con piena validità ufficiale, digitali e sempre a portata di mano!",
+          "action": "Aggiungi un documento"
+        },
+        "upgrade_empty": {
+          "title": "Il tuo Portafoglio è ora parte di IT-Wallet",
+          "description": "Scopri le funzionalità evolute dei documenti digitali su IO.",
+          "action": "Aggiungi documento"
+        },
+        "upgrade": {
+          "title": "IO dà il benvenuto a IT-Wallet",
+          "description": "Il tuo portafoglio digitale pubblico: semplice, sicuro, tuo. Scopri i nuovi documenti ora disponibili!",
+          "action": "Inizia"
+        },
+        "upgrade_with_mdl": {
+          "title": "Dimostra chi sei col tuo dispositivo",
+          "description": "Usa la tua Patente digitale anche come documento di riconoscimento, in modo facile e sicuro!",
+          "action": "Inizia"
+        },
+        "dismissAlert": {
+          "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?",
+          "description": "Potrai ottenere IT-Wallet in qualsiasi altro momento, andando in Impostazioni > IT-Wallet.",
+          "confirm": "Sì, rinuncia",
+          "cancel": "Indietro"
         }
       },
       "settings": {

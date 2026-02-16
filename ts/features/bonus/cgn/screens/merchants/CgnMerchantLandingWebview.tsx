@@ -37,7 +37,7 @@ const CgnMerchantLandingWebview: FunctionComponent<Props> = () => {
   });
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }} edges={["bottom"]}>
       <WebviewComponent
         source={{
           uri: landingPageUrl,

@@ -47,7 +47,7 @@ import { buildEventProperties } from "../../utils/analytics";
 import { trackServicesAction } from "../../features/services/common/analytics";
 import { trackMessagesActionsPostDispatch } from "../../features/messages/analytics";
 import { trackIdentificationAction } from "../../features/identification/analytics";
-import { trackOfflineAccessReason } from "../../features/itwallet/analytics";
+import { updateOfflineAccessReason } from "../../features/itwallet/analytics/properties/propertyUpdaters";
 import {
   trackLoginFailure,
   trackLogoutFailure,
@@ -121,7 +121,7 @@ const trackAction =
       case getType(loginFailure):
         return trackLoginFailure({
           idp: action.payload.idp,
-          reason: action.payload.error,
+          reason: action.payload.error.message,
           flow: "auth"
         });
 
@@ -196,7 +196,7 @@ export const actionTracking =
       void trackIdentificationAction(action);
 
       // Define MP super property that indicates the reason for offline access
-      void trackOfflineAccessReason(action, middleware.getState());
+      void updateOfflineAccessReason(action);
 
       const fciEnvironment = fciEnvironmentSelector(middleware.getState());
       void trackFciAction(fciEnvironment)(action);

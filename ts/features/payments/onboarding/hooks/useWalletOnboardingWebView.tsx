@@ -15,6 +15,7 @@ import {
   paymentsStartOnboardingAction
 } from "../store/actions";
 import { selectPaymentOnboardingRequestResult } from "../store/selectors";
+import { storePaymentIsOnboardedAction } from "../../history/store/actions";
 import {
   WalletOnboardingOutcome,
   WalletOnboardingOutcomeEnum
@@ -76,7 +77,7 @@ export const useWalletOnboardingWebView = ({
   );
 
   const handleOnboardingResult = useCallback(
-    (resultUrl: string) => {
+    (resultUrl: string, isContextual: boolean = false) => {
       const url = new URLParse(resultUrl, true);
 
       const outcome = pipe(
@@ -88,9 +89,15 @@ export const useWalletOnboardingWebView = ({
         )
       );
 
-      analytics.trackPaymentOnboardingContextualCard({
-        is_onboarded: !!url.query.transactionId
-      });
+      const is_onboarded = !!url.query.transactionId;
+
+      dispatch(storePaymentIsOnboardedAction(is_onboarded));
+      if (isContextual) {
+        // Tech analytics event for contextual onboarding flow
+        analytics.trackPaymentOnboardingContextualCard({
+          is_onboarded
+        });
+      }
 
       onOnboardingOutcome({
         outcome,
@@ -99,11 +106,11 @@ export const useWalletOnboardingWebView = ({
         transactionId: url.query.transactionId
       });
     },
-    [onOnboardingOutcome]
+    [onOnboardingOutcome, dispatch]
   );
 
   const openBrowserSessionOnboarding = useCallback(
-    async (url: string) => {
+    async (url: string, isContextual: boolean = false) => {
       try {
         const result =
           Platform.OS === "ios"
@@ -112,7 +119,7 @@ export const useWalletOnboardingWebView = ({
                 ONBOARDING_CALLBACK_URL_SCHEMA
               )
             : await startWebviewContextualOnboardingSession(url);
-        handleOnboardingResult(result);
+        handleOnboardingResult(result, isContextual);
       } catch {
         onOnboardingOutcome({
           outcome: WalletOnboardingOutcomeEnum.CANCELED_BY_USER
@@ -156,7 +163,7 @@ export const useWalletOnboardingWebView = ({
 
   const startContextualOnboarding = async (url: string) => {
     setIsPendingOnboarding(false);
-    await openBrowserSessionOnboarding(url);
+    await openBrowserSessionOnboarding(url, true);
   };
 
   return {

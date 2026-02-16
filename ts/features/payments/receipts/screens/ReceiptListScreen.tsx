@@ -67,7 +67,8 @@ const ReceiptListScreen = () => {
       params: {
         transactionId: transaction.eventId,
         isPayer: transaction.isPayer,
-        isCart: transaction.isCart
+        isCart: transaction.isCart,
+        isDebtor: transaction.isDebtor
       }
     });
   };
@@ -222,7 +223,7 @@ const ReceiptListScreen = () => {
       )}
       ListEmptyComponent={EmptyStateList}
       ListFooterComponent={renderLoadingFooter}
-      keyExtractor={item => `transaction_${item.eventId}`}
+      keyExtractor={(item, index) => `transaction_${item.eventId}${index}`}
       renderItem={({ item }) => (
         <ReceiptFadeInOutAnimationView>
           <ReceiptListItemTransaction

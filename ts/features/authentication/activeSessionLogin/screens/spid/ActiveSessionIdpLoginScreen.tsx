@@ -167,9 +167,7 @@ const ActiveSessionIdpLoginScreen = () => {
         dispatch(activeSessionLoginFailure());
       }
       trackLoginFailure({
-        reason: new Error(
-          `login failure with code ${code || message || "n/a"}`
-        ),
+        reason: `login failure with code ${code || message || "n/a"}`,
         idp,
         flow: "reauth"
       });

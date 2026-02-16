@@ -1385,12 +1385,6 @@
         "title": "Möchtest du in der App bezahlen?",
         "content": "Finde heraus, welche Zahlungsmethoden du in dein Konto aufnehmen kannst.",
         "cta": "Mehr erfahren"
-      },
-      "error": {
-        "title": "Es ist ein Fehler aufgetreten",
-        "subtitle": "Versuche es erneut oder kontaktiere den Support",
-        "primaryButton": "Schließen",
-        "secondaryButton": "Erneut versuchen"
       }
     },
     "wallet": "Konto",
@@ -3294,10 +3288,6 @@
       "methods": {
         "title": "Zahlungsmethoden",
         "button": "Hinzufügen",
-        "banner": {
-          "content": "Füge dem Konto eine Zahlungsmethode hinzu, damit du nicht jedes Mal die Daten eingeben musst.",
-          "action": "Zahlungsmethode hinzufügen"
-        },
         "status": {
           "expired": "Abgelaufen"
         },
@@ -3306,6 +3296,11 @@
             "label": "Das Laden der Zahlungsmethoden ist fehlgeschlagen.",
             "retryButton": "Erneut versuchen"
           }
+        },
+        "banner": {
+          "title": "Wie möchten Sie bezahlen?",
+          "content": "Entdecken Sie, welche Zahlungsmethoden Sie in der IO-App nutzen können, um pagoPA-Zahlungsaufforderungen zu bezahlen.",
+          "action": "Verfügbare Zahlungsmethoden entdecken"
         }
       },
       "transactions": {
@@ -3324,7 +3319,6 @@
           "loading": "Die Quittung wird geladen...",
           "title": "pagoPA-Quittung",
           "shareButton": "Speichern oder teilen",
-          "error": "Die Quittung konnte nicht abgerufen werden.",
           "download": "Quittung abrufen",
           "hideFromList": "Von der Liste verstecken",
           "delete": {

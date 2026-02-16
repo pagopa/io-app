@@ -3,13 +3,12 @@ import {
   H4,
   IconButton,
   IOButton,
-  IOButtonProps,
   VSpacer,
   VStack,
   WithTestID
 } from "@pagopa/io-app-design-system";
 import { TxtParagraphNode, TxtStrongNode } from "@textlint/ast-node-types";
-import { useMemo } from "react";
+import { ComponentProps, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import ItWalletDeck from "../../../../../img/features/itWallet/brand/itw_deck_engagement.svg";
 import IOMarkdown from "../../../../components/IOMarkdown";
@@ -27,8 +26,8 @@ type Props = {
   // Events
   onPress: () => void;
   onDismiss: () => void;
-  // Variants
-  variant?: IOButtonProps["variant"];
+  // Styles
+  style?: ComponentProps<typeof View>["style"];
 };
 
 export const ItwEngagementBanner = ({
@@ -39,7 +38,7 @@ export const ItwEngagementBanner = ({
   dismissable,
   onPress,
   onDismiss,
-  variant
+  style
 }: WithTestID<Props>) => {
   // Generates a complete fallbackAccessibilityLabel by concatenating the title, content, and action
   // if they are present. Removes markdown formatting characters like asterisks.
@@ -76,14 +75,14 @@ export const ItwEngagementBanner = ({
       accessibilityLabel={accessibilityLabel}
       accessibilityRole={"button"}
       onAccessibilityTap={onPress}
+      // Styles
+      style={style}
     >
       <ItwBrandedBox borderRadius={8}>
         <ItWalletDeck width={105} height={145} style={styles.deck} />
         <VStack space={8}>
           <View style={styles.header}>
-            <H4 color="black" style={styles.content}>
-              {title}
-            </H4>
+            <H4 style={styles.content}>{title}</H4>
             {dismissable && (
               <IconButton
                 testID="itwEngagementBannerCloseButtonTestID"
@@ -101,7 +100,6 @@ export const ItwEngagementBanner = ({
         </VStack>
         <VSpacer size={8} />
         <IOButton
-          variant={variant}
           testID="itwEngagementBannerActionButtonTestID"
           color="primary"
           label={action}

@@ -7,18 +7,19 @@ import { checkCurrentSession } from "../../../authentication/common/store/action
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import {
-  getMixPanelCredential,
-  trackAddCredentialProfileAndSuperProperties,
   trackSaveCredentialSuccess,
   trackStartAddNewCredential,
   trackStartCredentialUpgrade,
   trackWalletDataShare,
   trackWalletDataShareAccepted
 } from "../../analytics";
+import { getMixPanelCredential } from "../../analytics/utils";
+import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import {
   itwCredentialsRemoveByType,
   itwCredentialsStore
 } from "../../credentials/store/actions";
+import { itwClearCredentialUpgradeFailed } from "../../common/store/actions/preferences";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
@@ -132,6 +133,8 @@ export const createCredentialIssuanceActionsImplementation = (
     store.dispatch(itwCredentialsRemoveByType(context.credentialType));
     // Stores the new obtained credentials
     store.dispatch(itwCredentialsStore(context.credentials));
+    // Clear older upgrade-failed flag for this credential after a successful issuance/upgrade.
+    store.dispatch(itwClearCredentialUpgradeFailed(context.credentialType));
   },
 
   trackStartAddCredential: ({
@@ -156,10 +159,13 @@ export const createCredentialIssuanceActionsImplementation = (
     CredentialIssuanceEvents
   >) => {
     if (context.credentialType) {
-      const isItwL3 = itwLifecycleIsITWalletValidSelector(store.getState());
+      const state = store.getState();
+      const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
       const credential = getMixPanelCredential(context.credentialType, isItwL3);
-      trackSaveCredentialSuccess(credential);
-      trackAddCredentialProfileAndSuperProperties(store.getState(), credential);
+      trackSaveCredentialSuccess({
+        credential,
+        credential_details: itwMixPanelCredentialDetailsSelector(state)
+      });
     }
   },
 

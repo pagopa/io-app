@@ -28,12 +28,6 @@ const IdPayEnableNotificationScreen = () => {
   );
   const initiative = useSelector(selectInitiative);
 
-  const initiativeName = pipe(
-    initiative,
-    O.map(i => i.initiativeName),
-    O.toUndefined
-  );
-
   const initiativeId = pipe(
     initiative,
     O.map(i => i.initiativeId),
@@ -42,7 +36,6 @@ const IdPayEnableNotificationScreen = () => {
 
   const handleClosePress = () => {
     trackIDPayOnboardingNotificationDenied({
-      initiativeName,
       initiativeId
     });
     machine.send({ type: "close" });
@@ -54,18 +47,16 @@ const IdPayEnableNotificationScreen = () => {
       if (isPushNotificationEnabled) {
         machine.send({ type: "close" });
         trackIDPayOnboardingNotificationSuccess({
-          initiativeName,
           initiativeId
         });
         IOToast.success(I18n.t("idpay.onboarding.enableNotification.success"));
       }
-    }, [isPushNotificationEnabled, machine, initiativeName, initiativeId])
+    }, [isPushNotificationEnabled, machine, initiativeId])
   );
 
   useOnFirstRender(() => {
     trackIDPayOnboardingNotificationActivation({
-      initiativeId,
-      initiativeName
+      initiativeId
     });
   });
 
@@ -88,7 +79,6 @@ const IdPayEnableNotificationScreen = () => {
         label: I18n.t("idpay.onboarding.enableNotification.action"),
         onPress: () => {
           trackIDPayOnboardingNotificationAccepted({
-            initiativeName,
             initiativeId
           });
           openSystemNotificationSettingsScreen();

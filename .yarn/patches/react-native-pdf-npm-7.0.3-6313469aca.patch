@@ -1,0 +1,25 @@
+diff --git a/ios/RNPDFPdf/RNPDFPdfView.mm b/ios/RNPDFPdf/RNPDFPdfView.mm
+index 15c9b05fe972c55308107dac3b5b999061651780..1a0688492032e6ad097d3ca82adb3e01547047bd 100644
+--- a/ios/RNPDFPdf/RNPDFPdfView.mm
++++ b/ios/RNPDFPdf/RNPDFPdfView.mm
+@@ -400,11 +400,15 @@ - (void)didSetProps:(NSArray<NSString *> *)changedProps
+         }
+ 
+         if (_pdfDocument && ([changedProps containsObject:@"path"] || [changedProps containsObject:@"enableAnnotationRendering"])) {
+-            if (!_enableAnnotationRendering) {
+-                for (unsigned long i=0; i<_pdfView.document.pageCount; i++) {
+-                    PDFPage *pdfPage = [_pdfView.document pageAtIndex:i];
+-                    for (unsigned long j=0; j<pdfPage.annotations.count; j++) {
+-                        pdfPage.annotations[j].shouldDisplay = _enableAnnotationRendering;
++            for (unsigned long i=0; i<_pdfView.document.pageCount; i++) {
++                PDFPage *pdfPage = [_pdfView.document pageAtIndex:i];
++                for (unsigned long j=0; j<pdfPage.annotations.count; j++) {
++                    if (_enableAnnotationRendering) {
++                        // Annotations are read-only by default on Android so we have to disable them here on iOS
++                        pdfPage.annotations[j].readOnly = true;
++                    } else {
++                        // If annotations are hidden, there is no need to flag them as read-only, just hide them
++                        pdfPage.annotations[j].shouldDisplay = false;
+                     }
+                 }
+             }

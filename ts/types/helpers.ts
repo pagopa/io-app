@@ -42,3 +42,8 @@ export type DiscriminatedOmit<
   T,
   K extends string | number | symbol
 > = T extends any ? Omit<T, K> : never;
+
+/**
+ * A type representing an array that contains at least one element.
+ */
+export type NonEmptyArray<T> = [T, ...Array<T>];

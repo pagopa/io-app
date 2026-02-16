@@ -5,12 +5,12 @@ import { useCallback, useMemo } from "react";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../../store/hooks";
 import {
-  trackITWalletBannerVisualized,
-  trackItWalletBannerClosure,
-  trackItWalletBannerTap
+  trackItwBannerVisualized,
+  trackItwBannerClosure,
+  trackItwBannerTap
 } from "../../../analytics";
 import { ITW_SCREENVIEW_EVENTS } from "../../../analytics/enum";
-import { itwSetWalletUpgradeMDLDetailsBannerHidden } from "../../../common/store/actions/preferences";
+import { itwCloseBanner } from "../../../common/store/actions/banners";
 import { ITW_ROUTES } from "../../../navigation/routes";
 
 /**
@@ -36,12 +36,12 @@ export const ItwPresentationWalletUpgradeMDLDetailsBanner = () => {
 
   useFocusEffect(
     useCallback(() => {
-      trackITWalletBannerVisualized(trackBannerProperties);
+      trackItwBannerVisualized(trackBannerProperties);
     }, [trackBannerProperties])
   );
 
   const handleOnPress = () => {
-    trackItWalletBannerTap(trackBannerProperties);
+    trackItwBannerTap(trackBannerProperties);
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
       params: { level: "l3" }
@@ -49,8 +49,8 @@ export const ItwPresentationWalletUpgradeMDLDetailsBanner = () => {
   };
 
   const handleOnClose = () => {
-    trackItWalletBannerClosure(trackBannerProperties);
-    dispatch(itwSetWalletUpgradeMDLDetailsBannerHidden(true));
+    trackItwBannerClosure(trackBannerProperties);
+    dispatch(itwCloseBanner("upgradeMDLDetails"));
   };
 
   return (

@@ -7,26 +7,33 @@ import {
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { openWebUrl } from "../../../../utils/url";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import { trackItwNfcNotSupported } from "../../analytics";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
+import { itwDisableItwActivation } from "../../common/store/actions/preferences";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { trackItwNfcNotSupported } from "../analytics";
 
 const NFC_NOT_SUPPORTED_FAQ_URL =
   "https://assistenza.ioapp.it/hc/it/articles/35541811236113-Cosa-serve-per-usare-IT-Wallet";
 
 export const ItwNfcNotSupportedComponent = () => {
   const navigation = useIONavigation();
+  const dispatch = useIODispatch();
 
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
-  useFocusEffect(trackItwNfcNotSupported);
+  useFocusEffect(
+    useCallback(() => {
+      trackItwNfcNotSupported();
+      dispatch(itwDisableItwActivation());
+    }, [dispatch])
+  );
 
   const goBack = useCallback(() => navigation.goBack(), [navigation]);
 

@@ -5,7 +5,7 @@ import { Platform } from "react-native";
 import {
   trackItWalletCardReadingClose,
   trackItWalletCieCardReadingSuccess
-} from "../../../analytics";
+} from "../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
@@ -79,7 +79,7 @@ export const ItwCieCardReadProgressContent = (
           title={I18n.t(
             `features.itWallet.identification.cie.readingCard.${platform}.idle.title`
           )}
-          pictogram="nfcScaniOS"
+          pictogram="nfcScanAndroid"
           secondaryAction={cancelAction}
         />
       );
@@ -94,7 +94,7 @@ export const ItwCieCardReadProgressContent = (
           subtitle={I18n.t(
             `features.itWallet.identification.cie.readingCard.${platform}.reading.subtitle`
           )}
-          pictogram="nfcScaniOS"
+          pictogram="nfcScanAndroid"
           secondaryAction={cancelAction}
         />
       );
