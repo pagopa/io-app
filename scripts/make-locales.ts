@@ -37,7 +37,7 @@ interface LocaleDocWithCheckedKeys extends LocaleDocWithKeys {
 
 const root = path.join(__dirname, "../locales");
 // these locales can contains a subset of keys defined in "it" locales where all translations strings are required
-const partialLocales = new Set<string>(["en", "de"]);
+const partialLocales = new Set<string>(["en", "de", "sl"]);
 
 /**
  * Reads a locale document.
