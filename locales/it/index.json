@@ -4306,6 +4306,18 @@
           "rateLimitToast": "Non riusciamo ad attivare il servizio SEND, riprova più tardi",
           "activationErrorMessage": "Non riusciamo ad attivare il servizio SEND"
         }
+      },
+      "lollipopPlayground": {
+        "environmentTitle": "Ambiente",
+        "uatLabel": "Usa UAT",
+        "uatDescription": "Manda le richieste AAR e quelle di attivazione servizio all'ambiente di UAT",
+        "playgroundTitle": "Lollipop Playground",
+        "postBodyLabel": "Body della post",
+        "postBodyPlaceholder": "{\n  p1: \"a string\",\n  p2: {\n    p3: true\n  }\n}",
+        "responseStatusCode": "Status Code risposta",
+        "responseBody": "Body della risposta",
+        "requestGet": "GET",
+        "requestPost": "POST"
       }
     },
     "fci": {
@@ -4519,8 +4531,9 @@
         "title": "Metodi di pagamento",
         "button": "Aggiungi",
         "banner": {
-          "content": "Aggiungi al portafoglio un metodo di pagamento, così non dovrai inserire ogni volta i dati.",
-          "action": "Aggiungi un metodo"
+          "content": "Scopri quali metodi di pagamento puoi usare su IO per pagare gli avvisi pagoPA.",
+          "action": "Scopri i metodi disponibili",
+          "title": "Come puoi pagare?"
         },
         "status": {
           "expired": "Scaduta"
@@ -4889,7 +4902,7 @@
         },
         "modeSelection": {
           "section": {
-            "issuance": "Ottieni {{ feature }}",
+            "issuance": "Attiva {{ feature }}",
             "reissuance": "Conferma periodica dell'identità"
           },
           "title": {
@@ -5129,7 +5142,8 @@
           "title": "Identità verificata",
           "titleL3": "Ci siamo quasi!",
           "subtitle": "Stai attivando **Documenti su IO** come:",
-          "subtitleL3": "Hai verificato la tua identità. \nIl tuo portafoglio IT-Wallet sarà associato a questi dati:",
+          "subtitleL3": "Hai confermato la tua identità. \nIl tuo portafoglio IT-Wallet sarà associato a questi dati:",
+          "bottomTextL3": "Se hai già aggiunto documenti al Portafoglio, questi saranno aggiornati alle funzionalità IT-Wallet, senza modifiche ai tuoi dati.",
           "actions": {
             "primary": "Continua",
             "secondary": "Annulla"
@@ -5225,6 +5239,17 @@
           "title": "Hai già questo documento",
           "body": "La versione digitale del documento è già presente nel tuo Portafoglio.",
           "primaryAction": "Vai al documento"
+        },
+        "credentialAlreadyUpdated": {
+          "title": "Hai aggiornato il documento",
+          "subtitle": "La versione digitale di {{ credential }} è ora aggiornata su IO e puoi trovarla nel Portafoglio",
+          "action": "Vai al Portafoglio"
+        },
+        "confirmIdentity": {
+          "title": "Conferma la tua identità per aggiungere la {{ credential }}",
+          "subtitle": "È necessario confermare l’identità associata a {{ wallet }} per richiedere l’emissione della Patente digitale",
+          "primaryAction": "Conferma identità",
+          "secondaryAction": "Non ora"
         },
         "walletInstanceNotActive": {
           "documentiSuIo": {
@@ -5479,7 +5504,8 @@
           "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}}).",
           "alert": {
             "message": "Non potrai completare l'accesso ai servizi online."
-          }
+          },
+          "bottomsheetTitle": "Dettaglio dati"
         },
         "remote": {
           "loadingScreen": {
@@ -5717,6 +5743,11 @@
               "confirm": "Sì, disattiva",
               "cancel": "No, torna indietro"
             }
+          },
+          "status": {
+            "expiringPrefix": "Conferma la tua identità entro il ",
+            "expired": "Conferma la tua identità per continuare con i tuoi documenti",
+            "action": "Inizia"
           }
         }
       },

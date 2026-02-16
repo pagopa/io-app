@@ -1713,7 +1713,6 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                     testID="LoadingSpinnerTestID"
                                   >
                                     <View
-                                      collapsable={false}
                                       style={
                                         {
                                           "transform": [

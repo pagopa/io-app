@@ -409,7 +409,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                   testID="LoadingIndicator"
                                 >
                                   <View
-                                    collapsable={false}
                                     style={
                                       {
                                         "transform": [
@@ -1035,7 +1034,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                   testID="LoadingIndicator"
                                 >
                                   <View
-                                    collapsable={false}
                                     style={
                                       {
                                         "transform": [
@@ -1661,7 +1659,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                   testID="LoadingIndicator"
                                 >
                                   <View
-                                    collapsable={false}
                                     style={
                                       {
                                         "transform": [
@@ -2287,7 +2284,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                   testID="LoadingIndicator"
                                 >
                                   <View
-                                    collapsable={false}
                                     style={
                                       {
                                         "transform": [
@@ -2913,7 +2909,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                   testID="LoadingIndicator"
                                 >
                                   <View
-                                    collapsable={false}
                                     style={
                                       {
                                         "transform": [
@@ -3539,7 +3534,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                   testID="LoadingIndicator"
                                 >
                                   <View
-                                    collapsable={false}
                                     style={
                                       {
                                         "transform": [
@@ -4165,7 +4159,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                   testID="LoadingIndicator"
                                 >
                                   <View
-                                    collapsable={false}
                                     style={
                                       {
                                         "transform": [
@@ -4791,7 +4784,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                   testID="LoadingIndicator"
                                 >
                                   <View
-                                    collapsable={false}
                                     style={
                                       {
                                         "transform": [
@@ -5417,7 +5409,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                   testID="LoadingIndicator"
                                 >
                                   <View
-                                    collapsable={false}
                                     style={
                                       {
                                         "transform": [
@@ -6043,7 +6034,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                   testID="LoadingIndicator"
                                 >
                                   <View
-                                    collapsable={false}
                                     style={
                                       {
                                         "transform": [
@@ -6669,7 +6659,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                   testID="LoadingIndicator"
                                 >
                                   <View
-                                    collapsable={false}
                                     style={
                                       {
                                         "transform": [
@@ -7295,7 +7284,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                   testID="LoadingIndicator"
                                 >
                                   <View
-                                    collapsable={false}
                                     style={
                                       {
                                         "transform": [
@@ -7921,7 +7909,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                   testID="LoadingIndicator"
                                 >
                                   <View
-                                    collapsable={false}
                                     style={
                                       {
                                         "transform": [
@@ -9489,7 +9476,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                   testID="LoadingIndicator"
                                 >
                                   <View
-                                    collapsable={false}
                                     style={
                                       {
                                         "transform": [
@@ -10115,7 +10101,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                   testID="LoadingIndicator"
                                 >
                                   <View
-                                    collapsable={false}
                                     style={
                                       {
                                         "transform": [
