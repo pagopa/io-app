@@ -154,21 +154,29 @@ export const isDownloadingMessageAttachmentSelector = (
     pot.isLoading
   );
 
-export const hasErrorOccourredOnRequestedDownloadSelector = (
+export const getRequestedDownloadErrorSelector = (
   state: GlobalState,
   messageId: string,
   attachmentId: string
-) =>
-  pipe(
-    state.entities.messages.downloads.statusById[messageId],
-    O.fromNullable,
-    O.chainNullableK(messageDownloads => messageDownloads[attachmentId]),
-    O.filter(() =>
-      isRequestedAttachmentDownloadSelector(state, messageId, attachmentId)
-    ),
-    O.getOrElseW(() => pot.none),
-    downloadPot => pot.isError(downloadPot) && !pot.isSome(downloadPot)
+) => {
+  const isRequestedDownload = isRequestedAttachmentDownloadSelector(
+    state,
+    messageId,
+    attachmentId
   );
+  const messageDownloads =
+    state.entities.messages.downloads.statusById[messageId]?.[attachmentId];
+
+  if (
+    !isRequestedDownload ||
+    messageDownloads == null ||
+    !pot.isError(messageDownloads)
+  ) {
+    return undefined;
+  }
+
+  return messageDownloads.error;
+};
 
 export const downloadedMessageAttachmentSelector = (
   state: GlobalState,

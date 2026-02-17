@@ -13,7 +13,7 @@ import {
 } from "../store/actions";
 import {
   downloadedMessageAttachmentSelector,
-  hasErrorOccourredOnRequestedDownloadSelector,
+  getRequestedDownloadErrorSelector,
   isDownloadingMessageAttachmentSelector,
   isRequestedAttachmentDownloadSelector
 } from "../store/reducers/downloads";
@@ -29,6 +29,7 @@ import {
   SendOpeningSource,
   SendUserType
 } from "../../pushNotifications/analytics";
+import { isAarAttachmentTtlError } from "../../pn/aar/utils/aarErrorMappings";
 
 export const useAttachmentDownload = (
   messageId: string,
@@ -48,12 +49,11 @@ export const useAttachmentDownload = (
   const download = useIOSelector(state =>
     downloadedMessageAttachmentSelector(state, messageId, attachmentId)
   );
+  const maybeDownloadError = useIOSelector(state =>
+    getRequestedDownloadErrorSelector(state, messageId, attachmentId)
+  );
   const isFetching = useIOSelector(state =>
     isDownloadingMessageAttachmentSelector(state, messageId, attachmentId)
-  );
-
-  const isDownloadError = useIOSelector(state =>
-    hasErrorOccourredOnRequestedDownloadSelector(state, messageId, attachmentId)
   );
 
   const attachmentCategory = attachment.category;
@@ -98,7 +98,7 @@ export const useAttachmentDownload = (
     serviceId
   ]);
 
-  const checkPathAndNavigate = useCallback(
+  const handleAttachmentDownloadSuccess = useCallback(
     async (downloadPath: string) => {
       if (await RNFS.exists(downloadPath)) {
         doNavigate();
@@ -108,6 +108,23 @@ export const useAttachmentDownload = (
     },
     [dispatch, doNavigate]
   );
+
+  const handleAttachmentDownloadFailure = useCallback(
+    (downloadError: Error) => {
+      dispatch(clearRequestedAttachmentDownload());
+      if (isSendAttachment) {
+        trackPNAttachmentDownloadFailure(attachmentCategory);
+      }
+      const isAarTtlError = isAarAttachmentTtlError(downloadError.message);
+      if (isAarTtlError) {
+        toast.error(I18n.t("messageDetails.attachments.failing.aarTtlError"));
+      } else {
+        toast.error(I18n.t("messageDetails.attachments.failing.details"));
+      }
+    },
+    [dispatch, isSendAttachment, attachmentCategory, toast]
+  );
+
   const onModuleAttachmentPress = useCallback(async () => {
     if (isFetching) {
       return;
@@ -145,29 +162,24 @@ export const useAttachmentDownload = (
 
   useEffect(() => {
     const state = store.getState();
-    if (
-      download &&
-      isRequestedAttachmentDownloadSelector(state, messageId, attachmentId)
-    ) {
-      void checkPathAndNavigate(download.path);
-    } else if (isDownloadError) {
-      dispatch(clearRequestedAttachmentDownload());
-      if (isSendAttachment) {
-        trackPNAttachmentDownloadFailure(attachmentCategory);
-      }
-      toast.error(I18n.t("messageDetails.attachments.failing.details"));
+    const isDownloadRequested = isRequestedAttachmentDownloadSelector(
+      state,
+      messageId,
+      attachmentId
+    );
+    if (download != null && isDownloadRequested) {
+      void handleAttachmentDownloadSuccess(download.path);
+    } else if (maybeDownloadError !== undefined) {
+      handleAttachmentDownloadFailure(maybeDownloadError);
     }
   }, [
-    attachmentCategory,
     attachmentId,
-    checkPathAndNavigate,
-    dispatch,
     download,
-    isDownloadError,
-    isSendAttachment,
+    handleAttachmentDownloadFailure,
+    handleAttachmentDownloadSuccess,
+    maybeDownloadError,
     messageId,
-    store,
-    toast
+    store
   ]);
 
   const displayName = attachmentDisplayName(attachment);

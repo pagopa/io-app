@@ -42,7 +42,7 @@ describe("aarErrorMappings", () => {
       });
     });
 
-    errorMap.forEach((component, errorCode) => {
+    Object.entries(errorMap).forEach(([errorCode, component]) => {
       it(`should return the correct component for error code ${errorCode}`, () => {
         const result = getSendAarErrorComponent([{ code: errorCode }]);
         expect(result).toBeDefined();
@@ -62,7 +62,7 @@ describe("aarErrorMappings", () => {
         expect(result).toBe(component);
       });
       it(`should return the first matching component when multiple valid error codes are provided after ${errorCode}`, () => {
-        const followingKnownErrors = Array.from(errorMap.keys())
+        const followingKnownErrors = Object.keys(errorMap)
           .filter(code => code !== errorCode)
           .map(code => ({ code }));
         const result = getSendAarErrorComponent([

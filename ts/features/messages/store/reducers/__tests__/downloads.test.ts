@@ -14,7 +14,7 @@ import {
   INITIAL_STATE,
   downloadedMessageAttachmentSelector,
   downloadsReducer,
-  hasErrorOccourredOnRequestedDownloadSelector,
+  getRequestedDownloadErrorSelector,
   isDownloadingMessageAttachmentSelector,
   isRequestedAttachmentDownloadSelector
 } from "../downloads";
@@ -545,8 +545,8 @@ describe("downloadsReducer", () => {
     });
   });
 
-  describe("hasErrorOccourredOnMessageAttachmentDownloadSelector", () => {
-    it("should return false on initial state", () => {
+  describe("getRequestedDownloadErrorSelector", () => {
+    it("should return undefined on initial state", () => {
       const initialState = appReducer(
         undefined,
         downloadAttachment.request({
@@ -556,14 +556,14 @@ describe("downloadsReducer", () => {
           serviceId
         })
       );
-      const isError = hasErrorOccourredOnRequestedDownloadSelector(
+      const error = getRequestedDownloadErrorSelector(
         initialState,
         messageId,
         mockPdfAttachment.id
       );
-      expect(isError).toBeFalsy();
+      expect(error).toBeUndefined();
     });
-    it("should return false on a messageId-unmatching attachment", () => {
+    it("should return undefined on a messageId-unmatching attachment", () => {
       const initialState = appReducer(
         undefined,
         downloadAttachment.request({
@@ -578,17 +578,17 @@ describe("downloadsReducer", () => {
         downloadAttachment.failure({
           attachment: mockPdfAttachment,
           messageId,
-          error: new Error("")
+          error: new Error("download failed")
         })
       );
-      const isError = hasErrorOccourredOnRequestedDownloadSelector(
+      const error = getRequestedDownloadErrorSelector(
         failureState,
         "01HNWQ5YDG02JFGFH9523AC04Z",
         mockPdfAttachment.id
       );
-      expect(isError).toBeFalsy();
+      expect(error).toBeUndefined();
     });
-    it("should return false on an attachmentId-unmatching attachment", () => {
+    it("should return undefined on an attachmentId-unmatching attachment", () => {
       const initialState = appReducer(
         undefined,
         downloadAttachment.request({
@@ -603,17 +603,18 @@ describe("downloadsReducer", () => {
         downloadAttachment.failure({
           attachment: mockPdfAttachment,
           messageId,
-          error: new Error("")
+          error: new Error("download failed")
         })
       );
-      const isError = hasErrorOccourredOnRequestedDownloadSelector(
+      const error = getRequestedDownloadErrorSelector(
         failureState,
         messageId,
         "potato"
       );
-      expect(isError).toBeFalsy();
+      expect(error).toBeUndefined();
     });
-    it("should return true on a failed attachment", () => {
+    it("should return the error on a failed attachment", () => {
+      const downloadError = new Error("download failed");
       const initialState = appReducer(
         undefined,
         downloadAttachment.request({
@@ -628,17 +629,18 @@ describe("downloadsReducer", () => {
         downloadAttachment.failure({
           attachment: mockPdfAttachment,
           messageId,
-          error: new Error("")
+          error: downloadError
         })
       );
-      const isError = hasErrorOccourredOnRequestedDownloadSelector(
+      const error = getRequestedDownloadErrorSelector(
         failureState,
         messageId,
         mockPdfAttachment.id
       );
-      expect(isError).toBeTruthy();
+      expect(error).toBeDefined();
+      expect(error).toBe(downloadError);
     });
-    it("should return false on a successful attachment", () => {
+    it("should return undefined on a successful attachment", () => {
       const initialState = appReducer(
         undefined,
         downloadAttachment.request({
@@ -648,7 +650,7 @@ describe("downloadsReducer", () => {
           serviceId
         })
       );
-      const failureState = appReducer(
+      const successState = appReducer(
         initialState,
         downloadAttachment.success({
           attachment: mockPdfAttachment,
@@ -656,14 +658,14 @@ describe("downloadsReducer", () => {
           path: `file:///${mockPdfAttachment.id}.pdf`
         })
       );
-      const isError = hasErrorOccourredOnRequestedDownloadSelector(
-        failureState,
+      const error = getRequestedDownloadErrorSelector(
+        successState,
         messageId,
         mockPdfAttachment.id
       );
-      expect(isError).toBeFalsy();
+      expect(error).toBeUndefined();
     });
-    it("should return false on a cancelled attachment", () => {
+    it("should return undefined on a cancelled attachment", () => {
       const initialState = appReducer(
         undefined,
         downloadAttachment.request({
@@ -673,21 +675,21 @@ describe("downloadsReducer", () => {
           serviceId
         })
       );
-      const failureState = appReducer(
+      const cancelledState = appReducer(
         initialState,
         downloadAttachment.cancel({
           attachment: mockPdfAttachment,
           messageId
         })
       );
-      const isError = hasErrorOccourredOnRequestedDownloadSelector(
-        failureState,
+      const error = getRequestedDownloadErrorSelector(
+        cancelledState,
         messageId,
         mockPdfAttachment.id
       );
-      expect(isError).toBeFalsy();
+      expect(error).toBeUndefined();
     });
-    it("should return false on a failed attachment after clear state", () => {
+    it("should return undefined on a failed attachment after clear state", () => {
       const initialState = appReducer(
         undefined,
         downloadAttachment.request({
@@ -702,19 +704,19 @@ describe("downloadsReducer", () => {
         downloadAttachment.failure({
           attachment: mockPdfAttachment,
           messageId,
-          error: new Error("")
+          error: new Error("download failed")
         })
       );
       const clearState = appReducer(
         failureState,
         clearRequestedAttachmentDownload()
       );
-      const isError = hasErrorOccourredOnRequestedDownloadSelector(
+      const error = getRequestedDownloadErrorSelector(
         clearState,
         messageId,
         mockPdfAttachment.id
       );
-      expect(isError).toBeFalsy();
+      expect(error).toBeUndefined();
     });
   });
 
