@@ -1,10 +1,11 @@
 import {
   Body,
   H6,
-  HStack,
   IconButton,
   IOButton,
+  hexToRgba,
   IOColors,
+  HStack,
   useIOTheme,
   VStack
 } from "@pagopa/io-app-design-system";
@@ -26,6 +27,10 @@ const TOOLTIP_MARGIN = 16;
 const ARROW_SIZE = 20;
 const ARROW_VISIBLE = ARROW_SIZE / 3;
 const BORDER_RADIUS = 8;
+const CLOSE_BUTTON_SPACE_FROM_EDGE = 8;
+const CLOSE_BUTTON_OPACITY = 0.7;
+/* Avoid text overlap of title with close icon */
+const TOOLTIP_TITLE_SAFE_PADDING = 32;
 
 type Props = {
   itemMeasurement: TourItemMeasurement;
@@ -135,21 +140,9 @@ export const TourTooltip = ({
       <View style={[styles.tooltip, { backgroundColor: tooltipBgColor }]}>
         <VStack space={16}>
           <VStack space={4}>
-            <HStack
-              space={8}
-              style={{
-                justifyContent: "space-between",
-                alignItems: "flex-start"
-              }}
-            >
-              <H6 style={{ flexShrink: 1 }}>{title}</H6>
-              <IconButton
-                icon="closeSmall"
-                color="neutral"
-                accessibilityLabel={I18n.t("features.tour.skip")}
-                onPress={handleSkip}
-              />
-            </HStack>
+            <H6 style={{ paddingRight: TOOLTIP_TITLE_SAFE_PADDING }}>
+              {title}
+            </H6>
             <Body>{description}</Body>
           </VStack>
           <HStack
@@ -178,6 +171,14 @@ export const TourTooltip = ({
             </HStack>
           </HStack>
         </VStack>
+        <View style={styles.closeIconButton}>
+          <IconButton
+            icon="closeSmall"
+            color="neutral"
+            accessibilityLabel={I18n.t("features.tour.skip")}
+            onPress={handleSkip}
+          />
+        </View>
       </View>
     </Animated.View>
   );
@@ -191,8 +192,14 @@ const styles = StyleSheet.create({
   tooltip: {
     borderRadius: BORDER_RADIUS,
     borderCurve: "continuous",
-    boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.15)",
+    boxShadow: `0px 2px 8px ${hexToRgba(IOColors.black, 0.15)}`,
     padding: 16
+  },
+  closeIconButton: {
+    position: "absolute",
+    right: CLOSE_BUTTON_SPACE_FROM_EDGE,
+    top: CLOSE_BUTTON_SPACE_FROM_EDGE,
+    opacity: CLOSE_BUTTON_OPACITY
   },
   arrow: {
     position: "absolute",
