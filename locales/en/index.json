@@ -4179,6 +4179,18 @@
           "rateLimitToast": "Non riusciamo ad attivare il servizio SEND, riprova più tardi",
           "activationErrorMessage": "Non riusciamo ad attivare il servizio SEND"
         }
+      },
+      "lollipopPlayground": {
+        "environmentTitle": "Environment",
+        "uatLabel": "Use UAT",
+        "uatDescription": "Sends Service Activation and AAR requests to the UAT environment",
+        "playgroundTitle": "Lollipop Playground",
+        "postBodyLabel": "Post Body",
+        "postBodyPlaceholder": "{\n  p1: \"a string\",\n  p2: {\n    p3: true\n  }\n}",
+        "responseStatusCode": "Response Status Code",
+        "responseBody": "Response Body",
+        "requestGet": "GET",
+        "requestPost": "POST"
       }
     },
     "fci": {
@@ -4382,10 +4394,6 @@
       "methods": {
         "title": "Metodi di pagamento",
         "button": "Aggiungi",
-        "banner": {
-          "content": "Aggiungi al portafoglio un metodo di pagamento, così non dovrai inserire ogni volta i dati.",
-          "action": "Aggiungi un metodo"
-        },
         "status": {
           "expired": "Scaduta"
         },
@@ -4394,12 +4402,17 @@
             "label": "The loading of the payment methods failed.",
             "retryButton": "Retry"
           }
+        },
+        "banner": {
+          "title": "How do you want to pay?",
+          "content": "Find out which payment methods you can use in the IO app to pay pagoPA notices.",
+          "action": "Discover available payment methods"
         }
       },
       "transactions": {
         "multiplePayment": "Pagamento multiplo",
         "title": "Ricevute pagoPA",
-        "button": "Mostra tutte",
+        "button": "Show all",
         "empty": {
           "title": "Qui vedrai le tue ricevute pagoPA",
           "content": "Paga un avviso in app o presso un qualsiasi canale abilitato a pagoPA."
@@ -4415,7 +4428,6 @@
           "loading": "We are hiding your receipt...",
           "title": "pagoPA Receipt",
           "shareButton": "Save or share",
-          "error": "Unable to retrieve the receipt.",
           "download": "Get receipt",
           "hideFromList": "Hide from list",
           "delete": {

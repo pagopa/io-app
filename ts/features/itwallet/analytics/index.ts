@@ -8,7 +8,7 @@ import {
   ITW_TECH_EVENTS
 } from "./enum";
 import {
-  TrackITWalletBannerClosureProperties,
+  TrackItwBannerProperties,
   ItwFlow,
   ItwWalletDataShare,
   ItwScreenFlowContext,
@@ -23,13 +23,14 @@ import {
   ItwIdMethod,
   CredentialStatusAssertionFailure,
   ItwCredentialDetails,
-  TrackSaveCredentialSuccess
+  TrackSaveCredentialSuccess,
+  TrackItwDeactivation
 } from "./utils/types";
 
 // Screen view events
 
-export const trackITWalletBannerVisualized = (
-  properties: TrackITWalletBannerClosureProperties
+export const trackItwBannerVisualized = (
+  properties: TrackItwBannerProperties
 ) => {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.BANNER,
@@ -76,10 +77,12 @@ export const trackItwDismissalContext = (
   );
 };
 
-export const trackItwUpgradeBanner = (banner_page: string) => {
+export const trackItwDiscoveryBanner = (
+  properties: TrackItwBannerProperties
+) => {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_BANNER,
-    buildEventProperties("UX", "screen_view", { banner_page })
+    buildEventProperties("UX", "screen_view", properties)
   );
 };
 
@@ -90,20 +93,23 @@ export const trackItwSurveyRequest = (properties: TrackQualtricsSurvey) => {
   );
 };
 
+export const trackItwSettings = () => {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_SETTINGS,
+    buildEventProperties("UX", "screen_view")
+  );
+};
+
 // Actions events
 
-export const trackItWalletBannerTap = (
-  properties: TrackITWalletBannerClosureProperties
-) => {
+export const trackItwBannerTap = (properties: TrackItwBannerProperties) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.TAP_BANNER,
     buildEventProperties("UX", "action", properties)
   );
 };
 
-export const trackItWalletBannerClosure = (
-  properties: TrackITWalletBannerClosureProperties
-) => {
+export const trackItwBannerClosure = (properties: TrackItwBannerProperties) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.CLOSE_BANNER,
     buildEventProperties("UX", "action", properties)
@@ -185,12 +191,17 @@ export const trackWalletCredentialShowAuthSource = (
   );
 };
 
-export const trackWalletStartDeactivation = (
-  credential: MixPanelCredential
-) => {
+export const trackItwStartActivation = (screen_name: string) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_START_ACTIVATION,
+    buildEventProperties("UX", "action", { screen_name })
+  );
+};
+
+export const trackItwStartDeactivation = (props: TrackItwDeactivation) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_START_DEACTIVATION,
-    buildEventProperties("UX", "action", { credential })
+    buildEventProperties("UX", "action", props)
   );
 };
 
@@ -210,10 +221,21 @@ export const trackItwDismissalAction = (
   );
 };
 
-export const trackItwTapUpgradeBanner = (banner_page: string) => {
+export const trackItwDiscoveryBannerTap = (
+  properties: TrackItwBannerProperties
+) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_TAP_BANNER,
-    buildEventProperties("UX", "action", { banner_page })
+    buildEventProperties("UX", "action", properties)
+  );
+};
+
+export const trackItwDiscoveryBannerClosure = (
+  properties: TrackItwBannerProperties
+) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CLOSE_BANNER,
+    buildEventProperties("UX", "action", properties)
   );
 };
 
@@ -252,19 +274,6 @@ export const trackItwSurveyRequestDeclined = (
 };
 
 // Errors events
-
-// TODO: Track IPZS timeout on eID flow
-export const trackItwIdRequestTimeout = (
-  ITW_ID_method?: ItwIdMethod,
-  itw_flow: ItwFlow = "not_available"
-) => {
-  if (ITW_ID_method) {
-    void mixpanelTrack(
-      ITW_ERRORS_EVENTS.ITW_ID_REQUEST_TIMEOUT,
-      buildEventProperties("KO", "error", { ITW_ID_method, itw_flow })
-    );
-  }
-};
 
 export const trackItwStatusCredentialAssertionFailure = ({
   credential,

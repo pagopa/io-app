@@ -1,497 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SendAARCieCardReadingComponent SendAARCieCardReadingComponent: ReadState is ERROR generic error bottomSheet should match snapshot 1`] = `
-[
-  <Text
-    allowFontScaling={true}
-    dynamicTypeRamp="body"
-    maxFontSizeMultiplier={1.5}
-    style={
-      [
-        {},
-        {
-          "color": "#555C70",
-          "fontFamily": "Titillio-Regular",
-          "fontSize": 16,
-          "includeFontPadding": false,
-          "lineHeight": 24,
-        },
-      ]
-    }
-  >
-    features.pn.aar.flow.ko.GENERIC.detail.subTitle
-  </Text>,
-  <View
-    style={
-      {
-        "height": 16,
-      }
-    }
-  />,
-  <View
-    style={
-      {
-        "marginHorizontal": -24,
-        "paddingHorizontal": 24,
-        "paddingVertical": 12,
-      }
-    }
-  >
-    <View
-      style={
-        {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "space-between",
-        }
-      }
-    >
-      <View
-        style={
-          {
-            "flex": 1,
-          }
-        }
-      >
-        <View
-          accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.supportTitle"
-          accessibilityRole="header"
-          accessible={true}
-        >
-          <Text
-            allowFontScaling={true}
-            dynamicTypeRamp="headline"
-            maxFontSizeMultiplier={1.5}
-            role="heading"
-            style={
-              [
-                {},
-                {
-                  "color": "#555C70",
-                  "fontFamily": "Titillio-Semibold",
-                  "fontSize": 16,
-                  "includeFontPadding": false,
-                  "lineHeight": 24,
-                },
-              ]
-            }
-          >
-            features.pn.aar.flow.ko.GENERIC.detail.supportTitle
-          </Text>
-        </View>
-      </View>
-    </View>
-  </View>,
-  <View
-    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.chat"
-    accessibilityRole="button"
-    accessibilityState={
-      {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "selected": undefined,
-      }
-    }
-    accessibilityValue={
-      {
-        "max": undefined,
-        "min": undefined,
-        "now": undefined,
-        "text": undefined,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onBlur={[Function]}
-    onClick={[Function]}
-    onFocus={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    onTouchEnd={[Function]}
-    testID="button_assistance"
-  >
-    <View
-      accessibilityElementsHidden={true}
-      importantForAccessibility="no-hide-descendants"
-      style={
-        [
-          {
-            "marginHorizontal": -24,
-            "paddingHorizontal": 24,
-            "paddingVertical": 12,
-          },
-          {
-            "backgroundColor": undefined,
-          },
-        ]
-      }
-    >
-      <View
-        style={
-          [
-            {
-              "alignItems": "center",
-              "flexDirection": "row",
-              "justifyContent": "space-between",
-            },
-            {
-              "columnGap": 18,
-            },
-            {
-              "transform": [
-                {
-                  "scale": undefined,
-                },
-              ],
-            },
-          ]
-        }
-      >
-        <RNSVGSvgView
-          accessibilityElementsHidden={true}
-          accessibilityLabel=""
-          accessible={false}
-          align="xMidYMid"
-          bbHeight={36}
-          bbWidth={36}
-          color="#0B3EE3"
-          focusable={false}
-          height={36}
-          importantForAccessibility="no-hide-descendants"
-          meetOrSlice={0}
-          minX={0}
-          minY={0}
-          style={
-            [
-              {
-                "backgroundColor": "transparent",
-                "borderWidth": 0,
-              },
-              {
-                "flex": 0,
-                "height": 36,
-                "width": 36,
-              },
-            ]
-          }
-          vbHeight={24}
-          vbWidth={24}
-          width={36}
-        >
-          <RNSVGGroup
-            fill={
-              {
-                "payload": 4278190080,
-                "type": 0,
-              }
-            }
-          >
-            <RNSVGPath
-              clipRule={0}
-              d="M0 9c0-4.97056 4.02944-9 9-9 4.9706 0 9 4.02944 9 9 0 4.9706-4.0294 9-9 9H3c-1.65685 0-3-1.3431-3-3V9Zm9-7C5.13401 2 2 5.13401 2 9v6c0 .5523.44772 1 1 1h6c3.866 0 7-3.134 7-7 0-3.86599-3.134-7-7-7ZM4.99808 7C4.44686 7 4 7.44686 4 7.99808c0 .55123.44686.99808.99808.99808h8.00382c.5512 0 .9981-.44685.9981-.99808C14 7.44686 13.5531 7 13.0019 7H4.99808Zm-.00143 4C4.44621 11 4 11.4462 4 11.9966c0 .5505.44621.9967.99665.9967h4.0067c.55044 0 .99665-.4462.99665-.9967C10 11.4462 9.55379 11 9.00335 11h-4.0067ZM21.8292 9.13773c-.3598-.41906-.9911-.46716-1.4102-.10743-.419.35973-.4671.9911-.1074 1.4101a7.00025 7.00025 0 0 1 1.6841 4.8099c.0031 1.2586.0017 4.1954.0007 5.7448-.0004.5514-.4457.9983-.9971.9988-1.7351.0017-5.1759.0043-5.6862-.001-1.759-.0183-3.4799-.5073-4.8248-1.6411-.4222-.356-1.05312-.3022-1.40909.12-.35598.4223-.30224 1.0532.12002 1.4091 1.72917 1.4578 3.94387 2.2111 6.20327 2.11.4038.0061 4.1864.004 6.5962.0019 1.1037-.0009 1.9957-.8955 1.9957-1.9992v-6.6717c.0809-2.2602-.6921-4.4681-2.1652-6.18417Z"
-              fill={
-                {
-                  "type": 2,
-                }
-              }
-              fillRule={0}
-              propList={
-                [
-                  "fill",
-                  "fillRule",
-                ]
-              }
-            />
-          </RNSVGGroup>
-        </RNSVGSvgView>
-        <View
-          style={
-            {
-              "flexGrow": 1,
-              "flexShrink": 1,
-            }
-          }
-        >
-          <Text
-            allowFontScaling={true}
-            maxFontSizeMultiplier={1.5}
-            style={
-              [
-                {},
-                {
-                  "color": "#0B3EE3",
-                  "fontFamily": "Titillio-Semibold",
-                  "fontSize": 16,
-                  "includeFontPadding": false,
-                  "lineHeight": 20,
-                },
-              ]
-            }
-          >
-            features.pn.aar.flow.ko.GENERIC.detail.chat
-          </Text>
-        </View>
-      </View>
-    </View>
-  </View>,
-  <View
-    style={
-      {
-        "height": 24,
-      }
-    }
-  />,
-  <View
-    style={
-      {
-        "marginHorizontal": -24,
-        "paddingHorizontal": 24,
-        "paddingVertical": 12,
-      }
-    }
-    testID="error_code_section_header"
-  >
-    <View
-      style={
-        {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "space-between",
-        }
-      }
-    >
-      <View
-        style={
-          {
-            "flex": 1,
-          }
-        }
-      >
-        <View
-          accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.additionalDataTitle"
-          accessibilityRole="header"
-          accessible={true}
-        >
-          <Text
-            allowFontScaling={true}
-            dynamicTypeRamp="headline"
-            maxFontSizeMultiplier={1.5}
-            role="heading"
-            style={
-              [
-                {},
-                {
-                  "color": "#555C70",
-                  "fontFamily": "Titillio-Semibold",
-                  "fontSize": 16,
-                  "includeFontPadding": false,
-                  "lineHeight": 24,
-                },
-              ]
-            }
-          >
-            features.pn.aar.flow.ko.GENERIC.detail.additionalDataTitle
-          </Text>
-        </View>
-      </View>
-    </View>
-  </View>,
-  <View
-    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.errorCode"
-    accessibilityRole="button"
-    accessibilityState={
-      {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "selected": undefined,
-      }
-    }
-    accessibilityValue={
-      {
-        "max": undefined,
-        "min": undefined,
-        "now": undefined,
-        "text": undefined,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onBlur={[Function]}
-    onClick={[Function]}
-    onFocus={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    onTouchEnd={[Function]}
-    testID="error_code_value"
-  >
-    <View
-      accessibilityElementsHidden={true}
-      importantForAccessibility="no-hide-descendants"
-      style={
-        [
-          {
-            "marginHorizontal": -24,
-            "paddingHorizontal": 24,
-            "paddingVertical": 12,
-          },
-          {
-            "backgroundColor": undefined,
-          },
-        ]
-      }
-    >
-      <View
-        style={
-          [
-            {
-              "alignItems": "center",
-              "flexDirection": "row",
-              "justifyContent": "space-between",
-            },
-            {
-              "columnGap": 18,
-            },
-            {
-              "transform": [
-                {
-                  "scale": undefined,
-                },
-              ],
-            },
-          ]
-        }
-      >
-        <View
-          style={
-            {
-              "flex": 1,
-            }
-          }
-        >
-          <Text
-            allowFontScaling={true}
-            dynamicTypeRamp="footnote"
-            maxFontSizeMultiplier={1.5}
-            style={
-              [
-                {},
-                {
-                  "color": "#555C70",
-                  "fontFamily": "Titillio-Regular",
-                  "fontSize": 14,
-                  "includeFontPadding": false,
-                  "lineHeight": 21,
-                },
-              ]
-            }
-          >
-            features.pn.aar.flow.ko.GENERIC.detail.errorCode
-          </Text>
-          <Text
-            allowFontScaling={true}
-            dynamicTypeRamp="headline"
-            maxFontSizeMultiplier={1.5}
-            numberOfLines={2}
-            style={
-              [
-                {},
-                {
-                  "color": "#0B3EE3",
-                  "fontFamily": "Titillio-Semibold",
-                  "fontSize": 16,
-                  "includeFontPadding": false,
-                  "lineHeight": 24,
-                },
-              ]
-            }
-          >
-            NON_MAPPED_ERROR
-          </Text>
-        </View>
-        <RNSVGSvgView
-          accessibilityElementsHidden={true}
-          accessibilityLabel=""
-          accessible={false}
-          align="xMidYMid"
-          bbHeight={36}
-          bbWidth={36}
-          color="#0B3EE3"
-          focusable={false}
-          height={36}
-          importantForAccessibility="no-hide-descendants"
-          meetOrSlice={0}
-          minX={0}
-          minY={0}
-          style={
-            [
-              {
-                "backgroundColor": "transparent",
-                "borderWidth": 0,
-              },
-              {
-                "flex": 0,
-                "height": 36,
-                "width": 36,
-              },
-            ]
-          }
-          vbHeight={24}
-          vbWidth={24}
-          width={36}
-        >
-          <RNSVGGroup
-            fill={
-              {
-                "payload": 4278190080,
-                "type": 0,
-              }
-            }
-          >
-            <RNSVGPath
-              clipRule={0}
-              d="M12 18h8a2 2 0 0 0 2-2V9h-4a3 3 0 0 1-3-3V2h-3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Zm9.332-11.987a2 2 0 0 1 .603.987H18a1 1 0 0 1-1-1V2.227a2 2 0 0 1 .406.281l3.926 3.505ZM14 20h-2a4 4 0 0 1-4-4V6H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2Zm2 0h4a4 4 0 0 0 4-4V7.505a4 4 0 0 0-1.336-2.984l-3.926-3.505A4 4 0 0 0 16.074 0H12a4 4 0 0 0-4 4H4a4 4 0 0 0-4 4v12a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4Z"
-              fill={
-                {
-                  "type": 2,
-                }
-              }
-              fillRule={0}
-              propList={
-                [
-                  "fill",
-                  "fillRule",
-                ]
-              }
-            />
-          </RNSVGGroup>
-        </RNSVGSvgView>
-      </View>
-    </View>
-  </View>,
-  <View
-    style={
-      {
-        "height": 24,
-      }
-    }
-  />,
-]
-`;
-
 exports[`SendAARCieCardReadingComponent should match the snapshot for readState: {
   status: 'SUCCESS',
   data: {
@@ -940,9 +448,21 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 }
                               >
-                                <View
-                                  accessible={true}
-                                >
+                                <View>
+                                  <View
+                                    accessibilityLabel="features.pn.aar.flow.cieScanning.success.title"
+                                    accessibilityLiveRegion="polite"
+                                    accessible={true}
+                                    importantForAccessibility="yes"
+                                    style={
+                                      {
+                                        "height": 1,
+                                        "opacity": 0,
+                                        "position": "absolute",
+                                        "width": 1,
+                                      }
+                                    }
+                                  />
                                   <Text
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title3"
@@ -1514,9 +1034,21 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 }
                               >
-                                <View
-                                  accessible={true}
-                                >
+                                <View>
+                                  <View
+                                    accessibilityLabel="features.pn.aar.flow.cieScanning.error.GENERIC.title"
+                                    accessibilityLiveRegion="polite"
+                                    accessible={true}
+                                    importantForAccessibility="yes"
+                                    style={
+                                      {
+                                        "height": 1,
+                                        "opacity": 0,
+                                        "position": "absolute",
+                                        "width": 1,
+                                      }
+                                    }
+                                  />
                                   <Text
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title3"
@@ -1739,7 +1271,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                             }
                           >
                             <View
-                              accessibilityLabel="global.buttons.close"
+                              accessibilityLabel="global.buttons.retry"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1856,7 +1388,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       ]
                                     }
                                   >
-                                    global.buttons.close
+                                    global.buttons.retry
                                   </Text>
                                 </View>
                               </View>
@@ -2416,9 +1948,21 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 }
                               >
-                                <View
-                                  accessible={true}
-                                >
+                                <View>
+                                  <View
+                                    accessibilityLabel="features.pn.aar.flow.cieScanning.error.GENERIC.title"
+                                    accessibilityLiveRegion="polite"
+                                    accessible={true}
+                                    importantForAccessibility="yes"
+                                    style={
+                                      {
+                                        "height": 1,
+                                        "opacity": 0,
+                                        "position": "absolute",
+                                        "width": 1,
+                                      }
+                                    }
+                                  />
                                   <Text
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title3"
@@ -2641,7 +2185,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                             }
                           >
                             <View
-                              accessibilityLabel="global.buttons.close"
+                              accessibilityLabel="global.buttons.retry"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -2758,7 +2302,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       ]
                                     }
                                   >
-                                    global.buttons.close
+                                    global.buttons.retry
                                   </Text>
                                 </View>
                               </View>
@@ -3318,9 +2862,21 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 }
                               >
-                                <View
-                                  accessible={true}
-                                >
+                                <View>
+                                  <View
+                                    accessibilityLabel="features.pn.aar.flow.cieScanning.error.GENERIC.title"
+                                    accessibilityLiveRegion="polite"
+                                    accessible={true}
+                                    importantForAccessibility="yes"
+                                    style={
+                                      {
+                                        "height": 1,
+                                        "opacity": 0,
+                                        "position": "absolute",
+                                        "width": 1,
+                                      }
+                                    }
+                                  />
                                   <Text
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title3"
@@ -3543,7 +3099,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                             }
                           >
                             <View
-                              accessibilityLabel="global.buttons.close"
+                              accessibilityLabel="global.buttons.retry"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -3660,7 +3216,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       ]
                                     }
                                   >
-                                    global.buttons.close
+                                    global.buttons.retry
                                   </Text>
                                 </View>
                               </View>
@@ -4220,9 +3776,21 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 }
                               >
-                                <View
-                                  accessible={true}
-                                >
+                                <View>
+                                  <View
+                                    accessibilityLabel="features.pn.aar.flow.cieScanning.error.TAG_LOST.title"
+                                    accessibilityLiveRegion="polite"
+                                    accessible={true}
+                                    importantForAccessibility="yes"
+                                    style={
+                                      {
+                                        "height": 1,
+                                        "opacity": 0,
+                                        "position": "absolute",
+                                        "width": 1,
+                                      }
+                                    }
+                                  />
                                   <Text
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title3"
@@ -5112,9 +4680,21 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 }
                               >
-                                <View
-                                  accessible={true}
-                                >
+                                <View>
+                                  <View
+                                    accessibilityLabel="features.pn.aar.flow.cieScanning.idle.title"
+                                    accessibilityLiveRegion="polite"
+                                    accessible={true}
+                                    importantForAccessibility="yes"
+                                    style={
+                                      {
+                                        "height": 1,
+                                        "opacity": 0,
+                                        "position": "absolute",
+                                        "width": 1,
+                                      }
+                                    }
+                                  />
                                   <Text
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title3"
@@ -5418,6 +4998,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     "alignSelf": "flex-start",
                                   }
                                 }
+                                testID="idleCloseButton"
                               >
                                 <View
                                   style={
@@ -5959,9 +5540,21 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 }
                               >
-                                <View
-                                  accessible={true}
-                                >
+                                <View>
+                                  <View
+                                    accessibilityLabel="features.pn.aar.flow.cieScanning.reading.title"
+                                    accessibilityLiveRegion="polite"
+                                    accessible={true}
+                                    importantForAccessibility="yes"
+                                    style={
+                                      {
+                                        "height": 1,
+                                        "opacity": 0,
+                                        "position": "absolute",
+                                        "width": 1,
+                                      }
+                                    }
+                                  />
                                   <Text
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title3"
@@ -6285,6 +5878,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     "alignSelf": "flex-start",
                                   }
                                 }
+                                testID="readingCloseButton"
                               >
                                 <View
                                   style={
@@ -6826,9 +6420,21 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 }
                               >
-                                <View
-                                  accessible={true}
-                                >
+                                <View>
+                                  <View
+                                    accessibilityLabel="features.pn.aar.flow.cieScanning.reading.title"
+                                    accessibilityLiveRegion="polite"
+                                    accessible={true}
+                                    importantForAccessibility="yes"
+                                    style={
+                                      {
+                                        "height": 1,
+                                        "opacity": 0,
+                                        "position": "absolute",
+                                        "width": 1,
+                                      }
+                                    }
+                                  />
                                   <Text
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title3"
@@ -7152,6 +6758,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     "alignSelf": "flex-start",
                                   }
                                 }
+                                testID="readingCloseButton"
                               >
                                 <View
                                   style={
@@ -7693,9 +7300,21 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                   }
                                 }
                               >
-                                <View
-                                  accessible={true}
-                                >
+                                <View>
+                                  <View
+                                    accessibilityLabel="features.pn.aar.flow.cieScanning.reading.title"
+                                    accessibilityLiveRegion="polite"
+                                    accessible={true}
+                                    importantForAccessibility="yes"
+                                    style={
+                                      {
+                                        "height": 1,
+                                        "opacity": 0,
+                                        "position": "absolute",
+                                        "width": 1,
+                                      }
+                                    }
+                                  />
                                   <Text
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title3"
@@ -8019,6 +7638,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     "alignSelf": "flex-start",
                                   }
                                 }
+                                testID="readingCloseButton"
                               >
                                 <View
                                   style={

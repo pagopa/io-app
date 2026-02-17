@@ -137,6 +137,12 @@ import { showSessionExpirationBlockingScreenSelector } from "../features/authent
 import { watchCdcSaga } from "../features/bonus/cdc/common/saga";
 import { watchMessagesSaga } from "../features/messages/saga";
 import { watchWalletSaga } from "../features/wallet/saga";
+import { watchSendLollipopLambda } from "../features/pn/lollipopLambda/saga";
+import {
+  isAppSupportedSelector,
+  versionInfoDataSelector
+} from "../common/versionInfo/store/reducers/versionInfo";
+import { versionInfoLoadSuccess } from "../common/versionInfo/store/actions/versionInfo";
 import { maybeHandlePendingBackgroundActions } from "./backgroundActions";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -262,6 +268,18 @@ export function* initializeApplicationSaga(
   const remoteConfig = yield* select(remoteConfigSelector);
   if (O.isNone(remoteConfig)) {
     yield* take(backendStatusLoadSuccess);
+  }
+
+  // Before proceeding, ensure that version info is loaded and app is supported
+  // we need to check that the min app version is satisfied to proceed any other step
+  const versionInfo = yield* select(versionInfoDataSelector);
+  if (versionInfo === null) {
+    yield* take(versionInfoLoadSuccess);
+  }
+
+  const isAppSupported = yield* select(isAppSupportedSelector);
+  if (!isAppSupported) {
+    return;
   }
 
   // ingress screen
@@ -618,8 +636,9 @@ export function* initializeApplicationSaga(
     // Start watching for PN actions
     yield* fork(watchPnSaga, sessionToken);
 
-    const aarRemoteEnabled = yield* select(isAarRemoteEnabled);
+    yield* fork(watchSendLollipopLambda, sessionToken, keyInfo);
 
+    const aarRemoteEnabled = yield* select(isAarRemoteEnabled);
     if (aarRemoteEnabled) {
       yield* fork(watchAarFlowSaga, sessionToken, keyInfo);
     }

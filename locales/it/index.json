@@ -4306,6 +4306,18 @@
           "rateLimitToast": "Non riusciamo ad attivare il servizio SEND, riprova più tardi",
           "activationErrorMessage": "Non riusciamo ad attivare il servizio SEND"
         }
+      },
+      "lollipopPlayground": {
+        "environmentTitle": "Ambiente",
+        "uatLabel": "Usa UAT",
+        "uatDescription": "Manda le richieste AAR e quelle di attivazione servizio all'ambiente di UAT",
+        "playgroundTitle": "Lollipop Playground",
+        "postBodyLabel": "Body della post",
+        "postBodyPlaceholder": "{\n  p1: \"a string\",\n  p2: {\n    p3: true\n  }\n}",
+        "responseStatusCode": "Status Code risposta",
+        "responseBody": "Body della risposta",
+        "requestGet": "GET",
+        "requestPost": "POST"
       }
     },
     "fci": {
@@ -4519,8 +4531,9 @@
         "title": "Metodi di pagamento",
         "button": "Aggiungi",
         "banner": {
-          "content": "Aggiungi al portafoglio un metodo di pagamento, così non dovrai inserire ogni volta i dati.",
-          "action": "Aggiungi un metodo"
+          "content": "Scopri quali metodi di pagamento puoi usare su IO per pagare gli avvisi pagoPA.",
+          "action": "Scopri i metodi disponibili",
+          "title": "Come puoi pagare?"
         },
         "status": {
           "expired": "Scaduta"
@@ -4535,7 +4548,7 @@
       "transactions": {
         "multiplePayment": "Pagamento multiplo",
         "title": "Ricevute pagoPA",
-        "button": "Vedi tutte",
+        "button": "Mostra tutte",
         "empty": {
           "title": "Qui vedrai le tue ricevute pagoPA",
           "content": "Paga un avviso in app o presso un qualsiasi canale abilitato a pagoPA."
@@ -4551,7 +4564,6 @@
           "loading": "Stiamo nascondendo la ricevuta...",
           "title": "Ricevuta pagoPA",
           "shareButton": "Salva o condividi",
-          "error": "Non è stato possibile recuperare la ricevuta.",
           "download": "Ottieni ricevuta",
           "hideFromList": "Nascondi dalla lista",
           "delete": {
@@ -4559,9 +4571,31 @@
             "failed": "C’è stato un errore, riprova"
           },
           "hideBanner": {
+            "isCart": {
+              "title": "Vuoi nascondere queste ricevute dalla tua lista?",
+              "content": "Stai per nascondere definitivamente tutte le ricevute collegate a questa transazione. Non compariranno più nell’elenco."
+            },
             "title": "Vuoi nascondere questa ricevuta dalla tua lista?",
             "content": "L’operazione è irreversibile. La ricevuta non verrà più mostrata nell’elenco delle tue ricevute.",
             "accept": "Sì, nascondi"
+          },
+          "debtorCartBanner": "Questo avviso è stato pagato insieme ad altri in un'unica transazione. Per informazioni sui costi di commissione, consulta il documento ricevuto in fase di pagamento.",
+          "error": {
+            "banner": {
+              "label": "Stiamo generando la ricevuta, torna tra un po’."
+            },
+            "400": {
+              "title": "I dati della ricevuta non sono corretti",
+              "subtitle": "Il Codice Fiscale non corrisponde a quello indicato in fase di pagamento."
+            },
+            "404": {
+              "title": "Non siamo riusciti a generare la ricevuta, riprova più tardi",
+              "subtitle": "Se il problema persiste, contatta l’assistenza."
+            },
+            "500": {
+              "title": "Stiamo riscontrando alcuni problemi sui nostri sistemi",
+              "subtitle": "Riprova più tardi."
+            }
           }
         },
         "details": {
@@ -4868,12 +4902,12 @@
         },
         "modeSelection": {
           "section": {
-            "issuance": "Ottieni {{ feature }}",
-            "reissuance": "Conferma identità"
+            "issuance": "Attiva {{ feature }}",
+            "reissuance": "Conferma periodica dell'identità"
           },
           "title": {
             "issuance": "Conferma la tua identità",
-            "reissuance": "Scegli come identificarti"
+            "reissuance": "Scegli come continuare"
           },
           "description": {
             "issuance": "È un passaggio di sicurezza necessario per associare i documenti digitali alla tua identità. ",
@@ -4884,6 +4918,7 @@
             "ciePin": {
               "title": "Continua con CIE + PIN",
               "subtitle": "Ha una durata di 12 mesi",
+              "reissuanceBadge": "Consigliato",
               "badge": "consigliato",
               "bottomSheet": {
                 "title": "Continua con CIE + PIN",
@@ -4922,6 +4957,10 @@
                 "warning": "Se scegli questo metodo dovrai ripetere il passaggio di sicurezza ogni 90 giorni."
               }
             }
+          },
+          "frequency": {
+            "every12Months": "Ogni 12 mesi",
+            "every90Days": "Ogni 90 giorni"
           }
         },
         "cie": {
@@ -5103,7 +5142,8 @@
           "title": "Identità verificata",
           "titleL3": "Ci siamo quasi!",
           "subtitle": "Stai attivando **Documenti su IO** come:",
-          "subtitleL3": "Hai verificato la tua identità. \nIl tuo portafoglio IT-Wallet sarà associato a questi dati:",
+          "subtitleL3": "Hai confermato la tua identità. \nIl tuo portafoglio IT-Wallet sarà associato a questi dati:",
+          "bottomTextL3": "Se hai già aggiunto documenti al Portafoglio, questi saranno aggiornati alle funzionalità IT-Wallet, senza modifiche ai tuoi dati.",
           "actions": {
             "primary": "Continua",
             "secondary": "Annulla"
@@ -5199,6 +5239,17 @@
           "title": "Hai già questo documento",
           "body": "La versione digitale del documento è già presente nel tuo Portafoglio.",
           "primaryAction": "Vai al documento"
+        },
+        "credentialAlreadyUpdated": {
+          "title": "Hai aggiornato il documento",
+          "subtitle": "La versione digitale di {{ credential }} è ora aggiornata su IO e puoi trovarla nel Portafoglio",
+          "action": "Vai al Portafoglio"
+        },
+        "confirmIdentity": {
+          "title": "Conferma la tua identità per aggiungere la {{ credential }}",
+          "subtitle": "È necessario confermare l’identità associata a {{ wallet }} per richiedere l’emissione della Patente digitale",
+          "primaryAction": "Conferma identità",
+          "secondaryAction": "Non ora"
         },
         "walletInstanceNotActive": {
           "documentiSuIo": {
@@ -5453,7 +5504,8 @@
           "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}}).",
           "alert": {
             "message": "Non potrai completare l'accesso ai servizi online."
-          }
+          },
+          "bottomsheetTitle": "Dettaglio dati"
         },
         "remote": {
           "loadingScreen": {
@@ -5691,6 +5743,11 @@
               "confirm": "Sì, disattiva",
               "cancel": "No, torna indietro"
             }
+          },
+          "status": {
+            "expiringPrefix": "Conferma la tua identità entro il ",
+            "expired": "Conferma la tua identità per continuare con i tuoi documenti",
+            "action": "Inizia"
           }
         }
       },
@@ -5831,20 +5888,32 @@
         "action": "Ricarica l'app IO",
         "failure": "Nessuna connessione. Collegati a internet e riprova."
       },
-      "upgrade": {
-        "banner": {
-          "documents": {
-            "active": {
-              "title": "Passa a IT-Wallet",
-              "description": "Aggiorna i tuoi documenti digitali e passa a funzionalità evolute con l’unico portafoglio digitale di Stato: pubblico, sicuro e gratuito. Garantito dallo Stato, accessibile solo a te.",
-              "action": "Passa a IT-Wallet"
-            },
-            "inactive": {
-              "title": "IT-Wallet per i tuoi documenti",
-              "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**. Garantito dallo Stato, accessibile solo a te.",
-              "action": "Ottieni IT-Wallet"
-            }
-          }
+      "engagementBanner": {
+        "activation": {
+          "title": "Porta su IO i tuoi documenti digitali",
+          "description": "Con piena validità ufficiale, digitali e sempre a portata di mano!",
+          "action": "Aggiungi un documento"
+        },
+        "upgrade_empty": {
+          "title": "Il tuo Portafoglio è ora parte di IT-Wallet",
+          "description": "Scopri le funzionalità evolute dei documenti digitali su IO.",
+          "action": "Aggiungi documento"
+        },
+        "upgrade": {
+          "title": "IO dà il benvenuto a IT-Wallet",
+          "description": "Il tuo portafoglio digitale pubblico: semplice, sicuro, tuo. Scopri i nuovi documenti ora disponibili!",
+          "action": "Inizia"
+        },
+        "upgrade_with_mdl": {
+          "title": "Dimostra chi sei col tuo dispositivo",
+          "description": "Usa la tua Patente digitale anche come documento di riconoscimento, in modo facile e sicuro!",
+          "action": "Inizia"
+        },
+        "dismissAlert": {
+          "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?",
+          "description": "Potrai ottenere IT-Wallet in qualsiasi altro momento, andando in Impostazioni > IT-Wallet.",
+          "confirm": "Sì, rinuncia",
+          "cancel": "Indietro"
         }
       },
       "settings": {
