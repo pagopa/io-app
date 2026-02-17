@@ -9,7 +9,7 @@ import { ColorModeChoice } from "../../hooks/useAppThemeConfiguration";
 export type TypefaceChoice = "comfortable" | "standard";
 
 // These different locales only apply to the app labels
-export type AppLocale = "it" | "en" | "de" | "fr" | "sl";
+export type AppLocale = "it" | "en" | "de";
 
 export const preferenceFingerprintIsEnabledSaveSuccess = createStandardAction(
   "PREFERENCES_FINGERPRINT_SAVE_SUCCESS"
