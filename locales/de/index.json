@@ -688,6 +688,7 @@
       "accessibility": {
         "carousel": {
           "label": "Vorstellung von IO",
+          "hint": "Karussell mit einer einführenden Anleitung zur IO-Funktionalität. Wähle, um den Inhalt kennenzulernen.",
           "step": "Folie {{current}} von {{total}}"
         }
       },

@@ -24,7 +24,15 @@
       "venerdì",
       "sabato"
     ],
-    "abbr_day_names": ["dom", "lun", "mar", "mer", "gio", "ven", "sab"],
+    "abbr_day_names": [
+      "dom",
+      "lun",
+      "mar",
+      "mer",
+      "gio",
+      "ven",
+      "sab"
+    ],
     "month_names": [
       " ",
       "gennaio",
@@ -55,7 +63,10 @@
       "nov",
       "dic"
     ],
-    "meridian": ["am", "pm"],
+    "meridian": [
+      "am",
+      "pm"
+    ],
     "time": {
       "minutes_zero": "0 minuti",
       "minutes_one": "1 minuto",
@@ -842,6 +853,7 @@
       "accessibility": {
         "carousel": {
           "label": "Presentazione di IO",
+          "hint": "Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto",
           "step": "Diapositiva {{current}} di {{total}}"
         }
       },
@@ -5971,7 +5983,7 @@
       "next": "Avanti",
       "back": "Indietro",
       "skip": "Salta",
-      "done": "Fine",
+      "done": "Fatto!",
       "stepIndicator": "Fase {{current}} di {{total}}"
     }
   },

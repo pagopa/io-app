@@ -840,6 +840,7 @@
       "accessibility": {
         "carousel": {
           "label": "IO presentation",
+          "hint": "Carousel that contains an introduction guide to IO functionalities. Select to know the content.",
           "step": "Slide {{current}} of {{total}}"
         }
       },
