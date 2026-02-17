@@ -1,8 +1,10 @@
 import {
+  BodySmall,
   ListItemHeader,
   RadioGroup,
   RadioItem,
   useIOToast,
+  VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -267,32 +269,47 @@ const LanguagesPreferencesScreen = () => {
         <VStack space={24}>
           <View>
             <ListItemHeader
-              iconName="institution"
+              iconName="device"
               label={I18n.t(
-                "profile.preferences.list.preferred_language.headers.services"
+                "profile.preferences.list.preferred_language.sections.app.title"
               )}
             />
+            <BodySmall>
+              {I18n.t(
+                "profile.preferences.list.preferred_language.sections.app.description"
+              )}
+            </BodySmall>
+
+            <VSpacer size={8} />
+
+            <RadioGroup<AppLocaleId>
+              type="radioListItem"
+              items={appLocaleOptions}
+              selectedItem={selectedAppLocale}
+              onPress={onAppLanguageSelected}
+            />
+          </View>
+
+          <View>
+            <ListItemHeader
+              iconName="email"
+              label={I18n.t(
+                "profile.preferences.list.preferred_language.sections.messages.title"
+              )}
+            />
+            <BodySmall>
+              {I18n.t(
+                "profile.preferences.list.preferred_language.sections.messages.description"
+              )}
+            </BodySmall>
+
+            <VSpacer size={8} />
 
             <RadioGroup<string>
               type="radioListItem"
               items={renderedItem}
               selectedItem={selectedItem}
               onPress={onLanguageSelected}
-            />
-          </View>
-
-          <View>
-            <ListItemHeader
-              iconName="device"
-              label={I18n.t(
-                "profile.preferences.list.preferred_language.headers.app"
-              )}
-            />
-            <RadioGroup<AppLocaleId>
-              type="radioListItem"
-              items={appLocaleOptions}
-              selectedItem={selectedAppLocale}
-              onPress={onAppLanguageSelected}
             />
           </View>
         </VStack>
