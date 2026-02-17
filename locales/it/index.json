@@ -842,7 +842,7 @@
       "accessibility": {
         "carousel": {
           "label": "Presentazione di IO",
-          "hint": "Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto"
+          "step": "Diapositiva {{current}} di {{total}}"
         }
       },
       "useful_resources": {
@@ -5971,7 +5971,8 @@
       "next": "Avanti",
       "back": "Indietro",
       "skip": "Salta",
-      "done": "Fine"
+      "done": "Fine",
+      "stepIndicator": "Fase {{current}} di {{total}}"
     }
   },
   "support": {

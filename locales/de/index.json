@@ -688,7 +688,7 @@
       "accessibility": {
         "carousel": {
           "label": "Vorstellung von IO",
-          "hint": "Karussell mit einer einführenden Anleitung zur IO-Funktionalität. Wähle, um den Inhalt kennenzulernen."
+          "step": "Folie {{current}} von {{total}}"
         }
       },
       "cie_bottom_sheet": {
@@ -3764,7 +3764,8 @@
       "next": "Weiter",
       "back": "Zurück",
       "skip": "Überspringen",
-      "done": "Fertig"
+      "done": "Fertig",
+      "stepIndicator": "Schritt {{current}} von {{total}}"
     }
   },
   "support": {

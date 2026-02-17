@@ -22,6 +22,7 @@ import { completeTourAction, prevTourStepAction } from "../store/actions";
 import { activeGroupIdSelector } from "../store/selectors";
 import { TourItemMeasurement } from "../types";
 import { useTourStepNavigation } from "../hooks/useTourStepNavigation";
+import { TourStepIndicator } from "./TourStepIndicator";
 
 const TOOLTIP_MARGIN = 16;
 const ARROW_SIZE = 20;
@@ -148,7 +149,7 @@ export const TourTooltip = ({
           <HStack
             style={{ justifyContent: "space-between", alignItems: "center" }}
           >
-            <Body weight="Semibold">{`${stepIndex + 1} / ${totalSteps}`}</Body>
+            <TourStepIndicator stepIndex={stepIndex} totalSteps={totalSteps} />
             <HStack space={8} style={{ alignItems: "center" }}>
               {!isFirstStep && (
                 <IOButton

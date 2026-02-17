@@ -840,7 +840,7 @@
       "accessibility": {
         "carousel": {
           "label": "IO presentation",
-          "hint": "Carousel that contains an introduction guide to IO functionalities. Select to know the content."
+          "step": "Slide {{current}} of {{total}}"
         }
       },
       "useful_resources": {
@@ -5481,7 +5481,8 @@
       "next": "Next",
       "back": "Back",
       "skip": "Skip",
-      "done": "Done"
+      "done": "Done",
+      "stepIndicator": "Step {{current}} of {{total}}"
     }
   },
   "support": {
