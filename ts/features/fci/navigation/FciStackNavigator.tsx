@@ -46,13 +46,7 @@ export const FciStackNavigator = () => (
       name={FCI_ROUTES.USER_DATA_SHARE}
       component={FciDataSharingScreen}
     />
-    <Stack.Screen
-      name={FCI_ROUTES.QTSP_TOS}
-      component={FciQtspClausesScreen}
-      options={{
-        headerShown: false
-      }}
-    />
+    <Stack.Screen name={FCI_ROUTES.QTSP_TOS} component={FciQtspClausesScreen} />
     <Stack.Screen
       name={FCI_ROUTES.TYP}
       component={FciThankyouScreen}
