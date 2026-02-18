@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`SendAarDelegationProposalScreen alert behavior should show an info alert on first render 1`] = `"Stai aiutando un’altra persona ad accedere a una notifica SEND."`;
+
 exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the androidNFCActivation state, displaying 
       a loading screen 1`] = `
 <View
