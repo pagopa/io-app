@@ -14,7 +14,7 @@ import {
   INITIAL_STATE,
   downloadedMessageAttachmentSelector,
   downloadsReducer,
-  getRequestedDownloadErrorSelector,
+  requestedDownloadErrorSelector,
   isDownloadingMessageAttachmentSelector,
   isRequestedAttachmentDownloadSelector
 } from "../downloads";
@@ -556,7 +556,7 @@ describe("downloadsReducer", () => {
           serviceId
         })
       );
-      const error = getRequestedDownloadErrorSelector(
+      const error = requestedDownloadErrorSelector(
         initialState,
         messageId,
         mockPdfAttachment.id
@@ -581,7 +581,7 @@ describe("downloadsReducer", () => {
           error: new Error("download failed")
         })
       );
-      const error = getRequestedDownloadErrorSelector(
+      const error = requestedDownloadErrorSelector(
         failureState,
         "01HNWQ5YDG02JFGFH9523AC04Z",
         mockPdfAttachment.id
@@ -606,7 +606,7 @@ describe("downloadsReducer", () => {
           error: new Error("download failed")
         })
       );
-      const error = getRequestedDownloadErrorSelector(
+      const error = requestedDownloadErrorSelector(
         failureState,
         messageId,
         "potato"
@@ -632,7 +632,7 @@ describe("downloadsReducer", () => {
           error: downloadError
         })
       );
-      const error = getRequestedDownloadErrorSelector(
+      const error = requestedDownloadErrorSelector(
         failureState,
         messageId,
         mockPdfAttachment.id
@@ -658,7 +658,7 @@ describe("downloadsReducer", () => {
           path: `file:///${mockPdfAttachment.id}.pdf`
         })
       );
-      const error = getRequestedDownloadErrorSelector(
+      const error = requestedDownloadErrorSelector(
         successState,
         messageId,
         mockPdfAttachment.id
@@ -682,7 +682,7 @@ describe("downloadsReducer", () => {
           messageId
         })
       );
-      const error = getRequestedDownloadErrorSelector(
+      const error = requestedDownloadErrorSelector(
         cancelledState,
         messageId,
         mockPdfAttachment.id
@@ -711,7 +711,7 @@ describe("downloadsReducer", () => {
         failureState,
         clearRequestedAttachmentDownload()
       );
-      const error = getRequestedDownloadErrorSelector(
+      const error = requestedDownloadErrorSelector(
         clearState,
         messageId,
         mockPdfAttachment.id

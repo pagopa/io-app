@@ -22,7 +22,7 @@ import {
 import {
   Download,
   downloadedMessageAttachmentSelector,
-  getRequestedDownloadErrorSelector,
+  requestedDownloadErrorSelector,
   isDownloadingMessageAttachmentSelector,
   isRequestedAttachmentDownloadSelector
 } from "../../store/reducers/downloads";
@@ -474,7 +474,7 @@ const setupSelectors = (overrides?: {
   jest
     .mocked(downloadedMessageAttachmentSelector)
     .mockReturnValue(download as any as Download | undefined);
-  jest.mocked(getRequestedDownloadErrorSelector).mockReturnValue(downloadError);
+  jest.mocked(requestedDownloadErrorSelector).mockReturnValue(downloadError);
   jest
     .mocked(isDownloadingMessageAttachmentSelector)
     .mockReturnValue(isFetching);

@@ -154,7 +154,7 @@ export const isDownloadingMessageAttachmentSelector = (
     pot.isLoading
   );
 
-export const getRequestedDownloadErrorSelector = (
+export const requestedDownloadErrorSelector = (
   state: GlobalState,
   messageId: string,
   attachmentId: string

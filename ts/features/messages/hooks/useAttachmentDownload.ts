@@ -13,7 +13,7 @@ import {
 } from "../store/actions";
 import {
   downloadedMessageAttachmentSelector,
-  getRequestedDownloadErrorSelector,
+  requestedDownloadErrorSelector,
   isDownloadingMessageAttachmentSelector,
   isRequestedAttachmentDownloadSelector
 } from "../store/reducers/downloads";
@@ -51,7 +51,7 @@ export const useAttachmentDownload = (
     downloadedMessageAttachmentSelector(state, messageId, attachmentId)
   );
   const maybeDownloadError = useIOSelector(state =>
-    getRequestedDownloadErrorSelector(state, messageId, attachmentId)
+    requestedDownloadErrorSelector(state, messageId, attachmentId)
   );
   const isFetching = useIOSelector(state =>
     isDownloadingMessageAttachmentSelector(state, messageId, attachmentId)
