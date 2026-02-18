@@ -24,12 +24,12 @@ import {
 } from "../../pn/analytics";
 import { trackThirdPartyMessageAttachmentShowPreview } from "../analytics";
 import PN_ROUTES from "../../pn/navigation/routes";
-import NavigationService from "../../../navigation/NavigationService";
 import {
   SendOpeningSource,
   SendUserType
 } from "../../pushNotifications/analytics";
 import { isAarAttachmentTtlError } from "../../pn/aar/utils/aarErrorMappings";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 
 export const useAttachmentDownload = (
   messageId: string,
@@ -41,6 +41,7 @@ export const useAttachmentDownload = (
 ) => {
   const attachmentId = attachment.id;
   const isSendAttachment = sendOpeningSource !== "not_set";
+  const navigation = useIONavigation();
 
   const dispatch = useIODispatch();
   const store = useIOStore();
@@ -66,7 +67,7 @@ export const useAttachmentDownload = (
         sendUserType,
         attachmentCategory
       );
-      NavigationService.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+      navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
         screen: PN_ROUTES.MAIN,
         params: {
           screen: PN_ROUTES.MESSAGE_ATTACHMENT,
@@ -77,7 +78,7 @@ export const useAttachmentDownload = (
         }
       });
     } else {
-      NavigationService.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+      navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
         screen: MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT,
         params: {
           messageId,
@@ -92,6 +93,7 @@ export const useAttachmentDownload = (
     dispatch,
     isSendAttachment,
     messageId,
+    navigation,
     onPreNavigate,
     sendOpeningSource,
     sendUserType,

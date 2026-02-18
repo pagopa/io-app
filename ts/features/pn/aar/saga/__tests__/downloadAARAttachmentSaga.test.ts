@@ -272,6 +272,7 @@ describe("getAttachmentMetadata", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   [undefined, mandateId].forEach(mandateIdVariant => {
     [false, true].forEach(useUATEnvironment => {
       it(`should return url on successful response (mandateId: ${mandateIdVariant} isUAT: ${useUATEnvironment})`, () => {
@@ -445,6 +446,102 @@ describe("getAttachmentMetadata", () => {
           );
         }
         expect(expectionThrown).toBe(true);
+        expect(mockedGetNotificationAttachmentInput.mock.calls.length).toBe(1);
+        expect(mockedGetNotificationAttachmentInput.mock.calls[0].length).toBe(
+          1
+        );
+        expect(mockedGetNotificationAttachmentInput.mock.calls[0][0]).toEqual({
+          Bearer: `Bearer ${bearerToken}`,
+          urlEncodedBase64AttachmentUrl: encodedUrl,
+          "x-pagopa-pn-io-src": "QR_CODE",
+          mandateId: mandateIdVariant,
+          isTest: useUATEnvironment
+        });
+      });
+      it(`should throw PN_DELIVERY_MANDATENOTFOUND on 500 response with AAR TTL error (mandateId: ${mandateIdVariant} isUAT: ${useUATEnvironment})`, () => {
+        const response = E.right({
+          status: 500,
+          value: {
+            status: 404,
+            errors: [{ code: "PN_DELIVERY_MANDATENOTFOUND" }]
+          }
+        });
+        const {
+          mockedGetNotificationAttachment,
+          mockedGetNotificationAttachmentInput
+        } = generateMocks(response);
+        // eslint-disable-next-line functional/no-let
+        let expectionThrown = false;
+        try {
+          testSaga(
+            testable!.getAttachmentMetadata,
+            bearerToken,
+            keyInfo,
+            attachment.url,
+            useUATEnvironment,
+            mandateIdVariant,
+            downloadRequestAction
+          )
+            .next()
+            .call(
+              withRefreshApiCall,
+              mockedGetNotificationAttachment,
+              downloadRequestAction
+            )
+            .next(response);
+        } catch (e: unknown) {
+          expectionThrown = true;
+          expect(e).toEqual(Error("PN_DELIVERY_MANDATENOTFOUND"));
+        }
+        expect(expectionThrown).toBe(true);
+        expect(mockedGetNotificationAttachmentInput.mock.calls.length).toBe(1);
+        expect(mockedGetNotificationAttachmentInput.mock.calls[0].length).toBe(
+          1
+        );
+        expect(mockedGetNotificationAttachmentInput.mock.calls[0][0]).toEqual({
+          Bearer: `Bearer ${bearerToken}`,
+          urlEncodedBase64AttachmentUrl: encodedUrl,
+          "x-pagopa-pn-io-src": "QR_CODE",
+          mandateId: mandateIdVariant,
+          isTest: useUATEnvironment
+        });
+      });
+      it(`should fall through to generic HTTP error on 500 response without AAR TTL error code (mandateId: ${mandateIdVariant} isUAT: ${useUATEnvironment})`, () => {
+        const response = E.right({
+          status: 500,
+          value: {
+            status: 404,
+            errors: [{ code: "SOME_OTHER_ERROR" }]
+          }
+        });
+        const {
+          mockedGetNotificationAttachment,
+          mockedGetNotificationAttachmentInput
+        } = generateMocks(response);
+        // eslint-disable-next-line functional/no-let
+        let exceptionThrown = false;
+        try {
+          testSaga(
+            testable!.getAttachmentMetadata,
+            bearerToken,
+            keyInfo,
+            attachment.url,
+            useUATEnvironment,
+            mandateIdVariant,
+            downloadRequestAction
+          )
+            .next()
+            .call(
+              withRefreshApiCall,
+              mockedGetNotificationAttachment,
+              downloadRequestAction
+            )
+            .next(response);
+        } catch (e: unknown) {
+          exceptionThrown = true;
+          expect((e as Error).message).toMatch(/^HTTP request failed/);
+        }
+        expect(exceptionThrown).toBe(true);
         expect(mockedGetNotificationAttachmentInput.mock.calls.length).toBe(1);
         expect(mockedGetNotificationAttachmentInput.mock.calls[0].length).toBe(
           1
