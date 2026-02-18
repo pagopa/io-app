@@ -1,45 +1,48 @@
 import {
   IOButton,
   ListItemSwitch,
-  TextInput
+  TextInput,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import {
   CieManager,
-  MrtdResponse,
+  InternalAuthResponse,
   type NfcEvent
 } from "@pagopa/io-react-native-cie";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useEffect, useState } from "react";
 import {
   Alert,
+  Keyboard,
   KeyboardAvoidingView,
-  Platform,
   StyleSheet,
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useHeaderSecondLevel } from "../../../../../../../hooks/useHeaderSecondLevel";
-import { useScreenEndMargin } from "../../../../../../../hooks/useScreenEndMargin";
-import { useIONavigation } from "../../../../../../../navigation/params/AppParamsList";
-import { SETTINGS_ROUTES } from "../../../../../common/navigation/routes";
-import { ReadStatusComponent } from "../../components/ReadStatusComponent";
-import { ReadStatus } from "../../types/ReadStatus";
+import { useHeaderSecondLevel } from "../../../../../../hooks/useHeaderSecondLevel";
+import { useScreenEndMargin } from "../../../../../../hooks/useScreenEndMargin";
+import { ReadStatusComponent } from "../components/ReadStatusComponent";
+import { useCieNavigation } from "../navigation/CiePlaygroundsNavigator";
+import { CIE_PLAYGROUNDS_ROUTES } from "../navigation/routes";
+import { ReadStatus } from "../types/ReadStatus";
+import { encodeChallenge } from "../utils/encoding";
 
-export function CieIasAndMrtdPlaygroundMrtdScreen() {
-  const navigation = useIONavigation();
+export const CieInternalAuthScreen = () => {
+  const navigation = useCieNavigation();
+
   const [status, setStatus] = useState<ReadStatus>("idle");
-  const [successResult, setSuccessResult] = useState<MrtdResponse | undefined>(
-    undefined
-  );
+  const [successResult, setSuccessResult] = useState<
+    InternalAuthResponse | undefined
+  >(undefined);
   const [event, setEvent] = useState<NfcEvent>();
-  const [can, setCan] = useState<string>("");
+  const [challenge, setChallenge] = useState<string>("");
 
   const [isBase64Encoding, setIsBase64Encoding] = useState(false);
   const toggleEncodingSwitch = () =>
     setIsBase64Encoding(previousState => !previousState);
 
   useHeaderSecondLevel({
-    title: "IAS+MRTD Reading"
+    title: "CIE Internal Auth"
   });
 
   const headerHeight = useHeaderHeight();
@@ -53,12 +56,12 @@ export function CieIasAndMrtdPlaygroundMrtdScreen() {
       CieManager.addListener("onError", error => {
         setStatus("error");
         Alert.alert(
-          "Error during MRTD reading",
+          "Error during internal authentication",
           JSON.stringify(error, undefined, 2)
         );
       }),
       // Start listening for attributes success
-      CieManager.addListener("onMRTDWithPaceSuccess", result => {
+      CieManager.addListener("onInternalAuthenticationSuccess", result => {
         setStatus("success");
         setSuccessResult(result);
       })
@@ -74,23 +77,29 @@ export function CieIasAndMrtdPlaygroundMrtdScreen() {
 
   useEffect(() => {
     if (status === "success" && successResult) {
-      navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-        screen: SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_MRTD_RESULTS,
-        params: {
+      navigation.replace(CIE_PLAYGROUNDS_ROUTES.RESULT, {
+        title: "Internal Authentication Result",
+        data: {
           result: successResult,
+          challenge,
+          encodedChallenge: encodeChallenge(
+            challenge,
+            isBase64Encoding ? "base64" : "hex"
+          ),
           encoding: isBase64Encoding ? "base64" : "hex"
         }
       });
     }
-  }, [status, successResult, navigation, isBase64Encoding]);
+  }, [status, navigation, challenge, isBase64Encoding, successResult]);
 
   const handleStartReading = async () => {
+    Keyboard.dismiss();
     setEvent(undefined);
     setStatus("reading");
 
     try {
-      await CieManager.startMRTDReading(
-        can,
+      await CieManager.startInternalAuthentication(
+        challenge,
         isBase64Encoding ? "base64" : "hex"
       );
     } catch (e) {
@@ -111,10 +120,7 @@ export function CieIasAndMrtdPlaygroundMrtdScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
-        behavior={Platform.select({
-          ios: "padding",
-          android: undefined
-        })}
+        behavior="padding"
         contentContainerStyle={{
           flex: 1,
           paddingBottom: 100 + screenEndMargin
@@ -134,26 +140,30 @@ export function CieIasAndMrtdPlaygroundMrtdScreen() {
             label="Use base64 encoding"
             onSwitchValueChange={toggleEncodingSwitch}
             value={isBase64Encoding}
+            disabled={status !== "idle"}
           />
           <TextInput
-            accessibilityLabel="CAN text input field"
-            value={can}
-            placeholder={"CAN"}
-            onChangeText={setCan}
+            accessibilityLabel="Challenge text input field"
+            value={challenge}
+            placeholder={"Challenge"}
+            onChangeText={setChallenge}
+            disabled={status !== "idle"}
           />
         </View>
+        <VSpacer size={16} />
         <IOButton
           variant="solid"
-          label={status === "reading" ? "Stop" : "Start reading"}
-          disabled={can.length < 6}
+          label={status === "reading" ? "Stop" : "Start sign"}
+          disabled={challenge.length === 0}
           onPress={() =>
             status === "reading" ? handleStopReading() : handleStartReading()
           }
         />
+        <VSpacer size={16} />
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
