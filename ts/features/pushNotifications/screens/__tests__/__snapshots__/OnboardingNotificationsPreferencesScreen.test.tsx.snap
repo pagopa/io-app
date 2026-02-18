@@ -1124,6 +1124,48 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(11, 62, 227, 1)",
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderCurve": "continuous",
+                                  "elevation": 0,
+                                  "flexDirection": "row",
+                                  "justifyContent": "center",
+                                  "overflow": "hidden",
+                                  "textAlignVertical": "center",
+                                },
+                                {
+                                  "paddingHorizontal": 16,
+                                },
+                                {
+                                  "backgroundColor": "#0B3EE3",
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
+                                },
+                                {},
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -1135,9 +1177,15 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
-                                false,
                                 {
-                                  "backgroundColor": undefined,
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                                {
+                                  "backgroundColor": "rgba(11, 62, 227, 1)",
                                 },
                                 {
                                   "paddingHorizontal": 16,
@@ -1154,6 +1202,30 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                  },
+                                  {
+                                    "columnGap": 8,
+                                  },
+                                  false,
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -1172,8 +1244,31 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 accessibilityElementsHidden={true}
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "color": "rgba(255, 255, 255, 1)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "textAlign": "auto",
+                                    },
+                                    {
+                                      "color": "#FFFFFF",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
@@ -1195,7 +1290,7 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                         "color": "#FFFFFF",
                                       },
                                       {
-                                        "color": undefined,
+                                        "color": "rgba(255, 255, 255, 1)",
                                       },
                                     ],
                                   ]
@@ -1221,6 +1316,29 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                       >
                         <View
                           accessibilityRole="header"
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "borderBottomWidth": 1,
+                                "borderColor": "rgba(210,214,227,0)",
+                              },
+                              {},
+                            ]
+                          }
                           style={
                             [
                               {
@@ -1236,6 +1354,31 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "marginTop": 0,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "flexGrow": 1,
+                                  "height": 56,
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 24,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -1276,6 +1419,27 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               <Text
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "opacity": 1,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "color": "#0E0F13",
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
@@ -1347,6 +1511,35 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -1357,7 +1550,13 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                         "height": 24,
                                         "width": 24,
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                     ]
                                   }
                                 >
@@ -1366,17 +1565,25 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    animatedProps={
-                                      {
-                                        "color": undefined,
-                                      }
-                                    }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    collapsable={false}
                                     color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {
+                                          "color": "rgba(14, 15, 19, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
@@ -2580,6 +2787,48 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(11, 62, 227, 1)",
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderCurve": "continuous",
+                                  "elevation": 0,
+                                  "flexDirection": "row",
+                                  "justifyContent": "center",
+                                  "overflow": "hidden",
+                                  "textAlignVertical": "center",
+                                },
+                                {
+                                  "paddingHorizontal": 16,
+                                },
+                                {
+                                  "backgroundColor": "#0B3EE3",
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
+                                },
+                                {},
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -2591,9 +2840,15 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
-                                false,
                                 {
-                                  "backgroundColor": undefined,
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                                {
+                                  "backgroundColor": "rgba(11, 62, 227, 1)",
                                 },
                                 {
                                   "paddingHorizontal": 16,
@@ -2610,7 +2865,31 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                             }
                           >
                             <View
+                              collapsable={false}
                               entering={[Function]}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                  },
+                                  {
+                                    "columnGap": 8,
+                                  },
+                                  false,
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -2629,8 +2908,31 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 accessibilityElementsHidden={true}
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "color": "rgba(255, 255, 255, 1)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "textAlign": "auto",
+                                    },
+                                    {
+                                      "color": "#FFFFFF",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
@@ -2652,7 +2954,7 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                         "color": "#FFFFFF",
                                       },
                                       {
-                                        "color": undefined,
+                                        "color": "rgba(255, 255, 255, 1)",
                                       },
                                     ],
                                   ]
@@ -2678,6 +2980,29 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                       >
                         <View
                           accessibilityRole="header"
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "borderBottomWidth": 1,
+                                "borderColor": "rgba(210,214,227,0)",
+                              },
+                              {},
+                            ]
+                          }
                           style={
                             [
                               {
@@ -2693,6 +3018,31 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "marginTop": 0,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "flexGrow": 1,
+                                  "height": 56,
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 24,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -2733,6 +3083,27 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               <Text
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "opacity": 1,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "color": "#0E0F13",
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
@@ -2804,6 +3175,35 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -2814,7 +3214,13 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                         "height": 24,
                                         "width": 24,
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                     ]
                                   }
                                 >
@@ -2823,17 +3229,25 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    animatedProps={
-                                      {
-                                        "color": undefined,
-                                      }
-                                    }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    collapsable={false}
                                     color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {
+                                          "color": "rgba(14, 15, 19, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
@@ -4037,6 +4451,48 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(11, 62, 227, 1)",
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderCurve": "continuous",
+                                  "elevation": 0,
+                                  "flexDirection": "row",
+                                  "justifyContent": "center",
+                                  "overflow": "hidden",
+                                  "textAlignVertical": "center",
+                                },
+                                {
+                                  "paddingHorizontal": 16,
+                                },
+                                {
+                                  "backgroundColor": "#0B3EE3",
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
+                                },
+                                {},
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -4048,9 +4504,15 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
-                                false,
                                 {
-                                  "backgroundColor": undefined,
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                                {
+                                  "backgroundColor": "rgba(11, 62, 227, 1)",
                                 },
                                 {
                                   "paddingHorizontal": 16,
@@ -4067,7 +4529,31 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                             }
                           >
                             <View
+                              collapsable={false}
                               entering={[Function]}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                  },
+                                  {
+                                    "columnGap": 8,
+                                  },
+                                  false,
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -4086,8 +4572,31 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 accessibilityElementsHidden={true}
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "color": "rgba(255, 255, 255, 1)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "textAlign": "auto",
+                                    },
+                                    {
+                                      "color": "#FFFFFF",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
@@ -4109,7 +4618,7 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                         "color": "#FFFFFF",
                                       },
                                       {
-                                        "color": undefined,
+                                        "color": "rgba(255, 255, 255, 1)",
                                       },
                                     ],
                                   ]
@@ -4135,6 +4644,29 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                       >
                         <View
                           accessibilityRole="header"
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "borderBottomWidth": 1,
+                                "borderColor": "rgba(210,214,227,0)",
+                              },
+                              {},
+                            ]
+                          }
                           style={
                             [
                               {
@@ -4150,6 +4682,31 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "marginTop": 0,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "flexGrow": 1,
+                                  "height": 56,
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 24,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -4190,6 +4747,27 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               <Text
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "opacity": 1,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "color": "#0E0F13",
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
@@ -4261,6 +4839,35 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -4271,7 +4878,13 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                         "height": 24,
                                         "width": 24,
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                     ]
                                   }
                                 >
@@ -4280,17 +4893,25 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    animatedProps={
-                                      {
-                                        "color": undefined,
-                                      }
-                                    }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    collapsable={false}
                                     color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {
+                                          "color": "rgba(14, 15, 19, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
@@ -5494,6 +6115,48 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(11, 62, 227, 1)",
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderCurve": "continuous",
+                                  "elevation": 0,
+                                  "flexDirection": "row",
+                                  "justifyContent": "center",
+                                  "overflow": "hidden",
+                                  "textAlignVertical": "center",
+                                },
+                                {
+                                  "paddingHorizontal": 16,
+                                },
+                                {
+                                  "backgroundColor": "#0B3EE3",
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
+                                },
+                                {},
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -5505,9 +6168,15 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
-                                false,
                                 {
-                                  "backgroundColor": undefined,
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                                {
+                                  "backgroundColor": "rgba(11, 62, 227, 1)",
                                 },
                                 {
                                   "paddingHorizontal": 16,
@@ -5524,7 +6193,31 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                             }
                           >
                             <View
+                              collapsable={false}
                               entering={[Function]}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                  },
+                                  {
+                                    "columnGap": 8,
+                                  },
+                                  false,
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -5543,8 +6236,31 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 accessibilityElementsHidden={true}
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "color": "rgba(255, 255, 255, 1)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "textAlign": "auto",
+                                    },
+                                    {
+                                      "color": "#FFFFFF",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
@@ -5566,7 +6282,7 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                         "color": "#FFFFFF",
                                       },
                                       {
-                                        "color": undefined,
+                                        "color": "rgba(255, 255, 255, 1)",
                                       },
                                     ],
                                   ]
@@ -5592,6 +6308,29 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                       >
                         <View
                           accessibilityRole="header"
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "borderBottomWidth": 1,
+                                "borderColor": "rgba(210,214,227,0)",
+                              },
+                              {},
+                            ]
+                          }
                           style={
                             [
                               {
@@ -5607,6 +6346,31 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "marginTop": 0,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "flexGrow": 1,
+                                  "height": 56,
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 24,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -5647,6 +6411,27 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               <Text
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "opacity": 1,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "color": "#0E0F13",
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
@@ -5718,6 +6503,35 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -5728,7 +6542,13 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                         "height": 24,
                                         "width": 24,
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                     ]
                                   }
                                 >
@@ -5737,17 +6557,25 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    animatedProps={
-                                      {
-                                        "color": undefined,
-                                      }
-                                    }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    collapsable={false}
                                     color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {
+                                          "color": "rgba(14, 15, 19, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
@@ -6389,14 +7217,34 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     testID="LoadingSpinnerTestID"
                                   >
                                     <View
-                                      style={
+                                      collapsable={false}
+                                      jestAnimatedProps={
                                         {
-                                          "transform": [
-                                            {
-                                              "rotateZ": "0deg",
-                                            },
-                                          ],
+                                          "value": {},
                                         }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {
+                                            "transform": [
+                                              {
+                                                "rotateZ": "0deg",
+                                              },
+                                            ],
+                                          },
+                                        }
+                                      }
+                                      jestInlineStyle={{}}
+                                      style={
+                                        [
+                                          {
+                                            "transform": [
+                                              {
+                                                "rotateZ": "0deg",
+                                              },
+                                            ],
+                                          },
+                                        ]
                                       }
                                       testID="LoadingSpinnerAnimatedTestID"
                                     >
@@ -6756,14 +7604,34 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     testID="LoadingSpinnerTestID"
                                   >
                                     <View
-                                      style={
+                                      collapsable={false}
+                                      jestAnimatedProps={
                                         {
-                                          "transform": [
-                                            {
-                                              "rotateZ": "0deg",
-                                            },
-                                          ],
+                                          "value": {},
                                         }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {
+                                            "transform": [
+                                              {
+                                                "rotateZ": "0deg",
+                                              },
+                                            ],
+                                          },
+                                        }
+                                      }
+                                      jestInlineStyle={{}}
+                                      style={
+                                        [
+                                          {
+                                            "transform": [
+                                              {
+                                                "rotateZ": "0deg",
+                                              },
+                                            ],
+                                          },
+                                        ]
                                       }
                                       testID="LoadingSpinnerAnimatedTestID"
                                     >
@@ -7241,6 +8109,48 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(11, 62, 227, 1)",
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderCurve": "continuous",
+                                  "elevation": 0,
+                                  "flexDirection": "row",
+                                  "justifyContent": "center",
+                                  "overflow": "hidden",
+                                  "textAlignVertical": "center",
+                                },
+                                {
+                                  "paddingHorizontal": 16,
+                                },
+                                {
+                                  "backgroundColor": "#0B3EE3",
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
+                                },
+                                {},
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -7252,9 +8162,15 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
-                                false,
                                 {
-                                  "backgroundColor": undefined,
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                                {
+                                  "backgroundColor": "rgba(11, 62, 227, 1)",
                                 },
                                 {
                                   "paddingHorizontal": 16,
@@ -7271,113 +8187,165 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                             }
                           >
                             <View
-                              skipExiting={true}
-                            >
-                              <View
-                                exiting={[Function]}
-                                style={
+                              collapsable={false}
+                              exiting={[Function]}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestInlineStyle={
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "center",
+                                }
+                              }
+                              style={
+                                [
                                   {
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "center",
+                                  },
+                                ]
+                              }
+                            >
+                              <View
+                                accessibilityRole="progressbar"
+                                accessible={true}
+                                style={
+                                  {
+                                    "height": 24,
+                                    "width": 24,
                                   }
                                 }
+                                testID="LoadingSpinnerTestID"
                               >
                                 <View
-                                  accessibilityRole="progressbar"
-                                  accessible={true}
-                                  style={
+                                  collapsable={false}
+                                  jestAnimatedProps={
                                     {
-                                      "height": 24,
-                                      "width": 24,
+                                      "value": {},
                                     }
                                   }
-                                  testID="LoadingSpinnerTestID"
-                                >
-                                  <View
-                                    style={
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "rotateZ": "0deg",
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={{}}
+                                  style={
+                                    [
                                       {
                                         "transform": [
                                           {
                                             "rotateZ": "0deg",
                                           },
                                         ],
-                                      }
+                                      },
+                                    ]
+                                  }
+                                  testID="LoadingSpinnerAnimatedTestID"
+                                >
+                                  <RNSVGSvgView
+                                    align="xMidYMid"
+                                    bbHeight={24}
+                                    bbWidth={24}
+                                    fill="none"
+                                    focusable={false}
+                                    height={24}
+                                    meetOrSlice={0}
+                                    minX={0}
+                                    minY={0}
+                                    style={
+                                      [
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderWidth": 0,
+                                        },
+                                        {
+                                          "flex": 0,
+                                          "height": 24,
+                                          "width": 24,
+                                        },
+                                      ]
                                     }
-                                    testID="LoadingSpinnerAnimatedTestID"
+                                    vbHeight={24}
+                                    vbWidth={24}
+                                    width={24}
                                   >
-                                    <RNSVGSvgView
-                                      align="xMidYMid"
-                                      bbHeight={24}
-                                      bbWidth={24}
-                                      fill="none"
-                                      focusable={false}
-                                      height={24}
-                                      meetOrSlice={0}
-                                      minX={0}
-                                      minY={0}
-                                      style={
+                                    <RNSVGGroup
+                                      fill={null}
+                                      propList={
                                         [
-                                          {
-                                            "backgroundColor": "transparent",
-                                            "borderWidth": 0,
-                                          },
-                                          {
-                                            "flex": 0,
-                                            "height": 24,
-                                            "width": 24,
-                                          },
+                                          "fill",
                                         ]
                                       }
-                                      vbHeight={24}
-                                      vbWidth={24}
-                                      width={24}
                                     >
+                                      <RNSVGDefs>
+                                        <RNSVGLinearGradient
+                                          gradient={
+                                            [
+                                              0,
+                                              16777215,
+                                              1,
+                                              -1,
+                                            ]
+                                          }
+                                          gradientTransform={null}
+                                          gradientUnits={0}
+                                          name="spinner-secondHalf"
+                                          x1="0%"
+                                          x2="100%"
+                                          y1="0%"
+                                          y2="0%"
+                                        />
+                                        <RNSVGLinearGradient
+                                          gradient={
+                                            [
+                                              0,
+                                              -1,
+                                              1,
+                                              -1,
+                                            ]
+                                          }
+                                          gradientTransform={null}
+                                          gradientUnits={0}
+                                          name="spinner-firstHalf"
+                                          x1="0%"
+                                          x2="100%"
+                                          y1="0%"
+                                          y2="0%"
+                                        />
+                                      </RNSVGDefs>
                                       <RNSVGGroup
-                                        fill={null}
+                                        fill={
+                                          {
+                                            "payload": 4278190080,
+                                            "type": 0,
+                                          }
+                                        }
                                         propList={
                                           [
-                                            "fill",
+                                            "strokeWidth",
                                           ]
                                         }
+                                        strokeWidth={3}
                                       >
-                                        <RNSVGDefs>
-                                          <RNSVGLinearGradient
-                                            gradient={
-                                              [
-                                                0,
-                                                16777215,
-                                                1,
-                                                -1,
-                                              ]
-                                            }
-                                            gradientTransform={null}
-                                            gradientUnits={0}
-                                            name="spinner-secondHalf"
-                                            x1="0%"
-                                            x2="100%"
-                                            y1="0%"
-                                            y2="0%"
-                                          />
-                                          <RNSVGLinearGradient
-                                            gradient={
-                                              [
-                                                0,
-                                                -1,
-                                                1,
-                                                -1,
-                                              ]
-                                            }
-                                            gradientTransform={null}
-                                            gradientUnits={0}
-                                            name="spinner-firstHalf"
-                                            x1="0%"
-                                            x2="100%"
-                                            y1="0%"
-                                            y2="0%"
-                                          />
-                                        </RNSVGDefs>
-                                        <RNSVGGroup
+                                        <RNSVGPath
+                                          d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -7386,77 +8354,61 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                           }
                                           propList={
                                             [
-                                              "strokeWidth",
+                                              "stroke",
                                             ]
                                           }
-                                          strokeWidth={3}
-                                        >
-                                          <RNSVGPath
-                                            d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
-                                            fill={
-                                              {
-                                                "payload": 4278190080,
-                                                "type": 0,
-                                              }
+                                          stroke={
+                                            {
+                                              "brushRef": "spinner-secondHalf",
+                                              "type": 1,
                                             }
-                                            propList={
-                                              [
-                                                "stroke",
-                                              ]
+                                          }
+                                        />
+                                        <RNSVGPath
+                                          d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
                                             }
-                                            stroke={
-                                              {
-                                                "brushRef": "spinner-secondHalf",
-                                                "type": 1,
-                                              }
+                                          }
+                                          propList={
+                                            [
+                                              "stroke",
+                                            ]
+                                          }
+                                          stroke={
+                                            {
+                                              "brushRef": "spinner-firstHalf",
+                                              "type": 1,
                                             }
-                                          />
-                                          <RNSVGPath
-                                            d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
-                                            fill={
-                                              {
-                                                "payload": 4278190080,
-                                                "type": 0,
-                                              }
+                                          }
+                                        />
+                                        <RNSVGPath
+                                          d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
                                             }
-                                            propList={
-                                              [
-                                                "stroke",
-                                              ]
+                                          }
+                                          propList={
+                                            [
+                                              "stroke",
+                                              "strokeLinecap",
+                                            ]
+                                          }
+                                          stroke={
+                                            {
+                                              "payload": 4294967295,
+                                              "type": 0,
                                             }
-                                            stroke={
-                                              {
-                                                "brushRef": "spinner-firstHalf",
-                                                "type": 1,
-                                              }
-                                            }
-                                          />
-                                          <RNSVGPath
-                                            d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
-                                            fill={
-                                              {
-                                                "payload": 4278190080,
-                                                "type": 0,
-                                              }
-                                            }
-                                            propList={
-                                              [
-                                                "stroke",
-                                                "strokeLinecap",
-                                              ]
-                                            }
-                                            stroke={
-                                              {
-                                                "payload": 4294967295,
-                                                "type": 0,
-                                              }
-                                            }
-                                            strokeLinecap={1}
-                                          />
-                                        </RNSVGGroup>
+                                          }
+                                          strokeLinecap={1}
+                                        />
                                       </RNSVGGroup>
-                                    </RNSVGSvgView>
-                                  </View>
+                                    </RNSVGGroup>
+                                  </RNSVGSvgView>
                                 </View>
                               </View>
                             </View>
@@ -7477,6 +8429,29 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                       >
                         <View
                           accessibilityRole="header"
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "borderBottomWidth": 1,
+                                "borderColor": "rgba(210,214,227,0)",
+                              },
+                              {},
+                            ]
+                          }
                           style={
                             [
                               {
@@ -7492,6 +8467,31 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "marginTop": 0,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "flexGrow": 1,
+                                  "height": 56,
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 24,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -7532,6 +8532,27 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                               <Text
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "opacity": 1,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "color": "#0E0F13",
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
@@ -7603,6 +8624,35 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -7613,7 +8663,13 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                         "height": 24,
                                         "width": 24,
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                     ]
                                   }
                                 >
@@ -7622,17 +8678,25 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    animatedProps={
-                                      {
-                                        "color": undefined,
-                                      }
-                                    }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    collapsable={false}
                                     color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {
+                                          "color": "rgba(14, 15, 19, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}

@@ -35,6 +35,30 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
   testID="itwWalletIdStatusTestID"
 >
   <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "transform": [
+            {
+              "scale": 1,
+            },
+          ],
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "marginHorizontal": -8,
+        },
+      ]
+    }
     style={
       [
         {
@@ -43,7 +67,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
         {
           "transform": [
             {
-              "scale": undefined,
+              "scale": 1,
             },
           ],
         },
@@ -112,19 +136,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
             cx={0}
             cy={0}
             r={125}
-            transform={
-              {
-                "get": [Function],
-                "value": [
-                  {
-                    "translateX": undefined,
-                  },
-                  {
-                    "scale": 1,
-                  },
-                ],
-              }
-            }
+            transform={"[{"translateX":0},{"scale":1}]"}
           >
             <skRadialGradient
               c={
@@ -214,16 +226,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
               >
                 <skRect
                   height={0}
-                  transform={
-                    {
-                      "get": [Function],
-                      "value": [
-                        {
-                          "translateY": undefined,
-                        },
-                      ],
-                    }
-                  }
+                  transform={"[{"translateY":0}]"}
                   width={0}
                   x={0}
                   y={-0}
@@ -561,6 +564,47 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
           }
         >
           <View
+            collapsable={false}
+            jestAnimatedProps={
+              {
+                "value": {},
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {
+                  "transform": [
+                    {
+                      "scale": 1,
+                    },
+                  ],
+                },
+              }
+            }
+            jestInlineStyle={
+              [
+                {
+                  "alignItems": "center",
+                  "borderCurve": "continuous",
+                  "elevation": 0,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "overflow": "hidden",
+                  "textAlignVertical": "center",
+                },
+                {
+                  "paddingHorizontal": 0,
+                },
+                {
+                  "backgroundColor": "transparent",
+                  "borderColor": "#0B3EE3",
+                  "borderRadius": 8,
+                  "borderWidth": 0,
+                  "height": undefined,
+                },
+                {},
+              ]
+            }
             style={
               [
                 {
@@ -572,7 +616,13 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
                   "overflow": "hidden",
                   "textAlignVertical": "center",
                 },
-                false,
+                {
+                  "transform": [
+                    {
+                      "scale": 1,
+                    },
+                  ],
+                },
                 {},
                 {
                   "paddingHorizontal": 0,
@@ -589,6 +639,30 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
             }
           >
             <View
+              collapsable={false}
+              jestAnimatedProps={
+                {
+                  "value": {},
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {},
+                }
+              }
+              jestInlineStyle={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  {
+                    "columnGap": 8,
+                  },
+                  false,
+                ]
+              }
               style={
                 [
                   {
@@ -607,8 +681,31 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
                 accessibilityElementsHidden={true}
                 accessible={false}
                 allowFontScaling={true}
+                collapsable={false}
                 ellipsizeMode="tail"
                 importantForAccessibility="no-hide-descendants"
+                jestAnimatedProps={
+                  {
+                    "value": {},
+                  }
+                }
+                jestAnimatedStyle={
+                  {
+                    "value": {
+                      "color": "rgba(11, 62, 227, 1)",
+                    },
+                  }
+                }
+                jestInlineStyle={
+                  [
+                    {
+                      "textAlign": "auto",
+                    },
+                    {
+                      "color": "#0B3EE3",
+                    },
+                  ]
+                }
                 maxFontSizeMultiplier={1.5}
                 numberOfLines={1}
                 style={
@@ -630,7 +727,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
                         "color": "#0B3EE3",
                       },
                       {
-                        "color": undefined,
+                        "color": "rgba(11, 62, 227, 1)",
                       },
                     ],
                   ]
@@ -682,6 +779,30 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpiring
   testID="itwWalletIdStatusTestID"
 >
   <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "transform": [
+            {
+              "scale": 1,
+            },
+          ],
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "marginHorizontal": -8,
+        },
+      ]
+    }
     style={
       [
         {
@@ -690,7 +811,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpiring
         {
           "transform": [
             {
-              "scale": undefined,
+              "scale": 1,
             },
           ],
         },
@@ -759,19 +880,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpiring
             cx={0}
             cy={0}
             r={125}
-            transform={
-              {
-                "get": [Function],
-                "value": [
-                  {
-                    "translateX": undefined,
-                  },
-                  {
-                    "scale": 1,
-                  },
-                ],
-              }
-            }
+            transform={"[{"translateX":0},{"scale":1}]"}
           >
             <skRadialGradient
               c={
@@ -861,16 +970,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpiring
               >
                 <skRect
                   height={0}
-                  transform={
-                    {
-                      "get": [Function],
-                      "value": [
-                        {
-                          "translateY": undefined,
-                        },
-                      ],
-                    }
-                  }
+                  transform={"[{"translateY":0}]"}
                   width={0}
                   x={0}
                   y={-0}
@@ -1218,6 +1318,30 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "valid" 1`] 
   testID="itwWalletIdStatusTestID"
 >
   <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "transform": [
+            {
+              "scale": 1,
+            },
+          ],
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "marginHorizontal": -8,
+        },
+      ]
+    }
     style={
       [
         {
@@ -1226,7 +1350,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "valid" 1`] 
         {
           "transform": [
             {
-              "scale": undefined,
+              "scale": 1,
             },
           ],
         },
@@ -1295,19 +1419,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "valid" 1`] 
             cx={0}
             cy={0}
             r={125}
-            transform={
-              {
-                "get": [Function],
-                "value": [
-                  {
-                    "translateX": undefined,
-                  },
-                  {
-                    "scale": 1,
-                  },
-                ],
-              }
-            }
+            transform={"[{"translateX":0},{"scale":1}]"}
           >
             <skRadialGradient
               c={
@@ -1397,16 +1509,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "valid" 1`] 
               >
                 <skRect
                   height={0}
-                  transform={
-                    {
-                      "get": [Function],
-                      "value": [
-                        {
-                          "translateY": undefined,
-                        },
-                      ],
-                    }
-                  }
+                  transform={"[{"translateY":0}]"}
                   width={0}
                   x={0}
                   y={-0}

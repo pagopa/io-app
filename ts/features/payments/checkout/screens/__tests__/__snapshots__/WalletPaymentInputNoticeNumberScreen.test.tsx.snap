@@ -352,6 +352,16 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                           ]
                         }
                         decelerationRate="normal"
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -501,6 +511,33 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "borderColor": "rgba(210, 214, 227, 1)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "borderCurve": "continuous",
+                                      "borderRadius": 8,
+                                      "borderWidth": 1,
+                                      "bottom": 0,
+                                      "left": 0,
+                                      "position": "absolute",
+                                      "right": 0,
+                                      "top": 0,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -514,12 +551,42 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                       "top": 0,
                                     },
                                     {
-                                      "borderColor": undefined,
+                                      "borderColor": "rgba(210, 214, 227, 1)",
                                     },
                                   ]
                                 }
                               />
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "opacity": 0,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "borderColor": "#0B3EE3",
+                                    },
+                                    {
+                                      "borderCurve": "continuous",
+                                      "borderRadius": 8,
+                                      "borderWidth": 2,
+                                      "bottom": 0,
+                                      "left": 0,
+                                      "position": "absolute",
+                                      "right": 0,
+                                      "top": 0,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -655,6 +722,34 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                 value=""
                               />
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "bottom": 0,
+                                      "justifyContent": "center",
+                                      "position": "absolute",
+                                      "top": 0,
+                                      "zIndex": 10,
+                                    },
+                                    {
+                                      "paddingHorizontal": 18,
+                                    },
+                                    {
+                                      "left": 48,
+                                    },
+                                  ]
+                                }
                                 pointerEvents="none"
                                 style={
                                   [
@@ -676,6 +771,41 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                               >
                                 <Text
                                   accessible={false}
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "translateX": 0,
+                                          },
+                                          {
+                                            "translateY": 0,
+                                          },
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": undefined,
+                                      },
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   onLayout={[Function]}
@@ -709,12 +839,32 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                 </Text>
                               </View>
                               <View
-                                style={
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
                                   {
                                     "alignSelf": "stretch",
                                     "justifyContent": "center",
                                     "overflow": "visible",
                                   }
+                                }
+                                style={
+                                  [
+                                    {
+                                      "alignSelf": "stretch",
+                                      "justifyContent": "center",
+                                      "overflow": "visible",
+                                    },
+                                  ]
                                 }
                               >
                                 <BVLinearGradient
@@ -839,6 +989,48 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "backgroundColor": "rgba(11, 62, 227, 1)",
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "borderCurve": "continuous",
+                                      "elevation": 0,
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                      "overflow": "hidden",
+                                      "textAlignVertical": "center",
+                                    },
+                                    {
+                                      "paddingHorizontal": 16,
+                                    },
+                                    {
+                                      "backgroundColor": "#0B3EE3",
+                                      "borderColor": "#FFFFFF",
+                                      "borderRadius": 8,
+                                      "borderWidth": 0,
+                                      "height": 48,
+                                    },
+                                    {},
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -850,9 +1042,15 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
-                                    false,
                                     {
-                                      "backgroundColor": undefined,
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                    {
+                                      "backgroundColor": "rgba(11, 62, 227, 1)",
                                     },
                                     {
                                       "paddingHorizontal": 16,
@@ -869,6 +1067,30 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "columnGap": 8,
+                                      },
+                                      false,
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -887,8 +1109,31 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                     accessibilityElementsHidden={true}
                                     accessible={false}
                                     allowFontScaling={true}
+                                    collapsable={false}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "color": "rgba(255, 255, 255, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#FFFFFF",
+                                        },
+                                      ]
+                                    }
                                     maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
@@ -910,7 +1155,7 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                             "color": "#FFFFFF",
                                           },
                                           {
-                                            "color": undefined,
+                                            "color": "rgba(255, 255, 255, 1)",
                                           },
                                         ],
                                       ]
