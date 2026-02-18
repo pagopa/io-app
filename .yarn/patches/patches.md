@@ -73,15 +73,6 @@ Created on **16/01/2023**
   This was fine as long as each event was originally created and handled using this library only but 
   initially another library was used, react-native-add-calendar-event, which treated event's Id as long
 
-
-### react-native-reanimated-npm-3.17.5-134bd4e99e.patch
-
-Created on **19/05/2025**
-
-#### Reason:
-
-- Patch to fix a visualization error that prevented cards to be incorrectly rendered in Wallet Home Screen.
-
 ### react-native-screenshot-prevent-npm-1.2.1-d115315590.patch
 
 Created on **24/11/2025**
@@ -97,15 +88,3 @@ Created on **15/01/2026**
 #### Reason:
 
 - Patch to fix RefreshControl issues on Fabric enablement
-
-
-### react-native-reanimated-npm-4.2.1-8be3b216b9.patch
-
-Created on **04/02/2026**
-
-#### Reason:
-
-- **Temporary patch** until Reanimated 4.2.2 is released. Backports the fix from [PR #8881](https://github.com/software-mansion/react-native-reanimated/pull/8881)
-- Prevents `nativeID` from being assigned to animated components during Jest tests, avoiding unstable snapshots with random IDs
-- This restores the behavior from Reanimated v3 where `nativeID` remained `undefined` in test environments
-- **Remove this patch** once Reanimated 4.2.2+ is released and upgrade to that version

@@ -140,7 +140,7 @@
     "react-native-qrcode-svg": "^6.3.12",
     "react-native-quick-base64": "^2.2.2",
     "react-native-quick-crypto": "^0.7.17",
-    "react-native-reanimated": "^4.2.1",
+    "react-native-reanimated": "4.2.2",
     "react-native-safe-area-context": "^5.5.2",
     "react-native-screen-brightness": "^2.0.0-alpha",
     "react-native-screens": "4.16.0",
@@ -279,8 +279,7 @@
     "react-native-webview@^13.16.0": "patch:react-native-webview@npm%3A13.16.0#./.yarn/patches/react-native-webview-npm-13.16.0-82f4e13202.patch",
     "react-native-screenshot-prevent@^1.2.1": "patch:react-native-screenshot-prevent@npm%3A1.2.1#./.yarn/patches/react-native-screenshot-prevent-npm-1.2.1-d115315590.patch",
     "react-native-pdf@7.0.3": "patch:react-native-pdf@npm%3A7.0.3#./.yarn/patches/react-native-pdf-npm-7.0.3-6313469aca.patch",
-    "react-native@0.81.5": "patch:react-native@npm%3A0.81.5#./.yarn/patches/react-native-npm-0.81.5-d8232ef145.patch",
-    "react-native-reanimated@^4.2.1": "patch:react-native-reanimated@npm%3A4.2.1#./.yarn/patches/react-native-reanimated-npm-4.2.1-8be3b216b9.patch"
+    "react-native@0.81.5": "patch:react-native@npm%3A0.81.5#./.yarn/patches/react-native-npm-0.81.5-d8232ef145.patch"
   },
   "react-native": {
     "path": "path-browserify",

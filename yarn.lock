@@ -11801,7 +11801,7 @@ __metadata:
     react-native-qrcode-svg: ^6.3.12
     react-native-quick-base64: ^2.2.2
     react-native-quick-crypto: ^0.7.17
-    react-native-reanimated: ^4.2.1
+    react-native-reanimated: 4.2.2
     react-native-safe-area-context: ^5.5.2
     react-native-screen-brightness: ^2.0.0-alpha
     react-native-screens: 4.16.0
@@ -16886,7 +16886,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-reanimated@npm:4.2.1, react-native-reanimated@npm:^4.0.0":
+"react-native-reanimated@npm:4.2.2":
+  version: 4.2.2
+  resolution: "react-native-reanimated@npm:4.2.2"
+  dependencies:
+    react-native-is-edge-to-edge: 1.2.1
+    semver: 7.7.3
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-worklets: ">=0.7.0"
+  checksum: 2497901472996aece1e350ffa02233ad0f9f7a16e389a201246474fae872f3ec9834a0b7c3801241d5844b9f7dbf0309d868728b3b35555de5d1836b3f527644
+  languageName: node
+  linkType: hard
+
+"react-native-reanimated@npm:^4.0.0":
   version: 4.2.1
   resolution: "react-native-reanimated@npm:4.2.1"
   dependencies:
@@ -16897,20 +16911,6 @@ __metadata:
     react-native: "*"
     react-native-worklets: ">=0.7.0"
   checksum: 102ead7c02411227f8364dec58cffc7a9225c8b9733cce07054064ecfd90cf2b124c8d1caf2bd11fc7db8603e0c91c392957ab0ce5852dcd1b3669e7d7d59931
-  languageName: node
-  linkType: hard
-
-"react-native-reanimated@patch:react-native-reanimated@npm%3A4.2.1#./.yarn/patches/react-native-reanimated-npm-4.2.1-8be3b216b9.patch::locator=io%40workspace%3A.":
-  version: 4.2.1
-  resolution: "react-native-reanimated@patch:react-native-reanimated@npm%3A4.2.1#./.yarn/patches/react-native-reanimated-npm-4.2.1-8be3b216b9.patch::version=4.2.1&hash=6657b8&locator=io%40workspace%3A."
-  dependencies:
-    react-native-is-edge-to-edge: 1.2.1
-    semver: 7.7.3
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-    react-native-worklets: ">=0.7.0"
-  checksum: bea429700b197c7d6657dcdf87231b037d1ae71697119296c14088355b30ce04643514439155d2736699e3b88eedb68bcf6b906fb867c0fec3f837c7170b48e0
   languageName: node
   linkType: hard
 
