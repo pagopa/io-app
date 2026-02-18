@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { useIOSelector } from "../../../store/hooks";
 import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
