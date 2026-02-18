@@ -4096,7 +4096,7 @@
           },
           "delegated": {
             "notAdressee": {
-              "warningAlert": "Questa comunicazione non è destinata a te.",
+              "infoAlert": "Stai aiutando un’altra persona ad accedere a una notifica SEND.",
               "title": "Vuoi aprire la notifica SEND di {{name}}?",
               "subtitle": "Se la persona che ha ricevuto la comunicazione ti ha chiesto di farlo, puoi aprire questa notifica SEND per suo conto.",
               "primaryAction": "Apri notifica SEND",
