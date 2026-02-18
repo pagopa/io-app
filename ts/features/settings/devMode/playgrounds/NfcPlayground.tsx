@@ -1,65 +1,100 @@
 import {
-  Body,
   Divider,
+  ListItemHeader,
   ListItemInfo,
-  Pictogram
+  VStack
 } from "@pagopa/io-app-design-system";
 import { useState } from "react";
-import { StyleSheet, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
+import { Platform, View } from "react-native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import {
-  convertUnknownToError,
-  serializeError
-} from "../../../../utils/errors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { getNfcAntennaInfo, NfcAntennaInfo } from "../../../../utils/nfc";
+import {
+  getNfcAntennaInfo,
+  isHceSupported,
+  NfcAntennaInfo
+} from "../../../../utils/nfc";
 
 export const NfcPlayground = () => {
-  const [failure, setFailure] = useState<Error>();
-  const [nfcAntennaInfo, setNfcAntennaInfo] = useState<NfcAntennaInfo>();
-
   useHeaderSecondLevel({
-    title: "NFC Playground"
+    title: "NFC Playgrounds"
   });
 
+  if (Platform.OS === "ios") {
+    return (
+      <IOScrollView centerContent={true}>
+        <OperationResultScreenContent
+          pictogram="accessDenied"
+          title="Not available on iOS"
+          subtitle="NFC information is not accessible on iOS devices."
+        />
+      </IOScrollView>
+    );
+  }
+
+  return (
+    <IOScrollView>
+      <VStack space={16}>
+        <HostCardEmulationInfo />
+        <AntennaInfo />
+      </VStack>
+    </IOScrollView>
+  );
+};
+
+const HostCardEmulationInfo = () => {
+  const [hasHce, setHasHce] = useState<boolean>();
+  const [failure, setFailure] = useState<Error>();
+
   useOnFirstRender(async () => {
-    try {
-      const info = await getNfcAntennaInfo();
-      setNfcAntennaInfo(info);
-    } catch (e) {
-      setFailure(serializeError(convertUnknownToError(e)));
-    }
+    isHceSupported().then(setHasHce).catch(setFailure);
+  });
+
+  useDebugInfo({
+    hasHce,
+    hasHceFailure: failure
+  });
+
+  return (
+    <View>
+      <ListItemHeader label="Host Card Emulation" />
+      <ListItemInfo
+        value="Supports Host Card Emulation (HCE)"
+        endElement={{
+          type: "badge",
+          componentProps: {
+            text: hasHce ? "\u{1F7E2} YES" : "\u{1F534} NO",
+            variant: hasHce ? "success" : "error"
+          }
+        }}
+      />
+    </View>
+  );
+};
+
+const AntennaInfo = () => {
+  const [nfcAntennaInfo, setNfcAntennaInfo] = useState<NfcAntennaInfo>();
+  const [failure, setFailure] = useState<Error>();
+
+  useOnFirstRender(async () => {
+    getNfcAntennaInfo().then(setNfcAntennaInfo).catch(setFailure);
   });
 
   useDebugInfo({
     nfcAntennaInfo,
-    failure
+    nfcAntennaInfoFailure: failure
   });
 
-  if (failure !== undefined) {
-    return (
-      <OperationResultScreenContent
-        isHeaderVisible={true}
-        pictogram="attention"
-        title="NFC Antenna Info not available on this device"
-      />
-    );
-  }
-
   if (!nfcAntennaInfo) {
-    return <LoadingScreenContent title="Getting NFC info" />;
+    return null;
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.pictogramContainer}>
-        <Pictogram name="nfcScanAndroid" size={180} />
-      </View>
-      <View style={styles.infoContainer}>
+    <>
+      <View>
+        <ListItemHeader label="Device Info" />
         <ListItemInfo
           value="Device Width (mm)"
           endElement={{
@@ -94,8 +129,9 @@ export const NfcPlayground = () => {
             }
           }}
         />
-        <Divider />
-        <Body style={styles.antennaHeader}>Available NFC Antennas:</Body>
+      </View>
+      <View>
+        <ListItemHeader label="Available NFC Antennas" />
         {nfcAntennaInfo.availableNfcAntennas.map((antenna, index) => (
           <View key={index}>
             <ListItemInfo
@@ -114,25 +150,6 @@ export const NfcPlayground = () => {
           </View>
         ))}
       </View>
-    </SafeAreaView>
+    </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16
-  },
-  pictogramContainer: {
-    alignItems: "center",
-    marginBottom: 24
-  },
-  infoContainer: {
-    flex: 1
-  },
-  antennaHeader: {
-    marginTop: 16,
-    marginBottom: 8,
-    fontWeight: "bold"
-  }
-});

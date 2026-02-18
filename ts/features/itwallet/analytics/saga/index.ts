@@ -2,7 +2,7 @@ import { SagaIterator } from "redux-saga";
 import { call, fork, select, takeEvery } from "typed-redux-saga/macro";
 import { registerSuperProperties } from "../../../../mixpanel.ts";
 import { GlobalState } from "../../../../store/reducers/types";
-import { getNfcAntennaInfo } from "../../../../utils/nfc";
+import { getNfcAntennaInfo, isHceSupported } from "../../../../utils/nfc";
 import {
   itwCredentialsRemove,
   itwCredentialsStore
@@ -36,10 +36,10 @@ export function* watchItwCredentialsAnalyticsSaga(): SagaIterator {
 }
 
 /**
- * Tracks NFC antenna information for discovery and debugging purposes.
- * TODO remove this function when NFC antenna info tracking is not needed anymore
+ * Tracks NFC information for discovery and debugging purposes.
+ * TODO remove this function when NFC info tracking is not needed anymore
  */
-export function* updateNfcAntennaInfoTrackingProperties() {
+export function* updateNfcInfoTrackingProperties() {
   try {
     const { deviceHeight, deviceWidth, availableNfcAntennas } = yield* call(
       getNfcAntennaInfo
@@ -53,9 +53,22 @@ export function* updateNfcAntennaInfoTrackingProperties() {
       NFC_AVAILABLE_ANTENNAS: antennaCount
     });
   } catch (e) {
-    const errorName = e instanceof Error ? e.name : String(e);
+    const errorName = e instanceof Error ? e.message : String(e);
     registerSuperProperties({
       NFC_ANTENNA_READ_FAILURE: errorName
+    });
+  }
+
+  try {
+    const isSupported = yield* call(isHceSupported);
+
+    registerSuperProperties({
+      NFC_HAS_HCE_SUPPORT: isSupported
+    });
+  } catch (e) {
+    const errorName = e instanceof Error ? e.message : String(e);
+    registerSuperProperties({
+      NFC_HCE_READ_FAILURE: errorName
     });
   }
 }

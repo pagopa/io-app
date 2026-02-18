@@ -25,14 +25,9 @@ const NfcAntennaInfoSchema = z.object({
 export type NfcAntennaInfo = z.infer<typeof NfcAntennaInfoSchema>;
 export type AvailableNfcAntenna = z.infer<typeof AvailableNfcAntennaSchema>;
 
-async function getAndroidNfcAntennaInfo(): Promise<NfcAntennaInfo> {
-  const raw = await NfcAntennaInfoNativeModule.getNfcAntennaInfo();
-  return NfcAntennaInfoSchema.parse(raw);
-}
-
-function getUnsupportedPlatformNfcAntennaInfo(): Promise<NfcAntennaInfo> {
+function getUnsupportedPlatformNfcInfo(): Promise<NfcAntennaInfo> {
   return Promise.reject(
-    new Error("NFC antenna info is only available on Android devices.")
+    new Error("NFC info is only available on Android devices.")
   );
 }
 
@@ -46,7 +41,22 @@ function getUnsupportedPlatformNfcAntennaInfo(): Promise<NfcAntennaInfo> {
  */
 export const getNfcAntennaInfo: () => Promise<NfcAntennaInfo> = Platform.select(
   {
-    android: getAndroidNfcAntennaInfo,
-    default: getUnsupportedPlatformNfcAntennaInfo
+    android: async () => {
+      const raw = await NfcAntennaInfoNativeModule.getNfcAntennaInfo();
+      return NfcAntennaInfoSchema.parse(raw);
+    },
+    default: getUnsupportedPlatformNfcInfo
   }
 );
+
+/**
+ * Checks if Host Card Emulation (HCE) is supported on the device.
+ * HCE allows the device to emulate an NFC card, enabling it to interact with NFC readers.
+ *
+ * @returns A promise that resolves to true if HCE is supported, or false if not.
+ * @throws If the platform is not Android or if the native module fails to provide valid data.
+ */
+export const isHceSupported: () => Promise<boolean> = Platform.select({
+  android: () => NfcAntennaInfoNativeModule.isHceSupported(),
+  default: getUnsupportedPlatformNfcInfo
+});
