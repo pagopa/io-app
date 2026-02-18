@@ -31,6 +31,9 @@ class MainActivity : ReactActivity() {
 
   // https://github.com/crazycodeboy/react-native-splash-screen#third-stepplugin-configuration
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
         // Enable edge to edge support
         // https://developer.android.com/develop/ui/views/layout/edge-to-edge?hl=it
         WindowCompat.setDecorFitsSystemWindows(window, false)
