@@ -7,7 +7,12 @@ import {
   useRef
 } from "react";
 import { View } from "react-native";
-import Animated, { AnimatedRef, SharedValue } from "react-native-reanimated";
+import Animated, {
+  AnimatedRef,
+  SharedValue,
+  useAnimatedRef,
+  useSharedValue
+} from "react-native-reanimated";
 import { useIODispatch } from "../../../store/hooks";
 import {
   registerTourItemAction,
@@ -17,7 +22,7 @@ import { TourItemMeasurement } from "../types";
 import { TourOverlay } from "./TourOverlay";
 
 type TourItemConfig = {
-  ref: React.RefObject<View | null>;
+  ref: AnimatedRef<Animated.View>;
   title: string;
   description: string;
 };
@@ -32,7 +37,7 @@ type TourContextValue = {
   registerItem: (
     groupId: string,
     index: number,
-    viewRef: React.RefObject<View | null>,
+    viewRef: AnimatedRef<Animated.View>,
     config: { title: string; description: string }
   ) => void;
   unregisterItem: (groupId: string, index: number) => void;
@@ -52,6 +57,18 @@ type TourContextValue = {
   ) => void;
   unregisterScrollRef: (groupId: string) => void;
   getScrollRef: (groupId: string) => ScrollRef | undefined;
+  /** Shared values driving the cutout and tooltip position. */
+  cutoutX: SharedValue<number>;
+  cutoutY: SharedValue<number>;
+  cutoutW: SharedValue<number>;
+  cutoutH: SharedValue<number>;
+  /**
+   * When true, the active GuidedTour component continuously tracks its
+   * position via useFrameCallback. Set to false during step transitions.
+   */
+  isTracking: SharedValue<boolean>;
+  /** Animated ref for the overlay container, used for coordinate conversion. */
+  overlayAnimatedRef: AnimatedRef<Animated.View>;
 };
 
 const TourContext = createContext<TourContextValue | undefined>(undefined);
@@ -71,11 +88,18 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
   const itemsRef = useRef<Map<string, TourItemConfig>>(new Map());
   const scrollRefsRef = useRef<Map<string, ScrollRef>>(new Map());
 
+  const cutoutX = useSharedValue(0);
+  const cutoutY = useSharedValue(0);
+  const cutoutW = useSharedValue(0);
+  const cutoutH = useSharedValue(0);
+  const isTracking = useSharedValue(false);
+  const overlayAnimatedRef = useAnimatedRef<Animated.View>();
+
   const registerItem = useCallback(
     (
       groupId: string,
       index: number,
-      viewRef: React.RefObject<View | null>,
+      viewRef: AnimatedRef<Animated.View>,
       config: { title: string; description: string }
     ) => {
       dispatch(registerTourItemAction({ groupId, index }));
@@ -99,13 +123,17 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
   const getMeasurement = useCallback(
     (groupId: string, index: number): TourItemMeasurement | undefined => {
       const item = itemsRef.current.get(makeKey(groupId, index));
-      if (!item?.ref.current) {
+      const node = item?.ref.current;
+      if (!node) {
         return undefined;
       }
       const result: { value: TourItemMeasurement | undefined } = {
         value: undefined
       };
-      item.ref.current.measureInWindow((x, y, width, height) => {
+      // On Fabric the underlying host view supports synchronous
+      // measureInWindow via JSI. The AnimatedRef resolves to the
+      // native view at runtime; the cast satisfies TypeScript.
+      (node as unknown as View).measureInWindow((x, y, width, height) => {
         if (width !== 0 || height !== 0) {
           result.value = { x, y, width, height };
         }
@@ -157,7 +185,13 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
         getConfig,
         registerScrollRef,
         unregisterScrollRef,
-        getScrollRef
+        getScrollRef,
+        cutoutX,
+        cutoutY,
+        cutoutW,
+        cutoutH,
+        isTracking,
+        overlayAnimatedRef
       }}
     >
       {children}

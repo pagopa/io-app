@@ -1,3 +1,4 @@
+/* eslint-disable functional/immutable-data */
 import {
   Body,
   H6,
@@ -9,18 +10,18 @@ import {
   useIOTheme,
   VStack
 } from "@pagopa/io-app-design-system";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import Animated, {
   SharedValue,
-  useAnimatedStyle
+  useAnimatedStyle,
+  useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { completeTourAction, prevTourStepAction } from "../store/actions";
 import { activeGroupIdSelector } from "../store/selectors";
-import { TourItemMeasurement } from "../types";
 import { useTourStepNavigation } from "../hooks/useTourStepNavigation";
 import { TourStepIndicator } from "./TourStepIndicator";
 
@@ -34,7 +35,10 @@ const CLOSE_BUTTON_OPACITY = 0.7;
 const TOOLTIP_TITLE_SAFE_PADDING = 32;
 
 type Props = {
-  itemMeasurement: TourItemMeasurement;
+  cutoutX: SharedValue<number>;
+  cutoutY: SharedValue<number>;
+  cutoutW: SharedValue<number>;
+  cutoutH: SharedValue<number>;
   title: string;
   description: string;
   stepIndex: number;
@@ -43,7 +47,10 @@ type Props = {
 };
 
 export const TourTooltip = ({
-  itemMeasurement,
+  cutoutX,
+  cutoutY,
+  cutoutW,
+  cutoutH,
   title,
   description,
   stepIndex,
@@ -58,46 +65,69 @@ export const TourTooltip = ({
   const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
   const { handleNext } = useTourStepNavigation();
 
-  const [tooltipHeight, setTooltipHeight] = useState(0);
-
-  const spaceAbove = itemMeasurement.y - insets.top;
-  const spaceBelow =
-    windowHeight - (itemMeasurement.y + itemMeasurement.height) - insets.bottom;
-
-  const showAbove = spaceAbove > spaceBelow;
-
-  const rawTooltipTop = showAbove
-    ? itemMeasurement.y - tooltipHeight - ARROW_VISIBLE - TOOLTIP_MARGIN
-    : itemMeasurement.y +
-      itemMeasurement.height +
-      ARROW_VISIBLE +
-      TOOLTIP_MARGIN;
-
-  const tooltipTop = Math.max(
-    insets.top + TOOLTIP_MARGIN,
-    Math.min(
-      rawTooltipTop,
-      windowHeight - insets.bottom - tooltipHeight - TOOLTIP_MARGIN
-    )
-  );
-
-  const itemCenterX = itemMeasurement.x + itemMeasurement.width / 2;
+  const tooltipHeight = useSharedValue(0);
   const tooltipWidth = windowWidth - TOOLTIP_MARGIN * 2;
-  const tooltipLeft = Math.max(
-    TOOLTIP_MARGIN,
-    Math.min(
-      itemCenterX - tooltipWidth / 2,
-      windowWidth - tooltipWidth - TOOLTIP_MARGIN
-    )
-  );
 
-  const arrowLeft = Math.max(
-    TOOLTIP_MARGIN + ARROW_SIZE,
-    Math.min(
-      itemCenterX - tooltipLeft - ARROW_SIZE / 2,
-      tooltipWidth - ARROW_SIZE * 2
-    )
-  );
+  const containerAnimatedStyle = useAnimatedStyle(() => {
+    const spaceAbove = cutoutY.value - insets.top;
+    const spaceBelow =
+      windowHeight - (cutoutY.value + cutoutH.value) - insets.bottom;
+    const showAbove = spaceAbove > spaceBelow;
+
+    const rawTop = showAbove
+      ? cutoutY.value - tooltipHeight.value - ARROW_VISIBLE - TOOLTIP_MARGIN
+      : cutoutY.value + cutoutH.value + ARROW_VISIBLE + TOOLTIP_MARGIN;
+
+    const top = Math.max(
+      insets.top + TOOLTIP_MARGIN,
+      Math.min(
+        rawTop,
+        windowHeight - insets.bottom - tooltipHeight.value - TOOLTIP_MARGIN
+      )
+    );
+
+    const itemCenterX = cutoutX.value + cutoutW.value / 2;
+    const left = Math.max(
+      TOOLTIP_MARGIN,
+      Math.min(
+        itemCenterX - tooltipWidth / 2,
+        windowWidth - tooltipWidth - TOOLTIP_MARGIN
+      )
+    );
+
+    return { top, left, width: tooltipWidth, opacity: opacity.value };
+  });
+
+  const arrowAnimatedStyle = useAnimatedStyle(() => {
+    const spaceAbove = cutoutY.value - insets.top;
+    const spaceBelow =
+      windowHeight - (cutoutY.value + cutoutH.value) - insets.bottom;
+    const showAbove = spaceAbove > spaceBelow;
+
+    const itemCenterX = cutoutX.value + cutoutW.value / 2;
+    const tooltipLeft = Math.max(
+      TOOLTIP_MARGIN,
+      Math.min(
+        itemCenterX - tooltipWidth / 2,
+        windowWidth - tooltipWidth - TOOLTIP_MARGIN
+      )
+    );
+
+    const arrowLeft = Math.max(
+      TOOLTIP_MARGIN + ARROW_SIZE,
+      Math.min(
+        itemCenterX - tooltipLeft - ARROW_SIZE / 2,
+        tooltipWidth - ARROW_SIZE * 2
+      )
+    );
+
+    return {
+      left: arrowLeft,
+      top: showAbove
+        ? tooltipHeight.value - ARROW_SIZE + ARROW_VISIBLE
+        : -ARROW_VISIBLE
+    };
+  });
 
   const isFirstStep = stepIndex === 0;
   const isLastStep = stepIndex === totalSteps - 1;
@@ -112,30 +142,19 @@ export const TourTooltip = ({
     dispatch(prevTourStepAction());
   }, [dispatch]);
 
-  const animatedStyle = useAnimatedStyle(() => ({
-    opacity: opacity.value
-  }));
-
   return (
     <Animated.View
-      style={[
-        styles.container,
-        { top: tooltipTop, left: tooltipLeft, width: tooltipWidth },
-        animatedStyle
-      ]}
-      onLayout={e => setTooltipHeight(e.nativeEvent.layout.height)}
+      style={[styles.container, containerAnimatedStyle]}
+      onLayout={e => {
+        tooltipHeight.value = e.nativeEvent.layout.height;
+      }}
       pointerEvents="box-none"
     >
-      <View
+      <Animated.View
         style={[
           styles.arrow,
-          {
-            backgroundColor: tooltipBgColor,
-            left: arrowLeft,
-            ...(showAbove
-              ? { bottom: -ARROW_VISIBLE }
-              : { top: -ARROW_VISIBLE })
-          }
+          { backgroundColor: tooltipBgColor },
+          arrowAnimatedStyle
         ]}
       />
       <View style={[styles.tooltip, { backgroundColor: tooltipBgColor }]}>

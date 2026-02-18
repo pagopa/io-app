@@ -1,4 +1,27 @@
 /* eslint-disable functional/immutable-data */
+/**
+ * Guided Tour Overlay — Position Tracking Architecture
+ *
+ * The cutout and tooltip positions are driven by Reanimated shared values
+ * (cutoutX/Y/W/H) that live in TourProvider context. This enables two
+ * complementary positioning modes:
+ *
+ * 1. Step transitions (JS thread): When the user advances to a new step,
+ *    TourOverlay performs a one-shot measurement via measureInWindow,
+ *    handles scroll-into-view if needed, and animates the cutout to the
+ *    new position with fade-out/fade-in transitions.
+ *
+ * 2. Continuous tracking (UI thread): Between step transitions, the active
+ *    GuidedTour component runs a useFrameCallback that calls Reanimated's
+ *    measure() on the UI thread every frame. If the target element moves
+ *    (e.g. due to an offline banner, keyboard, or orientation change), the
+ *    shared values update immediately and the Skia cutout + tooltip follow
+ *    at 60fps with zero JS thread involvement.
+ *
+ * The isTracking shared value coordinates the two modes: it is set to false
+ * during step transitions (so the frame callback does not interfere with
+ * animations) and set to true once the transition completes.
+ */
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import {
@@ -55,48 +78,54 @@ const measureInWindow = (view: View): TourItemMeasurement | undefined => {
 };
 
 export const TourOverlay = () => {
-  const { getMeasurement, getConfig, getScrollRef } = useTourContext();
+  const {
+    getMeasurement,
+    getConfig,
+    getScrollRef,
+    cutoutX,
+    cutoutY,
+    cutoutW,
+    cutoutH,
+    isTracking,
+    overlayAnimatedRef
+  } = useTourContext();
   const isActive = useIOSelector(isTourActiveSelector);
   const groupId = useIOSelector(activeGroupIdSelector);
   const stepIndex = useIOSelector(activeStepIndexSelector);
   const items = useIOSelector(tourItemsForActiveGroupSelector);
 
-  const overlayRef = useRef<View>(null);
   const isFirstMeasurement = useRef(true);
   const measureGeneration = useRef(0);
 
   const [visible, setVisible] = useState(false);
+  const [tooltipReady, setTooltipReady] = useState(false);
 
-  const [measurement, setMeasurement] = useState<
-    TourItemMeasurement | undefined
-  >(undefined);
   const [tooltipConfig, setTooltipConfig] = useState<
     { title: string; description: string } | undefined
   >(undefined);
 
-  const cutoutX = useSharedValue(0);
-  const cutoutY = useSharedValue(0);
-  const cutoutW = useSharedValue(0);
-  const cutoutH = useSharedValue(0);
   const opacity = useSharedValue(0);
   const cutoutOpacity = useSharedValue(1);
 
-  // When tour becomes active, mount the overlay and reset first-measurement flag
+  // When tour becomes active, mount the overlay and reset state
   useEffect(() => {
     if (isActive) {
       isFirstMeasurement.current = true;
+      isTracking.value = false;
       setVisible(true);
+      setTooltipReady(false);
     }
-  }, [isActive]);
+  }, [isActive, isTracking]);
 
   // When tour becomes inactive, fade out then unmount
   useEffect(() => {
     if (!isActive && visible) {
+      isTracking.value = false;
       opacity.value = withTiming(0, { duration: ANIMATION_DURATION }, () => {
         runOnJS(setVisible)(false);
       });
     }
-  }, [isActive, visible, opacity]);
+  }, [isActive, visible, opacity, isTracking]);
 
   const scrollIntoViewIfNeeded = useCallback(
     async (
@@ -172,7 +201,7 @@ export const TourOverlay = () => {
       didScroll: boolean
     ) => {
       const updateStep = () => {
-        setMeasurement(padded);
+        setTooltipReady(true);
         setTooltipConfig(config);
       };
 
@@ -189,15 +218,24 @@ export const TourOverlay = () => {
         updateStep();
         positionCutout();
         cutoutOpacity.value = 1;
-        opacity.value = withTiming(1, { duration: ANIMATION_DURATION });
+        opacity.value = withTiming(1, { duration: ANIMATION_DURATION }, () => {
+          // Enable continuous tracking once the overlay is fully visible
+          isTracking.value = true;
+        });
       } else if (didScroll) {
         // Already faded out before scrolling — reposition and fade in
         positionCutout();
         updateStep();
-        cutoutOpacity.value = withTiming(1, {
-          duration: ANIMATION_DURATION,
-          easing: STEP_EASING
-        });
+        cutoutOpacity.value = withTiming(
+          1,
+          {
+            duration: ANIMATION_DURATION,
+            easing: STEP_EASING
+          },
+          () => {
+            isTracking.value = true;
+          }
+        );
       } else {
         // Normal step transition: fade out cutout, reposition, then fade back in.
         // Cancel any lingering animation on cutoutOpacity from a previous
@@ -212,15 +250,21 @@ export const TourOverlay = () => {
             cutoutW.value = padded.width;
             cutoutH.value = padded.height;
             runOnJS(updateStep)();
-            cutoutOpacity.value = withTiming(1, {
-              duration: ANIMATION_DURATION,
-              easing: STEP_EASING
-            });
+            cutoutOpacity.value = withTiming(
+              1,
+              {
+                duration: ANIMATION_DURATION,
+                easing: STEP_EASING
+              },
+              () => {
+                isTracking.value = true;
+              }
+            );
           }
         );
       }
     },
-    [cutoutX, cutoutY, cutoutW, cutoutH, cutoutOpacity, opacity]
+    [cutoutX, cutoutY, cutoutW, cutoutH, cutoutOpacity, opacity, isTracking]
   );
 
   const measureCurrentStep = useCallback(async () => {
@@ -231,6 +275,9 @@ export const TourOverlay = () => {
     if (!currentItem) {
       return;
     }
+
+    // Pause continuous tracking during the step transition
+    isTracking.value = false;
 
     measureGeneration.current += 1;
     const generation = measureGeneration.current;
@@ -256,8 +303,9 @@ export const TourOverlay = () => {
     const { measurement: m, didScroll } = scrollResult;
 
     // Measure overlay position to convert page coords → overlay-relative coords
-    const overlayOffset = overlayRef.current
-      ? measureInWindow(overlayRef.current)
+    const overlayNode = overlayAnimatedRef.current;
+    const overlayOffset = overlayNode
+      ? measureInWindow(overlayNode as unknown as View)
       : undefined;
     const ox = overlayOffset?.x ?? 0;
     const oy = overlayOffset?.y ?? 0;
@@ -278,7 +326,9 @@ export const TourOverlay = () => {
     getMeasurement,
     getConfig,
     scrollIntoViewIfNeeded,
-    applyCutout
+    applyCutout,
+    isTracking,
+    overlayAnimatedRef
   ]);
 
   useEffect(() => {
@@ -297,7 +347,7 @@ export const TourOverlay = () => {
 
   return (
     <Animated.View
-      ref={overlayRef}
+      ref={overlayAnimatedRef}
       style={[styles.container, animatedContainerStyle]}
       pointerEvents={isActive ? "auto" : "none"}
     >
@@ -322,9 +372,12 @@ export const TourOverlay = () => {
           </Group>
         </Group>
       </Canvas>
-      {measurement && tooltipConfig && (
+      {tooltipReady && tooltipConfig && (
         <TourTooltip
-          itemMeasurement={measurement}
+          cutoutX={cutoutX}
+          cutoutY={cutoutY}
+          cutoutW={cutoutW}
+          cutoutH={cutoutH}
           title={tooltipConfig.title}
           description={tooltipConfig.description}
           stepIndex={stepIndex}
