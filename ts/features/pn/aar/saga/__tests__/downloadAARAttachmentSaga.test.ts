@@ -471,7 +471,7 @@ describe("getAttachmentMetadata", () => {
           mockedGetNotificationAttachmentInput
         } = generateMocks(response);
         // eslint-disable-next-line functional/no-let
-        let expectionThrown = false;
+        let exceptionThrown = false;
         try {
           testSaga(
             testable!.getAttachmentMetadata,
@@ -490,10 +490,10 @@ describe("getAttachmentMetadata", () => {
             )
             .next(response);
         } catch (e: unknown) {
-          expectionThrown = true;
+          exceptionThrown = true;
           expect(e).toEqual(Error("PN_DELIVERY_MANDATENOTFOUND"));
         }
-        expect(expectionThrown).toBe(true);
+        expect(exceptionThrown).toBe(true);
         expect(mockedGetNotificationAttachmentInput.mock.calls.length).toBe(1);
         expect(mockedGetNotificationAttachmentInput.mock.calls[0].length).toBe(
           1

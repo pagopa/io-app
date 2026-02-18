@@ -5,7 +5,7 @@ import {
   testable
 } from "../aarErrorMappings";
 
-const errorMap = testable.aarErrorMap!;
+const errorMap = testable.aarProblemJsonErrorComponentsMap!;
 describe("aarErrorMappings", () => {
   const genericErrorSpy = jest
     .spyOn(GENERIC_ERROR, "SendAarGenericErrorComponent")

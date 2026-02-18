@@ -28,7 +28,7 @@ const cieErrors = {
 const deliveryErrors = {
   PN_DELIVERY_MANDATENOTFOUND: "PN_DELIVERY_MANDATENOTFOUND"
 } as const;
-type SendAarErrorCodes = keyof typeof cieErrors | keyof typeof deliveryErrors;
+type SendAarErrorCodes = keyof (typeof cieErrors & typeof deliveryErrors);
 
 const aarProblemJsonErrorComponentsMap = {
   ..._.mapValues(cieErrors, () => GenericCieValidationErrorComponent),
@@ -69,6 +69,4 @@ export const getSendAarErrorComponent = (
   return aarProblemJsonErrorComponentsMap[maybeErrorKey];
 };
 
-export const testable = isTestEnv
-  ? { aarErrorMap: aarProblemJsonErrorComponentsMap }
-  : {};
+export const testable = isTestEnv ? { aarProblemJsonErrorComponentsMap } : {};
