@@ -1045,6 +1045,31 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                       }
                     >
                       <View
+                        collapsable={false}
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestInlineStyle={
+                          [
+                            {
+                              "paddingBottom": 24,
+                              "width": "100%",
+                            },
+                            {
+                              "bottom": 0,
+                              "position": "absolute",
+                            },
+                            false,
+                            undefined,
+                          ]
+                        }
                         style={
                           [
                             {
@@ -1061,6 +1086,36 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                         }
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "backgroundColor": "#FFFFFF",
+                                "bottom": 0,
+                                "height": 0,
+                                "position": "absolute",
+                                "shadowColor": "#0E0F13",
+                                "shadowOffset": {
+                                  "height": -4,
+                                  "width": 0,
+                                },
+                                "shadowOpacity": 0.1,
+                                "shadowRadius": 32,
+                                "width": "100%",
+                              },
+                              undefined,
+                            ]
+                          }
                           pointerEvents="none"
                           style={
                             [
@@ -1133,6 +1188,48 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -1144,9 +1241,15 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "backgroundColor": undefined,
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                  {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
                                   },
                                   {
                                     "paddingHorizontal": 16,
@@ -1163,6 +1266,30 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -1181,8 +1308,31 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={true}
+                                  collapsable={false}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "color": "rgba(255, 255, 255, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#FFFFFF",
+                                      },
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
@@ -1204,7 +1354,7 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                                           "color": "#FFFFFF",
                                         },
                                         {
-                                          "color": undefined,
+                                          "color": "rgba(255, 255, 255, 1)",
                                         },
                                       ],
                                     ]
@@ -1571,6 +1721,31 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                       }
                     >
                       <View
+                        collapsable={false}
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestInlineStyle={
+                          [
+                            {
+                              "paddingBottom": 24,
+                              "width": "100%",
+                            },
+                            {
+                              "bottom": 0,
+                              "position": "absolute",
+                            },
+                            false,
+                            undefined,
+                          ]
+                        }
                         style={
                           [
                             {
@@ -1587,6 +1762,36 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                         }
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "backgroundColor": "#FFFFFF",
+                                "bottom": 0,
+                                "height": 0,
+                                "position": "absolute",
+                                "shadowColor": "#0E0F13",
+                                "shadowOffset": {
+                                  "height": -4,
+                                  "width": 0,
+                                },
+                                "shadowOpacity": 0.1,
+                                "shadowRadius": 32,
+                                "width": "100%",
+                              },
+                              undefined,
+                            ]
+                          }
                           pointerEvents="none"
                           style={
                             [
@@ -1659,6 +1864,45 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  false,
+                                  false,
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#BBC2D6",
+                                    "borderColor": "#555C70",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {
+                                    "opacity": 0.5,
+                                  },
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -1689,113 +1933,165 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                               }
                             >
                               <View
-                                skipExiting={true}
-                              >
-                                <View
-                                  exiting={[Function]}
-                                  style={
+                                collapsable={false}
+                                exiting={[Function]}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                  }
+                                }
+                                style={
+                                  [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                <View
+                                  accessibilityRole="progressbar"
+                                  accessible={true}
+                                  style={
+                                    {
+                                      "height": 24,
+                                      "width": 24,
                                     }
                                   }
+                                  testID="LoadingSpinnerTestID"
                                 >
                                   <View
-                                    accessibilityRole="progressbar"
-                                    accessible={true}
-                                    style={
+                                    collapsable={false}
+                                    jestAnimatedProps={
                                       {
-                                        "height": 24,
-                                        "width": 24,
+                                        "value": {},
                                       }
                                     }
-                                    testID="LoadingSpinnerTestID"
-                                  >
-                                    <View
-                                      style={
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "0deg",
+                                            },
+                                          ],
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={{}}
+                                    style={
+                                      [
                                         {
                                           "transform": [
                                             {
                                               "rotateZ": "0deg",
                                             },
                                           ],
-                                        }
+                                        },
+                                      ]
+                                    }
+                                    testID="LoadingSpinnerAnimatedTestID"
+                                  >
+                                    <RNSVGSvgView
+                                      align="xMidYMid"
+                                      bbHeight={24}
+                                      bbWidth={24}
+                                      fill="none"
+                                      focusable={false}
+                                      height={24}
+                                      meetOrSlice={0}
+                                      minX={0}
+                                      minY={0}
+                                      style={
+                                        [
+                                          {
+                                            "backgroundColor": "transparent",
+                                            "borderWidth": 0,
+                                          },
+                                          {
+                                            "flex": 0,
+                                            "height": 24,
+                                            "width": 24,
+                                          },
+                                        ]
                                       }
-                                      testID="LoadingSpinnerAnimatedTestID"
+                                      vbHeight={24}
+                                      vbWidth={24}
+                                      width={24}
                                     >
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight={24}
-                                        bbWidth={24}
-                                        fill="none"
-                                        focusable={false}
-                                        height={24}
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
-                                        style={
+                                      <RNSVGGroup
+                                        fill={null}
+                                        propList={
                                           [
-                                            {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            {
-                                              "flex": 0,
-                                              "height": 24,
-                                              "width": 24,
-                                            },
+                                            "fill",
                                           ]
                                         }
-                                        vbHeight={24}
-                                        vbWidth={24}
-                                        width={24}
                                       >
+                                        <RNSVGDefs>
+                                          <RNSVGLinearGradient
+                                            gradient={
+                                              [
+                                                0,
+                                                5594224,
+                                                1,
+                                                -11182992,
+                                              ]
+                                            }
+                                            gradientTransform={null}
+                                            gradientUnits={0}
+                                            name="spinner-secondHalf"
+                                            x1="0%"
+                                            x2="100%"
+                                            y1="0%"
+                                            y2="0%"
+                                          />
+                                          <RNSVGLinearGradient
+                                            gradient={
+                                              [
+                                                0,
+                                                -11182992,
+                                                1,
+                                                -11182992,
+                                              ]
+                                            }
+                                            gradientTransform={null}
+                                            gradientUnits={0}
+                                            name="spinner-firstHalf"
+                                            x1="0%"
+                                            x2="100%"
+                                            y1="0%"
+                                            y2="0%"
+                                          />
+                                        </RNSVGDefs>
                                         <RNSVGGroup
-                                          fill={null}
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
                                           propList={
                                             [
-                                              "fill",
+                                              "strokeWidth",
                                             ]
                                           }
+                                          strokeWidth={3}
                                         >
-                                          <RNSVGDefs>
-                                            <RNSVGLinearGradient
-                                              gradient={
-                                                [
-                                                  0,
-                                                  5594224,
-                                                  1,
-                                                  -11182992,
-                                                ]
-                                              }
-                                              gradientTransform={null}
-                                              gradientUnits={0}
-                                              name="spinner-secondHalf"
-                                              x1="0%"
-                                              x2="100%"
-                                              y1="0%"
-                                              y2="0%"
-                                            />
-                                            <RNSVGLinearGradient
-                                              gradient={
-                                                [
-                                                  0,
-                                                  -11182992,
-                                                  1,
-                                                  -11182992,
-                                                ]
-                                              }
-                                              gradientTransform={null}
-                                              gradientUnits={0}
-                                              name="spinner-firstHalf"
-                                              x1="0%"
-                                              x2="100%"
-                                              y1="0%"
-                                              y2="0%"
-                                            />
-                                          </RNSVGDefs>
-                                          <RNSVGGroup
+                                          <RNSVGPath
+                                            d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -1804,77 +2100,61 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                             }
                                             propList={
                                               [
-                                                "strokeWidth",
+                                                "stroke",
                                               ]
                                             }
-                                            strokeWidth={3}
-                                          >
-                                            <RNSVGPath
-                                              d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
-                                              fill={
-                                                {
-                                                  "payload": 4278190080,
-                                                  "type": 0,
-                                                }
+                                            stroke={
+                                              {
+                                                "brushRef": "spinner-secondHalf",
+                                                "type": 1,
                                               }
-                                              propList={
-                                                [
-                                                  "stroke",
-                                                ]
+                                            }
+                                          />
+                                          <RNSVGPath
+                                            d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
+                                            fill={
+                                              {
+                                                "payload": 4278190080,
+                                                "type": 0,
                                               }
-                                              stroke={
-                                                {
-                                                  "brushRef": "spinner-secondHalf",
-                                                  "type": 1,
-                                                }
+                                            }
+                                            propList={
+                                              [
+                                                "stroke",
+                                              ]
+                                            }
+                                            stroke={
+                                              {
+                                                "brushRef": "spinner-firstHalf",
+                                                "type": 1,
                                               }
-                                            />
-                                            <RNSVGPath
-                                              d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
-                                              fill={
-                                                {
-                                                  "payload": 4278190080,
-                                                  "type": 0,
-                                                }
+                                            }
+                                          />
+                                          <RNSVGPath
+                                            d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
+                                            fill={
+                                              {
+                                                "payload": 4278190080,
+                                                "type": 0,
                                               }
-                                              propList={
-                                                [
-                                                  "stroke",
-                                                ]
+                                            }
+                                            propList={
+                                              [
+                                                "stroke",
+                                                "strokeLinecap",
+                                              ]
+                                            }
+                                            stroke={
+                                              {
+                                                "payload": 4283784304,
+                                                "type": 0,
                                               }
-                                              stroke={
-                                                {
-                                                  "brushRef": "spinner-firstHalf",
-                                                  "type": 1,
-                                                }
-                                              }
-                                            />
-                                            <RNSVGPath
-                                              d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
-                                              fill={
-                                                {
-                                                  "payload": 4278190080,
-                                                  "type": 0,
-                                                }
-                                              }
-                                              propList={
-                                                [
-                                                  "stroke",
-                                                  "strokeLinecap",
-                                                ]
-                                              }
-                                              stroke={
-                                                {
-                                                  "payload": 4283784304,
-                                                  "type": 0,
-                                                }
-                                              }
-                                              strokeLinecap={1}
-                                            />
-                                          </RNSVGGroup>
+                                            }
+                                            strokeLinecap={1}
+                                          />
                                         </RNSVGGroup>
-                                      </RNSVGSvgView>
-                                    </View>
+                                      </RNSVGGroup>
+                                    </RNSVGSvgView>
                                   </View>
                                 </View>
                               </View>
