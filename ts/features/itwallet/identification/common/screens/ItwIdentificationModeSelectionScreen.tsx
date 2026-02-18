@@ -54,6 +54,9 @@ export const ItwIdentificationModeSelectionScreen = ({
   const { name: routeName, params } = route;
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+
+  const issuanceMode =
+    ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
@@ -109,7 +112,7 @@ export const ItwIdentificationModeSelectionScreen = ({
 
   useFocusEffect(
     useCallback(() => {
-      if (params.eidReissuing) {
+      if (params.eidReissuing && issuanceMode !== "reissuance") {
         machineRef.send({
           type: "start",
           mode: "reissuance",
@@ -117,7 +120,7 @@ export const ItwIdentificationModeSelectionScreen = ({
           credentialType: params.credentialType
         });
       }
-    }, [machineRef, params])
+    }, [machineRef, params, issuanceMode])
   );
 
   useFocusEffect(
