@@ -4,7 +4,7 @@ import Animated, {
   SharedValue,
   useAnimatedRef,
   useAnimatedStyle,
-  useScrollViewOffset,
+  useScrollOffset,
   withSpring,
   WithSpringConfig
 } from "react-native-reanimated";
@@ -40,7 +40,7 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 export const DSItwBrandExploration = () => {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
-  const scrollOffset = useScrollViewOffset(scrollRef);
+  const scrollOffset = useScrollOffset(scrollRef);
 
   return (
     <>
