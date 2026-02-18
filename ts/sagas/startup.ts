@@ -151,7 +151,6 @@ import {
   initMixpanel,
   watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel
 } from "./mixpanel";
-import { setLanguageFromProfileIfExists } from "./preferences";
 import { askServicesPreferencesModeOptin } from "./services/servicesOptinSaga";
 import { checkAppHistoryVersionSaga } from "./startup/appVersionHistorySaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
@@ -536,10 +535,6 @@ export function* initializeApplicationSaga(
       return;
     }
 
-    if (!handleSessionExpiration) {
-      yield* call(setLanguageFromProfileIfExists);
-    }
-
     const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
     if (isFastLoginEnabled) {
       // At application startup, the state of the refresh token is "idle".
@@ -565,9 +560,6 @@ export function* initializeApplicationSaga(
   // Ask to accept ToS if there is a new available version
   yield* call(checkAcceptedTosSaga, userProfile);
 
-  if (!handleSessionExpiration) {
-    yield* call(setLanguageFromProfileIfExists);
-  }
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
 

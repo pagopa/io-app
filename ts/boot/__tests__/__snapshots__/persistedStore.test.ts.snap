@@ -90,7 +90,7 @@ exports[`Check the addition for new fields to the persisted store. If one of thi
   "isPagoPATestEnabled": false,
   "isPnTestEnabled": false,
   "preferredCalendar": undefined,
-  "preferredLanguage": undefined,
+  "preferredLanguage": "it",
   "themePreference": "light",
   "wasServiceAlertDisplayedOnce": false,
 }

@@ -741,10 +741,16 @@
         },
         "preferred_language": {
           "title": "Lingua preferita",
-          "subtitle": "In quale lingua vuoi usare l'applicazione?",
-          "headers": {
-            "services": "Servizi",
-            "app": "Applicazione"
+          "subtitle": "Scegli la lingua che vuoi usare per l’app e per i messaggi che ricevi dagli Enti.",
+          "sections": {
+            "messages": {
+              "title": "Messaggi",
+              "description": "Gli Enti possono usare questa preferenza per scriverti nella tua lingua preferita."
+            },
+            "app": {
+              "title": "Applicazione",
+              "description": "Scegli la lingua per i menu e i testi dell’app. I contenuti non ancora tradotti saranno in italiano."
+            }
           },
           "alert": {
             "title": "Vuoi cambiare la lingua in",

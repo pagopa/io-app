@@ -315,7 +315,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                     ]
                                   }
                                 >
-                                  In quale lingua vuoi usare l'applicazione?
+                                  Scegli la lingua che vuoi usare per l’app e per i messaggi che ricevi dagli Enti.
                                 </Text>
                               </View>
                               <View
@@ -342,6 +342,1244 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                   }
                                 >
                                   <View>
+                                    <View
+                                      style={
+                                        {
+                                          "marginHorizontal": -24,
+                                          "paddingHorizontal": 24,
+                                          "paddingVertical": 12,
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          {
+                                            "alignItems": "center",
+                                            "flexDirection": "row",
+                                            "justifyContent": "space-between",
+                                          }
+                                        }
+                                      >
+                                        <View
+                                          style={
+                                            {
+                                              "flex": 1,
+                                            }
+                                          }
+                                        >
+                                          <View
+                                            accessibilityLabel="Applicazione"
+                                            accessibilityRole="header"
+                                            accessible={true}
+                                          >
+                                            <Text
+                                              allowFontScaling={true}
+                                              dynamicTypeRamp="headline"
+                                              maxFontSizeMultiplier={1.5}
+                                              role="heading"
+                                              style={
+                                                [
+                                                  {},
+                                                  {
+                                                    "color": "#555C70",
+                                                    "fontFamily": "Titillio",
+                                                    "fontSize": 16,
+                                                    "fontStyle": "normal",
+                                                    "fontWeight": "600",
+                                                    "lineHeight": 24,
+                                                  },
+                                                ]
+                                              }
+                                            >
+                                              Applicazione
+                                            </Text>
+                                          </View>
+                                        </View>
+                                      </View>
+                                    </View>
+                                    <Text
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="footnote"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#555C70",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 14,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "400",
+                                            "lineHeight": 21,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Scegli la lingua per i menu e i testi dell’app. I contenuti non ancora tradotti saranno in italiano.
+                                    </Text>
+                                    <View
+                                      style={
+                                        {
+                                          "height": 8,
+                                        }
+                                      }
+                                    />
+                                    <View
+                                      accessibilityRole="radio"
+                                      accessibilityState={
+                                        {
+                                          "busy": undefined,
+                                          "checked": false,
+                                          "disabled": false,
+                                          "expanded": undefined,
+                                          "selected": undefined,
+                                        }
+                                      }
+                                      accessibilityValue={
+                                        {
+                                          "max": undefined,
+                                          "min": undefined,
+                                          "now": undefined,
+                                          "text": undefined,
+                                        }
+                                      }
+                                      accessible={true}
+                                      collapsable={false}
+                                      focusable={true}
+                                      onBlur={[Function]}
+                                      onClick={[Function]}
+                                      onFocus={[Function]}
+                                      onResponderGrant={[Function]}
+                                      onResponderMove={[Function]}
+                                      onResponderRelease={[Function]}
+                                      onResponderTerminate={[Function]}
+                                      onResponderTerminationRequest={[Function]}
+                                      onStartShouldSetResponder={[Function]}
+                                      onTouchEnd={[Function]}
+                                      testID="RadioItemTestID_app-locale-it"
+                                    >
+                                      <View
+                                        needsOffscreenAlphaCompositing={true}
+                                        style={
+                                          [
+                                            {
+                                              "marginHorizontal": -24,
+                                              "paddingHorizontal": 24,
+                                              "paddingVertical": 12,
+                                            },
+                                            {
+                                              "backgroundColor": undefined,
+                                            },
+                                            {
+                                              "opacity": 1,
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        <View
+                                          style={
+                                            {
+                                              "transform": [
+                                                {
+                                                  "scale": undefined,
+                                                },
+                                              ],
+                                            }
+                                          }
+                                        >
+                                          <View
+                                            style={
+                                              {
+                                                "alignItems": "flex-start",
+                                                "flexDirection": "row",
+                                                "justifyContent": "space-between",
+                                              }
+                                            }
+                                          >
+                                            <View
+                                              style={
+                                                {
+                                                  "columnGap": 18,
+                                                  "flexDirection": "row",
+                                                  "flexShrink": 1,
+                                                }
+                                              }
+                                            >
+                                              <Text
+                                                allowFontScaling={true}
+                                                dynamicTypeRamp="headline"
+                                                maxFontSizeMultiplier={1.5}
+                                                style={
+                                                  [
+                                                    {},
+                                                    {
+                                                      "color": "#0E0F13",
+                                                      "fontFamily": "Titillio",
+                                                      "fontSize": 16,
+                                                      "fontStyle": "normal",
+                                                      "fontWeight": "600",
+                                                      "lineHeight": 24,
+                                                    },
+                                                    {
+                                                      "flexShrink": 1,
+                                                    },
+                                                  ]
+                                                }
+                                              >
+                                                Italiano
+                                              </Text>
+                                            </View>
+                                            <View
+                                              style={
+                                                {
+                                                  "width": 8,
+                                                }
+                                              }
+                                            />
+                                            <View
+                                              accessibilityElementsHidden={true}
+                                              importantForAccessibility="no-hide-descendants"
+                                              pointerEvents="none"
+                                            >
+                                              <View
+                                                accessibilityState={
+                                                  {
+                                                    "busy": undefined,
+                                                    "checked": undefined,
+                                                    "disabled": undefined,
+                                                    "expanded": undefined,
+                                                    "selected": undefined,
+                                                  }
+                                                }
+                                                accessibilityValue={
+                                                  {
+                                                    "max": undefined,
+                                                    "min": undefined,
+                                                    "now": undefined,
+                                                    "text": undefined,
+                                                  }
+                                                }
+                                                accessible={false}
+                                                collapsable={false}
+                                                focusable={true}
+                                                onBlur={[Function]}
+                                                onClick={[Function]}
+                                                onFocus={[Function]}
+                                                onResponderGrant={[Function]}
+                                                onResponderMove={[Function]}
+                                                onResponderRelease={[Function]}
+                                                onResponderTerminate={[Function]}
+                                                onResponderTerminationRequest={[Function]}
+                                                onStartShouldSetResponder={[Function]}
+                                                style={
+                                                  {
+                                                    "height": 36,
+                                                    "width": 36,
+                                                  }
+                                                }
+                                                testID="AnimatedRadioInput"
+                                              >
+                                                <View
+                                                  style={
+                                                    [
+                                                      {
+                                                        "borderWidth": 2,
+                                                        "left": 0,
+                                                        "position": "absolute",
+                                                        "top": 0,
+                                                      },
+                                                      {
+                                                        "borderRadius": 18,
+                                                        "height": 36,
+                                                        "width": 36,
+                                                      },
+                                                      {
+                                                        "borderColor": "#636B82",
+                                                      },
+                                                    ]
+                                                  }
+                                                />
+                                                <View
+                                                  style={
+                                                    [
+                                                      {
+                                                        "left": 0,
+                                                        "position": "absolute",
+                                                        "top": 0,
+                                                      },
+                                                      {
+                                                        "borderRadius": 18,
+                                                        "height": 36,
+                                                        "width": 36,
+                                                      },
+                                                      {
+                                                        "backgroundColor": "#0B3EE3",
+                                                      },
+                                                      {
+                                                        "opacity": 0,
+                                                        "transform": [
+                                                          {
+                                                            "scale": undefined,
+                                                          },
+                                                        ],
+                                                      },
+                                                    ]
+                                                  }
+                                                />
+                                              </View>
+                                            </View>
+                                          </View>
+                                        </View>
+                                      </View>
+                                    </View>
+                                    <View
+                                      style={
+                                        {
+                                          "backgroundColor": "#D2D6E3",
+                                          "height": 0.5,
+                                        }
+                                      }
+                                    />
+                                    <View
+                                      accessibilityRole="radio"
+                                      accessibilityState={
+                                        {
+                                          "busy": undefined,
+                                          "checked": false,
+                                          "disabled": false,
+                                          "expanded": undefined,
+                                          "selected": undefined,
+                                        }
+                                      }
+                                      accessibilityValue={
+                                        {
+                                          "max": undefined,
+                                          "min": undefined,
+                                          "now": undefined,
+                                          "text": undefined,
+                                        }
+                                      }
+                                      accessible={true}
+                                      collapsable={false}
+                                      focusable={true}
+                                      onBlur={[Function]}
+                                      onClick={[Function]}
+                                      onFocus={[Function]}
+                                      onResponderGrant={[Function]}
+                                      onResponderMove={[Function]}
+                                      onResponderRelease={[Function]}
+                                      onResponderTerminate={[Function]}
+                                      onResponderTerminationRequest={[Function]}
+                                      onStartShouldSetResponder={[Function]}
+                                      onTouchEnd={[Function]}
+                                      testID="RadioItemTestID_app-locale-en"
+                                    >
+                                      <View
+                                        needsOffscreenAlphaCompositing={true}
+                                        style={
+                                          [
+                                            {
+                                              "marginHorizontal": -24,
+                                              "paddingHorizontal": 24,
+                                              "paddingVertical": 12,
+                                            },
+                                            {
+                                              "backgroundColor": undefined,
+                                            },
+                                            {
+                                              "opacity": 1,
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        <View
+                                          style={
+                                            {
+                                              "transform": [
+                                                {
+                                                  "scale": undefined,
+                                                },
+                                              ],
+                                            }
+                                          }
+                                        >
+                                          <View
+                                            style={
+                                              {
+                                                "alignItems": "flex-start",
+                                                "flexDirection": "row",
+                                                "justifyContent": "space-between",
+                                              }
+                                            }
+                                          >
+                                            <View
+                                              style={
+                                                {
+                                                  "columnGap": 18,
+                                                  "flexDirection": "row",
+                                                  "flexShrink": 1,
+                                                }
+                                              }
+                                            >
+                                              <Text
+                                                allowFontScaling={true}
+                                                dynamicTypeRamp="headline"
+                                                maxFontSizeMultiplier={1.5}
+                                                style={
+                                                  [
+                                                    {},
+                                                    {
+                                                      "color": "#0E0F13",
+                                                      "fontFamily": "Titillio",
+                                                      "fontSize": 16,
+                                                      "fontStyle": "normal",
+                                                      "fontWeight": "600",
+                                                      "lineHeight": 24,
+                                                    },
+                                                    {
+                                                      "flexShrink": 1,
+                                                    },
+                                                  ]
+                                                }
+                                              >
+                                                Inglese
+                                              </Text>
+                                            </View>
+                                            <View
+                                              style={
+                                                {
+                                                  "width": 8,
+                                                }
+                                              }
+                                            />
+                                            <View
+                                              accessibilityElementsHidden={true}
+                                              importantForAccessibility="no-hide-descendants"
+                                              pointerEvents="none"
+                                            >
+                                              <View
+                                                accessibilityState={
+                                                  {
+                                                    "busy": undefined,
+                                                    "checked": undefined,
+                                                    "disabled": undefined,
+                                                    "expanded": undefined,
+                                                    "selected": undefined,
+                                                  }
+                                                }
+                                                accessibilityValue={
+                                                  {
+                                                    "max": undefined,
+                                                    "min": undefined,
+                                                    "now": undefined,
+                                                    "text": undefined,
+                                                  }
+                                                }
+                                                accessible={false}
+                                                collapsable={false}
+                                                focusable={true}
+                                                onBlur={[Function]}
+                                                onClick={[Function]}
+                                                onFocus={[Function]}
+                                                onResponderGrant={[Function]}
+                                                onResponderMove={[Function]}
+                                                onResponderRelease={[Function]}
+                                                onResponderTerminate={[Function]}
+                                                onResponderTerminationRequest={[Function]}
+                                                onStartShouldSetResponder={[Function]}
+                                                style={
+                                                  {
+                                                    "height": 36,
+                                                    "width": 36,
+                                                  }
+                                                }
+                                                testID="AnimatedRadioInput"
+                                              >
+                                                <View
+                                                  style={
+                                                    [
+                                                      {
+                                                        "borderWidth": 2,
+                                                        "left": 0,
+                                                        "position": "absolute",
+                                                        "top": 0,
+                                                      },
+                                                      {
+                                                        "borderRadius": 18,
+                                                        "height": 36,
+                                                        "width": 36,
+                                                      },
+                                                      {
+                                                        "borderColor": "#636B82",
+                                                      },
+                                                    ]
+                                                  }
+                                                />
+                                                <View
+                                                  style={
+                                                    [
+                                                      {
+                                                        "left": 0,
+                                                        "position": "absolute",
+                                                        "top": 0,
+                                                      },
+                                                      {
+                                                        "borderRadius": 18,
+                                                        "height": 36,
+                                                        "width": 36,
+                                                      },
+                                                      {
+                                                        "backgroundColor": "#0B3EE3",
+                                                      },
+                                                      {
+                                                        "opacity": 0,
+                                                        "transform": [
+                                                          {
+                                                            "scale": undefined,
+                                                          },
+                                                        ],
+                                                      },
+                                                    ]
+                                                  }
+                                                />
+                                              </View>
+                                            </View>
+                                          </View>
+                                        </View>
+                                      </View>
+                                    </View>
+                                    <View
+                                      style={
+                                        {
+                                          "backgroundColor": "#D2D6E3",
+                                          "height": 0.5,
+                                        }
+                                      }
+                                    />
+                                    <View
+                                      accessibilityRole="radio"
+                                      accessibilityState={
+                                        {
+                                          "busy": undefined,
+                                          "checked": false,
+                                          "disabled": false,
+                                          "expanded": undefined,
+                                          "selected": undefined,
+                                        }
+                                      }
+                                      accessibilityValue={
+                                        {
+                                          "max": undefined,
+                                          "min": undefined,
+                                          "now": undefined,
+                                          "text": undefined,
+                                        }
+                                      }
+                                      accessible={true}
+                                      collapsable={false}
+                                      focusable={true}
+                                      onBlur={[Function]}
+                                      onClick={[Function]}
+                                      onFocus={[Function]}
+                                      onResponderGrant={[Function]}
+                                      onResponderMove={[Function]}
+                                      onResponderRelease={[Function]}
+                                      onResponderTerminate={[Function]}
+                                      onResponderTerminationRequest={[Function]}
+                                      onStartShouldSetResponder={[Function]}
+                                      onTouchEnd={[Function]}
+                                      testID="RadioItemTestID_app-locale-de"
+                                    >
+                                      <View
+                                        needsOffscreenAlphaCompositing={true}
+                                        style={
+                                          [
+                                            {
+                                              "marginHorizontal": -24,
+                                              "paddingHorizontal": 24,
+                                              "paddingVertical": 12,
+                                            },
+                                            {
+                                              "backgroundColor": undefined,
+                                            },
+                                            {
+                                              "opacity": 1,
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        <View
+                                          style={
+                                            {
+                                              "transform": [
+                                                {
+                                                  "scale": undefined,
+                                                },
+                                              ],
+                                            }
+                                          }
+                                        >
+                                          <View
+                                            style={
+                                              {
+                                                "alignItems": "flex-start",
+                                                "flexDirection": "row",
+                                                "justifyContent": "space-between",
+                                              }
+                                            }
+                                          >
+                                            <View
+                                              style={
+                                                {
+                                                  "columnGap": 18,
+                                                  "flexDirection": "row",
+                                                  "flexShrink": 1,
+                                                }
+                                              }
+                                            >
+                                              <Text
+                                                allowFontScaling={true}
+                                                dynamicTypeRamp="headline"
+                                                maxFontSizeMultiplier={1.5}
+                                                style={
+                                                  [
+                                                    {},
+                                                    {
+                                                      "color": "#0E0F13",
+                                                      "fontFamily": "Titillio",
+                                                      "fontSize": 16,
+                                                      "fontStyle": "normal",
+                                                      "fontWeight": "600",
+                                                      "lineHeight": 24,
+                                                    },
+                                                    {
+                                                      "flexShrink": 1,
+                                                    },
+                                                  ]
+                                                }
+                                              >
+                                                Tedesco
+                                              </Text>
+                                            </View>
+                                            <View
+                                              style={
+                                                {
+                                                  "width": 8,
+                                                }
+                                              }
+                                            />
+                                            <View
+                                              accessibilityElementsHidden={true}
+                                              importantForAccessibility="no-hide-descendants"
+                                              pointerEvents="none"
+                                            >
+                                              <View
+                                                accessibilityState={
+                                                  {
+                                                    "busy": undefined,
+                                                    "checked": undefined,
+                                                    "disabled": undefined,
+                                                    "expanded": undefined,
+                                                    "selected": undefined,
+                                                  }
+                                                }
+                                                accessibilityValue={
+                                                  {
+                                                    "max": undefined,
+                                                    "min": undefined,
+                                                    "now": undefined,
+                                                    "text": undefined,
+                                                  }
+                                                }
+                                                accessible={false}
+                                                collapsable={false}
+                                                focusable={true}
+                                                onBlur={[Function]}
+                                                onClick={[Function]}
+                                                onFocus={[Function]}
+                                                onResponderGrant={[Function]}
+                                                onResponderMove={[Function]}
+                                                onResponderRelease={[Function]}
+                                                onResponderTerminate={[Function]}
+                                                onResponderTerminationRequest={[Function]}
+                                                onStartShouldSetResponder={[Function]}
+                                                style={
+                                                  {
+                                                    "height": 36,
+                                                    "width": 36,
+                                                  }
+                                                }
+                                                testID="AnimatedRadioInput"
+                                              >
+                                                <View
+                                                  style={
+                                                    [
+                                                      {
+                                                        "borderWidth": 2,
+                                                        "left": 0,
+                                                        "position": "absolute",
+                                                        "top": 0,
+                                                      },
+                                                      {
+                                                        "borderRadius": 18,
+                                                        "height": 36,
+                                                        "width": 36,
+                                                      },
+                                                      {
+                                                        "borderColor": "#636B82",
+                                                      },
+                                                    ]
+                                                  }
+                                                />
+                                                <View
+                                                  style={
+                                                    [
+                                                      {
+                                                        "left": 0,
+                                                        "position": "absolute",
+                                                        "top": 0,
+                                                      },
+                                                      {
+                                                        "borderRadius": 18,
+                                                        "height": 36,
+                                                        "width": 36,
+                                                      },
+                                                      {
+                                                        "backgroundColor": "#0B3EE3",
+                                                      },
+                                                      {
+                                                        "opacity": 0,
+                                                        "transform": [
+                                                          {
+                                                            "scale": undefined,
+                                                          },
+                                                        ],
+                                                      },
+                                                    ]
+                                                  }
+                                                />
+                                              </View>
+                                            </View>
+                                          </View>
+                                        </View>
+                                      </View>
+                                    </View>
+                                    <View
+                                      style={
+                                        {
+                                          "backgroundColor": "#D2D6E3",
+                                          "height": 0.5,
+                                        }
+                                      }
+                                    />
+                                    <View
+                                      accessibilityRole="radio"
+                                      accessibilityState={
+                                        {
+                                          "busy": undefined,
+                                          "checked": false,
+                                          "disabled": false,
+                                          "expanded": undefined,
+                                          "selected": undefined,
+                                        }
+                                      }
+                                      accessibilityValue={
+                                        {
+                                          "max": undefined,
+                                          "min": undefined,
+                                          "now": undefined,
+                                          "text": undefined,
+                                        }
+                                      }
+                                      accessible={true}
+                                      collapsable={false}
+                                      focusable={true}
+                                      onBlur={[Function]}
+                                      onClick={[Function]}
+                                      onFocus={[Function]}
+                                      onResponderGrant={[Function]}
+                                      onResponderMove={[Function]}
+                                      onResponderRelease={[Function]}
+                                      onResponderTerminate={[Function]}
+                                      onResponderTerminationRequest={[Function]}
+                                      onStartShouldSetResponder={[Function]}
+                                      onTouchEnd={[Function]}
+                                      testID="RadioItemTestID_app-locale-fr"
+                                    >
+                                      <View
+                                        needsOffscreenAlphaCompositing={true}
+                                        style={
+                                          [
+                                            {
+                                              "marginHorizontal": -24,
+                                              "paddingHorizontal": 24,
+                                              "paddingVertical": 12,
+                                            },
+                                            {
+                                              "backgroundColor": undefined,
+                                            },
+                                            {
+                                              "opacity": 1,
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        <View
+                                          style={
+                                            {
+                                              "transform": [
+                                                {
+                                                  "scale": undefined,
+                                                },
+                                              ],
+                                            }
+                                          }
+                                        >
+                                          <View
+                                            style={
+                                              {
+                                                "alignItems": "flex-start",
+                                                "flexDirection": "row",
+                                                "justifyContent": "space-between",
+                                              }
+                                            }
+                                          >
+                                            <View
+                                              style={
+                                                {
+                                                  "columnGap": 18,
+                                                  "flexDirection": "row",
+                                                  "flexShrink": 1,
+                                                }
+                                              }
+                                            >
+                                              <Text
+                                                allowFontScaling={true}
+                                                dynamicTypeRamp="headline"
+                                                maxFontSizeMultiplier={1.5}
+                                                style={
+                                                  [
+                                                    {},
+                                                    {
+                                                      "color": "#0E0F13",
+                                                      "fontFamily": "Titillio",
+                                                      "fontSize": 16,
+                                                      "fontStyle": "normal",
+                                                      "fontWeight": "600",
+                                                      "lineHeight": 24,
+                                                    },
+                                                    {
+                                                      "flexShrink": 1,
+                                                    },
+                                                  ]
+                                                }
+                                              >
+                                                Francese
+                                              </Text>
+                                            </View>
+                                            <View
+                                              style={
+                                                {
+                                                  "width": 8,
+                                                }
+                                              }
+                                            />
+                                            <View
+                                              accessibilityElementsHidden={true}
+                                              importantForAccessibility="no-hide-descendants"
+                                              pointerEvents="none"
+                                            >
+                                              <View
+                                                accessibilityState={
+                                                  {
+                                                    "busy": undefined,
+                                                    "checked": undefined,
+                                                    "disabled": undefined,
+                                                    "expanded": undefined,
+                                                    "selected": undefined,
+                                                  }
+                                                }
+                                                accessibilityValue={
+                                                  {
+                                                    "max": undefined,
+                                                    "min": undefined,
+                                                    "now": undefined,
+                                                    "text": undefined,
+                                                  }
+                                                }
+                                                accessible={false}
+                                                collapsable={false}
+                                                focusable={true}
+                                                onBlur={[Function]}
+                                                onClick={[Function]}
+                                                onFocus={[Function]}
+                                                onResponderGrant={[Function]}
+                                                onResponderMove={[Function]}
+                                                onResponderRelease={[Function]}
+                                                onResponderTerminate={[Function]}
+                                                onResponderTerminationRequest={[Function]}
+                                                onStartShouldSetResponder={[Function]}
+                                                style={
+                                                  {
+                                                    "height": 36,
+                                                    "width": 36,
+                                                  }
+                                                }
+                                                testID="AnimatedRadioInput"
+                                              >
+                                                <View
+                                                  style={
+                                                    [
+                                                      {
+                                                        "borderWidth": 2,
+                                                        "left": 0,
+                                                        "position": "absolute",
+                                                        "top": 0,
+                                                      },
+                                                      {
+                                                        "borderRadius": 18,
+                                                        "height": 36,
+                                                        "width": 36,
+                                                      },
+                                                      {
+                                                        "borderColor": "#636B82",
+                                                      },
+                                                    ]
+                                                  }
+                                                />
+                                                <View
+                                                  style={
+                                                    [
+                                                      {
+                                                        "left": 0,
+                                                        "position": "absolute",
+                                                        "top": 0,
+                                                      },
+                                                      {
+                                                        "borderRadius": 18,
+                                                        "height": 36,
+                                                        "width": 36,
+                                                      },
+                                                      {
+                                                        "backgroundColor": "#0B3EE3",
+                                                      },
+                                                      {
+                                                        "opacity": 0,
+                                                        "transform": [
+                                                          {
+                                                            "scale": undefined,
+                                                          },
+                                                        ],
+                                                      },
+                                                    ]
+                                                  }
+                                                />
+                                              </View>
+                                            </View>
+                                          </View>
+                                        </View>
+                                      </View>
+                                    </View>
+                                    <View
+                                      style={
+                                        {
+                                          "backgroundColor": "#D2D6E3",
+                                          "height": 0.5,
+                                        }
+                                      }
+                                    />
+                                    <View
+                                      accessibilityRole="radio"
+                                      accessibilityState={
+                                        {
+                                          "busy": undefined,
+                                          "checked": false,
+                                          "disabled": false,
+                                          "expanded": undefined,
+                                          "selected": undefined,
+                                        }
+                                      }
+                                      accessibilityValue={
+                                        {
+                                          "max": undefined,
+                                          "min": undefined,
+                                          "now": undefined,
+                                          "text": undefined,
+                                        }
+                                      }
+                                      accessible={true}
+                                      collapsable={false}
+                                      focusable={true}
+                                      onBlur={[Function]}
+                                      onClick={[Function]}
+                                      onFocus={[Function]}
+                                      onResponderGrant={[Function]}
+                                      onResponderMove={[Function]}
+                                      onResponderRelease={[Function]}
+                                      onResponderTerminate={[Function]}
+                                      onResponderTerminationRequest={[Function]}
+                                      onStartShouldSetResponder={[Function]}
+                                      onTouchEnd={[Function]}
+                                      testID="RadioItemTestID_app-locale-sl"
+                                    >
+                                      <View
+                                        needsOffscreenAlphaCompositing={true}
+                                        style={
+                                          [
+                                            {
+                                              "marginHorizontal": -24,
+                                              "paddingHorizontal": 24,
+                                              "paddingVertical": 12,
+                                            },
+                                            {
+                                              "backgroundColor": undefined,
+                                            },
+                                            {
+                                              "opacity": 1,
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        <View
+                                          style={
+                                            {
+                                              "transform": [
+                                                {
+                                                  "scale": undefined,
+                                                },
+                                              ],
+                                            }
+                                          }
+                                        >
+                                          <View
+                                            style={
+                                              {
+                                                "alignItems": "flex-start",
+                                                "flexDirection": "row",
+                                                "justifyContent": "space-between",
+                                              }
+                                            }
+                                          >
+                                            <View
+                                              style={
+                                                {
+                                                  "columnGap": 18,
+                                                  "flexDirection": "row",
+                                                  "flexShrink": 1,
+                                                }
+                                              }
+                                            >
+                                              <Text
+                                                allowFontScaling={true}
+                                                dynamicTypeRamp="headline"
+                                                maxFontSizeMultiplier={1.5}
+                                                style={
+                                                  [
+                                                    {},
+                                                    {
+                                                      "color": "#0E0F13",
+                                                      "fontFamily": "Titillio",
+                                                      "fontSize": 16,
+                                                      "fontStyle": "normal",
+                                                      "fontWeight": "600",
+                                                      "lineHeight": 24,
+                                                    },
+                                                    {
+                                                      "flexShrink": 1,
+                                                    },
+                                                  ]
+                                                }
+                                              >
+                                                Sloveno
+                                              </Text>
+                                            </View>
+                                            <View
+                                              style={
+                                                {
+                                                  "width": 8,
+                                                }
+                                              }
+                                            />
+                                            <View
+                                              accessibilityElementsHidden={true}
+                                              importantForAccessibility="no-hide-descendants"
+                                              pointerEvents="none"
+                                            >
+                                              <View
+                                                accessibilityState={
+                                                  {
+                                                    "busy": undefined,
+                                                    "checked": undefined,
+                                                    "disabled": undefined,
+                                                    "expanded": undefined,
+                                                    "selected": undefined,
+                                                  }
+                                                }
+                                                accessibilityValue={
+                                                  {
+                                                    "max": undefined,
+                                                    "min": undefined,
+                                                    "now": undefined,
+                                                    "text": undefined,
+                                                  }
+                                                }
+                                                accessible={false}
+                                                collapsable={false}
+                                                focusable={true}
+                                                onBlur={[Function]}
+                                                onClick={[Function]}
+                                                onFocus={[Function]}
+                                                onResponderGrant={[Function]}
+                                                onResponderMove={[Function]}
+                                                onResponderRelease={[Function]}
+                                                onResponderTerminate={[Function]}
+                                                onResponderTerminationRequest={[Function]}
+                                                onStartShouldSetResponder={[Function]}
+                                                style={
+                                                  {
+                                                    "height": 36,
+                                                    "width": 36,
+                                                  }
+                                                }
+                                                testID="AnimatedRadioInput"
+                                              >
+                                                <View
+                                                  style={
+                                                    [
+                                                      {
+                                                        "borderWidth": 2,
+                                                        "left": 0,
+                                                        "position": "absolute",
+                                                        "top": 0,
+                                                      },
+                                                      {
+                                                        "borderRadius": 18,
+                                                        "height": 36,
+                                                        "width": 36,
+                                                      },
+                                                      {
+                                                        "borderColor": "#636B82",
+                                                      },
+                                                    ]
+                                                  }
+                                                />
+                                                <View
+                                                  style={
+                                                    [
+                                                      {
+                                                        "left": 0,
+                                                        "position": "absolute",
+                                                        "top": 0,
+                                                      },
+                                                      {
+                                                        "borderRadius": 18,
+                                                        "height": 36,
+                                                        "width": 36,
+                                                      },
+                                                      {
+                                                        "backgroundColor": "#0B3EE3",
+                                                      },
+                                                      {
+                                                        "opacity": 0,
+                                                        "transform": [
+                                                          {
+                                                            "scale": undefined,
+                                                          },
+                                                        ],
+                                                      },
+                                                    ]
+                                                  }
+                                                />
+                                              </View>
+                                            </View>
+                                          </View>
+                                        </View>
+                                      </View>
+                                    </View>
+                                  </View>
+                                  <View>
+                                    <View
+                                      style={
+                                        {
+                                          "marginHorizontal": -24,
+                                          "paddingHorizontal": 24,
+                                          "paddingVertical": 12,
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          {
+                                            "alignItems": "center",
+                                            "flexDirection": "row",
+                                            "justifyContent": "space-between",
+                                          }
+                                        }
+                                      >
+                                        <View
+                                          style={
+                                            {
+                                              "flex": 1,
+                                            }
+                                          }
+                                        >
+                                          <View
+                                            accessibilityLabel="Messaggi"
+                                            accessibilityRole="header"
+                                            accessible={true}
+                                          >
+                                            <Text
+                                              allowFontScaling={true}
+                                              dynamicTypeRamp="headline"
+                                              maxFontSizeMultiplier={1.5}
+                                              role="heading"
+                                              style={
+                                                [
+                                                  {},
+                                                  {
+                                                    "color": "#555C70",
+                                                    "fontFamily": "Titillio",
+                                                    "fontSize": 16,
+                                                    "fontStyle": "normal",
+                                                    "fontWeight": "600",
+                                                    "lineHeight": 24,
+                                                  },
+                                                ]
+                                              }
+                                            >
+                                              Messaggi
+                                            </Text>
+                                          </View>
+                                        </View>
+                                      </View>
+                                    </View>
+                                    <Text
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="footnote"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#555C70",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 14,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "400",
+                                            "lineHeight": 21,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Gli Enti possono usare questa preferenza per scriverti nella tua lingua preferita.
+                                    </Text>
+                                    <View
+                                      style={
+                                        {
+                                          "height": 8,
+                                        }
+                                      }
+                                    />
                                     <View
                                       accessibilityRole="radio"
                                       accessibilityState={

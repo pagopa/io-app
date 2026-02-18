@@ -739,10 +739,13 @@
         },
         "preferred_language": {
           "title": "Favourite language",
-          "subtitle": "In which language do you want to use the application?",
-          "headers": {
-            "services": "Services",
-            "app": "Application"
+          "sections": {
+            "messages": {
+              "title": "Messages"
+            },
+            "app": {
+              "title": "Application"
+            }
           },
           "alert": {
             "title": "Do you want to change the language to",
