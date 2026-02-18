@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { ViewStyle } from "react-native";
 import {
-  AnimatedStyleProp,
+  AnimatedStyle,
   Easing,
   useAnimatedStyle,
   useSharedValue,
@@ -18,7 +18,7 @@ type SineWaveConfiguration = {
 };
 
 type SineWaveAnimation = {
-  animatedStyle: AnimatedStyleProp<ViewStyle>;
+  animatedStyle: AnimatedStyle<ViewStyle>;
 };
 
 const useSineWaveAnimation = ({

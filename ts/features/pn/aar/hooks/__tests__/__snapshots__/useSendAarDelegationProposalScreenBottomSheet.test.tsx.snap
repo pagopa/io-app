@@ -789,6 +789,48 @@ exports[`useSendAarDelegationProposalScreenBottomSheet should render the correct
                           testID="requestIdentification"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(11, 62, 227, 1)",
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderCurve": "continuous",
+                                  "elevation": 0,
+                                  "flexDirection": "row",
+                                  "justifyContent": "center",
+                                  "overflow": "hidden",
+                                  "textAlignVertical": "center",
+                                },
+                                {
+                                  "paddingHorizontal": 16,
+                                },
+                                {
+                                  "backgroundColor": "#0B3EE3",
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
+                                },
+                                {},
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -800,9 +842,15 @@ exports[`useSendAarDelegationProposalScreenBottomSheet should render the correct
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
-                                false,
                                 {
-                                  "backgroundColor": undefined,
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                                {
+                                  "backgroundColor": "rgba(11, 62, 227, 1)",
                                 },
                                 {
                                   "paddingHorizontal": 16,
@@ -819,6 +867,30 @@ exports[`useSendAarDelegationProposalScreenBottomSheet should render the correct
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                  },
+                                  {
+                                    "columnGap": 8,
+                                  },
+                                  false,
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -837,8 +909,31 @@ exports[`useSendAarDelegationProposalScreenBottomSheet should render the correct
                                 accessibilityElementsHidden={true}
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "color": "rgba(255, 255, 255, 1)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "textAlign": "auto",
+                                    },
+                                    {
+                                      "color": "#FFFFFF",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
@@ -860,7 +955,7 @@ exports[`useSendAarDelegationProposalScreenBottomSheet should render the correct
                                         "color": "#FFFFFF",
                                       },
                                       {
-                                        "color": undefined,
+                                        "color": "rgba(255, 255, 255, 1)",
                                       },
                                     ],
                                   ]

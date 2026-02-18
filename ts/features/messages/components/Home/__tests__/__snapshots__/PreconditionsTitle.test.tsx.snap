@@ -1443,7 +1443,7 @@ exports[`PreconditionsTitle should match snapshot when title content is 'loading
                               "borderCurve": "continuous",
                               "borderRadius": 4,
                               "height": 20,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": 182,
                             }
                           }
