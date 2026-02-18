@@ -83,7 +83,9 @@ export const itwRestrictedModeOpenSelector = (state: GlobalState) => {
 export const itwIsBannerDueSelector =
   (bannerId: ItwBannerId) => (state: GlobalState) => {
     const b = state.features.itWallet.banners[bannerId];
-    if (!b?.showFrom) {return false;}
+    if (!b?.showFrom) {
+      return false;
+    }
 
     return Date.now() >= new Date(b.showFrom).getTime();
   };
