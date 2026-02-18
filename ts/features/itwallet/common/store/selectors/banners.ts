@@ -70,3 +70,20 @@ export const itwIsWalletDiscoveryBannerHiddenSelector =
  */
 export const itwIsInboxDiscoveryBannerHiddenSelector =
   itwIsBannerHiddenSelector("discovery_messages_inbox");
+
+/** Returns whether the IT-wallet restricted mode banner is open. Defaults to false.
+ */
+export const itwRestrictedModeOpenSelector = (state: GlobalState) => {
+  const rm = state.features.itWallet.banners.restrictedMode;
+  return Boolean(rm && !rm.dismissedOn);
+};
+
+/** Returns whether the IT-wallet banner is due to be shown.
+ * */
+export const itwIsBannerDueSelector =
+  (bannerId: ItwBannerId) => (state: GlobalState) => {
+    const b = state.features.itWallet.banners[bannerId];
+    if (!b?.showFrom) {return false;}
+
+    return Date.now() >= new Date(b.showFrom).getTime();
+  };

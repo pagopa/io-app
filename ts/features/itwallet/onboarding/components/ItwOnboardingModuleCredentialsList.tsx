@@ -22,10 +22,12 @@ import { ItwOnboardingModuleCredential } from "./ItwOnboardingModuleCredential";
 
 type Props = {
   credentialTypesToDisplay: Array<string>;
+  restrictedMode?: boolean;
 };
 
 export const ItwOnboardingModuleCredentialsList = ({
-  credentialTypesToDisplay
+  credentialTypesToDisplay,
+  restrictedMode = false
 }: Props) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const navigation = useIONavigation();
@@ -60,7 +62,10 @@ export const ItwOnboardingModuleCredentialsList = ({
            */
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.DISCOVERY.INFO,
-            params: { level: "l3", credentialType: type }
+            params: {
+              level: restrictedMode ? "l2" : "l3",
+              credentialType: type
+            }
           });
         } else {
           /**
@@ -73,7 +78,7 @@ export const ItwOnboardingModuleCredentialsList = ({
           });
         }
       },
-      [machineRef, navigation, isL3Enabled, isItWalletValid]
+      [machineRef, navigation, isL3Enabled, isItWalletValid, restrictedMode]
     )
   );
 

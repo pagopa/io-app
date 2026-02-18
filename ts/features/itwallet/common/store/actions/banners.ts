@@ -7,6 +7,12 @@ export const itwCloseBanner =
 export const itwShowBanner =
   createStandardAction("ITW_SHOW_BANNER")<ItwBannerId>();
 
+export const itwScheduleBanner = createStandardAction("ITW_SCHEDULE_BANNER")<{
+  bannerId: ItwBannerId;
+  showFrom: string;
+}>();
+
 export type ItwBannersActions =
   | ActionType<typeof itwCloseBanner>
-  | ActionType<typeof itwShowBanner>;
+  | ActionType<typeof itwShowBanner>
+  | ActionType<typeof itwScheduleBanner>;

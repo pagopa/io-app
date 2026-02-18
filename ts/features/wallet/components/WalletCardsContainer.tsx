@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
@@ -19,8 +19,8 @@ import {
   shouldRenderWalletLoadingStateSelector
 } from "../store/selectors";
 import { withWalletCategoryFilter } from "../utils";
-import { itwRestrictedModeSelector } from "../../itwallet/identification/common/store/selectors";
 import { ItwRestrictedModeBanner } from "../../itwallet/discovery/components/ItwRestrictedModeBanner";
+import { itwRestrictedModeOpenSelector } from "../../itwallet/common/store/selectors/banners";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
@@ -45,7 +45,7 @@ const WalletCardsContainer = () => {
     itwShouldRenderWalletDiscoveryBannerSelector
   );
   const shouldRenderItwRestrictedModeBanner = useIOSelector(
-    itwRestrictedModeSelector
+    itwRestrictedModeOpenSelector
   );
 
   useItwWalletInstanceRevocationAlert();

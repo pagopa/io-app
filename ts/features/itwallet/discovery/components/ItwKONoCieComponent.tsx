@@ -13,13 +13,12 @@ import { openWebUrl } from "../../../../utils/url";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { itwDisableItwActivation } from "../../common/store/actions/preferences";
-import { trackItwNfcNotSupported } from "../analytics";
-import { itwRestrictedMode } from "../../identification/common/store/actions";
 
-const NFC_NOT_SUPPORTED_FAQ_URL =
+// TODO: è questo l'url???
+const FAQ_URL =
   "https://assistenza.ioapp.it/hc/it/articles/35541811236113-Cosa-serve-per-usare-IT-Wallet";
 
-export const ItwNfcNotSupportedComponent = () => {
+export const ItwKONoCieComponent = () => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
 
@@ -28,18 +27,14 @@ export const ItwNfcNotSupportedComponent = () => {
 
   useFocusEffect(
     useCallback(() => {
-      trackItwNfcNotSupported();
       dispatch(itwDisableItwActivation());
-      dispatch(itwRestrictedMode(true));
     }, [dispatch])
   );
 
   const handleOpenFaq = () =>
-    openWebUrl(NFC_NOT_SUPPORTED_FAQ_URL, () =>
-      IOToast.error(I18n.t("genericError"))
-    );
+    openWebUrl(FAQ_URL, () => IOToast.error(I18n.t("genericError")));
 
-  const navigateToDiscoveryInfoScreen = useCallback(
+  const navigateToWalletHome = useCallback(
     () =>
       navigation.replace(ROUTES.MAIN, {
         screen: ROUTES.WALLET_HOME,
@@ -49,25 +44,21 @@ export const ItwNfcNotSupportedComponent = () => {
   );
 
   const action: OperationResultScreenContentProps["action"] = {
-    label: I18n.t(
-      "features.itWallet.discovery.nfcNotSupported.actions.continue"
-    ),
+    label: I18n.t("features.itWallet.discovery.koNoCie.actions.continue"),
     onPress: handleOpenFaq
   };
 
   const secondaryAction: OperationResultScreenContentProps["secondaryAction"] =
     {
-      label: I18n.t(
-        "features.itWallet.discovery.nfcNotSupported.actions.cancel"
-      ),
-      onPress: navigateToDiscoveryInfoScreen
+      label: I18n.t("features.itWallet.discovery.koNoCie.actions.cancel"),
+      onPress: navigateToWalletHome
     };
 
   return (
     <OperationResultScreenContent
-      testID="itwNfcNotSupportedComponentTestID"
-      title={I18n.t("features.itWallet.discovery.nfcNotSupported.title")}
-      subtitle={I18n.t("features.itWallet.discovery.nfcNotSupported.subtitle")}
+      testID="itwKONoCieComponentTestID"
+      title={I18n.t("features.itWallet.discovery.koNoCie.title")}
+      subtitle={I18n.t("features.itWallet.discovery.koNoCie.subtitle")}
       pictogram="attention"
       action={action}
       secondaryAction={secondaryAction}

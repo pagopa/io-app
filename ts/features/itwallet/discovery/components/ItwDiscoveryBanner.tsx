@@ -4,7 +4,10 @@ import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { ItwEngagementBanner } from "../../common/components/ItwEngagementBanner";
-import { itwCloseBanner } from "../../common/store/actions/banners";
+import {
+  itwCloseBanner,
+  itwScheduleBanner
+} from "../../common/store/actions/banners";
 import {
   itwIsMdlPresentSelector,
   itwIsWalletEmptySelector
@@ -17,6 +20,7 @@ import {
   trackItwDiscoveryBanner
 } from "../../analytics";
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
+import { itwIsBannerDueSelector } from "../../common/store/selectors/banners";
 
 type Props = {
   /** Flow type to determine dismissal logic and tracking properties  */
@@ -43,6 +47,9 @@ export const ItwDiscoveryBanner = ({
   const isWalletActive = useIOSelector(itwLifecycleIsValidSelector);
   const isWalletEmpty = useIOSelector(itwIsWalletEmptySelector);
   const hasMdl = useIOSelector(itwIsMdlPresentSelector);
+  const shouldRenderDelayedItwDiscoveryBanner = useIOSelector(
+    itwIsBannerDueSelector("discovery_delayed")
+  );
 
   const bannerId = useMemo(() => {
     if (!isWalletActive) {
@@ -99,6 +106,35 @@ export const ItwDiscoveryBanner = ({
     onDismiss?.();
     dispatch(itwCloseBanner(`discovery_${flow}`));
   };
+
+  const handleOnDismissDelayedBanner = () => {
+    dispatch(
+      itwScheduleBanner({
+        bannerId: "discovery_delayed",
+        showFrom: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
+      })
+    );
+  };
+
+  if (shouldRenderDelayedItwDiscoveryBanner) {
+    return (
+      <ItwEngagementBanner
+        title={I18n.t(
+          "features.itWallet.engagementBanner.upgrade_with_mdl.title"
+        )}
+        description={I18n.t(
+          "features.itWallet.engagementBanner.upgrade_with_mdl.description"
+        )}
+        action={I18n.t(
+          "features.itWallet.engagementBanner.upgrade_with_mdl.action"
+        )}
+        onPress={navigateToDiscoveryScreen}
+        onDismiss={handleOnDismissDelayedBanner}
+        dismissable={true}
+        style={style}
+      />
+    );
+  }
 
   if (!isWalletActive) {
     return (

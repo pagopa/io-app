@@ -17,7 +17,8 @@ import {
   itwIsBannerHiddenSelector,
   itwIsDiscoveryBannerHiddenSelector,
   itwIsWalletDiscoveryBannerHiddenSelector,
-  itwIsWalletUpgradeMDLDetailsBannerHiddenSelector
+  itwIsWalletUpgradeMDLDetailsBannerHiddenSelector,
+  itwRestrictedModeOpenSelector
 } from "./banners";
 import {
   itwCredentialUpgradeFailedSelector,
@@ -170,6 +171,7 @@ export const itwShouldRenderInboxDiscoveryBannerSelector = (
   state: GlobalState
 ) =>
   itwShouldRenderDiscoveryBannerSelector(state) &&
+  !itwRestrictedModeOpenSelector(state) &&
   !itwIsBannerHiddenSelector("discovery_messages_inbox")(state);
 
 /**

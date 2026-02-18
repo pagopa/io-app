@@ -13,8 +13,11 @@ import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
-import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../../store/hooks";
+import {
+  IOStackNavigationRouteProps,
+  useIONavigation
+} from "../../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { itwDisabledIdentificationMethodsSelector } from "../../../common/store/selectors/remoteConfig";
 import { EidIssuanceLevel } from "../../../machine/eid/context";
@@ -32,6 +35,12 @@ import {
   trackItwUserWithoutL3Requirements
 } from "../../analytics";
 import { useContinueWithBottomSheet } from "../hooks/useContinueWithBottomSheet";
+import { isRestrictedCredential } from "../../../common/utils/itwCredentialUtils";
+import { ITW_ROUTES } from "../../../navigation/routes";
+import {
+  itwCloseBanner,
+  itwScheduleBanner
+} from "../../../common/store/actions/banners";
 
 export type ItwIdentificationNavigationParams = {
   eidReissuing?: boolean;
@@ -53,6 +62,8 @@ export const ItwIdentificationModeSelectionScreen = ({
 }: ItwIdentificationModeSelectionScreenProps) => {
   const { name: routeName, params } = route;
 
+  const dispatch = useIODispatch();
+  const navigation = useIONavigation();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
@@ -137,13 +148,35 @@ export const ItwIdentificationModeSelectionScreen = ({
       machineRef.send({ type: "go-to-cie-warning", warning: "card" });
     } else {
       trackItwUserWithoutL3Bottomsheet();
-      machineRef.send({
-        type: "restart",
-        mode: "issuance",
-        level: "l2-fallback"
-      });
+      const canContinueWithDocIO = params.credentialType
+        ? isRestrictedCredential(params.credentialType)
+        : false;
+
+      dispatch(itwCloseBanner("discovery_wallet"));
+      dispatch(itwCloseBanner("discovery_messages_inbox"));
+      dispatch(
+        itwScheduleBanner({
+          bannerId: "discovery_delayed",
+          showFrom: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
+        })
+      );
+
+      if (canContinueWithDocIO) {
+        machineRef.send({
+          type: "restart",
+          mode: "issuance",
+          level: "l2-fallback"
+        });
+      } else {
+        navigation.replace(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.DISCOVERY.INFO,
+          params: {
+            error: "ko-no-cie"
+          }
+        });
+      }
     }
-  }, [mode, machineRef, routeName]);
+  }, [mode, machineRef, routeName, dispatch, navigation, params]);
 
   const dismissalDialog = useItwDismissalDialog({
     enabled: params.eidReissuing,

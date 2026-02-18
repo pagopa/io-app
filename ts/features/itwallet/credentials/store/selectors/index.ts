@@ -1,3 +1,4 @@
+/* eslint-disable functional/immutable-data */
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
@@ -326,4 +327,27 @@ export const itwHasExpiringCredentialsSelector = createSelector(
 export const itwIsMdlPresentSelector = createSelector(
   itwCredentialsByTypeSelector,
   credentials => credentials.mDL !== undefined
+);
+
+/**
+ * Split a given list of credential types into obtained / notObtained
+ * obtained = present in wallet
+ */
+export const itwCredentialsSplittedSelector = createSelector(
+  itwCredentialsByTypeSelector,
+  (_: GlobalState, types: ReadonlyArray<string>) => types,
+  (credentialsByType, types) => {
+    const obtained: Array<string> = [];
+    const notObtained: Array<string> = [];
+
+    for (const type of types) {
+      if (credentialsByType[type as keyof typeof credentialsByType]) {
+        obtained.push(type);
+      } else {
+        notObtained.push(type);
+      }
+    }
+
+    return { obtained, notObtained };
+  }
 );

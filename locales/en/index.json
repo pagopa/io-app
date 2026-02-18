@@ -4612,11 +4612,7 @@
           "subtitle": "Il tuo dispositivo non è dotato di tecnologia NFC, necessaria per il funzionamento dei portafogli digitali.",
           "actions": {
             "continue": "Continua senza IT-Wallet",
-            "cancel": "Non ora",
-            "l3": {
-              "continue": "Scopri di più",
-              "cancel": "Chiudi"
-            }
+            "cancel": "Non ora"
           }
         },
         "ipzsPrivacy": {

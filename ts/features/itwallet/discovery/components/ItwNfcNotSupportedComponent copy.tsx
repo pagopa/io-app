@@ -1,3 +1,4 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback } from "react";
@@ -8,13 +9,17 @@ import {
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIODispatch } from "../../../../store/hooks";
+import { openWebUrl } from "../../../../utils/url";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { itwDisableItwActivation } from "../../common/store/actions/preferences";
-import { ITW_ROUTES } from "../../navigation/routes";
+import { trackItwNfcNotSupported } from "../analytics";
 import { itwShowBanner } from "../../common/store/actions/banners";
 
-export const ItwRestrictedModeFallbackComponent = () => {
+const NFC_NOT_SUPPORTED_FAQ_URL =
+  "https://assistenza.ioapp.it/hc/it/articles/35541811236113-Cosa-serve-per-usare-IT-Wallet";
+
+export const ItwNfcNotSupportedComponent = () => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
 
@@ -23,12 +28,18 @@ export const ItwRestrictedModeFallbackComponent = () => {
 
   useFocusEffect(
     useCallback(() => {
+      trackItwNfcNotSupported();
       dispatch(itwDisableItwActivation());
       dispatch(itwShowBanner("restrictedMode"));
     }, [dispatch])
   );
 
-  const navigateToHomeScreen = useCallback(
+  const handleOpenFaq = () =>
+    openWebUrl(NFC_NOT_SUPPORTED_FAQ_URL, () =>
+      IOToast.error(I18n.t("genericError"))
+    );
+
+  const navigateToDiscoveryInfoScreen = useCallback(
     () =>
       navigation.replace(ROUTES.MAIN, {
         screen: ROUTES.WALLET_HOME,
@@ -37,40 +48,27 @@ export const ItwRestrictedModeFallbackComponent = () => {
     [navigation]
   );
 
-  const navigateToDiscoveryInfoScreen = useCallback(
-    () =>
-      navigation.replace(ITW_ROUTES.MAIN, {
-        screen: ITW_ROUTES.DISCOVERY.INFO,
-        params: {
-          level: "l2-fallback"
-        }
-      }),
-    [navigation]
-  );
-
   const action: OperationResultScreenContentProps["action"] = {
     label: I18n.t(
-      "features.itWallet.discovery.continueWithoutItw.actions.continue"
+      "features.itWallet.discovery.nfcNotSupported.actions.continue"
     ),
-    onPress: navigateToDiscoveryInfoScreen
+    onPress: handleOpenFaq
   };
 
   const secondaryAction: OperationResultScreenContentProps["secondaryAction"] =
     {
       label: I18n.t(
-        "features.itWallet.discovery.continueWithoutItw.actions.cancel"
+        "features.itWallet.discovery.nfcNotSupported.actions.cancel"
       ),
-      onPress: navigateToHomeScreen
+      onPress: navigateToDiscoveryInfoScreen
     };
 
   return (
     <OperationResultScreenContent
-      testID="itwRestrictedModeFallbackComponentTestID"
-      title={I18n.t("features.itWallet.discovery.continueWithoutItw.title")}
-      subtitle={I18n.t(
-        "features.itWallet.discovery.continueWithoutItw.subtitle"
-      )}
-      pictogram="cardAdd"
+      testID="itwNfcNotSupportedComponentTestID"
+      title={I18n.t("features.itWallet.discovery.nfcNotSupported.title")}
+      subtitle={I18n.t("features.itWallet.discovery.nfcNotSupported.subtitle")}
+      pictogram="attention"
       action={action}
       secondaryAction={secondaryAction}
     />

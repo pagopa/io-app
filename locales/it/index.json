@@ -4489,12 +4489,17 @@
       },
       "onboarding": {
         "title": "Cosa vuoi aggiungere al Portafoglio?",
+        "restrictedMode": {
+          "title": "Documenti con funzionalità ridotte",
+          "description": "Puoi ottenere una versione digitale dei seguenti documenti utilizzabile solo dal vivo e senza le funzionalità evolute di IT-Wallet"
+        },
         "sections": {
           "itw": "Documenti",
-          "other": "Bonus e altro"
+          "other": "Bonus e altro",
+          "added": "Già presenti"
         },
         "badge": {
-          "active": "Già presente",
+          "active": "Valido",
           "unavailable": "Non disponibile",
           "requested": "In corso",
           "upcoming": "In arrivo",
@@ -4504,7 +4509,9 @@
           "cgn": "Carta Giovani Nazionale",
           "welfare": "Iniziative welfare",
           "payments": "Metodi di pagamento"
-        }
+        },
+        "addBonus": "Vuoi aggiungere un bonus o un metodo di pagamento?",
+        "addRestricted": "Aggiungi documenti con funzionalità ridotte"
       }
     },
     "payments": {
@@ -4865,6 +4872,14 @@
           "subtitle": "Il tuo dispositivo non ha la tecnologia NFC. Senza NFC puoi aggiungere solo alcuni documenti digitali, con funzionalità ridotte.",
           "actions": {
             "continue": "Continua",
+            "cancel": "Chiudi"
+          }
+        },
+        "koNoCie": {
+          "title": "Non puoi continuare senza la Carta di Identità Elettronica (CIE)",
+          "subtitle": "Per attivare il portafoglio IT-Wallet di IO hai bisogno di una Carta di Identità Elettronica.\n\nRichiedere la CIE è facile e veloce: scopri cosa puoi fare per ottenerla.",
+          "actions": {
+            "continue": "Scopri cosa puoi fare",
             "cancel": "Chiudi"
           }
         },

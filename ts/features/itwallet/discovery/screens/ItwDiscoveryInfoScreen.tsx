@@ -1,19 +1,21 @@
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../store/hooks.ts";
-import { CredentialType } from "../../common/utils/itwMocksUtils.ts";
+import { isRestrictedCredential } from "../../common/utils/itwCredentialUtils.ts";
 import { itwHasNfcFeatureSelector } from "../../identification/common/store/selectors/index.ts";
 import { EidIssuanceLevel } from "../../machine/eid/context.ts";
 import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
 import { ItwDiscoveryInfoComponent } from "../components/ItwDiscoveryInfoComponent.tsx";
 import { ItwDiscoveryInfoFallbackComponent } from "../components/ItwDiscoveryInfoFallbackComponent.tsx";
 import { ItwDiscoveryInfoLegacyComponent } from "../components/ItwDiscoveryInfoLegacyComponent.tsx";
-import { ItwNfcNotSupportedComponent } from "../components/ItwNfcNotSupportedComponent.tsx";
+import { ItwKONoCieComponent } from "../components/ItwKONoCieComponent.tsx";
+import { ItwNfcNotSupportedComponent } from "../components/ItwNfcNotSupportedComponent copy.tsx";
 import { ItwRestrictedModeFallbackComponent } from "../components/ItwRestrictedModeFallbackComponent.tsx";
 
 export type ItwDiscoveryInfoScreenNavigationParams = {
   level?: EidIssuanceLevel;
   animationEnabled?: boolean;
   credentialType?: string;
+  error?: "ko-no-cie";
 };
 
 export type ItwDiscoveryInfoScreenProps = IOStackNavigationRouteProps<
@@ -27,12 +29,16 @@ export type ItwDiscoveryInfoScreenProps = IOStackNavigationRouteProps<
 export const ItwDiscoveryInfoScreen = ({
   route
 }: ItwDiscoveryInfoScreenProps) => {
-  const { level = "l2", credentialType } = route.params ?? {};
+  const { level = "l2", credentialType, error } = route.params ?? {};
   const hasNfcFeature = useIOSelector(itwHasNfcFeatureSelector);
-  const canContinueWithDocIO =
-    credentialType === CredentialType.DRIVING_LICENSE ||
-    credentialType === CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD ||
-    credentialType === CredentialType.EUROPEAN_DISABILITY_CARD;
+
+  if (error === "ko-no-cie") {
+    return <ItwKONoCieComponent />;
+  }
+
+  const canContinueWithDocIO = credentialType
+    ? isRestrictedCredential(credentialType)
+    : false;
 
   if (level === "l3") {
     if (!hasNfcFeature) {

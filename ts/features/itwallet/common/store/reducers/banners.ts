@@ -1,7 +1,11 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
-import { itwCloseBanner, itwShowBanner } from "../actions/banners";
+import {
+  itwCloseBanner,
+  itwScheduleBanner,
+  itwShowBanner
+} from "../actions/banners";
 import { NonEmptyArray } from "../../../../../types/helpers";
 
 /**
@@ -18,7 +22,9 @@ export type ItwBannerId =
   | "discovery" // (Legacy) Discovery banner for Documenti su IO
   | "discovery_wallet" // Discovery banner for IT Wallet placed in the wallet screen
   | "discovery_messages_inbox" // Discovery banner for IT Wallet placed in the messages inbox screen
-  | "upgradeMDLDetails"; // Upgrade to IT Wallet banner placed in MDL details screen
+  | "upgradeMDLDetails" // Upgrade to IT Wallet banner placed in MDL details screen
+  | "restrictedMode" // Restricted Mode banner
+  | "discovery_delayed"; // Discovery banner after CIE ko
 
 /**
  * Mapping between banner identifiers and the duration (expressed in days) for which they should be hidden
@@ -28,7 +34,9 @@ export const bannerHideDurations: Record<ItwBannerId, NonEmptyArray<number>> = {
   discovery: [6 * 30], // ~6 months
   discovery_wallet: [30, 60, 120], // ~1 month, ~2 months, ~4 months
   discovery_messages_inbox: [30, 60, 120], // ~1 month, ~2 months, ~4 months
-  upgradeMDLDetails: [FOREVER]
+  upgradeMDLDetails: [FOREVER],
+  restrictedMode: [FOREVER],
+  discovery_delayed: [0]
 };
 
 export type ItwBannersState = Partial<
@@ -39,6 +47,8 @@ export type ItwBannersState = Partial<
       dismissedOn?: string;
       /** How many times the banner was dismissed */
       dismissCount?: number;
+      /** Earliest date/time when the banner can be shown */
+      showFrom?: string;
     }
   >
 >;
@@ -74,6 +84,18 @@ const reducer = (
       return {
         ...state,
         [bannerId]: {}
+      };
+    }
+
+    case getType(itwScheduleBanner): {
+      const { bannerId, showFrom } = action.payload;
+
+      return {
+        ...state,
+        [bannerId]: {
+          ...state[bannerId],
+          showFrom
+        }
       };
     }
 
