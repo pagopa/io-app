@@ -1,5 +1,6 @@
 import {
   Credential,
+  SdJwt,
   Trust,
   WalletInstance
 } from "@pagopa/io-react-native-wallet";
@@ -84,6 +85,23 @@ export type WalletInstanceStatus = Awaited<
 export type WalletInstanceRevocationReason =
   WalletInstanceStatus["revocation_reason"];
 
+/**
+ * Alias for the Verification type
+ */
+export type Verification = NonNullable<
+  ReturnType<typeof SdJwt.getVerification>
+>;
+
+/**
+ * Slim version of Verification for storage.
+ * Only persists the fields actually used by the app.
+ * The `evidence` field is excluded as it's being dropped in spec v1.3.3.
+ */
+export type StoredVerification = Pick<
+  Verification,
+  "trust_framework" | "assurance_level"
+>;
+
 export type StoredStatusAssertion =
   | {
       credentialStatus: "valid";
@@ -117,6 +135,8 @@ export type StoredCredential = {
     expiration: string;
     issuedAt?: string;
   };
+  spec_version: string;
+  verification?: StoredVerification;
 };
 
 // Digital credential status
