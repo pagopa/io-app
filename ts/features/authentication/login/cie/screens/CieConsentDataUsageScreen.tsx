@@ -19,7 +19,6 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import { useOnboardingAbortAlert } from "../../../../onboarding/hooks/useOnboardingAbortAlert";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch } from "../../../../../store/hooks";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
 import { onLoginUriChanged } from "../../../common/utils/login";
@@ -49,7 +48,7 @@ const CieConsentDataUsageScreen = () => {
   const { showAlert } = useOnboardingAbortAlert();
   const navigation = useIONavigation();
   const loginSuccessDispatch = useCallback(
-    (token: SessionToken) => dispatch(loginSuccess({ token, idp: "cie" })),
+    (token: string) => dispatch(loginSuccess({ token, idp: "cie" })),
     [dispatch]
   );
 
@@ -90,7 +89,7 @@ const CieConsentDataUsageScreen = () => {
   );
 
   const handleLoginSuccess = useCallback(
-    (token: SessionToken) => {
+    (token: string) => {
       setIsLoginSuccess(true);
       setHasError(false);
       loginSuccessDispatch(token);

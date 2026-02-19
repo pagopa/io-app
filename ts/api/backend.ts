@@ -46,7 +46,6 @@ import {
   GetPaymentInfoV2T,
   getPaymentInfoV2DefaultDecoder
 } from "../../definitions/backend/requestTypes";
-import { SessionToken } from "../types/SessionToken";
 import { defaultRetryingFetch } from "../utils/fetch";
 import {
   tokenHeaderProducer,
@@ -110,7 +109,7 @@ export type LogoutT = IPostApiRequestType<
 
 export function BackendClient(
   baseUrl: string,
-  token: SessionToken,
+  token: string,
   _keyInfo: KeyInfo = {},
   fetchApi: typeof fetch = defaultRetryingFetch()
 ) {
@@ -342,7 +341,7 @@ export function BackendClient(
     deleteUserDataProcessingRequest: withBearerToken(
       createFetchRequestForApi(deleteUserDataProcessingT, options)
     ),
-    isSameClient: (sessionToken: SessionToken, keyInfo?: KeyInfo) =>
+    isSameClient: (sessionToken: string, keyInfo?: KeyInfo) =>
       _.isEqual(_keyInfo, keyInfo) && token === sessionToken
   };
 }
