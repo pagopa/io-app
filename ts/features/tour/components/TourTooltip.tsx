@@ -10,7 +10,6 @@ import {
   useIOTheme,
   VStack
 } from "@pagopa/io-app-design-system";
-import { useCallback } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import Animated, {
   SharedValue,
@@ -19,10 +18,6 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "i18next";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { completeTourAction, prevTourStepAction } from "../store/actions";
-import { activeGroupIdSelector } from "../store/selectors";
-import { useTourStepNavigation } from "../hooks/useTourStepNavigation";
 import { TourStepIndicator } from "./TourStepIndicator";
 
 const TOOLTIP_MARGIN = 16;
@@ -44,6 +39,9 @@ type Props = {
   stepIndex: number;
   totalSteps: number;
   opacity: SharedValue<number>;
+  onNext: () => void;
+  onBack: () => void;
+  onSkip: () => void;
 };
 
 export const TourTooltip = ({
@@ -55,15 +53,15 @@ export const TourTooltip = ({
   description,
   stepIndex,
   totalSteps,
-  opacity
+  opacity,
+  onNext,
+  onBack,
+  onSkip
 }: Props) => {
-  const dispatch = useIODispatch();
   const theme = useIOTheme();
-  const groupId = useIOSelector(activeGroupIdSelector);
   const insets = useSafeAreaInsets();
   const tooltipBgColor = IOColors[theme["appBackground-primary"]];
   const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
-  const { handleNext } = useTourStepNavigation();
 
   const tooltipHeight = useSharedValue(0);
   const tooltipWidth = windowWidth - TOOLTIP_MARGIN * 2;
@@ -132,16 +130,6 @@ export const TourTooltip = ({
   const isFirstStep = stepIndex === 0;
   const isLastStep = stepIndex === totalSteps - 1;
 
-  const handleSkip = useCallback(() => {
-    if (groupId) {
-      dispatch(completeTourAction({ groupId }));
-    }
-  }, [dispatch, groupId]);
-
-  const handleBack = useCallback(() => {
-    dispatch(prevTourStepAction());
-  }, [dispatch]);
-
   return (
     <Animated.View
       style={[styles.container, containerAnimatedStyle]}
@@ -175,7 +163,7 @@ export const TourTooltip = ({
                   variant="link"
                   color="primary"
                   label={I18n.t("features.tour.back")}
-                  onPress={handleBack}
+                  onPress={onBack}
                 />
               )}
               <IOButton
@@ -186,7 +174,7 @@ export const TourTooltip = ({
                     ? I18n.t("features.tour.done")
                     : I18n.t("features.tour.next")
                 }
-                onPress={handleNext}
+                onPress={onNext}
               />
             </HStack>
           </HStack>
@@ -196,7 +184,7 @@ export const TourTooltip = ({
             icon="closeSmall"
             color="neutral"
             accessibilityLabel={I18n.t("features.tour.skip")}
-            onPress={handleSkip}
+            onPress={onSkip}
           />
         </View>
       </View>

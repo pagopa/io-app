@@ -21,6 +21,11 @@
  * The isTracking shared value coordinates the two modes: it is set to false
  * during step transitions (so the frame callback does not interfere with
  * animations) and set to true once the transition completes.
+ *
+ * Navigation actions (next/back/skip) are dispatched to Redux only when
+ * the animation reaches the point where the tooltip content should update,
+ * keeping the displayed step indicator and controls in sync with the
+ * visual transition.
  */
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
@@ -39,13 +44,18 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 import { scheduleOnRN } from "react-native-worklets";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   activeGroupIdSelector,
   activeStepIndexSelector,
   isTourActiveSelector,
   tourItemsForActiveGroupSelector
 } from "../store/selectors";
+import {
+  completeTourAction,
+  nextTourStepAction,
+  prevTourStepAction
+} from "../store/actions";
 import { TourItemMeasurement } from "../types";
 import { useTourContext } from "./TourProvider";
 import { TourTooltip } from "./TourTooltip";
@@ -89,6 +99,7 @@ export const TourOverlay = () => {
     isTracking,
     overlayAnimatedRef
   } = useTourContext();
+  const dispatch = useIODispatch();
   const isActive = useIOSelector(isTourActiveSelector);
   const groupId = useIOSelector(activeGroupIdSelector);
   const stepIndex = useIOSelector(activeStepIndexSelector);
@@ -96,6 +107,12 @@ export const TourOverlay = () => {
 
   const isFirstMeasurement = useRef(true);
   const measureGeneration = useRef(0);
+  /**
+   * Tracks the step index we are navigating towards. When the user taps
+   * Next/Back quickly, this ref stays ahead of the Redux state so that
+   * subsequent taps compute the correct target.
+   */
+  const pendingStepRef = useRef(stepIndex);
 
   const [visible, setVisible] = useState(false);
   const [tooltipReady, setTooltipReady] = useState(false);
@@ -112,6 +129,7 @@ export const TourOverlay = () => {
     if (isActive) {
       isFirstMeasurement.current = true;
       isTracking.value = false;
+      pendingStepRef.current = 0;
       setVisible(true);
       setTooltipReady(false);
     }
@@ -198,9 +216,11 @@ export const TourOverlay = () => {
     (
       padded: TourItemMeasurement,
       config: { title: string; description: string } | undefined,
+      onCommit: () => void,
       didScroll: boolean
     ) => {
       const updateStep = () => {
+        onCommit();
         setTooltipReady(true);
         setTooltipConfig(config);
       };
@@ -267,75 +287,119 @@ export const TourOverlay = () => {
     [cutoutX, cutoutY, cutoutW, cutoutH, cutoutOpacity, opacity, isTracking]
   );
 
-  const measureCurrentStep = useCallback(async () => {
-    if (groupId === undefined || items.length === 0) {
-      return;
-    }
-    const currentItem = items[stepIndex];
-    if (!currentItem) {
-      return;
-    }
+  /**
+   * Measures the target step, handles scroll-into-view, and animates
+   * the cutout. The `onCommit` callback fires at the exact point where
+   * the tooltip content should update (after fade-out and reposition).
+   */
+  const navigateToStep = useCallback(
+    async (targetIndex: number, onCommit: () => void) => {
+      if (groupId === undefined || items.length === 0) {
+        return;
+      }
+      const targetItem = items[targetIndex];
+      if (!targetItem) {
+        return;
+      }
 
-    // Pause continuous tracking during the step transition
-    isTracking.value = false;
+      // Pause continuous tracking during the step transition
+      isTracking.value = false;
 
-    measureGeneration.current += 1;
-    const generation = measureGeneration.current;
+      measureGeneration.current += 1;
+      const generation = measureGeneration.current;
 
-    const initial = getMeasurement(groupId, currentItem.index);
-    if (!initial) {
-      requestAnimationFrame(() => {
-        void measureCurrentStep();
-      });
-      return;
-    }
+      const initial = getMeasurement(groupId, targetItem.index);
+      if (!initial) {
+        requestAnimationFrame(() => {
+          void navigateToStep(targetIndex, onCommit);
+        });
+        return;
+      }
 
-    const scrollResult = await scrollIntoViewIfNeeded(
+      const scrollResult = await scrollIntoViewIfNeeded(
+        groupId,
+        targetItem.index,
+        initial,
+        generation
+      );
+      if (scrollResult.stale) {
+        return;
+      }
+
+      const { measurement: m, didScroll } = scrollResult;
+
+      // Measure overlay position to convert page coords → overlay-relative coords
+      const overlayNode = overlayAnimatedRef.current;
+      const overlayOffset = overlayNode
+        ? measureInWindow(overlayNode as unknown as View)
+        : undefined;
+      const ox = overlayOffset?.x ?? 0;
+      const oy = overlayOffset?.y ?? 0;
+
+      const padded: TourItemMeasurement = {
+        x: m.x - ox - CUTOUT_PADDING,
+        y: m.y - oy - CUTOUT_PADDING,
+        width: m.width + CUTOUT_PADDING * 2,
+        height: m.height + CUTOUT_PADDING * 2
+      };
+
+      const config = getConfig(groupId, targetItem.index);
+      applyCutout(padded, config, onCommit, didScroll);
+    },
+    [
       groupId,
-      currentItem.index,
-      initial,
-      generation
-    );
-    if (scrollResult.stale) {
-      return;
-    }
+      items,
+      getMeasurement,
+      getConfig,
+      scrollIntoViewIfNeeded,
+      applyCutout,
+      isTracking,
+      overlayAnimatedRef
+    ]
+  );
 
-    const { measurement: m, didScroll } = scrollResult;
-
-    // Measure overlay position to convert page coords → overlay-relative coords
-    const overlayNode = overlayAnimatedRef.current;
-    const overlayOffset = overlayNode
-      ? measureInWindow(overlayNode as unknown as View)
-      : undefined;
-    const ox = overlayOffset?.x ?? 0;
-    const oy = overlayOffset?.y ?? 0;
-
-    const padded: TourItemMeasurement = {
-      x: m.x - ox - CUTOUT_PADDING,
-      y: m.y - oy - CUTOUT_PADDING,
-      width: m.width + CUTOUT_PADDING * 2,
-      height: m.height + CUTOUT_PADDING * 2
-    };
-
-    const config = getConfig(groupId, currentItem.index);
-    applyCutout(padded, config, didScroll);
-  }, [
-    groupId,
-    items,
-    stepIndex,
-    getMeasurement,
-    getConfig,
-    scrollIntoViewIfNeeded,
-    applyCutout,
-    isTracking,
-    overlayAnimatedRef
-  ]);
-
+  // Initial measurement when the overlay becomes visible
   useEffect(() => {
     if (visible) {
-      void measureCurrentStep();
+      // First step — no Redux dispatch needed, stepIndex is already 0
+      void navigateToStep(stepIndex, () => undefined);
     }
-  }, [visible, measureCurrentStep]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible]);
+
+  const handleNext = useCallback(() => {
+    if (!groupId) {
+      return;
+    }
+    const nextIndex = pendingStepRef.current + 1;
+    if (nextIndex >= items.length) {
+      setTooltipReady(false);
+      dispatch(completeTourAction({ groupId }));
+      return;
+    }
+    pendingStepRef.current = nextIndex;
+    void navigateToStep(nextIndex, () => {
+      dispatch(nextTourStepAction());
+    });
+  }, [groupId, items.length, navigateToStep, dispatch]);
+
+  const handleBack = useCallback(() => {
+    const prevIndex = pendingStepRef.current - 1;
+    if (prevIndex < 0) {
+      return;
+    }
+    pendingStepRef.current = prevIndex;
+    void navigateToStep(prevIndex, () => {
+      dispatch(prevTourStepAction());
+    });
+  }, [navigateToStep, dispatch]);
+
+  const handleSkip = useCallback(() => {
+    if (groupId) {
+      setTooltipReady(false);
+      dispatch(completeTourAction({ groupId }));
+    }
+  }, [dispatch, groupId]);
 
   const animatedContainerStyle = useAnimatedStyle(() => ({
     opacity: opacity.value
@@ -383,6 +447,9 @@ export const TourOverlay = () => {
           stepIndex={stepIndex}
           totalSteps={items.length}
           opacity={cutoutOpacity}
+          onNext={handleNext}
+          onBack={handleBack}
+          onSkip={handleSkip}
         />
       )}
     </Animated.View>
