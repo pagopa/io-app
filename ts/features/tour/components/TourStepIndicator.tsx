@@ -1,11 +1,14 @@
 import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
+import Animated from "react-native-reanimated";
 
 const DOT_SIZE = 8;
 const ACTIVE_WIDTH = 16;
 const ACTIVE_HEIGHT = 4;
 const INNER_GAP = 8;
+const TRANSITION_DURATION = "200ms";
+const TRANSPARENT = "transparent";
 
 type Props = {
   stepIndex: number;
@@ -26,26 +29,26 @@ export const TourStepIndicator = ({ stepIndex, totalSteps }: Props) => {
       })}
       style={styles.container}
     >
-      {Array.from({ length: totalSteps }).map((_, index) => (
-        <View
-          key={index}
-          style={[
-            styles.dot,
-            index === stepIndex
-              ? {
-                  width: ACTIVE_WIDTH,
-                  height: ACTIVE_HEIGHT,
-                  backgroundColor: activeColor
-                }
-              : {
-                  width: DOT_SIZE,
-                  height: DOT_SIZE,
-                  borderWidth: 1,
-                  borderColor: defaultColor
-                }
-          ]}
-        />
-      ))}
+      {Array.from({ length: totalSteps }).map((_, index) => {
+        const isActive = index === stepIndex;
+        return (
+          <Animated.View
+            key={index}
+            style={[
+              styles.dot,
+              {
+                width: isActive ? ACTIVE_WIDTH : DOT_SIZE,
+                height: isActive ? ACTIVE_HEIGHT : DOT_SIZE,
+                backgroundColor: isActive ? activeColor : TRANSPARENT,
+                borderWidth: isActive ? 0 : 1,
+                borderColor: isActive ? TRANSPARENT : defaultColor,
+                transitionProperty: ["width", "height", "backgroundColor"],
+                transitionDuration: TRANSITION_DURATION
+              }
+            ]}
+          />
+        );
+      })}
     </View>
   );
 };
