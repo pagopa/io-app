@@ -377,7 +377,29 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -386,12 +408,41 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -405,7 +456,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -945,7 +996,29 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -954,12 +1027,41 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -973,7 +1075,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -1513,7 +1615,29 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -1522,12 +1646,41 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -1541,7 +1694,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -2081,7 +2234,29 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -2090,12 +2265,41 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -2109,7 +2313,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -2649,7 +2853,29 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -2658,12 +2884,41 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -2677,7 +2932,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -3217,7 +3472,29 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -3226,12 +3503,41 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -3245,7 +3551,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -3785,7 +4091,29 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -3794,12 +4122,41 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -3813,7 +4170,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -4553,7 +4910,29 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -4562,12 +4941,41 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -4581,7 +4989,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -5321,7 +5729,29 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -5330,12 +5760,41 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -5349,7 +5808,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -6089,7 +6548,29 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -6098,12 +6579,41 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -6117,7 +6627,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -6857,7 +7367,29 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -6866,12 +7398,41 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -6885,7 +7446,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -7625,7 +8186,29 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -7634,12 +8217,41 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -7653,7 +8265,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -8393,7 +9005,29 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -8402,12 +9036,41 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -8421,7 +9084,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -8961,7 +9624,29 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -8970,12 +9655,41 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -8989,7 +9703,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -9529,7 +10243,29 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -9538,12 +10274,41 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -9557,7 +10322,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -10097,7 +10862,29 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -10106,12 +10893,41 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -10125,7 +10941,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -10665,7 +11481,29 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -10674,12 +11512,41 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -10693,7 +11560,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -11233,7 +12100,29 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -11242,12 +12131,41 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -11261,7 +12179,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -11801,7 +12719,29 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -11810,12 +12750,41 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -11829,7 +12798,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -12569,7 +13538,29 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -12578,12 +13569,41 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -12597,7 +13617,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -13337,7 +14357,29 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -13346,12 +14388,41 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -13365,7 +14436,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -14105,7 +15176,29 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -14114,12 +15207,41 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -14133,7 +15255,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -14873,7 +15995,29 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -14882,12 +16026,41 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -14901,7 +16074,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -15641,7 +16814,29 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -15650,12 +16845,41 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -15669,7 +16893,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },

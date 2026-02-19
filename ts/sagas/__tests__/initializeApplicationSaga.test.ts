@@ -46,6 +46,11 @@ import {
   watchSessionRefreshInOfflineSaga
 } from "../../features/ingress/saga";
 import { watchForceLogoutSaga } from "../../features/authentication/common/saga/watchForceLogoutSaga";
+import {
+  isAppSupportedSelector,
+  versionInfoDataSelector
+} from "../../common/versionInfo/store/reducers/versionInfo";
+import { VersionInfo } from "../../../definitions/content/VersionInfo";
 
 const aSessionToken = "a_session_token" as SessionToken;
 const aSessionInfo = O.some({
@@ -62,6 +67,20 @@ const aPublicKey = O.some({
   x: "nDbpq45jXUKfWxodyvec3F1e+r0oTSqhakbauVmB59Y=",
   y: "CtI6Cozk4O5OJ4Q6WyjiUw9/K6TyU0aDdssd25YHZxg="
 });
+const aVersionInfo: VersionInfo = {
+  min_app_version: {
+    android: "1.0.0",
+    ios: "1.0.0"
+  },
+  latest_released_app_version: {
+    android: "6.0.0",
+    ios: "6.0.0"
+  },
+  rollout_app_version: {
+    android: "6.0.0",
+    ios: "6.0.0"
+  }
+};
 
 jest.mock("react-native-background-timer", () => ({
   startTimer: jest.fn()
@@ -106,6 +125,10 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(versionInfoDataSelector)
+      .next(aVersionInfo)
+      .select(isAppSupportedSelector)
+      .next(true)
       .select(isBlockingScreenSelector)
       .next()
       .select(sessionTokenSelector)
@@ -157,6 +180,10 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(versionInfoDataSelector)
+      .next(aVersionInfo)
+      .select(isAppSupportedSelector)
+      .next(true)
       .select(isBlockingScreenSelector)
       .next()
       .select(sessionTokenSelector)
@@ -202,6 +229,10 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(versionInfoDataSelector)
+      .next(aVersionInfo)
+      .select(isAppSupportedSelector)
+      .next(true)
       .select(isBlockingScreenSelector)
       .next()
       .select(sessionTokenSelector)
@@ -252,6 +283,10 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(versionInfoDataSelector)
+      .next(aVersionInfo)
+      .select(isAppSupportedSelector)
+      .next(true)
       .select(isBlockingScreenSelector)
       .next()
       .select(sessionTokenSelector)
@@ -315,6 +350,10 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(versionInfoDataSelector)
+      .next(aVersionInfo)
+      .select(isAppSupportedSelector)
+      .next(true)
       .select(isBlockingScreenSelector)
       .next()
       .select(sessionTokenSelector)
@@ -365,6 +404,10 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(versionInfoDataSelector)
+      .next(aVersionInfo)
+      .select(isAppSupportedSelector)
+      .next(true)
       .select(isBlockingScreenSelector)
       .next()
       .select(sessionTokenSelector)

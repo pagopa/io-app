@@ -4096,7 +4096,7 @@
           },
           "delegated": {
             "notAdressee": {
-              "warningAlert": "Questa comunicazione non è destinata a te.",
+              "infoAlert": "Stai aiutando un’altra persona ad accedere a una notifica SEND.",
               "title": "Vuoi aprire la notifica SEND di {{name}}?",
               "subtitle": "Se la persona che ha ricevuto la comunicazione ti ha chiesto di farlo, puoi aprire questa notifica SEND per suo conto.",
               "primaryAction": "Apri notifica SEND",
@@ -4307,6 +4307,18 @@
           "rateLimitToast": "Non riusciamo ad attivare il servizio SEND, riprova più tardi",
           "activationErrorMessage": "Non riusciamo ad attivare il servizio SEND"
         }
+      },
+      "lollipopPlayground": {
+        "environmentTitle": "Ambiente",
+        "uatLabel": "Usa UAT",
+        "uatDescription": "Manda le richieste AAR e quelle di attivazione servizio all'ambiente di UAT",
+        "playgroundTitle": "Lollipop Playground",
+        "postBodyLabel": "Body della post",
+        "postBodyPlaceholder": "{\n  p1: \"a string\",\n  p2: {\n    p3: true\n  }\n}",
+        "responseStatusCode": "Status Code risposta",
+        "responseBody": "Body della risposta",
+        "requestGet": "GET",
+        "requestPost": "POST"
       }
     },
     "fci": {
@@ -4891,7 +4903,7 @@
         },
         "modeSelection": {
           "section": {
-            "issuance": "Ottieni {{ feature }}",
+            "issuance": "Attiva {{ feature }}",
             "reissuance": "Conferma periodica dell'identità"
           },
           "title": {
@@ -5131,7 +5143,8 @@
           "title": "Identità verificata",
           "titleL3": "Ci siamo quasi!",
           "subtitle": "Stai attivando **Documenti su IO** come:",
-          "subtitleL3": "Hai verificato la tua identità. \nIl tuo portafoglio IT-Wallet sarà associato a questi dati:",
+          "subtitleL3": "Hai confermato la tua identità. \nIl tuo portafoglio IT-Wallet sarà associato a questi dati:",
+          "bottomTextL3": "Se hai già aggiunto documenti al Portafoglio, questi saranno aggiornati alle funzionalità IT-Wallet, senza modifiche ai tuoi dati.",
           "actions": {
             "primary": "Continua",
             "secondary": "Annulla"

@@ -63,17 +63,18 @@ const mockBottomSheet = (_props: {
   present: mockPresent,
   dismiss: jest.fn()
 });
-const mockToastWarning = jest.fn();
+const mockToastInfo = jest.fn();
 const mockToastHideAll = jest.fn();
 
 jest.mock("@pagopa/io-app-design-system", () => ({
   ...jest.requireActual("@pagopa/io-app-design-system"),
+  LoadingSpinner: jest.fn(),
   useIOToast: () => ({
     show: (_message: string, _options?: unknown) => jest.fn(),
     error: jest.fn(),
-    warning: mockToastWarning,
+    warning: jest.fn(),
     success: jest.fn(),
-    info: (_message: string) => jest.fn(),
+    info: mockToastInfo,
     hideAll: mockToastHideAll,
     hide: (_id: number) => jest.fn()
   })
@@ -270,10 +271,12 @@ describe("SendAarDelegationProposalScreen", () => {
   });
 
   describe("alert behavior", () => {
-    it("should show a warning alert on first render", () => {
-      expect(mockToastWarning).not.toHaveBeenCalled();
+    it("should show an info alert on first render", () => {
+      expect(mockToastInfo).not.toHaveBeenCalled();
       renderScreen();
-      expect(mockToastWarning).toHaveBeenCalledTimes(1);
+      expect(mockToastInfo).toHaveBeenCalledTimes(1);
+      const passedMessage = mockToastInfo.mock.calls[0][0];
+      expect(passedMessage).toMatchSnapshot();
     });
   });
 

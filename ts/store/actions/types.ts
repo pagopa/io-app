@@ -37,6 +37,7 @@ import { OnboardingActions } from "../../features/onboarding/store/actions";
 import { PaymentsActions as PaymentsFeatureActions } from "../../features/payments/common/store/actions";
 import { AARFlowStateActions } from "../../features/pn/aar/store/actions";
 import { SENDLoginEngagementActions } from "../../features/pn/loginEngagement/store/actions";
+import { SENDLollipopLambdaActions } from "../../features/pn/lollipopLambda/store/actions";
 import { PnActions } from "../../features/pn/store/actions";
 import { NotificationPermissionsActions } from "../../features/pushNotifications/store/actions/environment";
 import { NotificationsActions } from "../../features/pushNotifications/store/actions/installation";
@@ -122,6 +123,7 @@ export type Action =
   | UtmLinkActions
   | ConnectivityActions
   | AARFlowStateActions
+  | SENDLollipopLambdaActions
   | BackgroundLinkingActions
   | SENDLoginEngagementActions
   | CdcActions
