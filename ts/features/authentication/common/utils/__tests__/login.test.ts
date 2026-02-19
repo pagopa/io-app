@@ -5,7 +5,6 @@ import {
   getIntentFallbackUrl,
   getLoginHeaders
 } from "../login";
-import { SessionToken } from "../../../../../types/SessionToken";
 
 jest.mock("../../../../../utils/environment", () => ({
   isLocalEnv: true
@@ -19,7 +18,7 @@ jest.mock("react-native-device-info", () => ({
 describe("hook the login outcome from the url", () => {
   const remoteHost = "https://somedomain.com/somepath";
   const successSuffix = "/profile.html";
-  const successToken = "ABCDFG0123456" as SessionToken;
+  const successToken = "mock-token";
   const failureSuffix = "/error.html";
   const errorCode = "123456";
   const failureSuffixWithCode = failureSuffix + "?errorCode=";

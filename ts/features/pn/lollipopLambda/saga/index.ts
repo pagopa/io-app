@@ -9,7 +9,6 @@ import {
 } from "typed-redux-saga/macro";
 import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import { ActionType } from "typesafe-actions";
-import { SessionToken } from "../../../../types/SessionToken";
 import { apiUrlPrefix } from "../../../../config";
 import { KeyInfo } from "../../../lollipop/utils/crypto";
 import {
@@ -24,7 +23,7 @@ import { unknownToReason } from "../../../messages/utils";
 import { isTestEnv } from "../../../../utils/environment";
 
 export function* watchSendLollipopLambda(
-  sessionToken: SessionToken,
+  sessionToken: string,
   keyInfo: KeyInfo
 ) {
   const lollipopLambdaClient = yield* call(

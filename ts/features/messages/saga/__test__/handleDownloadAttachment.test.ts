@@ -10,7 +10,6 @@ import {
   handleDownloadAttachment,
   testable
 } from "../handleDownloadAttachment";
-import { SessionToken } from "../../../../types/SessionToken";
 import {
   cancelPreviousAttachmentDownload,
   downloadAttachment
@@ -31,7 +30,7 @@ import * as analytics from "../../analytics";
 const messageId = "01JTT75QYSHWBTNTFM3CZZ17SH";
 const savePath = "/tmp/attachment.pdf";
 const serviceId = "service0000001" as ServiceId;
-const sessionToken = "token" as SessionToken;
+const sessionToken = "mock-session-token";
 const keyTag = "a12e9221-c056-4bbc-8623-ca92df29361e";
 const someKeyTag = O.some(keyTag);
 const publicKey: PublicKey = {
