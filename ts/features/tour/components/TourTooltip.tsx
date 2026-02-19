@@ -157,15 +157,18 @@ export const TourTooltip = ({
             style={{ justifyContent: "space-between", alignItems: "center" }}
           >
             <TourStepIndicator stepIndex={stepIndex} totalSteps={totalSteps} />
-            <HStack space={8} style={{ alignItems: "center" }}>
-              {!isFirstStep && (
-                <IOButton
-                  variant="link"
+            <HStack space={24} style={{ alignItems: "center" }}>
+              <View
+                style={isFirstStep && { opacity: 0, pointerEvents: "box-none" }}
+              >
+                <IconButton
+                  iconSize={20}
+                  icon="arrowLeft"
                   color="primary"
-                  label={I18n.t("features.tour.back")}
+                  accessibilityLabel={I18n.t("features.tour.back")}
                   onPress={onBack}
                 />
-              )}
+              </View>
               <IOButton
                 variant="link"
                 color="primary"
