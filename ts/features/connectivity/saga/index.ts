@@ -51,7 +51,7 @@ export function* connectionStatusSaga(
         yield* put(setConnectionStatus(isAppConnected));
 
         // update mixpanel super properties
-        const state = (yield* select()) as GlobalState;
+        const state: GlobalState = yield* select();
         void updateMixpanelSuperProperties(state);
 
         if (isAppConnected) {
