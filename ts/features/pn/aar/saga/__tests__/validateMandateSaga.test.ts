@@ -22,7 +22,6 @@ import {
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
-import { HttpStatusCode } from "../../../../../../definitions/pagopa/ecommerce/HttpStatusCode";
 
 const { handleMixPanelCustomTrackingIfNeeded } = testable!;
 
@@ -201,8 +200,7 @@ describe("validateMandateSaga", () => {
         .next(res)
         .call(
           handleMixPanelCustomTrackingIfNeeded,
-          res.right.status,
-          res.right.value,
+          res.right.value?.errors,
           reason
         )
         .next()
@@ -314,19 +312,14 @@ describe("handleMixPanelCustomTrackingIfNeeded", () => {
     "Cie_Expired_Error",
     "cIe_ExPiReD_eRrOr"
   ])(
-    'should call "trackSendAarMandateCieExpiredError" event for status 422 and errorCode "%s"',
+    'should call "trackSendAarMandateCieExpiredError" for errorCode "%s"',
     code => {
-      handleMixPanelCustomTrackingIfNeeded(
-        422,
-        {
-          detail: "A detail",
-          status: 422 as HttpStatusCode,
-          errors: [{ code }]
-        },
-        "Some reason"
-      );
+      handleMixPanelCustomTrackingIfNeeded([{ code }], "Some reason");
 
       expect(trackSendAarMandateCieExpiredError).toHaveBeenCalledTimes(1);
+      expect(trackSendAarMandateCieExpiredError).toHaveBeenCalledWith(
+        "Some reason"
+      );
       expect(
         trackSendAarMandateCieNotRelatedToDelegatorError
       ).not.toHaveBeenCalled();
@@ -340,86 +333,123 @@ describe("handleMixPanelCustomTrackingIfNeeded", () => {
     "Cie_Not_Related_To_Delegator_Error",
     "cIe_NoT_rElAtEd_To_DeLeGaToR_eRrOr"
   ])(
-    'should call "trackSendAarMandateCieNotRelatedToDelegatorError" event for status 422 and errorCode "%s"',
+    'should call "trackSendAarMandateCieNotRelatedToDelegatorError" for errorCode "%s"',
     code => {
-      handleMixPanelCustomTrackingIfNeeded(
-        422,
-        {
-          detail: "A detail",
-          status: 422 as HttpStatusCode,
-          errors: [{ code }]
-        },
-        "Some reason"
-      );
+      handleMixPanelCustomTrackingIfNeeded([{ code }], "Some reason");
 
       expect(
         trackSendAarMandateCieNotRelatedToDelegatorError
       ).toHaveBeenCalledTimes(1);
+      expect(
+        trackSendAarMandateCieNotRelatedToDelegatorError
+      ).toHaveBeenCalledWith("Some reason");
       expect(trackSendAarMandateCieExpiredError).not.toHaveBeenCalled();
       expect(trackSendAarMandateCieDataError).not.toHaveBeenCalled();
     }
   );
 
   it.each([
-    {
-      status: 400
-    },
-
-    {
-      status: 400,
-      errors: [{ code: "CIE_EXPIRED_ERROR" }]
-    },
-    {
-      status: 400,
-      errors: [{ code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR" }]
-    },
-    {
-      status: 422
-    },
-    {
-      status: 422,
-      errors: [{ code: "ANY_ERROR_CODE" }]
-    },
-    {
-      status: 422,
-      errors: [{ code: "NOT_A_CIE_NOT_RELATED_TO_DELEGATOR_ERROR" }]
-    },
-    {
-      status: 422,
-      errors: [{ code: "NOT_A_CIE_EXPIRED_ERROR" }]
-    },
-    {
-      status: 500
-    },
-    {
-      status: 500,
-      errors: [{ code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR" }]
-    },
-    {
-      status: 500,
-      errors: [{ code: "CIE_EXPIRED_ERROR" }]
-    }
-  ] as Array<{ status: 400 | 422 | 500; errors?: Array<{ code: string }> }>)(
-    'should track "trackSendAarMandateCieDataError" event for %o',
-    ({ status, errors }) => {
-      const reason = "Some reason";
-
-      handleMixPanelCustomTrackingIfNeeded(
-        status,
-        {
-          detail: "A detail",
-          status: status as HttpStatusCode,
-          errors
-        },
-        reason
-      );
+    "PN_MANDATE_BADREQUEST",
+    "PN_GENERIC_INVALIDPARAMETER",
+    "PN_MANDATE_NOTFOUND",
+    "PN_MANDATE_INVALIDVERIFICATIONCODE",
+    "CIE_INVALID_INPUT",
+    "CIE_INTEGRITY_ERROR",
+    "CIE_SIGNATURE_ERROR",
+    "CIE_CHECKER_SERVER_ERROR"
+  ])(
+    'should call "trackSendAarMandateCieDataError" for errorCode "%s"',
+    code => {
+      handleMixPanelCustomTrackingIfNeeded([{ code }], "Some reason");
 
       expect(trackSendAarMandateCieDataError).toHaveBeenCalledTimes(1);
-      expect(trackSendAarMandateCieDataError).toHaveBeenCalledWith(reason);
+      expect(trackSendAarMandateCieDataError).toHaveBeenCalledWith(
+        "Some reason"
+      );
       expect(
         trackSendAarMandateCieNotRelatedToDelegatorError
       ).not.toHaveBeenCalled();
       expect(trackSendAarMandateCieExpiredError).not.toHaveBeenCalled();
     }
   );
+
+  it.each([
+    {
+      title: "CIE_EXPIRED_ERROR before CIE_NOT_RELATED_TO_DELEGATOR_ERROR",
+      errors: [
+        { code: "UNKNOWN_ERROR" },
+        { code: "CIE_EXPIRED_ERROR" },
+        { code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR" }
+      ],
+      expectedTracker: trackSendAarMandateCieExpiredError
+    },
+    {
+      title: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR before CIE_EXPIRED_ERROR",
+      errors: [
+        { code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR" },
+        { code: "CIE_EXPIRED_ERROR" }
+      ],
+      expectedTracker: trackSendAarMandateCieNotRelatedToDelegatorError
+    },
+    {
+      title: "CIE_INTEGRITY_ERROR before CIE_EXPIRED_ERROR",
+      errors: [{ code: "CIE_INTEGRITY_ERROR" }, { code: "CIE_EXPIRED_ERROR" }],
+      expectedTracker: trackSendAarMandateCieDataError
+    },
+    {
+      title:
+        "unknown codes followed by CIE_NOT_RELATED_TO_DELEGATOR_ERROR and CIE_INTEGRITY_ERROR",
+      errors: [
+        { code: "UNKNOWN_1" },
+        { code: "UNKNOWN_2" },
+        { code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR" },
+        { code: "CIE_INTEGRITY_ERROR" }
+      ],
+      expectedTracker: trackSendAarMandateCieNotRelatedToDelegatorError
+    }
+  ])(
+    "should only track the first mapped error for $title",
+    ({ errors, expectedTracker }) => {
+      handleMixPanelCustomTrackingIfNeeded(errors, "Some reason");
+
+      expect(expectedTracker).toHaveBeenCalledTimes(1);
+      expect(expectedTracker).toHaveBeenCalledWith("Some reason");
+
+      const allTrackers = [
+        trackSendAarMandateCieExpiredError,
+        trackSendAarMandateCieNotRelatedToDelegatorError,
+        trackSendAarMandateCieDataError
+      ];
+      allTrackers
+        .filter(t => t !== expectedTracker)
+        .forEach(t => expect(t).not.toHaveBeenCalled());
+    }
+  );
+
+  it.each([
+    {
+      title: "undefined errors",
+      errors: undefined
+    },
+    {
+      title: "empty errors array",
+      errors: [] as Array<{ code: string }>
+    },
+    {
+      title: "unknown error code",
+      errors: [{ code: "UNKNOWN_ERROR" }]
+    },
+    {
+      title: "multiple unknown error codes",
+      errors: [{ code: "UNKNOWN_1" }, { code: "UNKNOWN_2" }]
+    }
+  ])("should not call any tracking function for $title", ({ errors }) => {
+    handleMixPanelCustomTrackingIfNeeded(errors, "Some reason");
+
+    expect(trackSendAarMandateCieDataError).not.toHaveBeenCalled();
+    expect(trackSendAarMandateCieExpiredError).not.toHaveBeenCalled();
+    expect(
+      trackSendAarMandateCieNotRelatedToDelegatorError
+    ).not.toHaveBeenCalled();
+  });
 });
