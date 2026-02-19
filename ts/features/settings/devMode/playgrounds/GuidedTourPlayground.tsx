@@ -7,7 +7,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useCallback, useEffect } from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { Dimensions, Platform, StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedRef,
   useScrollOffset
@@ -47,7 +47,7 @@ export const GuidedTourPlayground = () => {
   const headerRegion = useCallback(
     () => ({
       x: 0,
-      y: insets.top,
+      y: Platform.OS === "ios" ? insets.top : 0,
       width: screenWidth,
       height: headerHeight - insets.top
     }),
