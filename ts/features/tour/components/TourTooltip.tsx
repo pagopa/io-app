@@ -169,16 +169,18 @@ export const TourTooltip = ({
                   onPress={onBack}
                 />
               </View>
-              <IOButton
-                variant="link"
-                color="primary"
-                label={
-                  isLastStep
-                    ? I18n.t("features.tour.done")
-                    : I18n.t("features.tour.next")
-                }
-                onPress={onNext}
-              />
+              <View style={{ alignSelf: "center" }}>
+                <IOButton
+                  variant="link"
+                  color="primary"
+                  label={
+                    isLastStep
+                      ? I18n.t("features.tour.done")
+                      : I18n.t("features.tour.next")
+                  }
+                  onPress={onNext}
+                />
+              </View>
             </HStack>
           </HStack>
         </VStack>
