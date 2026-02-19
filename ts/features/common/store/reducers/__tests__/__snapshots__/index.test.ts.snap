@@ -401,6 +401,12 @@ exports[`featuresPersistor should match snapshot 1`] = `
       },
     },
   },
+  "tour": {
+    "activeGroupId": undefined,
+    "activeStepIndex": 0,
+    "completed": [],
+    "items": {},
+  },
   "utmLink": {
     "utmCampaign": undefined,
     "utmMedium": undefined,
