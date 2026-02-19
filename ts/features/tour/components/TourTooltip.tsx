@@ -60,7 +60,7 @@ export const TourTooltip = ({
 }: Props) => {
   const theme = useIOTheme();
   const insets = useSafeAreaInsets();
-  const tooltipBgColor = IOColors[theme["appBackground-primary"]];
+  const tooltipBgColor = IOColors[theme["appBackground-secondary"]];
   const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
   const tooltipHeight = useSharedValue(0);
