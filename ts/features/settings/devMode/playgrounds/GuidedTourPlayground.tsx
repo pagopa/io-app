@@ -6,17 +6,19 @@ import {
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { useCallback, useEffect } from "react";
+import { Dimensions, StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedRef,
   useScrollOffset
 } from "react-native-reanimated";
 import { useHeaderHeight } from "@react-navigation/elements";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { GuidedTour } from "../../../tour/components/GuidedTour";
 import { useTourContext } from "../../../tour/components/TourProvider";
+import { useGuidedTourRegion } from "../../../tour/components/useGuidedTourRegion";
 import {
   resetTourCompletedAction,
   startTourAction
@@ -39,6 +41,27 @@ export const GuidedTourPlayground = () => {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollY = useScrollOffset(scrollRef);
   const headerHeight = useHeaderHeight();
+  const insets = useSafeAreaInsets();
+  const { width: screenWidth } = Dimensions.get("window");
+
+  const headerRegion = useCallback(
+    () => ({
+      x: 0,
+      y: insets.top,
+      width: screenWidth,
+      height: headerHeight - insets.top
+    }),
+    [insets.top, screenWidth, headerHeight]
+  );
+
+  useGuidedTourRegion({
+    groupId: PLAYGROUND_GROUP_ID,
+    index: 0,
+    title: "Navigation Header",
+    description:
+      "This is the navigation header. It is managed by react-navigation, not wrapped in a React component.",
+    region: headerRegion
+  });
 
   useEffect(() => {
     registerScrollRef(PLAYGROUND_GROUP_ID, scrollRef, scrollY, headerHeight);
@@ -82,7 +105,7 @@ export const GuidedTourPlayground = () => {
 
       <GuidedTour
         groupId={PLAYGROUND_GROUP_ID}
-        index={0}
+        index={1}
         title="Welcome Card"
         description="This is the first item in the tour. It shows a welcome message."
       >
@@ -97,7 +120,7 @@ export const GuidedTourPlayground = () => {
 
       <GuidedTour
         groupId={PLAYGROUND_GROUP_ID}
-        index={1}
+        index={2}
         title="Action Button"
         description="This button performs an important action."
       >
@@ -113,7 +136,7 @@ export const GuidedTourPlayground = () => {
 
       <GuidedTour
         groupId={PLAYGROUND_GROUP_ID}
-        index={2}
+        index={3}
         title="Info Section"
         description="This section contains useful information about the feature."
       >
@@ -131,7 +154,7 @@ export const GuidedTourPlayground = () => {
 
       <GuidedTour
         groupId={PLAYGROUND_GROUP_ID}
-        index={3}
+        index={4}
         title="Below the Fold"
         description="This item is below the fold. The tour should auto-scroll to reveal it."
       >
@@ -146,7 +169,7 @@ export const GuidedTourPlayground = () => {
 
       <GuidedTour
         groupId={PLAYGROUND_GROUP_ID}
-        index={4}
+        index={5}
         title="Bottom Item"
         description="This is the last item, far down the page."
       >

@@ -91,6 +91,7 @@ export const TourOverlay = () => {
   const {
     getMeasurement,
     getConfig,
+    isRegionItem,
     getScrollRef,
     cutoutX,
     cutoutY,
@@ -316,17 +317,31 @@ export const TourOverlay = () => {
         return;
       }
 
-      const scrollResult = await scrollIntoViewIfNeeded(
-        groupId,
-        targetItem.index,
-        initial,
-        generation
-      );
-      if (scrollResult.stale) {
+      // Region-based items (e.g. header) are always visible — skip scrolling
+      const isRegion = isRegionItem(groupId, targetItem.index);
+
+      const { m, didScroll } = (await (async () => {
+        if (isRegion) {
+          return { m: initial, didScroll: false };
+        }
+        const scrollResult = await scrollIntoViewIfNeeded(
+          groupId,
+          targetItem.index,
+          initial,
+          generation
+        );
+        if (scrollResult.stale) {
+          return undefined;
+        }
+        return {
+          m: scrollResult.measurement,
+          didScroll: scrollResult.didScroll
+        };
+      })()) ?? { m: undefined, didScroll: undefined };
+
+      if (!m) {
         return;
       }
-
-      const { measurement: m, didScroll } = scrollResult;
 
       // Measure overlay position to convert page coords → overlay-relative coords
       const overlayNode = overlayAnimatedRef.current;
@@ -351,6 +366,7 @@ export const TourOverlay = () => {
       items,
       getMeasurement,
       getConfig,
+      isRegionItem,
       scrollIntoViewIfNeeded,
       applyCutout,
       isTracking,

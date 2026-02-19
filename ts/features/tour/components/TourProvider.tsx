@@ -22,7 +22,8 @@ import { TourItemMeasurement } from "../types";
 import { TourOverlay } from "./TourOverlay";
 
 type TourItemConfig = {
-  ref: AnimatedRef<Animated.View>;
+  ref?: AnimatedRef<Animated.View>;
+  regionProvider?: () => TourItemMeasurement | undefined;
   title: string;
   description: string;
 };
@@ -41,6 +42,13 @@ type TourContextValue = {
     config: { title: string; description: string }
   ) => void;
   unregisterItem: (groupId: string, index: number) => void;
+  registerRegion: (
+    groupId: string,
+    index: number,
+    regionProvider: () => TourItemMeasurement | undefined,
+    config: { title: string; description: string }
+  ) => void;
+  unregisterRegion: (groupId: string, index: number) => void;
   getMeasurement: (
     groupId: string,
     index: number
@@ -49,6 +57,8 @@ type TourContextValue = {
     groupId: string,
     index: number
   ) => { title: string; description: string } | undefined;
+  /** Returns true if the item is region-based (no ref tracking needed). */
+  isRegionItem: (groupId: string, index: number) => boolean;
   registerScrollRef: (
     groupId: string,
     ref: AnimatedRef<Animated.ScrollView>,
@@ -120,25 +130,65 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
     [dispatch]
   );
 
+  const registerRegion = useCallback(
+    (
+      groupId: string,
+      index: number,
+      regionProvider: () => TourItemMeasurement | undefined,
+      config: { title: string; description: string }
+    ) => {
+      dispatch(registerTourItemAction({ groupId, index }));
+      itemsRef.current.set(makeKey(groupId, index), {
+        regionProvider,
+        title: config.title,
+        description: config.description
+      });
+    },
+    [dispatch]
+  );
+
+  const unregisterRegion = useCallback(
+    (groupId: string, index: number) => {
+      dispatch(unregisterTourItemAction({ groupId, index }));
+      itemsRef.current.delete(makeKey(groupId, index));
+    },
+    [dispatch]
+  );
+
   const getMeasurement = useCallback(
     (groupId: string, index: number): TourItemMeasurement | undefined => {
       const item = itemsRef.current.get(makeKey(groupId, index));
-      const node = item?.ref.current;
+      if (!item) {
+        return undefined;
+      }
+
+      // Region-based item: call the provider directly
+      if (item.regionProvider) {
+        return item.regionProvider();
+      }
+
+      // Ref-based item: measure the native view
+      const node = item.ref?.current;
       if (!node) {
         return undefined;
       }
       const result: { value: TourItemMeasurement | undefined } = {
         value: undefined
       };
-      // On Fabric the underlying host view supports synchronous
-      // measureInWindow via JSI. The AnimatedRef resolves to the
-      // native view at runtime; the cast satisfies TypeScript.
       (node as unknown as View).measureInWindow((x, y, width, height) => {
         if (width !== 0 || height !== 0) {
           result.value = { x, y, width, height };
         }
       });
       return result.value;
+    },
+    []
+  );
+
+  const isRegionItem = useCallback(
+    (groupId: string, index: number): boolean => {
+      const item = itemsRef.current.get(makeKey(groupId, index));
+      return item?.regionProvider != null;
     },
     []
   );
@@ -181,8 +231,11 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
       value={{
         registerItem,
         unregisterItem,
+        registerRegion,
+        unregisterRegion,
         getMeasurement,
         getConfig,
+        isRegionItem,
         registerScrollRef,
         unregisterScrollRef,
         getScrollRef,
