@@ -4,7 +4,6 @@ import {
   createCryptoContextFor
 } from "@pagopa/io-react-native-wallet";
 import * as Sentry from "@sentry/react-native";
-import { SessionToken } from "../../../../types/SessionToken";
 import { createItWalletFetch } from "../../api/client";
 import { regenerateCryptoKey, WIA_KEYTAG } from "./itwCryptoContextUtils";
 import {
@@ -30,7 +29,7 @@ export const getIntegrityHardwareKeyTag = async (): Promise<string> =>
 export const registerWalletInstance = async (
   { WALLET_PROVIDER_BASE_URL }: Env,
   hardwareKeyTag: string,
-  sessionToken: SessionToken
+  sessionToken: string
 ) => {
   const integrityContext = getIntegrityContext(hardwareKeyTag);
   // This must be used only for API calls mediated through our backend which are related to the wallet instance only
@@ -56,7 +55,7 @@ export const registerWalletInstance = async (
 export const getAttestation = async (
   { WALLET_PROVIDER_BASE_URL }: Env,
   hardwareKeyTag: string,
-  sessionToken: SessionToken
+  sessionToken: string
 ): Promise<WalletInstanceAttestations> => {
   const integrityContext = getIntegrityContext(hardwareKeyTag);
 
@@ -116,7 +115,7 @@ export const isWalletInstanceAttestationValid = (
 export const getWalletInstanceStatus = (
   { WALLET_PROVIDER_BASE_URL }: Env,
   hardwareKeyTag: string,
-  sessionToken: SessionToken
+  sessionToken: string
 ) =>
   WalletInstance.getWalletInstanceStatus({
     id: hardwareKeyTag,
@@ -136,7 +135,7 @@ export const getWalletInstanceStatus = (
  */
 export const getCurrentWalletInstanceStatus = (
   { WALLET_PROVIDER_BASE_URL }: Env,
-  sessionToken: SessionToken
+  sessionToken: string
 ) => {
   try {
     return WalletInstance.getCurrentWalletInstanceStatus({

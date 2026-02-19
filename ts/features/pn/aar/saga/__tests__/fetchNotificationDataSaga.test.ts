@@ -5,7 +5,6 @@ import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJ
 import { ThirdPartyMessage } from "../../../../../../definitions/pn/aar/ThirdPartyMessage";
 import { pnMessagingServiceIdSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { profileFiscalCodeSelector } from "../../../../settings/common/store/selectors";
 import { trackSendAARFailure } from "../../analytics";
@@ -40,8 +39,8 @@ const fetchingNotificationDataRequestAction = setAarFlowState(
 );
 
 const { aarMessageDataPayloadFromResponse } = testable!;
-const mockSessionToken = "token" as SessionToken;
-const mockSessionTokenWithBearer = `Bearer ${mockSessionToken}` as SessionToken;
+const mockSessionToken = "mock-session-token";
+const mockSessionTokenWithBearer = `Bearer ${mockSessionToken}`;
 const mockIUn = "01K83208Z4CPBJXPFH7X9GDDMK";
 const mockSubject = "Message subject";
 const mockFiscalCode = "NMUVCN66S01F138R";

@@ -4,7 +4,6 @@ import {
   createStandardAction
 } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { isDevEnv } from "../../../../../utils/environment";
 
 type PendingActionPayload = { pendingAction: Action };
@@ -41,7 +40,7 @@ export const refreshSessionToken = createAsyncAction(
   "REFRESH_SESSION_TOKEN_REQUEST",
   "REFRESH_SESSION_TOKEN_SUCCESS",
   "REFRESH_SESSION_TOKEN_FAILURE"
-)<RefreshSessionTokenRequestPayload, SessionToken, Error>();
+)<RefreshSessionTokenRequestPayload, string, Error>();
 
 type SessionTokenRefreshChoice = "yes" | "no";
 export const askUserToRefreshSessionToken = createAsyncAction(
