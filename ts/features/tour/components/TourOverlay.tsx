@@ -34,11 +34,11 @@ import {
 import Animated, {
   cancelAnimation,
   Easing,
-  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
+import { scheduleOnRN } from "react-native-worklets";
 import { useIOSelector } from "../../../store/hooks";
 import {
   activeGroupIdSelector,
@@ -122,7 +122,7 @@ export const TourOverlay = () => {
     if (!isActive && visible) {
       isTracking.value = false;
       opacity.value = withTiming(0, { duration: ANIMATION_DURATION }, () => {
-        runOnJS(setVisible)(false);
+        scheduleOnRN(setVisible, false);
       });
     }
   }, [isActive, visible, opacity, isTracking]);
@@ -156,7 +156,7 @@ export const TourOverlay = () => {
           cutoutOpacity.value = withTiming(
             0,
             { duration: ANIMATION_DURATION, easing: STEP_EASING },
-            () => runOnJS(resolve)()
+            () => scheduleOnRN(resolve)
           );
         });
         if (measureGeneration.current !== generation) {
@@ -249,7 +249,7 @@ export const TourOverlay = () => {
             cutoutY.value = padded.y;
             cutoutW.value = padded.width;
             cutoutH.value = padded.height;
-            runOnJS(updateStep)();
+            scheduleOnRN(updateStep);
             cutoutOpacity.value = withTiming(
               1,
               {
