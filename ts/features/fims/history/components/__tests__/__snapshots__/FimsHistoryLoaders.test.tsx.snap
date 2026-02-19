@@ -356,7 +356,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 8,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "25%",
                             }
                           }
@@ -376,7 +376,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 16,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "70%",
                             }
                           }
@@ -396,7 +396,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 16,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "50%",
                             }
                           }
@@ -418,7 +418,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 8,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "25%",
                             }
                           }
@@ -438,7 +438,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 16,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "70%",
                             }
                           }
@@ -458,7 +458,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 16,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "50%",
                             }
                           }
@@ -480,7 +480,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 8,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "25%",
                             }
                           }
@@ -500,7 +500,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 16,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "70%",
                             }
                           }
@@ -520,7 +520,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 16,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "50%",
                             }
                           }
@@ -895,7 +895,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 8,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "25%",
                             }
                           }
@@ -915,7 +915,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 16,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "70%",
                             }
                           }
@@ -935,7 +935,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 16,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "50%",
                             }
                           }
@@ -957,7 +957,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 8,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "25%",
                             }
                           }
@@ -977,7 +977,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 16,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "70%",
                             }
                           }
@@ -997,7 +997,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 16,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "50%",
                             }
                           }
@@ -1019,7 +1019,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 8,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "25%",
                             }
                           }
@@ -1039,7 +1039,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 16,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "70%",
                             }
                           }
@@ -1059,7 +1059,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 16,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "50%",
                             }
                           }
@@ -1434,7 +1434,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 8,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "25%",
                             }
                           }
@@ -1454,7 +1454,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 16,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "70%",
                             }
                           }
@@ -1474,7 +1474,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 16,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "50%",
                             }
                           }
@@ -1496,7 +1496,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 8,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "25%",
                             }
                           }
@@ -1516,7 +1516,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 16,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "70%",
                             }
                           }
@@ -1536,7 +1536,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 16,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "50%",
                             }
                           }
@@ -1558,7 +1558,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 8,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "25%",
                             }
                           }
@@ -1578,7 +1578,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 16,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "70%",
                             }
                           }
@@ -1598,7 +1598,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 16,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "50%",
                             }
                           }
@@ -1973,7 +1973,7 @@ exports[`loadingFimsHistoryItem should match snapshot 1`] = `
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 8,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "25%",
                             }
                           }
@@ -1993,7 +1993,7 @@ exports[`loadingFimsHistoryItem should match snapshot 1`] = `
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 16,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "70%",
                             }
                           }
@@ -2013,7 +2013,7 @@ exports[`loadingFimsHistoryItem should match snapshot 1`] = `
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "height": 16,
-                              "opacity": 0.55,
+                              "opacity": 0.75,
                               "width": "50%",
                             }
                           }

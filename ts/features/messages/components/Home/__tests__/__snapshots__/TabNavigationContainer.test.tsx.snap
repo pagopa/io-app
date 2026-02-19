@@ -419,7 +419,26 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                 testID="home_tab_item_inbox"
                               >
                                 <View
-                                  style={
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "backgroundColor": "rgba(157, 178, 244, 0)",
+                                        "borderColor": "rgba(187, 194, 214, 1)",
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
                                     [
                                       {
                                         "alignItems": "center",
@@ -436,9 +455,34 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                         "columnGap": 4,
                                       },
                                       false,
+                                    ]
+                                  }
+                                  style={
+                                    [
                                       {
-                                        "backgroundColor": undefined,
-                                        "borderColor": undefined,
+                                        "alignItems": "center",
+                                        "alignSelf": "flex-start",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 64,
+                                        "borderWidth": 1,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 16,
+                                        "paddingVertical": 8,
+                                      },
+                                      {
+                                        "columnGap": 4,
+                                      },
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                      {
+                                        "backgroundColor": "rgba(157, 178, 244, 0)",
+                                        "borderColor": "rgba(187, 194, 214, 1)",
                                       },
                                       false,
                                     ]
@@ -585,7 +629,26 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                 testID="home_tab_item_archive"
                               >
                                 <View
-                                  style={
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "backgroundColor": "rgba(157, 178, 244, 0.251)",
+                                        "borderColor": "rgba(11, 62, 227, 0.502)",
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
                                     [
                                       {
                                         "alignItems": "center",
@@ -602,9 +665,34 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                         "columnGap": 4,
                                       },
                                       false,
+                                    ]
+                                  }
+                                  style={
+                                    [
                                       {
-                                        "backgroundColor": undefined,
-                                        "borderColor": undefined,
+                                        "alignItems": "center",
+                                        "alignSelf": "flex-start",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 64,
+                                        "borderWidth": 1,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 16,
+                                        "paddingVertical": 8,
+                                      },
+                                      {
+                                        "columnGap": 4,
+                                      },
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                      {
+                                        "backgroundColor": "rgba(157, 178, 244, 0.251)",
+                                        "borderColor": "rgba(11, 62, 227, 0.502)",
                                       },
                                       false,
                                     ]
@@ -1124,7 +1212,26 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                 testID="home_tab_item_inbox"
                               >
                                 <View
-                                  style={
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "backgroundColor": "rgba(157, 178, 244, 0.251)",
+                                        "borderColor": "rgba(11, 62, 227, 0.502)",
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
                                     [
                                       {
                                         "alignItems": "center",
@@ -1141,9 +1248,34 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                         "columnGap": 4,
                                       },
                                       false,
+                                    ]
+                                  }
+                                  style={
+                                    [
                                       {
-                                        "backgroundColor": undefined,
-                                        "borderColor": undefined,
+                                        "alignItems": "center",
+                                        "alignSelf": "flex-start",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 64,
+                                        "borderWidth": 1,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 16,
+                                        "paddingVertical": 8,
+                                      },
+                                      {
+                                        "columnGap": 4,
+                                      },
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                      {
+                                        "backgroundColor": "rgba(157, 178, 244, 0.251)",
+                                        "borderColor": "rgba(11, 62, 227, 0.502)",
                                       },
                                       false,
                                     ]
@@ -1303,7 +1435,26 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                 testID="home_tab_item_archive"
                               >
                                 <View
-                                  style={
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "backgroundColor": "rgba(157, 178, 244, 0)",
+                                        "borderColor": "rgba(187, 194, 214, 1)",
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
                                     [
                                       {
                                         "alignItems": "center",
@@ -1320,9 +1471,34 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                         "columnGap": 4,
                                       },
                                       false,
+                                    ]
+                                  }
+                                  style={
+                                    [
                                       {
-                                        "backgroundColor": undefined,
-                                        "borderColor": undefined,
+                                        "alignItems": "center",
+                                        "alignSelf": "flex-start",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 64,
+                                        "borderWidth": 1,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 16,
+                                        "paddingVertical": 8,
+                                      },
+                                      {
+                                        "columnGap": 4,
+                                      },
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                      {
+                                        "backgroundColor": "rgba(157, 178, 244, 0)",
+                                        "borderColor": "rgba(187, 194, 214, 1)",
                                       },
                                       false,
                                     ]

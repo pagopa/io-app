@@ -3241,14 +3241,34 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                                 testID="LoadingIndicator"
                               >
                                 <View
-                                  style={
+                                  collapsable={false}
+                                  jestAnimatedProps={
                                     {
-                                      "transform": [
-                                        {
-                                          "rotateZ": "0deg",
-                                        },
-                                      ],
+                                      "value": {},
                                     }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "rotateZ": "0deg",
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={{}}
+                                  style={
+                                    [
+                                      {
+                                        "transform": [
+                                          {
+                                            "rotateZ": "0deg",
+                                          },
+                                        ],
+                                      },
+                                    ]
                                   }
                                   testID="LoadingSpinnerAnimatedTestID"
                                 >
@@ -5969,14 +5989,34 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                                 testID="LoadingIndicator"
                               >
                                 <View
-                                  style={
+                                  collapsable={false}
+                                  jestAnimatedProps={
                                     {
-                                      "transform": [
-                                        {
-                                          "rotateZ": "0deg",
-                                        },
-                                      ],
+                                      "value": {},
                                     }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "rotateZ": "0deg",
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={{}}
+                                  style={
+                                    [
+                                      {
+                                        "transform": [
+                                          {
+                                            "rotateZ": "0deg",
+                                          },
+                                        ],
+                                      },
+                                    ]
                                   }
                                   testID="LoadingSpinnerAnimatedTestID"
                                 >

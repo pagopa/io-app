@@ -48,6 +48,38 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
     testID="appearance-settings-banner"
   >
     <View
+      collapsable={false}
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "transform": [
+              {
+                "scale": 1,
+              },
+            ],
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "alignContent": "center",
+            "alignItems": "flex-start",
+            "borderCurve": "continuous",
+            "borderRadius": 8,
+            "flexDirection": "row",
+            "padding": 16,
+          },
+          {
+            "backgroundColor": "#F4F5F8",
+          },
+        ]
+      }
       style={
         [
           {
@@ -64,7 +96,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           {
             "transform": [
               {
-                "scale": undefined,
+                "scale": 1,
               },
             ],
           },
@@ -350,6 +382,35 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           onStartShouldSetResponder={[Function]}
         >
           <View
+            collapsable={false}
+            jestAnimatedProps={
+              {
+                "value": {},
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {
+                  "transform": [
+                    {
+                      "scale": 1,
+                    },
+                  ],
+                },
+              }
+            }
+            jestInlineStyle={
+              [
+                {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                },
+                {
+                  "height": 24,
+                  "width": 24,
+                },
+              ]
+            }
             style={
               [
                 {
@@ -360,7 +421,13 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
                   "height": 24,
                   "width": 24,
                 },
-                false,
+                {
+                  "transform": [
+                    {
+                      "scale": 1,
+                    },
+                  ],
+                },
               ]
             }
           >
@@ -369,17 +436,25 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
               accessibilityLabel=""
               accessible={false}
               align="xMidYMid"
-              animatedProps={
-                {
-                  "color": undefined,
-                }
-              }
               bbHeight={36}
               bbWidth={36}
+              collapsable={false}
               color="#0E0F13"
               focusable={false}
               height={36}
               importantForAccessibility="no-hide-descendants"
+              jestAnimatedProps={
+                {
+                  "value": {
+                    "color": "rgba(14, 15, 19, 1)",
+                  },
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {},
+                }
+              }
               meetOrSlice={0}
               minX={0}
               minY={0}
@@ -486,6 +561,35 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
     testID="notifications-banner"
   >
     <View
+      collapsable={false}
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "transform": [
+              {
+                "scale": 1,
+              },
+            ],
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "borderCurve": "continuous",
+            "borderRadius": 12,
+            "padding": 16,
+          },
+          {
+            "backgroundColor": "rgba(255,102,102,0.2)",
+          },
+        ]
+      }
       style={
         [
           {
@@ -499,7 +603,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           {
             "transform": [
               {
-                "scale": undefined,
+                "scale": 1,
               },
             ],
           },
