@@ -357,10 +357,13 @@ export const createEidIssuanceActionsImplementation = (
     event
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     assertEvent(event, "select-identification-mode");
+    if (context.level === "l3") {
+      return;
+    }
 
     trackItWalletIDMethodSelected({
       ITW_ID_method: event.mode,
-      itw_flow: context.level === "l3" ? "L3" : "L2"
+      itw_flow: "L2"
     });
   },
 
