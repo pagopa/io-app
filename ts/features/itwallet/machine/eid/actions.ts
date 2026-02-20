@@ -358,6 +358,10 @@ export const createEidIssuanceActionsImplementation = (
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     assertEvent(event, "select-identification-mode");
 
+    if (event.source === "l3-missing-pin-ko") {
+      return;
+    }
+
     trackItWalletIDMethodSelected({
       ITW_ID_method: event.mode,
       itw_flow: context.level === "l3" ? "L3" : "L2"
