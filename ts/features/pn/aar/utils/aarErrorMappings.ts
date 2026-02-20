@@ -36,6 +36,7 @@ const aarProblemJsonComponentMap = {
   [cieErrors.CIE_EXPIRED_ERROR]: CieExpiredComponent,
   [cieErrors.CIE_NOT_RELATED_TO_DELEGATOR_ERROR]: UnrelatedCieComponent
 } satisfies { [key in SendAarErrorCodes]?: ComponentType };
+
 export const aarProblemJsonTrackingMap = {
   ..._.mapValues(cieErrors, () => trackSendAarMandateCieDataError),
   [cieErrors.CIE_EXPIRED_ERROR]: trackSendAarMandateCieExpiredError,
