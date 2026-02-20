@@ -3,7 +3,6 @@ import { SagaIterator } from "redux-saga";
 import { call, put } from "typed-redux-saga/macro";
 import { ItWalletClient } from "../../api/client.ts";
 import { itwSetFiscalCodeWhitelisted } from "../../common/store/actions/preferences.ts";
-import { SessionToken } from "../../../../types/SessionToken.ts";
 
 /**
  * Saga that handles the retrieval of the whitelisted status for the fiscal code.
@@ -13,7 +12,7 @@ import { SessionToken } from "../../../../types/SessionToken.ts";
  */
 export function* handleGetWhitelistedStatus(
   client: ItWalletClient,
-  sessionToken: SessionToken
+  sessionToken: string
 ): SagaIterator {
   try {
     const response = yield* call(client.isFiscalCodeWhitelisted, {

@@ -17,7 +17,6 @@ import {
   setCieIDSelectedSecurityLevelActiveSessionLogin
 } from "../actions";
 import { SpidIdp } from "../../../../../utils/idps";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { StandardLoginRequestInfo } from "../../../login/idp/store/types";
 import { SpidLevel } from "../../../login/cie/utils";
 import { isTestEnv } from "../../../../../utils/environment";
@@ -33,7 +32,7 @@ export type ActiveSessionLoginState = {
   isUserLoggedIn: boolean;
   loginInfo?: {
     idp?: SpidIdp;
-    token?: SessionToken;
+    token?: string;
     fastLoginOptIn?: boolean;
     spidLoginInfo?: StandardLoginRequestInfo;
     cieIDSelectedSecurityLevel?: SpidLevel;

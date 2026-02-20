@@ -1,6 +1,5 @@
 import { LollipopConfig } from "../../../../lollipop";
 import { KeyInfo } from "../../../../lollipop/utils/crypto";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { createSendLollipopLambdaClient } from "../index";
 import * as lollipopFetchModule from "../../../../lollipop/utils/fetch";
 
@@ -21,7 +20,7 @@ describe("createSendLollipopLambdaClient", () => {
 
   it("should invoke `createClient` with input 'baseUrl', the result of `lollipopFetch` and a 'withDefaults' function", () => {
     const baseUrl = "https://localhost:3000";
-    const sessionToken = "session-token-123" as SessionToken;
+    const sessionToken = "mock-session-token";
     const keyInfo: KeyInfo = {
       keyTag: "aTag",
       publicKey: {
@@ -57,7 +56,7 @@ describe("createSendLollipopLambdaClient", () => {
 
   it("should create a `withDefaults` function that adds Bearer token to params", () => {
     const baseUrl = "https://localhost:3000";
-    const sessionToken = "my-session-token" as SessionToken;
+    const sessionToken = "mock-session-token";
     const keyInfo: KeyInfo = {};
 
     createSendLollipopLambdaClient(baseUrl, sessionToken, keyInfo);

@@ -6,7 +6,6 @@ import { ActionType } from "typesafe-actions";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { apiUrlPrefix, fetchTimeout } from "../../../../config";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { SessionToken } from "../../../../types/SessionToken";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
 import { isTestEnv } from "../../../../utils/environment";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
@@ -31,7 +30,7 @@ const isFastLoginError = (e: unknown) =>
   e instanceof Error && e.message === fastLoginType;
 
 export function* downloadAARAttachmentSaga(
-  bearerToken: SessionToken,
+  bearerToken: string,
   keyInfo: KeyInfo,
   mandateId: string | undefined,
   action: ActionType<typeof downloadAttachment.request>
@@ -93,7 +92,7 @@ export function* downloadAARAttachmentSaga(
 }
 
 function* getAttachmentPrevalidatedUrl(
-  bearerToken: SessionToken,
+  bearerToken: string,
   keyInfo: KeyInfo,
   attachmentUrl: string,
   useUATEnvironment: boolean,
@@ -122,7 +121,7 @@ function* getAttachmentPrevalidatedUrl(
 }
 
 function* getAttachmentMetadata(
-  bearerToken: SessionToken,
+  bearerToken: string,
   keyInfo: KeyInfo,
   attachmentUrl: string,
   useUATEnvironment: boolean,

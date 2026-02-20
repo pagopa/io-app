@@ -20,10 +20,9 @@ import {
   handleActiveSessionLoginSaga,
   watchActiveSessionLoginSaga
 } from "../saga";
-import { SessionToken } from "../../../../types/SessionToken";
 import { watchCieAuthenticationSaga } from "../../login/cie/sagas/cie";
 
-const mockToken = "mock-token" as SessionToken;
+const mockToken = "mock-token";
 const mockIdp = {
   id: "testidp1",
   name: "testidp1",

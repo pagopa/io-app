@@ -6,7 +6,6 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
 import { FciClient } from "../../api/backendFci";
 import { fciMetadataRequest } from "../../store/actions";
 import { getNetworkError } from "../../../../utils/errors";
-import { SessionToken } from "../../../../types/SessionToken";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../../types/utils";
 
@@ -15,7 +14,7 @@ import { SagaCallReturnType } from "../../../../types/utils";
  */
 export function* handleGetMetadata(
   getMetadata: FciClient["getMetadata"],
-  bearerToken: SessionToken,
+  bearerToken: string,
   action: ActionType<(typeof fciMetadataRequest)["request"]>
 ): SagaIterator {
   try {
