@@ -4666,7 +4666,9 @@
         "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
         "ed": "Titoli accademici",
         "ee": "Iscrizioni accademiche",
-        "res": "Attestato di residenza"
+        "res": "Attestato di residenza",
+        "edip": "Diplomi",
+        "edat": "Frequenza scolastica"
       },
       "wallet": {
         "active": "Attivo",
@@ -5462,7 +5464,9 @@
             "content": {
               "education_degree": "I tuoi titoli accademici digitali hanno piena validità ufficiale.",
               "education_enrollment": "Le tue iscrizioni accademiche digitali hanno piena validità ufficiale.",
-              "residency": "Il tuo attestato di residenza digitale ha piena validità ufficiale."
+              "residency": "Il tuo attestato di residenza digitale ha piena validità ufficiale.",
+              "education_diploma": "I tuoi Diplomi digitali hanno piena validità ufficiale.",
+              "education_attendance": "La tua iscrizione scolastica digitale ha piena validità ufficiale."
             }
           },
           "discoverItWallet": "Scopri IT-Wallet",

@@ -118,5 +118,7 @@ export const credentialGradientColors: {
 } = {
   [CredentialType.EDUCATION_DEGREE]: ["#F2F1CE", "#ECECEC"],
   [CredentialType.EDUCATION_ENROLLMENT]: ["#E0F2CE", "#ECECEC"],
-  [CredentialType.RESIDENCY]: ["#F2E4CE", "#ECECEC"]
+  [CredentialType.RESIDENCY]: ["#F2E4CE", "#ECECEC"],
+  [CredentialType.EDUCATION_DIPLOMA]: ["#F2F1CE", "#ECECEC"],
+  [CredentialType.EDUCATION_ATTENDANCE]: ["#F2F1CE", "#ECECEC"]
 };

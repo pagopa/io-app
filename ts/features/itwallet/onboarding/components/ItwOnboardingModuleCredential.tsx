@@ -22,7 +22,9 @@ const credentialIconByType: Record<string, IOIcons> = {
   [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: "healthCard",
   [CredentialType.EDUCATION_DEGREE]: "messageLegal",
   [CredentialType.EDUCATION_ENROLLMENT]: "messageLegal",
-  [CredentialType.RESIDENCY]: "messageLegal"
+  [CredentialType.RESIDENCY]: "messageLegal",
+  [CredentialType.EDUCATION_DIPLOMA]: "messageLegal",
+  [CredentialType.EDUCATION_ATTENDANCE]: "messageLegal"
 };
 
 const activeBadge: Badge = {
