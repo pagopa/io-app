@@ -9,7 +9,6 @@ import { ActionType } from "typesafe-actions";
 import { apiUrlPrefix } from "../../../../config";
 import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { SessionToken } from "../../../../types/SessionToken";
 import { isTestEnv } from "../../../../utils/environment";
 import { unknownToReason } from "../../../messages/utils";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
@@ -109,7 +108,7 @@ function* reportPNServiceStatusOnFailure(
   trackPNServiceStatusChangeError(isServiceActive, reason);
 }
 
-export function* watchPnSaga(bearerToken: SessionToken): SagaIterator {
+export function* watchPnSaga(bearerToken: string): SagaIterator {
   const pnClient = createPnClient(apiUrlPrefix, bearerToken);
 
   yield* takeLatest(

@@ -11,7 +11,6 @@ import { getCustomSignature, getTosSignature } from "../../utils/signature";
 import { fciDocumentsWithUrlSelector } from "../../store/reducers/fciSignatureRequest";
 import { fciQtspFilledDocumentUrlSelector } from "../../store/reducers/fciQtspFilledDocument";
 import { createFciClientWithLollipop } from "../../api/backendFci";
-import { SessionToken } from "../../../../types/SessionToken";
 import { KeyInfo } from "../../../lollipop/utils/crypto";
 import { LollipopMethodEnum } from "../../../../../definitions/fci/LollipopMethod";
 import { LollipopOriginalURL } from "../../../../../definitions/fci/LollipopOriginalURL";
@@ -25,7 +24,7 @@ import { SagaCallReturnType } from "../../../../types/utils";
  */
 export function* handleCreateSignature(
   apiUrl: string,
-  bearerToken: SessionToken,
+  bearerToken: string,
   keyInfo: KeyInfo = {},
   action: ActionType<(typeof fciSigningRequest)["request"]>
 ): SagaIterator {
