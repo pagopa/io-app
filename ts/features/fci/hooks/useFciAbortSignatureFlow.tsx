@@ -2,7 +2,7 @@ import {
   FooterActions,
   useIOExperimentalDesign
 } from "@pagopa/io-app-design-system";
-import { useRoute } from "@react-navigation/native";
+import { CommonActions, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { Alert } from "react-native";
 import IOMarkdown from "../../../components/IOMarkdown";
@@ -16,7 +16,11 @@ import { fciSignatureRequestDossierTitleSelector } from "../store/reducers/fciSi
 /**
  * A hook that returns a function to present the abort signature flow bottom sheet
  */
-export const useFciAbortSignatureFlow = () => {
+export const useFciAbortSignatureFlow = (
+  { onEndGoBack }: { onEndGoBack: boolean } = {
+    onEndGoBack: false
+  }
+) => {
   const dispatch = useIODispatch();
   const route = useRoute();
   const dossierTitle = useIOSelector(fciSignatureRequestDossierTitleSelector);
@@ -28,7 +32,15 @@ export const useFciAbortSignatureFlow = () => {
    */
   const abortSignatureFlow = () => {
     trackFciUserExit(route.name, fciEnvironment);
-    dispatch(fciEndRequest());
+    dispatch(
+      fciEndRequest(
+        onEndGoBack
+          ? {
+              onEndNavigationAction: CommonActions.goBack()
+            }
+          : undefined
+      )
+    );
     dismiss();
   };
 

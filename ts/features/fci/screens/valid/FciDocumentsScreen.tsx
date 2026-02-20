@@ -32,7 +32,6 @@ import { useFciNoSignatureFields } from "../../hooks/useFciNoSignatureFields";
 import { FciParamsList } from "../../navigation/params";
 import { FCI_ROUTES } from "../../navigation/routes";
 import {
-  fciClearStateRequest,
   fciDownloadPreview,
   fciUpdateDocumentSignaturesRequest
 } from "../../store/actions";
@@ -129,6 +128,11 @@ const FciDocumentsScreen = () => {
 
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
+
+  const { present: presentOnBack, bottomSheet: fciAbortSignatureOnBack } =
+    useFciAbortSignatureFlow({
+      onEndGoBack: true
+    });
 
   const {
     present: showNoSignatureFieldsBs,
@@ -246,9 +250,10 @@ const FciDocumentsScreen = () => {
     contextualHelp: emptyContextualHelp,
     goBack: () => {
       if (currentDoc <= 0) {
-        dispatch(fciClearStateRequest());
+        presentOnBack();
+      } else {
+        navigation.goBack();
       }
-      navigation.goBack();
     }
   });
 
@@ -301,6 +306,7 @@ const FciDocumentsScreen = () => {
         )}
       </View>
       {fciAbortSignature}
+      {fciAbortSignatureOnBack}
       {fciNoSignatureFields}
     </>
   );
