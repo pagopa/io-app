@@ -143,7 +143,7 @@ const InnerNavigator = memo(() => {
         component={withItwEnabled(ItwDiscoveryInfoScreen)}
         options={({ route }) => ({
           ...hiddenHeader,
-          animationEnabled: route.params?.animationEnabled
+          animation: route.params?.animationEnabled ? "default" : "none"
         })}
       />
       <Stack.Screen
@@ -153,14 +153,14 @@ const InnerNavigator = memo(() => {
       <Stack.Screen
         name={ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN}
         component={withItwEnabled(ItwAlreadyActiveScreen)}
-        options={{ ...hiddenHeader, animationEnabled: false }}
+        options={{ ...hiddenHeader, animation: "none" }}
       />
       {/* IDENTIFICATION */}
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION}
         component={ItwIdentificationModeSelectionScreen}
         options={({ route }) => ({
-          animationEnabled: route.params.animationEnabled
+          animation: route.params.animationEnabled ? "default" : "none"
         })}
       />
       <Stack.Screen

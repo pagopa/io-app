@@ -21,7 +21,7 @@ const Stack = createStackNavigator<FimsParamsList>();
 
 export const FimsNavigator = () => (
   <Stack.Navigator
-    initialRouteName={FIMS_ROUTES.MAIN}
+    // initialRouteName={FIMS_ROUTES.MAIN}
     // Make sure to disable gestures in order to prevent
     // the user from going back by swiping and thus not
     // calling the custom cancel logic
