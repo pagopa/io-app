@@ -12,7 +12,6 @@ import {
   isSessionExpired
 } from "../utils/guards";
 import { SpidIdp } from "../../../../../utils/idps";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { format } from "../../../../../utils/dates";
 import { AuthenticationState, AuthenticationStateWithIdp } from "../models";
 
@@ -31,16 +30,14 @@ export const isSessionExpiredSelector = (state: GlobalState) =>
 export const isSessionCorruptedSelector = (state: GlobalState) =>
   !isLoggedIn(state.authentication) && isSessionCorrupted(state.authentication);
 
-export const sessionTokenSelector = (
-  state: GlobalState
-): SessionToken | undefined =>
+export const sessionTokenSelector = (state: GlobalState): string | undefined =>
   isLoggedIn(state.authentication)
     ? state.authentication.sessionToken
     : undefined;
 
 export const bareSessionTokenSelector = (
   state: GlobalState
-): Optional<SessionToken> =>
+): Optional<string> =>
   isLogoutRequested(state.authentication)
     ? state.authentication.sessionToken
     : undefined;

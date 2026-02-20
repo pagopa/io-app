@@ -1,5 +1,4 @@
 import { PublicSession } from "../../../../../../definitions/session_manager/PublicSession";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { SpidIdp } from "../../../../../utils/idps";
 
 // reason for the user to be in the unauthenticated state
@@ -31,21 +30,21 @@ export type LoggedOutWithIdp = Readonly<{
 export type LoggedInWithoutSessionInfo = Readonly<{
   kind: "LoggedInWithoutSessionInfo";
   idp: SpidIdp;
-  sessionToken: SessionToken;
+  sessionToken: string;
 }>;
 
 // The user is logged in and we also have all session info
 export type LoggedInWithSessionInfo = Readonly<{
   kind: "LoggedInWithSessionInfo";
   idp: SpidIdp;
-  sessionToken: SessionToken;
+  sessionToken: string;
   sessionInfo: PublicSession;
 }>;
 
 export type LogoutRequested = Readonly<{
   kind: "LogoutRequested";
   idp: SpidIdp;
-  sessionToken: SessionToken;
+  sessionToken: string;
   reason: LoggedOutReason;
 }>;
 
