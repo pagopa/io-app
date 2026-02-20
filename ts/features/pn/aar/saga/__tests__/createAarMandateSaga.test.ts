@@ -15,7 +15,7 @@ import {
 } from "../../utils/testUtils";
 import { createAarMandateSaga } from "../createAarMandateSaga";
 
-const sessionToken = "token" as any;
+const sessionToken = "mock-session-token";
 const createAarMandateMock = jest.fn();
 const currentState = sendAarMockStateFactory.creatingMandate();
 const mockAction = setAarFlowState(currentState);

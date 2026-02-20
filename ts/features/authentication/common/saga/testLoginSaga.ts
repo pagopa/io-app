@@ -10,7 +10,6 @@ import { PasswordLogin } from "../../../../../definitions/session_manager/Passwo
 import { BackendPublicClient } from "../../../../api/backendPublic";
 import { apiUrlPrefix } from "../../../../config";
 import { loginFailure, loginSuccess, testLoginRequest } from "../store/actions";
-import { SessionToken } from "../../../../types/SessionToken";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
 import { convertUnknownToError } from "../../../../utils/errors";
 import { IdpData } from "../../../../../definitions/content/IdpData";
@@ -74,8 +73,7 @@ export function* handleTestLogin({
       if (testLoginResponse.right.status === 200) {
         yield* put(
           loginSuccess({
-            token: testLoginResponse.right.value
-              .token as string as SessionToken,
+            token: testLoginResponse.right.value.token,
             idp: "test" as keyof IdpData
           })
         );

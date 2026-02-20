@@ -121,7 +121,29 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
   >
     <View
       accessibilityElementsHidden={true}
+      collapsable={false}
       importantForAccessibility="no-hide-descendants"
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "backgroundColor": "rgba(244, 245, 248, 0)",
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "marginHorizontal": -24,
+            "paddingHorizontal": 24,
+            "paddingVertical": 12,
+          },
+        ]
+      }
       style={
         [
           {
@@ -130,12 +152,41 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             "paddingVertical": 12,
           },
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "rgba(244, 245, 248, 0)",
           },
         ]
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            },
+            {
+              "columnGap": 18,
+            },
+          ]
+        }
         style={
           [
             {
@@ -149,7 +200,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             {
               "transform": [
                 {
-                  "scale": undefined,
+                  "scale": 1,
                 },
               ],
             },
@@ -344,7 +395,29 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
   >
     <View
       accessibilityElementsHidden={true}
+      collapsable={false}
       importantForAccessibility="no-hide-descendants"
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "backgroundColor": "rgba(244, 245, 248, 0)",
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "marginHorizontal": -24,
+            "paddingHorizontal": 24,
+            "paddingVertical": 12,
+          },
+        ]
+      }
       style={
         [
           {
@@ -353,12 +426,41 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             "paddingVertical": 12,
           },
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "rgba(244, 245, 248, 0)",
           },
         ]
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            },
+            {
+              "columnGap": 18,
+            },
+          ]
+        }
         style={
           [
             {
@@ -372,7 +474,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             {
               "transform": [
                 {
-                  "scale": undefined,
+                  "scale": 1,
                 },
               ],
             },
@@ -619,7 +721,29 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
   >
     <View
       accessibilityElementsHidden={true}
+      collapsable={false}
       importantForAccessibility="no-hide-descendants"
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "backgroundColor": "rgba(244, 245, 248, 0)",
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "marginHorizontal": -24,
+            "paddingHorizontal": 24,
+            "paddingVertical": 12,
+          },
+        ]
+      }
       style={
         [
           {
@@ -628,12 +752,41 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             "paddingVertical": 12,
           },
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "rgba(244, 245, 248, 0)",
           },
         ]
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            },
+            {
+              "columnGap": 18,
+            },
+          ]
+        }
         style={
           [
             {
@@ -647,7 +800,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             {
               "transform": [
                 {
-                  "scale": undefined,
+                  "scale": 1,
                 },
               ],
             },
@@ -842,7 +995,29 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
   >
     <View
       accessibilityElementsHidden={true}
+      collapsable={false}
       importantForAccessibility="no-hide-descendants"
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "backgroundColor": "rgba(244, 245, 248, 0)",
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "marginHorizontal": -24,
+            "paddingHorizontal": 24,
+            "paddingVertical": 12,
+          },
+        ]
+      }
       style={
         [
           {
@@ -851,12 +1026,41 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             "paddingVertical": 12,
           },
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "rgba(244, 245, 248, 0)",
           },
         ]
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            },
+            {
+              "columnGap": 18,
+            },
+          ]
+        }
         style={
           [
             {
@@ -870,7 +1074,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             {
               "transform": [
                 {
-                  "scale": undefined,
+                  "scale": 1,
                 },
               ],
             },
@@ -1117,7 +1321,29 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
   >
     <View
       accessibilityElementsHidden={true}
+      collapsable={false}
       importantForAccessibility="no-hide-descendants"
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "backgroundColor": "rgba(244, 245, 248, 0)",
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "marginHorizontal": -24,
+            "paddingHorizontal": 24,
+            "paddingVertical": 12,
+          },
+        ]
+      }
       style={
         [
           {
@@ -1126,12 +1352,41 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             "paddingVertical": 12,
           },
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "rgba(244, 245, 248, 0)",
           },
         ]
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            },
+            {
+              "columnGap": 18,
+            },
+          ]
+        }
         style={
           [
             {
@@ -1145,7 +1400,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             {
               "transform": [
                 {
-                  "scale": undefined,
+                  "scale": 1,
                 },
               ],
             },
@@ -1340,7 +1595,29 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
   >
     <View
       accessibilityElementsHidden={true}
+      collapsable={false}
       importantForAccessibility="no-hide-descendants"
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "backgroundColor": "rgba(244, 245, 248, 0)",
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "marginHorizontal": -24,
+            "paddingHorizontal": 24,
+            "paddingVertical": 12,
+          },
+        ]
+      }
       style={
         [
           {
@@ -1349,12 +1626,41 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             "paddingVertical": 12,
           },
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "rgba(244, 245, 248, 0)",
           },
         ]
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            },
+            {
+              "columnGap": 18,
+            },
+          ]
+        }
         style={
           [
             {
@@ -1368,7 +1674,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             {
               "transform": [
                 {
-                  "scale": undefined,
+                  "scale": 1,
                 },
               ],
             },
@@ -1615,7 +1921,29 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
   >
     <View
       accessibilityElementsHidden={true}
+      collapsable={false}
       importantForAccessibility="no-hide-descendants"
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "backgroundColor": "rgba(244, 245, 248, 0)",
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "marginHorizontal": -24,
+            "paddingHorizontal": 24,
+            "paddingVertical": 12,
+          },
+        ]
+      }
       style={
         [
           {
@@ -1624,12 +1952,41 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             "paddingVertical": 12,
           },
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "rgba(244, 245, 248, 0)",
           },
         ]
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            },
+            {
+              "columnGap": 18,
+            },
+          ]
+        }
         style={
           [
             {
@@ -1643,7 +2000,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             {
               "transform": [
                 {
-                  "scale": undefined,
+                  "scale": 1,
                 },
               ],
             },
@@ -1869,7 +2226,29 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
   >
     <View
       accessibilityElementsHidden={true}
+      collapsable={false}
       importantForAccessibility="no-hide-descendants"
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "backgroundColor": "rgba(244, 245, 248, 0)",
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "marginHorizontal": -24,
+            "paddingHorizontal": 24,
+            "paddingVertical": 12,
+          },
+        ]
+      }
       style={
         [
           {
@@ -1878,12 +2257,41 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             "paddingVertical": 12,
           },
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "rgba(244, 245, 248, 0)",
           },
         ]
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            },
+            {
+              "columnGap": 18,
+            },
+          ]
+        }
         style={
           [
             {
@@ -1897,7 +2305,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             {
               "transform": [
                 {
-                  "scale": undefined,
+                  "scale": 1,
                 },
               ],
             },
@@ -2092,7 +2500,29 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
   >
     <View
       accessibilityElementsHidden={true}
+      collapsable={false}
       importantForAccessibility="no-hide-descendants"
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "backgroundColor": "rgba(244, 245, 248, 0)",
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "marginHorizontal": -24,
+            "paddingHorizontal": 24,
+            "paddingVertical": 12,
+          },
+        ]
+      }
       style={
         [
           {
@@ -2101,12 +2531,41 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             "paddingVertical": 12,
           },
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "rgba(244, 245, 248, 0)",
           },
         ]
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            },
+            {
+              "columnGap": 18,
+            },
+          ]
+        }
         style={
           [
             {
@@ -2120,7 +2579,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             {
               "transform": [
                 {
-                  "scale": undefined,
+                  "scale": 1,
                 },
               ],
             },
@@ -2367,7 +2826,29 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
   >
     <View
       accessibilityElementsHidden={true}
+      collapsable={false}
       importantForAccessibility="no-hide-descendants"
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "backgroundColor": "rgba(244, 245, 248, 0)",
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "marginHorizontal": -24,
+            "paddingHorizontal": 24,
+            "paddingVertical": 12,
+          },
+        ]
+      }
       style={
         [
           {
@@ -2376,12 +2857,41 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             "paddingVertical": 12,
           },
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "rgba(244, 245, 248, 0)",
           },
         ]
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            },
+            {
+              "columnGap": 18,
+            },
+          ]
+        }
         style={
           [
             {
@@ -2395,7 +2905,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             {
               "transform": [
                 {
-                  "scale": undefined,
+                  "scale": 1,
                 },
               ],
             },
@@ -2590,7 +3100,29 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
   >
     <View
       accessibilityElementsHidden={true}
+      collapsable={false}
       importantForAccessibility="no-hide-descendants"
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "backgroundColor": "rgba(244, 245, 248, 0)",
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "marginHorizontal": -24,
+            "paddingHorizontal": 24,
+            "paddingVertical": 12,
+          },
+        ]
+      }
       style={
         [
           {
@@ -2599,12 +3131,41 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             "paddingVertical": 12,
           },
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "rgba(244, 245, 248, 0)",
           },
         ]
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            },
+            {
+              "columnGap": 18,
+            },
+          ]
+        }
         style={
           [
             {
@@ -2618,7 +3179,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             {
               "transform": [
                 {
-                  "scale": undefined,
+                  "scale": 1,
                 },
               ],
             },
@@ -2865,7 +3426,29 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
   >
     <View
       accessibilityElementsHidden={true}
+      collapsable={false}
       importantForAccessibility="no-hide-descendants"
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "backgroundColor": "rgba(244, 245, 248, 0)",
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "marginHorizontal": -24,
+            "paddingHorizontal": 24,
+            "paddingVertical": 12,
+          },
+        ]
+      }
       style={
         [
           {
@@ -2874,12 +3457,41 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             "paddingVertical": 12,
           },
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "rgba(244, 245, 248, 0)",
           },
         ]
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            },
+            {
+              "columnGap": 18,
+            },
+          ]
+        }
         style={
           [
             {
@@ -2893,7 +3505,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             {
               "transform": [
                 {
-                  "scale": undefined,
+                  "scale": 1,
                 },
               ],
             },
@@ -3088,7 +3700,29 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
   >
     <View
       accessibilityElementsHidden={true}
+      collapsable={false}
       importantForAccessibility="no-hide-descendants"
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "backgroundColor": "rgba(244, 245, 248, 0)",
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "marginHorizontal": -24,
+            "paddingHorizontal": 24,
+            "paddingVertical": 12,
+          },
+        ]
+      }
       style={
         [
           {
@@ -3097,12 +3731,41 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             "paddingVertical": 12,
           },
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "rgba(244, 245, 248, 0)",
           },
         ]
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            },
+            {
+              "columnGap": 18,
+            },
+          ]
+        }
         style={
           [
             {
@@ -3116,7 +3779,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             {
               "transform": [
                 {
-                  "scale": undefined,
+                  "scale": 1,
                 },
               ],
             },
@@ -3363,7 +4026,29 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
   >
     <View
       accessibilityElementsHidden={true}
+      collapsable={false}
       importantForAccessibility="no-hide-descendants"
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "backgroundColor": "rgba(244, 245, 248, 0)",
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "marginHorizontal": -24,
+            "paddingHorizontal": 24,
+            "paddingVertical": 12,
+          },
+        ]
+      }
       style={
         [
           {
@@ -3372,12 +4057,41 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             "paddingVertical": 12,
           },
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "rgba(244, 245, 248, 0)",
           },
         ]
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            },
+            {
+              "columnGap": 18,
+            },
+          ]
+        }
         style={
           [
             {
@@ -3391,7 +4105,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             {
               "transform": [
                 {
-                  "scale": undefined,
+                  "scale": 1,
                 },
               ],
             },

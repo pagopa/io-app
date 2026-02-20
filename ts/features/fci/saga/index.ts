@@ -10,7 +10,6 @@ import NavigationService from "../../../navigation/NavigationService";
 import { FCI_ROUTES } from "../navigation/routes";
 import ROUTES from "../../../navigation/routes";
 import { apiUrlPrefix } from "../../../config";
-import { SessionToken } from "../../../types/SessionToken";
 import {
   identificationPinReset,
   identificationRequest,
@@ -64,7 +63,7 @@ import { handleDrawSignatureBox } from "./handleDrawSignatureBox";
  * @param bearerToken
  */
 export function* watchFciSaga(
-  bearerToken: SessionToken,
+  bearerToken: string,
   keyInfo: KeyInfo
 ): SagaIterator {
   const fciGeneratedClient = createFciClient(apiUrlPrefix);

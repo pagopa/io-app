@@ -3,7 +3,6 @@ import * as E from "fp-ts/lib/Either";
 import { call, put, select } from "typed-redux-saga/macro";
 import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { SessionToken } from "../../../../types/SessionToken";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { unknownToReason } from "../../../messages/utils";
@@ -24,7 +23,7 @@ const sendAARFailurePhase: SendAARFailurePhase = "Fetch QRCode";
 
 export function* fetchAARQrCodeSaga(
   fetchQRCode: SendAARClient["aarQRCodeCheck"],
-  sessionToken: SessionToken,
+  sessionToken: string,
   action: ReturnType<typeof setAarFlowState>
 ) {
   const currentState = yield* select(currentAARFlowData);
