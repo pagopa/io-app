@@ -154,34 +154,33 @@ export const TourTooltip = ({
             <Body>{description}</Body>
           </VStack>
           <HStack
+            space={16}
             style={{ justifyContent: "space-between", alignItems: "center" }}
           >
+            <View
+              style={isFirstStep && { opacity: 0, pointerEvents: "box-none" }}
+            >
+              <IconButton
+                iconSize={24}
+                icon="arrowLeft"
+                color="primary"
+                accessibilityLabel={I18n.t("features.tour.back")}
+                onPress={onBack}
+              />
+            </View>
             <TourStepIndicator stepIndex={stepIndex} totalSteps={totalSteps} />
-            <HStack space={24} style={{ alignItems: "center" }}>
-              <View
-                style={isFirstStep && { opacity: 0, pointerEvents: "box-none" }}
-              >
-                <IconButton
-                  iconSize={20}
-                  icon="arrowLeft"
-                  color="primary"
-                  accessibilityLabel={I18n.t("features.tour.back")}
-                  onPress={onBack}
-                />
-              </View>
-              <View style={{ alignSelf: "center" }}>
-                <IOButton
-                  variant="link"
-                  color="primary"
-                  label={
-                    isLastStep
-                      ? I18n.t("features.tour.done")
-                      : I18n.t("features.tour.next")
-                  }
-                  onPress={onNext}
-                />
-              </View>
-            </HStack>
+            <View style={{ alignSelf: "center" }}>
+              <IOButton
+                variant="link"
+                color="primary"
+                label={
+                  isLastStep
+                    ? I18n.t("features.tour.done")
+                    : I18n.t("features.tour.next")
+                }
+                onPress={onNext}
+              />
+            </View>
           </HStack>
         </VStack>
         <View style={styles.closeIconButton}>
