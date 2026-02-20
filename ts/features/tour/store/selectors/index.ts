@@ -3,20 +3,14 @@ import { GlobalState } from "../../../../store/reducers/types";
 
 const tourStateSelector = (state: GlobalState) => state.features.tour;
 
-export const isTourActiveSelector = createSelector(
-  tourStateSelector,
-  tour => tour.activeGroupId !== undefined
-);
+export const isTourActiveSelector = (state: GlobalState) =>
+  state.features.tour.activeGroupId !== undefined;
 
-export const activeGroupIdSelector = createSelector(
-  tourStateSelector,
-  tour => tour.activeGroupId
-);
+export const activeGroupIdSelector = (state: GlobalState) =>
+  state.features.tour.activeGroupId;
 
-export const activeStepIndexSelector = createSelector(
-  tourStateSelector,
-  tour => tour.activeStepIndex
-);
+export const activeStepIndexSelector = (state: GlobalState) =>
+  state.features.tour.activeStepIndex;
 
 export const tourItemsForActiveGroupSelector = createSelector(
   tourStateSelector,
@@ -30,6 +24,5 @@ export const tourItemsForActiveGroupSelector = createSelector(
   }
 );
 
-export const isTourCompletedSelector =
-  (groupId: string) => (state: GlobalState) =>
-    state.features.tour.completed.includes(groupId);
+export const isTourCompletedSelector = (state: GlobalState, groupId: string) =>
+  state.features.tour.completed.includes(groupId);
