@@ -2,7 +2,6 @@ import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/Either";
 import { call, put, select } from "typed-redux-saga/macro";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { SessionToken } from "../../../../types/SessionToken";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { unknownToReason } from "../../../messages/utils";
@@ -21,7 +20,7 @@ import {
 const sendAarFailurePhase: SendAARFailurePhase = "Create Mandate";
 export function* createAarMandateSaga(
   createAarMandate: SendAARClient["createAARMandate"],
-  sessionToken: SessionToken,
+  sessionToken: string,
   action: ReturnType<typeof setAarFlowState>
 ) {
   const currentState = action.payload;

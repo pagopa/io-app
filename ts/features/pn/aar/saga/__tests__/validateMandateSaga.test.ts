@@ -10,7 +10,6 @@ import {
   sendAarMockStateFactory,
   sendAarMockStates
 } from "../../utils/testUtils";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { setAarFlowState } from "../../store/actions";
 import {
   aarProblemJsonAnalyticsReport,
@@ -30,8 +29,8 @@ const mockValidatingMandateAction = setAarFlowState(mockValidatingMandateState);
 const aarStatesWithoutValidatingMandate = sendAarMockStates.filter(
   ({ type }) => type !== mockValidatingMandateState.type
 );
-const sessionToken = "test-session-token" as SessionToken;
-const sessionTokenWithBearer = `Bearer ${sessionToken}` as SessionToken;
+const sessionToken = "mock-session-token";
+const sessionTokenWithBearer = `Bearer ${sessionToken}`;
 
 const mockAcceptMandate = jest.fn();
 

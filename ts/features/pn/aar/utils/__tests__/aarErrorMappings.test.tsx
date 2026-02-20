@@ -6,6 +6,7 @@ import {
 } from "../aarErrorMappings";
 
 const errorMap = testable!.aarProblemJsonComponentMap;
+
 describe("aarErrorMappings", () => {
   const genericErrorSpy = jest
     .spyOn(GENERIC_ERROR, "SendAarGenericErrorComponent")
@@ -77,27 +78,29 @@ describe("aarErrorMappings", () => {
         expect(result).toBe(component);
       });
     });
-  });
 
-  describe("isAarAttachmentTtlError", () => {
-    it("should return true for PN_DELIVERY_MANDATENOTFOUND", () => {
-      expect(isAarAttachmentTtlError("PN_DELIVERY_MANDATENOTFOUND")).toBe(true);
-    });
+    describe("isAarAttachmentTtlError", () => {
+      it("should return true for PN_DELIVERY_MANDATENOTFOUND", () => {
+        expect(isAarAttachmentTtlError("PN_DELIVERY_MANDATENOTFOUND")).toBe(
+          true
+        );
+      });
 
-    it("should return false for undefined", () => {
-      expect(isAarAttachmentTtlError(undefined)).toBe(false);
-    });
+      it("should return false for undefined", () => {
+        expect(isAarAttachmentTtlError(undefined)).toBe(false);
+      });
 
-    it("should return false for an empty string", () => {
-      expect(isAarAttachmentTtlError("")).toBe(false);
-    });
+      it("should return false for an empty string", () => {
+        expect(isAarAttachmentTtlError("")).toBe(false);
+      });
 
-    it("should return false for an unrelated error code", () => {
-      expect(isAarAttachmentTtlError("SOME_OTHER_ERROR")).toBe(false);
-    });
+      it("should return false for an unrelated error code", () => {
+        expect(isAarAttachmentTtlError("SOME_OTHER_ERROR")).toBe(false);
+      });
 
-    it("should return false for a CIE error code", () => {
-      expect(isAarAttachmentTtlError("CIE_EXPIRED_ERROR")).toBe(false);
+      it("should return false for a CIE error code", () => {
+        expect(isAarAttachmentTtlError("CIE_EXPIRED_ERROR")).toBe(false);
+      });
     });
   });
 });

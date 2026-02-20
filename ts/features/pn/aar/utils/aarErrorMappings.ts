@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { ComponentType } from "react";
 import { AARError } from "../../../../../definitions/pn/aar/AARError";
+import { isTestEnv } from "../../../../utils/environment";
 import {
   trackSendAarMandateCieDataError,
   trackSendAarMandateCieExpiredError,
@@ -12,7 +13,6 @@ import {
   GenericCieValidationErrorComponent,
   UnrelatedCieComponent
 } from "../components/errors/SendAarCieValidationErrorComponent";
-import { isDevEnv } from "../../../../utils/environment";
 
 const cieErrors = {
   PN_MANDATE_BADREQUEST: "PN_MANDATE_BADREQUEST",
@@ -66,7 +66,7 @@ export const getSendAarErrorComponent = (
   );
 };
 
-export const testable = isDevEnv
+export const testable = isTestEnv
   ? {
       aarProblemJsonComponentMap
     }

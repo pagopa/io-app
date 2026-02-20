@@ -5,7 +5,6 @@ import { PersistPartial, PersistedState } from "redux-persist";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { SessionToken } from "../../../../../types/SessionToken";
 import {
   loginSuccess,
   logoutSuccess
@@ -102,7 +101,7 @@ describe("persistedPnBannerDismissReducer", () => {
 
       store.dispatch(
         loginSuccess({
-          token: "" as SessionToken,
+          token: "mock-token",
           idp: "test"
         })
       );

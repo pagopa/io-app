@@ -1,4 +1,3 @@
-import { SessionToken } from "../../../../types/SessionToken";
 import { SpidIdp } from "../../../../utils/idps";
 import {
   setStartActiveSessionLogin,
@@ -56,7 +55,7 @@ describe("activeSessionLoginReducer", () => {
   });
 
   it("should handle activeSessionLoginSuccess", () => {
-    const mockToken = "mock-session-token" as SessionToken;
+    const mockToken = "mock-token";
     const state = activeSessionLoginReducer(
       testableInitialState,
       activeSessionLoginSuccess(mockToken)
@@ -83,7 +82,7 @@ describe("activeSessionLoginReducer", () => {
       isActiveSessionLogin: true,
       isUserLoggedIn: true,
       loginInfo: {
-        token: "token" as SessionToken,
+        token: "mock-token",
         fastLoginOptIn: true
       },
       engagement: {
@@ -116,7 +115,7 @@ describe("activeSessionLoginReducer", () => {
       isActiveSessionLogin: true,
       isUserLoggedIn: true,
       loginInfo: {
-        token: "token" as SessionToken,
+        token: "mock-token",
         fastLoginOptIn: true
       },
       engagement: {

@@ -4,7 +4,6 @@ import { testSaga } from "redux-saga-test-plan";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { KeyInfo } from "../../../../lollipop/utils/crypto";
 import { downloadAttachment } from "../../../../messages/store/actions";
@@ -28,7 +27,7 @@ jest.mock("react-native-blob-util", () => ({
 }));
 
 const bearerToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30" as SessionToken;
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30";
 const keyInfo: KeyInfo = {
   keyTag: "a12e9221-c056-4bbc-8623-ca92df29361e",
   publicKey: {
@@ -272,6 +271,7 @@ describe("getAttachmentMetadata", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   [undefined, mandateId].forEach(mandateIdVariant => {
     [false, true].forEach(useUATEnvironment => {
       it(`should return url on successful response (mandateId: ${mandateIdVariant} isUAT: ${useUATEnvironment})`, () => {
@@ -445,6 +445,102 @@ describe("getAttachmentMetadata", () => {
           );
         }
         expect(expectionThrown).toBe(true);
+        expect(mockedGetNotificationAttachmentInput.mock.calls.length).toBe(1);
+        expect(mockedGetNotificationAttachmentInput.mock.calls[0].length).toBe(
+          1
+        );
+        expect(mockedGetNotificationAttachmentInput.mock.calls[0][0]).toEqual({
+          Bearer: `Bearer ${bearerToken}`,
+          urlEncodedBase64AttachmentUrl: encodedUrl,
+          "x-pagopa-pn-io-src": "QR_CODE",
+          mandateId: mandateIdVariant,
+          isTest: useUATEnvironment
+        });
+      });
+      it(`should throw PN_DELIVERY_MANDATENOTFOUND on 500 response with AAR TTL error (mandateId: ${mandateIdVariant} isUAT: ${useUATEnvironment})`, () => {
+        const response = E.right({
+          status: 500,
+          value: {
+            status: 404,
+            errors: [{ code: "PN_DELIVERY_MANDATENOTFOUND" }]
+          }
+        });
+        const {
+          mockedGetNotificationAttachment,
+          mockedGetNotificationAttachmentInput
+        } = generateMocks(response);
+        // eslint-disable-next-line functional/no-let
+        let exceptionThrown = false;
+        try {
+          testSaga(
+            testable!.getAttachmentMetadata,
+            bearerToken,
+            keyInfo,
+            attachment.url,
+            useUATEnvironment,
+            mandateIdVariant,
+            downloadRequestAction
+          )
+            .next()
+            .call(
+              withRefreshApiCall,
+              mockedGetNotificationAttachment,
+              downloadRequestAction
+            )
+            .next(response);
+        } catch (e: unknown) {
+          exceptionThrown = true;
+          expect(e).toEqual(Error("PN_DELIVERY_MANDATENOTFOUND"));
+        }
+        expect(exceptionThrown).toBe(true);
+        expect(mockedGetNotificationAttachmentInput.mock.calls.length).toBe(1);
+        expect(mockedGetNotificationAttachmentInput.mock.calls[0].length).toBe(
+          1
+        );
+        expect(mockedGetNotificationAttachmentInput.mock.calls[0][0]).toEqual({
+          Bearer: `Bearer ${bearerToken}`,
+          urlEncodedBase64AttachmentUrl: encodedUrl,
+          "x-pagopa-pn-io-src": "QR_CODE",
+          mandateId: mandateIdVariant,
+          isTest: useUATEnvironment
+        });
+      });
+      it(`should fall through to generic HTTP error on 500 response without AAR TTL error code (mandateId: ${mandateIdVariant} isUAT: ${useUATEnvironment})`, () => {
+        const response = E.right({
+          status: 500,
+          value: {
+            status: 404,
+            errors: [{ code: "SOME_OTHER_ERROR" }]
+          }
+        });
+        const {
+          mockedGetNotificationAttachment,
+          mockedGetNotificationAttachmentInput
+        } = generateMocks(response);
+        // eslint-disable-next-line functional/no-let
+        let exceptionThrown = false;
+        try {
+          testSaga(
+            testable!.getAttachmentMetadata,
+            bearerToken,
+            keyInfo,
+            attachment.url,
+            useUATEnvironment,
+            mandateIdVariant,
+            downloadRequestAction
+          )
+            .next()
+            .call(
+              withRefreshApiCall,
+              mockedGetNotificationAttachment,
+              downloadRequestAction
+            )
+            .next(response);
+        } catch (e: unknown) {
+          exceptionThrown = true;
+          expect((e as Error).message).toMatch(/^HTTP request failed/);
+        }
+        expect(exceptionThrown).toBe(true);
         expect(mockedGetNotificationAttachmentInput.mock.calls.length).toBe(1);
         expect(mockedGetNotificationAttachmentInput.mock.calls[0].length).toBe(
           1

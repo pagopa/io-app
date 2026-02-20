@@ -9,7 +9,6 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { profileLoadSuccess } from "../../../settings/common/store/actions";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { SessionToken } from "../../../../types/SessionToken";
 import * as appVersion from "../../../../utils/appVersion";
 import * as device from "../../../../utils/device";
 import { SpidIdp } from "../../../../utils/idps";
@@ -150,7 +149,7 @@ describe("the ZendeskAskPermissions screen", () => {
         store.dispatch(
           loginSuccess({
             idp: "test",
-            token: "123456" as SessionToken
+            token: "mock-token"
           })
         );
         store.dispatch(
@@ -173,7 +172,7 @@ describe("the ZendeskAskPermissions screen", () => {
         store.dispatch(
           loginSuccess({
             idp: "test",
-            token: "123456" as SessionToken
+            token: "mock-token"
           })
         );
         store.dispatch(
@@ -198,7 +197,7 @@ describe("the ZendeskAskPermissions screen", () => {
         store.dispatch(
           loginSuccess({
             idp: "test",
-            token: "123456" as SessionToken
+            token: "mock-token"
           })
         );
         store.dispatch(
