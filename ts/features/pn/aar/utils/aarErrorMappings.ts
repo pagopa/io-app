@@ -54,21 +54,20 @@ export const getSendAarErrorComponent = (
 ): ComponentType => {
   const maybeErrorKey = errors
     ?.map(({ code }) => code)
-    .find(error => error in aarProblemJsonComponentMap);
+    .find(
+      (error): error is keyof typeof aarProblemJsonComponentMap =>
+        error in aarProblemJsonComponentMap
+    );
 
   if (maybeErrorKey == null) {
     return SendAarGenericErrorComponent;
   }
 
-  return _.get(
-    aarProblemJsonComponentMap,
-    maybeErrorKey,
-    SendAarGenericErrorComponent
-  );
+  return aarProblemJsonComponentMap[maybeErrorKey];
 };
 
 export const testable = isTestEnv
   ? {
       aarProblemJsonComponentMap
     }
-  : undefined;
+  : {};

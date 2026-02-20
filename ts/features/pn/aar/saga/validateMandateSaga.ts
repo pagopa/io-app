@@ -4,7 +4,7 @@ import { call, put, select } from "typed-redux-saga/macro";
 import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SagaCallReturnType } from "../../../../types/utils";
-import { isDevEnv } from "../../../../utils/environment";
+import { isTestEnv } from "../../../../utils/environment";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { unknownToReason } from "../../../messages/utils";
 import {
@@ -148,6 +148,6 @@ const handleMixPanelCustomTrackingIfNeeded = (
   }
 };
 
-export const testable = isDevEnv
+export const testable = isTestEnv
   ? { handleMixPanelCustomTrackingIfNeeded }
   : undefined;
