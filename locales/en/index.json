@@ -840,7 +840,8 @@
       "accessibility": {
         "carousel": {
           "label": "IO presentation",
-          "hint": "Carousel that contains an introduction guide to IO functionalities. Select to know the content."
+          "hint": "Carousel that contains an introduction guide to IO functionalities. Select to know the content.",
+          "step": "Slide {{current}} of {{total}}"
         }
       },
       "useful_resources": {
@@ -5488,6 +5489,13 @@
         "cta": "Attiva notifiche push",
         "toast": "Hai attivato le notifiche push"
       }
+    },
+    "tour": {
+      "next": "Next",
+      "back": "Back",
+      "skip": "Skip",
+      "done": "Done",
+      "stepIndicator": "Step {{current}} of {{total}}"
     }
   },
   "support": {

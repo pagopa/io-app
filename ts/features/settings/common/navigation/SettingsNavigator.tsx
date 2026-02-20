@@ -17,6 +17,7 @@ import { CieIasAndMrtdPlaygroundMrtdScreen } from "../../devMode/playgrounds/Cie
 import { IdPayCodePlayGround } from "../../devMode/playgrounds/IdPayCodePlayground";
 import IdPayOnboardingPlayground from "../../devMode/playgrounds/IdPayOnboardingPlayground";
 import { IOMarkdownPlayground } from "../../devMode/playgrounds/IOMarkdownPlayground";
+import { GuidedTourPlayground } from "../../devMode/playgrounds/GuidedTourPlayground";
 import { NfcPlayground } from "../../devMode/playgrounds/NfcPlayground";
 import AppearancePreferenceScreen from "../../preferences/screens/AppearancePreferenceScreen";
 import CalendarsPreferencesScreen from "../../preferences/screens/CalendarsPreferencesScreen";
@@ -227,6 +228,10 @@ const SettingsStackNavigator = () => (
     <Stack.Screen
       name={SETTINGS_ROUTES.NFC_PLAYGROUND}
       component={NfcPlayground}
+    />
+    <Stack.Screen
+      name={SETTINGS_ROUTES.GUIDED_TOUR_PLAYGROUND}
+      component={GuidedTourPlayground}
     />
     <Stack.Screen
       name={SETTINGS_ROUTES.SEND_PLAYGROUND}

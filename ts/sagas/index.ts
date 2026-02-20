@@ -12,6 +12,7 @@ import { watchIdentification } from "../features/identification/sagas";
 import { watchUtmLinkSaga } from "../features/utmLink/saga";
 import { watchZendeskSupportSaga } from "../features/zendesk/saga";
 import { watchForceLogoutActiveSessionLogin } from "../features/authentication/activeSessionLogin/saga/forceLogoutActiveSessionLoginSaga";
+import { watchTourSaga } from "../features/tour/sagas";
 import backendStatusSaga from "./backendStatus";
 import { watchContentSaga } from "./contentLoaders";
 import { loadSystemPreferencesSaga } from "./preferences";
@@ -35,6 +36,7 @@ export default function* root() {
     call(watchUtmLinkSaga),
     call(watchLogoutSaga),
     call(watchForceLogoutActiveSessionLogin),
+    call(watchTourSaga),
     zendeskEnabled ? call(watchZendeskSupportSaga) : undefined
   ]);
 }

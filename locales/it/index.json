@@ -842,7 +842,8 @@
       "accessibility": {
         "carousel": {
           "label": "Presentazione di IO",
-          "hint": "Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto"
+          "hint": "Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto",
+          "step": "Diapositiva {{current}} di {{total}}"
         }
       },
       "useful_resources": {
@@ -5980,6 +5981,13 @@
         "cta": "Attiva notifiche push",
         "toast": "Hai attivato le notifiche push"
       }
+    },
+    "tour": {
+      "next": "Avanti",
+      "back": "Indietro",
+      "skip": "Salta",
+      "done": "Fatto!",
+      "stepIndicator": "Fase {{current}} di {{total}}"
     }
   },
   "support": {
@@ -6851,7 +6859,7 @@
       }
     },
     "whatsNew": {
-      "title": "Abbiamo migliorato l’accesso a IO!",
+      "title": "Abbiamo migliorato l'accesso a IO!",
       "subtitle": "Ora puoi accedere all'app utilizzando il tuo SPID o la tua CIE solo una volta all'anno. Ti basterà poi utilizzare il tuo codice di sblocco o il biometrico per entrare."
     }
   },
