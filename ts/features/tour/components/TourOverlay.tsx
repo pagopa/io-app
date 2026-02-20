@@ -183,7 +183,7 @@ export const TourOverlay = () => {
         }
       }
 
-      const currentScrollY = ref.scrollY.value as number;
+      const currentScrollY = ref.scrollY.value;
       const desiredWindowY = ref.headerHeight + VISIBLE_MARGIN;
       const scrollTarget = Math.max(0, currentScrollY + (m.y - desiredWindowY));
       ref.scrollViewRef.current?.scrollTo({ y: scrollTarget, animated: true });
