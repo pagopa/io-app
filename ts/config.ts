@@ -13,6 +13,9 @@ import Config from "react-native-config";
 const DEFAULT_CONTENT_REPO_URL =
   "https://assets.cdn.io.pagopa.it" as NonEmptyString;
 
+const NEW_DEFAULT_CONTENT_REPO_URL =
+  "https://assets.io.pagopa.it" as NonEmptyString;
+
 // default timeout of fetch (in ms)
 const DEFAULT_FETCH_TIMEOUT_MS = 8000;
 
@@ -166,6 +169,11 @@ export const contentRepoUrl = pipe(
   NonEmptyString.decode,
   E.getOrElse(() => DEFAULT_CONTENT_REPO_URL)
 );
+
+export const newContentRepoUrl =
+  (typeof Config.NEW_CONTENT_REPO_URL === "string" &&
+    Config.NEW_CONTENT_REPO_URL.trim()) ||
+  NEW_DEFAULT_CONTENT_REPO_URL;
 
 export const totMessageFetchWorkers = pipe(
   parseInt(Config.TOT_MESSAGE_FETCH_WORKERS, 10),
