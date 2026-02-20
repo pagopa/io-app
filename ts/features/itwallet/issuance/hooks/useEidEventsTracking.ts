@@ -127,7 +127,10 @@ export const useEidEventsTracking = ({
        */
       return trackItwIdRequestUnexpectedFailure(
         shouldSerializeReason(failure)
-          ? { ...serializeFailureReason(failure), itw_flow: itwFlow }
+          ? {
+              ...serializeFailureReason(failure, "ITW_EID_EVENTS_TRACKING"),
+              itw_flow: itwFlow
+            }
           : { ...failure, itw_flow: itwFlow }
       );
     }
