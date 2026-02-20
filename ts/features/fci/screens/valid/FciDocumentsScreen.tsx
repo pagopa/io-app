@@ -129,11 +129,6 @@ const FciDocumentsScreen = () => {
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
 
-  const { present: presentOnBack, bottomSheet: fciAbortSignatureOnBack } =
-    useFciAbortSignatureFlow({
-      onEndGoBack: true
-    });
-
   const {
     present: showNoSignatureFieldsBs,
     bottomSheet: fciNoSignatureFields
@@ -250,7 +245,7 @@ const FciDocumentsScreen = () => {
     contextualHelp: emptyContextualHelp,
     goBack: () => {
       if (currentDoc <= 0) {
-        presentOnBack();
+        present();
       } else {
         navigation.goBack();
       }
@@ -306,7 +301,6 @@ const FciDocumentsScreen = () => {
         )}
       </View>
       {fciAbortSignature}
-      {fciAbortSignatureOnBack}
       {fciNoSignatureFields}
     </>
   );

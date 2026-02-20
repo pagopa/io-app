@@ -283,13 +283,11 @@ function* clearAllFciFiles(action: ActionType<typeof fciClearAllFiles>) {
 /**
  * Handle the FCI abort requests saga
  */
-function* watchFciEndSaga(
-  action: ActionType<typeof fciEndRequest>
-): SagaIterator {
+function* watchFciEndSaga(): SagaIterator {
   yield* put(fciClearStateRequest());
   yield* put(fciClearAllFiles({ path: FciDownloadPreviewDirectoryPath }));
-  const navigationAction =
-    action.payload?.onEndNavigationAction ??
-    CommonActions.navigate(ROUTES.MAIN);
-  yield* call(NavigationService.dispatchNavigationAction, navigationAction);
+  yield* call(
+    NavigationService.dispatchNavigationAction,
+    CommonActions.navigate(ROUTES.MAIN)
+  );
 }

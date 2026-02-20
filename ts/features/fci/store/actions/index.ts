@@ -4,7 +4,6 @@ import {
   createStandardAction
 } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
-import { CommonActions } from "@react-navigation/native";
 import { CreateFilledDocument } from "../../../../../definitions/fci/CreateFilledDocument";
 import { CreateSignatureBody } from "../../../../../definitions/fci/CreateSignatureBody";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
@@ -99,9 +98,7 @@ export const fciStartSigningRequest = createStandardAction(
 /**
  * clear the FCI store
  */
-export const fciEndRequest = createStandardAction("FCI_END_REQUEST")<{
-  onEndNavigationAction: CommonActions.Action;
-} | void>();
+export const fciEndRequest = createStandardAction("FCI_END_REQUEST")<void>();
 
 /**
  * poll the filled document
