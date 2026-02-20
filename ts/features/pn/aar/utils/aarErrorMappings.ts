@@ -3,6 +3,7 @@ import { ComponentType } from "react";
 import { AARError } from "../../../../../definitions/pn/aar/AARError";
 import { isTestEnv } from "../../../../utils/environment";
 import {
+  trackSendAarMandateCieDataError,
   trackSendAarMandateCieExpiredError,
   trackSendAarMandateCieNotRelatedToDelegatorError
 } from "../analytics";
@@ -30,18 +31,18 @@ const deliveryErrors = {
 } as const;
 type SendAarErrorCodes = keyof (typeof cieErrors & typeof deliveryErrors);
 
-const aarProblemJsonErrorComponentsMap = {
+const aarProblemJsonComponentMap = {
   ..._.mapValues(cieErrors, () => GenericCieValidationErrorComponent),
   [cieErrors.CIE_EXPIRED_ERROR]: CieExpiredComponent,
   [cieErrors.CIE_NOT_RELATED_TO_DELEGATOR_ERROR]: UnrelatedCieComponent
-};
-export const aarProblemJsonErrorTrackingMap = {
+} satisfies { [key in SendAarErrorCodes]?: ComponentType };
+
+export const aarProblemJsonTrackingMap = {
+  ..._.mapValues(cieErrors, () => trackSendAarMandateCieDataError),
   [cieErrors.CIE_EXPIRED_ERROR]: trackSendAarMandateCieExpiredError,
   [cieErrors.CIE_NOT_RELATED_TO_DELEGATOR_ERROR]:
     trackSendAarMandateCieNotRelatedToDelegatorError
-} satisfies {
-  [K in SendAarErrorCodes]?: () => void;
-};
+} satisfies { [key in SendAarErrorCodes]?: (...args: Array<string>) => void };
 
 export const isAarAttachmentTtlError = (
   error?: string
@@ -51,22 +52,22 @@ export const isAarAttachmentTtlError = (
 export const getSendAarErrorComponent = (
   errors: ReadonlyArray<AARError> | undefined
 ): ComponentType => {
-  if (errors === undefined || errors.length === 0) {
-    return SendAarGenericErrorComponent;
-  }
   const maybeErrorKey = errors
-    .map(({ code }) => code)
+    ?.map(({ code }) => code)
     .find(
-      (error): error is keyof typeof aarProblemJsonErrorComponentsMap =>
-        error in aarProblemJsonErrorComponentsMap
+      (error): error is keyof typeof aarProblemJsonComponentMap =>
+        error in aarProblemJsonComponentMap
     );
 
   if (maybeErrorKey == null) {
-    // if none found, return the generic error component
     return SendAarGenericErrorComponent;
   }
 
-  return aarProblemJsonErrorComponentsMap[maybeErrorKey];
+  return aarProblemJsonComponentMap[maybeErrorKey];
 };
 
-export const testable = isTestEnv ? { aarProblemJsonErrorComponentsMap } : {};
+export const testable = isTestEnv
+  ? {
+      aarProblemJsonComponentMap
+    }
+  : {};

@@ -1,24 +1,24 @@
 import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { call, put, select } from "typed-redux-saga/macro";
+import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SagaCallReturnType } from "../../../../types/utils";
+import { isTestEnv } from "../../../../utils/environment";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { unknownToReason } from "../../../messages/utils";
 import {
   aarProblemJsonAnalyticsReport,
-  trackSendAARFailure,
-  trackSendAarMandateCieDataError
+  trackSendAARFailure
 } from "../analytics";
 import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
+import { aarProblemJsonTrackingMap } from "../utils/aarErrorMappings";
 import {
   AARFlowState,
   SendAARFailurePhase,
   sendAARFlowStates
 } from "../utils/stateUtils";
-import { isDevEnv } from "../../../../utils/environment";
-import { aarProblemJsonErrorTrackingMap } from "../utils/aarErrorMappings";
 
 const sendAARFailurePhase: SendAARFailurePhase = "Validate Mandate";
 
@@ -102,12 +102,7 @@ export function* validateMandateSaga(
           status,
           value
         )})`;
-        yield* call(
-          handleMixPanelCustomTrackingIfNeeded,
-          status,
-          value,
-          reason
-        );
+        yield* call(handleMixPanelCustomTrackingIfNeeded, value.errors, reason);
         yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
         const errorState: AARFlowState = {
           type: sendAARFlowStates.ko,
@@ -137,36 +132,22 @@ export function* validateMandateSaga(
   }
 }
 
-function handleMixPanelCustomTrackingIfNeeded<
-  S extends Exclude<
-    AcceptMandateSuccessfulResponse["right"]["status"],
-    204 | 401
-  >
->(
-  status: S,
-  value: Extract<
-    AcceptMandateSuccessfulResponse["right"],
-    { status: S }
-  >["value"],
+const handleMixPanelCustomTrackingIfNeeded = (
+  errors: AARProblemJson["errors"],
   reason: string
-) {
-  if (status === 422) {
-    const maybeErrorKey = value.errors
-      ?.map(({ code }) => code.toUpperCase())
-      .find(
-        (code): code is keyof typeof aarProblemJsonErrorTrackingMap =>
-          code in aarProblemJsonErrorTrackingMap
-      );
+) => {
+  const maybeErrorKey = errors
+    ?.map(({ code }) => code.toUpperCase())
+    .find(
+      (code): code is keyof typeof aarProblemJsonTrackingMap =>
+        code in aarProblemJsonTrackingMap
+    );
 
-    if (maybeErrorKey) {
-      aarProblemJsonErrorTrackingMap[maybeErrorKey]();
-      return;
-    }
+  if (maybeErrorKey) {
+    aarProblemJsonTrackingMap[maybeErrorKey](reason);
   }
+};
 
-  trackSendAarMandateCieDataError(reason);
-}
-
-export const testable = isDevEnv
+export const testable = isTestEnv
   ? { handleMixPanelCustomTrackingIfNeeded }
   : undefined;
