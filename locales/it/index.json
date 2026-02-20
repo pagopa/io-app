@@ -2802,6 +2802,7 @@
       "downloadFailed": "L'allegato non è al momento disponibile. Riprova o contatta l'ente mittente",
       "showPreview": "Visualizza anteprima",
       "failing": {
+        "aarTtlError": "È passato troppo tempo, inquadra di nuovo il codice QR",
         "details": "Non sono riuscito a scaricare l’allegato. Riprova o apri una segnalazione"
       }
     },
