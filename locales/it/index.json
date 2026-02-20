@@ -4359,8 +4359,8 @@
             "subTitle": "Verifica di avere installato l’ultima versione di IO e accedi di nuovo con SPID o CIE."
           },
           "rejected": {
-            "title": "La firma non è andata a buon fine",
-            "subTitle": "L’ente ti contatterà nei prossimi giorni per farti firmare di nuovo. Se non dovesse succedere, scrivi a"
+            "title": "Non è stato possibile firmare i documenti",
+            "subTitle": "Attendi un nuovo messaggio per firmare di nuovo o contatta l’ente all’indirizzo "
           },
           "signing": {
             "title": "La firma non è andata a buon fine",
@@ -4429,7 +4429,7 @@
       },
       "thankYouPage": {
         "title": "Fatto!",
-        "content": "A breve riceverai un messaggio con i documenti firmati.",
+        "content": "Riceverai un messaggio su IO con l’esito della tua richiesta.",
         "cta": "Chiudi"
       },
       "qtspTos": {

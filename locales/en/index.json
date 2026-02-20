@@ -4231,8 +4231,8 @@
             "subTitle": "Make sure you have installed the latest version of IO and log in again with SPID or CIE."
           },
           "rejected": {
-            "title": "The signature failed",
-            "subTitle": "The institution will contact you in the next few days to get you to sign again. If this doesn't happen, please e-mail"
+            "title": "Non è stato possibile firmare i documenti",
+            "subTitle": "Attendi un nuovo messaggio per firmare di nuovo o contatta l’ente all’indirizzo "
           },
           "cancelled": {
             "title": "The signature request has been cancelled",
@@ -4301,7 +4301,7 @@
       },
       "thankYouPage": {
         "title": "Done!",
-        "content": "You will shortly receive a message with the signed documents.",
+        "content": "Riceverai un messaggio su IO con l’esito della tua richiesta.",
         "cta": "Close"
       },
       "qtspTos": {
