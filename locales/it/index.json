@@ -4360,7 +4360,7 @@
           },
           "rejected": {
             "title": "Non è stato possibile firmare i documenti",
-            "subTitle": "Attendi un nuovo messaggio per firmare di nuovo o contatta l’ente all’indirizzo "
+            "subTitle": "Attendi un nuovo messaggio per firmare o contatta l’ente all’indirizzo "
           },
           "signing": {
             "title": "La firma non è andata a buon fine",
