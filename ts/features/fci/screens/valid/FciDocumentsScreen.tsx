@@ -15,6 +15,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as S from "fp-ts/lib/string";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useRef, useState, useEffect, ComponentProps } from "react";
 import { StyleSheet, View } from "react-native";
 import Pdf, { PdfRef } from "react-native-pdf";
@@ -39,7 +40,10 @@ import {
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
-import { fciSignatureDetailDocumentsSelector } from "../../store/reducers/fciSignatureRequest";
+import {
+  fciSignatureDetailDocumentsSelector,
+  fciSignatureRequestSelector
+} from "../../store/reducers/fciSignatureRequest";
 import {
   getOptionalSignatureFields,
   getRequiredSignatureFields,
@@ -64,6 +68,7 @@ const FciDocumentsScreen = () => {
   const route = useRoute<RouteProp<FciParamsList, "FCI_DOCUMENTS">>();
   const currentDoc = route.params.currentDoc ?? 0;
   const documents = useIOSelector(fciSignatureDetailDocumentsSelector);
+  const signatureRequest = useIOSelector(fciSignatureRequestSelector);
   const downloadPath = useIOSelector(fciDownloadPathSelector);
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const navigation = useNavigation();
@@ -80,7 +85,11 @@ const FciDocumentsScreen = () => {
   } = useFooterActionsInlineMeasurements();
 
   useEffect(() => {
-    if (documents.length !== 0 && isFocused) {
+    if (
+      documents.length !== 0 &&
+      isFocused &&
+      !pot.isLoading(signatureRequest)
+    ) {
       dispatch(fciDownloadPreview.request({ url: documents[currentDoc].url }));
     }
     // if the user hasn't checked any signauture field,
@@ -99,7 +108,14 @@ const FciDocumentsScreen = () => {
         })
       );
     }
-  }, [dispatch, documentSignaturesSelector, documents, currentDoc, isFocused]);
+  }, [
+    dispatch,
+    documentSignaturesSelector,
+    documents,
+    currentDoc,
+    isFocused,
+    signatureRequest
+  ]);
 
   useEffect(() => {
     if (isFocused) {
@@ -252,7 +268,7 @@ const FciDocumentsScreen = () => {
     }
   });
 
-  if (S.isEmpty(downloadPath)) {
+  if (pot.isLoading(signatureRequest) || S.isEmpty(downloadPath)) {
     return <LoadingComponent />;
   }
 

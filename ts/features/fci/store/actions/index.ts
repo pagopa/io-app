@@ -28,6 +28,13 @@ export const fciSignatureRequestFromId = createAsyncAction(
 )<string, SignatureRequestDetailView, NetworkError>();
 
 /**
+ * retry flow for signatureRequest by id
+ */
+export const fciSignatureRequestRetryFromId = createStandardAction(
+  "FCI_SIGNATURE_DETAIL_RETRY_REQUEST"
+)<string>();
+
+/**
  * get and handle the QTSP clauses
  */
 export const fciLoadQtspClauses = createAsyncAction(
@@ -143,6 +150,7 @@ export const fciEnvironmentSet = createStandardAction("FCI_ENVIRONMENT_SET")<
 
 export type FciActions =
   | ActionType<typeof fciSignatureRequestFromId>
+  | ActionType<typeof fciSignatureRequestRetryFromId>
   | ActionType<typeof fciLoadQtspClauses>
   | ActionType<typeof fciLoadQtspFilledDocument>
   | ActionType<typeof fciSigningRequest>
