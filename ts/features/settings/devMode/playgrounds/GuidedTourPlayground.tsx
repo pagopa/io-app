@@ -6,13 +6,13 @@ import {
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { useHeaderHeight } from "@react-navigation/elements";
 import { useCallback, useEffect } from "react";
 import { Dimensions, Platform, StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedRef,
   useScrollOffset
 } from "react-native-reanimated";
-import { useHeaderHeight } from "@react-navigation/elements";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -34,8 +34,8 @@ export const GuidedTourPlayground = () => {
 
   const cardBgColor = IOColors[theme["appBackground-secondary"]];
   const fillerBgColor = IOColors[theme["appBackground-primary"]];
-  const isCompleted = useIOSelector(
-    isTourCompletedSelector(PLAYGROUND_GROUP_ID)
+  const isCompleted = useIOSelector(state =>
+    isTourCompletedSelector(state, PLAYGROUND_GROUP_ID)
   );
 
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
