@@ -101,7 +101,7 @@ const ItwL3CredentialOnboardingSection = () => {
           variant="link"
           label={I18n.t("features.wallet.onboarding.addBonus")}
           onPress={() => {
-            navigation.navigate(ITW_ROUTES.MAIN, {
+            navigation.replace(ITW_ROUTES.MAIN, {
               screen: ITW_ROUTES.L3_ONBOARDING,
               params: { page: 1 }
             });

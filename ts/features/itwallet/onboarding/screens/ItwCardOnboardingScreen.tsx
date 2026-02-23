@@ -51,6 +51,7 @@ import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
 import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences.ts";
 
 const CATALOGUE_ENABLED = false;
 
@@ -91,7 +92,7 @@ const ItwCardOnboardingScreen = ({ route }: Props) => {
         label: I18n.t("features.wallet.onboarding.addRestricted"),
         onPress: () => {
           setPage(null);
-          navigation.navigate(ITW_ROUTES.MAIN, {
+          navigation.replace(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.RESTRICTED_MODE_ONBOARDING
           });
         }
@@ -257,6 +258,7 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
 
   const isCgnLoading = useIOSelector(isCgnDetailsLoading);
   const isCgnActive = useIOSelector(isCgnInformationAvailableSelector);
+  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
 
   const startCgnActiviation = useCallback(() => {
     trackStartAddNewCredential("CGN");
@@ -271,21 +273,36 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
     });
   };
 
+  const cgnBaseProps = useMemo(
+    () => ({
+      testID: "cgnModuleTestID",
+      label: I18n.t("features.wallet.onboarding.options.cgn"),
+      onPress: !isCgnActive ? startCgnActiviation : undefined,
+      badge: isCgnActive ? activeBadge : undefined
+    }),
+    [startCgnActiviation, isCgnActive]
+  );
+
   const cgnModule = useMemo(
     () =>
       isCgnLoading ? (
         <ModuleCredential testID="cgnModuleLoadingTestID" isLoading={true} />
+      ) : isL3Enabled ? (
+        <ModuleCredential {...cgnBaseProps} />
       ) : (
         <ModuleCredential
-          testID="cgnModuleTestID"
+          {...cgnBaseProps}
           image={require("../../../../../img/bonus/cgn/cgn_logo.png")}
-          label={I18n.t("features.wallet.onboarding.options.cgn")}
-          onPress={!isCgnActive ? startCgnActiviation : undefined}
-          badge={isCgnActive ? activeBadge : undefined}
         />
       ),
-    [isCgnActive, isCgnLoading, startCgnActiviation]
+    [isCgnLoading, cgnBaseProps, isL3Enabled]
   );
+
+  const baseProps = {
+    testID: "paymentsModuleTestID",
+    label: I18n.t("features.wallet.onboarding.options.payments"),
+    onPress: navigateToPaymentMethodOnboarding
+  };
 
   return (
     <View>
@@ -296,12 +313,11 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
       )}
       <VStack space={8}>
         {cgnModule}
-        <ModuleCredential
-          testID="paymentsModuleTestID"
-          icon="creditCard"
-          label={I18n.t("features.wallet.onboarding.options.payments")}
-          onPress={navigateToPaymentMethodOnboarding}
-        />
+        {isL3Enabled ? (
+          <ModuleCredential {...baseProps} />
+        ) : (
+          <ModuleCredential {...baseProps} icon="creditCard" />
+        )}
       </VStack>
     </View>
   );
