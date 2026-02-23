@@ -278,6 +278,48 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
             testID="cie-id-error-primary-action"
           >
             <View
+              collapsable={false}
+              jestAnimatedProps={
+                {
+                  "value": {},
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {
+                    "backgroundColor": "rgba(11, 62, 227, 1)",
+                    "transform": [
+                      {
+                        "scale": 1,
+                      },
+                    ],
+                  },
+                }
+              }
+              jestInlineStyle={
+                [
+                  {
+                    "alignItems": "center",
+                    "borderCurve": "continuous",
+                    "elevation": 0,
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "overflow": "hidden",
+                    "textAlignVertical": "center",
+                  },
+                  {
+                    "paddingHorizontal": 24,
+                  },
+                  {
+                    "backgroundColor": "#0B3EE3",
+                    "borderColor": "#FFFFFF",
+                    "borderRadius": 8,
+                    "borderWidth": 0,
+                    "height": 48,
+                  },
+                  {},
+                ]
+              }
               style={
                 [
                   {
@@ -289,9 +331,15 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
-                  false,
                   {
-                    "backgroundColor": undefined,
+                    "transform": [
+                      {
+                        "scale": 1,
+                      },
+                    ],
+                  },
+                  {
+                    "backgroundColor": "rgba(11, 62, 227, 1)",
                   },
                   {
                     "paddingHorizontal": 24,
@@ -308,6 +356,30 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
               }
             >
               <View
+                collapsable={false}
+                jestAnimatedProps={
+                  {
+                    "value": {},
+                  }
+                }
+                jestAnimatedStyle={
+                  {
+                    "value": {},
+                  }
+                }
+                jestInlineStyle={
+                  [
+                    {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    },
+                    {
+                      "columnGap": 8,
+                    },
+                    false,
+                  ]
+                }
                 style={
                   [
                     {
@@ -326,8 +398,31 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                   accessibilityElementsHidden={true}
                   accessible={false}
                   allowFontScaling={true}
+                  collapsable={false}
                   ellipsizeMode="tail"
                   importantForAccessibility="no-hide-descendants"
+                  jestAnimatedProps={
+                    {
+                      "value": {},
+                    }
+                  }
+                  jestAnimatedStyle={
+                    {
+                      "value": {
+                        "color": "rgba(255, 255, 255, 1)",
+                      },
+                    }
+                  }
+                  jestInlineStyle={
+                    [
+                      {
+                        "textAlign": "auto",
+                      },
+                      {
+                        "color": "#FFFFFF",
+                      },
+                    ]
+                  }
                   maxFontSizeMultiplier={1.5}
                   numberOfLines={1}
                   style={
@@ -349,7 +444,7 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                           "color": "#FFFFFF",
                         },
                         {
-                          "color": undefined,
+                          "color": "rgba(255, 255, 255, 1)",
                         },
                       ],
                     ]
@@ -425,6 +520,47 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
             testID="cie-id-error-secondary-action"
           >
             <View
+              collapsable={false}
+              jestAnimatedProps={
+                {
+                  "value": {},
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {
+                    "transform": [
+                      {
+                        "scale": 1,
+                      },
+                    ],
+                  },
+                }
+              }
+              jestInlineStyle={
+                [
+                  {
+                    "alignItems": "center",
+                    "borderCurve": "continuous",
+                    "elevation": 0,
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "overflow": "hidden",
+                    "textAlignVertical": "center",
+                  },
+                  {
+                    "paddingHorizontal": 0,
+                  },
+                  {
+                    "backgroundColor": "transparent",
+                    "borderColor": "#0B3EE3",
+                    "borderRadius": 8,
+                    "borderWidth": 0,
+                    "height": undefined,
+                  },
+                  {},
+                ]
+              }
               style={
                 [
                   {
@@ -436,7 +572,13 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
-                  false,
+                  {
+                    "transform": [
+                      {
+                        "scale": 1,
+                      },
+                    ],
+                  },
                   {},
                   {
                     "paddingHorizontal": 0,
@@ -453,6 +595,30 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
               }
             >
               <View
+                collapsable={false}
+                jestAnimatedProps={
+                  {
+                    "value": {},
+                  }
+                }
+                jestAnimatedStyle={
+                  {
+                    "value": {},
+                  }
+                }
+                jestInlineStyle={
+                  [
+                    {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    },
+                    {
+                      "columnGap": 8,
+                    },
+                    false,
+                  ]
+                }
                 style={
                   [
                     {
@@ -471,8 +637,31 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                   accessibilityElementsHidden={true}
                   accessible={false}
                   allowFontScaling={true}
+                  collapsable={false}
                   ellipsizeMode="tail"
                   importantForAccessibility="no-hide-descendants"
+                  jestAnimatedProps={
+                    {
+                      "value": {},
+                    }
+                  }
+                  jestAnimatedStyle={
+                    {
+                      "value": {
+                        "color": "rgba(11, 62, 227, 1)",
+                      },
+                    }
+                  }
+                  jestInlineStyle={
+                    [
+                      {
+                        "textAlign": "auto",
+                      },
+                      {
+                        "color": "#0B3EE3",
+                      },
+                    ]
+                  }
                   maxFontSizeMultiplier={1.5}
                   numberOfLines={1}
                   style={
@@ -494,7 +683,7 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                           "color": "#0B3EE3",
                         },
                         {
-                          "color": undefined,
+                          "color": "rgba(11, 62, 227, 1)",
                         },
                       ],
                     ]
@@ -792,6 +981,48 @@ Inserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura
             testID="cie-id-error-primary-action"
           >
             <View
+              collapsable={false}
+              jestAnimatedProps={
+                {
+                  "value": {},
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {
+                    "backgroundColor": "rgba(11, 62, 227, 1)",
+                    "transform": [
+                      {
+                        "scale": 1,
+                      },
+                    ],
+                  },
+                }
+              }
+              jestInlineStyle={
+                [
+                  {
+                    "alignItems": "center",
+                    "borderCurve": "continuous",
+                    "elevation": 0,
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "overflow": "hidden",
+                    "textAlignVertical": "center",
+                  },
+                  {
+                    "paddingHorizontal": 24,
+                  },
+                  {
+                    "backgroundColor": "#0B3EE3",
+                    "borderColor": "#FFFFFF",
+                    "borderRadius": 8,
+                    "borderWidth": 0,
+                    "height": 48,
+                  },
+                  {},
+                ]
+              }
               style={
                 [
                   {
@@ -803,9 +1034,15 @@ Inserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
-                  false,
                   {
-                    "backgroundColor": undefined,
+                    "transform": [
+                      {
+                        "scale": 1,
+                      },
+                    ],
+                  },
+                  {
+                    "backgroundColor": "rgba(11, 62, 227, 1)",
                   },
                   {
                     "paddingHorizontal": 24,
@@ -822,6 +1059,30 @@ Inserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura
               }
             >
               <View
+                collapsable={false}
+                jestAnimatedProps={
+                  {
+                    "value": {},
+                  }
+                }
+                jestAnimatedStyle={
+                  {
+                    "value": {},
+                  }
+                }
+                jestInlineStyle={
+                  [
+                    {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    },
+                    {
+                      "columnGap": 8,
+                    },
+                    false,
+                  ]
+                }
                 style={
                   [
                     {
@@ -840,8 +1101,31 @@ Inserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura
                   accessibilityElementsHidden={true}
                   accessible={false}
                   allowFontScaling={true}
+                  collapsable={false}
                   ellipsizeMode="tail"
                   importantForAccessibility="no-hide-descendants"
+                  jestAnimatedProps={
+                    {
+                      "value": {},
+                    }
+                  }
+                  jestAnimatedStyle={
+                    {
+                      "value": {
+                        "color": "rgba(255, 255, 255, 1)",
+                      },
+                    }
+                  }
+                  jestInlineStyle={
+                    [
+                      {
+                        "textAlign": "auto",
+                      },
+                      {
+                        "color": "#FFFFFF",
+                      },
+                    ]
+                  }
                   maxFontSizeMultiplier={1.5}
                   numberOfLines={1}
                   style={
@@ -863,7 +1147,7 @@ Inserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura
                           "color": "#FFFFFF",
                         },
                         {
-                          "color": undefined,
+                          "color": "rgba(255, 255, 255, 1)",
                         },
                       ],
                     ]
@@ -939,6 +1223,47 @@ Inserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura
             testID="cie-id-error-secondary-action"
           >
             <View
+              collapsable={false}
+              jestAnimatedProps={
+                {
+                  "value": {},
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {
+                    "transform": [
+                      {
+                        "scale": 1,
+                      },
+                    ],
+                  },
+                }
+              }
+              jestInlineStyle={
+                [
+                  {
+                    "alignItems": "center",
+                    "borderCurve": "continuous",
+                    "elevation": 0,
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "overflow": "hidden",
+                    "textAlignVertical": "center",
+                  },
+                  {
+                    "paddingHorizontal": 0,
+                  },
+                  {
+                    "backgroundColor": "transparent",
+                    "borderColor": "#0B3EE3",
+                    "borderRadius": 8,
+                    "borderWidth": 0,
+                    "height": undefined,
+                  },
+                  {},
+                ]
+              }
               style={
                 [
                   {
@@ -950,7 +1275,13 @@ Inserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
-                  false,
+                  {
+                    "transform": [
+                      {
+                        "scale": 1,
+                      },
+                    ],
+                  },
                   {},
                   {
                     "paddingHorizontal": 0,
@@ -967,6 +1298,30 @@ Inserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura
               }
             >
               <View
+                collapsable={false}
+                jestAnimatedProps={
+                  {
+                    "value": {},
+                  }
+                }
+                jestAnimatedStyle={
+                  {
+                    "value": {},
+                  }
+                }
+                jestInlineStyle={
+                  [
+                    {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    },
+                    {
+                      "columnGap": 8,
+                    },
+                    false,
+                  ]
+                }
                 style={
                   [
                     {
@@ -985,8 +1340,31 @@ Inserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura
                   accessibilityElementsHidden={true}
                   accessible={false}
                   allowFontScaling={true}
+                  collapsable={false}
                   ellipsizeMode="tail"
                   importantForAccessibility="no-hide-descendants"
+                  jestAnimatedProps={
+                    {
+                      "value": {},
+                    }
+                  }
+                  jestAnimatedStyle={
+                    {
+                      "value": {
+                        "color": "rgba(11, 62, 227, 1)",
+                      },
+                    }
+                  }
+                  jestInlineStyle={
+                    [
+                      {
+                        "textAlign": "auto",
+                      },
+                      {
+                        "color": "#0B3EE3",
+                      },
+                    ]
+                  }
                   maxFontSizeMultiplier={1.5}
                   numberOfLines={1}
                   style={
@@ -1008,7 +1386,7 @@ Inserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura
                           "color": "#0B3EE3",
                         },
                         {
-                          "color": undefined,
+                          "color": "rgba(11, 62, 227, 1)",
                         },
                       ],
                     ]

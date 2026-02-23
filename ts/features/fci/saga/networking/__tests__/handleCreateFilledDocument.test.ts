@@ -11,7 +11,6 @@ import {
   handleCreateFilledDocument
 } from "../handleCreateFilledDocument";
 import { FilledDocumentDetailView } from "../../../../../../definitions/fci/FilledDocumentDetailView";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 
 const mockedPayload: CreateFilledDocument = {
@@ -35,13 +34,13 @@ describe("handleCreateFilledDocument", () => {
   };
   const postQtspFilledBodyRequest = mockBackendFciClient({
     body: loadAction.payload,
-    Bearer: "mockedToken"
+    Bearer: "mock-token"
   });
   it("Should dispatch fciLoadQtspFilledDocument.success with the response payload if the response is right and the status code is 200", () => {
     testSaga(
       handleCreateFilledDocument,
       mockBackendFciClient,
-      "mockedToken" as SessionToken,
+      "mock-token",
       loadAction
     )
       .next()
@@ -57,7 +56,7 @@ describe("handleCreateFilledDocument", () => {
     testSaga(
       handleCreateFilledDocument,
       mockBackendFciClient,
-      "mockedToken" as SessionToken,
+      "mock-token",
       loadAction
     )
       .next()
@@ -75,7 +74,7 @@ describe("handleCreateFilledDocument", () => {
     testSaga(
       handleCreateFilledDocument,
       mockBackendFciClient,
-      "mockedToken" as SessionToken,
+      "mock-token",
       loadAction
     )
       .next()
@@ -96,7 +95,7 @@ describe("handleCreateFilledDocument", () => {
     testSaga(
       handleCreateFilledDocument,
       mockBackendFciClient,
-      "mockedToken" as SessionToken,
+      "mock-token",
       loadAction
     )
       .next()
