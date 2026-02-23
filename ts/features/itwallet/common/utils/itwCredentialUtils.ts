@@ -10,7 +10,7 @@ import {
   CredentialFormat,
   CredentialMetadata,
   ItwCredentialStatus,
-  Verification
+  StoredVerification
 } from "./itwTypesUtils";
 
 // Credentials that can be actively requested and obtained by the user
@@ -132,7 +132,7 @@ type ExtractVerification = (args: {
   format: CredentialMetadata["format"];
   parsedCredential: CredentialMetadata["parsedCredential"];
   credential: CredentialBundle["credential"];
-}) => Verification | undefined;
+}) => StoredVerification | undefined;
 
 /**
  * Extracts the verification object from a stored credential based on its format.
@@ -145,14 +145,21 @@ export const extractVerification: ExtractVerification = ({
   credential
 }) => {
   try {
-    switch (format) {
-      case CredentialFormat.SD_JWT:
-        return SdJwt.getVerification(credential);
-      case CredentialFormat.MDOC:
-        return Mdoc.getVerificationFromParsedCredential(parsedCredential);
-      default:
-        return undefined;
+    const verification = (() => {
+      switch (format) {
+        case CredentialFormat.SD_JWT:
+          return SdJwt.getVerification(credential);
+        case CredentialFormat.MDOC:
+          return Mdoc.getVerificationFromParsedCredential(parsedCredential);
+        default:
+          return undefined;
+      }
+    })();
+    if (!verification) {
+      return undefined;
     }
+    const { trust_framework, assurance_level } = verification;
+    return { trust_framework, assurance_level };
   } catch {
     return undefined;
   }
