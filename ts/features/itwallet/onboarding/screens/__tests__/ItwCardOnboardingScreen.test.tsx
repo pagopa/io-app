@@ -18,7 +18,7 @@ import * as appParamsList from "../../../../../navigation/params/AppParamsList";
 import { ItwCardOnboardingScreen } from "../ItwCardOnboardingScreen";
 
 describe("ItwCardOnboardingScreen", () => {
-  const navigateMock = jest.fn();
+  const replaceMock = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -31,7 +31,7 @@ describe("ItwCardOnboardingScreen", () => {
     jest.spyOn(envSelectors, "selectItwEnv").mockReturnValue("prod" as EnvType);
 
     jest.spyOn(appParamsList, "useIONavigation").mockReturnValue({
-      navigate: navigateMock
+      replace: replaceMock
     } as any);
   });
 
@@ -95,7 +95,7 @@ describe("ItwCardOnboardingScreen", () => {
 
     fireEvent.press(button);
 
-    expect(navigateMock).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+    expect(replaceMock).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.RESTRICTED_MODE_ONBOARDING
     });
   });

@@ -19,13 +19,13 @@ import * as appParamsList from "../../../../../navigation/params/AppParamsList";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 
 describe("ItwCardRestrictedModeScreen", () => {
-  const navigateMock = jest.fn();
+  const replaceMock = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
 
     jest.spyOn(appParamsList, "useIONavigation").mockReturnValue({
-      navigate: navigateMock
+      replace: replaceMock
     } as any);
 
     jest
@@ -59,7 +59,7 @@ describe("ItwCardRestrictedModeScreen", () => {
 
     fireEvent.press(getByTestId("add-bonus-action-testID"));
 
-    expect(navigateMock).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+    expect(replaceMock).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.L3_ONBOARDING,
       params: { page: 1 }
     });
