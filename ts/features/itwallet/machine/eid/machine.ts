@@ -917,8 +917,8 @@ export const itwEidIssuanceMachine = setup({
             "Displays informations to prepare the CIE for reading (currently not used for CAN flow).",
           entry: "navigateToCieCardPreparationScreen",
           on: {
-            back: {
-              target: "WaitingForCan"
+            close: {
+              actions: "closeIssuance"
             },
             next: {
               target: "DisplayingCieNfcPreparationInstructions"
@@ -930,6 +930,9 @@ export const itwEidIssuanceMachine = setup({
             "Once the challenge is initialized, we show NFC instructions with a dedicated screen.",
           entry: "navigateToCieCanPreparationScreen",
           on: {
+            close: {
+              actions: "closeIssuance"
+            },
             next: {
               target: "WaitingForCan"
             }

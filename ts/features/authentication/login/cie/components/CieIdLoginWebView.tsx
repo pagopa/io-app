@@ -14,7 +14,6 @@ import { getCieIDLoginUri, isAuthenticationUrl } from "../utils";
 import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLoginSource";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { loggedInAuthSelector } from "../../../common/store/selectors";
 import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
 import { onLoginUriChanged } from "../../../common/utils/login";
@@ -165,7 +164,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
   }, [handleLoginFailure, checkIfUrlIsWhitelisted]);
 
   const handleLoginSuccess = useCallback(
-    (token: SessionToken) => {
+    (token: string) => {
       dispatch(loginSuccess({ token, idp: "cieid" }));
     },
     [dispatch]
