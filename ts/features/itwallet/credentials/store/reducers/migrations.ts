@@ -2,10 +2,12 @@ import { SdJwt } from "@pagopa/io-react-native-wallet";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { MigrationManifest, PersistedState } from "redux-persist";
+import { WALLET_SPEC_VERSION } from "../../../common/utils/constants";
+import { extractVerification } from "../../../common/utils/itwCredentialUtils";
 
 type MigrationState = PersistedState & Record<string, any>;
 
-export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 6;
+export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 7;
 
 export const itwCredentialsStateMigrations: MigrationManifest = {
   // Version 0
@@ -156,6 +158,26 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
             }
           ]
         )
+      )
+    };
+  },
+
+  // Version 7
+  // Add spec_version and verification fields to stored credentials
+  "7": (state: MigrationState) => {
+    const addSpecVersionAndVerification = (cred: Record<string, any>) => ({
+      ...cred,
+      spec_version: WALLET_SPEC_VERSION,
+      verification: extractVerification(cred as any)
+    });
+
+    return {
+      ...state,
+      credentials: Object.fromEntries(
+        Object.values<Record<string, any>>(state.credentials).map(c => [
+          c.credentialId,
+          addSpecVersionAndVerification(c)
+        ])
       )
     };
   }
