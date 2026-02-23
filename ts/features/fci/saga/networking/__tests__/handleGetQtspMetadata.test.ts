@@ -6,7 +6,6 @@ import { mockQtspClausesMetadata } from "../../../types/__mocks__/QtspClausesMet
 import { fciLoadQtspClauses } from "../../../store/actions";
 import { handleGetQtspMetadata } from "../handleGetQtspMetadata";
 import { QtspClausesMetadataDetailView } from "../../../../../../definitions/fci/QtspClausesMetadataDetailView";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { fciIssuerEnvironmentSelector } from "../../../store/reducers/fciSignatureRequest";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 
@@ -26,14 +25,14 @@ describe("handleGetQtspMetadata", () => {
     payload: undefined
   };
   const getQtspClausesMetadataRequest = mockBackendFciClient({
-    Bearer: "mockedToken",
+    Bearer: "mock-token",
     "x-iosign-issuer-environment": "mockedIssuerEnvironment"
   });
   it("Should dispatch fciLoadQtspClauses.success with the response payload if the response is right and the status code is 200", () => {
     testSaga(
       handleGetQtspMetadata,
       mockBackendFciClient,
-      "mockedToken" as SessionToken,
+      "mock-token",
       loadAction
     )
       .next()
@@ -49,7 +48,7 @@ describe("handleGetQtspMetadata", () => {
     testSaga(
       handleGetQtspMetadata,
       mockBackendFciClient,
-      "mockedToken" as SessionToken,
+      "mock-token",
       loadAction
     )
       .next()
@@ -69,7 +68,7 @@ describe("handleGetQtspMetadata", () => {
     testSaga(
       handleGetQtspMetadata,
       mockBackendFciClient,
-      "mockedToken" as SessionToken,
+      "mock-token",
       loadAction
     )
       .next()
@@ -90,7 +89,7 @@ describe("handleGetQtspMetadata", () => {
     testSaga(
       handleGetQtspMetadata,
       mockBackendFciClient,
-      "mockedToken" as SessionToken,
+      "mock-token",
       loadAction
     )
       .next()
