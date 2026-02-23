@@ -600,7 +600,12 @@
             "title": "Möchtest du die Sprache ändern in {{lang}}?",
             "subtitle": "Du musst die App neu starten, um die Änderung zu übernehmen"
           },
-          "toast": {
+          "toastApp": {
+            "success": {
+              "title": "Sprache geändert! Starte die App neu, um die Änderungen zu übernehmen"
+            }
+          },
+          "toastMessages": {
             "success": {
               "title": "Sprache geändert"
             }
