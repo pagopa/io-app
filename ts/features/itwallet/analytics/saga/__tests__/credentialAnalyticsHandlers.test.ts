@@ -40,7 +40,8 @@ const mockedEid: StoredCredential = {
   jwt: {
     issuedAt: "2024-09-30T07:32:49.000Z",
     expiration: jwtExpiration
-  }
+  },
+  spec_version: "1.0.0"
 };
 const mockedMdl: StoredCredential = {
   credential: "",
@@ -55,7 +56,8 @@ const mockedMdl: StoredCredential = {
   jwt: {
     issuedAt: "2024-09-30T07:32:49.000Z",
     expiration: jwtExpiration
-  }
+  },
+  spec_version: "1.0.0"
 };
 
 const store: DeepPartial<GlobalState> = {
