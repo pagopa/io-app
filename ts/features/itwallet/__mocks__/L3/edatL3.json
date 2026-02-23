@@ -48,6 +48,10 @@
     "school_attendance_type": {
       "name": { "it-IT": "Tipo di frequenza", "en-US": "Attendance type" },
       "value": "Frequenza - Scuola Secondaria di II Grado"
+    },
+    "date_of_expiry": {
+      "name": { "it-IT": "Data di scadenza", "en-US": "Expiry date" },
+      "value": "2026-02-16"
     }
   },
   "keyTag": "f7b9d056-9e6b-49a0-b8bc-678f855fe5ab",
@@ -1408,6 +1412,19 @@
               "display": [
                 { "locale": "it-IT", "name": "Tipo di frequenza" },
                 { "locale": "en-US", "name": "Attendance type" }
+              ]
+            },
+            {
+              "path": ["date_of_expiry"],
+              "display": [
+                {
+                  "locale": "it-IT",
+                  "name": "Data di scadenza"
+                },
+                {
+                  "locale": "en-US",
+                  "name": "Expiry date"
+                }
               ]
             }
           ]
