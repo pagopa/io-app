@@ -48,29 +48,7 @@ describe("itwEidIssuanceMachine actions", () => {
     jest.clearAllMocks();
   });
 
-  it("should skip ITW_ID_METHOD_SELECTED tracking for L3 requirements KO source", () => {
-    const { trackIdentificationMethodSelected } =
-      createEidIssuanceActionsImplementation(
-        mockNavigation,
-        mockStore,
-        mockToast
-      );
-
-    trackIdentificationMethodSelected({
-      context: {
-        level: "l3"
-      },
-      event: {
-        type: "select-identification-mode",
-        mode: "spid",
-        source: "l3-missing-pin-ko"
-      }
-    } as ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>);
-
-    expect(trackItWalletIDMethodSelected).not.toHaveBeenCalled();
-  });
-
-  it("should track ITW_ID_METHOD_SELECTED for method selection screen source", () => {
+  it("should track ITW_ID_METHOD_SELECTED when selecting an identification mode", () => {
     const { trackIdentificationMethodSelected } =
       createEidIssuanceActionsImplementation(
         mockNavigation,
@@ -84,8 +62,7 @@ describe("itwEidIssuanceMachine actions", () => {
       },
       event: {
         type: "select-identification-mode",
-        mode: "cieId",
-        source: "method-selection-screen"
+        mode: "cieId"
       }
     } as ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>);
 

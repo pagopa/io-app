@@ -90,8 +90,7 @@ export const useCieInfoBottomSheet = ({
             });
             machineRef.send({
               type: "select-identification-mode",
-              mode: "cieId",
-              source: "l3-missing-pin-ko"
+              mode: "cieId"
             });
           },
           style: "default"
@@ -110,8 +109,7 @@ export const useCieInfoBottomSheet = ({
             });
             machineRef.send({
               type: "select-identification-mode",
-              mode: "spid",
-              source: "l3-missing-pin-ko"
+              mode: "spid"
             });
           },
           style: "default"

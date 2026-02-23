@@ -43,7 +43,6 @@ export type AddNewCredential = {
 export type SelectIdentificationMode = {
   type: "select-identification-mode";
   mode: IdentificationMode;
-  source?: "method-selection-screen" | "l3-missing-pin-ko";
 };
 
 export type GoToCieWarning = {
