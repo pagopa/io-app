@@ -84,6 +84,7 @@ export const itwEidIssuanceMachine = setup({
     storeWalletInstanceAttestation: notImplemented,
     storeAuthLevel: notImplemented,
     storeEidCredential: notImplemented,
+    storeCredentialUpgradeFailures: notImplemented,
     handleSessionExpired: notImplemented,
     resetWalletInstance: notImplemented,
     freezeSimplifiedActivationRequirements: notImplemented,
@@ -916,8 +917,8 @@ export const itwEidIssuanceMachine = setup({
             "Displays informations to prepare the CIE for reading (currently not used for CAN flow).",
           entry: "navigateToCieCardPreparationScreen",
           on: {
-            back: {
-              target: "WaitingForCan"
+            close: {
+              actions: "closeIssuance"
             },
             next: {
               target: "DisplayingCieNfcPreparationInstructions"
@@ -929,6 +930,9 @@ export const itwEidIssuanceMachine = setup({
             "Once the challenge is initialized, we show NFC instructions with a dedicated screen.",
           entry: "navigateToCieCanPreparationScreen",
           on: {
+            close: {
+              actions: "closeIssuance"
+            },
             next: {
               target: "WaitingForCan"
             }
@@ -1173,6 +1177,7 @@ export const itwEidIssuanceMachine = setup({
           entry: "navigateToSuccessScreen",
           tags: [ItwTags.Loading],
           invoke: {
+            id: "credentialUpgradeMachine",
             src: "credentialUpgradeMachine",
             input: ({ context }) => {
               assert(context.eid, "PID must be defined for credential upgrade");
@@ -1192,9 +1197,12 @@ export const itwEidIssuanceMachine = setup({
             },
             onDone: {
               description: "Credentials upgrade completed successfully",
-              actions: assign(({ event }) => ({
-                failedCredentials: event.output.failedCredentials
-              })),
+              actions: [
+                assign(({ event }) => ({
+                  failedCredentials: event.output.failedCredentials
+                })),
+                "storeCredentialUpgradeFailures"
+              ],
               target: "#itwEidIssuanceMachine.Success"
             },
             onError: {

@@ -16,8 +16,7 @@ import {
   IOVisualCostants,
   ListItemHeader,
   SearchInput,
-  SearchInputRef,
-  VSpacer
+  SearchInputRef
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
@@ -168,7 +167,7 @@ export const SearchScreen = () => {
       return <ServiceListSkeleton />;
     }
 
-    return <VSpacer size={16} />;
+    return <></>;
   }, [isUpdating]);
 
   const ListEmptyComponent = useMemo(() => {
@@ -239,6 +238,8 @@ export const SearchScreen = () => {
         ListFooterComponent={ListFooterComponent}
         ListHeaderComponent={ListHeaderComponent}
         contentContainerStyle={{
+          flexGrow: 1,
+          paddingBottom: insets.bottom,
           paddingHorizontal: IOVisualCostants.appMarginDefault
         }}
         data={data?.institutions}

@@ -128,6 +128,10 @@ export const MessagesSearchScreen = () => {
       <FlatList
         ItemSeparatorComponent={() => <Divider />}
         data={filteredMessages}
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingBottom: insets.bottom
+        }}
         renderItem={renderItemCallback}
         ListEmptyComponent={renderListEmptyComponent}
         keyboardDismissMode={Platform.select({

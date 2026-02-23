@@ -54,14 +54,33 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
       >
         <View
           collapsable={false}
-          style={
+          jestAnimatedProps={
             {
-              "transform": [
-                {
-                  "rotateZ": "0deg",
-                },
-              ],
+              "value": {},
             }
+          }
+          jestAnimatedStyle={
+            {
+              "value": {
+                "transform": [
+                  {
+                    "rotateZ": "0deg",
+                  },
+                ],
+              },
+            }
+          }
+          jestInlineStyle={{}}
+          style={
+            [
+              {
+                "transform": [
+                  {
+                    "rotateZ": "0deg",
+                  },
+                ],
+              },
+            ]
           }
           testID="LoadingSpinnerAnimatedTestID"
         >
@@ -297,6 +316,49 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
           testID="loadingSpinnerOverlayCancelButton"
         >
           <View
+            collapsable={false}
+            jestAnimatedProps={
+              {
+                "value": {},
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {
+                  "backgroundColor": "rgba(9, 50, 182, 0)",
+                  "borderColor": "rgba(11, 62, 227, 1)",
+                  "transform": [
+                    {
+                      "scale": 1,
+                    },
+                  ],
+                },
+              }
+            }
+            jestInlineStyle={
+              [
+                {
+                  "alignItems": "center",
+                  "borderCurve": "continuous",
+                  "elevation": 0,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "overflow": "hidden",
+                  "textAlignVertical": "center",
+                },
+                {
+                  "paddingHorizontal": 24,
+                },
+                {
+                  "backgroundColor": "rgba(9,50,182,0)",
+                  "borderColor": "#0B3EE3",
+                  "borderRadius": 8,
+                  "borderWidth": 2,
+                  "height": 48,
+                },
+                {},
+              ]
+            }
             style={
               [
                 {
@@ -308,10 +370,16 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
                   "overflow": "hidden",
                   "textAlignVertical": "center",
                 },
-                false,
                 {
-                  "backgroundColor": undefined,
-                  "borderColor": undefined,
+                  "transform": [
+                    {
+                      "scale": 1,
+                    },
+                  ],
+                },
+                {
+                  "backgroundColor": "rgba(9, 50, 182, 0)",
+                  "borderColor": "rgba(11, 62, 227, 1)",
                 },
                 {
                   "paddingHorizontal": 24,
@@ -328,6 +396,30 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
             }
           >
             <View
+              collapsable={false}
+              jestAnimatedProps={
+                {
+                  "value": {},
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {},
+                }
+              }
+              jestInlineStyle={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  {
+                    "columnGap": 8,
+                  },
+                  false,
+                ]
+              }
               style={
                 [
                   {
@@ -346,8 +438,31 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
                 accessibilityElementsHidden={true}
                 accessible={false}
                 allowFontScaling={true}
+                collapsable={false}
                 ellipsizeMode="tail"
                 importantForAccessibility="no-hide-descendants"
+                jestAnimatedProps={
+                  {
+                    "value": {},
+                  }
+                }
+                jestAnimatedStyle={
+                  {
+                    "value": {
+                      "color": "rgba(11, 62, 227, 1)",
+                    },
+                  }
+                }
+                jestInlineStyle={
+                  [
+                    {
+                      "textAlign": "auto",
+                    },
+                    {
+                      "color": "#0B3EE3",
+                    },
+                  ]
+                }
                 maxFontSizeMultiplier={1.5}
                 numberOfLines={1}
                 style={
@@ -369,7 +484,7 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
                         "color": "#0B3EE3",
                       },
                       {
-                        "color": undefined,
+                        "color": "rgba(11, 62, 227, 1)",
                       },
                     ],
                   ]
@@ -484,14 +599,33 @@ exports[`LoadingSpinnerOverlay Should match base loading snapshot 1`] = `
       >
         <View
           collapsable={false}
-          style={
+          jestAnimatedProps={
             {
-              "transform": [
-                {
-                  "rotateZ": "0deg",
-                },
-              ],
+              "value": {},
             }
+          }
+          jestAnimatedStyle={
+            {
+              "value": {
+                "transform": [
+                  {
+                    "rotateZ": "0deg",
+                  },
+                ],
+              },
+            }
+          }
+          jestInlineStyle={{}}
+          style={
+            [
+              {
+                "transform": [
+                  {
+                    "rotateZ": "0deg",
+                  },
+                ],
+              },
+            ]
           }
           testID="LoadingSpinnerAnimatedTestID"
         >

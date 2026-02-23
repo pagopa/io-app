@@ -717,7 +717,7 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 44,
-                                "opacity": 0.55,
+                                "opacity": 0.75,
                                 "width": 44,
                               }
                             }
@@ -753,7 +753,7 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
                                     "borderCurve": "continuous",
                                     "borderRadius": 8,
                                     "height": 16,
-                                    "opacity": 0.55,
+                                    "opacity": 0.75,
                                     "width": "100%",
                                   }
                                 }
@@ -775,7 +775,7 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
                                     "borderCurve": "continuous",
                                     "borderRadius": 8,
                                     "height": 16,
-                                    "opacity": 0.55,
+                                    "opacity": 0.75,
                                     "width": "100%",
                                   }
                                 }
@@ -797,7 +797,7 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "height": 8,
-                                  "opacity": 0.55,
+                                  "opacity": 0.75,
                                   "width": "100%",
                                 }
                               }
@@ -819,7 +819,7 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "height": 8,
-                                  "opacity": 0.55,
+                                  "opacity": 0.75,
                                   "width": "100%",
                                 }
                               }

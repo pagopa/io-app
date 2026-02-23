@@ -15,13 +15,9 @@ import LoadingScreenContent from "../../../../../components/screens/LoadingScree
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
-import {
-  trackItWalletIDMethod,
-  trackItwUserWithoutL3Bottomsheet,
-  trackItwUserWithoutL3Requirements
-} from "../../analytics";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { itwDisabledIdentificationMethodsSelector } from "../../../common/store/selectors/remoteConfig";
+import { EidIssuanceLevel } from "../../../machine/eid/context";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
@@ -30,10 +26,17 @@ import {
   selectIssuanceMode
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import {
+  trackItWalletIDMethod,
+  trackItwUserWithoutL3Bottomsheet,
+  trackItwUserWithoutL3Requirements
+} from "../../analytics";
 import { useContinueWithBottomSheet } from "../hooks/useContinueWithBottomSheet";
 
 export type ItwIdentificationNavigationParams = {
   eidReissuing?: boolean;
+  level?: EidIssuanceLevel;
+  credentialType?: string;
   animationEnabled?: boolean;
 };
 
@@ -49,9 +52,11 @@ export const ItwIdentificationModeSelectionScreen = ({
   route
 }: ItwIdentificationModeSelectionScreenProps) => {
   const { name: routeName, params } = route;
-  const { eidReissuing } = params;
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+
+  const issuanceMode =
+    ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
@@ -107,10 +112,15 @@ export const ItwIdentificationModeSelectionScreen = ({
 
   useFocusEffect(
     useCallback(() => {
-      if (eidReissuing) {
-        machineRef.send({ type: "start", mode: "reissuance", level: "l2" });
+      if (params.eidReissuing && issuanceMode !== "reissuance") {
+        machineRef.send({
+          type: "start",
+          mode: "reissuance",
+          level: params.level || "l2",
+          credentialType: params.credentialType
+        });
       }
-    }, [eidReissuing, machineRef])
+    }, [machineRef, params, issuanceMode])
   );
 
   useFocusEffect(
@@ -139,7 +149,7 @@ export const ItwIdentificationModeSelectionScreen = ({
   }, [mode, machineRef, routeName]);
 
   const dismissalDialog = useItwDismissalDialog({
-    enabled: eidReissuing,
+    enabled: params.eidReissuing,
     customLabels: {
       body: ""
     },
@@ -160,7 +170,7 @@ export const ItwIdentificationModeSelectionScreen = ({
       }}
       description={description}
       headerActionsProp={{ showHelp: true }}
-      goBack={eidReissuing ? dismissalDialog.show : undefined}
+      goBack={params.eidReissuing ? dismissalDialog.show : undefined}
     >
       <ContentWrapper>
         <VSpacer size={8} />
@@ -203,7 +213,7 @@ export const ItwIdentificationModeSelectionScreen = ({
               {!isSpidDisabled && <SpidMethodModule />}
             </>
           )}
-          {isL3 && !eidReissuing && (
+          {isL3 && !params.eidReissuing && (
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <IOButton
                 variant="link"

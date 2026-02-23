@@ -23,10 +23,6 @@ import { generateDynamicUrlSelector } from "../../../../store/reducers/backendSt
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import {
-  trackIssuanceCredentialScrollToBottom,
-  trackItwExit
-} from "../analytics";
 import { trackOpenItwTos } from "../../analytics";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { ItwDataExchangeIcons } from "../../common/components/ItwDataExchangeIcons";
@@ -53,9 +49,14 @@ import {
 } from "../../machine/credential/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
+import {
+  trackIssuanceCredentialScrollToBottom,
+  trackItwExit
+} from "../analytics";
 import { ItwRequestedClaimsList } from "../components/ItwRequestedClaimsList";
 
 export type ItwIssuanceCredentialTrustIssuerNavigationParams = {
+  animationEnabled?: boolean;
   credentialType?: string;
   isUpgrade?: boolean;
 };

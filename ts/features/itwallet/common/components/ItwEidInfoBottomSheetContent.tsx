@@ -14,7 +14,7 @@ import { View } from "react-native";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { trackWalletStartDeactivation } from "../../analytics";
+import { trackItwStartDeactivation } from "../../analytics";
 import { mapPIDStatusToMixpanel } from "../../analytics/utils";
 import {
   itwCredentialsEidSelector,
@@ -23,6 +23,7 @@ import {
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { trackCredentialDetail } from "../../presentation/details/analytics";
+import { ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS } from "../../presentation/details/analytics/enum";
 import { useItwStatusIconColor } from "../hooks/useItwStatusIconColor";
 import { parseClaims, WellKnownClaim } from "../utils/itwClaimsUtils";
 import { CredentialMetadata } from "../utils/itwTypesUtils";
@@ -69,7 +70,11 @@ const ItwEidInfoBottomSheetContent = ({
     });
 
     const navigateToWalletRevocationScreen = () => {
-      trackWalletStartDeactivation("ITW_ID_V2");
+      trackItwStartDeactivation({
+        credential: "ITW_ID_V2",
+        screen_name:
+          ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS.ITW_CREDENTIAL_DETAIL
+      });
       navigation.navigate(ITW_ROUTES.MAIN, {
         screen: ITW_ROUTES.WALLET_REVOCATION_SCREEN
       });

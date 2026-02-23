@@ -73,15 +73,16 @@ const PaymentsMethodDetailsScreen = () => {
     return (
       <>
         <PaymentsMethodDetailsBaseScreenComponent
-          card={{ ...cardProps, isExpired: false }}
+          card={cardProps}
           headerTitle={headerTitle}
         >
+          <WalletDetailsPaymentMethodFeatures paymentMethod={paymentMethod} />
+          <VSpacer size={24} />
           {paymentMethodDetails.pspBusinessName && (
             <PaymentsMethodPspDetailsAlert
               pspBusinessName={paymentMethodDetails.pspBusinessName}
             />
           )}
-          <WalletDetailsPaymentMethodFeatures paymentMethod={paymentMethod} />
           <VSpacer size={24} />
           <PaymentsMethodDetailsDeleteButton paymentMethod={paymentMethod} />
         </PaymentsMethodDetailsBaseScreenComponent>

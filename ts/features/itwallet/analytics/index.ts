@@ -23,7 +23,8 @@ import {
   ItwIdMethod,
   CredentialStatusAssertionFailure,
   ItwCredentialDetails,
-  TrackSaveCredentialSuccess
+  TrackSaveCredentialSuccess,
+  TrackItwDeactivation
 } from "./utils/types";
 
 // Screen view events
@@ -89,6 +90,13 @@ export const trackItwSurveyRequest = (properties: TrackQualtricsSurvey) => {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.SURVEY_REQUEST,
     buildEventProperties("UX", "screen_view", properties)
+  );
+};
+
+export const trackItwSettings = () => {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_SETTINGS,
+    buildEventProperties("UX", "screen_view")
   );
 };
 
@@ -183,12 +191,17 @@ export const trackWalletCredentialShowAuthSource = (
   );
 };
 
-export const trackWalletStartDeactivation = (
-  credential: MixPanelCredential
-) => {
+export const trackItwStartActivation = (screen_name: string) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_START_ACTIVATION,
+    buildEventProperties("UX", "action", { screen_name })
+  );
+};
+
+export const trackItwStartDeactivation = (props: TrackItwDeactivation) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_START_DEACTIVATION,
-    buildEventProperties("UX", "action", { credential })
+    buildEventProperties("UX", "action", props)
   );
 };
 

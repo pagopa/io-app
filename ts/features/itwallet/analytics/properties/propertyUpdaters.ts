@@ -1,35 +1,36 @@
 import { getType } from "typesafe-actions";
-import { Action } from "../../../../store/actions/types";
-import { GlobalState } from "../../../../store/reducers/types";
-import { itwAuthLevelSelector } from "../../common/store/selectors/preferences";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import { MixPanelCredential } from "../utils/types";
-import {
-  setOfflineAccessReason,
-  resetOfflineAccessReason
-} from "../../../ingress/store/actions";
 import {
   getPeople,
   isMixpanelInstanceInitialized,
   registerSuperProperties
 } from "../../../../mixpanel";
-import { isItwAnalyticsCredential, mapPIDStatusToMixpanel } from "../utils";
-import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
+import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
+import {
+  resetOfflineAccessReason,
+  setOfflineAccessReason
+} from "../../../ingress/store/actions";
+import { itwAuthLevelSelector } from "../../common/store/selectors/preferences";
+import { isItwAnalyticsCredential } from "../utils";
+import { MixPanelCredential } from "../utils/types";
+import {
+  buildItwBaseProperties,
+  buildPidProperties
+} from "./basePropertyBuilder";
 import {
   ItwProfileProperties,
   forceUpdateItwProfileProperties
 } from "./profileProperties";
-import { buildItwBaseProperties } from "./basePropertyBuilder";
+import {
+  ITW_ANALYTICS_CREDENTIALS,
+  ItwAnalyticsCredential,
+  WalletRevokedAnalyticsEvent
+} from "./propertyTypes";
 import {
   ItwSuperProperties,
   buildItwSuperProperties,
   forceUpdateItwSuperProperties
 } from "./superProperties";
-import {
-  ItwAnalyticsCredential,
-  ITW_ANALYTICS_CREDENTIALS,
-  WalletRevokedAnalyticsEvent
-} from "./propertyTypes";
 
 /**
  * Performs a full sync of all ITW analytics properties
@@ -64,25 +65,15 @@ export const updateItwStatusAndPIDProperties = (state: GlobalState) => {
     return;
   }
 
-  const pidStatus = itwCredentialsEidStatusSelector(state);
+  const pidProperties = buildPidProperties(state);
 
-  const baseProps = {
+  const properties = {
     ITW_STATUS_V2: authLevel,
-    ITW_PID: mapPIDStatusToMixpanel(pidStatus)
+    ...pidProperties
   };
 
-  const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
-  const eIDStatus = !isItwL3 ? mapPIDStatusToMixpanel(pidStatus) : undefined;
-
-  forceUpdateItwProfileProperties({
-    ...baseProps,
-    ...(eIDStatus ? { ITW_ID_V2: eIDStatus } : {})
-  });
-
-  forceUpdateItwSuperProperties({
-    ...baseProps,
-    ...(eIDStatus ? { ITW_ID_V2: eIDStatus } : {})
-  });
+  forceUpdateItwProfileProperties(properties);
+  forceUpdateItwSuperProperties(properties);
 };
 
 /**

@@ -5,7 +5,6 @@ import { Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useIODispatch } from "../../../../store/hooks";
 import { isDefined } from "../../../../utils/guards";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import {
   CieCardReadContent,
   CieCardReadContentProps
@@ -18,10 +17,11 @@ import {
   useCieInternalAuthAndMrtdReading
 } from "../hooks/useCieInternalAuthAndMrtdReading";
 import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
+import { useTrackCieReadingEvents } from "../hooks/useTrackCieReadingEvents";
 import { setAarFlowState } from "../store/actions";
 import { RecipientInfo, sendAARFlowStates } from "../utils/stateUtils";
-import { useTrackCieReadingEvents } from "../hooks/useTrackCieReadingEvents";
-import { sendAarErrorSupportBottomSheetComponent } from "./errors/SendAARErrorComponent";
+import { useAarGenericErrorBottomSheet } from "./errors/hooks/useAarGenericErrorBottomSheet";
+import { SendAarZendeskSecondLevelTag } from "./errors/hooks/useAarStartSendZendeskSupport";
 
 type ScreenContentProps = Omit<CieCardReadContentProps, "progress">;
 
@@ -51,16 +51,10 @@ export const SendAARCieCardReadingComponent = ({
   const errorName = isError ? readState.error.name : undefined;
   const progress = isReadingState(readState) ? readState.progress : 0;
   const { terminateFlow } = useSendAarFlowManager();
-
-  const handleZendeskAssistance = () => {
-    dismiss();
-  };
-  const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
-    component: sendAarErrorSupportBottomSheetComponent(
-      handleZendeskAssistance,
-      errorName
-    ),
-    title: ""
+  const { bottomSheet, present } = useAarGenericErrorBottomSheet({
+    errorName,
+    zendeskSecondLevelTag:
+      SendAarZendeskSecondLevelTag.IO_PROBLEMA_NOTIFICA_SEND_QR_ALTRA_PERSONA
   });
   const handleStartReading = useCallback(() => {
     void startReading(can, verificationCode, "base64url");

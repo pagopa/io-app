@@ -1,6 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 import { SpidIdp } from "../../../../../utils/idps";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { SpidLevel } from "../../../login/cie/utils";
 
 export const setActiveSessionLoginLocalFlag = createStandardAction(
@@ -28,7 +27,7 @@ export const activeSessionLoginFailure = createStandardAction(
 
 export const activeSessionLoginSuccess = createStandardAction(
   "ACTIVE_SESSION_LOGIN_SUCCESS"
-)<SessionToken>();
+)<string>();
 
 export const setFastLoginOptSessionLogin = createStandardAction(
   "SET_FAST_LOGIN_OPT_IN_ACTIVE_SESSION_LOGIN"
@@ -37,7 +36,7 @@ export const setFastLoginOptSessionLogin = createStandardAction(
 export const consolidateActiveSessionLoginData = createStandardAction(
   "CONSOLIDATE_ACTIVE_SESSION_LOGIN_DATA"
 )<{
-  token: SessionToken;
+  token: string;
   idp: SpidIdp;
   fastLoginOptIn: boolean;
   cieIDSelectedSecurityLevel?: SpidLevel;
