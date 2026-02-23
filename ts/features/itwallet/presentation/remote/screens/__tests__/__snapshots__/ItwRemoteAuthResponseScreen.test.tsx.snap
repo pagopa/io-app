@@ -430,8 +430,13 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri i
                                                   "duration": [MockFunction] {
                                                     "calls": [
                                                       [],
+                                                      [],
                                                     ],
                                                     "results": [
+                                                      {
+                                                        "type": "return",
+                                                        "value": 1,
+                                                      },
                                                       {
                                                         "type": "return",
                                                         "value": 1,
@@ -441,8 +446,13 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri i
                                                   "fps": [MockFunction] {
                                                     "calls": [
                                                       [],
+                                                      [],
                                                     ],
                                                     "results": [
+                                                      {
+                                                        "type": "return",
+                                                        "value": 30,
+                                                      },
                                                       {
                                                         "type": "return",
                                                         "value": 30,
