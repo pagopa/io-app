@@ -11,7 +11,6 @@ import {
   logoutRequest,
   sessionExpired
 } from "../../../authentication/common/store/actions";
-import { SessionToken } from "../../../../types/SessionToken";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import {
   createFastLoginClient,
@@ -153,8 +152,7 @@ function* doRefreshTokenSaga(
         if (E.isRight(tokenResponse) && tokenResponse.right.status === 200) {
           // eslint-disable-next-line functional/immutable-data
           requestState.status = "success";
-          const newToken = tokenResponse.right.value
-            .token as unknown as SessionToken;
+          const newToken = tokenResponse.right.value.token;
           yield* put(refreshSessionToken.success(newToken));
           // Reinit all backend clients to use the new token
           yield* put(

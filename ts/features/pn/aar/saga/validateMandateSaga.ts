@@ -2,7 +2,6 @@ import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { call, put, select } from "typed-redux-saga/macro";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { SessionToken } from "../../../../types/SessionToken";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { unknownToReason } from "../../../messages/utils";
@@ -30,7 +29,7 @@ export type AcceptMandateSuccessfulResponse = Extract<
 
 export function* validateMandateSaga(
   acceptMandate: SendAARClient["acceptAARMandate"],
-  sessionToken: SessionToken,
+  sessionToken: string,
   action: ReturnType<typeof setAarFlowState>
 ) {
   if (action.payload.type !== sendAARFlowStates.validatingMandate) {
