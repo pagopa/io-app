@@ -32,7 +32,6 @@ import { useFciNoSignatureFields } from "../../hooks/useFciNoSignatureFields";
 import { FciParamsList } from "../../navigation/params";
 import { FCI_ROUTES } from "../../navigation/routes";
 import {
-  fciClearStateRequest,
   fciDownloadPreview,
   fciUpdateDocumentSignaturesRequest
 } from "../../store/actions";
@@ -246,9 +245,10 @@ const FciDocumentsScreen = () => {
     contextualHelp: emptyContextualHelp,
     goBack: () => {
       if (currentDoc <= 0) {
-        dispatch(fciClearStateRequest());
+        present();
+      } else {
+        navigation.goBack();
       }
-      navigation.goBack();
     }
   });
 
