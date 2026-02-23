@@ -9,17 +9,16 @@ import { PropsWithChildren, useCallback, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
-import { trackWalletShowBack } from "../analytics";
 import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
 import { ItwSkeumorphicCard } from "../../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCard/FlipGestureDetector.tsx";
-import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
+import { trackWalletShowBack } from "../analytics";
 import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialStatus";
 import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton.tsx";
 
@@ -48,7 +47,6 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   }, [credential.credentialType, isItwL3]);
 
   const valuesHidden = useIOSelector(itwIsClaimValueHiddenSelector);
-  const itwFeaturesEnabled = useItwFeaturesEnabled(credential);
 
   const handleCardPress = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
@@ -61,8 +59,7 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   };
 
   const { backgroundColor } = useThemeColorByCredentialType(
-    credential.credentialType,
-    itwFeaturesEnabled
+    credential.credentialType
   );
 
   return (
