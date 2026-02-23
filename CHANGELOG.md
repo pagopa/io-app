@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.24.1-rc.0](https://github.com/pagopa/io-app/compare/3.24.0-rc.4...3.24.1-rc.0) (2026-02-16)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-3922](https://pagopa.atlassian.net/browse/SIW-3922)] Fix method selection screen crashing on reissuance flow ([#7870](https://github.com/pagopa/io-app/issues/7870)) ([6bbfde5](https://github.com/pagopa/io-app/commit/6bbfde5bac8d79b7ddc654fcb05c0e09b955aa76))
+
 ## [3.24.0-rc.4](https://github.com/pagopa/io-app/compare/3.24.0-rc.3...3.24.0-rc.4) (2026-02-12)
 
 

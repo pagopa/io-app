@@ -20,7 +20,6 @@ import { getNetworkError } from "../../../../utils/errors";
 import { FilledDocumentDetailView } from "../../../../../definitions/fci/FilledDocumentDetailView";
 import { fciPollFilledDocumentReadySelector } from "../../store/reducers/fciPollFilledDocument";
 import { FciClient } from "../../api/backendFci";
-import { SessionToken } from "../../../../types/SessionToken";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../../types/utils";
 
@@ -36,7 +35,7 @@ const POLLING_TIME_THRESHOLD = (10 * 2000) as Millisecond;
  */
 export function* handleCreateFilledDocument(
   postQtspFilledBody: FciClient["createFilledDocument"],
-  bearerToken: SessionToken,
+  bearerToken: string,
   action: ActionType<(typeof fciLoadQtspFilledDocument)["request"]>
 ): SagaIterator {
   try {

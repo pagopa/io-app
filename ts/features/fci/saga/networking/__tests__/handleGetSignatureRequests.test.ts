@@ -3,7 +3,6 @@ import { left, right } from "fp-ts/lib/Either";
 import { ActionType } from "typesafe-actions";
 import { getNetworkError } from "../../../../../utils/errors";
 import { fciSignaturesListRequest } from "../../../store/actions";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { handleGetSignatureRequests } from "../handleGetSignatureRequests";
 import { mockedRandomSignatureRequestList } from "../../../types/__mocks__/SignaturesList.mock";
 import { SignatureRequestList } from "../../../../../../definitions/fci/SignatureRequestList";
@@ -25,13 +24,13 @@ describe("handleGetSignatureRequests", () => {
     payload: undefined
   };
   const getSignatureRequestsCall = mockBackendFciClient({
-    Bearer: "mockedToken"
+    Bearer: "mock-token"
   });
   it("it should dispatch fciSignaturesListRequest.success with the response payload if the response is right and the status code is 200", () => {
     testSaga(
       handleGetSignatureRequests,
       mockBackendFciClient,
-      "mockedToken" as SessionToken,
+      "mock-token",
       loadAction
     )
       .next()
@@ -45,7 +44,7 @@ describe("handleGetSignatureRequests", () => {
     testSaga(
       handleGetSignatureRequests,
       mockBackendFciClient,
-      "mockedToken" as SessionToken,
+      "mock-token",
       loadAction
     )
       .next()
@@ -63,7 +62,7 @@ describe("handleGetSignatureRequests", () => {
     testSaga(
       handleGetSignatureRequests,
       mockBackendFciClient,
-      "mockedToken" as SessionToken,
+      "mock-token",
       loadAction
     )
       .next()
@@ -84,7 +83,7 @@ describe("handleGetSignatureRequests", () => {
     testSaga(
       handleGetSignatureRequests,
       mockBackendFciClient,
-      "mockedToken" as SessionToken,
+      "mock-token",
       loadAction
     )
       .next()

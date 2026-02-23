@@ -10,7 +10,6 @@ import {
   resetAuthenticationState
 } from "../actions";
 import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
-import { SessionToken } from "../../../../../types/SessionToken";
 
 const mockError = {
   error: "Network error",
@@ -36,10 +35,10 @@ describe("authenticationReducer", () => {
       sessionToken: "old"
     } as any;
 
-    const action = refreshSessionToken.success("newToken" as SessionToken);
+    const action = refreshSessionToken.success("new-token");
     expect(authenticationReducer(state, action)).toEqual({
       ...state,
-      sessionToken: "newToken"
+      sessionToken: "new-token"
     });
   });
 

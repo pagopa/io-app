@@ -3,7 +3,6 @@ import URLParse from "url-parse";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { SessionToken } from "../../../../types/SessionToken";
 import { trackLoginSpidError } from "../analytics/spidAnalytics";
 import { spidRelayState } from "../../../../config";
 import { IdpData } from "../../../../../definitions/content/IdpData";
@@ -21,7 +20,7 @@ import {
 
 type LoginSuccess = {
   success: true;
-  token: SessionToken;
+  token: string;
 };
 
 type LoginFailure = {
@@ -110,7 +109,7 @@ export const extractLoginResult = (
   if (urlParse.pathname.includes(LOGIN_SUCCESS_PAGE)) {
     const token = getTokenFromUrlParse(urlParse);
     if (!isStringNullyOrEmpty(token)) {
-      return { success: true, token: token as SessionToken };
+      return { success: true, token: token as string };
     }
     return { success: false };
   }
@@ -153,7 +152,7 @@ export const getIdpLoginUri = (
 export const onLoginUriChanged =
   (
     onFailure: (errorCode?: string, errorMessage?: string) => void,
-    onSuccess: (_: SessionToken) => void,
+    onSuccess: (_: string) => void,
     idp?: keyof IdpData,
     flow: LoginType = "auth"
   ) =>

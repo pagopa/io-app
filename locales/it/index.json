@@ -2801,6 +2801,7 @@
       "downloadFailed": "L'allegato non è al momento disponibile. Riprova o contatta l'ente mittente",
       "showPreview": "Visualizza anteprima",
       "failing": {
+        "aarTtlError": "È passato troppo tempo, inquadra di nuovo il codice QR",
         "details": "Non sono riuscito a scaricare l’allegato. Riprova o apri una segnalazione"
       }
     },
@@ -4095,7 +4096,7 @@
           },
           "delegated": {
             "notAdressee": {
-              "warningAlert": "Questa comunicazione non è destinata a te.",
+              "infoAlert": "Stai aiutando un’altra persona ad accedere a una notifica SEND.",
               "title": "Vuoi aprire la notifica SEND di {{name}}?",
               "subtitle": "Se la persona che ha ricevuto la comunicazione ti ha chiesto di farlo, puoi aprire questa notifica SEND per suo conto.",
               "primaryAction": "Apri notifica SEND",
