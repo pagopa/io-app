@@ -1,8 +1,14 @@
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { ComponentProps, useCallback, useMemo } from "react";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import {
+  trackItwDiscoveryBanner,
+  trackItwDiscoveryBannerClosure,
+  trackItwDiscoveryBannerTap
+} from "../../analytics";
+import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
 import { ItwEngagementBanner } from "../../common/components/ItwEngagementBanner";
 import { itwCloseBanner } from "../../common/store/actions/banners";
 import {
@@ -11,13 +17,6 @@ import {
 } from "../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
-import {
-  trackItwDiscoveryBannerClosure,
-  trackItwDiscoveryBannerTap,
-  trackItwDiscoveryBanner
-} from "../../analytics";
-import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 
 type Props = {
   /** Flow type to determine dismissal logic and tracking properties  */
