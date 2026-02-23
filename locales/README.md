@@ -21,7 +21,7 @@ If you want to see the result in the app you must:
 1. Run the command: ```npm run generate:locales```.
 1. Edit the file [ts/i18n.ts](../ts/i18n.ts) by adding the new language source file in the resource object.
 
-    E.g. for German
+    E.g. for Spanish
     ```
     import it from "../locales/it/index.json";
     import en from "../locales/en/index.json";
