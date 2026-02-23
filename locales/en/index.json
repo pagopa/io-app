@@ -180,7 +180,6 @@
       "message": "We have reported this to our team! Please close the app and start again!"
     },
     "markdown": {
-      "reference": "[demo]I am a custom demo tag at the beginning of the markdown[/demo]\n\n# Titolo h1: Lorem ipsum dolor sit amet, consectetur adipisici elit\n\nTesto semplice\n\n## Titolo h2: sed eiusmod tempor incidunt ut labore et dolore magna aliqua\n\ntesto semplice\n\n### Titolo h3: Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.\n\ntesto semplice\n\nLorem **ipsum dolor** sit amet, *consectetur* adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Unam incolunt Belgae, aliam Aquitani, tertiam.\n\n\nLorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Magna pars studiorum, prodita quaerimus. Phasellus laoreet lorem vel dolor tempus vehicula. Fabio vel iudice vincam, sunt in culpa qui officia. Idque Caesaris facere voluntate liceret: sese habere. Tu quoque, Brute, fili mi, nihil timor populi, nihil!  \nNec dubitamus multa iter quae et nos invenerat. Cum sociis natoque penatibus et magnis dis parturient. Donec sed odio operae, eu vulputate felis rhoncus. Tityre, tu patulae recubans sub tegmine fagi dolor. At nos hinc posthac, sitientis piros Afros. Non equidem invideo, miror magis posuere velit aliquet.  \nHi omnes lingua, institutis, legibus inter se differunt. Quae vero auctorem tractata ab fiducia dicuntur. Plura mihi bona sunt, inclinet, amari petere vellent. Sed haec quis possit intrepidus aestimare tellus. Curabitur blandit tempus ardua ridiculus sed magna.\n\n[demo]I am a custom demo tag in the middle of the markdown[/demo]\n\nLorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Fabio vel iudice vincam, sunt in culpa qui officia.\n\n\n> Quote o indent\n\nLista:\n\n- uno\n- due\n- tre\n\nLista numerata:\n\n1. uno\n2. due\n3. tre\n\n\nLink\n\n[esempio di link](https://io.italia.it)\n\n\nEsempio link interni\n\n[home preferenze](ioit://PREFERENCES_HOME),\n[servizi](ioit://SERVICES_HOME),\n[profilo](ioit://PROFILE_MAIN),\n[portafoglio](ioit://WALLET_HOME),\n[privacy](ioit://PROFILE_PRIVACY_MAIN),\n[Termini e condizioni d'uso](ioit://PROFILE_TOS),\n[privacy policy](ioit://PROFILE_PRIVACY)\n[lista messaggi](ioit://MESSAGES_LIST)\n\n\nhttps://help.github.com/articles/basic-writing-and-formatting-syntax/\n",
       "decodeError": "Message can't be decoded"
     },
     "buttons": {
@@ -2521,7 +2520,6 @@
     "showMoreDataBottomSheet": {
       "title": "Identification data",
       "messageId": "Message ID",
-      "messageIdAccessibility": "ID messaggio, copy",
       "pagoPAHeader": "pagoPA notice",
       "noticeCode": "Notice code",
       "noticeCodeAccessibility": "Notice code, copy",
@@ -3712,9 +3710,6 @@
           "payment": "Payment methods",
           "other": "Bonus and more"
         }
-      },
-      "onboarding": {
-        "title": "Cosa vuoi aggiungere al portafoglio?"
       }
     },
     "payments": {
@@ -3795,44 +3790,12 @@
       }
     },
     "itWallet": {
-      "card": {
-        "status": {
-          "verificationExpiring": "Verifica",
-          "verificationExpired": "Verifica"
-        }
-      },
       "verifiableCredentials": {
         "claims": {
           "attachments": "Attachments"
         }
       },
-      "issuance": {
-        "eidPreview": {},
-        "credentialPreview": {
-          "bottomSheet": {
-            "authSource": {
-              "title": "Chi è?",
-              "subtitle": "È l’ente che detiene i dati contenuti all’interno del tuo documento."
-            }
-          }
-        },
-        "walletInstanceNotActive": {
-          "itWallet": {
-            "bodyBold": ""
-          }
-        }
-      },
       "presentation": {
-        "bottomSheets": {
-          "eidInfo": {
-            "alert": {
-              "documents": {
-                "expiring": "Verifica la tua identità entro il {{date}}.",
-                "expired": "È necessario un rapido passaggio di verifica per continuare a usare Documenti su IO."
-              }
-            }
-          }
-        },
         "credentialDetails": {
           "card": {
             "front": "Front",
@@ -3844,7 +3807,6 @@
           "documentDataTitle": "Document data",
           "lastUpdated": "Last updated on {{lastUpdateTime}}",
           "boolClaim": {
-            "true": "Sì",
             "false": "No"
           },
           "hiddenClaim": "Hidden",
@@ -3869,38 +3831,12 @@
           "openPdf": "Show document",
           "shareButton": "Save or share",
           "fiscalCode": "Your Fiscal Code"
-        },
-        "eid": {
-          "verificationExpired": {
-            "title": "Verifica la tua identità",
-            "contentStart": "È un passaggio di sicurezza necessario per continuare ad usare ",
-            "contentBold": "Documenti su IO",
-            "contentEnd": "."
-          }
-        }
-      },
-      "walletInstanceRevoked": {
-        "alert": {
-          "revokedByWalletProvider": {
-            "title": "Documenti su IO è stata disattivata"
-          },
-          "revokedByUser": {
-            "title": "Hai disattivato Documenti su IO",
-            "content": "Se cambi idea, potrai riattivare Documenti su IO in futuro."
-          }
         }
       },
       "offline": {
         "session_expired": {
           "modal": {
             "footerAction": "Log in again"
-          }
-        },
-        "timeout": {
-          "modal": {
-            "title": "",
-            "content": "",
-            "footerAction": ""
           }
         }
       },
@@ -4121,7 +4057,6 @@
       }
     },
     "onboarding": {
-      "headerTitle": "Verifica dei requisiti",
       "beforeContinue": {
         "text": "By clicking Continue, you declare that you have read, understood, and accepted the [Privacy Policy]({{privacyUrl}}) and the [Terms and Conditions of use]({{tosUrl}}).",
         "requestBonus": "Request bonus"
