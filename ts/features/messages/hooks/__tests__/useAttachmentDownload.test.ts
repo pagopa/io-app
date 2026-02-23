@@ -27,15 +27,12 @@ import {
   isRequestedAttachmentDownloadSelector
 } from "../../store/reducers/downloads";
 import { useAttachmentDownload } from "../useAttachmentDownload";
+import NavigationService from "../../../../navigation/NavigationService";
 
 // ---- Mocks ----
 
-const mockNavigate = jest.fn();
-jest.mock("../../../../navigation/params/AppParamsList", () => ({
-  useIONavigation: () => ({
-    navigate: mockNavigate
-  })
-}));
+jest.mock("../../../../navigation/NavigationService");
+const mockNavigate = jest.mocked(NavigationService.navigate);
 
 const mockDispatch = jest.fn();
 const mockGetState = jest.fn(() => ({}));
