@@ -1686,7 +1686,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'lo
                                 "borderCurve": "continuous",
                                 "borderRadius": 4,
                                 "height": 20,
-                                "opacity": 0.55,
+                                "opacity": 0.75,
                                 "width": "100%",
                               }
                             }
@@ -1699,7 +1699,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'lo
                                 "borderCurve": "continuous",
                                 "borderRadius": 4,
                                 "height": 20,
-                                "opacity": 0.55,
+                                "opacity": 0.75,
                                 "width": "100%",
                               }
                             }
@@ -1712,7 +1712,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'lo
                                 "borderCurve": "continuous",
                                 "borderRadius": 4,
                                 "height": 20,
-                                "opacity": 0.55,
+                                "opacity": 0.75,
                                 "width": "90%",
                               }
                             }
@@ -1735,7 +1735,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'lo
                                 "borderCurve": "continuous",
                                 "borderRadius": 4,
                                 "height": 20,
-                                "opacity": 0.55,
+                                "opacity": 0.75,
                                 "width": "100%",
                               }
                             }
@@ -1748,7 +1748,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'lo
                                 "borderCurve": "continuous",
                                 "borderRadius": 4,
                                 "height": 20,
-                                "opacity": 0.55,
+                                "opacity": 0.75,
                                 "width": "100%",
                               }
                             }
@@ -1761,7 +1761,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'lo
                                 "borderCurve": "continuous",
                                 "borderRadius": 4,
                                 "height": 20,
-                                "opacity": 0.55,
+                                "opacity": 0.75,
                                 "width": "90%",
                               }
                             }
@@ -1784,7 +1784,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'lo
                                 "borderCurve": "continuous",
                                 "borderRadius": 4,
                                 "height": 20,
-                                "opacity": 0.55,
+                                "opacity": 0.75,
                                 "width": "100%",
                               }
                             }
@@ -1797,7 +1797,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'lo
                                 "borderCurve": "continuous",
                                 "borderRadius": 4,
                                 "height": 20,
-                                "opacity": 0.55,
+                                "opacity": 0.75,
                                 "width": "100%",
                               }
                             }
@@ -1810,7 +1810,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'lo
                                 "borderCurve": "continuous",
                                 "borderRadius": 4,
                                 "height": 20,
-                                "opacity": 0.55,
+                                "opacity": 0.75,
                                 "width": "90%",
                               }
                             }

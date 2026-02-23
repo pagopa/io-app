@@ -1,21 +1,21 @@
-import { createStore } from "redux";
 import MockDate from "mockdate";
-import {
-  CredentialAlertType,
-  ItwPresentationCredentialStatusAlert,
-  deriveCredentialAlertType
-} from "../ItwPresentationCredentialStatusAlert";
-import { appReducer } from "../../../../../../store/reducers";
+import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../../store/actions/application";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { ITW_ROUTES } from "../../../../navigation/routes";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import {
   ItwCredentialStatus,
   StoredCredential
 } from "../../../../common/utils/itwTypesUtils";
 import * as selectors from "../../../../credentials/store/selectors";
 import { ItwCredentialIssuanceMachineProvider } from "../../../../machine/credential/provider";
+import { ITW_ROUTES } from "../../../../navigation/routes";
+import {
+  CredentialAlertType,
+  ItwPresentationCredentialStatusAlert,
+  deriveCredentialAlertType
+} from "../ItwPresentationCredentialStatusAlert";
 
 type TestCaseParams = [
   ItwCredentialStatus,
@@ -113,7 +113,8 @@ function renderComponent() {
     jwt: {
       issuedAt: "2024-09-30T07:32:49.000Z",
       expiration: "2100-09-04T00:00:00.000Z"
-    }
+    },
+    spec_version: "1.0.0"
   };
 
   const globalState = appReducer(undefined, applicationChangeState("active"));

@@ -58,6 +58,28 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "width": 0,
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "backgroundColor": "#00C5CA",
+              "borderRadius": 4,
+              "height": 4,
+            },
+          ]
+        }
         style={
           [
             {
@@ -90,9 +112,21 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
           }
         }
       >
-        <View
-          accessible={true}
-        >
+        <View>
+          <View
+            accessibilityLabel="Title 2"
+            accessibilityLiveRegion="polite"
+            accessible={true}
+            importantForAccessibility="yes"
+            style={
+              {
+                "height": 1,
+                "opacity": 0,
+                "position": "absolute",
+                "width": 1,
+              }
+            }
+          />
           <Text
             allowFontScaling={true}
             dynamicTypeRamp="title2"
@@ -304,6 +338,47 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
           }
         >
           <View
+            collapsable={false}
+            jestAnimatedProps={
+              {
+                "value": {},
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {
+                  "transform": [
+                    {
+                      "scale": 1,
+                    },
+                  ],
+                },
+              }
+            }
+            jestInlineStyle={
+              [
+                {
+                  "alignItems": "center",
+                  "borderCurve": "continuous",
+                  "elevation": 0,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "overflow": "hidden",
+                  "textAlignVertical": "center",
+                },
+                {
+                  "paddingHorizontal": 0,
+                },
+                {
+                  "backgroundColor": "transparent",
+                  "borderColor": "#0B3EE3",
+                  "borderRadius": 8,
+                  "borderWidth": 0,
+                  "height": undefined,
+                },
+                {},
+              ]
+            }
             style={
               [
                 {
@@ -315,7 +390,13 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                   "overflow": "hidden",
                   "textAlignVertical": "center",
                 },
-                false,
+                {
+                  "transform": [
+                    {
+                      "scale": 1,
+                    },
+                  ],
+                },
                 {},
                 {
                   "paddingHorizontal": 0,
@@ -332,6 +413,30 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
             }
           >
             <View
+              collapsable={false}
+              jestAnimatedProps={
+                {
+                  "value": {},
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {},
+                }
+              }
+              jestInlineStyle={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  {
+                    "columnGap": 8,
+                  },
+                  false,
+                ]
+              }
               style={
                 [
                   {
@@ -350,8 +455,31 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                 accessibilityElementsHidden={true}
                 accessible={false}
                 allowFontScaling={true}
+                collapsable={false}
                 ellipsizeMode="tail"
                 importantForAccessibility="no-hide-descendants"
+                jestAnimatedProps={
+                  {
+                    "value": {},
+                  }
+                }
+                jestAnimatedStyle={
+                  {
+                    "value": {
+                      "color": "rgba(11, 62, 227, 1)",
+                    },
+                  }
+                }
+                jestInlineStyle={
+                  [
+                    {
+                      "textAlign": "auto",
+                    },
+                    {
+                      "color": "#0B3EE3",
+                    },
+                  ]
+                }
                 maxFontSizeMultiplier={1.5}
                 numberOfLines={1}
                 style={
@@ -373,7 +501,7 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                         "color": "#0B3EE3",
                       },
                       {
-                        "color": undefined,
+                        "color": "rgba(11, 62, 227, 1)",
                       },
                     ],
                   ]
@@ -446,9 +574,21 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
           }
         }
       >
-        <View
-          accessible={true}
-        >
+        <View>
+          <View
+            accessibilityLabel="Title 3"
+            accessibilityLiveRegion="polite"
+            accessible={true}
+            importantForAccessibility="yes"
+            style={
+              {
+                "height": 1,
+                "opacity": 0,
+                "position": "absolute",
+                "width": 1,
+              }
+            }
+          />
           <Text
             allowFontScaling={true}
             dynamicTypeRamp="title2"
@@ -709,6 +849,48 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
           }
         >
           <View
+            collapsable={false}
+            jestAnimatedProps={
+              {
+                "value": {},
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {
+                  "backgroundColor": "rgba(11, 62, 227, 1)",
+                  "transform": [
+                    {
+                      "scale": 1,
+                    },
+                  ],
+                },
+              }
+            }
+            jestInlineStyle={
+              [
+                {
+                  "alignItems": "center",
+                  "borderCurve": "continuous",
+                  "elevation": 0,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "overflow": "hidden",
+                  "textAlignVertical": "center",
+                },
+                {
+                  "paddingHorizontal": 24,
+                },
+                {
+                  "backgroundColor": "#0B3EE3",
+                  "borderColor": "#FFFFFF",
+                  "borderRadius": 8,
+                  "borderWidth": 0,
+                  "height": 48,
+                },
+                {},
+              ]
+            }
             style={
               [
                 {
@@ -720,9 +902,15 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                   "overflow": "hidden",
                   "textAlignVertical": "center",
                 },
-                false,
                 {
-                  "backgroundColor": undefined,
+                  "transform": [
+                    {
+                      "scale": 1,
+                    },
+                  ],
+                },
+                {
+                  "backgroundColor": "rgba(11, 62, 227, 1)",
                 },
                 {
                   "paddingHorizontal": 24,
@@ -739,6 +927,30 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
             }
           >
             <View
+              collapsable={false}
+              jestAnimatedProps={
+                {
+                  "value": {},
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {},
+                }
+              }
+              jestInlineStyle={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  {
+                    "columnGap": 8,
+                  },
+                  false,
+                ]
+              }
               style={
                 [
                   {
@@ -757,8 +969,31 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                 accessibilityElementsHidden={true}
                 accessible={false}
                 allowFontScaling={true}
+                collapsable={false}
                 ellipsizeMode="tail"
                 importantForAccessibility="no-hide-descendants"
+                jestAnimatedProps={
+                  {
+                    "value": {},
+                  }
+                }
+                jestAnimatedStyle={
+                  {
+                    "value": {
+                      "color": "rgba(255, 255, 255, 1)",
+                    },
+                  }
+                }
+                jestInlineStyle={
+                  [
+                    {
+                      "textAlign": "auto",
+                    },
+                    {
+                      "color": "#FFFFFF",
+                    },
+                  ]
+                }
                 maxFontSizeMultiplier={1.5}
                 numberOfLines={1}
                 style={
@@ -780,7 +1015,7 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                         "color": "#FFFFFF",
                       },
                       {
-                        "color": undefined,
+                        "color": "rgba(255, 255, 255, 1)",
                       },
                     ],
                   ]
@@ -848,6 +1083,47 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
           }
         >
           <View
+            collapsable={false}
+            jestAnimatedProps={
+              {
+                "value": {},
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {
+                  "transform": [
+                    {
+                      "scale": 1,
+                    },
+                  ],
+                },
+              }
+            }
+            jestInlineStyle={
+              [
+                {
+                  "alignItems": "center",
+                  "borderCurve": "continuous",
+                  "elevation": 0,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "overflow": "hidden",
+                  "textAlignVertical": "center",
+                },
+                {
+                  "paddingHorizontal": 0,
+                },
+                {
+                  "backgroundColor": "transparent",
+                  "borderColor": "#0B3EE3",
+                  "borderRadius": 8,
+                  "borderWidth": 0,
+                  "height": undefined,
+                },
+                {},
+              ]
+            }
             style={
               [
                 {
@@ -859,7 +1135,13 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                   "overflow": "hidden",
                   "textAlignVertical": "center",
                 },
-                false,
+                {
+                  "transform": [
+                    {
+                      "scale": 1,
+                    },
+                  ],
+                },
                 {},
                 {
                   "paddingHorizontal": 0,
@@ -876,6 +1158,30 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
             }
           >
             <View
+              collapsable={false}
+              jestAnimatedProps={
+                {
+                  "value": {},
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {},
+                }
+              }
+              jestInlineStyle={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  {
+                    "columnGap": 8,
+                  },
+                  false,
+                ]
+              }
               style={
                 [
                   {
@@ -894,8 +1200,31 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                 accessibilityElementsHidden={true}
                 accessible={false}
                 allowFontScaling={true}
+                collapsable={false}
                 ellipsizeMode="tail"
                 importantForAccessibility="no-hide-descendants"
+                jestAnimatedProps={
+                  {
+                    "value": {},
+                  }
+                }
+                jestAnimatedStyle={
+                  {
+                    "value": {
+                      "color": "rgba(11, 62, 227, 1)",
+                    },
+                  }
+                }
+                jestInlineStyle={
+                  [
+                    {
+                      "textAlign": "auto",
+                    },
+                    {
+                      "color": "#0B3EE3",
+                    },
+                  ]
+                }
                 maxFontSizeMultiplier={1.5}
                 numberOfLines={1}
                 style={
@@ -917,7 +1246,7 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                         "color": "#0B3EE3",
                       },
                       {
-                        "color": undefined,
+                        "color": "rgba(11, 62, 227, 1)",
                       },
                     ],
                   ]
@@ -990,6 +1319,28 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "width": 0,
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "backgroundColor": "#00C5CA",
+              "borderRadius": 4,
+              "height": 4,
+            },
+          ]
+        }
         style={
           [
             {
@@ -1022,9 +1373,21 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
           }
         }
       >
-        <View
-          accessible={true}
-        >
+        <View>
+          <View
+            accessibilityLabel="Title"
+            accessibilityLiveRegion="polite"
+            accessible={true}
+            importantForAccessibility="yes"
+            style={
+              {
+                "height": 1,
+                "opacity": 0,
+                "position": "absolute",
+                "width": 1,
+              }
+            }
+          />
           <Text
             allowFontScaling={true}
             dynamicTypeRamp="title2"
@@ -1265,6 +1628,28 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "width": 0,
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "backgroundColor": "#00C5CA",
+              "borderRadius": 4,
+              "height": 4,
+            },
+          ]
+        }
         style={
           [
             {
@@ -1297,9 +1682,21 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
           }
         }
       >
-        <View
-          accessible={true}
-        >
+        <View>
+          <View
+            accessibilityLabel="Title 2"
+            accessibilityLiveRegion="polite"
+            accessible={true}
+            importantForAccessibility="yes"
+            style={
+              {
+                "height": 1,
+                "opacity": 0,
+                "position": "absolute",
+                "width": 1,
+              }
+            }
+          />
           <Text
             allowFontScaling={true}
             dynamicTypeRamp="title3"
@@ -1507,6 +1904,47 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
         }
       >
         <View
+          collapsable={false}
+          jestAnimatedProps={
+            {
+              "value": {},
+            }
+          }
+          jestAnimatedStyle={
+            {
+              "value": {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              },
+            }
+          }
+          jestInlineStyle={
+            [
+              {
+                "alignItems": "center",
+                "borderCurve": "continuous",
+                "elevation": 0,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "overflow": "hidden",
+                "textAlignVertical": "center",
+              },
+              {
+                "paddingHorizontal": 0,
+              },
+              {
+                "backgroundColor": "transparent",
+                "borderColor": "#0B3EE3",
+                "borderRadius": 8,
+                "borderWidth": 0,
+                "height": undefined,
+              },
+              {},
+            ]
+          }
           style={
             [
               {
@@ -1518,7 +1956,13 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
                 "overflow": "hidden",
                 "textAlignVertical": "center",
               },
-              false,
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              },
               {},
               {
                 "paddingHorizontal": 0,
@@ -1535,6 +1979,30 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
           }
         >
           <View
+            collapsable={false}
+            jestAnimatedProps={
+              {
+                "value": {},
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+            jestInlineStyle={
+              [
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                },
+                {
+                  "columnGap": 8,
+                },
+                false,
+              ]
+            }
             style={
               [
                 {
@@ -1553,8 +2021,31 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
               accessibilityElementsHidden={true}
               accessible={false}
               allowFontScaling={true}
+              collapsable={false}
               ellipsizeMode="tail"
               importantForAccessibility="no-hide-descendants"
+              jestAnimatedProps={
+                {
+                  "value": {},
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {
+                    "color": "rgba(11, 62, 227, 1)",
+                  },
+                }
+              }
+              jestInlineStyle={
+                [
+                  {
+                    "textAlign": "auto",
+                  },
+                  {
+                    "color": "#0B3EE3",
+                  },
+                ]
+              }
               maxFontSizeMultiplier={1.5}
               numberOfLines={1}
               style={
@@ -1576,7 +2067,7 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
                       "color": "#0B3EE3",
                     },
                     {
-                      "color": undefined,
+                      "color": "rgba(11, 62, 227, 1)",
                     },
                   ],
                 ]
@@ -1648,9 +2139,21 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
           }
         }
       >
-        <View
-          accessible={true}
-        >
+        <View>
+          <View
+            accessibilityLabel="Title 3"
+            accessibilityLiveRegion="polite"
+            accessible={true}
+            importantForAccessibility="yes"
+            style={
+              {
+                "height": 1,
+                "opacity": 0,
+                "position": "absolute",
+                "width": 1,
+              }
+            }
+          />
           <Text
             allowFontScaling={true}
             dynamicTypeRamp="title3"
@@ -1900,6 +2403,48 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "backgroundColor": "rgba(11, 62, 227, 1)",
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "borderCurve": "continuous",
+              "elevation": 0,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "overflow": "hidden",
+              "textAlignVertical": "center",
+            },
+            {
+              "paddingHorizontal": 16,
+            },
+            {
+              "backgroundColor": "#0B3EE3",
+              "borderColor": "#FFFFFF",
+              "borderRadius": 8,
+              "borderWidth": 0,
+              "height": 48,
+            },
+            {},
+          ]
+        }
         style={
           [
             {
@@ -1911,9 +2456,15 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
               "overflow": "hidden",
               "textAlignVertical": "center",
             },
-            false,
             {
-              "backgroundColor": undefined,
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+            {
+              "backgroundColor": "rgba(11, 62, 227, 1)",
             },
             {
               "paddingHorizontal": 16,
@@ -1930,6 +2481,30 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
         }
       >
         <View
+          collapsable={false}
+          jestAnimatedProps={
+            {
+              "value": {},
+            }
+          }
+          jestAnimatedStyle={
+            {
+              "value": {},
+            }
+          }
+          jestInlineStyle={
+            [
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              {
+                "columnGap": 8,
+              },
+              false,
+            ]
+          }
           style={
             [
               {
@@ -1948,8 +2523,31 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
             accessibilityElementsHidden={true}
             accessible={false}
             allowFontScaling={true}
+            collapsable={false}
             ellipsizeMode="tail"
             importantForAccessibility="no-hide-descendants"
+            jestAnimatedProps={
+              {
+                "value": {},
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {
+                  "color": "rgba(255, 255, 255, 1)",
+                },
+              }
+            }
+            jestInlineStyle={
+              [
+                {
+                  "textAlign": "auto",
+                },
+                {
+                  "color": "#FFFFFF",
+                },
+              ]
+            }
             maxFontSizeMultiplier={1.5}
             numberOfLines={1}
             style={
@@ -1971,7 +2569,7 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
                     "color": "#FFFFFF",
                   },
                   {
-                    "color": undefined,
+                    "color": "rgba(255, 255, 255, 1)",
                   },
                 ],
               ]
@@ -2036,6 +2634,47 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
         }
       >
         <View
+          collapsable={false}
+          jestAnimatedProps={
+            {
+              "value": {},
+            }
+          }
+          jestAnimatedStyle={
+            {
+              "value": {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              },
+            }
+          }
+          jestInlineStyle={
+            [
+              {
+                "alignItems": "center",
+                "borderCurve": "continuous",
+                "elevation": 0,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "overflow": "hidden",
+                "textAlignVertical": "center",
+              },
+              {
+                "paddingHorizontal": 0,
+              },
+              {
+                "backgroundColor": "transparent",
+                "borderColor": "#0B3EE3",
+                "borderRadius": 8,
+                "borderWidth": 0,
+                "height": undefined,
+              },
+              {},
+            ]
+          }
           style={
             [
               {
@@ -2047,7 +2686,13 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
                 "overflow": "hidden",
                 "textAlignVertical": "center",
               },
-              false,
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              },
               {},
               {
                 "paddingHorizontal": 0,
@@ -2064,6 +2709,30 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
           }
         >
           <View
+            collapsable={false}
+            jestAnimatedProps={
+              {
+                "value": {},
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+            jestInlineStyle={
+              [
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                },
+                {
+                  "columnGap": 8,
+                },
+                false,
+              ]
+            }
             style={
               [
                 {
@@ -2082,8 +2751,31 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
               accessibilityElementsHidden={true}
               accessible={false}
               allowFontScaling={true}
+              collapsable={false}
               ellipsizeMode="tail"
               importantForAccessibility="no-hide-descendants"
+              jestAnimatedProps={
+                {
+                  "value": {},
+                }
+              }
+              jestAnimatedStyle={
+                {
+                  "value": {
+                    "color": "rgba(11, 62, 227, 1)",
+                  },
+                }
+              }
+              jestInlineStyle={
+                [
+                  {
+                    "textAlign": "auto",
+                  },
+                  {
+                    "color": "#0B3EE3",
+                  },
+                ]
+              }
               maxFontSizeMultiplier={1.5}
               numberOfLines={1}
               style={
@@ -2105,7 +2797,7 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
                       "color": "#0B3EE3",
                     },
                     {
-                      "color": undefined,
+                      "color": "rgba(11, 62, 227, 1)",
                     },
                   ],
                 ]
@@ -2177,6 +2869,28 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "width": 0,
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "backgroundColor": "#00C5CA",
+              "borderRadius": 4,
+              "height": 4,
+            },
+          ]
+        }
         style={
           [
             {
@@ -2209,9 +2923,21 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
           }
         }
       >
-        <View
-          accessible={true}
-        >
+        <View>
+          <View
+            accessibilityLabel="Title"
+            accessibilityLiveRegion="polite"
+            accessible={true}
+            importantForAccessibility="yes"
+            style={
+              {
+                "height": 1,
+                "opacity": 0,
+                "position": "absolute",
+                "width": 1,
+              }
+            }
+          />
           <Text
             allowFontScaling={true}
             dynamicTypeRamp="title3"

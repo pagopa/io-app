@@ -1,4 +1,9 @@
-import { FooterActionsInline, IOColors } from "@pagopa/io-app-design-system";
+import {
+  FooterActionsInline,
+  IOColors,
+  IOSpacing,
+  useFooterActionsInlineMeasurements
+} from "@pagopa/io-app-design-system";
 import {
   RouteProp,
   StackActions,
@@ -27,7 +32,6 @@ import { useFciNoSignatureFields } from "../../hooks/useFciNoSignatureFields";
 import { FciParamsList } from "../../navigation/params";
 import { FCI_ROUTES } from "../../navigation/routes";
 import {
-  fciClearStateRequest,
   fciDownloadPreview,
   fciUpdateDocumentSignaturesRequest
 } from "../../store/actions";
@@ -69,13 +73,14 @@ const FciDocumentsScreen = () => {
   const isFocused = useIsFocused();
   const [focusEpoch, setFocusEpoch] = useState(0);
 
+  const {
+    footerActionsInlineMeasurements,
+    handleFooterActionsInlineMeasurements
+  } = useFooterActionsInlineMeasurements();
+
+  // Initialize document signatures once when documents are loaded
   useEffect(() => {
-    if (documents.length !== 0 && isFocused) {
-      dispatch(fciDownloadPreview.request({ url: documents[currentDoc].url }));
-    }
-    // if the user hasn't checked any signauture field,
-    // we need to initialize the documentSignatures state
-    if (RA.isEmpty(documentSignaturesSelector)) {
+    if (RA.isEmpty(documentSignaturesSelector) && documents.length > 0) {
       pipe(
         documents,
         RA.map(d => {
@@ -89,8 +94,16 @@ const FciDocumentsScreen = () => {
         })
       );
     }
-  }, [dispatch, documentSignaturesSelector, documents, currentDoc, isFocused]);
+  }, [dispatch, documentSignaturesSelector, documents]);
 
+  // Download document when currentDoc changes or screen becomes focused
+  useEffect(() => {
+    if (documents.length !== 0 && isFocused) {
+      dispatch(fciDownloadPreview.request({ url: documents[currentDoc].url }));
+    }
+  }, [dispatch, documents, currentDoc, isFocused]);
+
+  // Reset PDF state when screen refocuses
   useEffect(() => {
     if (isFocused) {
       // needed to re-trigger pdf load when opening the same document twice
@@ -236,9 +249,10 @@ const FciDocumentsScreen = () => {
     contextualHelp: emptyContextualHelp,
     goBack: () => {
       if (currentDoc <= 0) {
-        dispatch(fciClearStateRequest());
+        present();
+      } else {
+        navigation.goBack();
       }
-      navigation.goBack();
     }
   });
 
@@ -272,8 +286,18 @@ const FciDocumentsScreen = () => {
       <View style={{ flex: 1 }} testID={"FciDocumentsScreenTestID"}>
         {documents.length > 0 && (
           <>
-            {renderPager()}
+            <View
+              style={{
+                flex: 1,
+                marginBottom:
+                  footerActionsInlineMeasurements.safeBottomAreaHeight -
+                  IOSpacing.screenEndMargin
+              }}
+            >
+              {renderPager()}
+            </View>
             <FooterActionsInline
+              onMeasure={handleFooterActionsInlineMeasurements}
               startAction={cancelButtonProps}
               endAction={endActionButtonProps}
             />

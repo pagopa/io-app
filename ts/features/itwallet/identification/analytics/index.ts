@@ -144,13 +144,6 @@ export const trackItWalletSpidIDPSelected = (
   );
 };
 
-export const trackItWalletCiePinInfo = (itw_flow: ItwFlow) => {
-  void mixpanelTrack(
-    ITW_IDENTIFICATION_ACTIONS_EVENTS.ITW_CIE_PIN_INFO,
-    buildEventProperties("UX", "action", { itw_flow })
-  );
-};
-
 export const trackItWalletCiePinForgotten = (itw_flow: ItwFlow) => {
   void mixpanelTrack(
     ITW_IDENTIFICATION_ACTIONS_EVENTS.ITW_CIE_PIN_FORGOTTEN,

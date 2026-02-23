@@ -18,7 +18,8 @@ import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/sele
 import {
   itwSetAuthLevel,
   itwFreezeSimplifiedActivationRequirements,
-  itwClearSimplifiedActivationRequirements
+  itwClearSimplifiedActivationRequirements,
+  itwSetCredentialUpgradeFailed
 } from "../../common/store/actions/preferences";
 import {
   itwCredentialsRemoveByType,
@@ -310,6 +311,19 @@ export const createEidIssuanceActionsImplementation = (
 
   clearSimplifiedActivationRequirements: () => {
     store.dispatch(itwClearSimplifiedActivationRequirements());
+  },
+
+  storeCredentialUpgradeFailures: ({
+    event
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assertEvent(event, "xstate.done.actor.credentialUpgradeMachine");
+    store.dispatch(
+      itwSetCredentialUpgradeFailed(
+        event.output.failedCredentials.map(
+          failedCredential => failedCredential.credentialType
+        )
+      )
+    );
   },
 
   loadPidIntoContext: assign<

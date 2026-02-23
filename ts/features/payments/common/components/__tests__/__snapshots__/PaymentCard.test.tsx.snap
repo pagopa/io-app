@@ -45,7 +45,7 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
             "borderCurve": "continuous",
             "borderRadius": 28,
             "height": 24,
-            "opacity": 0.55,
+            "opacity": 0.75,
             "width": "60%",
           }
         }
@@ -58,7 +58,7 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
             "borderCurve": "continuous",
             "borderRadius": 28,
             "height": 24,
-            "opacity": 0.55,
+            "opacity": 0.75,
             "width": "20%",
           }
         }
@@ -81,7 +81,7 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
             "borderCurve": "continuous",
             "borderRadius": 28,
             "height": 16,
-            "opacity": 0.55,
+            "opacity": 0.75,
             "width": "55%",
           }
         }
@@ -94,7 +94,7 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
             "borderCurve": "continuous",
             "borderRadius": 28,
             "height": 16,
-            "opacity": 0.55,
+            "opacity": 0.75,
             "width": "45%",
           }
         }

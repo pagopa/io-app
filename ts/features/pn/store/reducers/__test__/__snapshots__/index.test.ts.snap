@@ -14,6 +14,9 @@ exports[`pnReducer should match snapshot 1`] = `
   "loginEngagement": {
     "hasSendEngagementScreenBeenDismissed": false,
   },
+  "lollipopLambda": {
+    "type": "idle",
+  },
   "tempAarMandate": {
     "mandate": {
       "kind": "undefined",

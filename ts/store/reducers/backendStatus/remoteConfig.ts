@@ -891,3 +891,14 @@ export const sendVisitTheWebsiteUrlSelector = (state: GlobalState) => {
   }
   return "https://cittadini.notifichedigitali.it/auth/login";
 };
+
+export const isSendLollipopPlaygroundEnabledSelector = (
+  state: GlobalState
+): boolean => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isNone(remoteConfigOption)) {
+    return false;
+  }
+  const remoteConfig = remoteConfigOption.value;
+  return !!remoteConfig.pn.lollipopPlaygroundEnabled;
+};

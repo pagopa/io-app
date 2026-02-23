@@ -561,6 +561,42 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                   }
                                 />
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "opacity": 0,
+                                        "transform": [
+                                          {
+                                            "scale": 0.5,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "borderCurve": "continuous",
+                                        "left": 0,
+                                        "position": "absolute",
+                                        "top": 0,
+                                      },
+                                      {
+                                        "borderRadius": 7.5,
+                                        "height": 36,
+                                        "width": 36,
+                                      },
+                                      {
+                                        "backgroundColor": "#0B3EE3",
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -581,7 +617,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                         "opacity": 0,
                                         "transform": [
                                           {
-                                            "scale": undefined,
+                                            "scale": 0.5,
                                           },
                                         ],
                                       },
