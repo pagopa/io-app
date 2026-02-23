@@ -15,7 +15,6 @@ import _ from "lodash";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Alert, View } from "react-native";
 import { Locales } from "../../../../../locales/locales";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { availableTranslations, setLocale } from "../../../../i18n";
 import {
@@ -48,8 +47,7 @@ type AppLocaleId = `app-locale-${AppLocale}`;
 const LanguagesPreferencesScreen = () => {
   const dispatch = useIODispatch();
   const toast = useIOToast();
-  const selectedLanguage = useRef<string | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState(false);
+  const previousSelectedItem = useRef<string | undefined>(undefined);
   const profile = useIOSelector(profileSelector, _.isEqual);
   const prevProfile = usePrevious(profile);
   const preferredLanguageSelect = useIOSelector(
@@ -149,12 +147,6 @@ const LanguagesPreferencesScreen = () => {
   );
 
   useEffect(() => {
-    // start updating
-    if (pot.isUpdating(profile)) {
-      setIsLoading(true);
-      return;
-    }
-
     // update completed
     if (
       prevProfile &&
@@ -162,8 +154,6 @@ const LanguagesPreferencesScreen = () => {
       pot.isSome(profile) &&
       !pot.isError(profile)
     ) {
-      setIsLoading(false);
-      setSelectedItem(selectedLanguage.current);
       toast.success(
         I18n.t(
           "profile.preferences.list.preferred_language.toastMessages.success.title"
@@ -172,24 +162,24 @@ const LanguagesPreferencesScreen = () => {
       return;
     }
 
-    // update error
+    // update error: revert to previous selection
     if (
       prevProfile &&
       pot.isSome(prevProfile) &&
       !pot.isError(prevProfile) &&
       pot.isError(profile)
     ) {
-      setIsLoading(false);
-      setSelectedItem(selectedLanguage.current);
+      setSelectedItem(previousSelectedItem.current);
       toast.error(I18n.t("errors.profileUpdateError"));
     }
-  }, [selectedLanguage, prevProfile, profile, selectedItem, toast]);
+  }, [prevProfile, profile, toast]);
 
   const onLanguageSelected = useCallback(
     (language: string) => {
       if (selectedItem !== language) {
         // eslint-disable-next-line functional/immutable-data
-        selectedLanguage.current = language;
+        previousSelectedItem.current = selectedItem;
+        setSelectedItem(language);
         upsertProfile(language as Locales);
       }
     },
@@ -224,68 +214,66 @@ const LanguagesPreferencesScreen = () => {
   );
 
   return (
-    <LoadingSpinnerOverlay isLoading={isLoading}>
-      <IOScrollViewWithLargeHeader
-        includeContentMargins
-        title={{
-          label: I18n.t("profile.preferences.list.preferred_language.title")
-        }}
-        description={I18n.t(
-          "profile.preferences.list.preferred_language.subtitle"
-        )}
-        canGoback={true}
-        headerActionsProp={{ showHelp: true }}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-      >
-        <VStack space={24}>
-          <View>
-            <ListItemHeader
-              iconName="device"
-              label={I18n.t(
-                "profile.preferences.list.preferred_language.sections.app.title"
-              )}
-            />
-            <BodySmall>
-              {I18n.t(
-                "profile.preferences.list.preferred_language.sections.app.description"
-              )}
-            </BodySmall>
+    <IOScrollViewWithLargeHeader
+      includeContentMargins
+      title={{
+        label: I18n.t("profile.preferences.list.preferred_language.title")
+      }}
+      description={I18n.t(
+        "profile.preferences.list.preferred_language.subtitle"
+      )}
+      canGoback={true}
+      headerActionsProp={{ showHelp: true }}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+    >
+      <VStack space={24}>
+        <View>
+          <ListItemHeader
+            iconName="device"
+            label={I18n.t(
+              "profile.preferences.list.preferred_language.sections.app.title"
+            )}
+          />
+          <BodySmall>
+            {I18n.t(
+              "profile.preferences.list.preferred_language.sections.app.description"
+            )}
+          </BodySmall>
 
-            <VSpacer size={8} />
+          <VSpacer size={8} />
 
-            <RadioGroup<AppLocaleId>
-              type="radioListItem"
-              items={appLocaleOptions}
-              selectedItem={selectedAppLocale}
-              onPress={onAppLanguageSelected}
-            />
-          </View>
+          <RadioGroup<AppLocaleId>
+            type="radioListItem"
+            items={appLocaleOptions}
+            selectedItem={selectedAppLocale}
+            onPress={onAppLanguageSelected}
+          />
+        </View>
 
-          <View>
-            <ListItemHeader
-              iconName="email"
-              label={I18n.t(
-                "profile.preferences.list.preferred_language.sections.messages.title"
-              )}
-            />
-            <BodySmall>
-              {I18n.t(
-                "profile.preferences.list.preferred_language.sections.messages.description"
-              )}
-            </BodySmall>
+        <View>
+          <ListItemHeader
+            iconName="email"
+            label={I18n.t(
+              "profile.preferences.list.preferred_language.sections.messages.title"
+            )}
+          />
+          <BodySmall>
+            {I18n.t(
+              "profile.preferences.list.preferred_language.sections.messages.description"
+            )}
+          </BodySmall>
 
-            <VSpacer size={8} />
+          <VSpacer size={8} />
 
-            <RadioGroup<string>
-              type="radioListItem"
-              items={renderedItem}
-              selectedItem={selectedItem}
-              onPress={onLanguageSelected}
-            />
-          </View>
-        </VStack>
-      </IOScrollViewWithLargeHeader>
-    </LoadingSpinnerOverlay>
+          <RadioGroup<string>
+            type="radioListItem"
+            items={renderedItem}
+            selectedItem={selectedItem}
+            onPress={onLanguageSelected}
+          />
+        </View>
+      </VStack>
+    </IOScrollViewWithLargeHeader>
   );
 };
 
