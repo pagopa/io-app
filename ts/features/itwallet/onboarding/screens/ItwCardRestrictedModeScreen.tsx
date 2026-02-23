@@ -8,7 +8,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
@@ -28,8 +27,6 @@ import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingM
 const CATALOGUE_ENABLED = false;
 
 const ItwCardRestrictedModeScreen = () => {
-  const [page, setPage] = useState(0);
-
   useFocusEffect(trackShowCredentialsList);
 
   return (
@@ -45,7 +42,7 @@ const ItwCardRestrictedModeScreen = () => {
       headerActionsProp={{ showHelp: true }}
     >
       <View style={styles.wrapper}>
-        {page === 0 && <ItwL3CredentialOnboardingSection />}
+        <ItwL3CredentialOnboardingSection />
       </View>
     </IOScrollViewWithLargeHeader>
   );
