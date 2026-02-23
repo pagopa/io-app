@@ -103,14 +103,10 @@ const FciDocumentsScreen = () => {
 
   // Download document when currentDoc changes or screen becomes focused
   useEffect(() => {
-    if (
-      documents.length !== 0 &&
-      isFocused &&
-      !pot.isLoading(signatureRequest)
-    ) {
+    if (documents.length !== 0 && isFocused) {
       dispatch(fciDownloadPreview.request({ url: documents[currentDoc].url }));
     }
-  }, [dispatch, documents, currentDoc, isFocused, signatureRequest]);
+  }, [dispatch, documents, currentDoc, isFocused]);
 
   // Reset PDF state when screen refocuses
   useEffect(() => {
