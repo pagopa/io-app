@@ -1,7 +1,6 @@
 import { SagaIterator } from "redux-saga";
 import { call, fork, select, takeEvery } from "typed-redux-saga/macro";
 import { apiUrlPrefix } from "../../../../config";
-import { SessionToken } from "../../../../types/SessionToken";
 import { watchHomeSaga } from "../../home/saga";
 import { watchInstitutionSaga } from "../../institution/saga";
 import { watchSearchSaga } from "../../search/saga";
@@ -15,7 +14,7 @@ import { specialServicePreferencesSaga } from "./specialServicePreferencesSaga";
 
 export function* watchServicesSaga(
   backendClient: BackendClient,
-  bearerToken: SessionToken
+  bearerToken: string
 ): SagaIterator {
   const servicesClient = yield* call(
     createServicesClient,

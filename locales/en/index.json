@@ -4179,6 +4179,18 @@
           "rateLimitToast": "Non riusciamo ad attivare il servizio SEND, riprova più tardi",
           "activationErrorMessage": "Non riusciamo ad attivare il servizio SEND"
         }
+      },
+      "lollipopPlayground": {
+        "environmentTitle": "Environment",
+        "uatLabel": "Use UAT",
+        "uatDescription": "Sends Service Activation and AAR requests to the UAT environment",
+        "playgroundTitle": "Lollipop Playground",
+        "postBodyLabel": "Post Body",
+        "postBodyPlaceholder": "{\n  p1: \"a string\",\n  p2: {\n    p3: true\n  }\n}",
+        "responseStatusCode": "Response Status Code",
+        "responseBody": "Response Body",
+        "requestGet": "GET",
+        "requestPost": "POST"
       }
     },
     "fci": {

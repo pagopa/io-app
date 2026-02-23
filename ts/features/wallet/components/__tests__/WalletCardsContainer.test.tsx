@@ -34,13 +34,6 @@ import {
 } from "../WalletCardsContainer";
 
 jest.spyOn(Alert, "alert");
-jest.mock("react-native-reanimated", () => ({
-  ...require("react-native-reanimated/mock"),
-  useReducedMotion: jest.fn,
-  Layout: {
-    duration: jest.fn()
-  }
-}));
 
 const mockNavigate = jest.fn();
 const mockAddListener = jest.fn().mockImplementation(_event => jest.fn());

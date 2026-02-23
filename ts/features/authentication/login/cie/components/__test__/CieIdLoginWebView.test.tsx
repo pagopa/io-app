@@ -4,7 +4,6 @@ import { EmitterSubscription, Linking } from "react-native";
 import CieIdLoginWebView from "../CieIdLoginWebView";
 import * as loginHooks from "../../../../../lollipop/hooks/useLollipopLoginSource";
 import * as authSelectors from "../../../../common/store/selectors";
-import { SessionToken } from "../../../../../../types/SessionToken";
 import { SpidLevelEnum } from "../../../../../../../definitions/session_manager/SpidLevel";
 import { loginFailure, loginSuccess } from "../../../../common/store/actions";
 import { withStore } from "../../../../../../utils/jest/withStore";
@@ -16,7 +15,7 @@ const IS_UAT = false;
 const authLoggedIn = {
   kind: "LoggedInWithSessionInfo",
   idp: { id: "", name: "", logo: { light: { uri: "" } }, profileUrl: "" },
-  sessionToken: "" as SessionToken,
+  sessionToken: "mock-session-token",
   sessionInfo: {
     spidLevel: SpidLevelEnum["https://www.spid.gov.it/SpidL2"]
   }
@@ -228,13 +227,13 @@ describe(CieIdLoginWebView, () => {
     const webView = getByTestId("cie-id-webview");
     act(() => {
       fireEvent(webView, "onShouldStartLoadWithRequest", {
-        url: `${API_PREFIX_URL}/profile.html?token=my-secret-token`
+        url: `${API_PREFIX_URL}/profile.html?token=my-token`
       });
     });
     expect(mockReplace).toHaveBeenCalledTimes(0);
     expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith(
-      loginSuccess({ idp: "cieid", token: "my-secret-token" as SessionToken })
+      loginSuccess({ idp: "cieid", token: "my-token" })
     );
   });
   it("Shouldn't execute the login because of missing token", () => {

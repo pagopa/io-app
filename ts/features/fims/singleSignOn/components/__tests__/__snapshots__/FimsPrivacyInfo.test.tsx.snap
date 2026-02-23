@@ -28,7 +28,7 @@ exports[`FimsPrivacyInfo component render LoadingSkeleton when privacyUrl is und
             "borderCurve": "continuous",
             "borderRadius": 4,
             "height": 21,
-            "opacity": 0.55,
+            "opacity": 0.75,
             "width": "98%",
           }
         }
@@ -41,7 +41,7 @@ exports[`FimsPrivacyInfo component render LoadingSkeleton when privacyUrl is und
             "borderCurve": "continuous",
             "borderRadius": 4,
             "height": 21,
-            "opacity": 0.55,
+            "opacity": 0.75,
             "width": "86%",
           }
         }
