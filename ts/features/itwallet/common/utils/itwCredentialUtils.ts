@@ -11,6 +11,12 @@ import {
   StoredCredential
 } from "./itwTypesUtils";
 
+export const restrictedCredentials = [
+  CredentialType.DRIVING_LICENSE,
+  CredentialType.EUROPEAN_DISABILITY_CARD,
+  CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+] as const;
+
 // Credentials that can be actively requested and obtained by the user
 export const availableCredentials = [
   CredentialType.DRIVING_LICENSE,

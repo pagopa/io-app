@@ -17,6 +17,7 @@ import {
   trackItwDiscoveryBanner
 } from "../../analytics";
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 
 type Props = {
   /** Flow type to determine dismissal logic and tracking properties  */
@@ -90,7 +91,7 @@ export const ItwDiscoveryBanner = ({
   const navigateToDocumentOnboardingScreen = () => {
     trackItwDiscoveryBannerTap(trackBannerProperties);
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ONBOARDING
+      screen: ITW_ROUTES.L3_ONBOARDING
     });
   };
 

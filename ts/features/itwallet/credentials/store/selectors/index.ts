@@ -327,3 +327,28 @@ export const itwIsMdlPresentSelector = createSelector(
   itwCredentialsByTypeSelector,
   credentials => credentials.mDL !== undefined
 );
+
+/**
+ * Split a given list of credential types into obtained / notObtained
+ * obtained = present in wallet
+ */
+export const itwCredentialsSplittedSelector = createSelector(
+  itwCredentialsByTypeSelector,
+  (_state: GlobalState, types: ReadonlyArray<string>) => types,
+  (credentialsByType, types) => {
+    const obtained: Array<string> = [];
+    const notObtained: Array<string> = [];
+
+    for (const type of types) {
+      if (credentialsByType[type as keyof typeof credentialsByType]) {
+        // eslint-disable-next-line functional/immutable-data
+        obtained.push(type);
+      } else {
+        // eslint-disable-next-line functional/immutable-data
+        notObtained.push(type);
+      }
+    }
+
+    return { obtained, notObtained };
+  }
+);

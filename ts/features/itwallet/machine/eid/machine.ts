@@ -60,7 +60,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToSuccessScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToWallet: notImplemented,
-    navigateToCredentialCatalog: notImplemented,
+    navigateToCatalogByLevel: notImplemented,
     navigateToCieNfcPreparationScreen: notImplemented,
     navigateToCiePinPreparationScreen: notImplemented,
     navigateToCieCardPreparationScreen: notImplemented,
@@ -1198,7 +1198,7 @@ export const itwEidIssuanceMachine = setup({
       entry: "navigateToSuccessScreen",
       on: {
         "add-new-credential": {
-          actions: "navigateToCredentialCatalog"
+          actions: "navigateToCatalogByLevel"
         },
         "go-to-wallet": {
           actions: "navigateToWallet"

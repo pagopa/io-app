@@ -66,6 +66,8 @@ import { ItwProximitySendDocumentsResponseScreen } from "../presentation/proximi
 import { ItwSettingsScreen } from "../settings/screens/ItwSettingsScreen.tsx";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
+import { ItwCardOnboardingScreen } from "../onboarding/screens/ItwCardOnboardingScreen.tsx";
+import { ItwCardRestrictedModeScreen } from "../onboarding/screens/ItwCardRestrictedModeScreen.tsx";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -107,6 +109,14 @@ const InnerNavigator = memo(() => {
       <Stack.Screen
         name={ITW_ROUTES.ONBOARDING}
         component={WalletCardOnboardingScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.L3_ONBOARDING}
+        component={ItwCardOnboardingScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.RESTRICTED_MODE_ONBOARDING}
+        component={ItwCardRestrictedModeScreen}
       />
       <Stack.Screen
         name={ITW_ROUTES.OFFLINE.WALLET}
