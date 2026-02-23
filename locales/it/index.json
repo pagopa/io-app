@@ -24,7 +24,15 @@
       "venerdì",
       "sabato"
     ],
-    "abbr_day_names": ["dom", "lun", "mar", "mer", "gio", "ven", "sab"],
+    "abbr_day_names": [
+      "dom",
+      "lun",
+      "mar",
+      "mer",
+      "gio",
+      "ven",
+      "sab"
+    ],
     "month_names": [
       " ",
       "gennaio",
@@ -55,7 +63,10 @@
       "nov",
       "dic"
     ],
-    "meridian": ["am", "pm"],
+    "meridian": [
+      "am",
+      "pm"
+    ],
     "time": {
       "minutes_zero": "0 minuti",
       "minutes_one": "1 minuto",
@@ -302,11 +313,18 @@
     }
   },
   "locales": {
+    "it": "italiano",
+    "en": "inglese",
+    "de": "tedesco",
+    "fr": "francese",
+    "sl": "sloveno"
+  },
+  "localesTranslated": {
     "it": "Italiano",
-    "en": "Inglese",
-    "de": "Tedesco",
-    "fr": "Francese",
-    "sl": "Sloveno"
+    "en": "English",
+    "de": "Deutsch",
+    "fr": "Français",
+    "sl": "Slovenščina"
   },
   "clipboard": {
     "copyIntoClipboard": "copia negli appunti",
@@ -733,7 +751,7 @@
         },
         "language": {
           "title": "Lingua",
-          "subtitle": "Scegli la lingua"
+          "subtitle": "Scegli la lingua per l’app e per i messaggi"
         },
         "preferred_calendar": {
           "title": "Calendario preferito",
@@ -741,24 +759,29 @@
         },
         "preferred_language": {
           "title": "Lingua preferita",
-          "subtitle": "Scegli la lingua che vuoi usare per l’app e per i messaggi che ricevi dagli Enti.",
+          "subtitle": "Queste impostazioni ti permettono di scegliere la lingua dell’app e quella dei messaggi che ricevi dagli enti.",
           "sections": {
             "messages": {
-              "title": "Messaggi",
-              "description": "Gli Enti possono usare questa preferenza per scriverti nella tua lingua preferita."
+              "title": "Nei messaggi",
+              "description": "Alcuni enti usano questa impostazione per inviarti messaggi nella lingua scelta."
             },
             "app": {
-              "title": "Applicazione",
-              "description": "Scegli la lingua per i menu e i testi dell’app. I contenuti non ancora tradotti saranno in italiano."
+              "title": "In app",
+              "description": "Scegli la lingua da usare su IO. Alcuni contenuti potrebbero essere disponibili solo in italiano."
             }
           },
           "alert": {
-            "title": "Vuoi cambiare la lingua in",
-            "subtitle": "Dovrai riavviare l'applicazione per applicare il cambiamento"
+            "title": "Vuoi cambiare la lingua dell’app in {{lang}}?",
+            "subtitle": "Riavvia l’app per rendere effettive le modifiche"
           },
-          "toast": {
+          "toastApp": {
             "success": {
-              "title": "Hai cambiato lingua"
+              "title": "Fatto! Riavvia l’app per rendere effettive le modifiche"
+            }
+          },
+          "toastMessages": {
+            "success": {
+              "title": "Fatto!"
             }
           },
           "not_selected": "Non selezionato",

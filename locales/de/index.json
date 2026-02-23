@@ -597,7 +597,7 @@
           "title": "Bevorzugte Sprache",
           "subtitle": "In welcher Sprache möchtest du die App nutzen?",
           "alert": {
-            "title": "Möchtest du die Sprache ändern in",
+            "title": "Möchtest du die Sprache ändern in {{lang}}?",
             "subtitle": "Du musst die App neu starten, um die Änderung zu übernehmen"
           },
           "toast": {

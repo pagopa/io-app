@@ -12,21 +12,12 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import _ from "lodash";
-import {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Alert, View } from "react-native";
 import { Locales } from "../../../../../locales/locales";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { AlertModal } from "../../../../components/ui/AlertModal";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { LightModalContext } from "../../../../components/ui/LightModal";
-import { availableTranslations } from "../../../../i18n";
+import { availableTranslations, setLocale } from "../../../../i18n";
 import {
   AppLocale,
   preferredLanguageSaveSuccess
@@ -59,7 +50,6 @@ const LanguagesPreferencesScreen = () => {
   const toast = useIOToast();
   const selectedLanguage = useRef<string | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const { showModal } = useContext(LightModalContext);
   const profile = useIOSelector(profileSelector, _.isEqual);
   const prevProfile = usePrevious(profile);
   const preferredLanguageSelect = useIOSelector(
@@ -98,7 +88,7 @@ const LanguagesPreferencesScreen = () => {
   const renderedItem: Array<RadioItem<string>> = useMemo(
     () =>
       availableTranslations.map(item => ({
-        value: I18n.t(`locales.${item}`, {
+        value: I18n.t(`localesTranslated.${item}`, {
           defaultValue: item
         }),
         id: item,
@@ -125,7 +115,7 @@ const LanguagesPreferencesScreen = () => {
     () =>
       /* TODO: We need a dynamic object here that satisfies `AppLocale` type */
       (["it", "en", "de"] as const).map(locale => ({
-        value: I18n.t(`locales.${locale}`, {
+        value: I18n.t(`localesTranslated.${locale}`, {
           defaultValue: locale
         }),
         id: `app-locale-${locale}` as AppLocaleId
@@ -146,15 +136,16 @@ const LanguagesPreferencesScreen = () => {
     (localeId: AppLocaleId) => {
       const locale = localeId.replace("app-locale-", "") as AppLocale;
 
+      setLocale(locale as Locales);
       preferredLanguageSaveSuccessDispatch(locale as Locales);
       setSelectedAppLocale(localeId);
-      showModal(
-        <AlertModal
-          message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
-        />
+      toast.success(
+        I18n.t(
+          "profile.preferences.list.preferred_language.toastApp.success.title"
+        )
       );
     },
-    [preferredLanguageSaveSuccessDispatch, showModal]
+    [preferredLanguageSaveSuccessDispatch, toast]
   );
 
   useEffect(() => {
@@ -175,7 +166,7 @@ const LanguagesPreferencesScreen = () => {
       setSelectedItem(selectedLanguage.current);
       toast.success(
         I18n.t(
-          "profile.preferences.list.preferred_language.toast.success.title"
+          "profile.preferences.list.preferred_language.toastMessages.success.title"
         )
       );
       return;
@@ -197,29 +188,9 @@ const LanguagesPreferencesScreen = () => {
   const onLanguageSelected = useCallback(
     (language: string) => {
       if (selectedItem !== language) {
-        Alert.alert(
-          `${I18n.t(
-            "profile.preferences.list.preferred_language.alert.title"
-            // eslint-disable-next-line sonarjs/no-nested-template-literals
-          )} ${I18n.t(`locales.${language as Locales}`)}?`,
-          I18n.t("profile.preferences.list.preferred_language.alert.subtitle"),
-          [
-            {
-              text: I18n.t("global.buttons.cancel"),
-              style: "cancel"
-            },
-            {
-              text: I18n.t("global.buttons.confirm"),
-              style: "default",
-              onPress: () => {
-                // eslint-disable-next-line functional/immutable-data
-                selectedLanguage.current = language;
-                upsertProfile(language as Locales);
-              }
-            }
-          ],
-          { cancelable: false }
-        );
+        // eslint-disable-next-line functional/immutable-data
+        selectedLanguage.current = language;
+        upsertProfile(language as Locales);
       }
     },
     [selectedItem, upsertProfile]
@@ -227,13 +198,12 @@ const LanguagesPreferencesScreen = () => {
 
   const onAppLanguageSelected = useCallback(
     (language: string) => {
-      if (selectedItem !== language) {
+      if (selectedAppLocale !== language) {
         const locale = language.replace("app-locale-", "") as AppLocale;
         Alert.alert(
-          `${I18n.t(
-            "profile.preferences.list.preferred_language.alert.title"
-            // eslint-disable-next-line sonarjs/no-nested-template-literals
-          )} ${I18n.t(`locales.${locale as Locales}`)}?`,
+          I18n.t("profile.preferences.list.preferred_language.alert.title", {
+            lang: I18n.t(`locales.${locale as Locales}`)
+          }),
           I18n.t("profile.preferences.list.preferred_language.alert.subtitle"),
           [
             {
@@ -250,7 +220,7 @@ const LanguagesPreferencesScreen = () => {
         );
       }
     },
-    [handleAppLocaleChange, selectedItem]
+    [handleAppLocaleChange, selectedAppLocale]
   );
 
   return (

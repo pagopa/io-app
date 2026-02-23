@@ -748,12 +748,17 @@
             }
           },
           "alert": {
-            "title": "Do you want to change the language to",
+            "title": "Do you want to change the language to {{lang}}?",
             "subtitle": "You'll need to restart the application to make this happen"
           },
-          "toast": {
+          "toastApp": {
             "success": {
-              "title": "You've switched the app language"
+              "title": "Done! Restart the app to apply the changes"
+            }
+          },
+          "toastMessages": {
+            "success": {
+              "title": "Done!"
             }
           },
           "not_selected": "Not selected",
