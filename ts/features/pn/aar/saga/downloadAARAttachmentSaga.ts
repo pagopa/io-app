@@ -22,6 +22,7 @@ import {
   trackSendAARFailure
 } from "../analytics";
 import { createSendAARClientWithLollipop } from "../api/client";
+import { isAarAttachmentTtlError } from "../utils/aarErrorMappings";
 
 const fastLoginType = "FAST_LOGIN_EXPIRED";
 const fastLoginError = Error(fastLoginType);
@@ -154,6 +155,12 @@ function* getAttachmentMetadata(
   const { status, value } = responseEither.right;
   if (status === 401) {
     throw fastLoginError;
+  }
+  if (status === 500) {
+    const errorCode = value.errors?.[0]?.code;
+    if (isAarAttachmentTtlError(errorCode)) {
+      throw Error(errorCode);
+    }
   }
   if (status !== 200) {
     const reason = aarProblemJsonAnalyticsReport(status, value);
