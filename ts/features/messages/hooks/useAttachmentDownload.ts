@@ -4,7 +4,19 @@ import { useCallback, useEffect } from "react";
 import RNFS from "react-native-fs";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
+import NavigationService from "../../../navigation/NavigationService";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
+import { isAarAttachmentTtlError } from "../../pn/aar/utils/aarErrorMappings";
+import {
+  trackPNAttachmentDownloadFailure,
+  trackPNAttachmentOpening
+} from "../../pn/analytics";
+import PN_ROUTES from "../../pn/navigation/routes";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
+import { trackThirdPartyMessageAttachmentShowPreview } from "../analytics";
 import { MESSAGES_ROUTES } from "../navigation/routes";
 import {
   cancelPreviousAttachmentDownload,
@@ -13,23 +25,11 @@ import {
 } from "../store/actions";
 import {
   downloadedMessageAttachmentSelector,
-  requestedDownloadErrorSelector,
   isDownloadingMessageAttachmentSelector,
-  isRequestedAttachmentDownloadSelector
+  isRequestedAttachmentDownloadSelector,
+  requestedDownloadErrorSelector
 } from "../store/reducers/downloads";
 import { attachmentDisplayName } from "../utils/attachments";
-import {
-  trackPNAttachmentDownloadFailure,
-  trackPNAttachmentOpening
-} from "../../pn/analytics";
-import { trackThirdPartyMessageAttachmentShowPreview } from "../analytics";
-import PN_ROUTES from "../../pn/navigation/routes";
-import {
-  SendOpeningSource,
-  SendUserType
-} from "../../pushNotifications/analytics";
-import { isAarAttachmentTtlError } from "../../pn/aar/utils/aarErrorMappings";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
 
 export const useAttachmentDownload = (
   messageId: string,
@@ -41,7 +41,6 @@ export const useAttachmentDownload = (
 ) => {
   const attachmentId = attachment.id;
   const isSendAttachment = sendOpeningSource !== "not_set";
-  const navigation = useIONavigation();
 
   const dispatch = useIODispatch();
   const store = useIOStore();
@@ -67,7 +66,10 @@ export const useAttachmentDownload = (
         sendUserType,
         attachmentCategory
       );
-      navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+      // since we are not sure if this hook will be called in a screen with a valid
+      // navigation context, it is necessary to instead use the global navigation
+      // service.
+      NavigationService.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
         screen: PN_ROUTES.MAIN,
         params: {
           screen: PN_ROUTES.MESSAGE_ATTACHMENT,
@@ -78,7 +80,7 @@ export const useAttachmentDownload = (
         }
       });
     } else {
-      navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+      NavigationService.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
         screen: MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT,
         params: {
           messageId,
@@ -93,7 +95,6 @@ export const useAttachmentDownload = (
     dispatch,
     isSendAttachment,
     messageId,
-    navigation,
     onPreNavigate,
     sendOpeningSource,
     sendUserType,
