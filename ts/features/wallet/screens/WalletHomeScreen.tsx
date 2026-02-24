@@ -8,8 +8,10 @@ import { useHeaderFirstLevel } from "../../../hooks/useHeaderFirstLevel";
 import { useTabItemPressWhenScreenActive } from "../../../hooks/useTabItemPressWhenScreenActive";
 import {
   IOStackNavigationRouteProps,
-  useIONavigation
+  useIONavigation,
+  useIOTabNavigation
 } from "../../../navigation/params/AppParamsList";
+import { useBottomTabNavigatorStyle } from "../../../hooks/useBottomTabNavigatorStyle";
 import { MainTabParamsList } from "../../../navigation/params/MainTabParamsList";
 import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -146,6 +148,15 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
       itwFeedbackBottomSheet,
       route.name
     ])
+  );
+
+  const tabNavigation = useIOTabNavigation();
+  const tabBarStyle = useBottomTabNavigatorStyle();
+
+  useFocusEffect(
+    useCallback(() => {
+      tabNavigation.setOptions({ tabBarStyle });
+    }, [tabBarStyle, tabNavigation])
   );
 
   const handleRefreshWallet = useCallback(() => {
