@@ -5,12 +5,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { ComponentRef, useRef, useState } from "react";
-import {
-  InputAccessoryView,
-  Keyboard,
-  Platform,
-  View
-} from "react-native";
+import { InputAccessoryView, Keyboard, Platform, View } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import {
   AppParamsList,
