@@ -274,7 +274,7 @@ export const createEidIssuanceActorsImplementation = (
   }),
 
   credentialUpgradeMachine: itwCredentialUpgradeMachine.provide({
-    actors: createCredentialUpgradeActorsImplementation(env),
+    actors: createCredentialUpgradeActorsImplementation(env, store),
     actions: createCredentialUpgradeActionsImplementation(store)
   })
 });

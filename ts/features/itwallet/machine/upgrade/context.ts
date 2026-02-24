@@ -1,6 +1,7 @@
 import {
   CredentialBundle,
-  CredentialMetadata
+  CredentialMetadata,
+  WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import { EidIssuanceMode } from "../eid/context";
 import { Input } from "./input";
@@ -9,11 +10,11 @@ export type Context = {
   /**
    * The wallet instance attestation obtained during the PID upgrade
    */
-  walletInstanceAttestation: string;
+  walletInstanceAttestation: WalletInstanceAttestations | undefined;
   /**
    * The upgrade PID credential
    */
-  pid: CredentialBundle;
+  pid: CredentialBundle | undefined;
   /**
    * Credentials that must be upgraded to L3
    */
@@ -35,8 +36,8 @@ export type Context = {
 };
 
 export const getInitialContext = (input: Input): Context => ({
-  walletInstanceAttestation: input.walletInstanceAttestation,
-  pid: input.pid,
+  walletInstanceAttestation: undefined,
+  pid: undefined,
   credentials: input.credentials,
   credentialIndex: -1,
   failedCredentials: [],

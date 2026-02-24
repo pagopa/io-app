@@ -35,8 +35,6 @@ describe("itwCredentialUpgradeMachine", () => {
     });
     const actor = createActor(machine, {
       input: {
-        walletInstanceAttestation: "attestation",
-        pid: makeCredential(),
         credentials: [],
         issuanceMode: "upgrade"
       }
@@ -76,8 +74,6 @@ describe("itwCredentialUpgradeMachine", () => {
 
     const actor = createActor(machine, {
       input: {
-        walletInstanceAttestation: "attestation",
-        pid: makeCredential(),
         credentials,
         issuanceMode: "upgrade"
       }
@@ -121,8 +117,6 @@ describe("itwCredentialUpgradeMachine", () => {
     ];
     const actor = createActor(machine, {
       input: {
-        walletInstanceAttestation: "attestation",
-        pid: makeCredential(),
         credentials,
         issuanceMode: "upgrade"
       }

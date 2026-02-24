@@ -136,9 +136,12 @@ export const createCredentialIssuanceActorsImplementation = (
 
     // Retrieve the PID credential from the vault
     const pidCredential = await CredentialsVault.get(eid.value.credentialId);
-    if (!pidCredential) {
-      throw new Error("PID credential not found in secure storage");
-    }
+    assert(pidCredential, "PID credential not found in secure storage");
+
+    const pid: CredentialBundle = {
+      metadata: eid.value,
+      credential: pidCredential
+    };
 
     return await credentialIssuanceUtils.obtainCredential({
       env,
@@ -148,8 +151,7 @@ export const createCredentialIssuanceActorsImplementation = (
       issuerConf,
       clientId,
       codeVerifier,
-      pidKeyTag: eid.value.keyTag,
-      pid: pidCredential
+      pid
     });
   });
 

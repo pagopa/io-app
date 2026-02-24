@@ -1188,7 +1188,7 @@ export const itwEidIssuanceMachine = setup({
               assert(context.mode, "Issuance mode must be defined");
 
               return {
-                pid: context.eid.metadata,
+                pid: context.eid,
                 walletInstanceAttestation:
                   context.walletInstanceAttestation?.jwt,
                 credentials: context.legacyCredentials,
