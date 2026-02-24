@@ -263,7 +263,7 @@ describe("itwProximityMachine", () => {
       const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
         value: { Bluetooth: "EnableBluetooth" },
         context: { credentials: MOCK_CREDENTIALS }
-      } as MachineSnapshot);
+      } as unknown as MachineSnapshot);
       const actor = createActor(mockedMachine, { snapshot });
       actor.start();
 
@@ -385,7 +385,7 @@ describe("itwProximityMachine", () => {
       const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
         value: { Bluetooth: "EnableBluetooth" },
         context: { credentials: MOCK_CREDENTIALS }
-      } as MachineSnapshot);
+      } as unknown as MachineSnapshot);
       const actor = createActor(mockedMachine, { snapshot });
       actor.start();
 
@@ -434,7 +434,7 @@ describe("itwProximityMachine", () => {
       const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
         value: { Bluetooth: "EnableBluetooth" },
         context: { credentials: MOCK_CREDENTIALS }
-      } as MachineSnapshot);
+      } as unknown as MachineSnapshot);
       const actor = createActor(mockedMachine, { snapshot });
       actor.start();
 
@@ -531,7 +531,7 @@ describe("itwProximityMachine", () => {
           credentials: MOCK_CREDENTIALS,
           walletInstanceAttestation: { jwt: "test-wia" }
         }
-      } as MachineSnapshot);
+      } as unknown as MachineSnapshot);
       const actor = createActor(mockedMachine, { snapshot });
       actor.start();
 
@@ -606,7 +606,7 @@ describe("itwProximityMachine", () => {
           credentials: MOCK_CREDENTIALS,
           walletInstanceAttestation: { jwt: "test-wia" }
         }
-      } as MachineSnapshot);
+      } as unknown as MachineSnapshot);
       const clock = new SimulatedClock();
       const actor = createActor(mockedMachine, { snapshot, clock });
       actor.start();
@@ -658,7 +658,7 @@ describe("itwProximityMachine", () => {
       const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
         value: { DeviceCommunication: "DisplayQrCode" },
         context: { credentials: MOCK_CREDENTIALS }
-      } as MachineSnapshot);
+      } as unknown as MachineSnapshot);
       const actor = createActor(mockedMachine, { snapshot });
       actor.start();
 
@@ -704,7 +704,7 @@ describe("itwProximityMachine", () => {
       const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
         value: { DeviceCommunication: "DisplayQrCode" },
         context: { credentials: MOCK_CREDENTIALS }
-      } as MachineSnapshot);
+      } as unknown as MachineSnapshot);
       const actor = createActor(mockedMachine, { snapshot });
       actor.start();
 
