@@ -119,6 +119,7 @@ describe("itwCredentialIssuanceMachine", () => {
   const requestCredential = jest.fn();
   const obtainCredential = jest.fn();
   const obtainStatusAssertion = jest.fn();
+  const storeCredentials = jest.fn();
 
   const isSessionExpired = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn();
@@ -159,7 +160,10 @@ describe("itwCredentialIssuanceMachine", () => {
       obtainStatusAssertion: fromPromise<
         ReadonlyArray<CredentialBundle>,
         ObtainStatusAssertionActorInput
-      >(obtainStatusAssertion)
+      >(obtainStatusAssertion),
+      storeCredentials: fromPromise<void, ReadonlyArray<CredentialBundle>>(
+        storeCredentials
+      )
     },
     guards: {
       isSessionExpired,
@@ -175,6 +179,7 @@ describe("itwCredentialIssuanceMachine", () => {
     hasValidWalletInstanceAttestation.mockImplementation(() => false);
     isEidExpired.mockImplementation(() => false);
     isSkipNavigation.mockImplementation(() => true);
+    storeCredentials.mockResolvedValue(undefined);
     jest.useFakeTimers();
   });
 
@@ -257,16 +262,19 @@ describe("itwCredentialIssuanceMachine", () => {
      */
 
     obtainCredential.mockImplementation(() =>
-      Promise.resolve({
-        credentials: [ItwStoredCredentialsMocks.mdl]
-      })
+      Promise.resolve([
+        { credential: "", metadata: ItwStoredCredentialsMocks.mdl }
+      ])
     );
 
     obtainStatusAssertion.mockImplementation(() =>
       Promise.resolve([
         {
-          ...ItwStoredCredentialsMocks.mdl,
-          storedStatusAssertion: T_STORED_STATUS_ASSERTION
+          credential: "",
+          metadata: {
+            ...ItwStoredCredentialsMocks.mdl,
+            storedStatusAssertion: T_STORED_STATUS_ASSERTION
+          }
         }
       ])
     );
@@ -322,9 +330,7 @@ describe("itwCredentialIssuanceMachine", () => {
       type: "add-to-wallet"
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual(
-      "DisplayingCredentialPreview"
-    );
+    await waitForActor(actor, snap => snap.matches("Completed"));
     expect(storeCredential).toHaveBeenCalledTimes(1);
     expect(navigateToWallet).toHaveBeenCalledTimes(1);
   });
