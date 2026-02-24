@@ -100,8 +100,7 @@ export type ObtainCredential = (args: {
   credentialType: string;
   walletInstanceAttestation: string;
   requestedCredential: RequestObject;
-  pidKeyTag: string;
-  pid: string;
+  pid: CredentialBundle;
   clientId: string;
   codeVerifier: string;
   issuerConf: IssuerConfiguration;
@@ -124,7 +123,6 @@ export const obtainCredential: ObtainCredential = async ({
   env,
   credentialType,
   requestedCredential: requestObject,
-  pidKeyTag,
   pid,
   walletInstanceAttestation,
   clientId,
@@ -142,10 +140,10 @@ export const obtainCredential: ObtainCredential = async ({
   const { code } =
     await Credential.Issuance.completeUserAuthorizationWithFormPostJwtMode(
       requestObject,
-      pid,
+      pid.credential,
       {
         wiaCryptoContext,
-        pidCryptoContext: createCryptoContextFor(pidKeyTag)
+        pidCryptoContext: createCryptoContextFor(pid.metadata.keyTag)
       }
     );
 

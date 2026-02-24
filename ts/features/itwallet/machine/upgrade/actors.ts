@@ -2,14 +2,13 @@ import { fromPromise } from "xstate";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
 import { Env } from "../../common/utils/environment";
 import { EidIssuanceMode } from "../eid/context";
-import { CredentialsVault } from "../../credentials/utils/vault";
 import {
   CredentialBundle,
   CredentialMetadata
 } from "../../common/utils/itwTypesUtils";
 
 export type UpgradeCredentialParams = {
-  pid: CredentialMetadata;
+  pid: CredentialBundle;
   walletInstanceAttestation: string;
   credential: CredentialMetadata;
   issuanceMode: EidIssuanceMode;
@@ -33,11 +32,6 @@ export const createCredentialUpgradeActorsImplementation = (env: Env) => ({
     const { pid, walletInstanceAttestation, credential, issuanceMode } = input;
     const isUpgrade = issuanceMode === "upgrade";
 
-    const pidCredential = await CredentialsVault.get(pid.credentialId);
-    if (!pidCredential) {
-      throw new Error("PID credential not found in secure storage");
-    }
-
     const { requestedCredential, issuerConf, clientId, codeVerifier } =
       await credentialIssuanceUtils.requestCredential({
         env,
@@ -55,8 +49,7 @@ export const createCredentialUpgradeActorsImplementation = (env: Env) => ({
       issuerConf,
       clientId,
       codeVerifier,
-      pid: pidCredential,
-      pidKeyTag: pid.keyTag
+      pid
     });
 
     return {

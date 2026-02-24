@@ -1,4 +1,7 @@
-import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
+import {
+  CredentialBundle,
+  CredentialMetadata
+} from "../../common/utils/itwTypesUtils";
 import { EidIssuanceMode } from "../eid/context";
 import { Input } from "./input";
 
@@ -10,7 +13,7 @@ export type Context = {
   /**
    * The upgrade PID credential
    */
-  pid: CredentialMetadata;
+  pid: CredentialBundle;
   /**
    * Credentials that must be upgraded to L3
    */

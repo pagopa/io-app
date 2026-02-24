@@ -1,4 +1,7 @@
-import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
+import {
+  CredentialBundle,
+  CredentialMetadata
+} from "../../common/utils/itwTypesUtils";
 import { EidIssuanceMode } from "../eid/context";
 
 export type Input = {
@@ -7,9 +10,9 @@ export type Input = {
    */
   walletInstanceAttestation: string;
   /**
-   * The upgrade PID credential
+   * The upgrade PID credential (metadata and credential)
    */
-  pid: CredentialMetadata;
+  pid: CredentialBundle;
   /**
    * Array of credentials that must be upgraded to L3
    */
