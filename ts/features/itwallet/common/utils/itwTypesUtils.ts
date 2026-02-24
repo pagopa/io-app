@@ -137,7 +137,7 @@ export type CredentialMetadata = {
     issuedAt?: string;
   };
   spec_version: string;
-  verification?: Verification;
+  verification?: StoredVerification;
 };
 
 /**

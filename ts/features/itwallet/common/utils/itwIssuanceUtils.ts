@@ -203,6 +203,7 @@ const getPid: GetPid = async ({
     );
 
   return {
+    credential,
     metadata: {
       parsedCredential,
       issuerConf,
@@ -221,8 +222,7 @@ const getPid: GetPid = async ({
         credential,
         parsedCredential
       })
-    },
-    credential
+    }
   };
 };
 
