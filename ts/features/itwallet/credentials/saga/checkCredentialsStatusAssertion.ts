@@ -44,7 +44,7 @@ export function* updateCredentialStatusAssertionSaga(
     );
     if (!credential) {
       throw new Error(
-        `Credential of type ${metadata.credentialType} not found in vault`
+        `Credential of type ${metadata.credentialType} not found in secure storage`
       );
     }
 
