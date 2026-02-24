@@ -99,6 +99,12 @@ export const itwEidIssuanceMachine = setup({
     trackIdentificationMethodSelected: notImplemented,
     trackItwIdAuthenticationCompleted: notImplemented,
     trackItwIdVerifiedDocument: notImplemented,
+    trackSetCieIdIdentificationL2: assign(() => ({
+      identification: {
+        mode: "cieId",
+        level: "L2"
+      }
+    })),
     /**
      * Context manipulation
      */
@@ -508,12 +514,7 @@ export const itwEidIssuanceMachine = setup({
                 guard: ({ event }) => event.mode === "cieId",
                 actions: [
                   "trackIdentificationMethodSelected",
-                  assign(({ context }) => ({
-                    identification: {
-                      mode: "cieId",
-                      level: context.level === "l2" ? "L2" : "L3"
-                    }
-                  }))
+                  "trackSetCieIdIdentificationL2"
                 ],
                 target: "#itwEidIssuanceMachine.UserIdentification.CieID"
               }
@@ -856,12 +857,7 @@ export const itwEidIssuanceMachine = setup({
                 guard: ({ event }) => event.mode === "cieId",
                 actions: [
                   "trackIdentificationMethodSelected",
-                  assign(() => ({
-                    identification: {
-                      mode: "cieId",
-                      level: "L3"
-                    }
-                  }))
+                  "trackSetCieIdIdentificationL2"
                 ],
                 target: "#itwEidIssuanceMachine.UserIdentification.CieID"
               }
