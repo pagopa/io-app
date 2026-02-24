@@ -3,9 +3,14 @@ import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pag
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useRef, useState } from "react";
-import { InputAccessoryView, Keyboard, Platform, View } from "react-native";
 import I18n from "i18next";
+import { ComponentRef, useRef, useState } from "react";
+import {
+  InputAccessoryView,
+  Keyboard,
+  Platform,
+  View
+} from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import {
   AppParamsList,
@@ -18,8 +23,8 @@ import {
   validatePaymentNoticeNumber
 } from "../../common/utils/validation";
 import * as analytics from "../analytics";
+import { useInputFocus } from "../hooks/useInputFocus";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
-import { TextInputValidationRefProps } from "../types";
 import { trimAndLimitValue } from "../utils";
 
 type InputState = {
@@ -60,7 +65,9 @@ const WalletPaymentInputNoticeNumberScreen = () => {
 
   const textInputWrapperRef = useRef<View>(null);
 
-  const textInputRef = useRef<TextInputValidationRefProps>(null);
+  const textInputRef = useRef<ComponentRef<typeof TextInputValidation>>(null);
+
+  useInputFocus(textInputRef);
 
   return (
     <>
@@ -126,7 +133,6 @@ const WalletPaymentInputNoticeNumberScreen = () => {
             returnKeyType: "done",
             inputAccessoryViewID: "noticeNumberInputAccessoryView"
           }}
-          autoFocus
         />
       </IOScrollViewWithLargeHeader>
       {Platform.OS === "ios" && (
