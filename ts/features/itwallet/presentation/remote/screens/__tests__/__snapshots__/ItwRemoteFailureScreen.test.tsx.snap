@@ -3378,13 +3378,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                                   "duration": [MockFunction] {
                                                     "calls": [
                                                       [],
-                                                      [],
                                                     ],
                                                     "results": [
-                                                      {
-                                                        "type": "return",
-                                                        "value": 1,
-                                                      },
                                                       {
                                                         "type": "return",
                                                         "value": 1,
@@ -3394,13 +3389,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                                   "fps": [MockFunction] {
                                                     "calls": [
                                                       [],
-                                                      [],
                                                     ],
                                                     "results": [
-                                                      {
-                                                        "type": "return",
-                                                        "value": 30,
-                                                      },
                                                       {
                                                         "type": "return",
                                                         "value": 30,
