@@ -17,6 +17,8 @@ import {
   RequestObject,
   StoredCredential
 } from "./itwTypesUtils";
+import { WALLET_SPEC_VERSION } from "./constants";
+import { extractVerification } from "./itwCredentialUtils";
 import { Env } from "./environment";
 import { enrichErrorWithMetadata } from "./itwFailureUtils";
 
@@ -277,6 +279,8 @@ const requestAndParseCredential = async ({
     jwt: {
       expiration: expiration.toISOString(),
       issuedAt: issuedAt?.toISOString()
-    }
+    },
+    spec_version: WALLET_SPEC_VERSION,
+    verification: extractVerification({ format, credential, parsedCredential })
   };
 };
