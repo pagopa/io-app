@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.25.0-rc.1](https://github.com/pagopa/io-app/compare/3.25.0-rc.0...3.25.0-rc.1) (2026-02-23)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-3855](https://pagopa.atlassian.net/browse/SIW-3855)] Enrich credential's metadata with `verification` claim and Wallet's spec version ([#7838](https://github.com/pagopa/io-app/issues/7838)) ([631c6a1](https://github.com/pagopa/io-app/commit/631c6a1ea8a6b5607992a5574ae743f6f0917da8)), closes [/#diff-a8de9723adbb6196cc33300f3b0260ff270e8e57eb4c55bbd1f4050c239235eeR26-R29](https://github.com/pagopa///issues/diff-a8de9723adbb6196cc33300f3b0260ff270e8e57eb4c55bbd1f4050c239235eeR26-R29) [/#diff-a8de9723adbb6196cc33300f3b0260ff270e8e57eb4c55bbd1f4050c239235eeL56-R53](https://github.com/pagopa///issues/diff-a8de9723adbb6196cc33300f3b0260ff270e8e57eb4c55bbd1f4050c239235eeL56-R53) [/#diff-a8de9723adbb6196cc33300f3b0260ff270e8e57eb4c55bbd1f4050c239235eeL82-L107](https://github.com/pagopa///issues/diff-a8de9723adbb6196cc33300f3b0260ff270e8e57eb4c55bbd1f4050c239235eeL82-L107) [/#diff-a873fdea74242c389308a731d5c65efbc4ade8cc0431289b12b7b42d7ee6ea6eL69-R76](https://github.com/pagopa///issues/diff-a873fdea74242c389308a731d5c65efbc4ade8cc0431289b12b7b42d7ee6ea6eL69-R76) [/#diff-9025fadd5f1a880e9b4dbfdec18fb3521e932ff4c09b5cb401da0c33c8fe3bd6R128-R129](https://github.com/pagopa///issues/diff-9025fadd5f1a880e9b4dbfdec18fb3521e932ff4c09b5cb401da0c33c8fe3bd6R128-R129) [/#diff-1978cbc9af25f6680bf8051b1cb976a01dac3be4b58c4ab38ccf2cbcd72697f8L280-R284](https://github.com/pagopa///issues/diff-1978cbc9af25f6680bf8051b1cb976a01dac3be4b58c4ab38ccf2cbcd72697f8L280-R284) [/#diff-2cd6d88d7a0a5ffab205730094379c0e1c542e964874a0edf5a5d60416e295c3L208-R216](https://github.com/pagopa///issues/diff-2cd6d88d7a0a5ffab205730094379c0e1c542e964874a0edf5a5d60416e295c3L208-R216) [/#diff-1978cbc9af25f6680bf8051b1cb976a01dac3be4b58c4ab38ccf2cbcd72697f8L280-R284](https://github.com/pagopa///issues/diff-1978cbc9af25f6680bf8051b1cb976a01dac3be4b58c4ab38ccf2cbcd72697f8L280-R284) [/#diff-2cd6d88d7a0a5ffab205730094379c0e1c542e964874a0edf5a5d60416e295c3L208-R216](https://github.com/pagopa///issues/diff-2cd6d88d7a0a5ffab205730094379c0e1c542e964874a0edf5a5d60416e295c3L208-R216) [/#diff-a0aaac11f684832cabbfd58aa1b0fe858d12481d6a6e54d7d8f1daba231385e2L2-R9](https://github.com/pagopa///issues/diff-a0aaac11f684832cabbfd58aa1b0fe858d12481d6a6e54d7d8f1daba231385e2L2-R9) [/#diff-b906f59b1894bb6692485770be29f66880ed599af81de3e0a9aa2a276cbc6546L18-R23](https://github.com/pagopa///issues/diff-b906f59b1894bb6692485770be29f66880ed599af81de3e0a9aa2a276cbc6546L18-R23) [/#diff-b906f59b1894bb6692485770be29f66880ed599af81de3e0a9aa2a276cbc6546L78-R83](https://github.com/pagopa///issues/diff-b906f59b1894bb6692485770be29f66880ed599af81de3e0a9aa2a276cbc6546L78-R83)
+
+
+### Bug Fixes
+
+* [[IOCOM-3000](https://pagopa.atlassian.net/browse/IOCOM-3000)] message details F24 attachment bottomsheet missing navigation reference ([#7884](https://github.com/pagopa/io-app/issues/7884)) ([b33e0c7](https://github.com/pagopa/io-app/commit/b33e0c7cfc076061789d388f0c4b25f78a31463d))
+
+
+### Chores
+
+* [[IOPLT-1634](https://pagopa.atlassian.net/browse/IOPLT-1634)] Remove the Italian strings from English translations ([#7882](https://github.com/pagopa/io-app/issues/7882)) ([6efaa7e](https://github.com/pagopa/io-app/commit/6efaa7e280c13c419932ba7894ef244a1d303ec7))
+
 ## [3.25.0-rc.0](https://github.com/pagopa/io-app/compare/3.24.0-rc.4...3.25.0-rc.0) (2026-02-23)
 
 
