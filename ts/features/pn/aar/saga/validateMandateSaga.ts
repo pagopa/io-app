@@ -149,15 +149,12 @@ const getAndTrackValidationErrorState = (
   status: number,
   reason: string
 ) => {
-  if (status !== 422) {
+  const maybeErrorKey = errors?.[0].code.toUpperCase();
+  if (status !== 422 || maybeErrorKey == null) {
     trackSendAarMandateCieDataError(reason);
     return AarErrorStatesKind.CIE_GENERIC;
   }
 
-  const maybeErrorKey = errors?.[0].code;
-  if (maybeErrorKey == null) {
-    return AarErrorStatesKind.CIE_GENERIC;
-  }
   switch (maybeErrorKey) {
     case sendAarProblemJsonErrorCodes.CIE_EXPIRED_ERROR:
       trackSendAarMandateCieExpiredError();
