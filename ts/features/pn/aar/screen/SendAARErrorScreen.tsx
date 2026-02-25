@@ -20,13 +20,13 @@ export const SendAARErrorScreen = () => {
   const { type } = flowData;
 
   useEffect(() => {
-    // handle navigation for retryable errors
     if (type === sendAARFlowStates.notAddresseeFinal) {
       trackSendAARAccessDeniedScreenView();
     }
   }, [type]);
 
   useEffect(() => {
+    // handle navigation for retryable errors
     if (type === sendAARFlowStates.cieCanAdvisory) {
       navigation.replace(PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL);
     }
@@ -40,7 +40,9 @@ export const SendAARErrorScreen = () => {
       return <SendAarNfcNotSupportedComponent />;
     }
     case sendAARFlowStates.ko: {
-      const ErrorComponent = getSendAarErrorComponent(flowData.error?.errors);
+      const ErrorComponent = getSendAarErrorComponent(
+        flowData.specificErrorKey
+      );
       return <ErrorComponent />;
     }
     case sendAARFlowStates.cieCanAdvisory: {

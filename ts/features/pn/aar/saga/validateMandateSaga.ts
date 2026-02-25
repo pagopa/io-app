@@ -4,21 +4,27 @@ import { call, put, select } from "typed-redux-saga/macro";
 import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SagaCallReturnType } from "../../../../types/utils";
-import { isTestEnv } from "../../../../utils/environment";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { unknownToReason } from "../../../messages/utils";
 import {
   aarProblemJsonAnalyticsReport,
-  trackSendAARFailure
+  trackSendAARFailure,
+  trackSendAarMandateCieDataError,
+  trackSendAarMandateCieExpiredError,
+  trackSendAarMandateCieNotRelatedToDelegatorError
 } from "../analytics";
 import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
-import { aarProblemJsonTrackingMap } from "../utils/aarErrorMappings";
+import {
+  AarErrorStatesKind,
+  sendAarProblemJsonErrorCodes
+} from "../utils/aarErrorMappings";
 import {
   AARFlowState,
   SendAARFailurePhase,
   sendAARFlowStates
 } from "../utils/stateUtils";
+import { isTestEnv } from "../../../../utils/environment";
 
 const sendAARFailurePhase: SendAARFailurePhase = "Validate Mandate";
 
@@ -102,10 +108,16 @@ export function* validateMandateSaga(
           status,
           value
         )})`;
-        yield* call(handleMixPanelCustomTrackingIfNeeded, value.errors, reason);
+        const maybeErrorKey = yield* call(
+          getAndTrackValidationErrorState,
+          value.errors,
+          status,
+          reason
+        );
         yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
         const errorState: AARFlowState = {
           type: sendAARFlowStates.ko,
+          specificErrorKey: maybeErrorKey,
           previousState: { ...action.payload },
           ...(value !== undefined && { error: value }),
           debugData: {
@@ -132,22 +144,35 @@ export function* validateMandateSaga(
   }
 }
 
-const handleMixPanelCustomTrackingIfNeeded = (
+const getAndTrackValidationErrorState = (
   errors: AARProblemJson["errors"],
+  status: number,
   reason: string
 ) => {
-  const maybeErrorKey = errors
-    ?.map(({ code }) => code.toUpperCase())
-    .find(
-      (code): code is keyof typeof aarProblemJsonTrackingMap =>
-        code in aarProblemJsonTrackingMap
-    );
+  if (status !== 422) {
+    trackSendAarMandateCieDataError(reason);
+    return AarErrorStatesKind.CIE_GENERIC;
+  }
 
-  if (maybeErrorKey) {
-    aarProblemJsonTrackingMap[maybeErrorKey](reason);
+  const maybeErrorKey = errors?.[0].code;
+  if (maybeErrorKey == null) {
+    return AarErrorStatesKind.CIE_GENERIC;
+  }
+  switch (maybeErrorKey) {
+    case sendAarProblemJsonErrorCodes.CIE_EXPIRED_ERROR:
+      trackSendAarMandateCieExpiredError();
+      return AarErrorStatesKind.CIE_EXPIRED;
+    case sendAarProblemJsonErrorCodes.CIE_NOT_RELATED_TO_DELEGATOR_ERROR:
+      trackSendAarMandateCieNotRelatedToDelegatorError();
+      return AarErrorStatesKind.CIE_NOT_RELATED_TO_DELEGATOR;
+    default:
+      trackSendAarMandateCieDataError(reason);
+      return AarErrorStatesKind.CIE_GENERIC;
   }
 };
 
 export const testable = isTestEnv
-  ? { handleMixPanelCustomTrackingIfNeeded }
+  ? {
+      getAndTrackValidationErrorState
+    }
   : undefined;

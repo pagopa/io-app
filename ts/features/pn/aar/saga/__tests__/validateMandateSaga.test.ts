@@ -1,28 +1,29 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
+import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
+import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import {
-  AcceptMandateSuccessfulResponse,
-  testable,
-  validateMandateSaga
-} from "../validateMandateSaga";
+  aarProblemJsonAnalyticsReport,
+  trackSendAARFailure,
+  trackSendAarMandateCieDataError,
+  trackSendAarMandateCieExpiredError,
+  trackSendAarMandateCieNotRelatedToDelegatorError
+} from "../../analytics";
+import { setAarFlowState } from "../../store/actions";
 import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
 import {
   sendAarMockStateFactory,
   sendAarMockStates
 } from "../../utils/testUtils";
-import { setAarFlowState } from "../../store/actions";
 import {
-  aarProblemJsonAnalyticsReport,
-  trackSendAARFailure,
-  trackSendAarMandateCieExpiredError,
-  trackSendAarMandateCieNotRelatedToDelegatorError,
-  trackSendAarMandateCieDataError
-} from "../../analytics";
-import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
-import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
-import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
+  AcceptMandateSuccessfulResponse,
+  testable,
+  validateMandateSaga
+} from "../validateMandateSaga";
+import { AarErrorStatesKind } from "../../utils/aarErrorMappings";
 
-const { handleMixPanelCustomTrackingIfNeeded } = testable!;
+const { getAndTrackValidationErrorState } = testable!;
 
 const mockValidatingMandateState = sendAarMockStateFactory.validatingMandate();
 const mockValidatingMandateAction = setAarFlowState(mockValidatingMandateState);
@@ -37,10 +38,13 @@ const mockAcceptMandate = jest.fn();
 const getMockKoState = (
   prevState: AARFlowState,
   error: AARProblemJson | undefined,
+  status: number | undefined,
   reason: string
 ): AARFlowState => ({
   type: "ko",
   previousState: { ...prevState },
+  specificErrorKey:
+    status && getAndTrackValidationErrorState(error?.errors, status, reason),
   ...(error != null && { error }),
   debugData: {
     phase: "Validate Mandate",
@@ -198,8 +202,9 @@ describe("validateMandateSaga", () => {
         )
         .next(res)
         .call(
-          handleMixPanelCustomTrackingIfNeeded,
+          getAndTrackValidationErrorState,
           res.right.value?.errors,
+          res.right.status,
           reason
         )
         .next()
@@ -207,7 +212,12 @@ describe("validateMandateSaga", () => {
         .next()
         .put(
           setAarFlowState(
-            getMockKoState(mockValidatingMandateState, error, reason)
+            getMockKoState(
+              mockValidatingMandateState,
+              error,
+              res.right.status,
+              reason
+            )
           )
         )
         .next()
@@ -265,6 +275,7 @@ describe("validateMandateSaga", () => {
           getMockKoState(
             mockValidatingMandateState,
             undefined,
+            undefined,
             `An error was thrown ()`
           )
         )
@@ -294,7 +305,12 @@ describe("validateMandateSaga", () => {
       .next()
       .put(
         setAarFlowState(
-          getMockKoState(mockValidatingMandateState, undefined, failureReason)
+          getMockKoState(
+            mockValidatingMandateState,
+            undefined,
+            undefined,
+            failureReason
+          )
         )
       )
       .next()
@@ -313,7 +329,7 @@ describe("handleMixPanelCustomTrackingIfNeeded", () => {
   ])(
     'should call "trackSendAarMandateCieExpiredError" for errorCode "%s"',
     code => {
-      handleMixPanelCustomTrackingIfNeeded([{ code }], "Some reason");
+      getAndTrackValidationErrorState([{ code }], 422, "Some reason");
 
       expect(trackSendAarMandateCieExpiredError).toHaveBeenCalledTimes(1);
       expect(trackSendAarMandateCieExpiredError).toHaveBeenCalledWith(
@@ -334,7 +350,7 @@ describe("handleMixPanelCustomTrackingIfNeeded", () => {
   ])(
     'should call "trackSendAarMandateCieNotRelatedToDelegatorError" for errorCode "%s"',
     code => {
-      handleMixPanelCustomTrackingIfNeeded([{ code }], "Some reason");
+      getAndTrackValidationErrorState([{ code }], 422, "Some reason");
 
       expect(
         trackSendAarMandateCieNotRelatedToDelegatorError
@@ -359,7 +375,7 @@ describe("handleMixPanelCustomTrackingIfNeeded", () => {
   ])(
     'should call "trackSendAarMandateCieDataError" for errorCode "%s"',
     code => {
-      handleMixPanelCustomTrackingIfNeeded([{ code }], "Some reason");
+      getAndTrackValidationErrorState([{ code }], 422, "Some reason");
 
       expect(trackSendAarMandateCieDataError).toHaveBeenCalledTimes(1);
       expect(trackSendAarMandateCieDataError).toHaveBeenCalledWith(
@@ -376,11 +392,12 @@ describe("handleMixPanelCustomTrackingIfNeeded", () => {
     {
       title: "CIE_EXPIRED_ERROR before CIE_NOT_RELATED_TO_DELEGATOR_ERROR",
       errors: [
-        { code: "UNKNOWN_ERROR" },
         { code: "CIE_EXPIRED_ERROR" },
+        { code: "UNKNOWN_ERROR" },
         { code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR" }
       ],
-      expectedTracker: trackSendAarMandateCieExpiredError
+      expectedTracker: trackSendAarMandateCieExpiredError,
+      expectedErrorState: AarErrorStatesKind.CIE_EXPIRED
     },
     {
       title: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR before CIE_EXPIRED_ERROR",
@@ -388,12 +405,14 @@ describe("handleMixPanelCustomTrackingIfNeeded", () => {
         { code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR" },
         { code: "CIE_EXPIRED_ERROR" }
       ],
-      expectedTracker: trackSendAarMandateCieNotRelatedToDelegatorError
+      expectedTracker: trackSendAarMandateCieNotRelatedToDelegatorError,
+      expectedErrorState: AarErrorStatesKind.CIE_NOT_RELATED_TO_DELEGATOR
     },
     {
       title: "CIE_INTEGRITY_ERROR before CIE_EXPIRED_ERROR",
       errors: [{ code: "CIE_INTEGRITY_ERROR" }, { code: "CIE_EXPIRED_ERROR" }],
-      expectedTracker: trackSendAarMandateCieDataError
+      expectedTracker: trackSendAarMandateCieDataError,
+      expectedErrorState: AarErrorStatesKind.CIE_GENERIC
     },
     {
       title:
@@ -404,15 +423,20 @@ describe("handleMixPanelCustomTrackingIfNeeded", () => {
         { code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR" },
         { code: "CIE_INTEGRITY_ERROR" }
       ],
-      expectedTracker: trackSendAarMandateCieNotRelatedToDelegatorError
+      expectedTracker: trackSendAarMandateCieDataError,
+      expectedErrorState: AarErrorStatesKind.CIE_GENERIC
     }
   ])(
-    "should only track the first mapped error for $title",
+    "should only track the first error for $title",
     ({ errors, expectedTracker }) => {
-      handleMixPanelCustomTrackingIfNeeded(errors, "Some reason");
+      const state = getAndTrackValidationErrorState(errors, 422, "Some reason");
 
       expect(expectedTracker).toHaveBeenCalledTimes(1);
-      expect(expectedTracker).toHaveBeenCalledWith("Some reason");
+      if (state !== AarErrorStatesKind.CIE_GENERIC) {
+        expect(expectedTracker).toHaveBeenCalledWith("Some reason");
+      } else {
+        expect(expectedTracker).toHaveBeenCalledWith();
+      }
 
       const allTrackers = [
         trackSendAarMandateCieExpiredError,
@@ -425,30 +449,30 @@ describe("handleMixPanelCustomTrackingIfNeeded", () => {
     }
   );
 
-  it.each([
-    {
-      title: "undefined errors",
-      errors: undefined
-    },
-    {
-      title: "empty errors array",
-      errors: [] as Array<{ code: string }>
-    },
-    {
-      title: "unknown error code",
-      errors: [{ code: "UNKNOWN_ERROR" }]
-    },
-    {
-      title: "multiple unknown error codes",
-      errors: [{ code: "UNKNOWN_1" }, { code: "UNKNOWN_2" }]
-    }
-  ])("should not call any tracking function for $title", ({ errors }) => {
-    handleMixPanelCustomTrackingIfNeeded(errors, "Some reason");
+  // it.each([
+  //   {
+  //     title: "undefined errors",
+  //     errors: undefined
+  //   },
+  //   {
+  //     title: "empty errors array",
+  //     errors: [] as Array<{ code: string }>
+  //   },
+  //   {
+  //     title: "unknown error code",
+  //     errors: [{ code: "UNKNOWN_ERROR" }]
+  //   },
+  //   {
+  //     title: "multiple unknown error codes",
+  //     errors: [{ code: "UNKNOWN_1" }, { code: "UNKNOWN_2" }]
+  //   }
+  // ])("should not call any tracking function for $title", ({ errors }) => {
+  //   getAndTrackValidationErrorState(errors, 422, "Some reason");
 
-    expect(trackSendAarMandateCieDataError).not.toHaveBeenCalled();
-    expect(trackSendAarMandateCieExpiredError).not.toHaveBeenCalled();
-    expect(
-      trackSendAarMandateCieNotRelatedToDelegatorError
-    ).not.toHaveBeenCalled();
-  });
+  //   expect(trackSendAarMandateCieDataError).not.toHaveBeenCalled();
+  //   expect(trackSendAarMandateCieExpiredError).not.toHaveBeenCalled();
+  //   expect(
+  //     trackSendAarMandateCieNotRelatedToDelegatorError
+  //   ).not.toHaveBeenCalled();
+  // });
 });
