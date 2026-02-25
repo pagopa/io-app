@@ -27,30 +27,27 @@ const FlippableCard = ({
   duration = DEFAULT_DURATION,
   isFlipped: _isFlipped
 }: FlippableCardProps) => {
-  const isFlipped = useSharedValue(_isFlipped);
+  // Use a numeric shared value (0 = front, 1 = back) so withTiming can animate
+  // it smoothly. Driving withTiming on the shared value (rather than inside
+  // useAnimatedStyle) is the correct Reanimated pattern and avoids jitter.
+  const rotation = useSharedValue(_isFlipped ? 1 : 0);
 
   useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
-    isFlipped.value = _isFlipped;
-  }, [isFlipped, _isFlipped]);
+    rotation.value = withTiming(_isFlipped ? 1 : 0, { duration });
+  }, [rotation, _isFlipped, duration]);
 
-  const regularCardAnimatedStyle = useAnimatedStyle(() => {
-    const spinValue = interpolate(Number(isFlipped.value), [0, 1], [0, 180]);
-    const rotateValue = withTiming(`${spinValue}deg`, { duration });
+  const regularCardAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      { rotateY: `${interpolate(rotation.value, [0, 1], [0, 180])}deg` }
+    ]
+  }));
 
-    return {
-      transform: [{ rotateY: rotateValue }]
-    };
-  }, []);
-
-  const flippedCardAnimatedStyle = useAnimatedStyle(() => {
-    const spinValue = interpolate(Number(isFlipped.value), [0, 1], [180, 360]);
-    const rotateValue = withTiming(`${spinValue}deg`, { duration });
-
-    return {
-      transform: [{ rotateY: rotateValue }]
-    };
-  }, []);
+  const flippedCardAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      { rotateY: `${interpolate(rotation.value, [0, 1], [180, 360])}deg` }
+    ]
+  }));
 
   return (
     <View style={containerStyle}>
@@ -77,7 +74,8 @@ const styles = StyleSheet.create({
     right: 0
   },
   front: {
-    zIndex: 1
+    zIndex: 1,
+    backfaceVisibility: "hidden"
   },
   back: {
     backfaceVisibility: "hidden",
