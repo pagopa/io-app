@@ -1,8 +1,8 @@
 import { StyleSheet, View } from "react-native";
-import Animated, { FadeIn } from "react-native-reanimated";
+import Animated, { AnimatedStyle, FadeIn } from "react-native-reanimated";
 import CameraMarkerCorner from "../../../../img/camera-marker-corner.svg";
 import CameraMarkerLine from "../../../../img/camera-marker-line.svg";
-import { useSineWaveAnimation } from "../../../components/ui/utils/hooks/useSineWaveAnimation";
+import { IOEasingCurves } from "@pagopa/io-app-design-system";
 
 const ANIMATION_DURATION = 1500;
 
@@ -22,13 +22,6 @@ const AnimatedCameraMarker = ({
 }: Props) => {
   const lineSpan = size / 2 - cornerSize - 8;
 
-  const { animatedStyle: animatedLineStyle } = useSineWaveAnimation({
-    enabled: isAnimated,
-    span: lineSpan,
-    duration: ANIMATION_DURATION,
-    axis: "y"
-  });
-
   const drawMarkerCorner = (rotation: number, size: number) => (
     <CameraMarkerCorner
       width={size}
@@ -38,6 +31,18 @@ const AnimatedCameraMarker = ({
       }}
     />
   );
+
+  const scanAnimation: AnimatedStyle = {
+    animationName: {
+      from: { transform: [{ translateY: -lineSpan }] },
+      to: { transform: [{ translateY: lineSpan }] }
+    },
+    animationDuration: ANIMATION_DURATION,
+    animationTimingFunction: IOEasingCurves.easeInOutCubic,
+    animationIterationCount: "infinite",
+    animationDirection: "alternate",
+    animationPlayState: isAnimated ? "running" : "paused"
+  };
 
   return (
     <Animated.View style={styles.container} entering={FadeIn}>
@@ -52,7 +57,7 @@ const AnimatedCameraMarker = ({
             {drawMarkerCorner(180, cornerSize)}
           </View>
         </View>
-        <Animated.View style={animatedLineStyle}>
+        <Animated.View style={scanAnimation}>
           <CameraMarkerLine width={size - 10} height={size} />
         </Animated.View>
       </View>
