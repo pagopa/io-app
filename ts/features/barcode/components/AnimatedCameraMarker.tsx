@@ -1,8 +1,8 @@
+import { IOEasingCurves } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
 import Animated, { AnimatedStyle, FadeIn } from "react-native-reanimated";
 import CameraMarkerCorner from "../../../../img/camera-marker-corner.svg";
 import CameraMarkerLine from "../../../../img/camera-marker-line.svg";
-import { IOEasingCurves } from "@pagopa/io-app-design-system";
 
 const ANIMATION_DURATION = 1500;
 
