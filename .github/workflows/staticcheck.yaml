@@ -54,7 +54,12 @@ jobs:
           name: api-client
           path: definitions/
       - id: run-test
-        run: yarn test:ci --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            yarn test:ci --changedSince=origin/${{ github.base_ref }}
+          else
+            yarn test:ci --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+          fi
       - id: codecov-script        
         uses: codecov/codecov-action@84508663e988701840491b86de86b666e8a86bed # v4.3.0
         with:
