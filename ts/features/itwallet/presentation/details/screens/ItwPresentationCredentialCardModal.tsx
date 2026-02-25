@@ -4,32 +4,32 @@ import {
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useState, useLayoutEffect, memo, useCallback } from "react";
-import { StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
+import { memo, useCallback, useLayoutEffect, useState } from "react";
+import { StyleSheet, useWindowDimensions, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
+import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
 import {
   ItwSkeumorphicCard,
   SKEUMORPHIC_CARD_ASPECT_RATIO
 } from "../../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCard/FlipGestureDetector.tsx";
+import { itwSetClaimValuesHidden } from "../../../common/store/actions/preferences.ts";
+import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import {
   ItwCredentialStatus,
   StoredCredential
 } from "../../../common/utils/itwTypesUtils.ts";
-import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
-import { ItwPresentationCredentialCardFlipButton } from "../components/ItwPresentationCredentialCardFlipButton.tsx";
-import { trackCredentialCardModal } from "../analytics";
-import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
-import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
-import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
-import { itwSetClaimValuesHidden } from "../../../common/store/actions/preferences.ts";
-import { ItwPresentationCredentialCardHideValuesButton } from "../components/ItwPresentationCredentialCardHideValuesButton.tsx";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
+import { trackCredentialCardModal } from "../analytics";
+import { ItwPresentationCredentialCardFlipButton } from "../components/ItwPresentationCredentialCardFlipButton.tsx";
+import { ItwPresentationCredentialCardHideValuesButton } from "../components/ItwPresentationCredentialCardHideValuesButton.tsx";
 
 export type ItwPresentationCredentialCardModalNavigationParams = {
   credential: StoredCredential;
@@ -47,6 +47,9 @@ type Props = IOStackNavigationRouteProps<
 const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
   const { credential, status } = route.params;
   const safeAreaInsets = useSafeAreaInsets();
+  const { width: screenWidth } = useWindowDimensions();
+  const cardPreRotationWidth =
+    (screenWidth - 48) * SKEUMORPHIC_CARD_ASPECT_RATIO;
   const [isFlipped, setFlipped] = useState(false);
   const theme = useIOTheme();
   const valuesHidden = useIOSelector(itwIsClaimValueHiddenSelector);
@@ -102,18 +105,20 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
           }
         ]}
       >
-        <FlipGestureDetector
-          isFlipped={isFlipped}
-          setIsFlipped={setFlipped}
-          direction={"updown"}
-        >
-          <ItwSkeumorphicCard
-            credential={credential}
-            status={status}
+        <View style={{ width: cardPreRotationWidth }}>
+          <FlipGestureDetector
             isFlipped={isFlipped}
-            valuesHidden={valuesHidden}
-          />
-        </FlipGestureDetector>
+            setIsFlipped={setFlipped}
+            direction={"updown"}
+          >
+            <ItwSkeumorphicCard
+              credential={credential}
+              status={status}
+              isFlipped={isFlipped}
+              valuesHidden={valuesHidden}
+            />
+          </FlipGestureDetector>
+        </View>
       </View>
       <ItwPresentationCredentialCardFlipButton
         isFlipped={isFlipped}
@@ -136,12 +141,9 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end"
   },
   cardContainer: {
-    transform: [
-      { rotate: "90deg" }, // Rotates the card to landscape
-      { scale: SKEUMORPHIC_CARD_ASPECT_RATIO } // Scales the card to fit the screen
-    ],
+    transform: [{ rotate: "90deg" }],
     position: "absolute",
-    paddingHorizontal: 24,
+    alignItems: "center",
     justifyContent: "center",
     bottom: IOVisualCostants.headerHeight,
     left: 0,
