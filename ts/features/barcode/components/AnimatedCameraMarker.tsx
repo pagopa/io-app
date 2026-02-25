@@ -22,10 +22,10 @@ const AnimatedCameraMarker = ({
 }: Props) => {
   const lineSpan = size / 2 - cornerSize - 8;
 
-  const drawMarkerCorner = (rotation: number, size: number) => (
+  const drawMarkerCorner = (rotation: number) => (
     <CameraMarkerCorner
-      width={size}
-      height={size}
+      width={cornerSize}
+      height={cornerSize}
       style={{
         transform: [{ rotate: `${rotation}deg` }]
       }}
@@ -49,12 +49,12 @@ const AnimatedCameraMarker = ({
       <View style={[styles.marker, { width: size, height: size }]}>
         <View style={styles.corners}>
           <View style={styles.cornersSide}>
-            {drawMarkerCorner(0, cornerSize)}
-            {drawMarkerCorner(90, cornerSize)}
+            {drawMarkerCorner(0)}
+            {drawMarkerCorner(90)}
           </View>
           <View style={styles.cornersSide}>
-            {drawMarkerCorner(-90, cornerSize)}
-            {drawMarkerCorner(180, cornerSize)}
+            {drawMarkerCorner(-90)}
+            {drawMarkerCorner(180)}
           </View>
         </View>
         <Animated.View style={scanAnimation}>
