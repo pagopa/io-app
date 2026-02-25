@@ -1,46 +1,49 @@
 import {
   IOButton,
+  ListItemHeader,
   ListItemSwitch,
-  TextInput
+  OTPInput,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import {
   CieManager,
-  InternalAuthResponse,
+  MrtdResponse,
   type NfcEvent
 } from "@pagopa/io-react-native-cie";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useEffect, useState } from "react";
 import {
   Alert,
+  Keyboard,
   KeyboardAvoidingView,
-  Platform,
   StyleSheet,
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useHeaderSecondLevel } from "../../../../../../../hooks/useHeaderSecondLevel";
-import { useScreenEndMargin } from "../../../../../../../hooks/useScreenEndMargin";
-import { useIONavigation } from "../../../../../../../navigation/params/AppParamsList";
-import { SETTINGS_ROUTES } from "../../../../../common/navigation/routes";
-import { ReadStatusComponent } from "../../components/ReadStatusComponent";
-import { ReadStatus } from "../../types/ReadStatus";
-import { encodeChallenge } from "../../utils/encoding";
+import { useHeaderSecondLevel } from "../../../../../../hooks/useHeaderSecondLevel";
+import { useScreenEndMargin } from "../../../../../../hooks/useScreenEndMargin";
+import { ReadStatusComponent } from "../components/ReadStatusComponent";
+import { useCieNavigation } from "../navigation/CiePlaygroundsNavigator";
+import { CIE_PLAYGROUNDS_ROUTES } from "../navigation/routes";
+import { ReadStatus } from "../types/ReadStatus";
 
-export function CieIasAndMrtdPlaygroundIntAuthScreen() {
-  const navigation = useIONavigation();
+const CAN_PIN_LENGTH = 6;
+
+export const CieMrtdScreen = () => {
+  const navigation = useCieNavigation();
   const [status, setStatus] = useState<ReadStatus>("idle");
-  const [successResult, setSuccessResult] = useState<
-    InternalAuthResponse | undefined
-  >(undefined);
+  const [successResult, setSuccessResult] = useState<MrtdResponse | undefined>(
+    undefined
+  );
   const [event, setEvent] = useState<NfcEvent>();
-  const [challenge, setChallenge] = useState<string>("");
+  const [can, setCan] = useState<string>("");
 
   const [isBase64Encoding, setIsBase64Encoding] = useState(false);
   const toggleEncodingSwitch = () =>
     setIsBase64Encoding(previousState => !previousState);
 
   useHeaderSecondLevel({
-    title: "Internal Auth"
+    title: "CIE MRTD with PACE Reading"
   });
 
   const headerHeight = useHeaderHeight();
@@ -54,12 +57,12 @@ export function CieIasAndMrtdPlaygroundIntAuthScreen() {
       CieManager.addListener("onError", error => {
         setStatus("error");
         Alert.alert(
-          "Error during internal authentication",
+          "Error during MRTD reading",
           JSON.stringify(error, undefined, 2)
         );
       }),
       // Start listening for attributes success
-      CieManager.addListener("onInternalAuthenticationSuccess", result => {
+      CieManager.addListener("onMRTDWithPaceSuccess", result => {
         setStatus("success");
         setSuccessResult(result);
       })
@@ -75,29 +78,23 @@ export function CieIasAndMrtdPlaygroundIntAuthScreen() {
 
   useEffect(() => {
     if (status === "success" && successResult) {
-      navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-        screen:
-          SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH_RESULTS,
-        params: {
+      navigation.replace(CIE_PLAYGROUNDS_ROUTES.RESULT, {
+        title: "MRTD Reading Result",
+        data: {
           result: successResult,
-          challenge,
-          encodedChallenge: encodeChallenge(
-            challenge,
-            isBase64Encoding ? "base64" : "hex"
-          ),
           encoding: isBase64Encoding ? "base64" : "hex"
         }
       });
     }
-  }, [status, navigation, challenge, isBase64Encoding, successResult]);
+  }, [status, successResult, navigation, isBase64Encoding]);
 
   const handleStartReading = async () => {
     setEvent(undefined);
     setStatus("reading");
 
     try {
-      await CieManager.startInternalAuthentication(
-        challenge,
+      await CieManager.startMRTDReading(
+        can,
         isBase64Encoding ? "base64" : "hex"
       );
     } catch (e) {
@@ -115,13 +112,18 @@ export function CieIasAndMrtdPlaygroundIntAuthScreen() {
     void CieManager.stopReading();
   };
 
+  const onCanChanged = (value: string) => {
+    setCan(value);
+
+    if (value.length === CAN_PIN_LENGTH) {
+      Keyboard.dismiss();
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
-        behavior={Platform.select({
-          ios: "padding",
-          android: undefined
-        })}
+        behavior="padding"
         contentContainerStyle={{
           flex: 1,
           paddingBottom: 100 + screenEndMargin
@@ -141,26 +143,30 @@ export function CieIasAndMrtdPlaygroundIntAuthScreen() {
             label="Use base64 encoding"
             onSwitchValueChange={toggleEncodingSwitch}
             value={isBase64Encoding}
+            disabled={status !== "idle"}
           />
-          <TextInput
-            accessibilityLabel="Challenge text input field"
-            value={challenge}
-            placeholder={"Challenge"}
-            onChangeText={setChallenge}
+          <ListItemHeader label="Insert card CAN" />
+          <OTPInput
+            accessibilityLabel="CAN text input field"
+            value={can}
+            onValueChange={onCanChanged}
+            length={CAN_PIN_LENGTH}
           />
         </View>
+        <VSpacer size={16} />
         <IOButton
           variant="solid"
-          label={status === "reading" ? "Stop" : "Start sign"}
-          disabled={challenge.length === 0}
+          label={status === "reading" ? "Stop" : "Start reading"}
+          disabled={can.length < CAN_PIN_LENGTH}
           onPress={() =>
             status === "reading" ? handleStopReading() : handleStartReading()
           }
         />
+        <VSpacer size={16} />
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
