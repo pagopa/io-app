@@ -1,6 +1,5 @@
 import {
   HeaderSecondLevel,
-  IOVisualCostants,
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -48,8 +47,14 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
   const { credential, status } = route.params;
   const safeAreaInsets = useSafeAreaInsets();
   const { width: screenWidth } = useWindowDimensions();
-  const cardPreRotationWidth =
-    (screenWidth - 48) * SKEUMORPHIC_CARD_ASPECT_RATIO;
+  // cardAreaHeight is measured via onLayout so we can clamp cardPreRotationWidth
+  // on small devices: after rotate("90deg"), the visual card height = cardPreRotationWidth,
+  // so we cap it to the available area height to prevent overlap with the footer.
+  const [cardAreaHeight, setCardAreaHeight] = useState(0);
+  const cardPreRotationWidth = Math.min(
+    (screenWidth - 48) * SKEUMORPHIC_CARD_ASPECT_RATIO,
+    cardAreaHeight
+  );
   const [isFlipped, setFlipped] = useState(false);
   const theme = useIOTheme();
   const valuesHidden = useIOSelector(itwIsClaimValueHiddenSelector);
@@ -97,28 +102,32 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
         }
       ]}
     >
+      {/* Card area fills the space between header and footer, centering the card */}
       <View
-        style={[
-          styles.cardContainer,
-          {
-            top: -safeAreaInsets.top
-          }
-        ]}
+        style={styles.cardArea}
+        onLayout={e => setCardAreaHeight(e.nativeEvent.layout.height)}
       >
-        <View style={{ width: cardPreRotationWidth }}>
-          <FlipGestureDetector
-            isFlipped={isFlipped}
-            setIsFlipped={setFlipped}
-            direction={"updown"}
+        {cardAreaHeight > 0 && (
+          <View
+            style={{
+              width: cardPreRotationWidth,
+              transform: [{ rotate: "90deg" }]
+            }}
           >
-            <ItwSkeumorphicCard
-              credential={credential}
-              status={status}
+            <FlipGestureDetector
               isFlipped={isFlipped}
-              valuesHidden={valuesHidden}
-            />
-          </FlipGestureDetector>
-        </View>
+              setIsFlipped={setFlipped}
+              direction={"leftright"}
+            >
+              <ItwSkeumorphicCard
+                credential={credential}
+                status={status}
+                isFlipped={isFlipped}
+                valuesHidden={valuesHidden}
+              />
+            </FlipGestureDetector>
+          </View>
+        )}
       </View>
       <ItwPresentationCredentialCardFlipButton
         isFlipped={isFlipped}
@@ -137,17 +146,12 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
 
 const styles = StyleSheet.create({
   contentContainer: {
-    flex: 1,
-    justifyContent: "flex-end"
+    flex: 1
   },
-  cardContainer: {
-    transform: [{ rotate: "90deg" }],
-    position: "absolute",
+  cardArea: {
+    flex: 1,
     alignItems: "center",
-    justifyContent: "center",
-    bottom: IOVisualCostants.headerHeight,
-    left: 0,
-    right: 0
+    justifyContent: "center"
   }
 });
 
