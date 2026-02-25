@@ -14,5 +14,6 @@ module.exports = {
   globalSetup: "./jestGlobalSetup.js",
   setupFilesAfterEnv: ["./jestAfterEnvSetup.js"],
   collectCoverage: true,
-  testPathIgnorePatterns: [".*fiscal-code.test.ts$"]
+  testPathIgnorePatterns: [".*fiscal-code.test.ts$"],
+  modulePathIgnorePatterns: ["<rootDir>/.*/__mocks__"]
 };
