@@ -24,15 +24,7 @@
       "Friday",
       "Saturday"
     ],
-    "abbr_day_names": [
-      "Sun",
-      "Mon",
-      "Tue",
-      "Wed",
-      "Thu",
-      "Fri",
-      "Sat"
-    ],
+    "abbr_day_names": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
     "month_names": [
       " ",
       "January",
@@ -63,10 +55,7 @@
       "Nov",
       "Dec"
     ],
-    "meridian": [
-      "am",
-      "pm"
-    ],
+    "meridian": ["am", "pm"],
     "time": {
       "minutes_zero": "0 minutes",
       "minutes_one": "1 minute",
