@@ -1,5 +1,5 @@
 diff --git a/RNScreenshotPrevent.podspec b/RNScreenshotPrevent.podspec
-index 5b8912dcd663e30b8dbd13b37f1ca7656b0b550d..30e50e1e1fcc7273959acdbb978cf3523ef8110e 100644
+index 5b8912dcd663e30b8dbd13b37f1ca7656b0b550d..9914568a6ec63c12ef6572a409a436f31d81d105 100644
 --- a/RNScreenshotPrevent.podspec
 +++ b/RNScreenshotPrevent.podspec
 @@ -10,16 +10,29 @@ Pod::Spec.new do |s|
@@ -39,7 +39,7 @@ index 5b8912dcd663e30b8dbd13b37f1ca7656b0b550d..30e50e1e1fcc7273959acdbb978cf352
    
 \ No newline at end of file
 diff --git a/android/build.gradle b/android/build.gradle
-index 6ee6db648848012a47a1d95356c38d716ad29a15..30e7f5251365432ecf5d7a7007cb4e1712e749cc 100644
+index 6ee6db648848012a47a1d95356c38d716ad29a15..a69b395bcc129179162e37c6c197dbfa727e1a71 100644
 --- a/android/build.gradle
 +++ b/android/build.gradle
 @@ -1,24 +1,22 @@
@@ -307,7 +307,7 @@ index d381e388ec81d0a456ea496891fc635fe48a863e..00000000000000000000000000000000
 -}
 \ No newline at end of file
 diff --git a/android/src/main/java/com/killserver/screenshotprev/RNScreenshotPreventPackage.java b/android/src/main/java/com/killserver/screenshotprev/RNScreenshotPreventPackage.java
-index f853d05249d33d7ca405a2dcb4b528199be40f71..b26e7f7cddc6401a857cff9e44e9a0a142034ad9 100644
+index f853d05249d33d7ca405a2dcb4b528199be40f71..38a1077c8c4cef27e17b753082527475846ba012 100644
 --- a/android/src/main/java/com/killserver/screenshotprev/RNScreenshotPreventPackage.java
 +++ b/android/src/main/java/com/killserver/screenshotprev/RNScreenshotPreventPackage.java
 @@ -1,29 +1,46 @@
@@ -673,8 +673,16 @@ index 0000000000000000000000000000000000000000..e78f7265f2b1e0799dde3e63e6e36c20
 +  }
 +}
 \ No newline at end of file
+diff --git a/ios/.DS_Store b/ios/.DS_Store
+new file mode 100644
+index 0000000000000000000000000000000000000000..ad29777740dd47e36407046ebc85f83265024ea1
+--- /dev/null
++++ b/ios/.DS_Store
+@@ -0,0 +1 @@
++   Bud1           	                                                           r e e n s h                                                                                                                                                                                                                                                                                                                                                                                                                                           R N S c r e e n s h o t P r e v e n t . hIlocblob      B   .������      R N S c r e e n s h o t P r e v e n t . m mIlocblob      �   .������      R N S c r e e n s h o t P r e v e n t . x c o d e p r o jIlocblob     "   .������      U I I m a g e + I m a g e E f f e c t s . hIlocblob     �   .������      U I I m a g e + I m a g e E f f e c t s . mIlocblob        .������                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @      �                                        @      �                                          @      �                                          @                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   E  	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       DSDB                                 `          �                                         @      �                                          @      �                                          @                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+\ No newline at end of file
 diff --git a/ios/RNScreenshotPrevent.h b/ios/RNScreenshotPrevent.h
-index 8c05c1aee3407d69f39b118556b33da5c53854b1..e4ccd701f55cb5b6bd7a19459a2d9dabcff2fe3a 100644
+index 8c05c1aee3407d69f39b118556b33da5c53854b1..72481337597b0ec7113f14e57d95f6b7d25997e7 100644
 --- a/ios/RNScreenshotPrevent.h
 +++ b/ios/RNScreenshotPrevent.h
 @@ -9,7 +9,15 @@
@@ -907,10 +915,10 @@ index 37d55b5d4021c62e3adf8dd6c1a207a99c67b32e..00000000000000000000000000000000
 -@end
 diff --git a/ios/RNScreenshotPrevent.mm b/ios/RNScreenshotPrevent.mm
 new file mode 100644
-index 0000000000000000000000000000000000000000..7acdf8b8f970653d7e9387535d89f01af60fd92e
+index 0000000000000000000000000000000000000000..84ff5bb8c7d977e6029b731c774bb5430c5ad683
 --- /dev/null
 +++ b/ios/RNScreenshotPrevent.mm
-@@ -0,0 +1,217 @@
+@@ -0,0 +1,271 @@
 +#import "RNScreenshotPrevent.h"
 +#import "UIImage+ImageEffects.h"
 +
@@ -925,7 +933,7 @@ index 0000000000000000000000000000000000000000..7acdf8b8f970653d7e9387535d89f01a
 +    BOOL enabled;
 +    UIImageView *obfuscatingView;
 +    UITextField *secureField;
-+
++    
 +}
 +
 +RCT_EXPORT_MODULE();
@@ -944,41 +952,73 @@ index 0000000000000000000000000000000000000000..7acdf8b8f970653d7e9387535d89f01a
 +    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 +    // handle inactive event
 +    [center addObserver:self selector:@selector(handleAppStateResignActive)
-+                            name:UIApplicationWillResignActiveNotification
-+                            object:nil];
++                   name:UIApplicationWillResignActiveNotification
++                 object:nil];
 +    // handle active event
 +    [center addObserver:self selector:@selector(handleAppStateActive)
-+                            name:UIApplicationDidBecomeActiveNotification
-+                            object:nil];
++                   name:UIApplicationDidBecomeActiveNotification
++                 object:nil];
 +    // handle screenshot taken event
 +    [center addObserver:self selector:@selector(handleAppScreenshotNotification)
-+                            name:UIApplicationUserDidTakeScreenshotNotification
-+                            object:nil];
-+
++                   name:UIApplicationUserDidTakeScreenshotNotification
++                 object:nil];
++    
 +    hasListeners = TRUE;
 +}
 +
 +- (void) stopObserving {
 +    [[NSNotificationCenter defaultCenter] removeObserver:self];
-+
++    
 +    hasListeners = FALSE;
 +}
 +
 +#pragma mark - App Notification Methods
 +
++/** Helper method to get the current window - supports iOS 13+ scenes */
++- (UIWindow *)getCurrentWindow {
++    UIWindow *keyWindow = nil;
++    
++#if defined(__IPHONE_13_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0
++    if (@available(iOS 13.0, *)) {
++        NSSet<UIScene *> *scenes = [[UIApplication sharedApplication] connectedScenes];
++        for (UIScene *scene in scenes) {
++            if ([scene isKindOfClass:[UIWindowScene class]] && scene.activationState == UISceneActivationStateForegroundActive) {
++                UIWindowScene *windowScene = (UIWindowScene *)scene;
++                for (UIWindow *window in windowScene.windows) {
++                    if (window.isKeyWindow) {
++                        keyWindow = window;
++                        break;
++                    }
++                }
++                if (keyWindow) break;
++            }
++        }
++    }
++#endif
++    
++    // Fallback for iOS < 13
++    if (!keyWindow) {
++        keyWindow = [UIApplication sharedApplication].keyWindow;
++    }
++    
++    return keyWindow;
++}
++
 +/** displays blurry view when app becomes inactive */
 +- (void)handleAppStateResignActive {
 +    if (self->enabled) {
-+        UIWindow    *keyWindow = [UIApplication sharedApplication].keyWindow;
++        UIWindow    *keyWindow = [self getCurrentWindow];
++        if (!keyWindow) return;
++        
 +        UIImageView *blurredScreenImageView = [[UIImageView alloc] initWithFrame:keyWindow.bounds];
-+
++        
 +        UIGraphicsBeginImageContext(keyWindow.bounds.size);
 +        [keyWindow drawViewHierarchyInRect:keyWindow.frame afterScreenUpdates:NO];
 +        UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
 +        UIGraphicsEndImageContext();
-+
++        
 +        blurredScreenImageView.image = [viewImage applyLightEffect];
-+
++        
 +        self->obfuscatingView = blurredScreenImageView;
 +        [keyWindow addSubview:self->obfuscatingView];
 +    }
@@ -987,15 +1027,24 @@ index 0000000000000000000000000000000000000000..7acdf8b8f970653d7e9387535d89f01a
 +/** removes blurry view when app becomes active */
 +- (void)handleAppStateActive {
 +    if  (self->obfuscatingView) {
++        UIWindow *keyWindow = [self getCurrentWindow];
 +        [UIView animateWithDuration: 0.3
 +                         animations: ^ {
-+                             self->obfuscatingView.alpha = 0;
-+                         }
++            self->obfuscatingView.alpha = 0;
++        }
 +                         completion: ^(BOOL finished) {
-+                             [self->obfuscatingView removeFromSuperview];
-+                             self->obfuscatingView = nil;
-+                         }
-+         ];
++            [self->obfuscatingView removeFromSuperview];
++            self->obfuscatingView = nil;
++            // Force layout update to prevent UI misalignment
++            [keyWindow setNeedsLayout];
++            [keyWindow layoutIfNeeded];
++            // Also force update on root view controller's view
++            if (keyWindow.rootViewController && keyWindow.rootViewController.view) {
++                [keyWindow.rootViewController.view setNeedsLayout];
++                [keyWindow.rootViewController.view layoutIfNeeded];
++            }
++        }
++        ];
 +    }
 +}
 +
@@ -1009,7 +1058,7 @@ index 0000000000000000000000000000000000000000..7acdf8b8f970653d7e9387535d89f01a
 +
 ++(BOOL) requiresMainQueueSetup
 +{
-+  return YES;
++    return YES;
 +}
 +
 +CGSize CGSizeAspectFit(const CGSize aspectRatio, const CGSize boundingSize)
@@ -1040,19 +1089,22 @@ index 0000000000000000000000000000000000000000..7acdf8b8f970653d7e9387535d89f01a
 +/**
 + * creates secure text field inside rootView of the app
 + * taken from https://stackoverflow.com/questions/18680028/prevent-screen-capture-in-an-ios-app
-+ * 
++ *
 + * converted to ObjC and modified to get it working with RCT
 + */
 +-(void) addSecureTextFieldToView:(UIView *) view :(NSString *) imagePath {
 +    
-+    UIView *rootView = [UIApplication sharedApplication].keyWindow.rootViewController.view;
++    UIWindow *keyWindow = [self getCurrentWindow];
++    if (!keyWindow || !keyWindow.rootViewController) return;
++    
++    UIView *rootView = keyWindow.rootViewController.view;
 +    
 +    
 +    // fixes safe-area
 +    secureField = [[UITextField alloc] initWithFrame:rootView.frame];
 +    secureField.secureTextEntry = TRUE;
 +    secureField.userInteractionEnabled = FALSE;
-+
++    
 +    if (imagePath && ![imagePath isEqualToString:@""]) {
 +        UIView * imgView = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, rootView.frame.size.width, rootView.frame.size.height)];
 +        NSURL *url = [NSURL URLWithString:imagePath];
@@ -1074,11 +1126,10 @@ index 0000000000000000000000000000000000000000..7acdf8b8f970653d7e9387535d89f01a
 +        
 +        secureField.backgroundColor = [UIColor colorWithPatternImage:resultImage];
 +    }
-+
-+    [view sendSubviewToBack:secureField];
-+    [view addSubview:secureField];
-+    [view.layer.superlayer addSublayer:secureField.layer];
-+    [[secureField.layer.sublayers lastObject] addSublayer:view.layer];
++    
++    // Simply add the secure field as a subview
++    // Avoid manipulating the layer hierarchy directly as it can break layout
++    [view insertSubview:secureField atIndex:0];
 +}
 +
 +// TODO: not working now, fix crash on _UITextFieldCanvasView contenttViewInvalidated: unrecognized selector sent to instance
@@ -1089,6 +1140,9 @@ index 0000000000000000000000000000000000000000..7acdf8b8f970653d7e9387535d89f01a
 +                [subview removeFromSuperview];
 +                subview.secureTextEntry = FALSE;
 +                secureField.userInteractionEnabled = TRUE;
++                // Force layout update after removal
++                [view setNeedsLayout];
++                [view layoutIfNeeded];
 +            }
 +        }
 +    }
@@ -1102,8 +1156,12 @@ index 0000000000000000000000000000000000000000..7acdf8b8f970653d7e9387535d89f01a
 +
 +/** adds secure textfield view */
 +RCT_EXPORT_METHOD(enableSecureView: (NSString *)imagePath) {
++    [self enabled:YES];
 +    if(secureField.secureTextEntry == false) {
-+        UIView *view = [UIApplication sharedApplication].keyWindow.rootViewController.view;
++        UIWindow *keyWindow = [self getCurrentWindow];
++        if (!keyWindow || !keyWindow.rootViewController) return;
++        
++        UIView *view = keyWindow.rootViewController.view;
 +        for(UIView *subview in view.subviews) {
 +            [self addSecureTextFieldToView:subview :imagePath];
 +        }
@@ -1112,8 +1170,12 @@ index 0000000000000000000000000000000000000000..7acdf8b8f970653d7e9387535d89f01a
 +
 +/** removes secure textfield from the view */
 +RCT_EXPORT_METHOD(disableSecureView) {
++    [self enabled:NO];
 +    secureField.secureTextEntry = false;
-+    UIView *view = [UIApplication sharedApplication].keyWindow.rootViewController.view;
++    UIWindow *keyWindow = [self getCurrentWindow];
++    if (!keyWindow || !keyWindow.rootViewController) return;
++    
++    UIView *view = keyWindow.rootViewController.view;
 +    for(UIView *subview in view.subviews) {
 +        [self removeSecureTextFieldFromView:subview];
 +    }
@@ -1121,7 +1183,7 @@ index 0000000000000000000000000000000000000000..7acdf8b8f970653d7e9387535d89f01a
 +
 +#ifdef RCT_NEW_ARCH_ENABLED
 +- (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
-+    (const facebook::react::ObjCTurboModule::InitParams &)params
++(const facebook::react::ObjCTurboModule::InitParams &)params
 +{
 +    return std::make_shared<facebook::react::NativeRNScreenshotPreventSpecJSI>(params);
 +}
@@ -1129,7 +1191,7 @@ index 0000000000000000000000000000000000000000..7acdf8b8f970653d7e9387535d89f01a
 +
 +@end
 diff --git a/ios/UIImage+ImageEffects.h b/ios/UIImage+ImageEffects.h
-index 3e83ea833329b8093919b8d222adeccc5c329f23..9cd9be3ffffac3eaafc053bd15ad8c7b69c8c5f9 100644
+index 3e83ea833329b8093919b8d222adeccc5c329f23..e026fbe6a59388226aab9cd6c4510452b9594e33 100644
 --- a/ios/UIImage+ImageEffects.h
 +++ b/ios/UIImage+ImageEffects.h
 @@ -2,14 +2,14 @@
@@ -1497,7 +1559,7 @@ index 0000000000000000000000000000000000000000..e0c2ae2ed44e86e68e750e701baf9df8
 +
 +export default TurboModuleRegistry.get<Spec>('RNScreenshotPrevent');
 diff --git a/src/index.d.ts b/src/index.d.ts
-index 4ae53861dca03cbda558f7cd2779824f0f8e6097..1d1d3c259702e0c7da618dff7020e2fb558a9af5 100644
+index 4ae53861dca03cbda558f7cd2779824f0f8e6097..7a1af1ea1463799a6095fde6cb9815f56fcd326a 100644
 --- a/src/index.d.ts
 +++ b/src/index.d.ts
 @@ -1,8 +1,8 @@
@@ -1515,8 +1577,9 @@ index 4ae53861dca03cbda558f7cd2779824f0f8e6097..1d1d3c259702e0c7da618dff7020e2fb
 +	export function useDisableSecureView(): void;
 +	export function addListener(fn: Function): void;
  }
+\ No newline at end of file
 diff --git a/src/index.ts b/src/index.ts
-index aa8f952601bb8d0c8c0d8b0f08ab4710f7e05fce..c2d11627c75da1fce5730e4734e2398148a3ce7d 100644
+index aa8f952601bb8d0c8c0d8b0f08ab4710f7e05fce..213fa9910e6514c41d8fb4d1f79644626b4d3562 100644
 --- a/src/index.ts
 +++ b/src/index.ts
 @@ -1,88 +1,132 @@
