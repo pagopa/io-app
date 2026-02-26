@@ -25,6 +25,12 @@ describe("aarErrorMappings", () => {
       const Component = getSendAarErrorComponent(undefined);
       expect(Component).toBe(errorMap[AarErrorStatesKind.GENERIC]);
     });
+    it("should return the generic error component for an unmapped error kind", () => {
+      const Component = getSendAarErrorComponent(
+        "UNMAPPED ERROR" as AarErrorStatesKind
+      );
+      expect(Component).toBe(errorMap[AarErrorStatesKind.GENERIC]);
+    });
   });
   describe("isAarAttachmentTtlError", () => {
     it("should return true for PN_DELIVERY_MANDATENOTFOUND", () => {

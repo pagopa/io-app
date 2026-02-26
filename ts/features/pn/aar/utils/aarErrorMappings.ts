@@ -8,10 +8,10 @@ import {
 import { SendAarGenericErrorComponent } from "../components/errors/SendAARErrorComponent";
 
 export enum AarErrorStatesKind {
-  CIE_EXPIRED,
-  CIE_NOT_RELATED_TO_DELEGATOR,
-  CIE_GENERIC,
-  GENERIC
+  CIE_EXPIRED = "CIE_EXPIRED",
+  CIE_NOT_RELATED_TO_DELEGATOR = "CIE_NOT_RELATED_TO_DELEGATOR",
+  CIE_GENERIC = "CIE_GENERIC",
+  GENERIC = "GENERIC"
 }
 const cieErrors = {
   PN_MANDATE_BADREQUEST: "PN_MANDATE_BADREQUEST",
@@ -48,8 +48,13 @@ export const isAarAttachmentTtlError = (
 
 export const getSendAarErrorComponent = (
   maybeErrorKey?: AarErrorStatesKind
-): ComponentType =>
-  aarProblemJsonComponentMap[maybeErrorKey ?? AarErrorStatesKind.GENERIC];
+): ComponentType => {
+  const errorKind =
+    maybeErrorKey != null && maybeErrorKey in AarErrorStatesKind
+      ? maybeErrorKey
+      : AarErrorStatesKind.GENERIC;
+  return aarProblemJsonComponentMap[errorKind];
+};
 
 export const testable = isTestEnv
   ? {

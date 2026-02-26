@@ -216,7 +216,7 @@ describe("validateMandateSaga", () => {
       errorState: AarErrorStatesKind.CIE_GENERIC
     }
   ] as Array<{ res: AcceptMandateSuccessfulResponse; errorState: AarErrorStatesKind }>)(
-    "should dispatch a KO state when the response is %o",
+    "should dispatch the correct KO state when the response is %o",
     ({ res, errorState }) => {
       const error = res.right.value;
       const reason = `HTTP request failed (${aarProblemJsonAnalyticsReport(
