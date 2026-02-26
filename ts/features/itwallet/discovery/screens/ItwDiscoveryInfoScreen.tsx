@@ -1,6 +1,5 @@
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../store/hooks.ts";
-import { itwIsActivationDisabledSelector } from "../../common/store/selectors/preferences.ts";
 import { isRestrictedCredential } from "../../common/utils/itwCredentialUtils.ts";
 import { itwHasNfcFeatureSelector } from "../../identification/common/store/selectors/index.ts";
 import { EidIssuanceLevel } from "../../machine/eid/context.ts";

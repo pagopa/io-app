@@ -11,7 +11,6 @@ import {
 import { itwDisabledCredentialsSelector } from "../../common/store/selectors/remoteConfig";
 import {
   isNewCredential,
-  isRestrictedCredential,
   isUpcomingCredential
 } from "../../common/utils/itwCredentialUtils";
 import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
