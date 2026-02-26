@@ -12,6 +12,8 @@ import { PNActivationReminderBanner } from "../../pn/reminderBanner/components/P
 import { isPnActivationReminderBannerRenderableSelector } from "../../pn/reminderBanner/reducer/bannerDismiss";
 import { PushNotificationsBanner } from "../../pushNotifications/components/PushNotificationsBanner";
 import { isPushNotificationsBannerRenderableSelector } from "../../pushNotifications/store/selectors";
+import OsDismissionBanner from "../../osDismission/components/OsDismissionBanner";
+import { isOsDismissionisBannerRenderableSelector } from "../../osDismission/store/selectors";
 
 type ComponentWithCloseHandler = (closeHandler: () => void) => ReactElement;
 type ComponentAndLogic = {
@@ -26,6 +28,7 @@ export type LandingScreenBannerId =
   keyof typeof LANDING_SCREEN_BANNERS_ENABLED_MAP;
 
 export const LANDING_SCREEN_BANNERS_ENABLED_MAP = {
+  OS_DISMISSION_REMINDER: true,
   PUSH_NOTIFICATIONS_REMINDER: true,
   IT_WALLET_DISCOVERY: true,
   ITW_DISCOVERY: true /** Legacy Documenti su IO */,
@@ -34,6 +37,12 @@ export const LANDING_SCREEN_BANNERS_ENABLED_MAP = {
 } as const;
 
 export const landingScreenBannerMap: BannerMapById = {
+  OS_DISMISSION_REMINDER: {
+    component: closeHandler => (
+      <OsDismissionBanner handleOnClose={closeHandler} />
+    ),
+    isRenderableSelector: isOsDismissionisBannerRenderableSelector
+  },
   PUSH_NOTIFICATIONS_REMINDER: {
     component: closeHandler => (
       <PushNotificationsBanner closeHandler={closeHandler} />

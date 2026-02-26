@@ -5980,6 +5980,13 @@
         "cta": "Attiva notifiche push",
         "toast": "Hai attivato le notifiche push"
       }
+    },
+    "osDismission": {
+      "banner": {
+        "title": "Aggiorna il tuo dispositivo per continuare a usare IO",
+        "body": "Presto la versione attuale del tuo sistema operativo non sarà più supportata.",
+        "action": "Scopri di più"
+      }
     }
   },
   "support": {
