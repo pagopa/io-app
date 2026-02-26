@@ -849,13 +849,11 @@ export const itwEidIssuanceMachine = setup({
             "select-identification-mode": [
               {
                 guard: ({ event }) => event.mode === "spid",
-                actions: "trackIdentificationMethodSelected",
                 target: "#itwEidIssuanceMachine.UserIdentification.Spid"
               },
               {
                 guard: ({ event }) => event.mode === "cieId",
                 actions: [
-                  "trackIdentificationMethodSelected",
                   assign(() => ({
                     identification: {
                       mode: "cieId",
