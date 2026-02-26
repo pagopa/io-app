@@ -190,18 +190,19 @@ export function trackLoginInfoResourceTap(
     buildEventProperties("UX", "action", { resource_selected })
   );
 }
+
 export function trackLoginFailure(props: {
-  reason: Error;
+  reason: string;
   idp: keyof IdpData | undefined;
   flow: LoginType;
 }) {
-  const propsWithDefaultFlow = {
-    ...props,
-    flow: props.flow || "auth"
-  };
+  const { flow, ...rest } = props;
   void mixpanelTrack(
     "LOGIN_FAILURE",
-    buildEventProperties("TECH", "error", propsWithDefaultFlow)
+    buildEventProperties("TECH", "error", {
+      ...rest,
+      flow: flow || "auth"
+    })
   );
 }
 
@@ -219,5 +220,19 @@ export function trackLogoutFailure(
   void mixpanelTrack(
     "LOGOUT_FAILURE",
     buildEventProperties("TECH", "error", { reason, flow })
+  );
+}
+
+export function trackSessionTokenSource(source: "fragment" | "queryParam") {
+  void mixpanelTrack(
+    "SESSION_TOKEN_SOURCE",
+    buildEventProperties("TECH", undefined, { source })
+  );
+}
+
+export function trackSessionTokenFragmentFailure(reason: string) {
+  void mixpanelTrack(
+    "SESSION_TOKEN_FRAGMENT_FAILURE",
+    buildEventProperties("TECH", undefined, { reason })
   );
 }

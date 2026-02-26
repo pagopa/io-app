@@ -2,13 +2,13 @@ import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { call, put, select } from "typed-redux-saga/macro";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { SessionToken } from "../../../../types/SessionToken";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { unknownToReason } from "../../../messages/utils";
 import {
   aarProblemJsonAnalyticsReport,
-  trackSendAARFailure
+  trackSendAARFailure,
+  trackSendAarMandateCieDataError
 } from "../analytics";
 import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
@@ -17,12 +17,19 @@ import {
   SendAARFailurePhase,
   sendAARFlowStates
 } from "../utils/stateUtils";
+import { isDevEnv } from "../../../../utils/environment";
+import { aarProblemJsonErrorTrackingMap } from "../utils/aarErrorMappings";
 
 const sendAARFailurePhase: SendAARFailurePhase = "Validate Mandate";
 
+export type AcceptMandateSuccessfulResponse = Extract<
+  Awaited<ReturnType<SendAARClient["acceptAARMandate"]>>,
+  { _tag: "Right" }
+>;
+
 export function* validateMandateSaga(
   acceptMandate: SendAARClient["acceptAARMandate"],
-  sessionToken: SessionToken,
+  sessionToken: string,
   action: ReturnType<typeof setAarFlowState>
 ) {
   if (action.payload.type !== sendAARFlowStates.validatingMandate) {
@@ -90,12 +97,17 @@ export function* validateMandateSaga(
           "Fast login expiration"
         );
         return;
-      // TODO: [IOCOM-2844] Map 400 and 422 errors
       default:
         const reason = `HTTP request failed (${aarProblemJsonAnalyticsReport(
           status,
           value
         )})`;
+        yield* call(
+          handleMixPanelCustomTrackingIfNeeded,
+          status,
+          value,
+          reason
+        );
         yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
         const errorState: AARFlowState = {
           type: sendAARFlowStates.ko,
@@ -124,3 +136,37 @@ export function* validateMandateSaga(
     );
   }
 }
+
+function handleMixPanelCustomTrackingIfNeeded<
+  S extends Exclude<
+    AcceptMandateSuccessfulResponse["right"]["status"],
+    204 | 401
+  >
+>(
+  status: S,
+  value: Extract<
+    AcceptMandateSuccessfulResponse["right"],
+    { status: S }
+  >["value"],
+  reason: string
+) {
+  if (status === 422) {
+    const maybeErrorKey = value.errors
+      ?.map(({ code }) => code.toUpperCase())
+      .find(
+        (code): code is keyof typeof aarProblemJsonErrorTrackingMap =>
+          code in aarProblemJsonErrorTrackingMap
+      );
+
+    if (maybeErrorKey) {
+      aarProblemJsonErrorTrackingMap[maybeErrorKey]();
+      return;
+    }
+  }
+
+  trackSendAarMandateCieDataError(reason);
+}
+
+export const testable = isDevEnv
+  ? { handleMixPanelCustomTrackingIfNeeded }
+  : undefined;

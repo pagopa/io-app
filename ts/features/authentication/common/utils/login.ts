@@ -3,7 +3,6 @@ import URLParse from "url-parse";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { SessionToken } from "../../../../types/SessionToken";
 import { trackLoginSpidError } from "../analytics/spidAnalytics";
 import { spidRelayState } from "../../../../config";
 import { IdpData } from "../../../../../definitions/content/IdpData";
@@ -11,13 +10,17 @@ import { isStringNullyOrEmpty } from "../../../../utils/strings";
 import { getAppVersion } from "../../../../utils/appVersion";
 import { isLocalEnv } from "../../../../utils/environment";
 import { LoginType } from "../../activeSessionLogin/screens/analytics";
+import {
+  trackSessionTokenFragmentFailure,
+  trackSessionTokenSource
+} from "../analytics";
 /**
  * Helper functions for handling the SPID login flow through a webview.
  */
 
 type LoginSuccess = {
   success: true;
-  token: SessionToken;
+  token: string;
 };
 
 type LoginFailure = {
@@ -52,6 +55,45 @@ export const getIntentFallbackUrl = (intentUrl: string): O.Option<string> => {
   return O.none;
 };
 
+/**
+ * Extracts the session token from the hash fragment
+ * @param hash
+ */
+const getTokenFromHash = (hash: unknown): string | undefined => {
+  if (!hash || typeof hash !== "string") {
+    return undefined;
+  }
+  const paramsString = hash.startsWith("#") ? hash.slice(1) : hash;
+
+  try {
+    const searchParams = new URLSearchParams(paramsString);
+    return searchParams.get("token") || undefined;
+  } catch (e) {
+    trackSessionTokenFragmentFailure(
+      e instanceof Error ? e.message : String(e)
+    );
+    return undefined;
+  }
+};
+
+/**
+ * Extracts the session token using a priority-based strategy:
+ * First, it checks the URL hash fragment for the token.
+ * If not found in the hash, it checks the query parameters.
+ * @param urlParse
+ */
+const getTokenFromUrlParse = (urlParse: URLParse) => {
+  const { hash, query } = urlParse;
+
+  const tokenFromHash = getTokenFromHash(hash);
+  if (tokenFromHash) {
+    trackSessionTokenSource("fragment");
+    return tokenFromHash;
+  }
+  trackSessionTokenSource("queryParam");
+  return query.token;
+};
+
 // Prefixes for LOGIN SUCCESS/ERROR
 const LOGIN_SUCCESS_PAGE = "profile.html";
 const LOGIN_FAILURE_PAGE = "error.html";
@@ -65,9 +107,9 @@ export const extractLoginResult = (
 
   // LOGIN_SUCCESS
   if (urlParse.pathname.includes(LOGIN_SUCCESS_PAGE)) {
-    const token = urlParse.query.token;
+    const token = getTokenFromUrlParse(urlParse);
     if (!isStringNullyOrEmpty(token)) {
-      return { success: true, token: token as SessionToken };
+      return { success: true, token: token as string };
     }
     return { success: false };
   }
@@ -110,7 +152,7 @@ export const getIdpLoginUri = (
 export const onLoginUriChanged =
   (
     onFailure: (errorCode?: string, errorMessage?: string) => void,
-    onSuccess: (_: SessionToken) => void,
+    onSuccess: (_: string) => void,
     idp?: keyof IdpData,
     flow: LoginType = "auth"
   ) =>

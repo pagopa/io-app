@@ -79,7 +79,7 @@ export const ItwCieCardReadProgressContent = (
           title={I18n.t(
             `features.itWallet.identification.cie.readingCard.${platform}.idle.title`
           )}
-          pictogram="nfcScaniOS"
+          pictogram="nfcScanAndroid"
           secondaryAction={cancelAction}
         />
       );
@@ -94,7 +94,7 @@ export const ItwCieCardReadProgressContent = (
           subtitle={I18n.t(
             `features.itWallet.identification.cie.readingCard.${platform}.reading.subtitle`
           )}
-          pictogram="nfcScaniOS"
+          pictogram="nfcScanAndroid"
           secondaryAction={cancelAction}
         />
       );

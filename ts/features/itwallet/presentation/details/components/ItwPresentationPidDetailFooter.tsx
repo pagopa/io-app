@@ -3,11 +3,12 @@ import { constVoid } from "fp-ts/function";
 import I18n from "i18next";
 import { memo } from "react";
 import { Alert, View } from "react-native";
-import { trackWalletStartDeactivation } from "../../../analytics";
+import { trackItwStartDeactivation } from "../../../analytics";
 import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailableToastGuard.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { useItwStartCredentialSupportRequest } from "../hooks/useItwStartCredentialSupportRequest";
+import { ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS } from "../analytics/enum";
 
 type Props = {
   credential: StoredCredential;
@@ -23,7 +24,11 @@ const ItwPresentationPidDetailFooter = ({ credential }: Props) => {
   );
 
   const handleRevokePress = () => {
-    trackWalletStartDeactivation("ITW_PID");
+    trackItwStartDeactivation({
+      credential: "ITW_PID",
+      screen_name:
+        ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS.ITW_CREDENTIAL_DETAIL
+    });
     Alert.alert(
       I18n.t("features.itWallet.presentation.itWalletId.dialog.revoke.title"),
       I18n.t("features.itWallet.presentation.itWalletId.dialog.revoke.message"),

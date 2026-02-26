@@ -70,7 +70,7 @@ export type CredentialStatusAssertionFailure = {
 
 export type ItwIdMethod = IdentificationContext["mode"];
 
-export type TrackITWalletBannerClosureProperties = {
+export type TrackItwBannerProperties = {
   banner_id: string;
   banner_page: string;
   banner_landing: string;
@@ -171,4 +171,9 @@ export type TrackSaveCredentialSuccess = {
   credential: MixPanelCredential;
   credential_details: ItwCredentialDetails;
   ITW_ID_method?: ItwIdMethod;
+};
+
+export type TrackItwDeactivation = {
+  credential: MixPanelCredential;
+  screen_name: string;
 };

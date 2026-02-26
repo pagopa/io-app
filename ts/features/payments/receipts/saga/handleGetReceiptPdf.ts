@@ -9,6 +9,10 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
 import { byteArrayToBase64 } from "../utils";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
 import { DownloadReceiptHeaders } from "../utils/types";
+import {
+  DownloadReceiptOutcomeErrorEnum,
+  ReceiptDownloadFailure
+} from "../types";
 
 /**
  * Handle the remote call to get the transaction receipt pdf from the biz events API
@@ -62,24 +66,26 @@ export function* handleGetReceiptPdf(
       );
     } else if (getTransactionReceiptResult.right.status !== 401) {
       // The 401 status returned from all the pagoPA APIs need to reset the session token before refreshing the token
+      const apiErrorCode = getTransactionReceiptResult.right.value?.code;
+      const statusCode = getTransactionReceiptResult.right.status;
 
-      action.payload.onError?.();
-      yield* put(
-        getPaymentsReceiptDownloadAction.failure({
-          ...getGenericError(
-            new Error(
-              `response status code ${getTransactionReceiptResult.right.status}`
-            )
-          )
-        })
-      );
+      if (
+        apiErrorCode &&
+        apiErrorCode === DownloadReceiptOutcomeErrorEnum.AT_404_002
+      ) {
+        // In that specific case we need to call show the info alert since the receipt is under generation
+        action.payload.onErrorGeneration?.();
+      } else {
+        action.payload.onError?.();
+      }
+      const failure: ReceiptDownloadFailure = {
+        ...getGenericError(new Error(`response status code ${statusCode}`)),
+        code: apiErrorCode as DownloadReceiptOutcomeErrorEnum | undefined
+      };
+      yield* put(getPaymentsReceiptDownloadAction.failure(failure));
     }
   } catch (e) {
+    yield* put(getPaymentsReceiptDownloadAction.failure(getNetworkError(e)));
     action.payload.onError?.();
-    yield* put(
-      getPaymentsReceiptDownloadAction.failure({
-        ...getNetworkError(e)
-      })
-    );
   }
 }

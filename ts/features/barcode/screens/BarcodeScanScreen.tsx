@@ -173,7 +173,7 @@ const BarcodeScanScreen = () => {
         });
         break;
       case "SEND":
-        navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
           screen: PN_ROUTES.MAIN,
           params: {
             screen: PN_ROUTES.QR_SCAN_FLOW,

@@ -2,7 +2,6 @@ import { testSaga } from "redux-saga-test-plan";
 import { Effect, call } from "redux-saga/effects";
 import { take } from "typed-redux-saga/macro";
 import { apiUrlPrefix } from "../../../../../config";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { KeyInfo } from "../../../../lollipop/utils/crypto";
 import {
   SendAARClient,
@@ -25,7 +24,7 @@ const { aarFlowMasterSaga, raceWithTerminateFlow } = testable as NonNullable<
   typeof testable
 >;
 
-const mockSessionToken = "mock-session-token" as SessionToken;
+const mockSessionToken = "mock-session-token";
 const mockKeyInfo = {} as KeyInfo;
 
 const mockSendAARClient: SendAARClient = {

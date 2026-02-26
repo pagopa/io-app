@@ -71,6 +71,7 @@ Map {
   },
   "cieScanning" => Set {
     "cieScanningAdvisory",
+    "cieCanAdvisory",
     "validatingMandate",
   },
   "validatingMandate" => Set {

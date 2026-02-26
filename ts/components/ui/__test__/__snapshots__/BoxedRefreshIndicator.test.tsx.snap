@@ -26,14 +26,33 @@ exports[`BoxedRefreshIndicator Should match all-properties snapshot 1`] = `
   >
     <View
       collapsable={false}
-      style={
+      jestAnimatedProps={
         {
-          "transform": [
-            {
-              "rotateZ": "0deg",
-            },
-          ],
+          "value": {},
         }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "transform": [
+              {
+                "rotateZ": "0deg",
+              },
+            ],
+          },
+        }
+      }
+      jestInlineStyle={{}}
+      style={
+        [
+          {
+            "transform": [
+              {
+                "rotateZ": "0deg",
+              },
+            ],
+          },
+        ]
       }
       testID="LoadingSpinnerAnimatedTestID"
     >
@@ -224,14 +243,33 @@ exports[`BoxedRefreshIndicator Should match base snapshot 1`] = `
   >
     <View
       collapsable={false}
-      style={
+      jestAnimatedProps={
         {
-          "transform": [
-            {
-              "rotateZ": "0deg",
-            },
-          ],
+          "value": {},
         }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "transform": [
+              {
+                "rotateZ": "0deg",
+              },
+            ],
+          },
+        }
+      }
+      jestInlineStyle={{}}
+      style={
+        [
+          {
+            "transform": [
+              {
+                "rotateZ": "0deg",
+              },
+            ],
+          },
+        ]
       }
       testID="LoadingSpinnerAnimatedTestID"
     >

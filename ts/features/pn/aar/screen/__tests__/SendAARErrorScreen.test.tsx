@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -23,15 +24,16 @@ const handledRetryStates: Array<AARFlowStateName> = [
   sendAARFlowStates.cieCanAdvisory
 ];
 const mockReplace = jest.fn();
-jest.mock("../../../../../navigation/params/AppParamsList", () => {
-  const actualNav = jest.requireActual(
-    "../../../../../navigation/params/AppParamsList"
-  );
+const mockShouldNeverCall = jest.fn();
+jest.mock("@react-navigation/native", () => {
+  const actualNav = jest.requireActual("@react-navigation/native");
   return {
     ...actualNav,
-    useIONavigation: () => ({
-      replace: mockReplace
-    })
+    useNavigation: () =>
+      new Proxy(actualNav.useNavigation?.(), {
+        get: (_target, prop) =>
+          prop === "replace" ? mockReplace : mockShouldNeverCall
+      })
   };
 });
 describe("SendAARErrorScreen", () => {
@@ -136,6 +138,16 @@ describe("SendAARErrorScreen", () => {
       } else {
         expect(mockReplace).not.toHaveBeenCalled();
       }
+    });
+
+    it(`should never call any non-replace navigation action when type is "${mockState.type}"`, () => {
+      jest
+        .spyOn(SELECTORS, "currentAARFlowData")
+        .mockImplementation(_state => mockState);
+
+      renderScreen();
+
+      expect(mockShouldNeverCall).not.toHaveBeenCalled();
     });
   });
 });

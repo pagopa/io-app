@@ -10,13 +10,6 @@ import {
   WalletCardsCategoryContainerProps
 } from "../WalletCardsCategoryContainer";
 
-jest.mock("react-native-reanimated", () => ({
-  ...require("react-native-reanimated/mock"),
-  Layout: {
-    duration: jest.fn()
-  }
-}));
-
 describe("WalletCardsCategoryContainer", () => {
   jest.useFakeTimers();
   jest.runAllTimers();

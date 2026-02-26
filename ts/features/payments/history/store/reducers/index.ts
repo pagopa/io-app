@@ -242,10 +242,10 @@ const reducer = (
         ...state,
         analyticsData: {
           ...state.analyticsData,
-          transactionsHomeLength: action.payload?.length ?? 0,
+          transactionsHomeLength: action.payload?.data.length ?? 0,
           paymentsHomeStatus: getPaymentsHomeStatus(
             state.analyticsData?.savedPaymentMethods?.length ?? 0,
-            action.payload?.length ?? 0
+            action.payload?.data.length ?? 0
           )
         }
       };
@@ -279,7 +279,8 @@ const reducer = (
           receiptOrganizationFiscalCode:
             action.payload.carts?.[0]?.payee?.taxCode,
           receiptOrganizationName: action.payload.carts?.[0]?.payee?.name,
-          receiptPayerFiscalCode: action.payload.infoNotice?.payer?.taxCode
+          receiptPayerFiscalCode: action.payload.infoNotice?.payer?.taxCode,
+          receiptEventId: action.payload.infoNotice?.eventId
         }
       };
     case getType(getPaymentsReceiptDownloadAction.request): {

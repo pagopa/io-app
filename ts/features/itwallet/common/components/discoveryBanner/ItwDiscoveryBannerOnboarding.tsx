@@ -7,8 +7,8 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import { useIOSelector } from "../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
-  trackItWalletBannerTap,
-  trackITWalletBannerVisualized
+  trackItwBannerTap,
+  trackItwBannerVisualized
 } from "../../../analytics";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { isItwDiscoveryBannerRenderableSelector } from "../../store/selectors";
@@ -51,13 +51,13 @@ const ItwDiscoveryBannerOnboarding = () => {
   useOnFirstRender(
     useCallback(() => {
       if (isBannerRenderable) {
-        trackITWalletBannerVisualized(trackBannerProperties);
+        trackItwBannerVisualized(trackBannerProperties);
       }
     }, [trackBannerProperties, isBannerRenderable])
   );
 
   const handleOnPress = () => {
-    trackItWalletBannerTap(trackBannerProperties);
+    trackItwBannerTap(trackBannerProperties);
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
       params: {}

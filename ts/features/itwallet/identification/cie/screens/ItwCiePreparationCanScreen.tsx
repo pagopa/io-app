@@ -1,12 +1,11 @@
-import { ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
-import { Image } from "react-native";
-import { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
+import I18n from "i18next";
+import { useCallback } from "react";
+import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import { trackItwIdCieCanTutorialCan } from "../../analytics";
 import { selectIdentification } from "../../../machine/eid/selectors";
+import { trackItwIdCieCanTutorialCan } from "../../analytics";
+import { ItwCiePreparationScreenContent } from "../components/ItwCiePreparationScreenContent";
 
 export const ItwCiePreparationCanScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -19,15 +18,33 @@ export const ItwCiePreparationCanScreen = () => {
     }, [identification])
   );
 
+  const dismissalDialog = useItwDismissalDialog({
+    customLabels: {
+      title: I18n.t(
+        "features.itWallet.discovery.screen.itw.dismissalDialog.title"
+      ),
+      body: I18n.t(
+        "features.itWallet.discovery.screen.itw.dismissalDialog.body"
+      ),
+      confirmLabel: I18n.t(
+        "features.itWallet.discovery.screen.itw.dismissalDialog.confirm"
+      ),
+      cancelLabel: I18n.t(
+        "features.itWallet.discovery.screen.itw.dismissalDialog.cancel"
+      )
+    },
+    handleDismiss: () => {
+      machineRef.send({ type: "close" });
+    }
+  });
+
   return (
-    <IOScrollViewWithLargeHeader
-      title={{
-        label: I18n.t(`features.itWallet.identification.cie.prepare.can.title`)
-      }}
+    <ItwCiePreparationScreenContent
+      title={I18n.t(`features.itWallet.identification.cie.prepare.can.title`)}
       description={I18n.t(
         `features.itWallet.identification.cie.prepare.can.description`
       )}
-      headerActionsProp={{ showHelp: true }}
+      imageSrc={require("../../../../../../img/features/itWallet/identification/cie_can.png")}
       actions={{
         type: "SingleButton",
         primary: {
@@ -35,15 +52,7 @@ export const ItwCiePreparationCanScreen = () => {
           onPress: () => machineRef.send({ type: "next" })
         }
       }}
-    >
-      <ContentWrapper>
-        <VSpacer size={8} />
-        <Image
-          accessibilityIgnoresInvertColors
-          source={require("../../../../../../img/features/itWallet/identification/cie_can.png")}
-          resizeMode="contain"
-        />
-      </ContentWrapper>
-    </IOScrollViewWithLargeHeader>
+      goBack={dismissalDialog.show}
+    />
   );
 };

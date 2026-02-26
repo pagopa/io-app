@@ -1,20 +1,12 @@
-import { createStore } from "redux";
 import { act, fireEvent } from "@testing-library/react-native";
+import _ from "lodash";
 import { Alert } from "react-native";
+import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import PN_ROUTES from "../../../navigation/routes";
-import {
-  SendAarCanEducationalScreen,
-  SendAarCanEducationalScreenProps
-} from "../SendAarCanEducationalScreen";
-import { setAarFlowState } from "../../store/actions";
-import * as AAR_SELECTORS from "../../store/selectors";
-import { sendAARFlowStates } from "../../utils/stateUtils";
-import { sendAarMockStates } from "../../utils/testUtils";
-import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import {
   trackSendAarMandateCiePreparation,
   trackSendAarMandateCiePreparationContinue,
@@ -22,8 +14,17 @@ import {
   trackSendAarMandateCieReadingClosureAlertAccepted,
   trackSendAarMandateCieReadingClosureAlertContinue
 } from "../../analytics";
+import { setAarFlowState } from "../../store/actions";
+import * as AAR_SELECTORS from "../../store/selectors";
+import { sendAARFlowStates } from "../../utils/stateUtils";
+import { sendAarMockStates } from "../../utils/testUtils";
+import {
+  SendAarCanEducationalScreen,
+  SendAarCanEducationalScreenProps
+} from "../SendAarCanEducationalScreen";
 
-const mockNavigate = jest.fn();
+const mockReplace = jest.fn();
+const mockShouldNeverCall = jest.fn();
 
 const mockTerminateFlow = jest.fn();
 const mockDispatch = jest.fn();
@@ -232,23 +233,26 @@ describe("SendAarCanEducationalScreen", () => {
 
     it(`${
       isCieCanInsertion ? "should" : "should not"
-    } navigate into the "SendAARCieCanInsertionScreen"`, () => {
+    } replace to the "SendAARCieCanInsertionScreen"`, () => {
       renderComponent();
 
       if (isCieCanInsertion) {
-        expect(mockNavigate).toHaveBeenCalledTimes(1);
-        expect(mockNavigate).toHaveBeenCalledWith(
-          MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
+        expect(mockReplace).toHaveBeenCalledTimes(1);
+        expect(mockReplace).toHaveBeenCalledWith(
+          PN_ROUTES.SEND_AAR_CIE_CAN_INSERTION,
           {
-            screen: PN_ROUTES.MAIN,
-            params: {
-              screen: PN_ROUTES.SEND_AAR_CIE_CAN_INSERTION
-            }
+            animationTypeForReplace: "push"
           }
         );
       } else {
-        expect(mockNavigate).not.toHaveBeenCalled();
+        expect(mockReplace).not.toHaveBeenCalled();
       }
+    });
+
+    it(`should never call any non-replace navigation action when type is "${aarState.type}"`, () => {
+      renderComponent();
+
+      expect(mockShouldNeverCall).not.toHaveBeenCalled();
     });
   });
 });
@@ -261,7 +265,10 @@ function renderComponent() {
     ({ navigation, route }: SendAarCanEducationalScreenProps) => (
       <SendAarCanEducationalScreen
         route={route}
-        navigation={{ ...navigation, navigate: mockNavigate }}
+        navigation={{
+          ..._.mapValues(navigation, () => mockShouldNeverCall),
+          replace: mockReplace
+        }}
       />
     ),
     PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL,

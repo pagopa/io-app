@@ -7,6 +7,7 @@ import {
   useFooterActionsMeasurements,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { isEqual } from "lodash";
 import { Route, StackActions, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
@@ -114,7 +115,7 @@ const FciSignatureFieldsScreen = () => {
           docSignatures,
           RA.fromOption,
           RA.map(doc => doc.signature_fields),
-          RA.map(fields => fields.filter(f => f === signatureField)),
+          RA.map(fields => fields.filter(f => isEqual(f, signatureField))),
           RA.flatten
         )
       ),
@@ -165,7 +166,7 @@ const FciSignatureFieldsScreen = () => {
         fciUpdateDocumentSignaturesRequest({
           ...doc,
           signature_fields: !value
-            ? [...doc.signature_fields.filter(f => f !== item)]
+            ? [...doc.signature_fields.filter(f => !isEqual(f, item))]
             : [...doc.signature_fields, item]
         })
       )
@@ -226,7 +227,7 @@ const FciSignatureFieldsScreen = () => {
             RA.findFirst(doc => doc.document_id === docId),
             O.chain(document => O.fromNullable(document)),
             O.map(doc => doc.signature_fields),
-            O.map(RA.filter(f => f === item)),
+            O.map(RA.filter(f => isEqual(f, item))),
             O.fold(constFalse, RA.isNonEmpty)
           )}
           onChange={v => onChange(v, item)}

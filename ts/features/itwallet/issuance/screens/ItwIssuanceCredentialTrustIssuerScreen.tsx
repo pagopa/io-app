@@ -1,4 +1,3 @@
-import { useCallback, useRef } from "react";
 import {
   ContentWrapper,
   FeatureInfo,
@@ -13,6 +12,7 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
+import { useCallback, useRef } from "react";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
@@ -23,10 +23,6 @@ import { generateDynamicUrlSelector } from "../../../../store/reducers/backendSt
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import {
-  trackIssuanceCredentialScrollToBottom,
-  trackItwExit
-} from "../analytics";
 import { trackOpenItwTos } from "../../analytics";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { ItwDataExchangeIcons } from "../../common/components/ItwDataExchangeIcons";
@@ -53,9 +49,14 @@ import {
 } from "../../machine/credential/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
+import {
+  trackIssuanceCredentialScrollToBottom,
+  trackItwExit
+} from "../analytics";
 import { ItwRequestedClaimsList } from "../components/ItwRequestedClaimsList";
 
 export type ItwIssuanceCredentialTrustIssuerNavigationParams = {
+  animationEnabled?: boolean;
   credentialType?: string;
   isUpgrade?: boolean;
 };

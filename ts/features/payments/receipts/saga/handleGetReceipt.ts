@@ -1,13 +1,12 @@
-import { pipe } from "fp-ts/lib/function";
 import * as E from "fp-ts/lib/Either";
 import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
-import { getPaymentsReceiptAction } from "../store/actions";
-import { TransactionClient } from "../../common/api/client";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { ReceiptsHeaders } from "../utils/types";
+import { TransactionClient } from "../../common/api/client";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
+import { getPaymentsReceiptAction } from "../store/actions";
+import { getReceiptContinuationToken } from "../utils";
 
 const DEFAULT_TRANSACTION_LIST_SIZE = 10;
 
@@ -39,11 +38,8 @@ export function* handleGetReceipt(
       return;
     }
     if (getTransactionListResult.right.status === 200) {
-      const continuationToken = pipe(
-        getTransactionListResult.right.headers,
-        ReceiptsHeaders.decode,
-        E.map(headers => headers.map["x-continuation-token"]),
-        E.getOrElseW(() => undefined)
+      const continuationToken = getReceiptContinuationToken(
+        getTransactionListResult.right.headers
       );
       action.payload.onSuccess?.(continuationToken);
       yield* put(

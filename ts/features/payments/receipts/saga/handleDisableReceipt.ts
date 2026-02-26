@@ -1,4 +1,5 @@
 import { IOToast } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import { put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
@@ -8,7 +9,15 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
 import { TransactionClient } from "../../common/api/client";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
-import { hidePaymentsReceiptAction } from "../store/actions";
+import {
+  hidePaymentsReceiptAction,
+  getPaymentsLatestReceiptAction,
+  setNeedsHomeListRefreshAction
+} from "../store/actions";
+import {
+  walletLatestReceiptListPotSelector,
+  latestTransactionsContinuationTokenSelector
+} from "../store/selectors";
 import * as analytics from "../analytics";
 /**
  * Handle the remote call to hide the transaction receipt
@@ -70,11 +79,30 @@ export function* handleDisableReceipt(
 
     if (getTransactionReceiptResult.right.status === 200) {
       handleHideReceiptSuccess();
+
       yield* put(
         hidePaymentsReceiptAction.success(
           getTransactionReceiptResult.right.value
         )
       );
+
+      // Need after hiding a receipt, check if we need to refresh the home list
+      const latestTransactionsPot = yield* select(
+        walletLatestReceiptListPotSelector
+      );
+      const continuationToken = yield* select(
+        latestTransactionsContinuationTokenSelector
+      );
+      const hasRemainingTransactions =
+        pot.isSome(latestTransactionsPot) &&
+        latestTransactionsPot.value.length > 0;
+
+      // Refresh home list if there are remaining transactions AND there's a continuation token (more receipts available)
+      // If no continuation token, the current list already contains all available receipts
+      if (hasRemainingTransactions && continuationToken) {
+        yield* put(setNeedsHomeListRefreshAction(true));
+        yield* put(getPaymentsLatestReceiptAction.request());
+      }
     } else if (getTransactionReceiptResult.right.status !== 401) {
       // The 401 status is handled by the withPaymentsSessionToken
       handleHideReceiptFailure();

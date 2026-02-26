@@ -254,6 +254,7 @@ export const useItwFailureSupportModal = ({
               <ListItemInfoCopy
                 icon="ladybug"
                 label={I18n.t("features.itWallet.support.errorCode")}
+                accessibilityHint={I18n.t("clipboard.copyIntoClipboard")}
                 value={code}
                 onPress={() => clipboardSetStringWithFeedback(code)}
               />
