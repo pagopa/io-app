@@ -98,6 +98,9 @@ const ItwL2CredentialOnboardingSection = () => {
           testID="add-bonus-action-testID"
           variant="link"
           label={I18n.t("features.itWallet.onboarding.cta.addBonus")}
+          accessibilityLabel={I18n.t(
+            "features.itWallet.onboarding.cta.addBonus"
+          )}
           onPress={() => {
             navigation.replace(ITW_ROUTES.MAIN, {
               screen: ITW_ROUTES.L3_ONBOARDING,

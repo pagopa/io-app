@@ -252,6 +252,8 @@ const ItwL3CredentialOnboardingSection: FunctionComponent<
               variant="link"
               label={action.label}
               onPress={action.onPress}
+              accessibilityLabel={action.label}
+              numberOfLines={2}
             />
           </>
         ) : null}
