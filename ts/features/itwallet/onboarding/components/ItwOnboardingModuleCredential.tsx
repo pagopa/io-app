@@ -35,7 +35,7 @@ const activeBadge: Badge = {
 
 const activeL3Badge: Badge = {
   variant: "success",
-  text: I18n.t("features.wallet.onboarding.badge.l3-active")
+  text: I18n.t("features.itWallet.onboarding.badge.valid")
 };
 
 const disabledBadge: Badge = {

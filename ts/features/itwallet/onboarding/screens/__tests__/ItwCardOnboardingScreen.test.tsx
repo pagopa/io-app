@@ -81,7 +81,9 @@ describe("ItwCardOnboardingScreen", () => {
 
     const { queryByText } = renderComponent({ page: 0 });
 
-    expect(queryByText("features.wallet.onboarding.addRestricted")).toBeNull();
+    expect(
+      queryByText("features.itWallet.onboarding.cta.addRestricted")
+    ).toBeNull();
   });
 
   it("it should navigate to restricted mode onboarding when action button is pressed", () => {

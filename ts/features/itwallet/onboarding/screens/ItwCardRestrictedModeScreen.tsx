@@ -32,10 +32,10 @@ const ItwCardRestrictedModeScreen = () => {
   return (
     <IOScrollViewWithLargeHeader
       title={{
-        label: I18n.t("features.wallet.onboarding.restrictedMode.title")
+        label: I18n.t("features.itWallet.onboarding.restrictedMode.title")
       }}
       description={I18n.t(
-        "features.wallet.onboarding.restrictedMode.description"
+        "features.itWallet.onboarding.restrictedMode.description"
       )}
       contextualHelp={emptyContextualHelp}
       faqCategories={["wallet", "wallet_methods"]}
@@ -99,7 +99,7 @@ const ItwL3CredentialOnboardingSection = () => {
         <IOButton
           testID="add-bonus-action-testID"
           variant="link"
-          label={I18n.t("features.wallet.onboarding.addBonus")}
+          label={I18n.t("features.itWallet.onboarding.cta.addBonus")}
           onPress={() => {
             navigation.replace(ITW_ROUTES.MAIN, {
               screen: ITW_ROUTES.L3_ONBOARDING,

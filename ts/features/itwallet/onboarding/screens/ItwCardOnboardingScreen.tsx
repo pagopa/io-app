@@ -89,7 +89,7 @@ const ItwCardOnboardingScreen = ({ route }: Props) => {
   const itwAction = useMemo(() => {
     if (isWalletEnabled) {
       return {
-        label: I18n.t("features.wallet.onboarding.addRestricted"),
+        label: I18n.t("features.itWallet.onboarding.cta.addRestricted"),
         onPress: () => {
           setPage(null);
           navigation.replace(ITW_ROUTES.MAIN, {
@@ -129,15 +129,15 @@ const ItwCardOnboardingScreen = ({ route }: Props) => {
         onItemPress={setPage}
       >
         <TabItem
-          label={I18n.t("features.wallet.onboarding.itw-sections.itw")}
+          label={I18n.t("features.itWallet.onboarding.sections.doc")}
           accessibilityLabel={I18n.t(
-            "features.wallet.onboarding.itw-sections.itw"
+            "features.itWallet.onboarding.sections.doc"
           )}
         />
         <TabItem
-          label={I18n.t("features.wallet.onboarding.itw-sections.other")}
+          label={I18n.t("features.itWallet.onboarding.sections.other")}
           accessibilityLabel={I18n.t(
-            "features.wallet.onboarding.itw-sections.other"
+            "features.itWallet.onboarding.sections.other"
           )}
         />
       </TabNavigation>
@@ -216,7 +216,7 @@ const ItwL3CredentialOnboardingSection: FunctionComponent<
           <VStack space={8}>
             <View style={styles.header}>
               <H6 role="heading" color={theme["textBody-tertiary"]}>
-                {I18n.t("features.wallet.onboarding.itw-sections.added")}
+                {I18n.t("features.itWallet.onboarding.sections.added")}
               </H6>
             </View>
             {list(obtained)}
