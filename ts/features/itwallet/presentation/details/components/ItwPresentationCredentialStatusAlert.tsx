@@ -204,6 +204,20 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
     isItwL3
   });
 
+  const isMdlExpiredOrInvalid =
+    credential.credentialType === CredentialType.DRIVING_LICENSE &&
+    (status === "expired" || status === "invalid");
+
+  if (isMdlExpiredOrInvalid) {
+    return (
+      <MdlExpiredOrInvalidAlert
+        credential={credential}
+        message={message}
+        onTrack={trackCredentialAlertEvent}
+      />
+    );
+  }
+
   if (!alertType) {
     return null;
   }
@@ -352,6 +366,95 @@ type IssuerDynamicErrorAlertProps = {
   message: Record<string, { title: string; description: string }>;
   credential: StoredCredential;
   onTrack: TrackCredentialAlert;
+};
+
+const MdlExpiredOrInvalidAlert = ({
+  credential,
+  message,
+  onTrack
+}: {
+  credential: StoredCredential;
+  message?: Record<string, { title: string; description: string }>;
+  onTrack: TrackCredentialAlert;
+}) => {
+  const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
+  const localizedMessage = message
+    ? getLocalizedMessageOrFallback(message)
+    : undefined;
+  const { confirmAndRemoveCredential } =
+    useItwRemoveCredentialWithConfirm(credential);
+
+  const onUpdateCredential = useCallback(() => {
+    onTrack("press_cta");
+    machineRef.send({
+      type: "select-credential",
+      credentialType: credential.credentialType,
+      mode: "reissuance"
+    });
+  }, [credential.credentialType, machineRef, onTrack]);
+
+  const bottomSheet = useIOBottomSheetModal({
+    title: I18n.t(
+      "features.itWallet.presentation.alerts.mdl.expired.sheetTitle"
+    ),
+    component: (
+      <VStack space={24}>
+        <IOMarkdown
+          content={
+            localizedMessage?.description ??
+            I18n.t("features.itWallet.presentation.alerts.mdl.expired.content")
+          }
+        />
+        <View>
+          <IOButton
+            testID="itwMdlUpdateCredentialBottomSheetButtonTestID"
+            variant="solid"
+            fullWidth
+            label={I18n.t(
+              "features.itWallet.presentation.credentialDetails.actions.updateDigitalDocument"
+            )}
+            onPress={onUpdateCredential}
+          />
+        </View>
+        <View
+          style={{
+            marginBottom: 8,
+            flexDirection: "row",
+            justifyContent: "center"
+          }}
+        >
+          <IOButton
+            testID="itwMdlRemoveCredentialBottomSheetButtonTestID"
+            variant="link"
+            color="danger"
+            textAlign="center"
+            label={I18n.t(
+              "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
+            )}
+            onPress={confirmAndRemoveCredential}
+          />
+        </View>
+      </VStack>
+    )
+  });
+
+  const handleAlertPress = useAlertPressHandler(onTrack, bottomSheet);
+
+  return (
+    <>
+      <Alert
+        testID="itwMdlExpiredInvalidBannerTestID"
+        variant="error"
+        content={
+          localizedMessage?.title ??
+          I18n.t("features.itWallet.presentation.alerts.mdl.expired.title")
+        }
+        action={I18n.t("global.buttons.findOutMore")}
+        onPress={handleAlertPress}
+      />
+      {bottomSheet.bottomSheet}
+    </>
+  );
 };
 
 const IssuerDynamicErrorAlert = ({
