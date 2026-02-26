@@ -10,13 +10,13 @@ import {
   IconButton,
   useIOToast
 } from "@pagopa/io-app-design-system";
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import RNFS from "react-native-fs";
 import Share from "react-native-share";
 import { Prettify } from "../../types/helpers";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
-import { truncateObjectStrings } from "./utils";
+import { debugInfoReplacer } from "./utils";
 import { withDebugEnabled } from "./withDebugEnabled";
 
 type ExpandableProps =
@@ -60,7 +60,11 @@ export const DebugPrettyPrint = withDebugEnabled(
             color={"grey-700"}
             weight="Medium"
           >
-            {JSON.stringify(truncateObjectStrings(data), null, 2)}
+            {JSON.stringify(
+              data,
+              debugInfoReplacer({ truncateStrings: true }),
+              2
+            )}
           </IOText>
         </View>
       );
@@ -71,7 +75,11 @@ export const DebugPrettyPrint = withDebugEnabled(
         // Create a temporary file path
         const filePath = `${RNFS.CachesDirectoryPath}/${title}.json`;
         // Write JSON data to the file
-        await RNFS.writeFile(filePath, JSON.stringify(data, null, 2), "utf8");
+        await RNFS.writeFile(
+          filePath,
+          JSON.stringify(data, debugInfoReplacer(), 2),
+          "utf8"
+        );
         await Share.open({
           filename: `${title}.json`,
           type: "application/json",
