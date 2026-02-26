@@ -11,6 +11,7 @@ import {
   trackSendAarMandateCieNotRelatedToDelegatorError
 } from "../../analytics";
 import { setAarFlowState } from "../../store/actions";
+import { AarErrorStatesKind } from "../../utils/aarErrorMappings";
 import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
 import {
   sendAarMockStateFactory,
@@ -21,7 +22,6 @@ import {
   testable,
   validateMandateSaga
 } from "../validateMandateSaga";
-import { AarErrorStatesKind } from "../../utils/aarErrorMappings";
 
 const { getAndTrackValidationErrorState } = testable!;
 
@@ -407,6 +407,29 @@ describe("getAndTrackValidationErrorState", () => {
   );
 
   it.each([
+    "PN_MANDATE_NOTFOUND",
+    "pn_mandate_notfound",
+    "Pn_Mandate_NotFound",
+    "pN_mAnDaTe_nOtFoUnD"
+  ])(
+    'should not track any CIE event and return the correct error kind for status 422 and errorCode "%s"',
+    code => {
+      const res = getAndTrackValidationErrorState(
+        [{ code }],
+        500,
+        "Some reason"
+      );
+
+      expect(
+        trackSendAarMandateCieNotRelatedToDelegatorError
+      ).not.toHaveBeenCalled();
+      expect(trackSendAarMandateCieExpiredError).not.toHaveBeenCalled();
+      expect(trackSendAarMandateCieDataError).not.toHaveBeenCalled();
+      expect(res).toBe(AarErrorStatesKind.CIE_TTL_EXPIRED);
+    }
+  );
+
+  const genericErrorCases = [
     {
       status: 400
     },
@@ -445,7 +468,96 @@ describe("getAndTrackValidationErrorState", () => {
       status: 500,
       errors: [{ code: "CIE_EXPIRED_ERROR" }]
     }
-  ])(
+  ];
+  const specificErrorCases = [
+    {
+      status: 400,
+      errors: [{ code: "CIE_EXPIRED_ERROR" }],
+      result: AarErrorStatesKind.CIE_GENERIC
+    },
+    {
+      status: 422,
+      errors: [{ code: "CIE_EXPIRED_ERROR" }],
+      result: AarErrorStatesKind.CIE_EXPIRED
+    },
+    {
+      status: 422,
+      errors: [{ code: "NON_MAPPED_ERROR" }, { code: "CIE_EXPIRED_ERROR" }],
+      result: AarErrorStatesKind.CIE_GENERIC
+    },
+    {
+      status: 422,
+      errors: [
+        {
+          code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR"
+        }
+      ],
+      result: AarErrorStatesKind.CIE_NOT_RELATED_TO_DELEGATOR
+    },
+    {
+      status: 422,
+      errors: [
+        {
+          code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR"
+        },
+        {
+          code: "CIE_EXPIRED_ERROR"
+        }
+      ],
+      result: AarErrorStatesKind.CIE_NOT_RELATED_TO_DELEGATOR
+    },
+    {
+      status: 422,
+      errors: [
+        {
+          code: "CIE_EXPIRED_ERROR"
+        },
+        {
+          code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR"
+        }
+      ],
+      result: AarErrorStatesKind.CIE_EXPIRED
+    },
+    {
+      status: 422,
+      errors: [
+        {
+          code: "NOT_MAPPED"
+        },
+        {
+          code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR"
+        }
+      ],
+      result: AarErrorStatesKind.CIE_GENERIC
+    },
+    {
+      status: 500,
+      result: AarErrorStatesKind.CIE_GENERIC
+    },
+    {
+      status: 500,
+      errors: [{ code: "PN_MANDATE_NOTFOUND" }],
+      result: AarErrorStatesKind.CIE_TTL_EXPIRED
+    },
+    {
+      status: 422,
+      errors: [{ code: "PN_MANDATE_NOTFOUND" }],
+      result: AarErrorStatesKind.CIE_GENERIC
+    },
+    {
+      status: 500,
+      errors: [
+        {
+          code: "CIE_EXPIRED_ERROR"
+        },
+        {
+          code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR"
+        }
+      ],
+      result: AarErrorStatesKind.CIE_GENERIC
+    }
+  ];
+  it.each(genericErrorCases)(
     'should track "trackSendAarMandateCieDataError" event and return a generic error for %o',
     ({ status, errors }) => {
       const reason = "Some reason";
@@ -461,4 +573,13 @@ describe("getAndTrackValidationErrorState", () => {
       expect(res).toBe(AarErrorStatesKind.CIE_GENERIC);
     }
   );
+  it.each(specificErrorCases)(
+    "should return the correct result when called with: %o",
+    ({ status, errors, result }) => {
+      const reason = "Some reason";
+      const res = getAndTrackValidationErrorState(errors, status, reason);
+      expect(res).toBe(result);
+    }
+  );
 });
+// --- complex `.each` test cases ---

@@ -164,10 +164,54 @@ describe("createAarMandateSaga", () => {
       .next()
       .isDone();
   });
-  [404, 500, 400, 418].forEach(status => {
-    it(`should handle and track a ${status} response `, () => {
+  [
+    {
+      status: 404,
+      errors: [{ code: "NOT_A_MANDATE" }],
+      expectedErrorKey: AarErrorStatesKind.GENERIC
+    },
+    {
+      status: 500,
+      errors: [{ code: "PN_MANDATE_ALREADYEXISTS" }],
+      expectedErrorKey: AarErrorStatesKind.PENDING_DELEGATION
+    },
+    {
+      status: 500,
+      errors: undefined,
+      expectedErrorKey: AarErrorStatesKind.GENERIC
+    },
+    {
+      status: 500,
+      errors: [{ code: "PN_MANDATE_ALREADYEXISTS" }, { code: "NOT_A_MANDATE" }],
+      expectedErrorKey: AarErrorStatesKind.PENDING_DELEGATION
+    },
+    {
+      status: 404,
+      errors: [{ code: "PN_MANDATE_ALREADYEXISTS" }],
+      expectedErrorKey: AarErrorStatesKind.GENERIC
+    },
+    {
+      status: 500,
+      errors: [{ code: "NOT_A_MANDATE" }, { code: "PN_MANDATE_ALREADYEXISTS" }],
+      expectedErrorKey: AarErrorStatesKind.GENERIC
+    },
+    {
+      status: 400,
+      errors: [{ code: "INVALID_REQUEST" }],
+      expectedErrorKey: AarErrorStatesKind.GENERIC
+    },
+    {
+      status: 418,
+      errors: [{ code: "I_AM_A_TEAPOT" }],
+      expectedErrorKey: AarErrorStatesKind.GENERIC
+    }
+  ].forEach(({ status, errors, expectedErrorKey }) => {
+    it(`should handle and track a ${status} response containing errors: ${
+      errors ? errors.map(e => e.code).join(", ") : "{none}"
+    }`, () => {
       const responseValue = {
         status: status as 599,
+        errors,
         detail: "detail"
       };
       const mandateResponse = E.right({
@@ -177,10 +221,7 @@ describe("createAarMandateSaga", () => {
 
       const errorReason = `HTTP request failed (${aarProblemJsonAnalyticsReport(
         status,
-        {
-          status: status as 599,
-          detail: "detail"
-        }
+        responseValue
       )})`;
 
       testSaga(
@@ -200,7 +241,7 @@ describe("createAarMandateSaga", () => {
           setAarFlowState({
             type: sendAARFlowStates.ko,
             previousState: currentState,
-            specificErrorKey: AarErrorStatesKind.GENERIC,
+            specificErrorKey: expectedErrorKey,
             error: responseValue,
             debugData: {
               phase: "Create Mandate",

@@ -161,10 +161,8 @@ const responseToHandlerMap = {
     }
   },
   500: {
-    [sendAarProblemJsonErrorCodes.PN_MANDATE_NOTFOUND]: (reason: string) => {
-      trackSendAarMandateCieDataError(reason);
-      return AarErrorStatesKind.CIE_TTL_EXPIRED;
-    }
+    [sendAarProblemJsonErrorCodes.PN_MANDATE_NOTFOUND]: () =>
+      AarErrorStatesKind.CIE_TTL_EXPIRED
   }
 };
 const getAndTrackValidationErrorState = (
