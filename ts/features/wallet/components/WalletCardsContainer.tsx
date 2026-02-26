@@ -8,7 +8,10 @@ import { useIOSelector } from "../../../store/hooks";
 import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
-import { itwShouldRenderWalletDiscoveryBannerSelector } from "../../itwallet/common/store/selectors";
+import {
+  itwShouldRenderRestrictedModeBannerSelector,
+  itwShouldRenderWalletDiscoveryBannerSelector
+} from "../../itwallet/common/store/selectors";
 import { ItwDiscoveryBanner } from "../../itwallet/discovery/components/ItwDiscoveryBanner";
 import { ItwWalletCardsContainer } from "../../itwallet/wallet/components/ItwWalletCardsContainer";
 import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
@@ -19,6 +22,7 @@ import {
   shouldRenderWalletLoadingStateSelector
 } from "../store/selectors";
 import { withWalletCategoryFilter } from "../utils";
+import { ItwRestrictedModeBanner } from "../../itwallet/common/components/ItwRestrictedModeBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
@@ -42,6 +46,9 @@ const WalletCardsContainer = () => {
   const shouldRenderItwDiscoveryBanner = useIOSelector(
     itwShouldRenderWalletDiscoveryBannerSelector
   );
+  const shouldRenderItwRestrictedModeBanner = useIOSelector(
+    itwShouldRenderRestrictedModeBannerSelector
+  );
 
   useItwWalletInstanceRevocationAlert();
 
@@ -55,6 +62,7 @@ const WalletCardsContainer = () => {
     }
     return (
       <>
+        {shouldRenderItwRestrictedModeBanner && <ItwRestrictedModeBanner />}
         {shouldRenderItwDiscoveryBanner && <ItwDiscoveryBanner />}
         <View testID="walletCardsContainerTestID" style={styles.content}>
           {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
@@ -66,7 +74,8 @@ const WalletCardsContainer = () => {
     shouldRenderLoadingState,
     shouldRenderEmptyState,
     shouldRenderItwCardsContainer,
-    shouldRenderItwDiscoveryBanner
+    shouldRenderItwDiscoveryBanner,
+    shouldRenderItwRestrictedModeBanner
   ]);
 
   return (

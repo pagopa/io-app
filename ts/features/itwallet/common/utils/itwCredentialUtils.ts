@@ -37,6 +37,12 @@ export const isUpcomingCredential = (type: string): boolean =>
 export const isNewCredential = (type: string): type is NewCredential =>
   newCredentials.includes(type as NewCredential);
 
+// TODO: change to restrictedCredentials once SIW-3947 is merged and closed
+export const isRestrictedCredential = (
+  type: string
+): type is (typeof availableCredentials)[number] =>
+  availableCredentials.includes(type as (typeof availableCredentials)[number]);
+
 export const itwGetCredentialNameByCredentialType = (
   isItwCredential: boolean
 ): Record<string, string> => ({

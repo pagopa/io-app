@@ -1,5 +1,7 @@
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../store/hooks.ts";
+import { itwIsActivationDisabledSelector } from "../../common/store/selectors/preferences.ts";
+import { isRestrictedCredential } from "../../common/utils/itwCredentialUtils.ts";
 import { itwHasNfcFeatureSelector } from "../../identification/common/store/selectors/index.ts";
 import { EidIssuanceLevel } from "../../machine/eid/context.ts";
 import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
@@ -7,6 +9,7 @@ import { ItwDiscoveryInfoComponent } from "../components/ItwDiscoveryInfoCompone
 import { ItwDiscoveryInfoFallbackComponent } from "../components/ItwDiscoveryInfoFallbackComponent.tsx";
 import { ItwDiscoveryInfoLegacyComponent } from "../components/ItwDiscoveryInfoLegacyComponent.tsx";
 import { ItwNfcNotSupportedComponent } from "../components/ItwNfcNotSupportedComponent.tsx";
+import { ItwRestrictedModeFallbackComponent } from "../components/ItwRestrictedModeFallbackComponent.tsx";
 
 export type ItwDiscoveryInfoScreenNavigationParams = {
   level?: EidIssuanceLevel;
@@ -27,10 +30,18 @@ export const ItwDiscoveryInfoScreen = ({
 }: ItwDiscoveryInfoScreenProps) => {
   const { level = "l2", credentialType } = route.params ?? {};
   const hasNfcFeature = useIOSelector(itwHasNfcFeatureSelector);
+  const canContinueWithDocIO = credentialType
+    ? isRestrictedCredential(credentialType)
+    : false;
 
   if (level === "l3") {
     if (!hasNfcFeature) {
-      // L3 requires NFC, show not supported screen
+      if (canContinueWithDocIO) {
+        return (
+          <ItwRestrictedModeFallbackComponent credentialType={credentialType} />
+        );
+      }
+      // // L3 requires NFC, show not supported screen
       return <ItwNfcNotSupportedComponent />;
     }
 

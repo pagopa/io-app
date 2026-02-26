@@ -21,6 +21,7 @@ import {
 } from "./banners";
 import {
   itwCredentialUpgradeFailedSelector,
+  itwIsActivationDisabledSelector,
   itwIsL3EnabledSelector
 } from "./preferences";
 import { isItwEnabledSelector } from "./remoteConfig";
@@ -161,7 +162,8 @@ export const itwShouldRenderDiscoveryBannerSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
   !offlineAccessReasonSelector(state) &&
   itwIsL3EnabledSelector(state) &&
-  !itwLifecycleIsValidSelector(state);
+  !itwLifecycleIsValidSelector(state) &&
+  !itwIsActivationDisabledSelector(state);
 
 /**
  * Returns whether the new IT-Wallet activation banner in the messages inbox screen should be rendered
@@ -188,10 +190,24 @@ export const itwShouldRenderWalletDiscoveryBannerSelector = (
  * - The L3 feature flag is enabled
  * - The wallet is active but not an IT Wallet instance
  * - The banner was not dismissed by the user
+ * - The activation is not disabled
  */
 export const itwShouldRenderUpgradeBannerSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
   !offlineAccessReasonSelector(state) &&
   itwIsL3EnabledSelector(state) &&
   !itwLifecycleIsITWalletValidSelector(state) &&
-  !itwIsWalletDiscoveryBannerHiddenSelector(state);
+  !itwIsWalletDiscoveryBannerHiddenSelector(state) &&
+  !itwIsActivationDisabledSelector(state);
+
+export const itwShouldRenderRestrictedModeBannerSelector = (
+  state: GlobalState
+) =>
+  !itwLifecycleIsValidSelector(state) && itwIsActivationDisabledSelector(state);
+
+export const itwShouldRenderRestrictedModeCardBannerSelector = (
+  state: GlobalState
+) =>
+  !offlineAccessReasonSelector(state) &&
+  itwLifecycleIsValidSelector(state) &&
+  itwIsActivationDisabledSelector(state);

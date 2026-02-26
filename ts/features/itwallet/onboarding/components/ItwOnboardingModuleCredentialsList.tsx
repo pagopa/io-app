@@ -4,10 +4,14 @@ import { useCallback } from "react";
 import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import {
+  itwIsActivationDisabledSelector,
+  itwIsL3EnabledSelector
+} from "../../common/store/selectors/preferences";
 import { itwDisabledCredentialsSelector } from "../../common/store/selectors/remoteConfig";
 import {
   isNewCredential,
+  isRestrictedCredential,
   isUpcomingCredential
 } from "../../common/utils/itwCredentialUtils";
 import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
@@ -36,6 +40,9 @@ export const ItwOnboardingModuleCredentialsList = ({
   const itwCredentialsTypes = useIOSelector(itwCredentialsTypesSelector);
   const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
   const isItWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isItWalletActivationDisabled = useIOSelector(
+    itwIsActivationDisabledSelector
+  );
 
   const isCredentialIssuancePending =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
@@ -53,7 +60,11 @@ export const ItwOnboardingModuleCredentialsList = ({
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL
           });
-        } else if (isL3Enabled && !isItWalletValid) {
+        } else if (
+          isL3Enabled &&
+          !isItWalletValid &&
+          !isItWalletActivationDisabled
+        ) {
           /**
            * User has a whitelisted fiscal code but has not yet obtained an IT Wallet.
            * If he requests an ITW credential, start the credential issuance flow with contextual PID issuance
@@ -73,7 +84,13 @@ export const ItwOnboardingModuleCredentialsList = ({
           });
         }
       },
-      [machineRef, navigation, isL3Enabled, isItWalletValid]
+      [
+        machineRef,
+        navigation,
+        isL3Enabled,
+        isItWalletValid,
+        isItWalletActivationDisabled
+      ]
     )
   );
 
