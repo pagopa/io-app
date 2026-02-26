@@ -75,6 +75,35 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
       testID="DocumentsNavigationBarLeftButtonTestID"
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "justifyContent": "center",
+            },
+            {
+              "height": 24,
+              "width": 24,
+            },
+          ]
+        }
         style={
           [
             {
@@ -85,7 +114,13 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
               "height": 24,
               "width": 24,
             },
-            false,
+            {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
           ]
         }
       >
@@ -94,17 +129,25 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
           accessibilityLabel=""
           accessible={false}
           align="xMidYMid"
-          animatedProps={
-            {
-              "color": undefined,
-            }
-          }
           bbHeight={36}
           bbWidth={36}
+          collapsable={false}
           color="#0B3EE3"
           focusable={false}
           height={36}
           importantForAccessibility="no-hide-descendants"
+          jestAnimatedProps={
+            {
+              "value": {
+                "color": "rgba(11, 62, 227, 1)",
+              },
+            }
+          }
+          jestAnimatedStyle={
+            {
+              "value": {},
+            }
+          }
           meetOrSlice={0}
           minX={0}
           minY={0}
@@ -209,6 +252,35 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
       testID="DocumentsNavigationBarRightButtonTestID"
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "justifyContent": "center",
+            },
+            {
+              "height": 24,
+              "width": 24,
+            },
+          ]
+        }
         style={
           [
             {
@@ -219,7 +291,13 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
               "height": 24,
               "width": 24,
             },
-            false,
+            {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
           ]
         }
       >
@@ -228,17 +306,25 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
           accessibilityLabel=""
           accessible={false}
           align="xMidYMid"
-          animatedProps={
-            {
-              "color": undefined,
-            }
-          }
           bbHeight={36}
           bbWidth={36}
+          collapsable={false}
           color="#0B3EE3"
           focusable={false}
           height={36}
           importantForAccessibility="no-hide-descendants"
+          jestAnimatedProps={
+            {
+              "value": {
+                "color": "rgba(11, 62, 227, 1)",
+              },
+            }
+          }
+          jestAnimatedStyle={
+            {
+              "value": {},
+            }
+          }
           meetOrSlice={0}
           minX={0}
           minY={0}

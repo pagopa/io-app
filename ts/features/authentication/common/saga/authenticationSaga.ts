@@ -6,7 +6,6 @@ import {
 } from "../../../../store/actions/analytics";
 import { loginSuccess } from "../store/actions";
 import { startupLoadSuccess } from "../../../../store/actions/startup";
-import { SessionToken } from "../../../../types/SessionToken";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { StartupStatusEnum } from "../../../../store/reducers/startup";
 import {
@@ -26,13 +25,9 @@ import { watchTestLoginRequestSaga } from "./testLoginSaga";
 
 /**
  * A saga that makes the user go through the authentication process until
- * a SessionToken gets produced.
+ * a session token gets produced.
  */
-export function* authenticationSaga(): Generator<
-  ReduxSagaEffect,
-  SessionToken,
-  any
-> {
+export function* authenticationSaga(): Generator<ReduxSagaEffect, string> {
   yield* put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
   yield* put(analyticsAuthenticationStarted("auth"));
 

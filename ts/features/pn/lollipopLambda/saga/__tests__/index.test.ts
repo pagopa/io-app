@@ -2,7 +2,6 @@ import * as E from "fp-ts/lib/Either";
 import { call, take } from "typed-redux-saga/macro";
 import { testSaga } from "redux-saga-test-plan";
 import { Effect } from "redux-saga/effects";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { KeyInfo } from "../../../../lollipop/utils/crypto";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
@@ -47,7 +46,7 @@ const mockErrorResponse: ErrorResponse = {
   }
 };
 
-const mockSessionToken = "mock-session-token" as SessionToken;
+const mockSessionToken = "mock-session-token";
 const mockKeyInfo = {} as KeyInfo;
 
 const mockClient: SendLollipopLambdaClient = {

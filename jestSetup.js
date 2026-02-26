@@ -67,21 +67,16 @@ jest.mock("@react-native-cookies/cookies", () => jest.fn());
 jest.mock("react-native-share", () => jest.fn());
 jest.mock("@react-native-clipboard/clipboard", () => mockClipboard);
 
-jest.mock("react-native-reanimated", () => {
-  const Reanimated = require("react-native-reanimated/mock");
+// Mock react-native-worklets before reanimated setup
+// See: https://docs.swmansion.com/react-native-worklets/docs/guides/testing/
+jest.mock("react-native-worklets", () =>
+  require("react-native-worklets/lib/module/mock")
+);
 
-  // The mock misses the `addWhitelistedUIProps` implementation
-  // So we override it with a no-op
-  // eslint-disable-next-line functional/immutable-data,@typescript-eslint/no-empty-function
-  Reanimated.default.addWhitelistedUIProps = () => {};
-
-  return {
-    ...Reanimated,
-    LayoutAnimationConfig: require("react-native").View,
-    useScrollViewOffset: jest.fn,
-    useReducedMotion: jest.fn
-  };
-});
+// Setup react-native-reanimated for testing (v4.x)
+// See: https://docs.swmansion.com/react-native-reanimated/docs/guides/testing/
+const { setUpTests } = require("react-native-reanimated");
+setUpTests();
 
 jest.mock("react-native-blob-util", () => ({
   DocumentDir: () => jest.fn(),

@@ -44,18 +44,7 @@ describe("ListItemSwipeAction", () => {
     expect(swipeActionMock).toHaveBeenCalled();
   });
 
-  it("applies correct background color based on theme", () => {
-    jest.mock("@pagopa/io-app-design-system", () => ({
-      ...jest.requireActual("@pagopa/io-app-design-system"),
-      useIOThemeContext: () => ({ themeType: "dark" })
-    }));
-
-    const { getByText } = renderWithNavigation();
-
-    expect(getByText("Hide item")).toBeTruthy();
-  });
-
-  it("triggers swipe action and haptic feedback on strong left swipe", () => {
+  it("triggers swipe action and haptic feedback on strong left swipe", async () => {
     renderWithNavigation();
     const gestureHandler = getByGestureTestId("swipe-gesture");
 
@@ -64,10 +53,11 @@ describe("ListItemSwipeAction", () => {
       { state: State.ACTIVE, translationX: -250 },
       { state: State.END, translationX: -250, velocityX: -900 }
     ]);
+    await Promise.resolve();
     expect(swipeActionMock).toHaveBeenCalled();
   });
 
-  it("does not trigger swipe action on weak left swipe", () => {
+  it("does not trigger swipe action on weak left swipe", async () => {
     renderWithNavigation();
     const gestureHandler = getByGestureTestId("swipe-gesture");
 
@@ -76,10 +66,11 @@ describe("ListItemSwipeAction", () => {
       { state: State.ACTIVE, translationX: -10 },
       { state: State.END, translationX: -10, velocityX: -10 }
     ]);
+    await Promise.resolve();
     expect(swipeActionMock).not.toHaveBeenCalled();
   });
 
-  it("springs to -60 when swipe is moderate (between -50 and -200)", () => {
+  it("springs to -60 when swipe is moderate (between -50 and -200)", async () => {
     renderWithNavigation();
     const gestureHandler = getByGestureTestId("swipe-gesture");
 
@@ -88,6 +79,7 @@ describe("ListItemSwipeAction", () => {
       { state: State.ACTIVE, translationX: -100 },
       { state: State.END, translationX: -100, velocityX: 0 }
     ]);
+    await Promise.resolve();
     expect(swipeActionMock).not.toHaveBeenCalled();
   });
 });

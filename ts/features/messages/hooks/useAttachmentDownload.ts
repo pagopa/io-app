@@ -4,7 +4,19 @@ import { useCallback, useEffect } from "react";
 import RNFS from "react-native-fs";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
+import NavigationService from "../../../navigation/NavigationService";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
+import { isAarAttachmentTtlError } from "../../pn/aar/utils/aarErrorMappings";
+import {
+  trackPNAttachmentDownloadFailure,
+  trackPNAttachmentOpening
+} from "../../pn/analytics";
+import PN_ROUTES from "../../pn/navigation/routes";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
+import { trackThirdPartyMessageAttachmentShowPreview } from "../analytics";
 import { MESSAGES_ROUTES } from "../navigation/routes";
 import {
   cancelPreviousAttachmentDownload,
@@ -13,22 +25,11 @@ import {
 } from "../store/actions";
 import {
   downloadedMessageAttachmentSelector,
-  hasErrorOccourredOnRequestedDownloadSelector,
   isDownloadingMessageAttachmentSelector,
-  isRequestedAttachmentDownloadSelector
+  isRequestedAttachmentDownloadSelector,
+  requestedDownloadErrorSelector
 } from "../store/reducers/downloads";
 import { attachmentDisplayName } from "../utils/attachments";
-import {
-  trackPNAttachmentDownloadFailure,
-  trackPNAttachmentOpening
-} from "../../pn/analytics";
-import { trackThirdPartyMessageAttachmentShowPreview } from "../analytics";
-import PN_ROUTES from "../../pn/navigation/routes";
-import NavigationService from "../../../navigation/NavigationService";
-import {
-  SendOpeningSource,
-  SendUserType
-} from "../../pushNotifications/analytics";
 
 export const useAttachmentDownload = (
   messageId: string,
@@ -48,12 +49,11 @@ export const useAttachmentDownload = (
   const download = useIOSelector(state =>
     downloadedMessageAttachmentSelector(state, messageId, attachmentId)
   );
+  const maybeDownloadError = useIOSelector(state =>
+    requestedDownloadErrorSelector(state, messageId, attachmentId)
+  );
   const isFetching = useIOSelector(state =>
     isDownloadingMessageAttachmentSelector(state, messageId, attachmentId)
-  );
-
-  const isDownloadError = useIOSelector(state =>
-    hasErrorOccourredOnRequestedDownloadSelector(state, messageId, attachmentId)
   );
 
   const attachmentCategory = attachment.category;
@@ -66,6 +66,9 @@ export const useAttachmentDownload = (
         sendUserType,
         attachmentCategory
       );
+      // since we are not sure if this hook will be called in a screen with a valid
+      // navigation context, it is necessary to instead use the global navigation
+      // service.
       NavigationService.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
         screen: PN_ROUTES.MAIN,
         params: {
@@ -98,7 +101,7 @@ export const useAttachmentDownload = (
     serviceId
   ]);
 
-  const checkPathAndNavigate = useCallback(
+  const handleAttachmentDownloadSuccess = useCallback(
     async (downloadPath: string) => {
       if (await RNFS.exists(downloadPath)) {
         doNavigate();
@@ -108,6 +111,23 @@ export const useAttachmentDownload = (
     },
     [dispatch, doNavigate]
   );
+
+  const handleAttachmentDownloadFailure = useCallback(
+    (downloadError: Error) => {
+      dispatch(clearRequestedAttachmentDownload());
+      if (isSendAttachment) {
+        trackPNAttachmentDownloadFailure(attachmentCategory);
+      }
+      const isAarTtlError = isAarAttachmentTtlError(downloadError.message);
+      if (isAarTtlError) {
+        toast.error(I18n.t("messageDetails.attachments.failing.aarTtlError"));
+      } else {
+        toast.error(I18n.t("messageDetails.attachments.failing.details"));
+      }
+    },
+    [dispatch, isSendAttachment, attachmentCategory, toast]
+  );
+
   const onModuleAttachmentPress = useCallback(async () => {
     if (isFetching) {
       return;
@@ -145,29 +165,24 @@ export const useAttachmentDownload = (
 
   useEffect(() => {
     const state = store.getState();
-    if (
-      download &&
-      isRequestedAttachmentDownloadSelector(state, messageId, attachmentId)
-    ) {
-      void checkPathAndNavigate(download.path);
-    } else if (isDownloadError) {
-      dispatch(clearRequestedAttachmentDownload());
-      if (isSendAttachment) {
-        trackPNAttachmentDownloadFailure(attachmentCategory);
-      }
-      toast.error(I18n.t("messageDetails.attachments.failing.details"));
+    const isDownloadRequested = isRequestedAttachmentDownloadSelector(
+      state,
+      messageId,
+      attachmentId
+    );
+    if (download != null && isDownloadRequested) {
+      void handleAttachmentDownloadSuccess(download.path);
+    } else if (maybeDownloadError !== undefined) {
+      handleAttachmentDownloadFailure(maybeDownloadError);
     }
   }, [
-    attachmentCategory,
     attachmentId,
-    checkPathAndNavigate,
-    dispatch,
     download,
-    isDownloadError,
-    isSendAttachment,
+    handleAttachmentDownloadFailure,
+    handleAttachmentDownloadSuccess,
+    maybeDownloadError,
     messageId,
-    store,
-    toast
+    store
   ]);
 
   const displayName = attachmentDisplayName(attachment);
