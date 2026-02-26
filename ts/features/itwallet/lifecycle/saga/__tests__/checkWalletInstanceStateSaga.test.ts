@@ -18,7 +18,6 @@ import {
 } from "../checkWalletInstanceStateSaga";
 import { handleWalletInstanceResetSaga } from "../handleWalletInstanceResetSaga";
 import { itwUpdateWalletInstanceStatus } from "../../../walletInstance/store/actions";
-import { NetworkError } from "../../../../../utils/errors";
 
 jest.mock("@pagopa/io-react-native-crypto", () => ({
   deleteKey: jest.fn
@@ -225,9 +224,9 @@ describe("checkWalletInstanceStateSaga", () => {
       ])
       .call.fn(handleWalletInstanceResetSaga)
       .put(itwUpdateWalletInstanceStatus.cancel())
-      .not.put.actionType(
-        itwUpdateWalletInstanceStatus.failure({} as NetworkError)
-      )
+      .not.put.like({
+        action: { type: itwUpdateWalletInstanceStatus.failure.toString() }
+      })
       .run();
   });
 });
