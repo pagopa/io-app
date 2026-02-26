@@ -14,6 +14,7 @@ import {
   sendAarMockStates
 } from "../../utils/testUtils";
 import { createAarMandateSaga } from "../createAarMandateSaga";
+import { AarErrorStatesKind } from "../../utils/aarErrorMappings";
 
 const sessionToken = "mock-session-token";
 const createAarMandateMock = jest.fn();
@@ -199,6 +200,7 @@ describe("createAarMandateSaga", () => {
           setAarFlowState({
             type: sendAARFlowStates.ko,
             previousState: currentState,
+            specificErrorKey: AarErrorStatesKind.GENERIC,
             error: responseValue,
             debugData: {
               phase: "Create Mandate",

@@ -2,15 +2,19 @@ import { ComponentType } from "react";
 import { isTestEnv } from "../../../../utils/environment";
 import {
   CieExpiredComponent,
+  CieValidationExpiredTtlComponent,
   GenericCieValidationErrorComponent,
   UnrelatedCieComponent
 } from "../components/errors/SendAarCieValidationErrorComponent";
 import { SendAarGenericErrorComponent } from "../components/errors/SendAARErrorComponent";
+import { SendAarPendingDelegationErrorComponent } from "../components/errors/SendAarPendingDelegationErrorComponent";
 
 export enum AarErrorStatesKind {
   CIE_EXPIRED = "CIE_EXPIRED",
   CIE_NOT_RELATED_TO_DELEGATOR = "CIE_NOT_RELATED_TO_DELEGATOR",
   CIE_GENERIC = "CIE_GENERIC",
+  PENDING_DELEGATION = "PENDING_DELEGATION",
+  CIE_TTL_EXPIRED = "CIE_TTL_EXPIRED",
   GENERIC = "GENERIC"
 }
 const cieErrors = {
@@ -28,18 +32,27 @@ const cieErrors = {
 const deliveryErrors = {
   PN_DELIVERY_MANDATENOTFOUND: "PN_DELIVERY_MANDATENOTFOUND"
 } as const;
+const mandateCreationErrors = {
+  PN_MANDATE_ALREADYEXISTS: "PN_MANDATE_ALREADYEXISTS"
+};
 export const sendAarProblemJsonErrorCodes = {
   ...cieErrors,
-  ...deliveryErrors
+  ...deliveryErrors,
+  ...mandateCreationErrors
 };
 export type SendAarErrorCodes = keyof typeof sendAarProblemJsonErrorCodes;
 
-const aarProblemJsonComponentMap = {
+const aarProblemJsonComponentMap: {
+  [key in AarErrorStatesKind]: ComponentType;
+} = {
   [AarErrorStatesKind.CIE_EXPIRED]: CieExpiredComponent,
   [AarErrorStatesKind.CIE_NOT_RELATED_TO_DELEGATOR]: UnrelatedCieComponent,
   [AarErrorStatesKind.CIE_GENERIC]: GenericCieValidationErrorComponent,
-  [AarErrorStatesKind.GENERIC]: SendAarGenericErrorComponent
-} satisfies { [key in AarErrorStatesKind]: ComponentType };
+  [AarErrorStatesKind.CIE_TTL_EXPIRED]: CieValidationExpiredTtlComponent,
+  [AarErrorStatesKind.GENERIC]: SendAarGenericErrorComponent,
+  [AarErrorStatesKind.PENDING_DELEGATION]:
+    SendAarPendingDelegationErrorComponent
+};
 
 export const isAarAttachmentTtlError = (
   error?: string

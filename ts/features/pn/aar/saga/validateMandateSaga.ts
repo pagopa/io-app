@@ -1,9 +1,11 @@
 import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
+import _ from "lodash";
 import { call, put, select } from "typed-redux-saga/macro";
 import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SagaCallReturnType } from "../../../../types/utils";
+import { isTestEnv } from "../../../../utils/environment";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { unknownToReason } from "../../../messages/utils";
 import {
@@ -24,7 +26,6 @@ import {
   SendAARFailurePhase,
   sendAARFlowStates
 } from "../utils/stateUtils";
-import { isTestEnv } from "../../../../utils/environment";
 
 const sendAARFailurePhase: SendAARFailurePhase = "Validate Mandate";
 
@@ -144,28 +145,43 @@ export function* validateMandateSaga(
   }
 }
 
+const genericHandler = (reason: string) => {
+  trackSendAarMandateCieDataError(reason);
+  return AarErrorStatesKind.CIE_GENERIC;
+};
+const responseToHandlerMap = {
+  422: {
+    [sendAarProblemJsonErrorCodes.CIE_EXPIRED_ERROR]: () => {
+      trackSendAarMandateCieExpiredError();
+      return AarErrorStatesKind.CIE_EXPIRED;
+    },
+    [sendAarProblemJsonErrorCodes.CIE_NOT_RELATED_TO_DELEGATOR_ERROR]: () => {
+      trackSendAarMandateCieNotRelatedToDelegatorError();
+      return AarErrorStatesKind.CIE_NOT_RELATED_TO_DELEGATOR;
+    }
+  },
+  500: {
+    [sendAarProblemJsonErrorCodes.PN_MANDATE_NOTFOUND]: (reason: string) => {
+      trackSendAarMandateCieDataError(reason);
+      return AarErrorStatesKind.CIE_TTL_EXPIRED;
+    }
+  }
+};
 const getAndTrackValidationErrorState = (
   errors: AARProblemJson["errors"],
   status: number,
   reason: string
-) => {
+): AarErrorStatesKind => {
   const maybeErrorKey = errors?.[0].code.toUpperCase();
-  if (status !== 422 || maybeErrorKey == null) {
-    trackSendAarMandateCieDataError(reason);
-    return AarErrorStatesKind.CIE_GENERIC;
+  if (maybeErrorKey == null) {
+    return genericHandler(reason);
   }
-
-  switch (maybeErrorKey) {
-    case sendAarProblemJsonErrorCodes.CIE_EXPIRED_ERROR:
-      trackSendAarMandateCieExpiredError();
-      return AarErrorStatesKind.CIE_EXPIRED;
-    case sendAarProblemJsonErrorCodes.CIE_NOT_RELATED_TO_DELEGATOR_ERROR:
-      trackSendAarMandateCieNotRelatedToDelegatorError();
-      return AarErrorStatesKind.CIE_NOT_RELATED_TO_DELEGATOR;
-    default:
-      trackSendAarMandateCieDataError(reason);
-      return AarErrorStatesKind.CIE_GENERIC;
-  }
+  const handler = _.get(
+    responseToHandlerMap,
+    [status, maybeErrorKey],
+    genericHandler
+  );
+  return handler(reason);
 };
 
 export const testable = isTestEnv
