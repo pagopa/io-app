@@ -38,14 +38,8 @@ export const getCredentialStatus = (
     parsedCredential,
     storedStatusAssertion: statusAssertion
   } = credential;
-  // We could not determine the status of the credential.
-  // This happens when the status assertion API call fails.
-  if (statusAssertion?.credentialStatus === "unknown") {
-    return "unknown";
-  }
 
   const now = Date.now();
-
   const jwtExpireDays = differenceInCalendarDays(jwt.expiration, now);
 
   // Not all credentials have an expiration date
@@ -55,6 +49,14 @@ export const getCredentialStatus = (
     O.map(expireDate => differenceInCalendarDays(expireDate, now)),
     O.getOrElse(() => NaN)
   );
+
+  // We could not determine the status of the credential.
+  // This happens when the status assertion API call fails.
+  if (statusAssertion?.credentialStatus === "unknown") {
+    // This ensures that credentials with an expired JWT but an
+    // unknown status assertion are marked as "expired" instead of "unknown"
+    return documentExpireDays <= 0 ? "expired" : "unknown";
+  }
 
   const isIssuerAttestedExpired =
     statusAssertion?.credentialStatus === "invalid" &&
