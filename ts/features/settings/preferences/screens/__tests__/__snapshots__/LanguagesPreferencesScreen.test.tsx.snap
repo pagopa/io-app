@@ -1275,6 +1275,31 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                       testID="RadioItemTestID_sl"
                                     >
                                       <View
+                                        collapsable={false}
+                                        jestAnimatedProps={
+                                          {
+                                            "value": {},
+                                          }
+                                        }
+                                        jestAnimatedStyle={
+                                          {
+                                            "value": {
+                                              "backgroundColor": "rgba(244, 245, 248, 0)",
+                                            },
+                                          }
+                                        }
+                                        jestInlineStyle={
+                                          [
+                                            {
+                                              "marginHorizontal": -24,
+                                              "paddingHorizontal": 24,
+                                              "paddingVertical": 12,
+                                            },
+                                            {
+                                              "opacity": 1,
+                                            },
+                                          ]
+                                        }
                                         needsOffscreenAlphaCompositing={true}
                                         style={
                                           [
@@ -1284,7 +1309,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                               "paddingVertical": 12,
                                             },
                                             {
-                                              "backgroundColor": undefined,
+                                              "backgroundColor": "rgba(244, 245, 248, 0)",
                                             },
                                             {
                                               "opacity": 1,
@@ -1293,14 +1318,34 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                         }
                                       >
                                         <View
-                                          style={
+                                          collapsable={false}
+                                          jestAnimatedProps={
                                             {
-                                              "transform": [
-                                                {
-                                                  "scale": undefined,
-                                                },
-                                              ],
+                                              "value": {},
                                             }
+                                          }
+                                          jestAnimatedStyle={
+                                            {
+                                              "value": {
+                                                "transform": [
+                                                  {
+                                                    "scale": 1,
+                                                  },
+                                                ],
+                                              },
+                                            }
+                                          }
+                                          jestInlineStyle={{}}
+                                          style={
+                                            [
+                                              {
+                                                "transform": [
+                                                  {
+                                                    "scale": 1,
+                                                  },
+                                                ],
+                                              },
+                                            ]
                                           }
                                         >
                                           <View
@@ -1416,6 +1461,41 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                   }
                                                 />
                                                 <View
+                                                  collapsable={false}
+                                                  jestAnimatedProps={
+                                                    {
+                                                      "value": {},
+                                                    }
+                                                  }
+                                                  jestAnimatedStyle={
+                                                    {
+                                                      "value": {
+                                                        "opacity": 0,
+                                                        "transform": [
+                                                          {
+                                                            "scale": 0.5,
+                                                          },
+                                                        ],
+                                                      },
+                                                    }
+                                                  }
+                                                  jestInlineStyle={
+                                                    [
+                                                      {
+                                                        "left": 0,
+                                                        "position": "absolute",
+                                                        "top": 0,
+                                                      },
+                                                      {
+                                                        "borderRadius": 18,
+                                                        "height": 36,
+                                                        "width": 36,
+                                                      },
+                                                      {
+                                                        "backgroundColor": "#0B3EE3",
+                                                      },
+                                                    ]
+                                                  }
                                                   style={
                                                     [
                                                       {
@@ -1435,7 +1515,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                         "opacity": 0,
                                                         "transform": [
                                                           {
-                                                            "scale": undefined,
+                                                            "scale": 0.5,
                                                           },
                                                         ],
                                                       },
