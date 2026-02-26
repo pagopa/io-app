@@ -15,9 +15,9 @@ import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
 
 import * as appParamsList from "../../../../../navigation/params/AppParamsList";
-import { ItwCardOnboardingScreen } from "../ItwCardOnboardingScreen";
+import { ItwCardOnboardingL3Screen } from "../ItwCardOnboardingL3Screen";
 
-describe("ItwCardOnboardingScreen", () => {
+describe("ItwCardOnboardingL3Screen", () => {
   const replaceMock = jest.fn();
 
   beforeEach(() => {
@@ -98,7 +98,7 @@ describe("ItwCardOnboardingScreen", () => {
     fireEvent.press(button);
 
     expect(replaceMock).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.RESTRICTED_MODE_ONBOARDING
+      screen: ITW_ROUTES.L2_ONBOARDING
     });
   });
 
@@ -143,7 +143,7 @@ const renderComponent = (params?: { page?: number } | undefined) => {
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <ItwCredentialIssuanceMachineContext.Provider logic={logic}>
-        <ItwCardOnboardingScreen
+        <ItwCardOnboardingL3Screen
           route={{ key: "x", name: ITW_ROUTES.L3_ONBOARDING, params } as any}
           navigation={{} as any}
         />

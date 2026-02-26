@@ -41,7 +41,7 @@ import {
   newCredentials,
   upcomingCredentials
 } from "../../common/utils/itwCredentialUtils.ts";
-import { itwCredentialsSplittedSelector } from "../../credentials/store/selectors/index.ts";
+import { itwCredentialsSplitSelector } from "../../credentials/store/selectors/index.ts";
 import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions/index.ts";
 import {
   itwIsCredentialsCatalogueLoading,
@@ -54,13 +54,14 @@ import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingM
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences.ts";
 
 const CATALOGUE_ENABLED = false;
+const MAX_INDEX = 1;
 
 const activeBadge: Badge = {
   variant: "success",
   text: I18n.t("features.wallet.onboarding.badge.active")
 };
 
-export type ItwCardOnboardingNavigationParams =
+export type ItwCardOnboardingL3NavigationParams =
   | {
       page?: number;
     }
@@ -71,16 +72,23 @@ type Props = IOStackNavigationRouteProps<
   "ITW_CARD_L3_ONBOARDING"
 >;
 
-const ItwCardOnboardingScreen = ({ route }: Props) => {
+const ItwCardOnboardingL3Screen = ({ route }: Props) => {
   const { params } = route;
   const navigation = useIONavigation();
   const isWalletEnabled = useIOSelector(itwLifecycleIsValidSelector);
   const [page, setPage] = useState<number | null>(null);
 
+  const clampPage = (value: unknown): number => {
+    const n =
+      typeof value === "number" && Number.isFinite(value)
+        ? Math.floor(value)
+        : 0;
+    return Math.min(Math.max(n, 0), MAX_INDEX);
+  };
+
   useFocusEffect(
     useCallback(() => {
-      const nextPage = typeof params?.page === "number" ? params.page : 0;
-      setPage(nextPage);
+      setPage(clampPage(params?.page));
     }, [params?.page])
   );
 
@@ -93,7 +101,7 @@ const ItwCardOnboardingScreen = ({ route }: Props) => {
         onPress: () => {
           setPage(null);
           navigation.replace(ITW_ROUTES.MAIN, {
-            screen: ITW_ROUTES.RESTRICTED_MODE_ONBOARDING
+            screen: ITW_ROUTES.L2_ONBOARDING
           });
         }
       };
@@ -183,7 +191,7 @@ const ItwL3CredentialOnboardingSection: FunctionComponent<
   }, [shouldShowUpcoming]);
 
   const { obtained, notObtained } = useIOSelector(state =>
-    itwCredentialsSplittedSelector(state, credentialsToDisplay)
+    itwCredentialsSplitSelector(state, credentialsToDisplay)
   );
 
   const list = (types: Array<string>) => (
@@ -260,7 +268,7 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
   const isCgnActive = useIOSelector(isCgnInformationAvailableSelector);
   const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
 
-  const startCgnActiviation = useCallback(() => {
+  const startCgnActivation = useCallback(() => {
     trackStartAddNewCredential("CGN");
     dispatch(loadAvailableBonuses.request());
     dispatch(cgnActivationStart());
@@ -277,10 +285,10 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
     () => ({
       testID: "cgnModuleTestID",
       label: I18n.t("features.wallet.onboarding.options.cgn"),
-      onPress: !isCgnActive ? startCgnActiviation : undefined,
+      onPress: !isCgnActive ? startCgnActivation : undefined,
       badge: isCgnActive ? activeBadge : undefined
     }),
-    [startCgnActiviation, isCgnActive]
+    [startCgnActivation, isCgnActive]
   );
 
   const cgnModule = useMemo(
@@ -337,4 +345,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export { ItwCardOnboardingScreen };
+export { ItwCardOnboardingL3Screen };

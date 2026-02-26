@@ -332,7 +332,7 @@ export const itwIsMdlPresentSelector = createSelector(
  * Split a given list of credential types into obtained / notObtained
  * obtained = present in wallet
  */
-export const itwCredentialsSplittedSelector = createSelector(
+export const itwCredentialsSplitSelector = createSelector(
   itwCredentialsByTypeSelector,
   (_state: GlobalState, types: ReadonlyArray<string>) => types,
   (credentialsByType, types) => {

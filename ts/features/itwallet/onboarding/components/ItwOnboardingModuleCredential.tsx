@@ -69,15 +69,22 @@ const getBadge = (args: {
   const { isActive, isDisabled, isRequested, isUpcoming, isNew, isL3Enabled } =
     args;
 
-  const rules: Array<{ when: boolean; badge: Badge }> = [
-    { when: !!isActive, badge: isL3Enabled ? activeL3Badge : activeBadge },
-    { when: !!isDisabled, badge: disabledBadge },
-    { when: !!isRequested, badge: requestedBadge },
-    { when: !!isUpcoming, badge: upcomingBadge },
-    { when: !!isNew, badge: newBadge }
-  ];
-
-  return rules.find(r => r.when)?.badge;
+  if (isActive) {
+    return isL3Enabled ? activeL3Badge : activeBadge;
+  }
+  if (isDisabled) {
+    return disabledBadge;
+  }
+  if (isRequested) {
+    return requestedBadge;
+  }
+  if (isUpcoming) {
+    return upcomingBadge;
+  }
+  if (isNew) {
+    return newBadge;
+  }
+  return undefined;
 };
 
 const ItwOnboardingModuleCredential = ({

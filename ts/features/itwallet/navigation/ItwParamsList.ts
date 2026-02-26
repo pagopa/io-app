@@ -16,7 +16,7 @@ import { ITW_ROUTES } from "./routes";
 export type ItwParamsList = {
   [ITW_ROUTES.ONBOARDING]: undefined;
   [ITW_ROUTES.L3_ONBOARDING]: ItwCardOnboardingNavigationParams;
-  [ITW_ROUTES.RESTRICTED_MODE_ONBOARDING]: undefined;
+  [ITW_ROUTES.L2_ONBOARDING]: undefined;
   // OFFLINE WALLET
   [ITW_ROUTES.OFFLINE.WALLET]: undefined;
   // LANDING SCREENS

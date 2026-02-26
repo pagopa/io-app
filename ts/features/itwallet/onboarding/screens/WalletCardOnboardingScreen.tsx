@@ -155,7 +155,7 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
   const isCgnLoading = useIOSelector(isCgnDetailsLoading);
   const isCgnActive = useIOSelector(isCgnInformationAvailableSelector);
 
-  const startCgnActiviation = useCallback(() => {
+  const startCgnActivation = useCallback(() => {
     trackStartAddNewCredential("CGN");
     dispatch(loadAvailableBonuses.request());
     dispatch(cgnActivationStart());
@@ -177,11 +177,11 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
           testID="cgnModuleTestID"
           image={require("../../../../../img/bonus/cgn/cgn_logo.png")}
           label={I18n.t("features.wallet.onboarding.options.cgn")}
-          onPress={!isCgnActive ? startCgnActiviation : undefined}
+          onPress={!isCgnActive ? startCgnActivation : undefined}
           badge={isCgnActive ? activeBadge : undefined}
         />
       ),
-    [isCgnActive, isCgnLoading, startCgnActiviation]
+    [isCgnActive, isCgnLoading, startCgnActivation]
   );
 
   return (

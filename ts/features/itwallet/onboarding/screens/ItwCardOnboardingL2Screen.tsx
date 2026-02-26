@@ -15,7 +15,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
 import { trackShowCredentialsList } from "../../analytics";
 import { restrictedCredentials } from "../../common/utils/itwCredentialUtils.ts";
-import { itwCredentialsSplittedSelector } from "../../credentials/store/selectors/index.ts";
+import { itwCredentialsSplitSelector } from "../../credentials/store/selectors/index.ts";
 import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions/index.ts";
 import {
   itwIsCredentialsCatalogueLoading,
@@ -26,7 +26,7 @@ import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingM
 
 const CATALOGUE_ENABLED = false;
 
-const ItwCardRestrictedModeScreen = () => {
+const ItwCardOnboardingL2Screen = () => {
   useFocusEffect(trackShowCredentialsList);
 
   return (
@@ -42,13 +42,13 @@ const ItwCardRestrictedModeScreen = () => {
       headerActionsProp={{ showHelp: true }}
     >
       <View style={styles.wrapper}>
-        <ItwL3CredentialOnboardingSection />
+        <ItwL2CredentialOnboardingSection />
       </View>
     </IOScrollViewWithLargeHeader>
   );
 };
 
-const ItwL3CredentialOnboardingSection = () => {
+const ItwL2CredentialOnboardingSection = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const isCatalogueLoading = useIOSelector(itwIsCredentialsCatalogueLoading);
@@ -56,10 +56,8 @@ const ItwL3CredentialOnboardingSection = () => {
     itwIsCredentialsCatalogueUnavailable
   );
 
-  const credentialsToDisplay = [...restrictedCredentials];
-
   const { notObtained } = useIOSelector(state =>
-    itwCredentialsSplittedSelector(state, credentialsToDisplay)
+    itwCredentialsSplitSelector(state, restrictedCredentials)
   );
 
   const list = (types: Array<string>) => (
@@ -121,4 +119,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export { ItwCardRestrictedModeScreen };
+export { ItwCardOnboardingL2Screen };

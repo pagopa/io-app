@@ -115,7 +115,7 @@ const InnerNavigator = memo(() => {
         component={ItwCardOnboardingScreen}
       />
       <Stack.Screen
-        name={ITW_ROUTES.RESTRICTED_MODE_ONBOARDING}
+        name={ITW_ROUTES.L2_ONBOARDING}
         component={ItwCardRestrictedModeScreen}
       />
       <Stack.Screen

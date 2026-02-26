@@ -10,7 +10,7 @@ import { itwCredentialIssuanceMachine } from "../../../machine/credential/machin
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 
 import { ITW_ROUTES } from "../../../navigation/routes";
-import { ItwCardRestrictedModeScreen } from "../ItwCardRestrictedModeScreen";
+import { ItwCardOnboardingL2Screen } from "../ItwCardOnboardingL2Screen";
 
 import * as credentialsSelectors from "../../../credentials/store/selectors/index";
 
@@ -18,7 +18,7 @@ import * as appParamsList from "../../../../../navigation/params/AppParamsList";
 
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 
-describe("ItwCardRestrictedModeScreen", () => {
+describe("ItwCardOnboardingL2Screen", () => {
   const replaceMock = jest.fn();
 
   beforeEach(() => {
@@ -29,7 +29,7 @@ describe("ItwCardRestrictedModeScreen", () => {
     } as any);
 
     jest
-      .spyOn(credentialsSelectors, "itwCredentialsSplittedSelector")
+      .spyOn(credentialsSelectors, "itwCredentialsSplitSelector")
       .mockReturnValue({
         obtained: [],
         notObtained: [CredentialType.DRIVING_LICENSE]
@@ -81,10 +81,10 @@ const renderComponent = () => {
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <ItwCredentialIssuanceMachineContext.Provider logic={logic}>
-        <ItwCardRestrictedModeScreen />
+        <ItwCardOnboardingL2Screen />
       </ItwCredentialIssuanceMachineContext.Provider>
     ),
-    ITW_ROUTES.RESTRICTED_MODE_ONBOARDING,
+    ITW_ROUTES.L2_ONBOARDING,
     {},
     store
   );
