@@ -1166,7 +1166,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                           allowFontScaling={true}
                                           dynamicTypeRamp="headline"
                                           maxFontSizeMultiplier={1.5}
-                                          role="heading"
                                           style={
                                             [
                                               {},
@@ -1325,7 +1324,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                             allowFontScaling={true}
                                             dynamicTypeRamp="headline"
                                             maxFontSizeMultiplier={1.5}
-                                            role="heading"
                                             style={
                                               [
                                                 {},
@@ -2503,7 +2501,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                           allowFontScaling={true}
                                           dynamicTypeRamp="headline"
                                           maxFontSizeMultiplier={1.5}
-                                          role="heading"
                                           style={
                                             [
                                               {},
@@ -2662,7 +2659,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                             allowFontScaling={true}
                                             dynamicTypeRamp="headline"
                                             maxFontSizeMultiplier={1.5}
-                                            role="heading"
                                             style={
                                               [
                                                 {},
@@ -3871,7 +3867,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                           allowFontScaling={true}
                                           dynamicTypeRamp="headline"
                                           maxFontSizeMultiplier={1.5}
-                                          role="heading"
                                           style={
                                             [
                                               {},
@@ -4030,7 +4025,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                             allowFontScaling={true}
                                             dynamicTypeRamp="headline"
                                             maxFontSizeMultiplier={1.5}
-                                            role="heading"
                                             style={
                                               [
                                                 {},
@@ -5331,7 +5325,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                                           allowFontScaling={true}
                                           dynamicTypeRamp="headline"
                                           maxFontSizeMultiplier={1.5}
-                                          role="heading"
                                           style={
                                             [
                                               {},
@@ -6631,7 +6624,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                           allowFontScaling={true}
                                           dynamicTypeRamp="headline"
                                           maxFontSizeMultiplier={1.5}
-                                          role="heading"
                                           style={
                                             [
                                               {},
@@ -6790,7 +6782,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                             allowFontScaling={true}
                                             dynamicTypeRamp="headline"
                                             maxFontSizeMultiplier={1.5}
-                                            role="heading"
                                             style={
                                               [
                                                 {},
@@ -8228,7 +8219,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                           allowFontScaling={true}
                                           dynamicTypeRamp="headline"
                                           maxFontSizeMultiplier={1.5}
-                                          role="heading"
                                           style={
                                             [
                                               {},
@@ -8387,7 +8377,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                             allowFontScaling={true}
                                             dynamicTypeRamp="headline"
                                             maxFontSizeMultiplier={1.5}
-                                            role="heading"
                                             style={
                                               [
                                                 {},
@@ -9887,7 +9876,6 @@ Genera un nuovo QR Code e riprova.
                                           allowFontScaling={true}
                                           dynamicTypeRamp="headline"
                                           maxFontSizeMultiplier={1.5}
-                                          role="heading"
                                           style={
                                             [
                                               {},
@@ -11229,7 +11217,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                           allowFontScaling={true}
                                           dynamicTypeRamp="headline"
                                           maxFontSizeMultiplier={1.5}
-                                          role="heading"
                                           style={
                                             [
                                               {},
@@ -11388,7 +11375,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                             allowFontScaling={true}
                                             dynamicTypeRamp="headline"
                                             maxFontSizeMultiplier={1.5}
-                                            role="heading"
                                             style={
                                               [
                                                 {},
@@ -12840,7 +12826,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                                           allowFontScaling={true}
                                           dynamicTypeRamp="headline"
                                           maxFontSizeMultiplier={1.5}
-                                          role="heading"
                                           style={
                                             [
                                               {},
@@ -14192,7 +14177,6 @@ continuare
                                           allowFontScaling={true}
                                           dynamicTypeRamp="headline"
                                           maxFontSizeMultiplier={1.5}
-                                          role="heading"
                                           style={
                                             [
                                               {},
@@ -14351,7 +14335,6 @@ continuare
                                             allowFontScaling={true}
                                             dynamicTypeRamp="headline"
                                             maxFontSizeMultiplier={1.5}
-                                            role="heading"
                                             style={
                                               [
                                                 {},
