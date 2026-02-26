@@ -340,7 +340,7 @@ export const itwCredentialsSplitSelector = createSelector(
     const notObtained: Array<string> = [];
 
     for (const type of types) {
-      if (credentialsByType[type as keyof typeof credentialsByType]) {
+      if (credentialsByType[type]) {
         // eslint-disable-next-line functional/immutable-data
         obtained.push(type);
       } else {
