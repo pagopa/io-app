@@ -49,6 +49,7 @@ export function* getStatusOrResetWalletInstance(integrityKeyTag: string) {
     if (Errors.isWalletProviderResponseError(e) && e.statusCode === 404) {
       yield* call(handleWalletInstanceResetSaga);
       yield* put(itwUpdateWalletInstanceStatus.cancel());
+      yield* call(trackItwWalletBadState);
     } else {
       yield* put(itwUpdateWalletInstanceStatus.failure(getNetworkError(e)));
     }
