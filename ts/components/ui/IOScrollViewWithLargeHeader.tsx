@@ -14,6 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { ComponentProps, forwardRef, ReactNode, useState } from "react";
 
 import { LayoutChangeEvent, View } from "react-native";
+import Animated, { AnimatedRef } from "react-native-reanimated";
 import I18n from "i18next";
 import {
   BackProps,
@@ -48,6 +49,7 @@ type Props = WithTestID<
     ignoreAccessibilityCheck?: ComponentProps<
       typeof HeaderSecondLevel
     >["ignoreAccessibilityCheck"];
+    animatedRef?: AnimatedRef<Animated.ScrollView>;
     topElement?: ReactNode;
     alwaysBounceVertical?: boolean;
   } & SupportRequestParams
@@ -76,6 +78,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
       excludeEndContentMargin,
       testID,
       ignoreAccessibilityCheck = false,
+      animatedRef,
       topElement = undefined,
       alwaysBounceVertical
     },
@@ -116,6 +119,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
     return (
       <IOScrollView
         actions={actions}
+        animatedRef={animatedRef}
         headerConfig={headerProps}
         snapOffset={titleHeight}
         includeContentMargins={false}
