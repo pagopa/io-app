@@ -16960,11 +16960,11 @@ __metadata:
 
 "react-native-screenshot-prevent@patch:react-native-screenshot-prevent@patch%3Areact-native-screenshot-prevent@npm%253A1.2.1%23./.yarn/patches/react-native-screenshot-prevent-npm-1.2.1-d115315590.patch%3A%3Aversion=1.2.1&hash=7682fa&locator=io%2540workspace%253A.#./.yarn/patches/react-native-screenshot-prevent-patch-24552b42ab.patch::locator=io%40workspace%3A.":
   version: 1.2.1
-  resolution: "react-native-screenshot-prevent@patch:react-native-screenshot-prevent@patch%3Areact-native-screenshot-prevent@npm%253A1.2.1%23./.yarn/patches/react-native-screenshot-prevent-npm-1.2.1-d115315590.patch%3A%3Aversion=1.2.1&hash=7682fa&locator=io%2540workspace%253A.#./.yarn/patches/react-native-screenshot-prevent-patch-24552b42ab.patch::version=1.2.1&hash=861c37&locator=io%40workspace%3A."
+  resolution: "react-native-screenshot-prevent@patch:react-native-screenshot-prevent@patch%3Areact-native-screenshot-prevent@npm%253A1.2.1%23./.yarn/patches/react-native-screenshot-prevent-npm-1.2.1-d115315590.patch%3A%3Aversion=1.2.1&hash=7682fa&locator=io%2540workspace%253A.#./.yarn/patches/react-native-screenshot-prevent-patch-24552b42ab.patch::version=1.2.1&hash=5ffad5&locator=io%40workspace%3A."
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 7a0b7a5654134a3811f48ef32df9edd2c035392e969575134ac72c3b66c640dffa174fc51e8c577c63484dbdcb44cf9f3ce0db2b2bc2e2715e4c91ec34026702
+  checksum: bca78f24e0fffed93dd3e6ddd3d867436dd3151ab7d4efa3be1e3625bb1311b373ff5957862f544fd8ef19b7fc81ca8cf3b4c30ca188190712d95a582911939d
   languageName: node
   linkType: hard
 
