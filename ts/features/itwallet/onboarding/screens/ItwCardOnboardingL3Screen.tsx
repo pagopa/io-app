@@ -76,7 +76,9 @@ const ItwCardOnboardingL3Screen = ({ route }: Props) => {
   const navigation = useIONavigation();
   const isWalletEnabled = useIOSelector(itwLifecycleIsValidSelector);
   const [page, setPage] = useState<number>(
-    params?.page ? clamp(params.page, MAX_INDEX) : 0
+    params && !isNaN(Number(params?.page))
+      ? clamp(Number(params.page), MAX_INDEX)
+      : 0
   );
 
   useFocusEffect(trackShowCredentialsList);

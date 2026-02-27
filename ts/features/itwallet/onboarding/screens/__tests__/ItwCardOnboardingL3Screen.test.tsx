@@ -56,7 +56,7 @@ describe("ItwCardOnboardingL3Screen", () => {
   });
 
   it("it should fallback to page 0 when page param is not a number", () => {
-    const { queryByTestId } = renderComponent({ page: "1" } as any);
+    const { queryByTestId } = renderComponent({ page: "abc" } as any);
 
     expect(
       queryByTestId(`${CredentialType.DRIVING_LICENSE}ModuleTestID`)
