@@ -62,11 +62,9 @@ const activeBadge: Badge = {
   text: I18n.t("features.wallet.onboarding.badge.active")
 };
 
-export type ItwCardOnboardingL3NavigationParams =
-  | {
-      page?: number;
-    }
-  | undefined;
+export type ItwCardOnboardingL3NavigationParams = {
+  page?: number;
+};
 
 type Props = IOStackNavigationRouteProps<
   ItwParamsList,

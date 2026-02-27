@@ -15,7 +15,7 @@ import { ITW_ROUTES } from "./routes";
 
 export type ItwParamsList = {
   [ITW_ROUTES.ONBOARDING]: undefined;
-  [ITW_ROUTES.L3_ONBOARDING]: ItwCardOnboardingL3NavigationParams;
+  [ITW_ROUTES.L3_ONBOARDING]: ItwCardOnboardingL3NavigationParams | undefined;
   [ITW_ROUTES.L2_ONBOARDING]: undefined;
   // OFFLINE WALLET
   [ITW_ROUTES.OFFLINE.WALLET]: undefined;
