@@ -111,6 +111,46 @@ const DESIGN_SYSTEM_ROUTES = {
       title: "Loading Screen (extended props)"
     }
   },
+  NATIVE: {
+    FULL_SCREEN_MODAL: {
+      route: "DS_FULLSCR_MODAL",
+      title: "Full screen modal"
+    },
+    BOTTOM_SHEET: {
+      route: "DS_NATIVE_BOTTOM_SHEET",
+      title: "Bottom Sheet"
+    }
+  },
+  NATIVE_SHEETS: {
+    FIT_TO_CONTENTS: {
+      route: "DS_NATIVE_SHEET_FIT",
+      title: "Fit to contents"
+    },
+    HALF_SCREEN: {
+      route: "DS_NATIVE_SHEET_HALF",
+      title: "Half screen"
+    },
+    TWO_DETENTS: {
+      route: "DS_NATIVE_SHEET_TWO",
+      title: "Two detents"
+    },
+    GRABBER: {
+      route: "DS_NATIVE_SHEET_GRABBER",
+      title: "With grabber (iOS)"
+    },
+    UNDIMMED: {
+      route: "DS_NATIVE_SHEET_UNDIMMED",
+      title: "Undimmed background"
+    },
+    LONG_CONTENT: {
+      route: "DS_NATIVE_SHEET_LONG",
+      title: "Long scrollable content"
+    },
+    WITH_FOOTER: {
+      route: "DS_NATIVE_SHEET_FOOTER",
+      title: "With FooterActions"
+    }
+  },
   DEBUG: {
     SAFE_AREA: { route: "DS_SAFE_AREA", title: "Native safe area" },
     SAFE_AREA_CENTERED: {
@@ -120,10 +160,6 @@ const DESIGN_SYSTEM_ROUTES = {
     EDGE_TO_EDGE_AREA: {
       route: "DS_EDGE_TO_EDGE_AREA",
       title: "Edge to edge area"
-    },
-    FULL_SCREEN_MODAL: {
-      route: "DS_FULLSCR_MODAL",
-      title: "Full screen modal (native)"
     },
     SCREEN_END_MARGIN: {
       route: "DS_SCREEN_END_MARGIN",
