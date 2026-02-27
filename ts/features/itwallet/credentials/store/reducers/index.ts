@@ -5,7 +5,11 @@ import { isDevEnv } from "../../../../../utils/environment";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import createSecureStorage from "../../../../../store/storages/secureStorage";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
-import { itwCredentialsRemove, itwCredentialsStore } from "../actions";
+import {
+  itwCredentialsRemove,
+  itwCredentialsStore,
+  itwCredentialsVaultMigrationComplete
+} from "../actions";
 import {
   CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION,
   itwCredentialsStateMigrations
@@ -54,6 +58,28 @@ const reducer = (
       return {
         ...state,
         credentials: otherCredentials
+      };
+    }
+
+    case getType(itwCredentialsVaultMigrationComplete): {
+      // Destructure out `credential` explicitly rather than trusting the action
+      // type, because at runtime the objects coming from legacy Redux state may
+      // still carry the field even though CredentialMetadata doesn't declare it.
+      const migratedCredentials = action.payload.reduce((acc, entry) => {
+        const { credential: _credential, ...metadata } =
+          entry as CredentialMetadata & { credential?: string };
+        return {
+          ...acc,
+          [metadata.credentialId]: metadata as CredentialMetadata
+        };
+      }, {} as CredentialsRecord);
+
+      return {
+        ...state,
+        credentials: {
+          ...state.credentials,
+          ...migratedCredentials
+        }
       };
     }
 

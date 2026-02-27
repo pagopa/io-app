@@ -7,7 +7,7 @@ import { extractVerification } from "../../../common/utils/itwCredentialUtils";
 
 type MigrationState = PersistedState & Record<string, any>;
 
-export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 7;
+export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 8;
 
 export const itwCredentialsStateMigrations: MigrationManifest = {
   // Version 0
@@ -180,5 +180,13 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
         ])
       )
     };
-  }
+  },
+
+  // Version 8
+  // The `credential` JWT is migrated to CredentialsVault asynchronously at
+  // boot (createMigrate is sync-only, so it can't do vault writes safely).
+  // We intentionally leave `credential` untouched here: the boot saga removes
+  // it from Redux only after every vault write is confirmed, so a crash mid-
+  // migration can't lose a credential.
+  "8": (state: MigrationState) => state
 };

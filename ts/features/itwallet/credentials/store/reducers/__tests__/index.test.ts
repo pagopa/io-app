@@ -5,7 +5,11 @@ import {
   ParsedStatusAssertion,
   CredentialMetadata
 } from "../../../../common/utils/itwTypesUtils";
-import { itwCredentialsRemove, itwCredentialsStore } from "../../actions";
+import {
+  itwCredentialsRemove,
+  itwCredentialsStore,
+  itwCredentialsVaultMigrationComplete
+} from "../../actions";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
@@ -152,6 +156,36 @@ describe("ITW credentials reducer", () => {
     );
 
     expect(targetSate.features.itWallet.credentials.credentials).toEqual({});
+  });
+
+  it("should strip the credential field when handling itwCredentialsVaultMigrationComplete", () => {
+    // Simulate a legacy entry that has an extra `credential` JWT field in Redux
+    const legacyEntry = {
+      ...mockedCredential,
+      credential: "raw-jwt-string"
+    } as CredentialMetadata & { credential: string };
+
+    const sequenceOfActions: ReadonlyArray<Action> = [
+      applicationChangeState("active"),
+      // Directly set legacy state by reusing itwCredentialsStore with the cast type
+      itwCredentialsStore([legacyEntry as unknown as CredentialMetadata]),
+      itwCredentialsVaultMigrationComplete([
+        legacyEntry as unknown as CredentialMetadata
+      ])
+    ];
+    const targetState = reproduceSequence(
+      {} as GlobalState,
+      appReducer,
+      sequenceOfActions
+    );
+
+    const stored = targetState.features.itWallet.credentials.credentials[
+      mockedCredential.credentialId
+    ] as Record<string, unknown>;
+
+    expect(stored).toBeDefined();
+    expect(stored.credential).toBeUndefined();
+    expect(stored.credentialId).toBe(mockedCredential.credentialId);
   });
 
   it("should update existing credentials overwriting the previous instances", () => {

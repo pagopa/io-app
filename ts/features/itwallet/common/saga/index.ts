@@ -5,6 +5,7 @@ import { call, fork, put, select, takeLatest } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { watchItwCredentialsSaga } from "../../credentials/saga";
 import { checkCredentialsStatusAssertion } from "../../credentials/saga/checkCredentialsStatusAssertion";
+import { handleItwCredentialsVaultMigrationSaga } from "../../credentials/saga/handleItwCredentialsVaultMigrationSaga";
 import { handleWalletCredentialsRehydration } from "../../credentials/saga/handleWalletCredentialsRehydration";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors/index.ts";
 import { watchItwCredentialsCatalogueSaga } from "../../credentialsCatalogue/saga/index.ts";
@@ -68,6 +69,7 @@ export function* watchItwSaga(): SagaIterator {
  */
 export function* watchItwOfflineSaga(): SagaIterator {
   yield* fork(watchItwCredentialsSaga);
+  yield* call(handleItwCredentialsVaultMigrationSaga);
   yield* fork(handleWalletCredentialsRehydration);
   // Check if the device has the NFC Feature
   yield* fork(checkHasNfcFeatureSaga);
