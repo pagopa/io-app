@@ -205,6 +205,9 @@ export function createRootReducer(
             installation: {
               ...state.installation
             },
+            versionInfo: {
+              ...state.versionInfo
+            },
             // cie status must be kept
             cie: {
               ...state.cie
