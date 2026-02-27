@@ -14,7 +14,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts"
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
 import { trackShowCredentialsList } from "../../analytics";
-import { restrictedCredentials } from "../../common/utils/itwCredentialUtils.ts";
+import { l2Credentials } from "../../common/utils/itwCredentialUtils.ts";
 import { itwCredentialsSplitSelector } from "../../credentials/store/selectors/index.ts";
 import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions/index.ts";
 import {
@@ -57,7 +57,7 @@ const ItwL2CredentialOnboardingSection = () => {
   );
 
   const { notObtained } = useIOSelector(state =>
-    itwCredentialsSplitSelector(state, restrictedCredentials)
+    itwCredentialsSplitSelector(state, l2Credentials)
   );
 
   const list = (types: Array<string>) => (

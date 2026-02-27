@@ -51,7 +51,7 @@ const navigateToWalletRevocationScreen = jest.fn();
 const navigateToSuccessScreen = jest.fn();
 const navigateToFailureScreen = jest.fn();
 const navigateToWallet = jest.fn();
-const navigateToCatalogByLevel = jest.fn();
+const navigateToCredentialCatalog = jest.fn();
 const navigateToCieNfcPreparationScreen = jest.fn();
 const navigateToCieCardPreparationScreen = jest.fn();
 const navigateToCiePinPreparationScreen = jest.fn();
@@ -118,7 +118,7 @@ describe("itwEidIssuanceMachine", () => {
       navigateToSuccessScreen,
       navigateToFailureScreen,
       navigateToWallet,
-      navigateToCatalogByLevel,
+      navigateToCredentialCatalog,
       navigateToCieNfcPreparationScreen,
       navigateToCiePinPreparationScreen,
       navigateToCieCardPreparationScreen,
@@ -872,7 +872,7 @@ describe("itwEidIssuanceMachine", () => {
 
     actor.send({ type: "add-new-credential" });
 
-    expect(navigateToCatalogByLevel).toHaveBeenCalledTimes(1);
+    expect(navigateToCredentialCatalog).toHaveBeenCalledTimes(1);
   });
 
   it("Should return to TOS acceptance if session expires when creating a Wallet Instance", async () => {

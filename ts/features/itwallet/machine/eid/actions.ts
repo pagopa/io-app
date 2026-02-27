@@ -145,18 +145,15 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToCatalogByLevel: ({
+  navigateToCredentialCatalog: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    if (context.level === "l3") {
-      navigation.replace(ITW_ROUTES.MAIN, {
-        screen: ITW_ROUTES.L3_ONBOARDING
-      });
-    } else {
-      navigation.replace(ITW_ROUTES.MAIN, {
-        screen: ITW_ROUTES.ONBOARDING
-      });
-    }
+    navigation.replace(ITW_ROUTES.MAIN, {
+      screen:
+        context.level === "l3"
+          ? ITW_ROUTES.L3_ONBOARDING
+          : ITW_ROUTES.ONBOARDING
+    });
   },
 
   navigateToCieNfcPreparationScreen: () => {

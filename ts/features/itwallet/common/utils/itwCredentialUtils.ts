@@ -12,7 +12,8 @@ import {
   StoredVerification
 } from "./itwTypesUtils";
 
-export const restrictedCredentials = [
+// Credentials that can be obtained with valid a Documenti su IO instance
+export const l2Credentials = [
   CredentialType.DRIVING_LICENSE,
   CredentialType.EUROPEAN_DISABILITY_CARD,
   CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
