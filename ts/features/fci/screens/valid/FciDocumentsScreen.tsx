@@ -82,7 +82,7 @@ const FciDocumentsScreen = () => {
   useEffect(() => {
     if (!isFocused) {
       // we reset the download path when this component loses focus, since it remains mounted
-      // so when the user land again on thi screen we frshly reload the document url
+      // so when the user lands again on thi screen we freshly reload the document url
       // this fixes a graphic glitch where the previous document is shown for a split second before the new one is loaded
       dispatch(fciDownloadPreview.cancel());
     }
