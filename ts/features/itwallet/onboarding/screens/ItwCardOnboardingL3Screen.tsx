@@ -137,15 +137,15 @@ const ItwCardOnboardingL3Screen = ({ route }: Props) => {
         onItemPress={setPage}
       >
         <TabItem
-          label={I18n.t("features.itWallet.onboarding.sections.doc")}
+          label={I18n.t("features.wallet.onboarding.l3-sections.itw")}
           accessibilityLabel={I18n.t(
-            "features.itWallet.onboarding.sections.doc"
+            "features.wallet.onboarding.l3-sections.itw"
           )}
         />
         <TabItem
-          label={I18n.t("features.itWallet.onboarding.sections.other")}
+          label={I18n.t("features.wallet.onboarding.l3-sections.other")}
           accessibilityLabel={I18n.t(
-            "features.itWallet.onboarding.sections.other"
+            "features.wallet.onboarding.l3-sections.other"
           )}
         />
       </TabNavigation>
@@ -224,7 +224,7 @@ const ItwL3CredentialOnboardingSection: FunctionComponent<
           <VStack space={8}>
             <View style={styles.header}>
               <H6 role="heading" color={theme["textBody-tertiary"]}>
-                {I18n.t("features.itWallet.onboarding.sections.added")}
+                {I18n.t("features.wallet.onboarding.l3-sections.added")}
               </H6>
             </View>
             {list(obtained)}
