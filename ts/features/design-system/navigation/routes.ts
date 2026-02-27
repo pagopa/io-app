@@ -137,6 +137,10 @@ const DESIGN_SYSTEM_ROUTES = {
     LONG_CONTENT: {
       route: "DS_NATIVE_SHEET_LONG",
       title: "Long scrollable content"
+    },
+    LONG_CONTENT_FIT: {
+      route: "DS_NATIVE_SHEET_LONG_FIT",
+      title: "Long content (fitToContents)"
     }
   },
   DEBUG: {

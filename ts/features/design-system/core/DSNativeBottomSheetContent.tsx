@@ -85,10 +85,11 @@ export const NativeSheetTwoDetents = () => {
   return (
     <View style={styles.container}>
       <ContentWrapper>
-        <VSpacer size={16} />
-        <H4 color={theme["textHeading-default"]}>Two detents (30% / 70%)</H4>
+        <VSpacer size={24} />
+        <H4 color={theme["textHeading-default"]}>Two detents (35%/80%)</H4>
         <VSpacer size={8} />
         <ShortContent />
+        <VSpacer size={16} />
         <IOButton
           fullWidth
           variant="solid"
@@ -110,6 +111,32 @@ export const NativeSheetLongContent = () => {
       <ContentWrapper>
         <VSpacer size={24} />
         <H4 color={theme["textHeading-default"]}>Long scrollable content</H4>
+        <VSpacer size={8} />
+        <LongContent />
+        <VSpacer size={IOVisualCostants.appMarginDefault} />
+        <IOButton
+          fullWidth
+          variant="solid"
+          label="Dismiss"
+          onPress={() => navigation.goBack()}
+        />
+      </ContentWrapper>
+    </ScrollView>
+  );
+};
+
+export const NativeSheetLongContentFit = () => {
+  const theme = useIOTheme();
+  const navigation = useNavigation();
+  const insets = useSafeAreaInsets();
+
+  return (
+    <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom }}>
+      <ContentWrapper>
+        <VSpacer size={24} />
+        <H4 color={theme["textHeading-default"]}>
+          Long content (fitToContents)
+        </H4>
         <VSpacer size={8} />
         <LongContent />
         <VSpacer size={IOVisualCostants.appMarginDefault} />

@@ -42,6 +42,7 @@ import {
   NativeSheetFitToContents,
   NativeSheetHalf,
   NativeSheetLongContent,
+  NativeSheetLongContentFit,
   NativeSheetTwoDetents
 } from "../core/DSNativeBottomSheetContent";
 import { DSHapticFeedback } from "../core/DSHapticFeedback";
@@ -667,7 +668,7 @@ export const DesignSystemNavigator = () => {
             name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.TWO_DETENTS.route}
             component={NativeSheetTwoDetents}
             options={{
-              sheetAllowedDetents: [0.3, 0.7],
+              sheetAllowedDetents: [0.35, 0.8],
               headerShown: false
             }}
           />
@@ -677,6 +678,14 @@ export const DesignSystemNavigator = () => {
             options={{
               sheetAllowedDetents: [0.5, 1.0],
               sheetGrabberVisible: true,
+              headerShown: false
+            }}
+          />
+          <Stack.Screen
+            name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.LONG_CONTENT_FIT.route}
+            component={NativeSheetLongContentFit}
+            options={{
+              sheetAllowedDetents: "fitToContents",
               headerShown: false
             }}
           />
