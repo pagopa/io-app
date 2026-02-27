@@ -19,10 +19,16 @@ type CredentialsRecord = { [credentialKey: string]: CredentialMetadata };
 
 export type ItwCredentialsState = {
   credentials: CredentialsRecord;
+  // Credentials object before migration 8. Needed to handle migration outside of Redux Persist.
+  // Should be empty once migration is complete and can be removed in a future version.
+  legacyCredentials: {
+    [credentialKey: string]: CredentialMetadata & { credential: string };
+  };
 };
 
 export const itwCredentialsInitialState: ItwCredentialsState = {
-  credentials: {}
+  credentials: {},
+  legacyCredentials: {}
 };
 
 const reducer = (
@@ -62,24 +68,14 @@ const reducer = (
     }
 
     case getType(itwCredentialsVaultMigrationComplete): {
-      // Destructure out `credential` explicitly rather than trusting the action
-      // type, because at runtime the objects coming from legacy Redux state may
-      // still carry the field even though CredentialMetadata doesn't declare it.
-      const migratedCredentials = action.payload.reduce((acc, entry) => {
-        const { credential: _credential, ...metadata } =
-          entry as CredentialMetadata & { credential?: string };
-        return {
-          ...acc,
-          [metadata.credentialId]: metadata as CredentialMetadata
-        };
-      }, {} as CredentialsRecord);
-
+      const migrated = new Set(action.payload);
       return {
         ...state,
-        credentials: {
-          ...state.credentials,
-          ...migratedCredentials
-        }
+        legacyCredentials: Object.fromEntries(
+          Object.entries(state.legacyCredentials).filter(
+            ([key]) => !migrated.has(key)
+          )
+        )
       };
     }
 

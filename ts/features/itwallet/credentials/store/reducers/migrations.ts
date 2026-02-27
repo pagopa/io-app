@@ -183,10 +183,21 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
   },
 
   // Version 8
-  // The `credential` JWT is migrated to CredentialsVault asynchronously at
-  // boot (createMigrate is sync-only, so it can't do vault writes safely).
-  // We intentionally leave `credential` untouched here: the boot saga removes
-  // it from Redux only after every vault write is confirmed, so a crash mid-
-  // migration can't lose a credential.
-  "8": (state: MigrationState) => state
+  // Split `credentials` into two fields:
+  //   - `legacyCredentials`: full copy of the pre-migration credentials (including
+  //     the `credential` JWT), used as a staging area for the async vault write
+  //     performed by handleItwCredentialsVaultMigrationSaga at boot time.
+  //   - `credentials`: same entries but with `credential: undefined`, so Redux is
+  //     JWT-free immediately after upgrade.
+  "8": (state: MigrationState) => ({
+    ...state,
+    legacyCredentials: state.credentials,
+    credentials: Object.values<Record<string, any>>(state.credentials).reduce(
+      (acc, c) => ({
+        ...acc,
+        [c.credentialId]: { ...c, credential: undefined }
+      }),
+      {}
+    )
+  })
 };

@@ -43,9 +43,7 @@ describe("handleItwCredentialsVaultMigrationSaga", () => {
       features: {
         itWallet: {
           credentials: {
-            credentials: {
-              [baseCredential.credentialId]: baseCredential
-            }
+            legacyCredentials: {}
           }
         }
       }
@@ -69,20 +67,17 @@ describe("handleItwCredentialsVaultMigrationSaga", () => {
       features: {
         itWallet: {
           credentials: {
-            credentials: {
-              [legacyEntry.credentialId]:
-                legacyEntry as unknown as CredentialMetadata
+            legacyCredentials: {
+              [legacyEntry.credentialId]: legacyEntry
             }
           }
         }
       }
     };
 
-    const expectedPayload: Array<CredentialMetadata> = [baseCredential];
-
     return expectSaga(handleItwCredentialsVaultMigrationSaga)
       .withState(store)
-      .put(itwCredentialsVaultMigrationComplete(expectedPayload))
+      .put(itwCredentialsVaultMigrationComplete([legacyEntry.credentialId]))
       .run()
       .then(() => {
         expect(mockStore).toHaveBeenCalledTimes(1);
@@ -106,9 +101,8 @@ describe("handleItwCredentialsVaultMigrationSaga", () => {
       features: {
         itWallet: {
           credentials: {
-            credentials: {
-              [legacyEntry.credentialId]:
-                legacyEntry as unknown as CredentialMetadata
+            legacyCredentials: {
+              [legacyEntry.credentialId]: legacyEntry
             }
           }
         }
@@ -124,28 +118,39 @@ describe("handleItwCredentialsVaultMigrationSaga", () => {
       });
   });
 
-  it("dispatches completion action stripping the credential field from payload", () => {
-    mockStore.mockResolvedValue(true);
+  it("dispatches completion with only succeeded IDs on partial failure", async () => {
+    const sentryModule = await import("@sentry/react-native");
+    const captureException = jest.mocked(sentryModule.captureException);
 
-    const legacyEntry = { ...baseCredential, credential: "raw-jwt-string" };
+    const successEntry = { ...baseCredential, credential: "raw-jwt-success" };
+    const failEntry: typeof successEntry = {
+      ...baseCredential,
+      credentialId: "dc_sd_jwt_mDL_fail",
+      credential: "raw-jwt-fail"
+    };
+
+    // First call succeeds, second fails
+    mockStore.mockResolvedValueOnce(true).mockResolvedValueOnce(false);
 
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
           credentials: {
-            credentials: {
-              [legacyEntry.credentialId]:
-                legacyEntry as unknown as CredentialMetadata
+            legacyCredentials: {
+              [successEntry.credentialId]: successEntry,
+              [failEntry.credentialId]: failEntry
             }
           }
         }
       }
     };
 
-    // The payload must equal baseCredential (no `credential` field)
     return expectSaga(handleItwCredentialsVaultMigrationSaga)
       .withState(store)
-      .put(itwCredentialsVaultMigrationComplete([baseCredential]))
-      .run();
+      .put(itwCredentialsVaultMigrationComplete([successEntry.credentialId]))
+      .run()
+      .then(() => {
+        expect(captureException).toHaveBeenCalledTimes(1);
+      });
   });
 });

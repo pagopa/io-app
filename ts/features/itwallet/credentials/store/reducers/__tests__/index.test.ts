@@ -158,34 +158,52 @@ describe("ITW credentials reducer", () => {
     expect(targetSate.features.itWallet.credentials.credentials).toEqual({});
   });
 
-  it("should strip the credential field when handling itwCredentialsVaultMigrationComplete", () => {
-    // Simulate a legacy entry that has an extra `credential` JWT field in Redux
-    const legacyEntry = {
-      ...mockedCredential,
-      credential: "raw-jwt-string"
-    } as CredentialMetadata & { credential: string };
-
-    const sequenceOfActions: ReadonlyArray<Action> = [
+  it("should remove only the dispatched IDs from legacyCredentials when handling itwCredentialsVaultMigrationComplete", () => {
+    // Build a base app state with a credential in `credentials`
+    const baseState = reproduceSequence({} as GlobalState, appReducer, [
       applicationChangeState("active"),
-      // Directly set legacy state by reusing itwCredentialsStore with the cast type
-      itwCredentialsStore([legacyEntry as unknown as CredentialMetadata]),
-      itwCredentialsVaultMigrationComplete([
-        legacyEntry as unknown as CredentialMetadata
-      ])
-    ];
-    const targetState = reproduceSequence(
-      {} as GlobalState,
-      appReducer,
-      sequenceOfActions
+      itwCredentialsStore([mockedCredential])
+    ]);
+
+    // Inject two legacyCredentials directly (simulates post-migration-v8 state)
+    const legacyEntry1 = {
+      ...mockedCredential,
+      credential: "raw-jwt-string-1"
+    };
+    const legacyEntry2 = {
+      ...mockedCredential2,
+      credential: "raw-jwt-string-2"
+    };
+    const stateWithLegacy: GlobalState = {
+      ...baseState,
+      features: {
+        ...baseState.features,
+        itWallet: {
+          ...baseState.features.itWallet,
+          credentials: {
+            ...baseState.features.itWallet.credentials,
+            legacyCredentials: {
+              [mockedCredential.credentialId]: legacyEntry1,
+              [mockedCredential2.credentialId]: legacyEntry2
+            }
+          }
+        }
+      }
+    };
+
+    // Dispatch with only the first ID (simulates partial success)
+    const nextState = appReducer(
+      stateWithLegacy,
+      itwCredentialsVaultMigrationComplete([mockedCredential.credentialId])
     );
 
-    const stored = targetState.features.itWallet.credentials.credentials[
-      mockedCredential.credentialId
-    ] as Record<string, unknown>;
-
-    expect(stored).toBeDefined();
-    expect(stored.credential).toBeUndefined();
-    expect(stored.credentialId).toBe(mockedCredential.credentialId);
+    // The dispatched ID should be removed; the other should remain
+    expect(nextState.features.itWallet.credentials.legacyCredentials).toEqual({
+      [mockedCredential2.credentialId]: legacyEntry2
+    });
+    expect(nextState.features.itWallet.credentials.credentials).toEqual({
+      [mockedCredential.credentialId]: mockedCredential
+    });
   });
 
   it("should update existing credentials overwriting the previous instances", () => {

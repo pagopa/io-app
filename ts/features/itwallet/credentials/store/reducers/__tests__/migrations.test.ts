@@ -550,36 +550,64 @@ describe("ITW credentials reducer migrations", () => {
     expect(nextState).toStrictEqual(persistedStateAt8);
   });
 
-  it("should migrate from 8 to 9 (no-op: credential field left untouched)", () => {
-    const basePersistedStateAt8 = {
-      credentials: {
-        dc_sd_jwt_PersonIdentificationData: {
-          credentialId: "dc_sd_jwt_PersonIdentificationData",
-          credentialType: "PersonIdentificationData",
-          format: "dc+sd-jwt",
-          credential: "sd-jwt-credential-string",
-          parsedCredential: {},
-          storedStatusAssertion: undefined,
-          spec_version: "1.0.0",
-          verification: undefined,
-          jwt: {
-            expiration: "2024-06-12T11:33:20.000Z",
-            issuedAt: "2024-06-11T18:53:20.000Z"
-          }
+  it("should migrate from 7 to 8 (split credentials into legacyCredentials and JWT-free credentials)", () => {
+    const inputCredentials = {
+      dc_sd_jwt_PersonIdentificationData: {
+        credentialId: "dc_sd_jwt_PersonIdentificationData",
+        credentialType: "PersonIdentificationData",
+        format: "dc+sd-jwt",
+        credential: "sd-jwt-credential-string",
+        parsedCredential: {},
+        storedStatusAssertion: undefined,
+        spec_version: "1.0.0",
+        verification: undefined,
+        jwt: {
+          expiration: "2024-06-12T11:33:20.000Z",
+          issuedAt: "2024-06-11T18:53:20.000Z"
         }
       },
+      mso_mdoc_mDL: {
+        credentialId: "mso_mdoc_mDL",
+        credentialType: "mDL",
+        format: "mso_mdoc",
+        credential: "mdoc-credential-string",
+        parsedCredential: {},
+        storedStatusAssertion: undefined,
+        spec_version: "1.0.0",
+        verification: undefined,
+        jwt: {
+          expiration: "2024-06-12T11:33:20.000Z",
+          issuedAt: "2024-06-11T18:53:20.000Z"
+        }
+      }
+    };
+
+    const basePersistedStateAt7 = {
+      credentials: inputCredentials,
       _persist: {
-        version: 8,
+        version: 7,
         rehydrated: false
       }
     };
 
-    const from8To9Migration = itwCredentialsStateMigrations["8"];
-    expect(from8To9Migration).toBeDefined();
-    const nextState = from8To9Migration(basePersistedStateAt8);
+    const migration8 = itwCredentialsStateMigrations["8"];
+    expect(migration8).toBeDefined();
+    const nextState = migration8(basePersistedStateAt7);
 
-    // The migration is a no-op: state must be identical (credential field preserved)
-    expect(nextState).toBe(basePersistedStateAt8);
+    // legacyCredentials must be the same object reference as the original credentials
+    expect(nextState.legacyCredentials).toBe(inputCredentials);
+
+    // credentials must have the same entries but with credential: undefined
+    expect(nextState.credentials).toEqual({
+      dc_sd_jwt_PersonIdentificationData: {
+        ...inputCredentials.dc_sd_jwt_PersonIdentificationData,
+        credential: undefined
+      },
+      mso_mdoc_mDL: {
+        ...inputCredentials.mso_mdoc_mDL,
+        credential: undefined
+      }
+    });
   });
 
   it("should handle verification extraction failure gracefully in migration 7 to 8", () => {

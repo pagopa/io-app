@@ -33,14 +33,13 @@ export const itwCredentialsRemoveByType = createStandardAction(
 )<CredentialMetadata["credentialType"]>();
 
 /**
- * Signals that all legacy `credential` JWTs have been written to CredentialsVault.
- * Dispatched by handleItwCredentialsVaultMigrationSaga only after every write
- * succeeds, so the reducer can safely drop the field from persisted state.
- * See migration v8 for context on why this can't happen inside createMigrate().
+ * Signals that one or more legacy `credential` JWTs have been written to CredentialsVault.
+ * The payload contains the IDs of successfully migrated credentials so the reducer can
+ * remove only those from `legacyCredentials`; failing ones stay and retry on the next boot.
  */
 export const itwCredentialsVaultMigrationComplete = createStandardAction(
   "ITW_CREDENTIALS_VAULT_MIGRATION_COMPLETE"
-)<ReadonlyArray<CredentialMetadata>>();
+)<ReadonlyArray<string>>();
 
 export type ItwCredentialsActions =
   | ActionType<typeof itwCredentialsStore>

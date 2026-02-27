@@ -1,44 +1,29 @@
 import * as Sentry from "@sentry/react-native";
 import { call, put, select } from "typed-redux-saga/macro";
 import { GlobalState } from "../../../../store/reducers/types";
-import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { CredentialsVault } from "../utils/vault";
 import { itwCredentialsVaultMigrationComplete } from "../store/actions";
 
-type LegacyCredentialEntry = CredentialMetadata & { credential?: string };
-type LegacyCredentialEntryWithJwt = CredentialMetadata & { credential: string };
-
-const hasLegacyCredential = (
-  c: LegacyCredentialEntry
-): c is LegacyCredentialEntryWithJwt => c.credential !== undefined;
-
-const asCredentialMetadata = ({
-  credential: _credential,
-  ...metadata
-}: LegacyCredentialEntry): CredentialMetadata => metadata;
-
 /**
- * SIW-2178 introduced CredentialsVault to keep raw JWTs out of Redux, but
- * users who had already issued credentials still have the `credential` field
- * living in their persisted Redux state. We can't do this in redux-persist's
- * createMigrate() because that's synchronous, so we do it here at boot instead.
+ * SIW-2178 introduced CredentialsVault to keep raw JWTs out of Redux.
+ * Migration v8 populates `legacyCredentials` as a staging area: it copies the
+ * pre-migration `credentials` (with the `credential` JWT intact) and strips
+ * `credential` from `credentials` so Redux is JWT-free right after upgrade.
  *
- * We only remove `credential` from Redux after every vault write has succeeded,
- * so a partial failure can't cause data loss — the field stays in Redux and
- * the whole migration retries on the next boot.
+ * This saga reads from `legacyCredentials`, writes each JWT to CredentialsVault,
+ * and dispatches `itwCredentialsVaultMigrationComplete` with the IDs of succeeded writes
+ * so the reducer removes only those entries. Failed ones remain in `legacyCredentials`
+ * and retry on the next boot.
  */
 export function* handleItwCredentialsVaultMigrationSaga() {
-  const rawCredentials = yield* select(
+  const legacyCredentials = yield* select(
     (state: GlobalState) =>
-      state.features.itWallet.credentials.credentials as Record<
-        string,
-        LegacyCredentialEntry
-      >
+      state.features.itWallet.credentials.legacyCredentials
   );
 
-  const legacy = Object.values(rawCredentials).filter(hasLegacyCredential);
+  const entries = Object.values(legacyCredentials);
 
-  if (legacy.length === 0) {
+  if (entries.length === 0) {
     return;
   }
 
@@ -46,20 +31,24 @@ export function* handleItwCredentialsVaultMigrationSaga() {
   // on a rejection to detect failure — we have to inspect the results.
   const results = yield* call(() =>
     Promise.all(
-      legacy.map(c => CredentialsVault.store(c.credentialId, c.credential))
+      entries.map(async c => ({
+        credentialId: c.credentialId,
+        success: await CredentialsVault.store(c.credentialId, c.credential)
+      }))
     )
   );
 
-  if (!results.every(Boolean)) {
-    // Keep Redux intact: the field survives, and we retry on the next boot.
+  const succeeded = results.filter(r => r.success).map(r => r.credentialId);
+
+  if (results.some(r => !r.success)) {
+    // Failed ones stay in legacyCredentials and will retry on the next boot.
     Sentry.captureException(
       new Error("One or more credential vault migrations failed"),
       { tags: { isRequired: true }, extra: { operation: "vaultMigration" } }
     );
-    return;
   }
 
-  yield* put(
-    itwCredentialsVaultMigrationComplete(legacy.map(asCredentialMetadata))
-  );
+  if (succeeded.length > 0) {
+    yield* put(itwCredentialsVaultMigrationComplete(succeeded));
+  }
 }
