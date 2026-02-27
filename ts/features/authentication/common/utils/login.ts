@@ -61,13 +61,12 @@ export const getIntentFallbackUrl = (intentUrl: string): O.Option<string> => {
  */
 const getTokenFromUrlParse = (urlParse: URLParse): string | undefined => {
   const { hash } = urlParse;
-
   if (!hash || typeof hash !== "string") {
     return undefined;
   }
-  const paramsString = hash.startsWith("#") ? hash.slice(1) : hash;
 
   try {
+    const paramsString = hash.startsWith("#") ? hash.slice(1) : hash;
     const searchParams = new URLSearchParams(paramsString);
     const token = searchParams.get("token") || undefined;
     if (token) {
