@@ -40,12 +40,9 @@ import { DSFullScreenModal } from "../core/DSFullScreenModal";
 import { DSNativeBottomSheet } from "../core/DSNativeBottomSheet";
 import {
   NativeSheetFitToContents,
-  NativeSheetGrabber,
   NativeSheetHalf,
   NativeSheetLongContent,
-  NativeSheetTwoDetents,
-  NativeSheetUndimmed,
-  NativeSheetWithFooter
+  NativeSheetTwoDetents
 } from "../core/DSNativeBottomSheetContent";
 import { DSHapticFeedback } from "../core/DSHapticFeedback";
 import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
@@ -675,37 +672,11 @@ export const DesignSystemNavigator = () => {
             }}
           />
           <Stack.Screen
-            name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.GRABBER.route}
-            component={NativeSheetGrabber}
-            options={{
-              sheetAllowedDetents: "fitToContents",
-              sheetGrabberVisible: true,
-              headerShown: false
-            }}
-          />
-          <Stack.Screen
-            name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.UNDIMMED.route}
-            component={NativeSheetUndimmed}
-            options={{
-              sheetAllowedDetents: [0.4],
-              sheetLargestUndimmedDetentIndex: 0,
-              headerShown: false
-            }}
-          />
-          <Stack.Screen
             name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.LONG_CONTENT.route}
             component={NativeSheetLongContent}
             options={{
               sheetAllowedDetents: [0.5, 1.0],
               sheetGrabberVisible: true,
-              headerShown: false
-            }}
-          />
-          <Stack.Screen
-            name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.WITH_FOOTER.route}
-            component={NativeSheetWithFooter}
-            options={{
-              sheetAllowedDetents: "fitToContents",
               headerShown: false
             }}
           />

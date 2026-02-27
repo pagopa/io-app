@@ -134,21 +134,9 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "DS_NATIVE_SHEET_TWO",
       title: "Two detents"
     },
-    GRABBER: {
-      route: "DS_NATIVE_SHEET_GRABBER",
-      title: "With grabber (iOS)"
-    },
-    UNDIMMED: {
-      route: "DS_NATIVE_SHEET_UNDIMMED",
-      title: "Undimmed background"
-    },
     LONG_CONTENT: {
       route: "DS_NATIVE_SHEET_LONG",
       title: "Long scrollable content"
-    },
-    WITH_FOOTER: {
-      route: "DS_NATIVE_SHEET_FOOTER",
-      title: "With FooterActions"
     }
   },
   DEBUG: {
