@@ -16,6 +16,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { FunctionComponent, useCallback, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
+import { clamp } from "lodash";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import {
   IOStackNavigationRouteProps,
@@ -76,20 +77,8 @@ const ItwCardOnboardingL3Screen = ({ route }: Props) => {
   const { params } = route;
   const navigation = useIONavigation();
   const isWalletEnabled = useIOSelector(itwLifecycleIsValidSelector);
-  const [page, setPage] = useState<number | null>(null);
-
-  const clampPage = (value: unknown): number => {
-    const n =
-      typeof value === "number" && Number.isFinite(value)
-        ? Math.floor(value)
-        : 0;
-    return Math.min(Math.max(n, 0), MAX_INDEX);
-  };
-
-  useFocusEffect(
-    useCallback(() => {
-      setPage(clampPage(params?.page));
-    }, [params?.page])
+  const [page, setPage] = useState<number>(
+    params?.page ? clamp(params.page, MAX_INDEX) : 0
   );
 
   useFocusEffect(trackShowCredentialsList);
@@ -99,7 +88,7 @@ const ItwCardOnboardingL3Screen = ({ route }: Props) => {
       return {
         label: I18n.t("features.itWallet.onboarding.cta.addRestricted"),
         onPress: () => {
-          setPage(null);
+          setPage(0);
           navigation.replace(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.L2_ONBOARDING
           });
