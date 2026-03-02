@@ -14,10 +14,10 @@ import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { loadServiceDetail } from "../../../../services/details/store/actions/details";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { FIMS_ROUTES } from "../../navigation";
 import { FimsServiceConfiguration } from "../../../../../../definitions/content/FimsServiceConfiguration";
 import {
@@ -63,7 +63,12 @@ let authenticationCallbackWithServiceId:
   | undefined;
 
 describe("index", () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
   afterEach(() => {
+    jest.runOnlyPendingTimers();
+    jest.useRealTimers();
     jest.restoreAllMocks();
     jest.resetAllMocks();
     serviceDataPot = undefined;
@@ -777,6 +782,9 @@ const genericRender = (
     hookWrapper,
     MESSAGES_ROUTES.MESSAGE_DETAIL,
     {},
-    store
+    store,
+    {},
+    jest.fn(),
+    { headerShown: false }
   );
 };
