@@ -170,7 +170,7 @@ const LanguagesPreferencesScreen = () => {
       pot.isError(profile)
     ) {
       setSelectedItem(previousSelectedItem.current);
-      toast.error(I18n.t("errors.profileUpdateError"));
+      toast.error(I18n.t("global.genericError"));
     }
   }, [prevProfile, profile, toast]);
 

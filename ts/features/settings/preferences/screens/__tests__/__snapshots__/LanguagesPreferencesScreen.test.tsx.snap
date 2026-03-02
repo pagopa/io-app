@@ -366,7 +366,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                           allowFontScaling={true}
                                           dynamicTypeRamp="headline"
                                           maxFontSizeMultiplier={1.5}
-                                          role="heading"
                                           style={
                                             [
                                               {},
@@ -1330,7 +1329,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                           allowFontScaling={true}
                                           dynamicTypeRamp="headline"
                                           maxFontSizeMultiplier={1.5}
-                                          role="heading"
                                           style={
                                             [
                                               {},

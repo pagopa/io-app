@@ -261,8 +261,7 @@
     "copyFeedbackButton": "kopiert"
   },
   "errors": {
-    "loginError": "Es gab einen Fehler beim Anmelden, wiederhole den Vorgang.",
-    "profileUpdateError": "Beim Aktualisieren deines Profils ist ein Fehler aufgetreten."
+    "loginError": "Es gab einen Fehler beim Anmelden, wiederhole den Vorgang."
   },
   "permissionRationale": {
     "storage": {
