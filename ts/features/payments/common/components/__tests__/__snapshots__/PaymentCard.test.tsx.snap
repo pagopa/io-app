@@ -39,110 +39,28 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
     >
       <View
         collapsable={false}
-        jestAnimatedProps={
-          {
-            "value": {},
-          }
-        }
-        jestAnimatedStyle={
-          {
-            "value": {},
-          }
-        }
-        jestInlineStyle={
-          [
-            {
-              "backgroundColor": "#D2D6E3",
-              "borderCurve": "continuous",
-              "borderRadius": 28,
-              "height": 24,
-              "width": "60%",
-            },
-            {
-              "animationDuration": "1250ms",
-              "animationIterationCount": "infinite",
-              "animationName": {
-                "0%, 100%": {
-                  "opacity": 0.75,
-                },
-                "50%": {
-                  "opacity": 0.35,
-                },
-              },
-              "animationTimingFunction": CubicBezierEasing {
-                "x1": 0.37,
-                "x2": 0.63,
-                "y1": 0,
-                "y2": 1,
-              },
-            },
-          ]
-        }
         style={
-          [
-            {
-              "backgroundColor": "#D2D6E3",
-              "borderCurve": "continuous",
-              "borderRadius": 28,
-              "height": 24,
-              "width": "60%",
-            },
-            {},
-          ]
+          {
+            "backgroundColor": "#D2D6E3",
+            "borderCurve": "continuous",
+            "borderRadius": 28,
+            "height": 24,
+            "opacity": 0.75,
+            "width": "60%",
+          }
         }
       />
       <View
         collapsable={false}
-        jestAnimatedProps={
-          {
-            "value": {},
-          }
-        }
-        jestAnimatedStyle={
-          {
-            "value": {},
-          }
-        }
-        jestInlineStyle={
-          [
-            {
-              "backgroundColor": "#D2D6E3",
-              "borderCurve": "continuous",
-              "borderRadius": 28,
-              "height": 24,
-              "width": "20%",
-            },
-            {
-              "animationDuration": "1250ms",
-              "animationIterationCount": "infinite",
-              "animationName": {
-                "0%, 100%": {
-                  "opacity": 0.75,
-                },
-                "50%": {
-                  "opacity": 0.35,
-                },
-              },
-              "animationTimingFunction": CubicBezierEasing {
-                "x1": 0.37,
-                "x2": 0.63,
-                "y1": 0,
-                "y2": 1,
-              },
-            },
-          ]
-        }
         style={
-          [
-            {
-              "backgroundColor": "#D2D6E3",
-              "borderCurve": "continuous",
-              "borderRadius": 28,
-              "height": 24,
-              "width": "20%",
-            },
-            {},
-          ]
+          {
+            "backgroundColor": "#D2D6E3",
+            "borderCurve": "continuous",
+            "borderRadius": 28,
+            "height": 24,
+            "opacity": 0.75,
+            "width": "20%",
+          }
         }
       />
     </View>
@@ -157,110 +75,28 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
     >
       <View
         collapsable={false}
-        jestAnimatedProps={
-          {
-            "value": {},
-          }
-        }
-        jestAnimatedStyle={
-          {
-            "value": {},
-          }
-        }
-        jestInlineStyle={
-          [
-            {
-              "backgroundColor": "#D2D6E3",
-              "borderCurve": "continuous",
-              "borderRadius": 28,
-              "height": 16,
-              "width": "55%",
-            },
-            {
-              "animationDuration": "1250ms",
-              "animationIterationCount": "infinite",
-              "animationName": {
-                "0%, 100%": {
-                  "opacity": 0.75,
-                },
-                "50%": {
-                  "opacity": 0.35,
-                },
-              },
-              "animationTimingFunction": CubicBezierEasing {
-                "x1": 0.37,
-                "x2": 0.63,
-                "y1": 0,
-                "y2": 1,
-              },
-            },
-          ]
-        }
         style={
-          [
-            {
-              "backgroundColor": "#D2D6E3",
-              "borderCurve": "continuous",
-              "borderRadius": 28,
-              "height": 16,
-              "width": "55%",
-            },
-            {},
-          ]
+          {
+            "backgroundColor": "#D2D6E3",
+            "borderCurve": "continuous",
+            "borderRadius": 28,
+            "height": 16,
+            "opacity": 0.75,
+            "width": "55%",
+          }
         }
       />
       <View
         collapsable={false}
-        jestAnimatedProps={
-          {
-            "value": {},
-          }
-        }
-        jestAnimatedStyle={
-          {
-            "value": {},
-          }
-        }
-        jestInlineStyle={
-          [
-            {
-              "backgroundColor": "#D2D6E3",
-              "borderCurve": "continuous",
-              "borderRadius": 28,
-              "height": 16,
-              "width": "45%",
-            },
-            {
-              "animationDuration": "1250ms",
-              "animationIterationCount": "infinite",
-              "animationName": {
-                "0%, 100%": {
-                  "opacity": 0.75,
-                },
-                "50%": {
-                  "opacity": 0.35,
-                },
-              },
-              "animationTimingFunction": CubicBezierEasing {
-                "x1": 0.37,
-                "x2": 0.63,
-                "y1": 0,
-                "y2": 1,
-              },
-            },
-          ]
-        }
         style={
-          [
-            {
-              "backgroundColor": "#D2D6E3",
-              "borderCurve": "continuous",
-              "borderRadius": 28,
-              "height": 16,
-              "width": "45%",
-            },
-            {},
-          ]
+          {
+            "backgroundColor": "#D2D6E3",
+            "borderCurve": "continuous",
+            "borderRadius": 28,
+            "height": 16,
+            "opacity": 0.75,
+            "width": "45%",
+          }
         }
       />
     </View>

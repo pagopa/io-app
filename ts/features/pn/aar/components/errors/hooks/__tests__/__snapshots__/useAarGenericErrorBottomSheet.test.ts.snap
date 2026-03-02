@@ -63,6 +63,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             allowFontScaling={true}
             dynamicTypeRamp="headline"
             maxFontSizeMultiplier={1.5}
+            role="heading"
             style={
               [
                 {},
@@ -336,6 +337,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             allowFontScaling={true}
             dynamicTypeRamp="headline"
             maxFontSizeMultiplier={1.5}
+            role="heading"
             style={
               [
                 {},
@@ -661,6 +663,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             allowFontScaling={true}
             dynamicTypeRamp="headline"
             maxFontSizeMultiplier={1.5}
+            role="heading"
             style={
               [
                 {},
@@ -934,6 +937,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             allowFontScaling={true}
             dynamicTypeRamp="headline"
             maxFontSizeMultiplier={1.5}
+            role="heading"
             style={
               [
                 {},
@@ -1259,6 +1263,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             allowFontScaling={true}
             dynamicTypeRamp="headline"
             maxFontSizeMultiplier={1.5}
+            role="heading"
             style={
               [
                 {},
@@ -1532,6 +1537,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             allowFontScaling={true}
             dynamicTypeRamp="headline"
             maxFontSizeMultiplier={1.5}
+            role="heading"
             style={
               [
                 {},
@@ -1857,6 +1863,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             allowFontScaling={true}
             dynamicTypeRamp="headline"
             maxFontSizeMultiplier={1.5}
+            role="heading"
             style={
               [
                 {},
@@ -2161,6 +2168,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             allowFontScaling={true}
             dynamicTypeRamp="headline"
             maxFontSizeMultiplier={1.5}
+            role="heading"
             style={
               [
                 {},
@@ -2434,6 +2442,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             allowFontScaling={true}
             dynamicTypeRamp="headline"
             maxFontSizeMultiplier={1.5}
+            role="heading"
             style={
               [
                 {},
@@ -2759,6 +2768,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             allowFontScaling={true}
             dynamicTypeRamp="headline"
             maxFontSizeMultiplier={1.5}
+            role="heading"
             style={
               [
                 {},
@@ -3032,6 +3042,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             allowFontScaling={true}
             dynamicTypeRamp="headline"
             maxFontSizeMultiplier={1.5}
+            role="heading"
             style={
               [
                 {},
@@ -3357,6 +3368,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             allowFontScaling={true}
             dynamicTypeRamp="headline"
             maxFontSizeMultiplier={1.5}
+            role="heading"
             style={
               [
                 {},
@@ -3630,6 +3642,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             allowFontScaling={true}
             dynamicTypeRamp="headline"
             maxFontSizeMultiplier={1.5}
+            role="heading"
             style={
               [
                 {},
@@ -3955,6 +3968,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
             allowFontScaling={true}
             dynamicTypeRamp="headline"
             maxFontSizeMultiplier={1.5}
+            role="heading"
             style={
               [
                 {},

@@ -63,6 +63,7 @@ exports[`sendAarErrorSupportBottomSheetComponent should match the snapshot with 
             allowFontScaling={true}
             dynamicTypeRamp="headline"
             maxFontSizeMultiplier={1.5}
+            role="heading"
             style={
               [
                 {},
@@ -336,6 +337,7 @@ exports[`sendAarErrorSupportBottomSheetComponent should match the snapshot with 
             allowFontScaling={true}
             dynamicTypeRamp="headline"
             maxFontSizeMultiplier={1.5}
+            role="heading"
             style={
               [
                 {},
@@ -661,6 +663,7 @@ exports[`sendAarErrorSupportBottomSheetComponent should match the snapshot witho
             allowFontScaling={true}
             dynamicTypeRamp="headline"
             maxFontSizeMultiplier={1.5}
+            role="heading"
             style={
               [
                 {},

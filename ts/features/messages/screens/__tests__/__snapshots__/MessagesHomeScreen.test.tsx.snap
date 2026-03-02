@@ -10,6 +10,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -21,15 +22,32 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
+      <View
+        pointerEvents="box-none"
+        style={
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "end": 0,
+                "position": "absolute",
+                "start": 0,
+                "top": 0,
+              },
+            ],
+          ]
+        }
+      />
       <RNSScreenContainer
         onLayout={[Function]}
         style={
@@ -40,7 +58,9 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -57,11 +77,13 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -72,34 +94,14 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -107,35 +109,22 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -153,6 +142,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
@@ -188,120 +178,19 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
                     <View
+                      pointerEvents="box-none"
                       style={
                         {
-                          "flex": 1,
+                          "zIndex": 1,
                         }
                       }
                     >
                       <View
-                        style={
-                          {
-                            "flex": 1,
-                          }
-                        }
-                      >
-                        <View
-                          testID="mock_toasts"
-                        >
-                          This is a mock for Toasts
-                        </View>
-                        <View
-                          testID="mock_tab_navigation_container"
-                        >
-                          This is a mock for TabNavigationContainer
-                        </View>
-                        <RNCViewPager
-                          layoutDirection="ltr"
-                          onMoveShouldSetResponderCapture={[Function]}
-                          onPageScroll={[Function]}
-                          onPageScrollStateChanged={[Function]}
-                          onPageSelected={[Function]}
-                          testID="mock_pager_view_container"
-                        >
-                          <View
-                            collapsable={false}
-                            style={
-                              {
-                                "bottom": 0,
-                                "left": 0,
-                                "position": "absolute",
-                                "right": 0,
-                                "top": 0,
-                              }
-                            }
-                          >
-                            <View
-                              style={
-                                [
-                                  undefined,
-                                  {
-                                    "bottom": 0,
-                                    "left": 0,
-                                    "position": "absolute",
-                                    "right": 0,
-                                    "top": 0,
-                                  },
-                                ]
-                              }
-                            >
-                              Mock Inbox
-                            </View>
-                          </View>
-                          <View
-                            collapsable={false}
-                            style={
-                              {
-                                "bottom": 0,
-                                "left": 0,
-                                "position": "absolute",
-                                "right": 0,
-                                "top": 0,
-                              }
-                            }
-                          >
-                            <View
-                              style={
-                                [
-                                  undefined,
-                                  {
-                                    "bottom": 0,
-                                    "left": 0,
-                                    "position": "absolute",
-                                    "right": 0,
-                                    "top": 0,
-                                  },
-                                ]
-                              }
-                            >
-                              Mock Archive
-                            </View>
-                          </View>
-                        </RNCViewPager>
-                        <View
-                          testID="mock_preconditions"
-                        >
-                          This is a mock for Preconditions
-                        </View>
-                        <View
-                          testID="mock_security_suggestions"
-                        >
-                          This is a mock for Security Suggestions
-                        </View>
-                      </View>
-                    </View>
-                    <View
-                      collapsable={false}
-                      pointerEvents="box-none"
-                    >
-                      <View
-                        accessibilityElementsHidden={false}
-                        importantForAccessibility="auto"
+                        aria-hidden={false}
                         onLayout={[Function]}
                         pointerEvents="box-none"
                         style={null}
@@ -863,6 +752,109 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                         </View>
                       </View>
                     </View>
+                    <View
+                      style={
+                        {
+                          "flex": 1,
+                        }
+                      }
+                    >
+                      <View
+                        style={
+                          {
+                            "flex": 1,
+                          }
+                        }
+                      >
+                        <View
+                          testID="mock_toasts"
+                        >
+                          This is a mock for Toasts
+                        </View>
+                        <View
+                          testID="mock_tab_navigation_container"
+                        >
+                          This is a mock for TabNavigationContainer
+                        </View>
+                        <RNCViewPager
+                          layoutDirection="ltr"
+                          onMoveShouldSetResponderCapture={[Function]}
+                          onPageScroll={[Function]}
+                          onPageScrollStateChanged={[Function]}
+                          onPageSelected={[Function]}
+                          testID="mock_pager_view_container"
+                        >
+                          <View
+                            collapsable={false}
+                            style={
+                              {
+                                "bottom": 0,
+                                "left": 0,
+                                "position": "absolute",
+                                "right": 0,
+                                "top": 0,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                [
+                                  undefined,
+                                  {
+                                    "bottom": 0,
+                                    "left": 0,
+                                    "position": "absolute",
+                                    "right": 0,
+                                    "top": 0,
+                                  },
+                                ]
+                              }
+                            >
+                              Mock Inbox
+                            </View>
+                          </View>
+                          <View
+                            collapsable={false}
+                            style={
+                              {
+                                "bottom": 0,
+                                "left": 0,
+                                "position": "absolute",
+                                "right": 0,
+                                "top": 0,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                [
+                                  undefined,
+                                  {
+                                    "bottom": 0,
+                                    "left": 0,
+                                    "position": "absolute",
+                                    "right": 0,
+                                    "top": 0,
+                                  },
+                                ]
+                              }
+                            >
+                              Mock Archive
+                            </View>
+                          </View>
+                        </RNCViewPager>
+                        <View
+                          testID="mock_preconditions"
+                        >
+                          This is a mock for Preconditions
+                        </View>
+                        <View
+                          testID="mock_security_suggestions"
+                        >
+                          This is a mock for Security Suggestions
+                        </View>
+                      </View>
+                    </View>
                   </View>
                 </View>
               </View>
@@ -870,20 +862,6 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
           </View>
         </RNSScreen>
       </RNSScreenContainer>
-      <View
-        collapsable={false}
-        pointerEvents="box-none"
-        style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
-        }
-      />
     </View>
   </RNCSafeAreaProvider>
 </View>

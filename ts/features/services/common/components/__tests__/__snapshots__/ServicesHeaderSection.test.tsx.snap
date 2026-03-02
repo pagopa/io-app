@@ -44,56 +44,15 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
       >
         <View
           collapsable={false}
-          jestAnimatedProps={
-            {
-              "value": {},
-            }
-          }
-          jestAnimatedStyle={
-            {
-              "value": {},
-            }
-          }
-          jestInlineStyle={
-            [
-              {
-                "backgroundColor": "#D2D6E3",
-                "borderCurve": "continuous",
-                "borderRadius": 12,
-                "height": 66,
-                "width": 66,
-              },
-              {
-                "animationDuration": "1250ms",
-                "animationIterationCount": "infinite",
-                "animationName": {
-                  "0%, 100%": {
-                    "opacity": 0.75,
-                  },
-                  "50%": {
-                    "opacity": 0.35,
-                  },
-                },
-                "animationTimingFunction": CubicBezierEasing {
-                  "x1": 0.37,
-                  "x2": 0.63,
-                  "y1": 0,
-                  "y2": 1,
-                },
-              },
-            ]
-          }
           style={
-            [
-              {
-                "backgroundColor": "#D2D6E3",
-                "borderCurve": "continuous",
-                "borderRadius": 12,
-                "height": 66,
-                "width": 66,
-              },
-              {},
-            ]
+            {
+              "backgroundColor": "#D2D6E3",
+              "borderCurve": "continuous",
+              "borderRadius": 12,
+              "height": 66,
+              "opacity": 0.75,
+              "width": 66,
+            }
           }
         />
       </View>
@@ -109,164 +68,41 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
       >
         <View
           collapsable={false}
-          jestAnimatedProps={
-            {
-              "value": {},
-            }
-          }
-          jestAnimatedStyle={
-            {
-              "value": {},
-            }
-          }
-          jestInlineStyle={
-            [
-              {
-                "backgroundColor": "#D2D6E3",
-                "borderCurve": "continuous",
-                "borderRadius": 8,
-                "height": 16,
-                "width": "100%",
-              },
-              {
-                "animationDuration": "1250ms",
-                "animationIterationCount": "infinite",
-                "animationName": {
-                  "0%, 100%": {
-                    "opacity": 0.75,
-                  },
-                  "50%": {
-                    "opacity": 0.35,
-                  },
-                },
-                "animationTimingFunction": CubicBezierEasing {
-                  "x1": 0.37,
-                  "x2": 0.63,
-                  "y1": 0,
-                  "y2": 1,
-                },
-              },
-            ]
-          }
           style={
-            [
-              {
-                "backgroundColor": "#D2D6E3",
-                "borderCurve": "continuous",
-                "borderRadius": 8,
-                "height": 16,
-                "width": "100%",
-              },
-              {},
-            ]
+            {
+              "backgroundColor": "#D2D6E3",
+              "borderCurve": "continuous",
+              "borderRadius": 8,
+              "height": 16,
+              "opacity": 0.75,
+              "width": "100%",
+            }
           }
         />
         <View
           collapsable={false}
-          jestAnimatedProps={
-            {
-              "value": {},
-            }
-          }
-          jestAnimatedStyle={
-            {
-              "value": {},
-            }
-          }
-          jestInlineStyle={
-            [
-              {
-                "backgroundColor": "#D2D6E3",
-                "borderCurve": "continuous",
-                "borderRadius": 8,
-                "height": 16,
-                "width": "80%",
-              },
-              {
-                "animationDuration": "1250ms",
-                "animationIterationCount": "infinite",
-                "animationName": {
-                  "0%, 100%": {
-                    "opacity": 0.75,
-                  },
-                  "50%": {
-                    "opacity": 0.35,
-                  },
-                },
-                "animationTimingFunction": CubicBezierEasing {
-                  "x1": 0.37,
-                  "x2": 0.63,
-                  "y1": 0,
-                  "y2": 1,
-                },
-              },
-            ]
-          }
           style={
-            [
-              {
-                "backgroundColor": "#D2D6E3",
-                "borderCurve": "continuous",
-                "borderRadius": 8,
-                "height": 16,
-                "width": "80%",
-              },
-              {},
-            ]
+            {
+              "backgroundColor": "#D2D6E3",
+              "borderCurve": "continuous",
+              "borderRadius": 8,
+              "height": 16,
+              "opacity": 0.75,
+              "width": "80%",
+            }
           }
         />
         <View
           collapsable={false}
-          jestAnimatedProps={
-            {
-              "value": {},
-            }
-          }
-          jestAnimatedStyle={
-            {
-              "value": {},
-            }
-          }
-          jestInlineStyle={
-            [
-              {
-                "backgroundColor": "#D2D6E3",
-                "borderCurve": "continuous",
-                "borderRadius": 8,
-                "height": 8,
-                "width": "60%",
-              },
-              {
-                "animationDuration": "1250ms",
-                "animationIterationCount": "infinite",
-                "animationName": {
-                  "0%, 100%": {
-                    "opacity": 0.75,
-                  },
-                  "50%": {
-                    "opacity": 0.35,
-                  },
-                },
-                "animationTimingFunction": CubicBezierEasing {
-                  "x1": 0.37,
-                  "x2": 0.63,
-                  "y1": 0,
-                  "y2": 1,
-                },
-              },
-            ]
-          }
           style={
-            [
-              {
-                "backgroundColor": "#D2D6E3",
-                "borderCurve": "continuous",
-                "borderRadius": 8,
-                "height": 8,
-                "width": "60%",
-              },
-              {},
-            ]
+            {
+              "backgroundColor": "#D2D6E3",
+              "borderCurve": "continuous",
+              "borderRadius": 8,
+              "height": 8,
+              "opacity": 0.75,
+              "width": "60%",
+            }
           }
         />
       </View>
