@@ -37,6 +37,14 @@ import { DSForceScrollDownView } from "../core/DSForceScrollDownView";
 import { DSForceScrollDownViewCustomSlot } from "../core/DSForceScrollDownViewCustomSlot";
 import { DSForceScrollDownViewTitleTransition } from "../core/DSForceScrollDownViewTitleTransition";
 import { DSFullScreenModal } from "../core/DSFullScreenModal";
+import { DSNativeBottomSheet } from "../core/DSNativeBottomSheet";
+import {
+  NativeSheetFitToContents,
+  NativeSheetHalf,
+  NativeSheetLongContent,
+  NativeSheetLongContentFit,
+  NativeSheetTwoDetents
+} from "../core/DSNativeBottomSheetContent";
 import { DSHapticFeedback } from "../core/DSHapticFeedback";
 import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
 import { DSHeaderSecondLevel } from "../core/DSHeaderSecondLevel";
@@ -101,8 +109,7 @@ export const DesignSystemNavigator = () => {
 
   const customModalHeaderConf = {
     headerRight: RNNCloseButton,
-    title: DESIGN_SYSTEM_ROUTES.DEBUG.FULL_SCREEN_MODAL.title,
-    sheetCornerRadius: 24,
+    title: DESIGN_SYSTEM_ROUTES.NATIVE.FULL_SCREEN_MODAL.title,
     headerTitleStyle: {
       ...makeFontStyleObject(
         14,
@@ -136,9 +143,8 @@ export const DesignSystemNavigator = () => {
             color: IOColors[theme["textHeading-default"]]
           },
           headerTitleAlign: "center",
-          headerBackTitleVisible: false,
-          headerShown: true,
-          autoHideHomeIndicator: true
+          headerBackButtonDisplayMode: "minimal",
+          headerShown: true
         }}
       >
         <Stack.Screen
@@ -613,9 +619,28 @@ export const DesignSystemNavigator = () => {
           }}
         />
 
+        {/* NATIVE */}
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.NATIVE.BOTTOM_SHEET.route}
+          component={DSNativeBottomSheet}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.NATIVE.BOTTOM_SHEET.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.NATIVE.FULL_SCREEN_MODAL.route}
+          component={DSFullScreenModal}
+          options={{
+            ...customModalHeaderConf,
+            presentation: "pageSheet"
+          }}
+        />
+
         <Stack.Group
           screenOptions={{
             presentation: "formSheet",
+            gestureEnabled: true,
             ...(Platform.OS === "ios"
               ? {
                   gestureEnabled: isGestureEnabled
@@ -624,9 +649,45 @@ export const DesignSystemNavigator = () => {
           }}
         >
           <Stack.Screen
-            name={DESIGN_SYSTEM_ROUTES.DEBUG.FULL_SCREEN_MODAL.route}
-            component={DSFullScreenModal}
-            options={customModalHeaderConf}
+            name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.FIT_TO_CONTENTS.route}
+            component={NativeSheetFitToContents}
+            options={{
+              sheetAllowedDetents: "fitToContents",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen
+            name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.HALF_SCREEN.route}
+            component={NativeSheetHalf}
+            options={{
+              sheetAllowedDetents: [0.5],
+              headerShown: false
+            }}
+          />
+          <Stack.Screen
+            name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.TWO_DETENTS.route}
+            component={NativeSheetTwoDetents}
+            options={{
+              sheetAllowedDetents: [0.35, 0.8],
+              headerShown: false
+            }}
+          />
+          <Stack.Screen
+            name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.LONG_CONTENT.route}
+            component={NativeSheetLongContent}
+            options={{
+              sheetAllowedDetents: [0.5, 1.0],
+              sheetGrabberVisible: true,
+              headerShown: false
+            }}
+          />
+          <Stack.Screen
+            name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.LONG_CONTENT_FIT.route}
+            component={NativeSheetLongContentFit}
+            options={{
+              sheetAllowedDetents: "fitToContents",
+              headerShown: false
+            }}
           />
         </Stack.Group>
       </Stack.Navigator>
