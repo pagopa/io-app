@@ -1225,7 +1225,6 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
                                       maxFontSizeMultiplier={1.5}
-                                      role="heading"
                                       style={
                                         [
                                           {},
@@ -1887,7 +1886,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
                                       maxFontSizeMultiplier={1.5}
-                                      role="heading"
                                       style={
                                         [
                                           {},
@@ -2780,7 +2778,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
                                       maxFontSizeMultiplier={1.5}
-                                      role="heading"
                                       style={
                                         [
                                           {},
@@ -3673,7 +3670,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
                                       maxFontSizeMultiplier={1.5}
-                                      role="heading"
                                       style={
                                         [
                                           {},
@@ -4805,7 +4801,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
                                       maxFontSizeMultiplier={1.5}
-                                      role="heading"
                                       style={
                                         [
                                           {},
@@ -5937,7 +5932,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
                                       maxFontSizeMultiplier={1.5}
-                                      role="heading"
                                       style={
                                         [
                                           {},
@@ -6223,7 +6217,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
                                       maxFontSizeMultiplier={1.5}
-                                      role="heading"
                                       style={
                                         [
                                           {},
@@ -6748,7 +6741,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
                                       maxFontSizeMultiplier={1.5}
-                                      role="heading"
                                       style={
                                         [
                                           {},
@@ -8119,7 +8111,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
                                       maxFontSizeMultiplier={1.5}
-                                      role="heading"
                                       style={
                                         [
                                           {},
@@ -8405,7 +8396,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
                                       maxFontSizeMultiplier={1.5}
-                                      role="heading"
                                       style={
                                         [
                                           {},
