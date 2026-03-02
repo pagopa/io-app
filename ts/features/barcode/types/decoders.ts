@@ -16,6 +16,7 @@ import { ItwRemoteRequestPayload } from "../../itwallet/presentation/remote/util
 import { validateItwPresentationQrCodeParams } from "../../itwallet/presentation/remote/utils/itwRemotePresentationUtils";
 import { pnAARQRCodeRegexSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { IOBarcodeType } from "./IOBarcode";
+import { isPotentialCredentialOfferInvocation } from "../../itwallet/issuance/offer/utils/utils";
 
 // Discriminated barcode type
 // Represents the decoded content of a barcode that has been scanned
@@ -56,7 +57,12 @@ type StaticDecodedIOBarcode =
   | {
       type: "ITW_REMOTE";
       itwRemoteRequestPayload: ItwRemoteRequestPayload;
+    }
+  | {
+      type: "ITW_CREDENTIAL_OFFER";
+      itwCredentialOfferUri: string;
     };
+
 type RuntimeDecodedIOBarcode = {
   type: "SEND";
   qrCodeContent: string;
@@ -151,6 +157,18 @@ const decodeItwRemoteBarcode: IOBarcodeStaticDecoderFn = (data: string) =>
     }))
   );
 
+const decodeItwCredentialOfferBarcode: IOBarcodeStaticDecoderFn = (
+  data: string
+) =>
+  pipe(
+    O.some(data.trim()),
+    O.filter(isPotentialCredentialOfferInvocation),
+    O.map(itwCredentialOfferUri => ({
+      type: "ITW_CREDENTIAL_OFFER",
+      itwCredentialOfferUri
+    }))
+  );
+
 const decodeSENDAARBarcode: IOBarcodeRuntimeDecoderFn = (
   state: GlobalState,
   data: string
@@ -181,7 +199,8 @@ const StaticIOBarcodeDecoders: IOBarcodeStaticDecodersType = {
   IDPAY: decodeIdPayBarcode,
   PAGOPA: decodePagoPABarcode,
   FCI: decodeFciBarcode,
-  ITW_REMOTE: decodeItwRemoteBarcode
+  ITW_REMOTE: decodeItwRemoteBarcode,
+  ITW_CREDENTIAL_OFFER: decodeItwCredentialOfferBarcode
 };
 
 const RuntimeIOBarcodeDecoders: IOBarcodeRuntimeDecodersType = {

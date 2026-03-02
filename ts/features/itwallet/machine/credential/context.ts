@@ -1,5 +1,6 @@
 import { CryptoContext } from "@pagopa/io-react-native-jwt";
 import {
+  CredentialOfferResolved,
   IssuerConfiguration,
   RequestObject,
   StoredCredential,
@@ -7,6 +8,7 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { DigitalCredentialMetadata } from "../../common/utils/itwCredentialsCatalogueUtils";
 import { CredentialIssuanceFailure } from "./failure";
+import { CredentialOffer } from "@pagopa/io-react-native-wallet";
 
 /**
  * The mode for the credential issuance process.
@@ -59,6 +61,10 @@ export type Context = {
    * The credentials catalogue as a dictionary, with an entry for each credential type.
    */
   credentialsCatalogue: Record<string, DigitalCredentialMetadata> | undefined;
+
+  credentialOfferUri: string | undefined;
+  resolvedCredentialOffer: CredentialOfferResolved | undefined;
+
 };
 
 export const InitialContext: Context = {
@@ -73,5 +79,7 @@ export const InitialContext: Context = {
   requestedCredential: undefined,
   credentials: undefined,
   failure: undefined,
-  credentialsCatalogue: undefined
+  credentialsCatalogue: undefined,
+  credentialOfferUri: undefined,
+  resolvedCredentialOffer: undefined
 };

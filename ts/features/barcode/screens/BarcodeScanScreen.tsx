@@ -49,6 +49,7 @@ import {
 } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
+import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -178,6 +179,14 @@ const BarcodeScanScreen = () => {
           params: {
             screen: PN_ROUTES.QR_SCAN_FLOW,
             params: { aarUrl: barcode.qrCodeContent }
+          }
+        });
+        break;
+      case "ITW_CREDENTIAL_OFFER":
+        navigation.navigate(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER.INTRO,
+          params: {
+            itwCredentialOfferUri: barcode.itwCredentialOfferUri
           }
         });
         break;

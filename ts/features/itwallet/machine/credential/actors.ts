@@ -1,6 +1,10 @@
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
-import { Trust } from "@pagopa/io-react-native-wallet";
+import {
+  CredentialOffer,
+  IoWallet,
+  Trust
+} from "@pagopa/io-react-native-wallet";
 import { useIOStore } from "../../../../store/hooks";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { assert } from "../../../../utils/assert";
@@ -38,6 +42,15 @@ export type ObtainCredentialActorOutput = Awaited<
 >;
 
 export type ObtainStatusAssertionActorInput = Pick<Context, "credentials">;
+
+export type ProcessCredentialOfferActorInput = {
+  credentialOfferUri: string;
+};
+
+export type ProcessCredentialOfferActorOutput = {
+  offer: CredentialOffer.CredentialOffer;
+  grantDetails: CredentialOffer.ExtractGrantDetailsResult;
+};
 
 /**
  * Creates the actors for the eid issuance machine
@@ -177,11 +190,32 @@ export const createCredentialIssuanceActorsImplementation = (
     );
   });
 
+  const processCredentialOffer = fromPromise<
+    ProcessCredentialOfferActorOutput,
+    ProcessCredentialOfferActorInput
+  >(async ({ input }) => {
+    assert(input.credentialOfferUri, "credentialOfferUri is undefined");
+
+    // TODO - handle different versions. Hardcoded for a first implementation
+    const wallet = new IoWallet({ version: "1.3.3" });
+
+    const offer = await wallet.CredentialsOffer.resolveCredentialOffer(
+      input.credentialOfferUri
+    );
+
+    const grantDetails = wallet.CredentialsOffer.extractGrantDetails(offer);
+
+    console.log("Credential offer processed", { offer, grantDetails });
+
+    return { offer, grantDetails };
+  });
+
   return {
     verifyTrustFederation,
     getWalletAttestation,
     requestCredential,
     obtainCredential,
-    obtainStatusAssertion
+    obtainStatusAssertion,
+    processCredentialOffer
   };
 };
