@@ -73,15 +73,6 @@ Created on **16/01/2023**
   This was fine as long as each event was originally created and handled using this library only but 
   initially another library was used, react-native-add-calendar-event, which treated event's Id as long
 
-
-### react-native-reanimated-npm-3.17.5-134bd4e99e.patch
-
-Created on **19/05/2025**
-
-#### Reason:
-
-- Patch to fix a visualization error that prevented cards to be incorrectly rendered in Wallet Home Screen.
-
 ### react-native-screenshot-prevent-npm-1.2.1-d115315590.patch
 
 Created on **24/11/2025**

@@ -29,7 +29,6 @@ import {
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import {
   trackItWalletIDMethod,
-  trackItwUserWithoutL3Bottomsheet,
   trackItwUserWithoutL3Requirements
 } from "../../analytics";
 import { useContinueWithBottomSheet } from "../hooks/useContinueWithBottomSheet";
@@ -140,7 +139,11 @@ export const ItwIdentificationModeSelectionScreen = ({
       // If the user is in the L3 upgrade flow, he cannot proceed without a CIE card
       machineRef.send({ type: "go-to-cie-warning", warning: "card" });
     } else {
-      trackItwUserWithoutL3Bottomsheet();
+      trackItwUserWithoutL3Requirements({
+        screen_name: routeName,
+        reason: "user_without_cie",
+        position: "screen"
+      });
       machineRef.send({
         type: "restart",
         mode: "issuance",

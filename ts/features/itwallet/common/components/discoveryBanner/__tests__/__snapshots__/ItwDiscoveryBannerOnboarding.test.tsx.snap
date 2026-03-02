@@ -732,6 +732,38 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                           testID="itwDiscoveryBannerOnboardingTestID"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignContent": "center",
+                                  "alignItems": "flex-start",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "flexDirection": "row",
+                                  "padding": 16,
+                                },
+                                {
+                                  "backgroundColor": "#F4F5F8",
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -748,7 +780,7 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -1441,6 +1473,38 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'onboarding' ba
                           testID="itwDiscoveryBannerOnboardingTestID"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignContent": "center",
+                                  "alignItems": "flex-start",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "flexDirection": "row",
+                                  "padding": 16,
+                                },
+                                {
+                                  "backgroundColor": "#F4F5F8",
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -1457,7 +1521,7 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'onboarding' ba
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -2150,6 +2214,38 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'reactivating' 
                           testID="itwDiscoveryBannerOnboardingTestID"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignContent": "center",
+                                  "alignItems": "flex-start",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "flexDirection": "row",
+                                  "padding": 16,
+                                },
+                                {
+                                  "backgroundColor": "#F4F5F8",
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -2166,7 +2262,7 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'reactivating' 
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },

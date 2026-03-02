@@ -340,9 +340,14 @@ export const createEidIssuanceActionsImplementation = (
   trackWalletInstanceCreation: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    const identificationMethod =
+      context.identification?.mode ??
+      // Simplified PID activation skips identification but still requires ITW_ID_method for analytics.
+      (context.level === "l3" ? "ciePin" : undefined);
+
     trackSaveCredentialSuccess({
       credential: context.level === "l3" ? "ITW_PID" : "ITW_ID_V2",
-      ITW_ID_method: context.identification?.mode,
+      ITW_ID_method: identificationMethod,
       credential_details: itwMixPanelCredentialDetailsSelector(store.getState())
     });
   },

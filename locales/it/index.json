@@ -842,7 +842,8 @@
       "accessibility": {
         "carousel": {
           "label": "Presentazione di IO",
-          "hint": "Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto"
+          "hint": "Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto",
+          "step": "Diapositiva {{current}} di {{total}}"
         }
       },
       "useful_resources": {
@@ -2801,6 +2802,7 @@
       "downloadFailed": "L'allegato non è al momento disponibile. Riprova o contatta l'ente mittente",
       "showPreview": "Visualizza anteprima",
       "failing": {
+        "aarTtlError": "È passato troppo tempo, inquadra di nuovo il codice QR",
         "details": "Non sono riuscito a scaricare l’allegato. Riprova o apri una segnalazione"
       }
     },
@@ -4095,7 +4097,7 @@
           },
           "delegated": {
             "notAdressee": {
-              "warningAlert": "Questa comunicazione non è destinata a te.",
+              "infoAlert": "Stai aiutando un’altra persona ad accedere a una notifica SEND.",
               "title": "Vuoi aprire la notifica SEND di {{name}}?",
               "subtitle": "Se la persona che ha ricevuto la comunicazione ti ha chiesto di farlo, puoi aprire questa notifica SEND per suo conto.",
               "primaryAction": "Apri notifica SEND",
@@ -4358,8 +4360,8 @@
             "subTitle": "Verifica di avere installato l’ultima versione di IO e accedi di nuovo con SPID o CIE."
           },
           "rejected": {
-            "title": "La firma non è andata a buon fine",
-            "subTitle": "L’ente ti contatterà nei prossimi giorni per farti firmare di nuovo. Se non dovesse succedere, scrivi a"
+            "title": "Non è stato possibile firmare i documenti",
+            "subTitle": "Attendi un nuovo messaggio per firmare o contatta l’ente all’indirizzo "
           },
           "signing": {
             "title": "La firma non è andata a buon fine",
@@ -4428,7 +4430,7 @@
       },
       "thankYouPage": {
         "title": "Fatto!",
-        "content": "A breve riceverai un messaggio con i documenti firmati.",
+        "content": "Riceverai un messaggio su IO con l’esito della tua richiesta.",
         "cta": "Chiudi"
       },
       "qtspTos": {
@@ -5979,6 +5981,13 @@
         "cta": "Attiva notifiche push",
         "toast": "Hai attivato le notifiche push"
       }
+    },
+    "tour": {
+      "next": "Avanti",
+      "back": "Indietro",
+      "skip": "Salta",
+      "done": "Fatto!",
+      "stepIndicator": "Fase {{current}} di {{total}}"
     }
   },
   "support": {
@@ -6850,7 +6859,7 @@
       }
     },
     "whatsNew": {
-      "title": "Abbiamo migliorato l’accesso a IO!",
+      "title": "Abbiamo migliorato l'accesso a IO!",
       "subtitle": "Ora puoi accedere all'app utilizzando il tuo SPID o la tua CIE solo una volta all'anno. Ti basterà poi utilizzare il tuo codice di sblocco o il biometrico per entrare."
     }
   },

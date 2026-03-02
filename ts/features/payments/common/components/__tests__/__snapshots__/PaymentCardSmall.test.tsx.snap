@@ -375,14 +375,34 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                         testID="PaymentCardSmallTestID-pressable"
                       >
                         <View
-                          style={
+                          collapsable={false}
+                          jestAnimatedProps={
                             {
-                              "transform": [
-                                {
-                                  "scale": undefined,
-                                },
-                              ],
+                              "value": {},
                             }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "transform": [
+                                  {
+                                    "scale": 1,
+                                  },
+                                ],
+                              },
+                            }
+                          }
+                          jestInlineStyle={{}}
+                          style={
+                            [
+                              {
+                                "transform": [
+                                  {
+                                    "scale": 1,
+                                  },
+                                ],
+                              },
+                            ]
                           }
                         >
                           <View

@@ -3,9 +3,10 @@ import {
   IOFontWeight,
   makeFontStyleObject
 } from "@pagopa/io-app-design-system";
-import { FunctionComponent, PropsWithChildren } from "react";
+import { FunctionComponent, PropsWithChildren, useContext } from "react";
 import { Text, TextStyle, useWindowDimensions } from "react-native";
 import { HIDDEN_CLAIM_TEXT } from "../../utils/constants.ts";
+import { CardWidthContext } from "./CardWidthContext";
 
 export type ClaimLabelProps = {
   fontSize?: number;
@@ -26,12 +27,15 @@ export const ClaimLabel: FunctionComponent<
   hidden,
   ...props
 }) => {
-  const { width } = useWindowDimensions();
+  const cardWidth = useContext(CardWidthContext);
+  const { width: screenWidth } = useWindowDimensions();
 
-  // 360 is the width of the screen in the smallest device
-  // We calculated the optimal font size for a 360px screen
-  // and then we scale it to the current screen width
-  const fontScale = width / 360;
+  // REFERENCE_CARD_WIDTH is the card width at the 360 px baseline screen (360 − 32 px padding).
+  // We scale font size relative to the actual card width for pixel-accurate text positioning.
+  // Fall back to the screen-width heuristic before the card has been measured (first render).
+  const REFERENCE_CARD_WIDTH = 328;
+  const fontScale =
+    cardWidth > 0 ? cardWidth / REFERENCE_CARD_WIDTH : screenWidth / 360;
 
   return (
     <Text
