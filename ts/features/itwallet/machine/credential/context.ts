@@ -8,7 +8,6 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { DigitalCredentialMetadata } from "../../common/utils/itwCredentialsCatalogueUtils";
 import { CredentialIssuanceFailure } from "./failure";
-import { CredentialOffer } from "@pagopa/io-react-native-wallet";
 
 /**
  * The mode for the credential issuance process.
@@ -19,6 +18,8 @@ import { CredentialOffer } from "@pagopa/io-react-native-wallet";
  * - "upgrade": for upgrading an existing credential to a the new format
  */
 export type CredentialIssuanceMode = "issuance" | "reissuance" | "upgrade";
+
+export type IssuanceSource = "catalogue" | "credential_offer";
 
 export type Context = {
   /**
@@ -64,7 +65,8 @@ export type Context = {
 
   credentialOfferUri: string | undefined;
   resolvedCredentialOffer: CredentialOfferResolved | undefined;
-
+  issuanceSource: IssuanceSource | undefined;
+  trustIssuerBaseUrl: string | undefined;
 };
 
 export const InitialContext: Context = {
@@ -81,5 +83,7 @@ export const InitialContext: Context = {
   failure: undefined,
   credentialsCatalogue: undefined,
   credentialOfferUri: undefined,
-  resolvedCredentialOffer: undefined
+  resolvedCredentialOffer: undefined,
+  issuanceSource: undefined,
+  trustIssuerBaseUrl: undefined
 };

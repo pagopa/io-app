@@ -13,19 +13,17 @@ import { useCallback } from "react";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { selectResolvedCredentialOfferOption } from "../../../machine/credential/selectors";
 import * as O from "fp-ts/lib/Option";
-import { ContentWrapper, ListItemHeader } from "@pagopa/io-app-design-system";
-import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 
-export type ItwIssuanceCredentialOfferScreenNavigationParams = {
+export type ItwIssuanceCredentialOfferValidationScreenNavigationParams = {
   itwCredentialOfferUri: string;
 };
 
 type ScreenProps = IOStackNavigationRouteProps<
   ItwParamsList,
-  "ITW_ISSUANCE_CREDENTIAL_OFFER_INTRO"
+  "ITW_ISSUANCE_CREDENTIAL_OFFER_VALIDATION"
 >;
 
-export const ItwIssuanceCredentialOfferIntroScreen = ({
+export const ItwIssuanceCredentialOfferValidationScreen = ({
   route
 }: ScreenProps) => {
   const startupStatus = useIOSelector(isStartupLoaded);
@@ -45,11 +43,17 @@ export const ItwIssuanceCredentialOfferIntroScreen = ({
   );
 };
 
-const ContentView = ({ itwCredentialOfferUri }: { itwCredentialOfferUri: string }) => {
+const ContentView = ({
+  itwCredentialOfferUri
+}: {
+  itwCredentialOfferUri: string;
+}) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
 
   const resolvedCredentialOfferOption =
-    ItwCredentialIssuanceMachineContext.useSelector(selectResolvedCredentialOfferOption);
+    ItwCredentialIssuanceMachineContext.useSelector(
+      selectResolvedCredentialOfferOption
+    );
 
   useFocusEffect(
     useCallback(() => {
@@ -62,31 +66,5 @@ const ContentView = ({ itwCredentialOfferUri }: { itwCredentialOfferUri: string 
     }, [machineRef, itwCredentialOfferUri, resolvedCredentialOfferOption])
   );
 
-  if (O.isNone(resolvedCredentialOfferOption)) {
-    return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
-  }
-
-  return (
-    <IOScrollViewWithLargeHeader
-      title={{ label: I18n.t("features.itWallet.identification.nfc.title") }}
-      description={I18n.t("features.itWallet.identification.nfc.description")}
-      actions={{
-        type: "SingleButton",
-        primary: {
-          label: I18n.t("features.itWallet.identification.nfc.primaryAction"),
-          onPress: () => {
-            machineRef.send({
-              type: "confirm-credential-offer",
-            });
-          }
-        }
-      }}
-    >
-      <ContentWrapper>
-        <ListItemHeader
-          label={I18n.t("features.itWallet.identification.nfc.header")}
-        />
-      </ContentWrapper>
-    </IOScrollViewWithLargeHeader>
-  );
+  return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
 };

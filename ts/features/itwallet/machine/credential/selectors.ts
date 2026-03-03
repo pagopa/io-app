@@ -50,5 +50,6 @@ export const selectCredentialIntroContentOption = ({
     )
   );
 
-  export const selectResolvedCredentialOfferOption = (snapshot: MachineSnapshot) =>
-    O.fromNullable(snapshot.context.resolvedCredentialOffer);
+export const selectResolvedCredentialOfferOption = (
+  snapshot: MachineSnapshot
+) => O.fromNullable(snapshot.context.resolvedCredentialOffer);

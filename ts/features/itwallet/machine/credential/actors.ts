@@ -50,6 +50,11 @@ export type ProcessCredentialOfferActorInput = {
 export type ProcessCredentialOfferActorOutput = {
   offer: CredentialOffer.CredentialOffer;
   grantDetails: CredentialOffer.ExtractGrantDetailsResult;
+  trustIssuerBaseUrl: string;
+};
+
+export type VerifyTrustFederationActorInput = {
+  trustIssuerBaseUrl: string | undefined;
 };
 
 /**
@@ -62,21 +67,29 @@ export const createCredentialIssuanceActorsImplementation = (
   env: Env,
   store: ReturnType<typeof useIOStore>
 ) => {
-  const verifyTrustFederation = fromPromise<void>(async () => {
+  const verifyTrustFederation = fromPromise<
+    void,
+    VerifyTrustFederationActorInput
+  >(async ({ input }) => {
+    const { trustIssuerBaseUrl } = input;
+    // TODO in SIW-3986 - handle different versions. Hardcoded for a first implementation
+    const wallet = new IoWallet({ version: "1.0.0" });
+
     // Evaluate the issuer trust
     const trustAnchorEntityConfig =
-      await Trust.Build.getTrustAnchorEntityConfiguration(
+      await wallet.Trust.getTrustAnchorEntityConfiguration(
         env.WALLET_TA_BASE_URL
       );
 
     // Create the trust chain for the PID provider
-    const builtChainJwts = await Trust.Build.buildTrustChain(
-      env.WALLET_EAA_PROVIDER_BASE_URL,
-      trustAnchorEntityConfig
+    const builtChainJwts = await wallet.Trust.buildTrustChain(
+      trustIssuerBaseUrl ?? env.WALLET_EAA_PROVIDER_BASE_URL,
+      trustAnchorEntityConfig,
+      fetch
     );
 
     // Perform full validation on the built chain
-    await Trust.Verify.verifyTrustChain(
+    await wallet.Trust.verifyTrustChain(
       trustAnchorEntityConfig,
       builtChainJwts,
       {
@@ -196,7 +209,7 @@ export const createCredentialIssuanceActorsImplementation = (
   >(async ({ input }) => {
     assert(input.credentialOfferUri, "credentialOfferUri is undefined");
 
-    // TODO - handle different versions. Hardcoded for a first implementation
+    // TODO in SIW-3986 - handle different versions. Hardcoded for a first implementation
     const wallet = new IoWallet({ version: "1.3.3" });
 
     const offer = await wallet.CredentialsOffer.resolveCredentialOffer(
@@ -205,9 +218,11 @@ export const createCredentialIssuanceActorsImplementation = (
 
     const grantDetails = wallet.CredentialsOffer.extractGrantDetails(offer);
 
-    console.log("Credential offer processed", { offer, grantDetails });
+    const trustIssuerBaseUrl =
+      grantDetails.authorizationCodeGrant.authorizationServer ??
+      offer.credential_issuer;
 
-    return { offer, grantDetails };
+    return { offer, grantDetails, trustIssuerBaseUrl };
   });
 
   return {

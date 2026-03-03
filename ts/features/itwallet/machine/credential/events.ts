@@ -38,7 +38,7 @@ export type StartCredentialOffer = {
 
 export type ConfirmCredentialOffer = {
   type: "confirm-credential-offer";
-};  
+};
 
 export type CredentialIssuanceEvents =
   | SelectCredential

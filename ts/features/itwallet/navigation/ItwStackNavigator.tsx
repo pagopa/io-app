@@ -68,7 +68,7 @@ import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredential
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
-import { ItwIssuanceCredentialOfferIntroScreen } from "../issuance/offer/screens/ItwIssuanceCredentialOfferIntro";
+import { ItwIssuanceCredentialOfferValidationScreen } from "../issuance/offer/screens/ItwIssuanceCredentialOfferValidation";
 
 const Stack = createStackNavigator<ItwParamsList>();
 
@@ -272,8 +272,8 @@ const InnerNavigator = memo(() => {
         options={hiddenHeader}
       />
       <Stack.Screen
-        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER.INTRO}
-        component={ItwIssuanceCredentialOfferIntroScreen}
+        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER.VALIDATION}
+        component={ItwIssuanceCredentialOfferValidationScreen}
       />
       {/* CREDENTIAL PRESENTATION */}
       <Stack.Screen

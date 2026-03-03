@@ -9,7 +9,8 @@ import {
   ProcessCredentialOfferActorInput,
   ProcessCredentialOfferActorOutput,
   RequestCredentialActorInput,
-  RequestCredentialActorOutput
+  RequestCredentialActorOutput,
+  VerifyTrustFederationActorInput
 } from "./actors";
 import { Context, InitialContext } from "./context";
 import { CredentialIssuanceEvents } from "./events";
@@ -41,6 +42,7 @@ export const itwCredentialIssuanceMachine = setup({
     navigateToCredentialIntroductionScreen: notImplemented,
     navigateToTrustIssuerScreen: notImplemented,
     navigateToCredentialPreviewScreen: notImplemented,
+    navigateToCredentialOfferIntroScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToWallet: notImplemented,
     navigateToEidVerificationExpiredScreen: notImplemented,
@@ -65,7 +67,9 @@ export const itwCredentialIssuanceMachine = setup({
     trackCredentialIssuingDataShareAccepted: notImplemented
   },
   actors: {
-    verifyTrustFederation: fromPromise<void>(notImplemented),
+    verifyTrustFederation: fromPromise<void, VerifyTrustFederationActorInput>(
+      notImplemented
+    ),
     getWalletAttestation:
       fromPromise<GetWalletAttestationActorOutput>(notImplemented),
     requestCredential: fromPromise<
@@ -83,7 +87,7 @@ export const itwCredentialIssuanceMachine = setup({
     processCredentialOffer: fromPromise<
       ProcessCredentialOfferActorOutput,
       ProcessCredentialOfferActorInput
-    >(notImplemented),
+    >(notImplemented)
   },
   guards: {
     isSessionExpired: notImplemented,
@@ -108,7 +112,8 @@ export const itwCredentialIssuanceMachine = setup({
           actions: assign(({ event }) => {
             return {
               credentialOfferUri: event.itwCredentialOfferUri,
-              mode: "issuance"
+              mode: "issuance",
+              issuanceSource: "credential_offer"
             };
           })
         },
@@ -116,7 +121,8 @@ export const itwCredentialIssuanceMachine = setup({
           target: "EvaluateFlow",
           actions: assign(({ event }) => ({
             credentialType: event.credentialType,
-            mode: event.mode
+            mode: event.mode,
+            issuanceSource: "catalogue"
           }))
         }
       }
@@ -126,32 +132,23 @@ export const itwCredentialIssuanceMachine = setup({
       invoke: {
         src: "processCredentialOffer",
         input: ({ context }) => ({
-          credentialOfferUri: context.credentialOfferUri!,
+          credentialOfferUri: context.credentialOfferUri!
         }),
         onDone: {
-          target: "CredentialOfferResolved",
+          target: "EvaluateFlow",
           actions: assign(({ event }) => ({
             resolvedCredentialOffer: {
               offer: event.output.offer,
               grantDetails: event.output.grantDetails
-            }
+            },
+            trustIssuerBaseUrl: event.output.trustIssuerBaseUrl,
+            credentialType:
+              event.output.grantDetails.authorizationCodeGrant.scope
           }))
         },
-        
+
         // TODO: better handle different error cases (e.g. invalid offer, network error, etc.) and map them to specific failure states
-        onError: {
-        }
-      }
-    },
-    CredentialOfferResolved: {
-      on: {
-        "confirm-credential-offer": {
-          target: "EvaluateFlow",
-          actions: assign(({ context }) => ({
-            credentialType: context.resolvedCredentialOffer?.grantDetails.authorizationCodeGrant.scope,
-            mode: "issuance"
-          }))
-        }
+        onError: {}
       }
     },
     EvaluateFlow: {
@@ -193,10 +190,18 @@ export const itwCredentialIssuanceMachine = setup({
         continue: {
           target: "TrustFederationVerification"
         },
-        back: {
-          target: "Idle",
-          actions: "navigateToCardOnboardingScreen"
-        }
+        back: [
+          {
+            guard: ({ context }) => context.issuanceSource === "catalogue",
+            target: "Idle",
+            actions: "navigateToCardOnboardingScreen"
+          },
+          {
+            guard: ({ context }) => context.issuanceSource === "credential_offer",
+            target: "Idle",
+            actions: "closeIssuance"
+          }
+        ]
       }
     },
     TrustFederationVerification: {
@@ -205,6 +210,9 @@ export const itwCredentialIssuanceMachine = setup({
       tags: [ItwTags.Loading],
       invoke: {
         src: "verifyTrustFederation",
+        input: ({ context }) => ({
+          trustIssuerBaseUrl: context.trustIssuerBaseUrl
+        }),
         onDone: {
           target: "CheckingWalletInstanceAttestation"
         },
