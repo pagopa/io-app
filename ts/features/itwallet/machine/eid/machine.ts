@@ -819,7 +819,11 @@ export const itwEidIssuanceMachine = setup({
               states: {
                 Identification: {
                   on: {
-                    back: "#itwEidIssuanceMachine.UserIdentification.Identification"
+                    back: "#itwEidIssuanceMachine.UserIdentification.Identification",
+                    close: {
+                      target: "#itwEidIssuanceMachine.Idle",
+                      actions: "closeIssuance"
+                    }
                   }
                 },
                 PreparationCie: {

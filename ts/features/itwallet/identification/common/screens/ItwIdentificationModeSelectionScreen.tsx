@@ -129,27 +129,13 @@ export const ItwIdentificationModeSelectionScreen = ({
   );
 
   const handleNoCiePress = useCallback(() => {
-    if (mode === "upgrade") {
-      trackItwUserWithoutL3Requirements({
-        screen_name: routeName,
-        reason: "user_without_cie",
-        position: "screen"
-      });
-      // If the user is in the L3 upgrade flow, he cannot proceed without a CIE card
-      machineRef.send({ type: "go-to-cie-warning", warning: "card" });
-    } else {
-      trackItwUserWithoutL3Requirements({
-        screen_name: routeName,
-        reason: "user_without_cie",
-        position: "screen"
-      });
-      machineRef.send({
-        type: "restart",
-        mode: "issuance",
-        level: "l2-fallback"
-      });
-    }
-  }, [mode, machineRef, routeName]);
+    trackItwUserWithoutL3Requirements({
+      screen_name: routeName,
+      reason: "user_without_cie",
+      position: "screen"
+    });
+    machineRef.send({ type: "go-to-cie-warning", warning: "card" });
+  }, [machineRef, routeName]);
 
   const dismissalDialog = useItwDismissalDialog({
     enabled: params.eidReissuing,

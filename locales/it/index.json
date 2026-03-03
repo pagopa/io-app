@@ -5033,27 +5033,27 @@
           },
           "warning": {
             "card": {
-              "issuance": {
-                "title": "Continua senza i vantaggi di IT-Wallet",
-                "subtitle": "Se non hai la CIE, puoi usare SPID o CieID (livello 2) per ottenere una versione dei tuoi documenti digitali con funzionalità ridotte.",
-                "primaryAction": "Continua senza IT-Wallet",
-                "secondaryAction": "Torna indietro"
+              "l2-fallback": {
+                "title": "Puoi aggiungere il documento con funzionalità ridotte",
+                "subtitle": "Senza una CIE non puoi attivare le funzionalità evolute del portafoglio.\nContinua con le funzionalità ridotte.",
+                "primaryAction": "Continua",
+                "secondaryAction": "Chiudi"
               },
-              "upgrade": {
+              "ko-no-cie": {
                 "title": "Non puoi continuare senza la Carta di Identità Elettronica (CIE)",
-                "subtitle": "Per ottenere i vantaggi di IT-Wallet è necessario autenticarsi con la CIE.\n\nRichiedere la CIE è facile e veloce, scopri cosa puoi fare.",
+                "subtitle": "Per attivare il portafoglio IT-Wallet di IO hai bisogno di una Carta di Identità Elettronica.\n\nRichiedere la CIE è facile e veloce: scopri cosa puoi fare per ottenerla.",
                 "primaryAction": "Scopri cosa puoi fare",
                 "secondaryAction": "Chiudi"
               }
             },
             "pin": {
-              "issuance": {
+              "l2-fallback": {
                 "title": "Continua senza i vantaggi di IT-Wallet",
                 "subtitle": "Se non hai il PIN della CIE, puoi usare SPID o CieID (livello 2) per ottenere una versione dei tuoi documenti digitali con funzionalità ridotte.",
                 "primaryAction": "Continua senza IT-Wallet",
                 "secondaryAction": "Torna indietro"
               },
-              "upgrade": {
+              "ko-no-cie": {
                 "title": "Non puoi continuare senza il PIN della CIE",
                 "subtitle": "Se hai registrato un contatto di recupero quando hai richiesto la CIE, puoi reimpostare il PIN con l’app CieID.\n\n In alternativa, rivolgiti al tuo Comune per recuperare il PIN della tua carta.",
                 "primaryAction": "Scopri cosa puoi fare",
