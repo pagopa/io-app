@@ -43,10 +43,6 @@ import {
   upcomingCredentials
 } from "../../common/utils/itwCredentialUtils.ts";
 import { itwCredentialsByPresenceSelector } from "../../credentials/store/selectors/index.ts";
-import {
-  itwIsCredentialsCatalogueLoading,
-  itwIsCredentialsCatalogueUnavailable
-} from "../../credentialsCatalogue/store/selectors/index.ts";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
@@ -154,13 +150,8 @@ type ItwCredentialOnboardingSectionProps = {
 const ItwL3CredentialOnboardingSection: FunctionComponent<
   ItwCredentialOnboardingSectionProps
 > = ({ action }) => {
-  const dispatch = useIODispatch();
   const theme = useIOTheme();
   const env = useIOSelector(selectItwEnv);
-  const isCatalogueLoading = useIOSelector(itwIsCredentialsCatalogueLoading);
-  const isCatalogueUnavailable = useIOSelector(
-    itwIsCredentialsCatalogueUnavailable
-  );
 
   // Show upcoming credentials only if env is "pre"
   const shouldShowUpcoming = env === "pre";
@@ -186,22 +177,20 @@ const ItwL3CredentialOnboardingSection: FunctionComponent<
   );
 
   const renderContent = () => (
-      <>
-        <AsyncCredentialsCatalogue>
-          {list(notObtained)}
-        </AsyncCredentialsCatalogue>
-        {obtained.length > 0 && (
-          <VStack space={8}>
-            <View style={styles.header}>
-              <H6 role="heading" color={theme["textBody-tertiary"]}>
-                {I18n.t("features.wallet.onboarding.l3-sections.added")}
-              </H6>
-            </View>
-            {list(obtained)}
-          </VStack>
-        )}
-      </>
-    );
+    <>
+      <AsyncCredentialsCatalogue>{list(notObtained)}</AsyncCredentialsCatalogue>
+      {obtained.length > 0 && (
+        <VStack space={8}>
+          <View style={styles.header}>
+            <H6 role="heading" color={theme["textBody-tertiary"]}>
+              {I18n.t("features.wallet.onboarding.l3-sections.added")}
+            </H6>
+          </View>
+          {list(obtained)}
+        </VStack>
+      )}
+    </>
+  );
 
   return (
     <View>
