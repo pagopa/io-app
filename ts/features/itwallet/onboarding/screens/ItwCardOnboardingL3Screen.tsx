@@ -1,6 +1,5 @@
 import {
   Badge,
-  BannerErrorState,
   Divider,
   H6,
   IOButton,
@@ -14,9 +13,9 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
+import { clamp } from "lodash";
 import { FunctionComponent, useCallback, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { clamp } from "lodash";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import {
   IOStackNavigationRouteProps,
@@ -37,13 +36,13 @@ import {
 } from "../../analytics";
 import { PoweredByItWalletText } from "../../common/components/PoweredByItWalletText.tsx";
 import { selectItwEnv } from "../../common/store/selectors/environment.ts";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences.ts";
 import {
   availableCredentials,
   newCredentials,
   upcomingCredentials
 } from "../../common/utils/itwCredentialUtils.ts";
 import { itwCredentialsByPresenceSelector } from "../../credentials/store/selectors/index.ts";
-import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions/index.ts";
 import {
   itwIsCredentialsCatalogueLoading,
   itwIsCredentialsCatalogueUnavailable
@@ -52,9 +51,8 @@ import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
 import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences.ts";
+import { AsyncCredentialsCatalogue } from "./AsyncCredentialsCatalogueWrapper.tsx";
 
-const CATALOGUE_ENABLED = false;
 const MAX_INDEX = 1;
 
 const activeBadge: Badge = {
@@ -187,28 +185,11 @@ const ItwL3CredentialOnboardingSection: FunctionComponent<
     <ItwOnboardingModuleCredentialsList credentialTypesToDisplay={types} />
   );
 
-  const renderContent = () => {
-    if (CATALOGUE_ENABLED && isCatalogueLoading) {
-      return Array.from({ length: 5 }).map((_, i) => (
-        <ModuleCredential key={`loading-item-${i}`} isLoading />
-      ));
-    }
-    if (CATALOGUE_ENABLED && isCatalogueUnavailable) {
-      return (
-        <BannerErrorState
-          label={I18n.t(
-            "features.itWallet.credentialsCatalogue.failure.content"
-          )}
-          actionText={I18n.t(
-            "features.itWallet.credentialsCatalogue.failure.action"
-          )}
-          onPress={() => dispatch(itwFetchCredentialsCatalogue.request())}
-        />
-      );
-    }
-    return (
+  const renderContent = () => (
       <>
-        <VStack space={8}>{list(notObtained)}</VStack>
+        <AsyncCredentialsCatalogue>
+          {list(notObtained)}
+        </AsyncCredentialsCatalogue>
         {obtained.length > 0 && (
           <VStack space={8}>
             <View style={styles.header}>
@@ -221,7 +202,6 @@ const ItwL3CredentialOnboardingSection: FunctionComponent<
         )}
       </>
     );
-  };
 
   return (
     <View>
