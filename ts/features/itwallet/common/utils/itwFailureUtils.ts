@@ -39,6 +39,24 @@ export const isLocalIntegrityError = (e: unknown): e is IntegrityError =>
   localIntegrityErrors.includes(e.message as IntegrityErrorCodes);
 
 /**
+ * Regex to match the DCAppAttest error domain and invalid key code (3)
+ * in the NSError localizedDescription, regardless of the system locale.
+ */
+const DEVICE_CHECK_INVALID_KEY_REGEX = /com\.apple\.devicecheck\.error.*\b3\b/;
+
+/**
+ * Guard used to check if the error is an integrity failure caused by DCAppAttest
+ * throwing a com.apple.devicecheck.error with code 3 (invalidKey).
+ * This error indicates the hardware attestation key is no longer valid.
+ */
+export const isDeviceCheckInvalidKeyError = (e: unknown): e is IntegrityError =>
+  e instanceof Error &&
+  e.message === ("GENERATION_ASSERTION_FAILED" as IntegrityErrorCodes) &&
+  DEVICE_CHECK_INVALID_KEY_REGEX.test(
+    (e as unknown as IntegrityError).userInfo?.error ?? ""
+  );
+
+/**
  * Enrich instances of Error with `credentialId` so it is possible to retrieve the credential configuration
  * from `credential_configurations_supported` in the Issuer's EC. This is needed during multi-credential issuance
  * to get dynamic error messages, because the original error may not contain the credential configuration ID.
