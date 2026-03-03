@@ -38,11 +38,6 @@ export const getCredentialStatus = (
     parsedCredential,
     storedStatusAssertion: statusAssertion
   } = credential;
-  // We could not determine the status of the credential.
-  // This happens when the status assertion API call fails.
-  if (statusAssertion?.credentialStatus === "unknown") {
-    return "unknown";
-  }
 
   const now = Date.now();
 
@@ -83,6 +78,12 @@ export const getCredentialStatus = (
 
   if (documentExpireDays <= expiringDays) {
     return "expiring";
+  }
+
+  // We could not determine the status of the credential.
+  // This happens when the status assertion API call fails.
+  if (statusAssertion?.credentialStatus === "unknown") {
+    return "unknown";
   }
 
   return "valid";
