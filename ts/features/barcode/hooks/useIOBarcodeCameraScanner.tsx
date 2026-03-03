@@ -310,7 +310,7 @@ const LoadingMarkerComponent = () => (
       marginTop: "15%"
     }}
   >
-    <LoadingSpinner size={76} color="white" />
+    <LoadingSpinner size={48} color="white" />
   </Animated.View>
 );
 
