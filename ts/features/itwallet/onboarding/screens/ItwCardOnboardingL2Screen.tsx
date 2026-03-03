@@ -15,7 +15,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
 import { trackShowCredentialsList } from "../../analytics";
 import { l2Credentials } from "../../common/utils/itwCredentialUtils.ts";
-import { itwCredentialsSplitSelector } from "../../credentials/store/selectors/index.ts";
+import { itwCredentialsByPresenceSelector } from "../../credentials/store/selectors/index.ts";
 import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions/index.ts";
 import {
   itwIsCredentialsCatalogueLoading,
@@ -57,7 +57,7 @@ const ItwL2CredentialOnboardingSection = () => {
   );
 
   const { notObtained } = useIOSelector(state =>
-    itwCredentialsSplitSelector(state, l2Credentials)
+    itwCredentialsByPresenceSelector(state, l2Credentials)
   );
 
   const list = (types: Array<string>) => (
@@ -97,10 +97,8 @@ const ItwL2CredentialOnboardingSection = () => {
         <IOButton
           testID="add-bonus-action-testID"
           variant="link"
-          label={I18n.t("features.itWallet.onboarding.cta.addBonus")}
-          accessibilityLabel={I18n.t(
-            "features.itWallet.onboarding.cta.addBonus"
-          )}
+          label={I18n.t("features.wallet.onboarding.cta.addBonus")}
+          accessibilityLabel={I18n.t("features.wallet.onboarding.cta.addBonus")}
           onPress={() => {
             navigation.replace(ITW_ROUTES.MAIN, {
               screen: ITW_ROUTES.L3_ONBOARDING,

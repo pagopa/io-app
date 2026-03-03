@@ -82,7 +82,7 @@ describe("ItwCardOnboardingL3Screen", () => {
     const { queryByText } = renderComponent({ page: 0 });
 
     expect(
-      queryByText("features.itWallet.onboarding.cta.addRestricted")
+      queryByText("features.wallet.onboarding.cta.addRestricted")
     ).toBeNull();
   });
 

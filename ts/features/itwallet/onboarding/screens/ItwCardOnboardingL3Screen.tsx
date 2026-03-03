@@ -42,7 +42,7 @@ import {
   newCredentials,
   upcomingCredentials
 } from "../../common/utils/itwCredentialUtils.ts";
-import { itwCredentialsSplitSelector } from "../../credentials/store/selectors/index.ts";
+import { itwCredentialsByPresenceSelector } from "../../credentials/store/selectors/index.ts";
 import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions/index.ts";
 import {
   itwIsCredentialsCatalogueLoading,
@@ -86,7 +86,7 @@ const ItwCardOnboardingL3Screen = ({ route }: Props) => {
   const itwAction = useMemo(() => {
     if (isWalletEnabled) {
       return {
-        label: I18n.t("features.itWallet.onboarding.cta.addRestricted"),
+        label: I18n.t("features.wallet.onboarding.cta.addRestricted"),
         onPress: () => {
           setPage(0);
           navigation.replace(ITW_ROUTES.MAIN, {
@@ -180,7 +180,7 @@ const ItwL3CredentialOnboardingSection: FunctionComponent<
   }, [shouldShowUpcoming]);
 
   const { obtained, notObtained } = useIOSelector(state =>
-    itwCredentialsSplitSelector(state, credentialsToDisplay)
+    itwCredentialsByPresenceSelector(state, credentialsToDisplay)
   );
 
   const list = (types: Array<string>) => (

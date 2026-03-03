@@ -29,7 +29,7 @@ describe("ItwCardOnboardingL2Screen", () => {
     } as any);
 
     jest
-      .spyOn(credentialsSelectors, "itwCredentialsSplitSelector")
+      .spyOn(credentialsSelectors, "itwCredentialsByPresenceSelector")
       .mockReturnValue({
         obtained: [],
         notObtained: [CredentialType.DRIVING_LICENSE]
