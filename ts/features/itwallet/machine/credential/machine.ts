@@ -42,7 +42,6 @@ export const itwCredentialIssuanceMachine = setup({
     navigateToCredentialIntroductionScreen: notImplemented,
     navigateToTrustIssuerScreen: notImplemented,
     navigateToCredentialPreviewScreen: notImplemented,
-    navigateToCredentialOfferIntroScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToWallet: notImplemented,
     navigateToEidVerificationExpiredScreen: notImplemented,
@@ -197,7 +196,8 @@ export const itwCredentialIssuanceMachine = setup({
             actions: "navigateToCardOnboardingScreen"
           },
           {
-            guard: ({ context }) => context.issuanceSource === "credential_offer",
+            guard: ({ context }) =>
+              context.issuanceSource === "credential_offer",
             target: "Idle",
             actions: "closeIssuance"
           }
