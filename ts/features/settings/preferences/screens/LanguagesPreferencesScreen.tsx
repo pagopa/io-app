@@ -111,8 +111,7 @@ const LanguagesPreferencesScreen = () => {
 
   const appLocaleOptions: Array<RadioItem<AppLocaleId>> = useMemo(
     () =>
-      /* TODO: We need a dynamic object here that satisfies `AppLocale` type */
-      (["it", "en", "de"] as const).map(locale => ({
+      availableTranslations.map(locale => ({
         value: I18n.t(`localesTranslated.${locale}`, {
           defaultValue: locale
         }),
