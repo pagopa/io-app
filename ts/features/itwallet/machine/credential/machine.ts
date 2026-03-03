@@ -112,7 +112,7 @@ export const itwCredentialIssuanceMachine = setup({
             return {
               credentialOfferUri: event.itwCredentialOfferUri,
               mode: "issuance",
-              issuanceSource: "credential_offer"
+              issuanceSource: "credential-offer"
             };
           })
         },
@@ -191,15 +191,14 @@ export const itwCredentialIssuanceMachine = setup({
         },
         back: [
           {
-            guard: ({ context }) => context.issuanceSource === "catalogue",
-            target: "Idle",
-            actions: "navigateToCardOnboardingScreen"
-          },
-          {
             guard: ({ context }) =>
-              context.issuanceSource === "credential_offer",
+              context.issuanceSource === "credential-offer",
             target: "Idle",
             actions: "closeIssuance"
+          },
+          {
+            target: "Idle",
+            actions: "navigateToCardOnboardingScreen"
           }
         ]
       }

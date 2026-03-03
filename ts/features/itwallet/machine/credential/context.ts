@@ -19,7 +19,7 @@ import { CredentialIssuanceFailure } from "./failure";
  */
 export type CredentialIssuanceMode = "issuance" | "reissuance" | "upgrade";
 
-export type IssuanceSource = "catalogue" | "credential_offer";
+export type IssuanceSource = "catalogue" | "credential-offer";
 
 export type Context = {
   /**
@@ -62,10 +62,25 @@ export type Context = {
    * The credentials catalogue as a dictionary, with an entry for each credential type.
    */
   credentialsCatalogue: Record<string, DigitalCredentialMetadata> | undefined;
-
+  /**
+   * The credential offer URI, if the issuance process was started from a credential offer.
+   */
   credentialOfferUri: string | undefined;
+  /**
+   * Resolved and validated Credential Offer.
+   * Contains offer + grant details.
+   */
   resolvedCredentialOffer: CredentialOfferResolved | undefined;
+  /**
+   * Entry point of credential issuance flow:
+   * - catalogue
+   * - credentialOffer (QR / deep link)
+   */
   issuanceSource: IssuanceSource | undefined;
+  /**
+   * Entity base URL to be validated in the Trust step
+   * (derived from offer or environment config).
+   */
   trustIssuerBaseUrl: string | undefined;
 };
 

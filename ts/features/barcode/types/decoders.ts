@@ -16,7 +16,7 @@ import { ItwRemoteRequestPayload } from "../../itwallet/presentation/remote/util
 import { validateItwPresentationQrCodeParams } from "../../itwallet/presentation/remote/utils/itwRemotePresentationUtils";
 import { pnAARQRCodeRegexSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { IOBarcodeType } from "./IOBarcode";
-import { isPotentialCredentialOfferInvocation } from "../../itwallet/issuance/offer/utils/utils";
+import { isCredentialOfferUri } from "../../itwallet/issuance/offer/itwCredentialOfferUtils";
 
 // Discriminated barcode type
 // Represents the decoded content of a barcode that has been scanned
@@ -162,7 +162,7 @@ const decodeItwCredentialOfferBarcode: IOBarcodeStaticDecoderFn = (
 ) =>
   pipe(
     O.some(data.trim()),
-    O.filter(isPotentialCredentialOfferInvocation),
+    O.filter(isCredentialOfferUri),
     O.map(itwCredentialOfferUri => ({
       type: "ITW_CREDENTIAL_OFFER",
       itwCredentialOfferUri
