@@ -2,7 +2,7 @@ import { Platform } from "react-native";
 import { minOsSupportedSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../store/reducers/types";
 
-export const isOsDismissionisBannerRenderableSelector = (
+export const isOsDismissionBannerRenderableSelector = (
   state: GlobalState
 ): boolean => {
   const minOsSupported = minOsSupportedSelector(state);

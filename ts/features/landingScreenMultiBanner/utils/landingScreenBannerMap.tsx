@@ -13,7 +13,7 @@ import { isPnActivationReminderBannerRenderableSelector } from "../../pn/reminde
 import { PushNotificationsBanner } from "../../pushNotifications/components/PushNotificationsBanner";
 import { isPushNotificationsBannerRenderableSelector } from "../../pushNotifications/store/selectors";
 import OsDismissionBanner from "../../osDismission/components/OsDismissionBanner";
-import { isOsDismissionisBannerRenderableSelector } from "../../osDismission/store/selectors";
+import { isOsDismissionBannerRenderableSelector } from "../../osDismission/store/selectors";
 
 type ComponentWithCloseHandler = (closeHandler: () => void) => ReactElement;
 type ComponentAndLogic = {
@@ -41,7 +41,7 @@ export const landingScreenBannerMap: BannerMapById = {
     component: closeHandler => (
       <OsDismissionBanner handleOnClose={closeHandler} />
     ),
-    isRenderableSelector: isOsDismissionisBannerRenderableSelector
+    isRenderableSelector: isOsDismissionBannerRenderableSelector
   },
   PUSH_NOTIFICATIONS_REMINDER: {
     component: closeHandler => (
