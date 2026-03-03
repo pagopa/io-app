@@ -68,6 +68,7 @@ export interface SmartBackendOptions {
   localResources: typeof resources;
 }
 
+// TODO: Enable this backend plugin once the internal process to update translations on a remote source will be in place.
 // const DEFAULT_SMART_BACKEND_OPTIONS: SmartBackendOptions = {
 //   localResources: resources
 // };
