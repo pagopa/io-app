@@ -394,9 +394,9 @@ const MdlExpiredOrInvalidAlert = ({
   }, [credential.credentialType, machineRef, onTrack]);
 
   const bottomSheet = useIOBottomSheetModal({
-    title: I18n.t(
-      "features.itWallet.presentation.alerts.mdl.expired.sheetTitle"
-    ),
+    title:
+      localizedMessage?.title ??
+      I18n.t("features.itWallet.presentation.alerts.mdl.expired.sheetTitle"),
     component: (
       <VStack space={24}>
         <IOMarkdown
