@@ -17,10 +17,7 @@ import { Alert, View } from "react-native";
 import { Locales } from "../../../../../locales/locales";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { availableTranslations, setLocale } from "../../../../i18n";
-import {
-  AppLocale,
-  preferredLanguageSaveSuccess
-} from "../../../../store/actions/persistedPreferences";
+import { preferredLanguageSaveSuccess } from "../../../../store/actions/persistedPreferences";
 
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
@@ -42,7 +39,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * Allows the user to select one of the available Languages as preferred
  */
 
-type AppLocaleId = `app-locale-${AppLocale}`;
+type AppLocaleId = `app-locale-${Locales}`;
 
 const LanguagesPreferencesScreen = () => {
   const dispatch = useIODispatch();
@@ -126,12 +123,12 @@ const LanguagesPreferencesScreen = () => {
   );
 
   const [selectedAppLocale, setSelectedAppLocale] = useState<AppLocaleId>(
-    `app-locale-${initialAppSelectedItem as AppLocale}` as AppLocaleId
+    `app-locale-${initialAppSelectedItem as Locales}` as AppLocaleId
   );
 
   const handleAppLocaleChange = useCallback(
     (localeId: AppLocaleId) => {
-      const locale = localeId.replace("app-locale-", "") as AppLocale;
+      const locale = localeId.replace("app-locale-", "") as Locales;
 
       setLocale(locale as Locales);
       preferredLanguageSaveSuccessDispatch(locale as Locales);
@@ -188,7 +185,7 @@ const LanguagesPreferencesScreen = () => {
   const onAppLanguageSelected = useCallback(
     (language: string) => {
       if (selectedAppLocale !== language) {
-        const locale = language.replace("app-locale-", "") as AppLocale;
+        const locale = language.replace("app-locale-", "") as Locales;
         Alert.alert(
           I18n.t("profile.preferences.list.preferred_language.alert.title", {
             lang: I18n.t(`locales.${locale as Locales}`)
