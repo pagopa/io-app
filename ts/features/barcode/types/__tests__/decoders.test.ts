@@ -229,4 +229,109 @@ describe("test decodeIOBarcode function", () => {
       });
     });
   });
+
+  describe("test ITW_CREDENTIAL_OFFER barcode type", () => {
+    describe("custom schemes", () => {
+      it("should return O.some on valid openid-credential-offer:// URI", () => {
+        const value =
+          "openid-credential-offer://?credential_offer=%7B%22credential_issuer%22%3A%22https%3A%2F%2Fissuer.example.com%22%7D";
+        const output = decodeIOBarcode(fakeGlobalState, value);
+
+        expect(output).toStrictEqual(
+          O.some({
+            type: "ITW_CREDENTIAL_OFFER",
+            itwCredentialOfferUri: value
+          })
+        );
+      });
+
+      it("should return O.some on valid haip-vci:// URI", () => {
+        const value =
+          "haip-vci://?credential_offer=%7B%22credential_issuer%22%3A%22https%3A%2F%2Fissuer.example.com%22%7D";
+        const output = decodeIOBarcode(fakeGlobalState, value);
+
+        expect(output).toStrictEqual(
+          O.some({
+            type: "ITW_CREDENTIAL_OFFER",
+            itwCredentialOfferUri: value
+          })
+        );
+      });
+
+      it("should return O.some on haip-vci:// with credential_offer_uri", () => {
+        const value =
+          "haip-vci://?credential_offer_uri=https%3A%2F%2Fissuer.example.com%2Foffers%2F123";
+        const output = decodeIOBarcode(fakeGlobalState, value);
+
+        expect(output).toStrictEqual(
+          O.some({
+            type: "ITW_CREDENTIAL_OFFER",
+            itwCredentialOfferUri: value
+          })
+        );
+      });
+    });
+
+    describe("https universal links", () => {
+      it("should return O.some on valid https URI with credential_offer param", () => {
+        const value =
+          "https://wallet.example.com/credential-offer?credential_offer=%7B%22credential_issuer%22%3A%22https%3A%2F%2Fissuer.example.com%22%7D";
+        const output = decodeIOBarcode(fakeGlobalState, value);
+
+        expect(output).toStrictEqual(
+          O.some({
+            type: "ITW_CREDENTIAL_OFFER",
+            itwCredentialOfferUri: value
+          })
+        );
+      });
+
+      it("should return O.some on valid https URI with credential_offer_uri param", () => {
+        const value =
+          "https://wallet.example.com/credential-offer?credential_offer_uri=https%3A%2F%2Fissuer.example.com%2Foffers%2F123";
+        const output = decodeIOBarcode(fakeGlobalState, value);
+
+        expect(output).toStrictEqual(
+          O.some({
+            type: "ITW_CREDENTIAL_OFFER",
+            itwCredentialOfferUri: value
+          })
+        );
+      });
+
+      it("should return O.some with additional query params", () => {
+        const value =
+          "https://wallet.example.com/credential-offer?foo=bar&credential_offer=abc123&baz=qux";
+        const output = decodeIOBarcode(fakeGlobalState, value);
+
+        expect(output).toStrictEqual(
+          O.some({
+            type: "ITW_CREDENTIAL_OFFER",
+            itwCredentialOfferUri: value
+          })
+        );
+      });
+    });
+
+    describe("invalid cases", () => {
+      it("should return O.none on unknown scheme", () => {
+        const value = "unknown-scheme://?credential_offer=abc123";
+        const output = decodeIOBarcode(fakeGlobalState, value);
+        expect(output).toStrictEqual(O.none);
+      });
+
+      it("should return O.none on https URI without credential_offer params", () => {
+        const value = "https://wallet.example.com/credential-offer?foo=bar";
+        const output = decodeIOBarcode(fakeGlobalState, value);
+        expect(output).toStrictEqual(O.none);
+      });
+
+      it("should return O.none on http URI (not https)", () => {
+        const value =
+          "http://wallet.example.com/credential-offer?credential_offer=abc123";
+        const output = decodeIOBarcode(fakeGlobalState, value);
+        expect(output).toStrictEqual(O.none);
+      });
+    });
+  });
 });

@@ -30,6 +30,7 @@ export const ItwIssuanceCredentialOfferValidationScreen = ({
 
   if (startupStatus !== StartupStatusEnum.AUTHENTICATED) {
     return (
+      // TODO: evaluate if we can have a more specific loading screen for this case, or use the same one for all the remote loading phases
       <ItwRemoteLoadingScreen
         title={I18n.t(
           "features.itWallet.presentation.remote.loadingScreen.request"
