@@ -53,6 +53,7 @@
   },
   "dependencies": {
     "@babel/plugin-transform-class-properties": "^7.25.9",
+    "@babel/plugin-transform-export-namespace-from": "^7.27.1",
     "@babel/plugin-transform-private-methods": "^7.25.9",
     "@babel/plugin-transform-private-property-in-object": "^7.25.9",
     "@babel/plugin-transform-react-jsx": "^7.25.9",
@@ -70,7 +71,7 @@
     "@pagopa/io-react-native-jwt": "^2.1.0",
     "@pagopa/io-react-native-login-utils": "1.2.0",
     "@pagopa/io-react-native-secure-storage": "^0.2.1",
-    "@pagopa/io-react-native-wallet": "2.5.0",
+    "@pagopa/io-react-native-wallet": "github:pagopa/io-react-native-wallet#master",
     "@pagopa/io-react-native-wallet-legacy": "npm:@pagopa/io-react-native-wallet@0.30.0",
     "@pagopa/io-react-native-zendesk": "^0.3.30",
     "@pagopa/react-native-cie": "^1.5.0",
