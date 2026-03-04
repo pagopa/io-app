@@ -338,10 +338,20 @@ exports[`SendEngagementOnFirstAppOpenScreen should match the snapshot 1`] = `
             >
               Attiva SEND su IO per ricevere in app le comunicazioni a valore legale, come esiti di pratiche, rimborsi o multe, ed 
               <Text
+                allowFontScaling={true}
+                maxFontSizeMultiplier={1.5}
                 style={
-                  {
-                    "fontWeight": "600",
-                  }
+                  [
+                    {},
+                    {
+                      "color": "#0E0F13",
+                      "fontFamily": "Titillium Sans Pro",
+                      "fontSize": 16,
+                      "fontStyle": "normal",
+                      "fontWeight": "600",
+                      "lineHeight": undefined,
+                    },
+                  ]
                 }
               >
                 evitare le raccomandate e i relativi costi.

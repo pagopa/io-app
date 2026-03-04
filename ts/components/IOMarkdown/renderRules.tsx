@@ -13,6 +13,7 @@ import {
   HSpacer,
   IOPictogramsBleed,
   IOSpacer,
+  IOText,
   IOToast,
   IOVisualCostants,
   Nullable,
@@ -200,9 +201,9 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    */
   Emphasis(emphasis: TxtEmphasisNode, render: Renderer) {
     return (
-      <Text key={getTxtNodeKey(emphasis)} style={{ fontStyle: "italic" }}>
+      <IOText key={getTxtNodeKey(emphasis)} fontStyle="italic">
         {emphasis.children.map(render)}
-      </Text>
+      </IOText>
     );
   },
   /**
@@ -212,9 +213,9 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    */
   Strong(strong: TxtStrongNode, render: Renderer) {
     return (
-      <Text key={getTxtNodeKey(strong)} style={{ fontWeight: "600" }}>
+      <IOText key={getTxtNodeKey(strong)} weight="Semibold">
         {strong.children.map(render)}
-      </Text>
+      </IOText>
     );
   },
   /**
