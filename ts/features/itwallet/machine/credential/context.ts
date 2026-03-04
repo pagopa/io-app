@@ -74,7 +74,7 @@ export type Context = {
   /**
    * Entry point of credential issuance flow:
    * - catalogue
-   * - credentialOffer (QR / deep link)
+   * - credential-offer (QR / deep link)
    */
   issuanceSource: IssuanceSource | undefined;
   /**

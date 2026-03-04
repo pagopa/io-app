@@ -144,7 +144,7 @@ export const itwCredentialIssuanceMachine = setup({
           }))
         },
 
-        // TODO: better handle different error cases (e.g. invalid offer, network error, etc.) and map them to specific failure states
+        // TODO [SIW-3996]: better handle different error cases (e.g. invalid offer, network error, etc.) and map them to specific failure states
         onError: {}
       }
     },
