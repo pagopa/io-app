@@ -1,34 +1,27 @@
 import {
-  Credential,
+  ItwVersion,
   createCryptoContextFor
 } from "@pagopa/io-react-native-wallet";
 import { isAfter } from "date-fns";
 import * as t from "io-ts";
 import { CredentialFormat, StoredCredential } from "./itwTypesUtils";
 import { WIA_KEYTAG } from "./itwCryptoContextUtils";
-import { Env } from "./environment";
-
-type IssuerConf = Awaited<
-  ReturnType<Credential.Issuance.EvaluateIssuerTrust>
->["issuerConf"];
-
-const fetchIssuerConfShared = createIssuerConfSharedFetch();
+import { getIoWallet } from "./itwIoWallet";
 
 export const getCredentialStatusAssertion = async (
   credential: StoredCredential,
-  env: Env
+  itwVersion: ItwVersion
 ) => {
+  const ioWallet = getIoWallet(itwVersion);
+
   // Legacy credentials carry the legacy Issuer configuration, which is incompatible with the new API.
   // In this scenario the new configuration is fetched and used instead of `credential.issuerConf`.
-  const issuerConf =
-    credential.format === CredentialFormat.LEGACY_SD_JWT
-      ? await fetchIssuerConfShared(env)
-      : (credential.issuerConf as IssuerConf);
+  const issuerConf = credential.issuerConf;
 
   const credentialCryptoContext = createCryptoContextFor(credential.keyTag);
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
-  const rawStatusAssertion = await Credential.Status.statusAssertion(
+  const rawStatusAssertion = await ioWallet.CredentialStatus.getStatusAssertion(
     issuerConf,
     credential.credential,
     credential.format as CredentialFormat,
@@ -36,7 +29,7 @@ export const getCredentialStatusAssertion = async (
   );
 
   const { parsedStatusAssertion } =
-    await Credential.Status.verifyAndParseStatusAssertion(
+    await ioWallet.CredentialStatus.verifyAndParseStatusAssertion(
       issuerConf,
       rawStatusAssertion,
       credential.credential,
@@ -86,28 +79,3 @@ export const StatusAssertionError = t.intersection([
   t.type({ error: t.string }),
   t.partial({ error_description: t.string })
 ]);
-
-/**
- * Create a shared promise to fetch the new Issuer Entity Configuration.
- * Multiple invocations of this function will reuse the same promise,
- * avoiding multiple HTTP calls for the same result.
- *
- * @param maxAge Time in seconds to share the promise, defaults to 24 hours
- * @return The shared promise that resolves to the Issuer Configuration
- */
-function createIssuerConfSharedFetch(maxAge = 86400) {
-  // eslint-disable-next-line functional/no-let
-  let sharedPromise: Promise<IssuerConf> | null = null;
-  // eslint-disable-next-line functional/no-let
-  let timestamp: number = -1;
-
-  return function getIssuerConf(env: Env) {
-    if (timestamp + maxAge * 1000 < Date.now() || !sharedPromise) {
-      sharedPromise = Credential.Issuance.evaluateIssuerTrust(
-        env.WALLET_EAA_PROVIDER_BASE_URL
-      ).then(res => res.issuerConf);
-      timestamp = Date.now();
-    }
-    return sharedPromise;
-  };
-}

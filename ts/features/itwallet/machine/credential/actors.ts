@@ -165,7 +165,7 @@ export const createCredentialIssuanceActorsImplementation = (
       }
 
       const { statusAssertion, parsedStatusAssertion } =
-        await getCredentialStatusAssertion(credential, env).catch(
+        await getCredentialStatusAssertion(credential, itwVersion).catch(
           enrichErrorWithMetadata({ credentialId: credential.credentialId })
         );
 
@@ -174,7 +174,7 @@ export const createCredentialIssuanceActorsImplementation = (
         storedStatusAssertion: {
           credentialStatus: "valid",
           statusAssertion,
-          parsedStatusAssertion: parsedStatusAssertion.payload
+          parsedStatusAssertion
         }
       };
     };

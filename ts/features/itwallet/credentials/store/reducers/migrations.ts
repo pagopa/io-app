@@ -4,8 +4,11 @@ import * as O from "fp-ts/lib/Option";
 import { MigrationManifest, PersistedState } from "redux-persist";
 import { WALLET_SPEC_VERSION } from "../../../common/utils/constants";
 import { extractVerification } from "../../../common/utils/itwCredentialUtils";
+import { IssuerConfiguration } from "../../../common/utils/itwTypesUtils";
 
 type MigrationState = PersistedState & Record<string, any>;
+
+type AnyRecord = Record<string, any>;
 
 export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 7;
 
@@ -13,16 +16,15 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
   // Version 0
   // Add optional `storedStatusAttestation` field
   "0": (state: MigrationState) => {
-    const addStoredStatusAttestation = (credential: Record<string, any>) => ({
+    const addStoredStatusAttestation = (credential: AnyRecord) => ({
       ...credential,
       storedStatusAttestation: undefined
     });
     return {
       ...state,
       eid: pipe(state.eid, O.map(addStoredStatusAttestation)),
-      credentials: state.credentials.map(
-        (credential: O.Option<Record<string, any>>) =>
-          pipe(credential, O.map(addStoredStatusAttestation))
+      credentials: state.credentials.map((credential: O.Option<AnyRecord>) =>
+        pipe(credential, O.map(addStoredStatusAttestation))
       )
     };
   },
@@ -30,7 +32,7 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
   // Version 1
   // Add issuance and expiration dates to stored credentials
   "1": (state: MigrationState) => {
-    const addIatExpProperties = (credential: Record<string, any>) => {
+    const addIatExpProperties = (credential: AnyRecord) => {
       const { disclosures, sdJwt } = SdJwt.decode(credential.credential);
       const iatDisclosure = disclosures.find(
         ({ decoded }) => decoded[1] === "iat"
@@ -52,9 +54,8 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
     return {
       ...state,
       eid: pipe(state.eid, O.map(addIatExpProperties)),
-      credentials: state.credentials.map(
-        (credential: O.Option<Record<string, any>>) =>
-          pipe(credential, O.map(addIatExpProperties))
+      credentials: state.credentials.map((credential: O.Option<AnyRecord>) =>
+        pipe(credential, O.map(addIatExpProperties))
       )
     };
   },
@@ -62,7 +63,7 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
   // Version 2
   // Migrate store to key:credential Record and removes Option
   "2": (state: MigrationState) => {
-    const mapCredential = (credential: O.Option<Record<string, any>>) =>
+    const mapCredential = (credential: O.Option<AnyRecord>) =>
       pipe(
         credential,
         O.map(c => ({ [c.credentialType]: c })),
@@ -72,11 +73,11 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
     const { eid, credentials, ...other } = state;
 
     const credentialsByType = credentials.reduce(
-      (
-        acc: { [type: string]: Record<string, any> },
-        c: O.Option<Record<string, any>>
-      ) => ({ ...acc, ...mapCredential(c) }),
-      {} as { [type: string]: Record<string, any> }
+      (acc: { [type: string]: AnyRecord }, c: O.Option<AnyRecord>) => ({
+        ...acc,
+        ...mapCredential(c)
+      }),
+      {} as { [type: string]: AnyRecord }
     );
 
     return {
@@ -93,7 +94,7 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
   "3": (state: MigrationState) => ({
     ...state,
     credentials: Object.fromEntries(
-      Object.values<Record<string, any>>(state.credentials).map(credential => {
+      Object.values<AnyRecord>(state.credentials).map(credential => {
         const credentialId =
           credential.credentialId ?? credential.credentialType;
         return [credentialId, { ...credential, credentialId }];
@@ -108,7 +109,7 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
   "4": (state: MigrationState) => ({
     ...state,
     credentials: Object.fromEntries(
-      Object.values<Record<string, any>>(state.credentials).map(credential => [
+      Object.values<AnyRecord>(state.credentials).map(credential => [
         credential.credentialId,
         {
           ...credential,
@@ -123,7 +124,7 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
   "5": (state: MigrationState) => ({
     ...state,
     credentials: Object.fromEntries(
-      Object.values<Record<string, any>>(state.credentials).map(credential => [
+      Object.values<AnyRecord>(state.credentials).map(credential => [
         credential.credentialId,
         { ...credential, storedStatusAttestation: undefined }
       ])
@@ -133,9 +134,7 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
   // Version 6
   // Rename Status Attestation to Status Assertion
   "6": (state: MigrationState) => {
-    const mapStatusAttestationToAssertion = (
-      statusAttObj?: Record<string, any>
-    ) =>
+    const mapStatusAttestationToAssertion = (statusAttObj?: AnyRecord) =>
       statusAttObj?.credentialStatus === "valid"
         ? {
             credentialStatus: statusAttObj.credentialStatus,
@@ -147,7 +146,7 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
     return {
       ...state,
       credentials: Object.fromEntries(
-        Object.values<Record<string, any>>(state.credentials).map(
+        Object.values<AnyRecord>(state.credentials).map(
           ({ storedStatusAttestation, ...rest }) => [
             rest.credentialId,
             {
@@ -165,7 +164,7 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
   // Version 7
   // Add spec_version and verification fields to stored credentials
   "7": (state: MigrationState) => {
-    const addSpecVersionAndVerification = (cred: Record<string, any>) => ({
+    const addSpecVersionAndVerification = (cred: AnyRecord) => ({
       ...cred,
       spec_version: WALLET_SPEC_VERSION,
       verification: extractVerification(cred as any)
@@ -174,9 +173,57 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
     return {
       ...state,
       credentials: Object.fromEntries(
-        Object.values<Record<string, any>>(state.credentials).map(c => [
+        Object.values<AnyRecord>(state.credentials).map(c => [
           c.credentialId,
           addSpecVersionAndVerification(c)
+        ])
+      )
+    };
+  },
+
+  // Version 8
+  // Map version specific Issuer configurations to the new shared config
+  "8": (state: MigrationState) => {
+    const mapClaims = (claims: AnyRecord) =>
+      Object.entries(claims).map(([claimName, claimConfig]) => ({
+        path: [claimName],
+        display: claimConfig.display
+      }));
+
+    const mapIssuerConfig = (config: AnyRecord): IssuerConfiguration => {
+      const { oauth_authorization_server, openid_credential_issuer } =
+        config.metadata;
+      return {
+        authorization_endpoint:
+          oauth_authorization_server.authorization_endpoint,
+        credential_endpoint: openid_credential_issuer.credential_endpoint,
+        credential_issuer: openid_credential_issuer.credential_issuer,
+        credential_configurations_supported: config.sub.includes("1-0")
+          ? openid_credential_issuer.credential_configurations_supported
+          : Object.fromEntries(
+              Object.entries<AnyRecord>(
+                openid_credential_issuer.credential_configurations_supported
+              ).map(([credId, credConfig]) => [
+                credId,
+                { ...credConfig, claims: mapClaims(credConfig.claims) }
+              ])
+            ),
+        keys: openid_credential_issuer.jwks.keys,
+        pushed_authorization_request_endpoint:
+          oauth_authorization_server.pushed_authorization_request_endpoint,
+        token_endpoint: oauth_authorization_server.token_endpoint,
+        status_assertion_endpoint:
+          openid_credential_issuer.status_attestation_endpoint,
+        nonce_endpoint: openid_credential_issuer.nonce_endpoint
+      };
+    };
+
+    return {
+      ...state,
+      credentials: Object.fromEntries(
+        Object.values<AnyRecord>(state.credentials).map(c => [
+          c.credentialId,
+          { ...c, issuerConf: mapIssuerConfig(c.issuerConf) }
         ])
       )
     };
