@@ -189,6 +189,329 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                         }
                       }
                     >
+                      <RNCSafeAreaView
+                        edges={
+                          {
+                            "bottom": "additive",
+                            "left": "off",
+                            "right": "off",
+                            "top": "off",
+                          }
+                        }
+                        style={
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
+                        }
+                      >
+                        <View
+                          style={
+                            {
+                              "flex": 1,
+                              "paddingHorizontal": 24,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              {
+                                "alignItems": "center",
+                                "display": "flex",
+                                "flex": 1,
+                                "flexDirection": "column",
+                                "gap": 24,
+                                "justifyContent": "center",
+                              }
+                            }
+                          >
+                            <View
+                              accessibilityElementsHidden={true}
+                              accessible={false}
+                              importantForAccessibility="no-hide-descendants"
+                            >
+                              <View
+                                accessibilityHint="Attendi il caricamento del contenuto"
+                                accessibilityLabel="Caricamento in corso"
+                                accessibilityRole="progressbar"
+                                accessible={true}
+                                style={
+                                  {
+                                    "height": 48,
+                                    "width": 48,
+                                  }
+                                }
+                                testID="LoadingIndicator"
+                              >
+                                <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    {
+                                      "animationDuration": 850,
+                                      "animationIterationCount": "infinite",
+                                      "animationName": {
+                                        "from": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "0deg",
+                                            },
+                                          ],
+                                        },
+                                        "to": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "360deg",
+                                            },
+                                          ],
+                                        },
+                                      },
+                                      "animationTimingFunction": "linear",
+                                      "transformOrigin": "center",
+                                    }
+                                  }
+                                  style={
+                                    [
+                                      {
+                                        "transformOrigin": "center",
+                                      },
+                                    ]
+                                  }
+                                  testID="LoadingSpinnerAnimatedTestID"
+                                >
+                                  <RNSVGSvgView
+                                    align="xMidYMid"
+                                    bbHeight={48}
+                                    bbWidth={48}
+                                    fill="none"
+                                    focusable={false}
+                                    height={48}
+                                    meetOrSlice={0}
+                                    minX={0}
+                                    minY={0}
+                                    style={
+                                      [
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderWidth": 0,
+                                        },
+                                        {
+                                          "flex": 0,
+                                          "height": 48,
+                                          "width": 48,
+                                        },
+                                      ]
+                                    }
+                                    vbHeight={48}
+                                    vbWidth={48}
+                                    width={48}
+                                  >
+                                    <RNSVGGroup
+                                      fill={null}
+                                      propList={
+                                        [
+                                          "fill",
+                                        ]
+                                      }
+                                    >
+                                      <RNSVGDefs>
+                                        <RNSVGLinearGradient
+                                          gradient={
+                                            [
+                                              0,
+                                              736995,
+                                              1,
+                                              -16040221,
+                                            ]
+                                          }
+                                          gradientTransform={null}
+                                          gradientUnits={0}
+                                          name="«r0»-secondHalf"
+                                          x1="0%"
+                                          x2="100%"
+                                          y1="0%"
+                                          y2="0%"
+                                        />
+                                        <RNSVGLinearGradient
+                                          gradient={
+                                            [
+                                              0,
+                                              -16040221,
+                                              1,
+                                              -16040221,
+                                            ]
+                                          }
+                                          gradientTransform={null}
+                                          gradientUnits={0}
+                                          name="«r0»-firstHalf"
+                                          x1="0%"
+                                          x2="100%"
+                                          y1="0%"
+                                          y2="0%"
+                                        />
+                                      </RNSVGDefs>
+                                      <RNSVGGroup
+                                        fill={
+                                          {
+                                            "payload": 4278190080,
+                                            "type": 0,
+                                          }
+                                        }
+                                        propList={
+                                          [
+                                            "strokeWidth",
+                                          ]
+                                        }
+                                        strokeWidth={5}
+                                      >
+                                        <RNSVGPath
+                                          d="M 2.5 24 A 21.5 21.5 0 0 1 45.5 24"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                          propList={
+                                            [
+                                              "stroke",
+                                            ]
+                                          }
+                                          stroke={
+                                            {
+                                              "brushRef": "«r0»-secondHalf",
+                                              "type": 1,
+                                            }
+                                          }
+                                        />
+                                        <RNSVGPath
+                                          d="M 45.5 24 A 21.5 21.5 0 0 1 2.5 24"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                          propList={
+                                            [
+                                              "stroke",
+                                            ]
+                                          }
+                                          stroke={
+                                            {
+                                              "brushRef": "«r0»-firstHalf",
+                                              "type": 1,
+                                            }
+                                          }
+                                        />
+                                        <RNSVGPath
+                                          d="M 2.5 24 A 21.5 21.5 0 0 1 2.5 22.75"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                          propList={
+                                            [
+                                              "stroke",
+                                              "strokeLinecap",
+                                            ]
+                                          }
+                                          stroke={
+                                            {
+                                              "payload": 4278927075,
+                                              "type": 0,
+                                            }
+                                          }
+                                          strokeLinecap={1}
+                                        />
+                                      </RNSVGGroup>
+                                    </RNSVGGroup>
+                                  </RNSVGSvgView>
+                                </View>
+                              </View>
+                            </View>
+                            <View
+                              style={
+                                {
+                                  "alignItems": "center",
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
+                                }
+                              }
+                            >
+                              <Text
+                                accessibilityLabel="Stiamo caricando il messaggio"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title2"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#2B2E38",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 22,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 33,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Stiamo caricando il messaggio
+                              </Text>
+                              <Text
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 24,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Attendi qualche secondo
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                      </RNCSafeAreaView>
+                    </View>
+                    <View
+                      collapsable={false}
+                      pointerEvents="box-none"
+                    >
                       <View
                         aria-hidden={false}
                         onLayout={[Function]}
@@ -1180,6 +1503,329 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                           "zIndex": 1,
                         }
                       }
+                    >
+                      <RNCSafeAreaView
+                        edges={
+                          {
+                            "bottom": "additive",
+                            "left": "off",
+                            "right": "off",
+                            "top": "off",
+                          }
+                        }
+                        style={
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
+                        }
+                      >
+                        <View
+                          style={
+                            {
+                              "flex": 1,
+                              "paddingHorizontal": 24,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              {
+                                "alignItems": "center",
+                                "display": "flex",
+                                "flex": 1,
+                                "flexDirection": "column",
+                                "gap": 24,
+                                "justifyContent": "center",
+                              }
+                            }
+                          >
+                            <View
+                              accessibilityElementsHidden={true}
+                              accessible={false}
+                              importantForAccessibility="no-hide-descendants"
+                            >
+                              <View
+                                accessibilityHint="Attendi il caricamento del contenuto"
+                                accessibilityLabel="Caricamento in corso"
+                                accessibilityRole="progressbar"
+                                accessible={true}
+                                style={
+                                  {
+                                    "height": 48,
+                                    "width": 48,
+                                  }
+                                }
+                                testID="LoadingIndicator"
+                              >
+                                <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    {
+                                      "animationDuration": 850,
+                                      "animationIterationCount": "infinite",
+                                      "animationName": {
+                                        "from": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "0deg",
+                                            },
+                                          ],
+                                        },
+                                        "to": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "360deg",
+                                            },
+                                          ],
+                                        },
+                                      },
+                                      "animationTimingFunction": "linear",
+                                      "transformOrigin": "center",
+                                    }
+                                  }
+                                  style={
+                                    [
+                                      {
+                                        "transformOrigin": "center",
+                                      },
+                                    ]
+                                  }
+                                  testID="LoadingSpinnerAnimatedTestID"
+                                >
+                                  <RNSVGSvgView
+                                    align="xMidYMid"
+                                    bbHeight={48}
+                                    bbWidth={48}
+                                    fill="none"
+                                    focusable={false}
+                                    height={48}
+                                    meetOrSlice={0}
+                                    minX={0}
+                                    minY={0}
+                                    style={
+                                      [
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderWidth": 0,
+                                        },
+                                        {
+                                          "flex": 0,
+                                          "height": 48,
+                                          "width": 48,
+                                        },
+                                      ]
+                                    }
+                                    vbHeight={48}
+                                    vbWidth={48}
+                                    width={48}
+                                  >
+                                    <RNSVGGroup
+                                      fill={null}
+                                      propList={
+                                        [
+                                          "fill",
+                                        ]
+                                      }
+                                    >
+                                      <RNSVGDefs>
+                                        <RNSVGLinearGradient
+                                          gradient={
+                                            [
+                                              0,
+                                              736995,
+                                              1,
+                                              -16040221,
+                                            ]
+                                          }
+                                          gradientTransform={null}
+                                          gradientUnits={0}
+                                          name="«r2»-secondHalf"
+                                          x1="0%"
+                                          x2="100%"
+                                          y1="0%"
+                                          y2="0%"
+                                        />
+                                        <RNSVGLinearGradient
+                                          gradient={
+                                            [
+                                              0,
+                                              -16040221,
+                                              1,
+                                              -16040221,
+                                            ]
+                                          }
+                                          gradientTransform={null}
+                                          gradientUnits={0}
+                                          name="«r2»-firstHalf"
+                                          x1="0%"
+                                          x2="100%"
+                                          y1="0%"
+                                          y2="0%"
+                                        />
+                                      </RNSVGDefs>
+                                      <RNSVGGroup
+                                        fill={
+                                          {
+                                            "payload": 4278190080,
+                                            "type": 0,
+                                          }
+                                        }
+                                        propList={
+                                          [
+                                            "strokeWidth",
+                                          ]
+                                        }
+                                        strokeWidth={5}
+                                      >
+                                        <RNSVGPath
+                                          d="M 2.5 24 A 21.5 21.5 0 0 1 45.5 24"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                          propList={
+                                            [
+                                              "stroke",
+                                            ]
+                                          }
+                                          stroke={
+                                            {
+                                              "brushRef": "«r2»-secondHalf",
+                                              "type": 1,
+                                            }
+                                          }
+                                        />
+                                        <RNSVGPath
+                                          d="M 45.5 24 A 21.5 21.5 0 0 1 2.5 24"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                          propList={
+                                            [
+                                              "stroke",
+                                            ]
+                                          }
+                                          stroke={
+                                            {
+                                              "brushRef": "«r2»-firstHalf",
+                                              "type": 1,
+                                            }
+                                          }
+                                        />
+                                        <RNSVGPath
+                                          d="M 2.5 24 A 21.5 21.5 0 0 1 2.5 22.75"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                          propList={
+                                            [
+                                              "stroke",
+                                              "strokeLinecap",
+                                            ]
+                                          }
+                                          stroke={
+                                            {
+                                              "payload": 4278927075,
+                                              "type": 0,
+                                            }
+                                          }
+                                          strokeLinecap={1}
+                                        />
+                                      </RNSVGGroup>
+                                    </RNSVGGroup>
+                                  </RNSVGSvgView>
+                                </View>
+                              </View>
+                            </View>
+                            <View
+                              style={
+                                {
+                                  "alignItems": "center",
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
+                                }
+                              }
+                            >
+                              <Text
+                                accessibilityLabel="Stiamo caricando il messaggio"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title2"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#2B2E38",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 22,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 33,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Stiamo caricando il messaggio
+                              </Text>
+                              <Text
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 24,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Attendi qualche secondo
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                      </RNCSafeAreaView>
+                    </View>
+                    <View
+                      collapsable={false}
+                      pointerEvents="box-none"
                     >
                       <View
                         aria-hidden={false}
@@ -3518,6 +4164,329 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                         }
                       }
                     >
+                      <RNCSafeAreaView
+                        edges={
+                          {
+                            "bottom": "additive",
+                            "left": "off",
+                            "right": "off",
+                            "top": "off",
+                          }
+                        }
+                        style={
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
+                        }
+                      >
+                        <View
+                          style={
+                            {
+                              "flex": 1,
+                              "paddingHorizontal": 24,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              {
+                                "alignItems": "center",
+                                "display": "flex",
+                                "flex": 1,
+                                "flexDirection": "column",
+                                "gap": 24,
+                                "justifyContent": "center",
+                              }
+                            }
+                          >
+                            <View
+                              accessibilityElementsHidden={true}
+                              accessible={false}
+                              importantForAccessibility="no-hide-descendants"
+                            >
+                              <View
+                                accessibilityHint="Attendi il caricamento del contenuto"
+                                accessibilityLabel="Caricamento in corso"
+                                accessibilityRole="progressbar"
+                                accessible={true}
+                                style={
+                                  {
+                                    "height": 48,
+                                    "width": 48,
+                                  }
+                                }
+                                testID="LoadingIndicator"
+                              >
+                                <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    {
+                                      "animationDuration": 850,
+                                      "animationIterationCount": "infinite",
+                                      "animationName": {
+                                        "from": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "0deg",
+                                            },
+                                          ],
+                                        },
+                                        "to": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "360deg",
+                                            },
+                                          ],
+                                        },
+                                      },
+                                      "animationTimingFunction": "linear",
+                                      "transformOrigin": "center",
+                                    }
+                                  }
+                                  style={
+                                    [
+                                      {
+                                        "transformOrigin": "center",
+                                      },
+                                    ]
+                                  }
+                                  testID="LoadingSpinnerAnimatedTestID"
+                                >
+                                  <RNSVGSvgView
+                                    align="xMidYMid"
+                                    bbHeight={48}
+                                    bbWidth={48}
+                                    fill="none"
+                                    focusable={false}
+                                    height={48}
+                                    meetOrSlice={0}
+                                    minX={0}
+                                    minY={0}
+                                    style={
+                                      [
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderWidth": 0,
+                                        },
+                                        {
+                                          "flex": 0,
+                                          "height": 48,
+                                          "width": 48,
+                                        },
+                                      ]
+                                    }
+                                    vbHeight={48}
+                                    vbWidth={48}
+                                    width={48}
+                                  >
+                                    <RNSVGGroup
+                                      fill={null}
+                                      propList={
+                                        [
+                                          "fill",
+                                        ]
+                                      }
+                                    >
+                                      <RNSVGDefs>
+                                        <RNSVGLinearGradient
+                                          gradient={
+                                            [
+                                              0,
+                                              736995,
+                                              1,
+                                              -16040221,
+                                            ]
+                                          }
+                                          gradientTransform={null}
+                                          gradientUnits={0}
+                                          name="«r3»-secondHalf"
+                                          x1="0%"
+                                          x2="100%"
+                                          y1="0%"
+                                          y2="0%"
+                                        />
+                                        <RNSVGLinearGradient
+                                          gradient={
+                                            [
+                                              0,
+                                              -16040221,
+                                              1,
+                                              -16040221,
+                                            ]
+                                          }
+                                          gradientTransform={null}
+                                          gradientUnits={0}
+                                          name="«r3»-firstHalf"
+                                          x1="0%"
+                                          x2="100%"
+                                          y1="0%"
+                                          y2="0%"
+                                        />
+                                      </RNSVGDefs>
+                                      <RNSVGGroup
+                                        fill={
+                                          {
+                                            "payload": 4278190080,
+                                            "type": 0,
+                                          }
+                                        }
+                                        propList={
+                                          [
+                                            "strokeWidth",
+                                          ]
+                                        }
+                                        strokeWidth={5}
+                                      >
+                                        <RNSVGPath
+                                          d="M 2.5 24 A 21.5 21.5 0 0 1 45.5 24"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                          propList={
+                                            [
+                                              "stroke",
+                                            ]
+                                          }
+                                          stroke={
+                                            {
+                                              "brushRef": "«r3»-secondHalf",
+                                              "type": 1,
+                                            }
+                                          }
+                                        />
+                                        <RNSVGPath
+                                          d="M 45.5 24 A 21.5 21.5 0 0 1 2.5 24"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                          propList={
+                                            [
+                                              "stroke",
+                                            ]
+                                          }
+                                          stroke={
+                                            {
+                                              "brushRef": "«r3»-firstHalf",
+                                              "type": 1,
+                                            }
+                                          }
+                                        />
+                                        <RNSVGPath
+                                          d="M 2.5 24 A 21.5 21.5 0 0 1 2.5 22.75"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                          propList={
+                                            [
+                                              "stroke",
+                                              "strokeLinecap",
+                                            ]
+                                          }
+                                          stroke={
+                                            {
+                                              "payload": 4278927075,
+                                              "type": 0,
+                                            }
+                                          }
+                                          strokeLinecap={1}
+                                        />
+                                      </RNSVGGroup>
+                                    </RNSVGGroup>
+                                  </RNSVGSvgView>
+                                </View>
+                              </View>
+                            </View>
+                            <View
+                              style={
+                                {
+                                  "alignItems": "center",
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
+                                }
+                              }
+                            >
+                              <Text
+                                accessibilityLabel="Stiamo caricando il messaggio"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title2"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#2B2E38",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 22,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 33,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Stiamo caricando il messaggio
+                              </Text>
+                              <Text
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 24,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Attendi qualche secondo
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                      </RNCSafeAreaView>
+                    </View>
+                    <View
+                      collapsable={false}
+                      pointerEvents="box-none"
+                    >
                       <View
                         aria-hidden={false}
                         onLayout={[Function]}
@@ -4509,6 +5478,329 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                           "zIndex": 1,
                         }
                       }
+                    >
+                      <RNCSafeAreaView
+                        edges={
+                          {
+                            "bottom": "additive",
+                            "left": "off",
+                            "right": "off",
+                            "top": "off",
+                          }
+                        }
+                        style={
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
+                        }
+                      >
+                        <View
+                          style={
+                            {
+                              "flex": 1,
+                              "paddingHorizontal": 24,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              {
+                                "alignItems": "center",
+                                "display": "flex",
+                                "flex": 1,
+                                "flexDirection": "column",
+                                "gap": 24,
+                                "justifyContent": "center",
+                              }
+                            }
+                          >
+                            <View
+                              accessibilityElementsHidden={true}
+                              accessible={false}
+                              importantForAccessibility="no-hide-descendants"
+                            >
+                              <View
+                                accessibilityHint="Attendi il caricamento del contenuto"
+                                accessibilityLabel="Caricamento in corso"
+                                accessibilityRole="progressbar"
+                                accessible={true}
+                                style={
+                                  {
+                                    "height": 48,
+                                    "width": 48,
+                                  }
+                                }
+                                testID="LoadingIndicator"
+                              >
+                                <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    {
+                                      "animationDuration": 850,
+                                      "animationIterationCount": "infinite",
+                                      "animationName": {
+                                        "from": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "0deg",
+                                            },
+                                          ],
+                                        },
+                                        "to": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "360deg",
+                                            },
+                                          ],
+                                        },
+                                      },
+                                      "animationTimingFunction": "linear",
+                                      "transformOrigin": "center",
+                                    }
+                                  }
+                                  style={
+                                    [
+                                      {
+                                        "transformOrigin": "center",
+                                      },
+                                    ]
+                                  }
+                                  testID="LoadingSpinnerAnimatedTestID"
+                                >
+                                  <RNSVGSvgView
+                                    align="xMidYMid"
+                                    bbHeight={48}
+                                    bbWidth={48}
+                                    fill="none"
+                                    focusable={false}
+                                    height={48}
+                                    meetOrSlice={0}
+                                    minX={0}
+                                    minY={0}
+                                    style={
+                                      [
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderWidth": 0,
+                                        },
+                                        {
+                                          "flex": 0,
+                                          "height": 48,
+                                          "width": 48,
+                                        },
+                                      ]
+                                    }
+                                    vbHeight={48}
+                                    vbWidth={48}
+                                    width={48}
+                                  >
+                                    <RNSVGGroup
+                                      fill={null}
+                                      propList={
+                                        [
+                                          "fill",
+                                        ]
+                                      }
+                                    >
+                                      <RNSVGDefs>
+                                        <RNSVGLinearGradient
+                                          gradient={
+                                            [
+                                              0,
+                                              736995,
+                                              1,
+                                              -16040221,
+                                            ]
+                                          }
+                                          gradientTransform={null}
+                                          gradientUnits={0}
+                                          name="«r1»-secondHalf"
+                                          x1="0%"
+                                          x2="100%"
+                                          y1="0%"
+                                          y2="0%"
+                                        />
+                                        <RNSVGLinearGradient
+                                          gradient={
+                                            [
+                                              0,
+                                              -16040221,
+                                              1,
+                                              -16040221,
+                                            ]
+                                          }
+                                          gradientTransform={null}
+                                          gradientUnits={0}
+                                          name="«r1»-firstHalf"
+                                          x1="0%"
+                                          x2="100%"
+                                          y1="0%"
+                                          y2="0%"
+                                        />
+                                      </RNSVGDefs>
+                                      <RNSVGGroup
+                                        fill={
+                                          {
+                                            "payload": 4278190080,
+                                            "type": 0,
+                                          }
+                                        }
+                                        propList={
+                                          [
+                                            "strokeWidth",
+                                          ]
+                                        }
+                                        strokeWidth={5}
+                                      >
+                                        <RNSVGPath
+                                          d="M 2.5 24 A 21.5 21.5 0 0 1 45.5 24"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                          propList={
+                                            [
+                                              "stroke",
+                                            ]
+                                          }
+                                          stroke={
+                                            {
+                                              "brushRef": "«r1»-secondHalf",
+                                              "type": 1,
+                                            }
+                                          }
+                                        />
+                                        <RNSVGPath
+                                          d="M 45.5 24 A 21.5 21.5 0 0 1 2.5 24"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                          propList={
+                                            [
+                                              "stroke",
+                                            ]
+                                          }
+                                          stroke={
+                                            {
+                                              "brushRef": "«r1»-firstHalf",
+                                              "type": 1,
+                                            }
+                                          }
+                                        />
+                                        <RNSVGPath
+                                          d="M 2.5 24 A 21.5 21.5 0 0 1 2.5 22.75"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                          propList={
+                                            [
+                                              "stroke",
+                                              "strokeLinecap",
+                                            ]
+                                          }
+                                          stroke={
+                                            {
+                                              "payload": 4278927075,
+                                              "type": 0,
+                                            }
+                                          }
+                                          strokeLinecap={1}
+                                        />
+                                      </RNSVGGroup>
+                                    </RNSVGGroup>
+                                  </RNSVGSvgView>
+                                </View>
+                              </View>
+                            </View>
+                            <View
+                              style={
+                                {
+                                  "alignItems": "center",
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
+                                }
+                              }
+                            >
+                              <Text
+                                accessibilityLabel="Stiamo caricando il messaggio"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title2"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#2B2E38",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 22,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 33,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Stiamo caricando il messaggio
+                              </Text>
+                              <Text
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 24,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Attendi qualche secondo
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                      </RNCSafeAreaView>
+                    </View>
+                    <View
+                      collapsable={false}
+                      pointerEvents="box-none"
                     >
                       <View
                         aria-hidden={false}

@@ -548,7 +548,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -641,7 +642,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -734,7 +736,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -827,7 +830,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -920,7 +924,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -1013,7 +1018,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -1106,7 +1112,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -1199,7 +1206,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -1292,7 +1300,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -1385,7 +1394,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -1478,7 +1488,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -1539,7 +1550,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Emissione versione digitale Istituto Poligrafico e Zecca di Stato"
                           accessible={false}
                           style={
                             {
@@ -1571,7 +1581,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
+                                accessibilityLabel="Emissione versione digitale Istituto Poligrafico e Zecca di Stato"
                                 accessible={true}
+                                importantForAccessibility="yes"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -1621,7 +1633,10 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 </Text>
                               </View>
                             </View>
-                            <View>
+                            <View
+                              accessible={false}
+                              importantForAccessibility="auto"
+                            >
                               <View
                                 accessibilityLabel="Info Emissione versione digitale"
                                 accessibilityRole="button"
@@ -2543,7 +2558,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -2731,7 +2747,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
-                                  accessible={true}
+                                  accessible={false}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "flexDirection": "column",
@@ -2825,7 +2842,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -3013,7 +3031,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
-                                  accessible={true}
+                                  accessible={false}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "flexDirection": "column",
@@ -3202,7 +3221,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
-                                  accessible={true}
+                                  accessible={false}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "flexDirection": "column",
@@ -3391,7 +3411,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
-                                  accessible={true}
+                                  accessible={false}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "flexDirection": "column",
@@ -3454,7 +3475,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Data di Scadenza 22/02/2025"
-                          accessible={false}
+                          accessible={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -3485,7 +3506,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -3535,7 +3557,10 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 </Text>
                               </View>
                             </View>
-                            <View>
+                            <View
+                              accessible={false}
+                              importantForAccessibility="no-hide-descendants"
+                            >
                               <View
                                 accessible={true}
                                 style={
@@ -3724,7 +3749,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
-                                  accessible={true}
+                                  accessible={false}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "flexDirection": "column",
@@ -3913,7 +3939,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
-                                  accessible={true}
+                                  accessible={false}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "flexDirection": "column",
@@ -4007,7 +4034,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -4195,7 +4223,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
-                                  accessible={true}
+                                  accessible={false}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "flexDirection": "column",
@@ -4257,7 +4286,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Emissione versione digitale Istituto Poligrafico e Zecca di Stato"
                           accessible={false}
                           style={
                             {
@@ -4289,7 +4317,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
+                                accessibilityLabel="Emissione versione digitale Istituto Poligrafico e Zecca di Stato"
                                 accessible={true}
+                                importantForAccessibility="yes"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -4339,7 +4369,10 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 </Text>
                               </View>
                             </View>
-                            <View>
+                            <View
+                              accessible={false}
+                              importantForAccessibility="auto"
+                            >
                               <View
                                 accessibilityLabel="Info Emissione versione digitale"
                                 accessibilityRole="button"

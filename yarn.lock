@@ -3387,7 +3387,27 @@ __metadata:
   version: 3.1.1
   resolution: "@npmcli/fs@npm:3.1.1"
   dependencies:
-    semver: ^7.3.5
+    auto-changelog: ^2.4.0
+    lodash: ^4.17.21
+    react-native-easing-gradient: ^1.1.1
+    react-native-gesture-handler: ^2.25.0
+    react-native-haptic-feedback: ^2.3.3
+    react-native-linear-gradient: ^2.8.3
+    react-native-reanimated: 4.2.2
+    react-native-safe-area-context: ^5.6.2
+    react-native-svg: ^15.12.0
+    react-native-worklets: ^0.7.0
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-easing-gradient: "*"
+    react-native-gesture-handler: "*"
+    react-native-haptic-feedback: "*"
+    react-native-linear-gradient: "*"
+    react-native-reanimated: ">=4.0.0"
+    react-native-safe-area-context: "*"
+    react-native-svg: "*"
+    react-native-worklets: "*"
   checksum: d960cab4b93adcb31ce223bfb75c5714edbd55747342efb67dcc2f25e023d930a7af6ece3e75f2f459b6f38fc14d031c766f116cd124fdc937fd33112579e820
   languageName: node
   linkType: hard

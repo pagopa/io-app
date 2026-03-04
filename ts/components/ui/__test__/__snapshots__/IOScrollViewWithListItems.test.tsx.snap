@@ -494,7 +494,8 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                   }
                                 >
                                   <View
-                                    accessible={true}
+                                    accessible={false}
+                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       {
                                         "flexDirection": "column",
@@ -590,7 +591,8 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                   }
                                 >
                                   <View
-                                    accessible={true}
+                                    accessible={false}
+                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       {
                                         "flexDirection": "column",
@@ -2375,7 +2377,8 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                   }
                                 >
                                   <View
-                                    accessible={true}
+                                    accessible={false}
+                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       {
                                         "flexDirection": "column",
@@ -2471,7 +2474,8 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                   }
                                 >
                                   <View
-                                    accessible={true}
+                                    accessible={false}
+                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       {
                                         "flexDirection": "column",
