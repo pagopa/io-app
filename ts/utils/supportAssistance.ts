@@ -115,6 +115,7 @@ export const zendeskidentityProviderId = "4414310934673";
 export const zendeskCurrentAppVersionId = "4414316660369";
 export const zendeskVersionsHistoryId = "4419641151505";
 export const zendeskFciId = "14874226407825";
+export const zendeskFciCategoryId = "8086481365265";
 export const zendeskItWalletFailureCode = "31775197295633";
 export const zendeskIdPayCategoryId = "8086481365265";
 
@@ -135,12 +136,12 @@ export const zendeskPaymentMethodCategory: ZendeskCategory = {
     "de-DE": "Zahlungsmethode"
   }
 };
-export const zendeskFCICategory: ZendeskCategory = {
+export const zendeskFCIcategory: ZendeskCategory = {
   value: "firma_con_io",
   description: {
     "it-IT": "Firma con IO",
     "en-EN": "Firma con IO",
-    "de-DE": "Firma con IO"
+    "de-DE": "Mit IO unterschreiben"
   }
 };
 export const zendeskItWalletCategory: ZendeskCategory = {

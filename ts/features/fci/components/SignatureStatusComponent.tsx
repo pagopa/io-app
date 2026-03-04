@@ -15,8 +15,10 @@ import {
   assistanceToolRemoteConfig,
   resetCustomFields,
   zendeskCategoryId,
-  zendeskFCICategory,
-  zendeskFciId
+  zendeskFCIcategory,
+  zendeskFciId,
+  defaultZendeskBonusesCategory,
+  zendeskFciCategoryId
 } from "../../../utils/supportAssistance";
 import {
   zendeskSelectedCategory,
@@ -51,7 +53,11 @@ const SignatureStatusComponent = ({
 
   const zendeskAssistanceLogAndStart = () => {
     resetCustomFields();
-    addTicketCustomField(zendeskCategoryId, zendeskFCICategory.value);
+    addTicketCustomField(
+      zendeskCategoryId,
+      defaultZendeskBonusesCategory.value
+    );
+    addTicketCustomField(zendeskFciCategoryId, zendeskFCIcategory.value);
     addTicketCustomField(zendeskFciId, signatureRequestId ?? "");
     dispatch(
       zendeskSupportStart({
@@ -61,7 +67,7 @@ const SignatureStatusComponent = ({
         }
       })
     );
-    dispatch(zendeskSelectedCategory(zendeskFCICategory));
+    dispatch(zendeskSelectedCategory(defaultZendeskBonusesCategory));
   };
 
   const handleAskAssistance = () => {
