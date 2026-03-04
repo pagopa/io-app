@@ -306,8 +306,7 @@ const LoadingMarkerComponent = () => (
     entering={FadeIn}
     style={{
       flex: 1,
-      justifyContent: "center",
-      marginTop: "15%"
+      justifyContent: "center"
     }}
   >
     <LoadingSpinner size={48} color="white" />
