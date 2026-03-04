@@ -20,7 +20,7 @@ import {
 import { WALLET_SPEC_VERSION } from "./constants";
 import { extractVerification } from "./itwCredentialUtils";
 import { Env } from "./environment";
-import { ioWalletManager } from "./itwIoWallet";
+import { getIoWallet } from "./itwIoWallet";
 
 const CREDENTIAL_TYPE = "PersonIdentificationData";
 
@@ -51,7 +51,7 @@ const startAuthFlow = async ({
   identification,
   withMRTDPoP
 }: StartAuthFlowParams) => {
-  const ioWallet = ioWalletManager.get(itwVersion);
+  const ioWallet = getIoWallet(itwVersion);
 
   const idpHint = getIdpHint(identification, env);
 
@@ -123,7 +123,7 @@ const completeAuthFlow = async ({
   redirectUri,
   itwVersion
 }: CompleteAuthFlowParams) => {
-  const ioWallet = ioWalletManager.get(itwVersion);
+  const ioWallet = getIoWallet(itwVersion);
   const { code } =
     await ioWallet.CredentialIssuance.completeUserAuthorizationWithQueryMode(
       callbackUrl
@@ -170,7 +170,7 @@ const getPid = async ({
   dPoPContext,
   credentialDefinition
 }: PidIssuanceParams): Promise<StoredCredential> => {
-  const ioWallet = ioWalletManager.get(itwVersion);
+  const ioWallet = getIoWallet(itwVersion);
   const credentialKeyTag = uuidv4().toString();
   await generate(credentialKeyTag);
   const credentialCryptoContext = createCryptoContextFor(credentialKeyTag);
