@@ -106,7 +106,7 @@ export const getCredentialStatusObject = (credential: StoredCredential) => {
     O.chain(code =>
       O.tryCatch(() =>
         Errors.extractErrorMessageFromIssuerConf(code, {
-          issuerConf: issuerConf as IssuerConfiguration,
+          issuerConf,
           credentialType: credentialId
         })
       )

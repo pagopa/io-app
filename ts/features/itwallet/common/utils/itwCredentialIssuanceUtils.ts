@@ -202,8 +202,7 @@ const getCredentialConfigurationIds = (
   credentialType: string,
   skipMdocIssuance: boolean
 ) => {
-  const { credential_configurations_supported } =
-    issuerConfig.openid_credential_issuer;
+  const { credential_configurations_supported } = issuerConfig;
 
   const supportedConfigurationsByScope = Object.entries(
     credential_configurations_supported
