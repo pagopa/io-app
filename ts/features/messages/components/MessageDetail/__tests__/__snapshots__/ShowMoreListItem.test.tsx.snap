@@ -275,14 +275,6 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -859,14 +851,6 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1497,14 +1481,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2366,14 +2342,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3235,14 +3203,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4343,14 +4303,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5451,14 +5403,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7607,14 +7551,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

@@ -275,14 +275,6 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1160,14 +1152,6 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2045,14 +2029,6 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2930,14 +2906,6 @@ exports[`loadingFimsHistoryItem should match snapshot 1`] = `
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

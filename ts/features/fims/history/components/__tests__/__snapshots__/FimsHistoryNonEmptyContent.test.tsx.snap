@@ -275,14 +275,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1091,14 +1083,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2048,14 +2032,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2870,14 +2846,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3833,14 +3801,6 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4605,14 +4565,6 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5518,14 +5470,6 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5971,14 +5915,6 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

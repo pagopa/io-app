@@ -275,14 +275,6 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -604,14 +596,6 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -933,14 +917,6 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1262,14 +1238,6 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1591,14 +1559,6 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1920,14 +1880,6 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2249,14 +2201,6 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2578,14 +2522,6 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2907,14 +2843,6 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3236,14 +3164,6 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3565,14 +3485,6 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3894,14 +3806,6 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4223,14 +4127,6 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4552,14 +4448,6 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4881,14 +4769,6 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5210,14 +5090,6 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5539,14 +5411,6 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5868,14 +5732,6 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -6197,14 +6053,6 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -6526,14 +6374,6 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -6855,14 +6695,6 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7184,14 +7016,6 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7513,14 +7337,6 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7842,14 +7658,6 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -8171,14 +7979,6 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -8500,14 +8300,6 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -8829,14 +8621,6 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -9158,14 +8942,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -9596,14 +9372,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -10034,14 +9802,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -10472,14 +10232,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -10910,14 +10662,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -11348,14 +11092,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -11786,14 +11522,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -12224,14 +11952,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -12662,14 +12382,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -13100,14 +12812,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -13429,14 +13133,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -13758,14 +13454,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -14087,14 +13775,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -14416,14 +14096,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -14745,14 +14417,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -15074,14 +14738,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -15403,14 +15059,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -15732,14 +15380,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -16061,14 +15701,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -16499,14 +16131,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -16937,14 +16561,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -17375,14 +16991,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -17813,14 +17421,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -18251,14 +17851,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -18689,14 +18281,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -19127,14 +18711,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -19565,14 +19141,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -20003,14 +19571,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -20441,14 +20001,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -20879,14 +20431,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -21317,14 +20861,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -21755,14 +21291,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -22193,14 +21721,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -22631,14 +22151,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -23069,14 +22581,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -23507,14 +23011,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -23945,14 +23441,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -24274,14 +23762,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -24603,14 +24083,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -24932,14 +24404,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -25261,14 +24725,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -25590,14 +25046,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -25919,14 +25367,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -26248,14 +25688,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -26577,14 +26009,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -26906,14 +26330,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -27344,14 +26760,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -27782,14 +27190,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -28220,14 +27620,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -28658,14 +28050,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -29096,14 +28480,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -29534,14 +28910,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -29972,14 +29340,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -30410,14 +29770,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -30848,14 +30200,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -31338,14 +30682,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -31828,14 +31164,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -32318,14 +31646,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -32808,14 +32128,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -33298,14 +32610,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -33788,14 +33092,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -34278,14 +33574,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -34768,14 +34056,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -35258,14 +34538,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -35587,14 +34859,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -35916,14 +35180,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -36245,14 +35501,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -36574,14 +35822,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -36903,14 +36143,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -37232,14 +36464,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -37561,14 +36785,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -37890,14 +37106,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -38219,14 +37427,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -38709,14 +37909,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -39199,14 +38391,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -39689,14 +38873,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -40179,14 +39355,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -40669,14 +39837,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -41159,14 +40319,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -41649,14 +40801,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -42139,14 +41283,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -42629,14 +41765,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -43119,14 +42247,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -43609,14 +42729,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -44099,14 +43211,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -44589,14 +43693,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -45079,14 +44175,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -45569,14 +44657,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -46059,14 +45139,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -46549,14 +45621,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -47039,14 +46103,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -47368,14 +46424,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -47697,14 +46745,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -48026,14 +47066,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -48355,14 +47387,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -48684,14 +47708,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -49013,14 +48029,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -49342,14 +48350,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -49671,14 +48671,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -50000,14 +48992,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -50490,14 +49474,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -50980,14 +49956,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -51470,14 +50438,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -51960,14 +50920,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -52450,14 +51402,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -52940,14 +51884,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -53430,14 +52366,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -53920,14 +52848,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -54410,14 +53330,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -54739,14 +53651,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -55068,14 +53972,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -55397,14 +54293,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -55726,14 +54614,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -56055,14 +54935,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -56384,14 +55256,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -56713,14 +55577,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -57042,14 +55898,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -57371,14 +56219,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -57700,14 +56540,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -58029,14 +56861,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -58358,14 +57182,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -58687,14 +57503,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -59016,14 +57824,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -59345,14 +58145,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -59674,14 +58466,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -60003,14 +58787,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -60332,14 +59108,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -60661,14 +59429,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -60990,14 +59750,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -61319,14 +60071,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -61648,14 +60392,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -61977,14 +60713,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -62306,14 +61034,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -62635,14 +61355,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -62964,14 +61676,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

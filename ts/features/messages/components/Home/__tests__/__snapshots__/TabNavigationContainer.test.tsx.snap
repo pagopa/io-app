@@ -275,14 +275,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1045,14 +1037,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

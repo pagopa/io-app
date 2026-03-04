@@ -275,14 +275,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1330,14 +1322,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2109,14 +2093,6 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

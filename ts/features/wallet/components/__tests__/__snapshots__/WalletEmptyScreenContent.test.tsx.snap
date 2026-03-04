@@ -275,14 +275,6 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1086,14 +1078,6 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

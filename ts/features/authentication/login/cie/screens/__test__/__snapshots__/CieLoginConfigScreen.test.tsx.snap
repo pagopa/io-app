@@ -146,14 +146,6 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

@@ -146,14 +146,6 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1511,14 +1503,6 @@ exports[`SendQRScanFlowScreen should match snapshot when no app update is requir
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

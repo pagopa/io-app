@@ -275,14 +275,6 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -604,14 +596,6 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1322,14 +1306,6 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'onboarding' ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2040,14 +2016,6 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'reactivating' 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

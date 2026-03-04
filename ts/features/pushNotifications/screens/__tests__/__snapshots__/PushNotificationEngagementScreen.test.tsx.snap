@@ -146,14 +146,6 @@ exports[`PushNotificationEngagementScreen should match snapshot 1`] = `
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1349,14 +1341,6 @@ exports[`PushNotificationEngagementScreen should render a blank page when told t
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

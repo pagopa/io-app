@@ -275,14 +275,6 @@ exports[`LandingBannerPicker should correctly render a banner if passed a valid 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -664,14 +656,6 @@ exports[`LandingBannerPicker should not render a banner if no id is passed: noBa
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

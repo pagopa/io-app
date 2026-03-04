@@ -275,14 +275,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -871,14 +863,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1467,14 +1451,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2063,14 +2039,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2659,14 +2627,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3255,14 +3215,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3851,14 +3803,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4647,14 +4591,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5443,14 +5379,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -6239,14 +6167,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7035,14 +6955,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7831,14 +7743,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -8627,14 +8531,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -9223,14 +9119,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -9819,14 +9707,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -10415,14 +10295,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -11011,14 +10883,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -11607,14 +11471,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -12203,14 +12059,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -12999,14 +12847,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -13795,14 +13635,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -14591,14 +14423,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -15387,14 +15211,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -16183,14 +15999,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

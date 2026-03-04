@@ -146,14 +146,6 @@ exports[`SendQRScanFlowHandlerComponent should match snapshot and track the scre
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

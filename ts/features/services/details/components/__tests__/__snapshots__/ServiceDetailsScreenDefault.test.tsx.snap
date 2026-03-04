@@ -146,14 +146,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -889,14 +881,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2027,14 +2011,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

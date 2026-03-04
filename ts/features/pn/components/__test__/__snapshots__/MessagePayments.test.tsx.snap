@@ -275,14 +275,6 @@ exports[`MessagePayments should match snapshot when cancelled with payments with
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -604,14 +596,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2990,14 +2974,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5376,14 +5352,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5705,14 +5673,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7459,14 +7419,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -9213,14 +9165,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -11210,14 +11154,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -13207,14 +13143,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -13821,14 +13749,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -14435,14 +14355,6 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -14764,14 +14676,6 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

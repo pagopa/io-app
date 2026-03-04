@@ -275,14 +275,6 @@ exports[`ItwProximityFailureScreen should render failure screen for RELYING_PART
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1128,14 +1120,6 @@ exports[`ItwProximityFailureScreen should render failure screen for TIMEOUT 1`] 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2012,14 +1996,6 @@ exports[`ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

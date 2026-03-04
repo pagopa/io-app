@@ -275,14 +275,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -604,14 +596,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1695,14 +1679,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2786,14 +2762,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3804,14 +3772,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4133,14 +4093,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

@@ -275,14 +275,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -672,14 +664,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1069,14 +1053,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1466,14 +1442,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1863,14 +1831,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2260,14 +2220,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2657,14 +2609,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3054,14 +2998,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3451,14 +3387,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3848,14 +3776,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4245,14 +4165,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4642,14 +4554,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5039,14 +4943,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5436,14 +5332,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5833,14 +5721,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -6230,14 +6110,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -6627,14 +6499,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7024,14 +6888,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7421,14 +7277,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7818,14 +7666,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -8215,14 +8055,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -8612,14 +8444,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -9009,14 +8833,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -9406,14 +9222,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -9803,14 +9611,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -10200,14 +10000,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -10597,14 +10389,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -10994,14 +10778,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -11391,14 +11167,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -11788,14 +11556,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -12185,14 +11945,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -12582,14 +12334,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -12979,14 +12723,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -13376,14 +13112,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -13773,14 +13501,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -14170,14 +13890,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -14567,14 +14279,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -14964,14 +14668,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -15361,14 +15057,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -15758,14 +15446,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -16155,14 +15835,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -16552,14 +16224,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -16949,14 +16613,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -17346,14 +17002,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -17743,14 +17391,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -18140,14 +17780,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -18537,14 +18169,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -18934,14 +18558,6 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -19331,14 +18947,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -19728,14 +19336,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -20125,14 +19725,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -20522,14 +20114,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -20919,14 +20503,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -21316,14 +20892,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -21713,14 +21281,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -22110,14 +21670,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -22507,14 +22059,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -22904,14 +22448,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -23301,14 +22837,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -23698,14 +23226,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -24095,14 +23615,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -24492,14 +24004,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -24889,14 +24393,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -25286,14 +24782,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -25683,14 +25171,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -26080,14 +25560,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -26477,14 +25949,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -26874,14 +26338,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -27271,14 +26727,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -27668,14 +27116,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -28065,14 +27505,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -28462,14 +27894,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -28859,14 +28283,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -29256,14 +28672,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -29653,14 +29061,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -30050,14 +29450,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -30447,14 +29839,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -30844,14 +30228,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -31241,14 +30617,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -31638,14 +31006,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -32035,14 +31395,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -32432,14 +31784,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -32829,14 +32173,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -33226,14 +32562,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -33623,14 +32951,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -34020,14 +33340,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -34417,14 +33729,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -34814,14 +34118,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -35211,14 +34507,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -35608,14 +34896,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -36005,14 +35285,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -36402,14 +35674,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -36799,14 +36063,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -37196,14 +36452,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -37593,14 +36841,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -37990,14 +37230,6 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -38387,14 +37619,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -38784,14 +38008,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -39181,14 +38397,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -39578,14 +38786,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -39975,14 +39175,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -40372,14 +39564,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -40769,14 +39953,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -41166,14 +40342,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -41563,14 +40731,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -41960,14 +41120,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -42357,14 +41509,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -42754,14 +41898,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -43151,14 +42287,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -43548,14 +42676,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -43945,14 +43065,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -44342,14 +43454,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -44739,14 +43843,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -45136,14 +44232,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -45533,14 +44621,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -45930,14 +45010,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -46327,14 +45399,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -46724,14 +45788,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -47121,14 +46177,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -47518,14 +46566,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -47915,14 +46955,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -48312,14 +47344,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -48709,14 +47733,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -49106,14 +48122,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -49503,14 +48511,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -49900,14 +48900,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -50297,14 +49289,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -50694,14 +49678,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -51091,14 +50067,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -51488,14 +50456,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -51885,14 +50845,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -52282,14 +51234,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -52679,14 +51623,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -53076,14 +52012,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -53473,14 +52401,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -53870,14 +52790,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -54267,14 +53179,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -54664,14 +53568,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -55061,14 +53957,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -55458,14 +54346,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -55855,14 +54735,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -56252,14 +55124,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -56649,14 +55513,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -57046,14 +55902,6 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

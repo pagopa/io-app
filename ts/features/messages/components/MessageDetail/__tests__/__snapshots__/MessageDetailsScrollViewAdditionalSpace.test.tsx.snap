@@ -275,14 +275,6 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with butt
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -612,14 +604,6 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with butt
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -949,14 +933,6 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with butt
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1286,14 +1262,6 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with hidd
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1623,14 +1591,6 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with hidd
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1960,14 +1920,6 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with hidd
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

@@ -275,14 +275,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -604,14 +596,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -933,14 +917,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1262,14 +1238,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1591,14 +1559,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1920,14 +1880,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2249,14 +2201,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2578,14 +2522,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2907,14 +2843,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3236,14 +3164,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3565,14 +3485,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3894,14 +3806,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4223,14 +4127,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4552,14 +4448,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4881,14 +4769,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5210,14 +5090,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5539,14 +5411,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5868,14 +5732,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -6197,14 +6053,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -6526,14 +6374,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -6855,14 +6695,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7184,14 +7016,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7513,14 +7337,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7842,14 +7658,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -8171,14 +7979,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -8500,14 +8300,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -8829,14 +8621,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -9158,14 +8942,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -9487,14 +9263,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -9816,14 +9584,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -10145,14 +9905,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -10474,14 +10226,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -10803,14 +10547,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -11132,14 +10868,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -11461,14 +11189,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -11790,14 +11510,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -12119,14 +11831,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -12448,14 +12152,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -12777,14 +12473,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -13106,14 +12794,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -13435,14 +13115,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -13764,14 +13436,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -14093,14 +13757,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -14422,14 +14078,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -14751,14 +14399,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -15080,14 +14720,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -15409,14 +15041,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -15738,14 +15362,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -16067,14 +15683,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -16396,14 +16004,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -16725,14 +16325,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -17054,14 +16646,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -17383,14 +16967,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -17712,14 +17288,6 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -18041,14 +17609,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -18500,14 +18060,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -18959,14 +18511,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -19418,14 +18962,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -19877,14 +19413,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -20336,14 +19864,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -20795,14 +20315,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -21254,14 +20766,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -21713,14 +21217,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -22172,14 +21668,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -22631,14 +22119,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -23090,14 +22570,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -23549,14 +23021,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -24008,14 +23472,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -24467,14 +23923,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -24926,14 +24374,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -25385,14 +24825,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -25844,14 +25276,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -26303,14 +25727,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -26762,14 +26178,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -27221,14 +26629,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -27680,14 +27080,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -28139,14 +27531,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -28598,14 +27982,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -29057,14 +28433,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -29516,14 +28884,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -29975,14 +29335,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -30434,14 +29786,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -30890,14 +30234,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -31346,14 +30682,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -31802,14 +31130,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -32258,14 +31578,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -32714,14 +32026,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -33170,14 +32474,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -33626,14 +32922,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -34082,14 +33370,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -34538,14 +33818,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -34994,14 +34266,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -35450,14 +34714,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -35906,14 +35162,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -36362,14 +35610,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -36818,14 +36058,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -37274,14 +36506,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -37730,14 +36954,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -38186,14 +37402,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -38642,14 +37850,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -39098,14 +38298,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -39554,14 +38746,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -40010,14 +39194,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -40466,14 +39642,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -40922,14 +40090,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -41378,14 +40538,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -41834,14 +40986,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -42290,14 +41434,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -42746,14 +41882,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -43349,14 +42477,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -43952,14 +43072,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -44555,14 +43667,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -45158,14 +44262,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -45761,14 +44857,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -46364,14 +45452,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -47039,14 +46119,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -47714,14 +46786,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -48389,14 +47453,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -48992,14 +48048,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -49595,14 +48643,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -50198,14 +49238,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -50801,14 +49833,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -51404,14 +50428,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -52007,14 +51023,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -52682,14 +51690,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -53357,14 +52357,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -54032,14 +53024,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -54635,14 +53619,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -55238,14 +54214,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -55841,14 +54809,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -56444,14 +55404,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -57047,14 +55999,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -57650,14 +56594,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -58325,14 +57261,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -59000,14 +57928,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -59675,14 +58595,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -60275,14 +59187,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -60875,14 +59779,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -61475,14 +60371,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -62075,14 +60963,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -62675,14 +61555,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -63275,14 +62147,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -63947,14 +62811,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -64619,14 +63475,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -65291,14 +64139,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -65891,14 +64731,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -66491,14 +65323,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -67091,14 +65915,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -67691,14 +66507,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -68291,14 +67099,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -68891,14 +67691,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -69563,14 +68355,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -70235,14 +69019,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -70907,14 +69683,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -71507,14 +70275,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -72107,14 +70867,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -72707,14 +71459,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -73307,14 +72051,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -73907,14 +72643,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -74507,14 +73235,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -75179,14 +73899,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -75851,14 +74563,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

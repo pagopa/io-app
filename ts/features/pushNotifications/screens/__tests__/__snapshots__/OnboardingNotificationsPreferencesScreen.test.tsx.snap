@@ -146,14 +146,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1787,14 +1779,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3429,14 +3413,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5071,14 +5047,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -6713,14 +6681,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

@@ -275,14 +275,6 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -788,14 +780,6 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1301,14 +1285,6 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1814,14 +1790,6 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

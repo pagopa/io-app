@@ -275,14 +275,6 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -813,14 +805,6 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

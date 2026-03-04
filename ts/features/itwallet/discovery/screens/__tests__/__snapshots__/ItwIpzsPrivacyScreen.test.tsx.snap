@@ -146,14 +146,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1710,14 +1702,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

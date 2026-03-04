@@ -275,14 +275,6 @@ exports[`MessageDetailsHeader component should match the snapshot with a valid t
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -867,14 +859,6 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

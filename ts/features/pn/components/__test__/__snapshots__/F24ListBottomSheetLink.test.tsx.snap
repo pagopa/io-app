@@ -275,14 +275,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -870,14 +862,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1465,14 +1449,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2060,14 +2036,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2655,14 +2623,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3250,14 +3210,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3845,14 +3797,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4440,14 +4384,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5035,14 +4971,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5630,14 +5558,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -6477,14 +6397,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7324,14 +7236,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -8171,14 +8075,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -9018,14 +8914,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -9865,14 +9753,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -10712,14 +10592,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -11559,14 +11431,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -12406,14 +12270,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -13253,14 +13109,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -14359,14 +14207,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -15465,14 +15305,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -16571,14 +16403,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -17677,14 +17501,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -18783,14 +18599,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -19889,14 +19697,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -20995,14 +20795,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -22101,14 +21893,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

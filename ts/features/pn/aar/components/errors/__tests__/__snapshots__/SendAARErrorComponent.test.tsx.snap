@@ -275,14 +275,6 @@ exports[`SendAARErrorComponent - Full Test Suite should match snapshot and call 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

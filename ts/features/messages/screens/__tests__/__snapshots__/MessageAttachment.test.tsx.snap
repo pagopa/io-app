@@ -146,14 +146,6 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1461,14 +1453,6 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

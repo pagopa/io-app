@@ -275,14 +275,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -829,14 +821,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1588,14 +1572,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneLoading 1`] 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1917,14 +1893,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneUpdating 1`]
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2246,14 +2214,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2800,14 +2760,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, non-empty 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3129,14 +3081,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3683,14 +3627,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, non-e
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4012,14 +3948,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4566,14 +4494,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, non
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4895,14 +4815,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5449,14 +5361,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5778,14 +5682,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -6332,14 +6228,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7091,14 +6979,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneLoading 1`] 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7420,14 +7300,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneUpdating 1`]
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7749,14 +7621,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -8303,14 +8167,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, non-empty 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -8632,14 +8488,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -9186,14 +9034,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, non-e
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -9515,14 +9355,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -10069,14 +9901,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, non
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -10398,14 +10222,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -10952,14 +10768,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

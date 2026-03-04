@@ -275,14 +275,6 @@ exports[`PreconditionsTitle should match snapshot when title content is 'empty' 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -606,14 +598,6 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -964,14 +948,6 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1293,14 +1269,6 @@ exports[`PreconditionsTitle should match snapshot when title content is 'loading
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1686,14 +1654,6 @@ exports[`PreconditionsTitle should match snapshot when title content is undefine
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

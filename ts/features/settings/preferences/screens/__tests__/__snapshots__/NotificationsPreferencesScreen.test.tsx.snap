@@ -146,14 +146,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1607,14 +1599,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3068,14 +3052,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4529,14 +4505,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5990,14 +5958,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7451,14 +7411,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -8912,14 +8864,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -10373,14 +10317,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -11834,14 +11770,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -13295,14 +13223,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -14756,14 +14676,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -16217,14 +16129,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -17678,14 +17582,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -19139,14 +19035,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -20600,14 +20488,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -22061,14 +21941,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -23522,14 +23394,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -24983,14 +24847,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

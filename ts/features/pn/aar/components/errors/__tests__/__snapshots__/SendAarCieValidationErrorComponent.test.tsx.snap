@@ -275,14 +275,6 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1388,14 +1380,6 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2414,14 +2398,6 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

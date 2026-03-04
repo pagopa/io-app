@@ -275,14 +275,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled false,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -669,14 +661,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled false,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1063,14 +1047,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled false,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1482,14 +1458,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled false,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1876,14 +1844,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled false,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2270,14 +2230,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled false,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2689,14 +2641,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled false,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3083,14 +3027,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled false,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3477,14 +3413,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled false,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3896,14 +3824,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4290,14 +4210,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4684,14 +4596,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5103,14 +5007,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5553,14 +5449,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -6003,14 +5891,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -6478,14 +6358,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -6872,14 +6744,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7266,14 +7130,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7685,14 +7541,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled undefi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -8079,14 +7927,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled undefi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -8473,14 +8313,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled undefi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -8892,14 +8724,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled undefi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -9286,14 +9110,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled undefi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -9680,14 +9496,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled undefi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -10099,14 +9907,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled undefi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -10493,14 +10293,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled undefi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -10887,14 +10679,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled undefi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -11306,14 +11090,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -11790,14 +11566,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -12274,14 +12042,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -12783,14 +12543,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -13267,14 +13019,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -13751,14 +13495,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -14260,14 +13996,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -14744,14 +14472,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -15228,14 +14948,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -15737,14 +15449,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -16131,14 +15835,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -16525,14 +16221,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -16944,14 +16632,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -17394,14 +17074,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -17844,14 +17516,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -18319,14 +17983,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -18713,14 +18369,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -19107,14 +18755,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -19526,14 +19166,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -20010,14 +19642,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -20494,14 +20118,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -21003,14 +20619,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -21487,14 +21095,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -21971,14 +21571,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -22480,14 +22072,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -22964,14 +22548,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -23448,14 +23024,6 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -23957,14 +23525,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -24351,14 +23911,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -24745,14 +24297,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -25164,14 +24708,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -25558,14 +25094,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -25952,14 +25480,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -26371,14 +25891,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -26765,14 +26277,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -27159,14 +26663,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -27578,14 +27074,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -27972,14 +27460,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -28366,14 +27846,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -28785,14 +28257,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -29235,14 +28699,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -29685,14 +29141,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -30160,14 +29608,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -30554,14 +29994,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -30948,14 +30380,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -31367,14 +30791,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -31761,14 +31177,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -32155,14 +31563,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -32574,14 +31974,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -32968,14 +32360,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -33362,14 +32746,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -33781,14 +33157,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -34175,14 +33543,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -34569,14 +33929,6 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

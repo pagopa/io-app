@@ -275,14 +275,6 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1444,14 +1436,6 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2613,14 +2597,6 @@ exports[`BottomSheetContent doesn't render a link and matches its snapshot when 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

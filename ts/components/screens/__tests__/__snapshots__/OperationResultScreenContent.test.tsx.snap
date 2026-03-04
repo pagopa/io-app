@@ -275,14 +275,6 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

@@ -275,14 +275,6 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri i
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1156,14 +1148,6 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when no redirect_uri 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

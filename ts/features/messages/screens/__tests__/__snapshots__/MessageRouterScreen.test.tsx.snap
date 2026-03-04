@@ -146,14 +146,6 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1151,14 +1143,6 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2156,14 +2140,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3501,14 +3477,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4506,14 +4474,6 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

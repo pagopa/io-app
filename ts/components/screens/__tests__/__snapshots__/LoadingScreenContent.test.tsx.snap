@@ -275,14 +275,6 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -923,14 +915,6 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1571,14 +1555,6 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2196,14 +2172,6 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

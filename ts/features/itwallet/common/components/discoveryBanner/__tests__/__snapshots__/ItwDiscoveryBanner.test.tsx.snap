@@ -275,14 +275,6 @@ exports[`ItwDiscoveryBanner should match snapshot with 'onboarding' banner type 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1014,14 +1006,6 @@ exports[`ItwDiscoveryBanner should match snapshot with 'reactivating' banner typ
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

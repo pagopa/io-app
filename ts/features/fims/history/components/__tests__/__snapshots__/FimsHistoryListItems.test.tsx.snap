@@ -275,14 +275,6 @@ exports[`FimsHistoryListItems should match snapshot for FailureListItem 1`] = `
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -816,14 +808,6 @@ exports[`FimsHistoryListItems should match snapshot for SuccessListItem 1`] = `
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

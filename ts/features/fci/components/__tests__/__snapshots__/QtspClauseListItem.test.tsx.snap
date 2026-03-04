@@ -275,14 +275,6 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

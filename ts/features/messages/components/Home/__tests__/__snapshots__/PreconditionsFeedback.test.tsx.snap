@@ -275,14 +275,6 @@ exports[`PreconditionsFeedback should match snapshot with title and no subtitle 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -815,14 +807,6 @@ exports[`PreconditionsFeedback should match snapshot with title and subtitle 1`]
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

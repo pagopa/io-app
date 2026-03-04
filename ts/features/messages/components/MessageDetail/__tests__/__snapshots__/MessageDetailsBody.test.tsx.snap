@@ -275,14 +275,6 @@ exports[`MessageDetailsBody should match snapshot for message with CTA (IOMarkdo
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -610,14 +602,6 @@ exports[`MessageDetailsBody should match snapshot for message with CTA (Old Mark
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -988,14 +972,6 @@ exports[`MessageDetailsBody should match snapshot for message with invalid CTA 1
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1533,14 +1509,6 @@ exports[`MessageDetailsBody should match snapshot for message with no CTA (IOMar
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1868,14 +1836,6 @@ exports[`MessageDetailsBody should match snapshot for message with no CTA (Old M
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

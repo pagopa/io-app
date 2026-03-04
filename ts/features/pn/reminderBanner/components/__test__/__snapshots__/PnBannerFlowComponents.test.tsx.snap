@@ -275,14 +275,6 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1417,14 +1409,6 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2199,14 +2183,6 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2818,14 +2794,6 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3437,14 +3405,6 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

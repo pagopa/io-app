@@ -275,14 +275,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -835,14 +827,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1423,14 +1407,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable-wi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1990,14 +1966,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

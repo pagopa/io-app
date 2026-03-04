@@ -275,14 +275,6 @@ exports[`OrganizationHeader component should match the snapshot for a TPM denomi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -784,14 +776,6 @@ exports[`OrganizationHeader component should match the snapshot for a non third-
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

@@ -275,14 +275,6 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -754,14 +746,6 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1233,14 +1217,6 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1712,14 +1688,6 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

@@ -275,14 +275,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2285,14 +2277,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

@@ -275,14 +275,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1165,14 +1157,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2269,14 +2253,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTA and no pay
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2598,14 +2574,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3239,14 +3207,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and hidde
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3568,14 +3528,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4353,14 +4305,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5006,14 +4950,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

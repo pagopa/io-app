@@ -146,14 +146,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1285,14 +1277,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2424,14 +2408,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3167,14 +3143,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

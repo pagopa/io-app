@@ -281,14 +281,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -905,14 +897,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1985,14 +1969,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3065,14 +3041,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4145,14 +4113,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5176,14 +5136,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -6129,14 +6081,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7102,14 +7046,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -8075,14 +8011,6 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

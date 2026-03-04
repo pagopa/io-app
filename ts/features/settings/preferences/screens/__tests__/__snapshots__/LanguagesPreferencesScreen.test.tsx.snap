@@ -146,14 +146,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

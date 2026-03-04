@@ -275,14 +275,6 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

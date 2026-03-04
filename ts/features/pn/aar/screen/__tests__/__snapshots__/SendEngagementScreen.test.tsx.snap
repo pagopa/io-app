@@ -275,14 +275,6 @@ exports[`SendEngagementScreen should match snapshot and track screen visualizati
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

@@ -277,14 +277,6 @@ exports[`useSendAarDelegationProposalScreenBottomSheet should render the correct
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

@@ -275,14 +275,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1861,14 +1853,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3173,14 +3157,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4516,14 +4492,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5655,14 +5623,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7227,14 +7187,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -8799,14 +8751,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -10137,14 +10081,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -11723,14 +11659,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -13041,14 +12969,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

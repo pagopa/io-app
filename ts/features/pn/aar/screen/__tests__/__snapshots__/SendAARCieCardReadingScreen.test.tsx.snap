@@ -275,14 +275,6 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -604,14 +596,6 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -933,14 +917,6 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1262,14 +1238,6 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1615,14 +1583,6 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1944,14 +1904,6 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2273,14 +2225,6 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2602,14 +2546,6 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2931,14 +2867,6 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3557,14 +3485,6 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3886,14 +3806,6 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4215,14 +4127,6 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4544,14 +4448,6 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4873,14 +4769,6 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5202,14 +5090,6 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5531,14 +5411,6 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

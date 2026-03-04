@@ -146,14 +146,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1284,14 +1276,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2422,14 +2406,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not enable
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3165,14 +3141,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4303,14 +4271,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when servicePreference cou
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

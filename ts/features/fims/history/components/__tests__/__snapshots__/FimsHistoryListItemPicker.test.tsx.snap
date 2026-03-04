@@ -275,14 +275,6 @@ exports[`FimsHistoryListItem should call the "failureListItem" in case of (noneE
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -610,14 +602,6 @@ exports[`FimsHistoryListItem should call the "successListItem" in case of (some)
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -945,14 +929,6 @@ exports[`FimsHistoryListItem should call the "successListItem" in case of (someE
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1280,14 +1256,6 @@ exports[`FimsHistoryListItem should call the "successListItem" in case of (someL
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1615,14 +1583,6 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1948,14 +1908,6 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2281,14 +2233,6 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2614,14 +2558,6 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

@@ -275,14 +275,6 @@ exports[`ItwWalletReadyBanner should match snapshot when ITW new interface activ
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1013,14 +1005,6 @@ exports[`ItwWalletReadyBanner should match snapshot when ITW new interface activ
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

@@ -275,14 +275,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -737,14 +729,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1199,14 +1183,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1661,14 +1637,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2123,14 +2091,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2585,14 +2545,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3047,14 +2999,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3509,14 +3453,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3971,14 +3907,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4433,14 +4361,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4762,14 +4682,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5091,14 +5003,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5420,14 +5324,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5749,14 +5645,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -6078,14 +5966,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -6407,14 +6287,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -6736,14 +6608,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7065,14 +6929,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7394,14 +7250,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7723,14 +7571,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -8052,14 +7892,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -8381,14 +8213,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -8710,14 +8534,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -9039,14 +8855,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -9368,14 +9176,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -9697,14 +9497,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -10026,14 +9818,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >

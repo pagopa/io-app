@@ -146,14 +146,6 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
