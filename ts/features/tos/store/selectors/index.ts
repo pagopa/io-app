@@ -14,7 +14,7 @@ export const tosConfigSelector = createSelector(
   (remoteConfig, absolutePortalLinks) => {
     const DEFAULT_TOS_CONFIG: TosConfig = {
       tos_url: `${absolutePortalLinks.io_showcase}${PRIVACY_URL_BODY}`,
-      tos_version: 5.0
+      tos_version: 5.4
     };
     return pipe(
       remoteConfig,
