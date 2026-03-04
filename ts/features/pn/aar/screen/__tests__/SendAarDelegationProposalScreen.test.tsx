@@ -51,9 +51,7 @@ jest.mock("@react-navigation/native", () => {
       const actualNavigation = actualNav.useNavigation?.();
       return new Proxy(actualNavigation, {
         get: (target, prop) =>
-          prop === "replace"
-            ? mockReplace
-            : target[prop as keyof typeof target]
+          prop === "replace" ? mockReplace : target[prop as keyof typeof target]
       });
     }
   };
