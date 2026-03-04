@@ -23,8 +23,11 @@ import {
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
   ObtainStatusAssertionActorInput,
+  ProcessCredentialOfferActorInput,
+  ProcessCredentialOfferActorOutput,
   RequestCredentialActorInput,
-  RequestCredentialActorOutput
+  RequestCredentialActorOutput,
+  VerifyTrustFederationActorInput
 } from "../actors";
 import { Context, InitialContext } from "../context";
 import { CredentialIssuanceFailureType } from "../failure";
@@ -97,6 +100,11 @@ const T_STORED_STATUS_ASSERTION: StoredCredential["storedStatusAssertion"] = {
   parsedStatusAssertion: ItwStatusAssertionMocks.mdl
 };
 
+const T_OFFER_URI =
+  "openid-credential-offer://?credential_offer_uri=https://eaa.wallet.ipzs.it/offers/123";
+const T_CREDENTIAL_TYPE = "education_degree";
+const T_TRUST_ISSUER_BASE_URL = "https://eaa.wallet.ipzs.it";
+
 describe("itwCredentialIssuanceMachine", () => {
   const onInit = jest.fn();
   const navigateToTrustIssuerScreen = jest.fn();
@@ -104,6 +112,7 @@ describe("itwCredentialIssuanceMachine", () => {
   const navigateToFailureScreen = jest.fn();
   const navigateToWallet = jest.fn();
   const navigateToCredentialIntroductionScreen = jest.fn();
+  const navigateToCardOnboardingScreen = jest.fn();
   const closeIssuance = jest.fn();
   const storeWalletInstanceAttestation = jest.fn();
   const storeCredential = jest.fn();
@@ -118,6 +127,7 @@ describe("itwCredentialIssuanceMachine", () => {
   const requestCredential = jest.fn();
   const obtainCredential = jest.fn();
   const obtainStatusAssertion = jest.fn();
+  const processCredentialOffer = jest.fn();
 
   const isSessionExpired = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn();
@@ -134,6 +144,7 @@ describe("itwCredentialIssuanceMachine", () => {
       navigateToCredentialIntroductionScreen,
       navigateToFailureScreen,
       navigateToWallet,
+      navigateToCardOnboardingScreen,
       closeIssuance,
       storeWalletInstanceAttestation,
       storeCredential,
@@ -144,7 +155,9 @@ describe("itwCredentialIssuanceMachine", () => {
       trackCredentialIssuingDataShareAccepted
     },
     actors: {
-      verifyTrustFederation: fromPromise<void>(verifyTrustFederation),
+      verifyTrustFederation: fromPromise<void, VerifyTrustFederationActorInput>(
+        verifyTrustFederation
+      ),
       getWalletAttestation:
         fromPromise<GetWalletAttestationActorOutput>(getWalletAttestation),
       requestCredential: fromPromise<
@@ -158,7 +171,11 @@ describe("itwCredentialIssuanceMachine", () => {
       obtainStatusAssertion: fromPromise<
         Array<StoredCredential>,
         ObtainStatusAssertionActorInput
-      >(obtainStatusAssertion)
+      >(obtainStatusAssertion),
+      processCredentialOffer: fromPromise<
+        ProcessCredentialOfferActorOutput,
+        ProcessCredentialOfferActorInput
+      >(processCredentialOffer)
     },
     guards: {
       isSessionExpired,
@@ -777,5 +794,132 @@ describe("itwCredentialIssuanceMachine", () => {
       snapshot.matches("CredentialIntroduction")
     );
     expect(navigateToCredentialIntroductionScreen).toHaveBeenCalledTimes(1);
+  });
+
+  describe("Credential Offer flow", () => {
+    it("Should process a credential offer and proceed to EvaluateFlow", async () => {
+      processCredentialOffer.mockImplementation(() =>
+        Promise.resolve({
+          offer: { credential_issuer: T_TRUST_ISSUER_BASE_URL },
+          grantDetails: {
+            authorizationCodeGrant: {
+              scope: T_CREDENTIAL_TYPE,
+              authorizationServer: T_TRUST_ISSUER_BASE_URL
+            }
+          },
+          trustIssuerBaseUrl: T_TRUST_ISSUER_BASE_URL
+        })
+      );
+      hasValidWalletInstanceAttestation.mockImplementation(() => true);
+      hasCredentialIntroContent.mockImplementation(() => false);
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      requestCredential.mockImplementation(() => new Promise(() => {}));
+
+      const actor = createActor(mockedMachine);
+      actor.start();
+
+      await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
+      expect(actor.getSnapshot().value).toStrictEqual("Idle");
+
+      actor.send({
+        type: "start-credential-offer",
+        itwCredentialOfferUri: T_OFFER_URI
+      });
+
+      expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
+        credentialOfferUri: T_OFFER_URI,
+        mode: "issuance",
+        issuanceSource: "credential-offer"
+      });
+
+      await waitFor(() =>
+        expect(processCredentialOffer).toHaveBeenCalledTimes(1)
+      );
+
+      await waitFor(() =>
+        expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
+          credentialType: T_CREDENTIAL_TYPE,
+          trustIssuerBaseUrl: T_TRUST_ISSUER_BASE_URL
+        })
+      );
+    });
+
+    it("Should navigate to CredentialIntroduction if catalogue has intro content", async () => {
+      processCredentialOffer.mockImplementation(() =>
+        Promise.resolve({
+          offer: { credential_issuer: T_TRUST_ISSUER_BASE_URL },
+          grantDetails: {
+            authorizationCodeGrant: {
+              scope: T_CREDENTIAL_TYPE,
+              authorizationServer: T_TRUST_ISSUER_BASE_URL
+            }
+          },
+          trustIssuerBaseUrl: T_TRUST_ISSUER_BASE_URL
+        })
+      );
+      hasValidWalletInstanceAttestation.mockImplementation(() => true);
+      hasCredentialIntroContent.mockImplementation(() => true);
+      isEidExpired.mockImplementation(() => false);
+
+      const actor = createActor(mockedMachine);
+      actor.start();
+
+      actor.send({
+        type: "start-credential-offer",
+        itwCredentialOfferUri: T_OFFER_URI
+      });
+
+      await waitForActor(actor, snapshot =>
+        snapshot.matches("CredentialIntroduction")
+      );
+
+      expect(navigateToCredentialIntroductionScreen).toHaveBeenCalledTimes(1);
+    });
+
+    it("Should close the issuance when going back from CredentialIntroduction in credential-offer flow", async () => {
+      const initialSnapshot: MachineSnapshot = createActor(
+        itwCredentialIssuanceMachine
+      ).getSnapshot();
+
+      const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+        value: "CredentialIntroduction",
+        context: {
+          issuanceSource: "credential-offer"
+        }
+      } as MachineSnapshot);
+
+      const actor = createActor(mockedMachine, { snapshot });
+      actor.start();
+
+      expect(actor.getSnapshot().value).toStrictEqual("CredentialIntroduction");
+
+      actor.send({ type: "back" });
+
+      expect(actor.getSnapshot().value).toStrictEqual("Idle");
+      expect(closeIssuance).toHaveBeenCalledTimes(1);
+    });
+
+    it("Should navigate to CardOnboarding when going back from CredentialIntroduction in catalogue flow", async () => {
+      const initialSnapshot: MachineSnapshot = createActor(
+        itwCredentialIssuanceMachine
+      ).getSnapshot();
+
+      const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+        value: "CredentialIntroduction",
+        context: {
+          issuanceSource: "catalogue"
+        }
+      } as MachineSnapshot);
+
+      const actor = createActor(mockedMachine, { snapshot });
+      actor.start();
+
+      expect(actor.getSnapshot().value).toStrictEqual("CredentialIntroduction");
+
+      actor.send({ type: "back" });
+
+      expect(actor.getSnapshot().value).toStrictEqual("Idle");
+      expect(closeIssuance).not.toHaveBeenCalled();
+    });
   });
 });
