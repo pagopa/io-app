@@ -12,6 +12,10 @@ import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { IO_FIMS_LINK_PREFIX } from "../features/fims/singleSignOn/utils";
 import { SETTINGS_ROUTES } from "../features/settings/common/navigation/routes";
+import {
+  isCredentialOfferCustomScheme,
+  toCredentialOfferRelativePath
+} from "../features/itwallet/issuance/offer/itwCredentialOfferUtils";
 import { isTestEnv } from "./environment";
 import {
   IO_INTERNAL_LINK_PREFIX,
@@ -90,6 +94,10 @@ export const testableALLOWED_ROUTE_NAMES = isTestEnv
  * @returns
  */
 export function getInternalRoute(href: string): string {
+  if (isCredentialOfferCustomScheme(href)) {
+    return toCredentialOfferRelativePath(href);
+  }
+
   return pipe(
     extractPathFromURL(
       [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX, IO_FIMS_LINK_PREFIX],

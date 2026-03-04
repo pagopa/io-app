@@ -66,9 +66,9 @@ import { ItwProximitySendDocumentsResponseScreen } from "../presentation/proximi
 import { ItwSettingsScreen } from "../settings/screens/ItwSettingsScreen.tsx";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
+import { ItwIssuanceCredentialOfferValidationScreen } from "../issuance/offer/screens/ItwIssuanceCredentialOfferValidation";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
-import { ItwIssuanceCredentialOfferValidationScreen } from "../issuance/offer/screens/ItwIssuanceCredentialOfferValidation";
 
 const Stack = createStackNavigator<ItwParamsList>();
 

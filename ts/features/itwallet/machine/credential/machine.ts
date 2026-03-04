@@ -108,13 +108,11 @@ export const itwCredentialIssuanceMachine = setup({
       on: {
         "start-credential-offer": {
           target: "CredentialOfferValidation",
-          actions: assign(({ event }) => {
-            return {
-              credentialOfferUri: event.itwCredentialOfferUri,
-              mode: "issuance",
-              issuanceSource: "credential-offer"
-            };
-          })
+          actions: assign(({ event }) => ({
+            credentialOfferUri: event.itwCredentialOfferUri,
+            mode: "issuance",
+            issuanceSource: "credential-offer"
+          }))
         },
         "select-credential": {
           target: "EvaluateFlow",

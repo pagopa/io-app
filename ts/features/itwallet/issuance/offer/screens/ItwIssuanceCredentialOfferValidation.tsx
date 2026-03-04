@@ -1,4 +1,7 @@
 import I18n from "i18next";
+import * as O from "fp-ts/lib/Option";
+import { useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import {
@@ -8,14 +11,28 @@ import {
 import { ItwRemoteLoadingScreen } from "../../../presentation/remote/components/ItwRemoteLoadingScreen";
 import { useIOSelector } from "../../../../../store/hooks";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
-import { useFocusEffect } from "@react-navigation/native";
-import { useCallback } from "react";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { selectResolvedCredentialOfferOption } from "../../../machine/credential/selectors";
-import * as O from "fp-ts/lib/Option";
+import { ItwGenericErrorContent } from "../../../common/components/ItwGenericErrorContent";
 
 export type ItwIssuanceCredentialOfferValidationScreenNavigationParams = {
-  itwCredentialOfferUri: string;
+  /**
+   * From QR code scan (already normalized by the scanner flow)
+   * → full credential offer URI string
+   */
+  itwCredentialOfferUri?: string;
+  /**
+   * From HTTPS universal link OR from custom scheme normalized to an internal path
+   * (openid-credential-offer://, haip-vci://)
+   * → offer by reference
+   */
+  credential_offer_uri?: string;
+  /**
+   * From HTTPS universal link OR from custom scheme normalized to an internal path
+   * (openid-credential-offer://, haip-vci://)
+   * → offer by value (encoded JSON)
+   */
+  credential_offer?: string;
 };
 
 type ScreenProps = IOStackNavigationRouteProps<
@@ -28,6 +45,11 @@ export const ItwIssuanceCredentialOfferValidationScreen = ({
 }: ScreenProps) => {
   const startupStatus = useIOSelector(isStartupLoaded);
 
+  const itwCredentialOfferUri =
+    route.params?.itwCredentialOfferUri ??
+    route.params?.credential_offer_uri ??
+    route.params?.credential_offer;
+
   if (startupStatus !== StartupStatusEnum.AUTHENTICATED) {
     return (
       // TODO: evaluate if we can have a more specific loading screen for this case, or use the same one for all the remote loading phases
@@ -39,9 +61,12 @@ export const ItwIssuanceCredentialOfferValidationScreen = ({
     );
   }
 
-  return (
-    <ContentView itwCredentialOfferUri={route.params.itwCredentialOfferUri} />
-  );
+  if (!itwCredentialOfferUri) {
+    // This should never happen — all entry points provide at least one URI param
+    return <ItwGenericErrorContent />;
+  }
+
+  return <ContentView itwCredentialOfferUri={itwCredentialOfferUri} />;
 };
 
 const ContentView = ({
