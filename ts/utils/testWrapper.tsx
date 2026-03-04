@@ -40,7 +40,9 @@ export const renderScreenWithNavigationStoreContext = <S,>(
     <Provider store={store}>
       <IOThemeContextProvider theme={"light"}>
         <TestInnerNavigationContainer>
-          <Stack.Navigator screenOptions={screenOptions}>
+          <Stack.Navigator
+            screenOptions={{ ...screenOptions, animation: "none" }}
+          >
             <Stack.Screen
               name={route}
               component={screen}
