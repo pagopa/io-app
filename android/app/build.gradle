@@ -189,6 +189,7 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
+    implementation("com.google.zxing:core:3.5.3")
  
     implementation project(':react-native-cie')
 

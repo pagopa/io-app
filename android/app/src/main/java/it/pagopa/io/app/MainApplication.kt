@@ -13,6 +13,7 @@ import it.ipzs.cieidsdk.native_bridge.CiePackage
 import it.pagopa.io.app.appreview.AppReviewPackage
 import it.pagopa.io.app.modules.NfcInfoPackage
 import it.pagopa.io.app.modules.PdfHighResGeneratorPackage
+import it.pagopa.io.app.modules.QRCodeGeneratorPackage
 
 class MainApplication : Application(), ReactApplication {
  
@@ -26,6 +27,7 @@ class MainApplication : Application(), ReactApplication {
             add(AppReviewPackage())
             add(NavigationBarManagerPackage())
             add(PdfHighResGeneratorPackage())
+            add(QRCodeGeneratorPackage())
             add(NfcInfoPackage())
           }
  

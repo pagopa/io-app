@@ -5248,6 +5248,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/qrcode@npm:^1.5.6":
+  version: 1.5.6
+  resolution: "@types/qrcode@npm:1.5.6"
+  dependencies:
+    "@types/node": "*"
+  checksum: 7a10d298a9987dc4f0cdfdc5171dabafaf0945cc97e5daa6b609e726a57aa4a48ae0e966c68379ef390d61d3cd6621b9b04214bb16b42f5486a46349e1db254d
+  languageName: node
+  linkType: hard
+
 "@types/react-native-background-timer@npm:^2.0.0":
   version: 2.0.0
   resolution: "@types/react-native-background-timer@npm:2.0.0"
@@ -10214,6 +10223,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fast-text-encoding@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "fast-text-encoding@npm:1.0.6"
+  checksum: 9d58f694314b3283e785bf61954902536da228607ad246905e30256f9ab8331f780ac987e7222c9f5eafd04168d07e12b8054c85cedb76a2c05af0e82387a903
+  languageName: node
+  linkType: hard
+
 "fast-xml-parser@npm:^4.4.1":
   version: 4.5.0
   resolution: "fast-xml-parser@npm:4.5.0"
@@ -11710,6 +11726,7 @@ __metadata:
     "@types/node-fetch": ^2.1.7
     "@types/pako": ^2.0.0
     "@types/prettier": ^2.7.3
+    "@types/qrcode": ^1.5.6
     "@types/react": ^19.1.0
     "@types/react-native-background-timer": ^2.0.0
     "@types/react-native-push-notification": ^8.1.1
@@ -11798,6 +11815,8 @@ __metadata:
     react-native-pdf-thumbnail: ^1.3.1
     react-native-permissions: ^5.3.0
     react-native-push-notification: ^8.1.1
+    react-native-qrcode-skia: ^0.4.0
+    react-native-qrcode-styled: ^0.4.0
     react-native-qrcode-svg: ^6.3.12
     react-native-quick-base64: ^2.2.2
     react-native-quick-crypto: ^0.7.17
@@ -16260,7 +16279,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qrcode@npm:^1.5.1":
+"qrcode@npm:1.5.4, qrcode@npm:^1.5.1, qrcode@npm:^1.5.3":
   version: 1.5.4
   resolution: "qrcode@npm:1.5.4"
   dependencies:
@@ -16418,6 +16437,13 @@ __metadata:
     shell-quote: ^1.6.1
     ws: ^7
   checksum: b54f2d2416f5f5ca61b1741367865eab18b0040d7e4b3236693595803dfdf82ae02adbcb480acc5b9767748b615a2d5ce3af286cde3a7f8c193123c62c777428
+  languageName: node
+  linkType: hard
+
+"react-fast-compare@npm:^3.2.2":
+  version: 3.2.2
+  resolution: "react-fast-compare@npm:3.2.2"
+  checksum: 2071415b4f76a3e6b55c84611c4d24dcb12ffc85811a2840b5a3f1ff2d1a99be1020d9437ee7c6e024c9f4cbb84ceb35e48cf84f28fcb00265ad2dfdd3947704
   languageName: node
   linkType: hard
 
@@ -16845,6 +16871,34 @@ __metadata:
     "@react-native-community/push-notification-ios": ^1.10.1
     react-native: ">=0.33"
   checksum: ae70b5cccabc6b48808b47bc59c5bd610f8b4cb10d3d624ab411ae0d2fe9d62afd41ebab95be69dab5922ef2f665a7daaee6debf2000a8f86cdec0f5330f9a69
+  languageName: node
+  linkType: hard
+
+"react-native-qrcode-skia@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "react-native-qrcode-skia@npm:0.4.0"
+  dependencies:
+    qrcode: ^1.5.3
+  peerDependencies:
+    "@shopify/react-native-skia": ">=1.0.0"
+    react: "*"
+    react-native: "*"
+  checksum: da99c9c30f30ea7b809830a10b0d7a52c229f97888b9ac4ad50cda8f30ff6601d67f3a6fc763bfbc375038dc6282aa4794f324518eef0b34961eeb707fb15072
+  languageName: node
+  linkType: hard
+
+"react-native-qrcode-styled@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "react-native-qrcode-styled@npm:0.4.0"
+  dependencies:
+    fast-text-encoding: ^1.0.6
+    qrcode: 1.5.4
+    react-fast-compare: ^3.2.2
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-svg: "*"
+  checksum: 99c169e24872a31f7017390f2056d28075f135f9efacab2c1c67c4b164aa2b32c9bfe39765939582e3c89729dd145254e1030e6697561cbd536b67a51b3ade32
   languageName: node
   linkType: hard
 

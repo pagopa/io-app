@@ -20,6 +20,7 @@
 		65FE1313CE69411888425831 /* Titillio-ExtrablackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 96C2E93186814D36AD451D83 /* Titillio-ExtrablackItalic.otf */; };
 		68CE798678EF43669BE56D51 /* Titillio-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B58BBAC865EA4651B828C92B /* Titillio-Bold.otf */; };
 		697EE758195E4C198755B4EE /* Titillio-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = C9E629838F224B4F9823D692 /* Titillio-Thin.otf */; };
+		719831F0FEAF411A9A0B08A6 /* QRCodeGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = F059D7DB14A04904A92700C5 /* QRCodeGenerator.m */; };
 		72B66C3DDD7D46A08B942038 /* Titillio-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4F54E8E3A56A4E139D5DC82D /* Titillio-BoldItalic.otf */; };
 		73C78AB456BA498FA470EE9E /* FiraCode-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F9BF48C6EC30493DBDB754CA /* FiraCode-Medium.ttf */; };
 		76D9756A42724A6C9E607D7F /* Titillio-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 18809C19D0B945658C774D0D /* Titillio-RegularItalic.otf */; };
@@ -34,6 +35,7 @@
 		B57C5DCD2D8B12A500173EF4 /* AppReviewModule.m in Sources */ = {isa = PBXBuildFile; fileRef = B57C5DCC2D8B129A00173EF4 /* AppReviewModule.m */; };
 		B57C5DCF2D8B12DC00173EF4 /* AppReviewModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57C5DCE2D8B12D200173EF4 /* AppReviewModule.swift */; };
 		B7B71EAAE496484488FE3751 /* Titillio-Extrabold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 59423B676D254801BFAA4C5E /* Titillio-Extrabold.otf */; };
+		CD9CF0C82D3846DAA72E8461 /* QRCodeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E860F9692E674CABA8E181BE /* QRCodeGenerator.swift */; };
 		D2245B924B42442CAF4944D5 /* Titillio-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = D688263BB87C4DFBA007CD92 /* Titillio-SemiboldItalic.otf */; };
 		D3577FD00169492CB2980CE3 /* Titillio-Extrablack.otf in Resources */ = {isa = PBXBuildFile; fileRef = 71A3E9FDB4AD4D74AB491DA4 /* Titillio-Extrablack.otf */; };
 		EC056373020AA03F7D8532D9 /* libPods-IO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22DB90684FEFB1CA71467FD6 /* libPods-IO.a */; };
@@ -105,8 +107,10 @@
 		C9E629838F224B4F9823D692 /* Titillio-Thin.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Titillio-Thin.otf"; path = "../assets/fonts/Titillio/Titillio-Thin.otf"; sourceTree = "<group>"; };
 		D688263BB87C4DFBA007CD92 /* Titillio-SemiboldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Titillio-SemiboldItalic.otf"; path = "../assets/fonts/Titillio/Titillio-SemiboldItalic.otf"; sourceTree = "<group>"; };
 		E65EB458FCBA5EA05FA80A1F /* Pods-IO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IO.release.xcconfig"; path = "Target Support Files/Pods-IO/Pods-IO.release.xcconfig"; sourceTree = "<group>"; };
+		E860F9692E674CABA8E181BE /* QRCodeGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeGenerator.swift; sourceTree = "<group>"; };
 		E8C4B91357FA47018EE5ACF0 /* Titillio-BlackItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Titillio-BlackItalic.otf"; path = "../assets/fonts/Titillio/Titillio-BlackItalic.otf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F059D7DB14A04904A92700C5 /* QRCodeGenerator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QRCodeGenerator.m; sourceTree = "<group>"; };
 		F0625E792326820B00EDEF90 /* libReact-RCTImage.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTImage.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0625E7B2326822400EDEF90 /* libReact-RCTImage.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTImage.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F09FEB0E231818E3007071DB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = IO/en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -217,6 +221,8 @@
 			children = (
 				A626A6B82ED9B0260084EC6E /* PdfHighResGenerator.m */,
 				A626A6B52ED9AED00084EC6E /* PdfHighResGenerator.swift */,
+				F059D7DB14A04904A92700C5 /* QRCodeGenerator.m */,
+				E860F9692E674CABA8E181BE /* QRCodeGenerator.swift */,
 				B57C5DCE2D8B12D200173EF4 /* AppReviewModule.swift */,
 				B57C5DCC2D8B129A00173EF4 /* AppReviewModule.m */,
 				194A5D2A1F027F5A0078620E /* Podfile */,
@@ -534,6 +540,8 @@
 				B57C5DCD2D8B12A500173EF4 /* AppReviewModule.m in Sources */,
 				B57C5DCF2D8B12DC00173EF4 /* AppReviewModule.swift in Sources */,
 				A626A6B62ED9AED30084EC6E /* PdfHighResGenerator.swift in Sources */,
+				719831F0FEAF411A9A0B08A6 /* QRCodeGenerator.m in Sources */,
+				CD9CF0C82D3846DAA72E8461 /* QRCodeGenerator.swift in Sources */,
 				B551AC412DA55A0E00A4E30F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

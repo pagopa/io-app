@@ -17,6 +17,9 @@ import { isGestureEnabled } from "../../../utils/navigation";
 import { DesignSystem } from "../DesignSystem";
 import { DSAdvice } from "../core/DSAdvice";
 import { DSAlert } from "../core/DSAlert";
+import { DSQRCodeNative } from "../core/DSQRCodeNative";
+import { DSQRCodeSkia } from "../core/DSQRCodeSkia";
+import { DSQRCodeStyled } from "../core/DSQRCodeStyled";
 import { DSAnimatedPictograms } from "../core/DSAnimatedPictograms";
 import { DSBadges } from "../core/DSBadges";
 import { DSBonusCardScreen } from "../core/DSBonusCardScreen";
@@ -350,6 +353,33 @@ export const DesignSystemNavigator = () => {
         />
 
         {/* EXPERIMENTAL LAB */}
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.QR_CODE_STYLED.route}
+          component={DSQRCodeStyled}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.QR_CODE_STYLED.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.QR_CODE_SKIA.route}
+          component={DSQRCodeSkia}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.QR_CODE_SKIA.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.QR_CODE_NATIVE.route}
+          component={DSQRCodeNative}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.QR_CODE_NATIVE.title
+          }}
+        />
 
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ANIMATED_PICTOGRAMS.route}

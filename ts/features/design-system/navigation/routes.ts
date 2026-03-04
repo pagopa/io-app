@@ -151,6 +151,18 @@ const DESIGN_SYSTEM_ROUTES = {
     }
   },
   EXPERIMENTAL_LAB: {
+    QR_CODE_STYLED: {
+      route: "DS_QR_CODE_STYLED",
+      title: "QR Code Styled (RFC)"
+    },
+    QR_CODE_SKIA: {
+      route: "DS_QR_CODE_SKIA",
+      title: "QR Code Skia (RFC)"
+    },
+    QR_CODE_NATIVE: {
+      route: "DS_QR_CODE_NATIVE",
+      title: "QR Code Native (RFC)"
+    },
     DYNAMIC_BACKGROUND: {
       route: "DS_DYNAMIC_BACKGROUND",
       title: "Dynamic header background"
