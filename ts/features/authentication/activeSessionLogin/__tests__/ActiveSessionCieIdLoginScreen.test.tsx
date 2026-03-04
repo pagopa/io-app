@@ -30,7 +30,8 @@ jest.mock("@react-navigation/native", () => {
     ...actualNav,
     useNavigation: () => ({
       replace: mockReplace,
-      popToTop: mockPopToTop
+      popToTop: mockPopToTop,
+      addListener: jest.fn(() => jest.fn())
     }),
     useRoute: () => ({
       params: {
