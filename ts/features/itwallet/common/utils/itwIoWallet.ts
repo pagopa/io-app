@@ -2,10 +2,9 @@ import { IoWallet, ItwVersion } from "@pagopa/io-react-native-wallet";
 import { useIOSelector } from "../../../../store/hooks";
 import { selectItwSpecsVersion } from "../store/selectors/environment";
 
-const ioWalletMap: Record<ItwVersion, IoWallet> = {
-  "1.0.0": new IoWallet({ version: "1.0.0" }),
-  "1.3.3": new IoWallet({ version: "1.3.3" })
-};
+const instances: {
+  [V in ItwVersion]?: IoWallet;
+} = {};
 
 /**
  * Convenience hook to get the IoWallet instance matching the current IT-Wallet specs version.
@@ -13,7 +12,7 @@ const ioWalletMap: Record<ItwVersion, IoWallet> = {
  */
 export const useIoWallet = () => {
   const itwSpecsVersion = useIOSelector(selectItwSpecsVersion);
-  return ioWalletMap[itwSpecsVersion];
+  return getIoWallet(itwSpecsVersion);
 };
 
 /**
@@ -22,5 +21,10 @@ export const useIoWallet = () => {
  * @returns IoWallet
  */
 export function getIoWallet(version: ItwVersion) {
-  return ioWalletMap[version];
+  // Lazy initialization
+  if (!instances[version]) {
+    // eslint-disable-next-line functional/immutable-data
+    instances[version] = new IoWallet({ version });
+  }
+  return instances[version];
 }
