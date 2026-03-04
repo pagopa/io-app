@@ -238,7 +238,7 @@ const BarcodeScanBaseScreenComponent = ({
       );
     }
 
-    return <LoadingSpinner size={76} color="white" />;
+    return <LoadingSpinner size={48} color="white" />;
   }, [
     cameraPermissionStatus,
     openCameraSettings,
