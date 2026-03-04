@@ -1,5 +1,5 @@
 import { CieUtils } from "@pagopa/io-react-native-cie";
-import { Trust } from "@pagopa/io-react-native-wallet";
+import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
 import { useIOStore } from "../../../../store/hooks";
@@ -26,6 +26,7 @@ import {
   itwIntegrityServiceStatusSelector
 } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
+import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { createCredentialUpgradeActionsImplementation } from "../upgrade/actions";
 import { createCredentialUpgradeActorsImplementation } from "../upgrade/actors";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine";
@@ -68,11 +69,13 @@ export type GetWalletAttestationActorParams = {
 /**
  * Creates the actors for the eid issuance machine
  * @param env - The environment to use for the IT Wallet API calls
+ * @param itwVersion - IT-Wallet technical specs version
  * @param store the IOStore
  * @returns the actors
  */
 export const createEidIssuanceActorsImplementation = (
   env: Env,
+  itwVersion: ItwVersion,
   store: ReturnType<typeof useIOStore>
 ) => ({
   getCieStatus: fromPromise<CieContext>(async () => {
@@ -87,20 +90,21 @@ export const createEidIssuanceActorsImplementation = (
   }),
 
   verifyTrustFederation: fromPromise(async () => {
+    const ioWallet = getIoWallet(itwVersion);
     // Evaluate the issuer trust
     const trustAnchorEntityConfig =
-      await Trust.Build.getTrustAnchorEntityConfiguration(
+      await ioWallet.Trust.getTrustAnchorEntityConfiguration(
         env.WALLET_TA_BASE_URL
       );
 
     // Create the trust chain for the PID provider
-    const builtChainJwts = await Trust.Build.buildTrustChain(
+    const builtChainJwts = await ioWallet.Trust.buildTrustChain(
       env.WALLET_PID_PROVIDER_BASE_URL,
       trustAnchorEntityConfig
     );
 
     // Perform full validation on the built chain
-    await Trust.Verify.verifyTrustChain(
+    await ioWallet.Trust.verifyTrustChain(
       trustAnchorEntityConfig,
       builtChainJwts,
       {
@@ -133,9 +137,8 @@ export const createEidIssuanceActorsImplementation = (
       integrityServiceStatus === "ready",
       `Integrity service status is ${integrityServiceStatus}`
     );
-
     const hardwareKeyTag = await getIntegrityHardwareKeyTag();
-    await registerWalletInstance(env, hardwareKeyTag, sessionToken);
+    await registerWalletInstance(env, itwVersion, hardwareKeyTag, sessionToken);
 
     return hardwareKeyTag;
   }),
@@ -148,7 +151,7 @@ export const createEidIssuanceActorsImplementation = (
     assert(sessionToken, "sessionToken is undefined");
     assert(input.integrityKeyTag, "integrityKeyTag is undefined");
 
-    return getAttestation(env, input.integrityKeyTag, sessionToken);
+    return getAttestation(env, itwVersion, input.integrityKeyTag, sessionToken);
   }),
 
   revokeWalletInstance: fromPromise(async () => {
@@ -161,7 +164,12 @@ export const createEidIssuanceActorsImplementation = (
     }
     assert(sessionToken, "sessionToken is undefined");
 
-    await revokeCurrentWalletInstance(env, sessionToken, integrityKeyTag.value);
+    await revokeCurrentWalletInstance(
+      env,
+      itwVersion,
+      sessionToken,
+      integrityKeyTag.value
+    );
   }),
 
   startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
