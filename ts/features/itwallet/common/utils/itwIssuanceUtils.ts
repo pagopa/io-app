@@ -2,7 +2,7 @@ import { generate } from "@pagopa/io-react-native-crypto";
 import {
   AuthorizationDetail,
   createCryptoContextFor,
-  Credential
+  ItwVersion
 } from "@pagopa/io-react-native-wallet";
 import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import { v4 as uuidv4 } from "uuid";
@@ -20,11 +20,13 @@ import {
 import { WALLET_SPEC_VERSION } from "./constants";
 import { extractVerification } from "./itwCredentialUtils";
 import { Env } from "./environment";
+import { getIoWallet } from "./itwIoWallet";
 
 const CREDENTIAL_TYPE = "PersonIdentificationData";
 
 type StartAuthFlowParams = {
   env: Env;
+  itwVersion: ItwVersion;
   walletAttestation: string;
   identification: IdentificationContext;
   withMRTDPoP: boolean;
@@ -36,6 +38,7 @@ type StartAuthFlowParams = {
  * After completing the initial authentication flow and obtaining the redirectAuthUrl from the WebView (CIE + PIN & SPID) or Browser (CIEID),
  * the flow must be completed by invoking `completeAuthFlow`.
  * @param env - The environment to use for the wallet provider base URL
+ * @param itwVersion - IT-Wallet technical specs version
  * @param walletAttestation - The wallet attestation.
  * @param identification - The identification context.
  * @param withMRTDPoP - Whether to use MRTD PoP proof or not.
@@ -43,29 +46,25 @@ type StartAuthFlowParams = {
  */
 const startAuthFlow = async ({
   env,
+  itwVersion,
   walletAttestation,
   identification,
   withMRTDPoP
 }: StartAuthFlowParams) => {
-  const startFlow: Credential.Issuance.StartFlow = () => ({
-    issuerUrl: env.WALLET_PID_PROVIDER_BASE_URL,
-    credentialId: "dc_sd_jwt_PersonIdentificationData"
-  });
+  const ioWallet = getIoWallet(itwVersion);
 
   const idpHint = getIdpHint(identification, env);
 
-  const { issuerUrl, credentialId } = startFlow();
-
-  const { issuerConf } = await Credential.Issuance.evaluateIssuerTrust(
-    issuerUrl
+  const { issuerConf } = await ioWallet.CredentialIssuance.evaluateIssuerTrust(
+    env.WALLET_PID_PROVIDER_BASE_URL
   );
 
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
   const { issuerRequestUri, clientId, codeVerifier, credentialDefinition } =
-    await Credential.Issuance.startUserAuthorization(
+    await ioWallet.CredentialIssuance.startUserAuthorization(
       issuerConf,
-      [credentialId],
+      ["dc_sd_jwt_PersonIdentificationData"],
       withMRTDPoP
         ? { proofType: "mrtd-pop", idpHinting: idpHint }
         : { proofType: "none" },
@@ -77,7 +76,7 @@ const startAuthFlow = async ({
     );
 
   // Obtain the Authorization URL
-  const { authUrl } = await Credential.Issuance.buildAuthorizationUrl(
+  const { authUrl } = await ioWallet.CredentialIssuance.buildAuthorizationUrl(
     issuerRequestUri,
     clientId,
     issuerConf,
@@ -96,6 +95,7 @@ const startAuthFlow = async ({
 
 export type CompleteAuthFlowParams = {
   callbackUrl: string;
+  itwVersion: ItwVersion;
   issuerConf: IssuerConfiguration;
   clientId: string;
   codeVerifier: string;
@@ -117,14 +117,15 @@ export type CompleteAuthFlowResult = Awaited<
  */
 const completeAuthFlow = async ({
   callbackUrl,
-  clientId,
   codeVerifier,
   issuerConf,
   walletAttestation,
-  redirectUri
+  redirectUri,
+  itwVersion
 }: CompleteAuthFlowParams) => {
+  const ioWallet = getIoWallet(itwVersion);
   const { code } =
-    await Credential.Issuance.completeUserAuthorizationWithQueryMode(
+    await ioWallet.CredentialIssuance.completeUserAuthorizationWithQueryMode(
       callbackUrl
     );
 
@@ -132,10 +133,9 @@ const completeAuthFlow = async ({
   const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
-  const { accessToken } = await Credential.Issuance.authorizeAccess(
+  const { accessToken } = await ioWallet.CredentialIssuance.authorizeAccess(
     issuerConf,
     code,
-    clientId,
     redirectUri,
     codeVerifier,
     {
@@ -149,6 +149,7 @@ const completeAuthFlow = async ({
 };
 
 export type PidIssuanceParams = {
+  itwVersion: ItwVersion;
   issuerConf: IssuerConfiguration;
   accessToken: CredentialAccessToken;
   clientId: string;
@@ -162,12 +163,14 @@ export type PidIssuanceParams = {
  * @returns The stored credential.
  */
 const getPid = async ({
+  itwVersion,
   issuerConf,
   clientId,
   accessToken,
   dPoPContext,
   credentialDefinition
 }: PidIssuanceParams): Promise<StoredCredential> => {
+  const ioWallet = getIoWallet(itwVersion);
   const credentialKeyTag = uuidv4().toString();
   await generate(credentialKeyTag);
   const credentialCryptoContext = createCryptoContextFor(credentialKeyTag);
@@ -177,19 +180,20 @@ const getPid = async ({
     credentialDefinition
   );
 
-  const { credential, format } = await Credential.Issuance.obtainCredential(
-    issuerConf,
-    accessToken,
-    clientId,
-    credentialIdentifierDefinition,
-    {
-      credentialCryptoContext,
-      dPopCryptoContext: dPoPContext
-    }
-  );
+  const { credential, format } =
+    await ioWallet.CredentialIssuance.obtainCredential(
+      issuerConf,
+      accessToken,
+      clientId,
+      credentialIdentifierDefinition,
+      {
+        credentialCryptoContext,
+        dPopCryptoContext: dPoPContext
+      }
+    );
 
   const { parsedCredential, issuedAt, expiration } =
-    await Credential.Issuance.verifyAndParseCredential(
+    await ioWallet.CredentialIssuance.verifyAndParseCredential(
       issuerConf,
       credential,
       credentialIdentifierDefinition.credential_configuration_id,

@@ -182,6 +182,7 @@ export const createEidIssuanceActorsImplementation = (
 
       const authenticationContext = await issuanceUtils.startAuthFlow({
         env,
+        itwVersion,
         walletAttestation: input.walletInstanceAttestation,
         identification: input.identification,
         withMRTDPoP: input.withMRTDPoP
@@ -253,6 +254,7 @@ export const createEidIssuanceActorsImplementation = (
 
       const authParams = await issuanceUtils.completeAuthFlow({
         ...input.authenticationContext,
+        itwVersion,
         walletAttestation: input.walletInstanceAttestation
       });
 
@@ -262,6 +264,7 @@ export const createEidIssuanceActorsImplementation = (
       );
 
       return issuanceUtils.getPid({
+        itwVersion,
         ...authParams,
         ...input.authenticationContext
       });
