@@ -18,7 +18,8 @@ import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/sele
 import {
   itwSetAuthLevel,
   itwFreezeSimplifiedActivationRequirements,
-  itwClearSimplifiedActivationRequirements
+  itwClearSimplifiedActivationRequirements,
+  itwSetCredentialUpgradeFailed
 } from "../../common/store/actions/preferences";
 import {
   itwCredentialsRemoveByType,
@@ -312,6 +313,19 @@ export const createEidIssuanceActionsImplementation = (
     store.dispatch(itwClearSimplifiedActivationRequirements());
   },
 
+  storeCredentialUpgradeFailures: ({
+    event
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assertEvent(event, "xstate.done.actor.credentialUpgradeMachine");
+    store.dispatch(
+      itwSetCredentialUpgradeFailed(
+        event.output.failedCredentials.map(
+          failedCredential => failedCredential.credentialType
+        )
+      )
+    );
+  },
+
   loadPidIntoContext: assign<
     Context,
     EidIssuanceEvents,
@@ -326,9 +340,14 @@ export const createEidIssuanceActionsImplementation = (
   trackWalletInstanceCreation: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    const identificationMethod =
+      context.identification?.mode ??
+      // Simplified PID activation skips identification but still requires ITW_ID_method for analytics.
+      (context.level === "l3" ? "ciePin" : undefined);
+
     trackSaveCredentialSuccess({
       credential: context.level === "l3" ? "ITW_PID" : "ITW_ID_V2",
-      ITW_ID_method: context.identification?.mode,
+      ITW_ID_method: identificationMethod,
       credential_details: itwMixPanelCredentialDetailsSelector(store.getState())
     });
   },
@@ -343,10 +362,13 @@ export const createEidIssuanceActionsImplementation = (
     event
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     assertEvent(event, "select-identification-mode");
+    if (context.level === "l3") {
+      return;
+    }
 
     trackItWalletIDMethodSelected({
       ITW_ID_method: event.mode,
-      itw_flow: context.level === "l3" ? "L3" : "L2"
+      itw_flow: "L2"
     });
   },
 

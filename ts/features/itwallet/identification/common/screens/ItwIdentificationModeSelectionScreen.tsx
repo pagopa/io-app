@@ -15,13 +15,10 @@ import LoadingScreenContent from "../../../../../components/screens/LoadingScree
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
-import {
-  trackItWalletIDMethod,
-  trackItwUserWithoutL3Bottomsheet,
-  trackItwUserWithoutL3Requirements
-} from "../../analytics";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { itwDisabledIdentificationMethodsSelector } from "../../../common/store/selectors/remoteConfig";
+import { trackItWalletIDMethodSelected } from "../../../analytics";
+import { EidIssuanceLevel } from "../../../machine/eid/context";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
@@ -30,10 +27,16 @@ import {
   selectIssuanceMode
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import {
+  trackItWalletIDMethod,
+  trackItwUserWithoutL3Requirements
+} from "../../analytics";
 import { useContinueWithBottomSheet } from "../hooks/useContinueWithBottomSheet";
 
 export type ItwIdentificationNavigationParams = {
   eidReissuing?: boolean;
+  level?: EidIssuanceLevel;
+  credentialType?: string;
   animationEnabled?: boolean;
 };
 
@@ -49,9 +52,11 @@ export const ItwIdentificationModeSelectionScreen = ({
   route
 }: ItwIdentificationModeSelectionScreenProps) => {
   const { name: routeName, params } = route;
-  const { eidReissuing } = params;
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+
+  const issuanceMode =
+    ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
@@ -107,10 +112,15 @@ export const ItwIdentificationModeSelectionScreen = ({
 
   useFocusEffect(
     useCallback(() => {
-      if (eidReissuing) {
-        machineRef.send({ type: "start", mode: "reissuance", level: "l2" });
+      if (params.eidReissuing && issuanceMode !== "reissuance") {
+        machineRef.send({
+          type: "start",
+          mode: "reissuance",
+          level: params.level || "l2",
+          credentialType: params.credentialType
+        });
       }
-    }, [eidReissuing, machineRef])
+    }, [machineRef, params, issuanceMode])
   );
 
   useFocusEffect(
@@ -129,7 +139,11 @@ export const ItwIdentificationModeSelectionScreen = ({
       // If the user is in the L3 upgrade flow, he cannot proceed without a CIE card
       machineRef.send({ type: "go-to-cie-warning", warning: "card" });
     } else {
-      trackItwUserWithoutL3Bottomsheet();
+      trackItwUserWithoutL3Requirements({
+        screen_name: routeName,
+        reason: "user_without_cie",
+        position: "screen"
+      });
       machineRef.send({
         type: "restart",
         mode: "issuance",
@@ -139,7 +153,7 @@ export const ItwIdentificationModeSelectionScreen = ({
   }, [mode, machineRef, routeName]);
 
   const dismissalDialog = useItwDismissalDialog({
-    enabled: eidReissuing,
+    enabled: params.eidReissuing,
     customLabels: {
       body: ""
     },
@@ -160,7 +174,7 @@ export const ItwIdentificationModeSelectionScreen = ({
       }}
       description={description}
       headerActionsProp={{ showHelp: true }}
-      goBack={eidReissuing ? dismissalDialog.show : undefined}
+      goBack={params.eidReissuing ? dismissalDialog.show : undefined}
     >
       <ContentWrapper>
         <VSpacer size={8} />
@@ -203,7 +217,7 @@ export const ItwIdentificationModeSelectionScreen = ({
               {!isSpidDisabled && <SpidMethodModule />}
             </>
           )}
-          {isL3 && !eidReissuing && (
+          {isL3 && !params.eidReissuing && (
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <IOButton
                 variant="link"
@@ -259,6 +273,10 @@ const CiePinMethodModule = () => {
         icon="cieCard"
         onPress={() => {
           if (isL3) {
+            trackItWalletIDMethodSelected({
+              ITW_ID_method: "ciePin",
+              itw_flow: "L3"
+            });
             ciePinBottomSheet.present();
           } else {
             handleOnPress();
@@ -309,6 +327,10 @@ const SpidMethodModule = () => {
         icon="spid"
         onPress={() => {
           if (isL3) {
+            trackItWalletIDMethodSelected({
+              ITW_ID_method: "spid",
+              itw_flow: "L3"
+            });
             spidBottomSheet.present();
           } else {
             handleOnPress();
@@ -358,6 +380,10 @@ const CieIdMethodModule = () => {
         testID="CieIDMethodModuleTestID"
         onPress={() => {
           if (isL3) {
+            trackItWalletIDMethodSelected({
+              ITW_ID_method: "cieId",
+              itw_flow: "L3"
+            });
             cieIdBottomSheet.present();
           } else {
             handleOnPress();

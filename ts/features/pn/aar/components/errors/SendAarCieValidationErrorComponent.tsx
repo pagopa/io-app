@@ -3,7 +3,6 @@ import { OperationResultScreenContent } from "../../../../../components/screens/
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { sendAarInAppDelegationUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../../utils/url";
 import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
 import { setAarFlowState } from "../../store/actions";
@@ -20,7 +19,8 @@ import {
   trackSendAarMandateCieErrorDetailHelp,
   trackSendAarMandateCieErrorRetry
 } from "../../analytics";
-import { sendAarErrorSupportBottomSheetComponent } from "./SendAARErrorComponent";
+import { useAarGenericErrorBottomSheet } from "./hooks/useAarGenericErrorBottomSheet";
+import { SendAarZendeskSecondLevelTag } from "./hooks/useAarStartSendZendeskSupport";
 
 export const CieExpiredComponent = () => {
   const { terminateFlow } = useSendAarFlowManager();
@@ -115,18 +115,14 @@ export const GenericCieValidationErrorComponent = () => {
   const assistanceErrorCode = useIOSelector(
     currentAARFlowStateAssistanceErrorCode
   );
-  const handleZendeskAssistance = () => {
-    trackSendAarMandateCieErrorDetailHelp(assistanceErrorCode ?? "");
-    dismiss();
-  };
-
-  const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
-    component: sendAarErrorSupportBottomSheetComponent(
-      handleZendeskAssistance,
-      assistanceErrorCode,
-      () => trackSendAarMandateCieErrorDetailCode(assistanceErrorCode ?? "")
-    ),
-    title: ""
+  const { bottomSheet, present } = useAarGenericErrorBottomSheet({
+    errorName: assistanceErrorCode,
+    zendeskSecondLevelTag:
+      SendAarZendeskSecondLevelTag.IO_PROBLEMA_NOTIFICA_SEND_QR_ALTRA_PERSONA,
+    onCopyToClipboard: () =>
+      trackSendAarMandateCieErrorDetailCode(assistanceErrorCode ?? ""),
+    onStartAssistance: () =>
+      trackSendAarMandateCieErrorDetailHelp(assistanceErrorCode ?? "")
   });
 
   useDebugInfo(debugInfo);

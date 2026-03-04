@@ -10,6 +10,7 @@ import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { truncate } from "lodash";
 import I18n from "i18next";
+import { addPadding } from "@pagopa/io-react-native-jwt";
 import { Locales } from "../../../../../locales/locales";
 import { JsonFromString } from "./ItwCodecUtils";
 import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
@@ -723,55 +724,143 @@ export const getFamilyNameFromCredential = (
     O.getOrElse(() => "")
   );
 
+type ClaimDisplayValue =
+  | { renderAs: "text"; value: string }
+  | { renderAs: "list"; value: Array<string> }
+  | { renderAs: "image"; value: string }
+  | {
+      renderAs: "drivingPrivileges";
+      value: Array<DrivingPrivilegeClaimType>;
+    }
+  | {
+      renderAs: "nestedObject";
+      value: Array<ClaimDisplayFormat>;
+    }
+  | {
+      renderAs: "nestedObjectArray";
+      value: Array<Array<ClaimDisplayFormat>>;
+    };
+
+/**
+ * Converts a driving privilege claim into a list of displayable claims.
+ * This is used to present detailed information in the claim details bottom sheet.
+ * @param drivingPrivilege - The driving privilege claim to convert.
+ * @returns A list of claims formatted for display purposes.
+ */
+export const drivingPrivilegeToClaims = (
+  drivingPrivilege: DrivingPrivilegeClaimType
+): Array<ClaimDisplayFormat> => [
+  {
+    id: "issue_date",
+    label: I18n.t(
+      "features.itWallet.verifiableCredentials.claims.mdl.issuedDate"
+    ),
+    value: drivingPrivilege.issue_date.toString("DD/MM/YYYY")
+  },
+  {
+    id: "expiry_date",
+    label: I18n.t(
+      "features.itWallet.verifiableCredentials.claims.mdl.expirationDate"
+    ),
+    value: drivingPrivilege.expiry_date.toString("DD/MM/YYYY")
+  },
+  ...(drivingPrivilege.restrictions_conditions
+    ? [
+        {
+          id: "restrictions_conditions",
+          label: I18n.t(
+            "features.itWallet.verifiableCredentials.claims.mdl.restrictionConditions"
+          ),
+          value: drivingPrivilege.restrictions_conditions
+        }
+      ]
+    : [])
+];
+
 /**
  * Get the display value of a claim without being coupled to a specific UI component
- * @param claim The claim in {@link ClaimDisplayFormat}
- * @returns The display value as a string or an array of strings
+ * @param claim - The claim to resolve, in {@link ClaimDisplayFormat}.
+ * @returns A {@link ClaimDisplayValue} describing how the claim should be displayed.
  */
 export const getClaimDisplayValue = (
   claim: ClaimDisplayFormat
-): string | Array<string> =>
+): ClaimDisplayValue =>
   pipe(
     claim.value,
     ClaimValue.decode,
     E.fold(
-      () => I18n.t("features.itWallet.generic.placeholders.claimNotAvailable"),
+      () => ({
+        renderAs: "text",
+        value: I18n.t(
+          "features.itWallet.generic.placeholders.claimNotAvailable"
+        )
+      }),
       decoded => {
         if (PlaceOfBirthClaim.is(decoded)) {
-          return `${decoded.locality} (${decoded.country})`;
+          return {
+            renderAs: "text",
+            value: `${decoded.locality} (${decoded.country})`
+          };
         }
         if (SimpleDateClaim.is(decoded)) {
-          return decoded.toString();
+          return { renderAs: "text", value: decoded.toString() };
         }
         if (ImageClaim.is(decoded)) {
-          return decoded;
-        }
-        if (DrivingPrivilegesClaim.is(decoded)) {
-          return decoded.map(e => e.driving_privilege);
-        }
-        if (FiscalCodeClaim.is(decoded)) {
-          return pipe(
-            decoded,
-            extractFiscalCode,
-            O.getOrElseW(() => decoded)
-          );
-        }
-        if (BoolClaim.is(decoded)) {
-          return I18n.t(
-            `features.itWallet.presentation.credentialDetails.boolClaim.${decoded}`
-          );
+          return { renderAs: "image", value: decoded };
         }
         if (
-          SimpleListClaim.is(decoded) ||
-          StringClaim.is(decoded) ||
-          EmptyStringClaim.is(decoded)
+          claim.id.includes(WellKnownClaim.portrait) &&
+          StringClaim.is(decoded)
         ) {
-          return decoded; // must be the last one to be checked due to overlap with IPatternStringTag
+          return {
+            renderAs: "image",
+            value: `data:image/jpeg;base64,${addPadding(decoded)}`
+          };
         }
-
-        return I18n.t(
-          "features.itWallet.generic.placeholders.claimNotAvailable"
-        );
+        if (DrivingPrivilegesClaim.is(decoded)) {
+          return {
+            renderAs: "drivingPrivileges",
+            value: decoded
+          };
+        }
+        if (FiscalCodeClaim.is(decoded)) {
+          return {
+            renderAs: "text",
+            value: pipe(
+              decoded,
+              extractFiscalCode,
+              O.getOrElseW(() => decoded)
+            )
+          };
+        }
+        if (NestedObjectClaim.is(decoded)) {
+          const nestedClaims = parseClaims(decoded);
+          return { renderAs: "nestedObject", value: nestedClaims };
+        }
+        if (NestedArrayClaim.is(decoded)) {
+          const nestedObjects = decoded.map(obj => parseClaims(obj));
+          return { renderAs: "nestedObjectArray", value: nestedObjects };
+        }
+        if (BoolClaim.is(decoded)) {
+          return {
+            renderAs: "text",
+            value: I18n.t(
+              `features.itWallet.presentation.credentialDetails.boolClaim.${decoded}`
+            )
+          };
+        }
+        if (SimpleListClaim.is(decoded)) {
+          return { renderAs: "list", value: decoded };
+        }
+        if (StringClaim.is(decoded) || EmptyStringClaim.is(decoded)) {
+          return { renderAs: "text", value: decoded };
+        }
+        return {
+          renderAs: "text",
+          value: I18n.t(
+            "features.itWallet.generic.placeholders.claimNotAvailable"
+          )
+        };
       }
     )
   );

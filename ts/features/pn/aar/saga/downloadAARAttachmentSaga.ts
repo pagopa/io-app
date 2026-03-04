@@ -6,7 +6,6 @@ import { ActionType } from "typesafe-actions";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { apiUrlPrefix, fetchTimeout } from "../../../../config";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { SessionToken } from "../../../../types/SessionToken";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
 import { isTestEnv } from "../../../../utils/environment";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
@@ -23,6 +22,7 @@ import {
   trackSendAARFailure
 } from "../analytics";
 import { createSendAARClientWithLollipop } from "../api/client";
+import { isAarAttachmentTtlError } from "../utils/aarErrorMappings";
 
 const fastLoginType = "FAST_LOGIN_EXPIRED";
 const fastLoginError = Error(fastLoginType);
@@ -30,7 +30,7 @@ const isFastLoginError = (e: unknown) =>
   e instanceof Error && e.message === fastLoginType;
 
 export function* downloadAARAttachmentSaga(
-  bearerToken: SessionToken,
+  bearerToken: string,
   keyInfo: KeyInfo,
   mandateId: string | undefined,
   action: ActionType<typeof downloadAttachment.request>
@@ -92,7 +92,7 @@ export function* downloadAARAttachmentSaga(
 }
 
 function* getAttachmentPrevalidatedUrl(
-  bearerToken: SessionToken,
+  bearerToken: string,
   keyInfo: KeyInfo,
   attachmentUrl: string,
   useUATEnvironment: boolean,
@@ -121,7 +121,7 @@ function* getAttachmentPrevalidatedUrl(
 }
 
 function* getAttachmentMetadata(
-  bearerToken: SessionToken,
+  bearerToken: string,
   keyInfo: KeyInfo,
   attachmentUrl: string,
   useUATEnvironment: boolean,
@@ -155,6 +155,12 @@ function* getAttachmentMetadata(
   const { status, value } = responseEither.right;
   if (status === 401) {
     throw fastLoginError;
+  }
+  if (status === 500) {
+    const errorCode = value.errors?.[0]?.code;
+    if (isAarAttachmentTtlError(errorCode)) {
+      throw Error(errorCode);
+    }
   }
   if (status !== 200) {
     const reason = aarProblemJsonAnalyticsReport(status, value);

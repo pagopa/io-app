@@ -30,6 +30,7 @@ import {
 } from "../featureFlagWithMinAppVersionStatus";
 import { isIdPayLocallyEnabledSelector } from "../persistedPreferences";
 import { GlobalState } from "../types";
+import { OSPerPlatform } from "../../../../definitions/content/OSPerPlatform";
 
 export type RemoteConfigState = O.Option<BackendStatus["config"]>;
 
@@ -647,6 +648,16 @@ export const appFeedbackConfigSelector = createSelector(
     )
 );
 
+export const minOsSupportedSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): OSPerPlatform | undefined => {
+    if (O.isSome(remoteConfig)) {
+      return remoteConfig.value.min_supported_os;
+    }
+    return undefined;
+  }
+);
+
 export const appFeedbackUriConfigSelector = (topic: TopicKeys = "general") =>
   createSelector(
     appFeedbackConfigSelector,
@@ -890,4 +901,15 @@ export const sendVisitTheWebsiteUrlSelector = (state: GlobalState) => {
     }
   }
   return "https://cittadini.notifichedigitali.it/auth/login";
+};
+
+export const isSendLollipopPlaygroundEnabledSelector = (
+  state: GlobalState
+): boolean => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isNone(remoteConfigOption)) {
+    return false;
+  }
+  const remoteConfig = remoteConfigOption.value;
+  return !!remoteConfig.pn.lollipopPlaygroundEnabled;
 };

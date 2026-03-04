@@ -180,6 +180,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "ITW_DISCOVERY": true,
     "IT_WALLET_DISCOVERY": true,
     "LV_EXPIRATION_REMINDER": true,
+    "OS_DISMISSION_REMINDER": true,
     "PUSH_NOTIFICATIONS_REMINDER": true,
     "SEND_ACTIVATION_REMINDER": true,
   },
@@ -357,6 +358,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "loginEngagement": {
       "hasSendEngagementScreenBeenDismissed": false,
     },
+    "lollipopLambda": {
+      "type": "idle",
+    },
     "tempAarMandate": {
       "mandate": {
         "kind": "undefined",
@@ -397,6 +401,12 @@ exports[`featuresPersistor should match snapshot 1`] = `
         "kind": "PotNone",
       },
     },
+  },
+  "tour": {
+    "activeGroupId": undefined,
+    "activeStepIndex": 0,
+    "completed": [],
+    "items": {},
   },
   "utmLink": {
     "utmCampaign": undefined,

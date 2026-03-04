@@ -9,7 +9,7 @@ import { ItwPIDStatus, MixPanelCredential, CREDENTIALS_MAP } from "./types";
  * Maps an PID status to its corresponding Mixpanel tracking status.
  */
 export const mapPIDStatusToMixpanel = (
-  status: ItwJwtCredentialStatus
+  status: ItwJwtCredentialStatus | undefined
 ): ItwPIDStatus => {
   switch (status) {
     case "valid":

@@ -380,12 +380,36 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                         testID="FeaturedInstitutionCardTestID-pressable"
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "transform": [
+                                  {
+                                    "scale": 1,
+                                  },
+                                ],
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "flexGrow": 1,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
                                 "transform": [
                                   {
-                                    "scale": undefined,
+                                    "scale": 1,
                                   },
                                 ],
                               },
@@ -917,12 +941,36 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                         testID="FeaturedInstitutionCardTestID-pressable"
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "transform": [
+                                  {
+                                    "scale": 1,
+                                  },
+                                ],
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "flexGrow": 1,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
                                 "transform": [
                                   {
-                                    "scale": undefined,
+                                    "scale": 1,
                                   },
                                 ],
                               },
