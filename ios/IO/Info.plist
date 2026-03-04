@@ -34,6 +34,8 @@
           <string>ioit</string>
           <string>iowalletcie</string>
           <string>iologincie</string>
+          <string>openid-credential-offer</string>
+          <string>haip-vci</string>
         </array>
       </dict>
     </array>
