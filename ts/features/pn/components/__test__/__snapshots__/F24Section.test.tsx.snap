@@ -9234,7 +9234,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -9673,7 +9672,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -10112,7 +10110,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -10551,7 +10548,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -10990,7 +10986,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -11429,7 +11424,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -11868,7 +11862,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -12307,7 +12300,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -12746,7 +12738,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -16146,7 +16137,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -16585,7 +16575,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -17024,7 +17013,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -17463,7 +17451,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -17902,7 +17889,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -18341,7 +18327,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -18780,7 +18765,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -19219,7 +19203,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -19658,7 +19641,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -20097,7 +20079,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -20536,7 +20517,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -20975,7 +20955,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -21414,7 +21393,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -21853,7 +21831,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -22292,7 +22269,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -22731,7 +22707,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -23170,7 +23145,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -23609,7 +23583,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -27009,7 +26982,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -27448,7 +27420,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -27887,7 +27858,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -28326,7 +28296,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -28765,7 +28734,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -29204,7 +29172,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -29643,7 +29610,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -30082,7 +30048,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -30521,7 +30486,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -30960,7 +30924,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -31451,7 +31414,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -31942,7 +31904,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -32433,7 +32394,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -32924,7 +32884,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -33415,7 +33374,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -33906,7 +33864,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -34397,7 +34354,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -34888,7 +34844,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -38340,7 +38295,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -38831,7 +38785,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -39322,7 +39275,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -39813,7 +39765,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -40304,7 +40255,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -40795,7 +40745,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -41286,7 +41235,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -41777,7 +41725,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -42268,7 +42215,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -42759,7 +42705,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -43250,7 +43195,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -43741,7 +43685,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -44232,7 +44175,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -44723,7 +44665,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -45214,7 +45155,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -45705,7 +45645,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -46196,7 +46135,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -46687,7 +46625,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -50139,7 +50076,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -50630,7 +50566,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -51121,7 +51056,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -51612,7 +51546,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -52103,7 +52036,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -52594,7 +52526,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -53085,7 +53016,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -53576,7 +53506,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -54067,7 +53996,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},

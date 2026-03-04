@@ -680,7 +680,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -3067,7 +3066,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -5783,7 +5781,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -7538,7 +7535,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -9293,7 +9289,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -11291,7 +11286,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -13289,7 +13283,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -13904,7 +13897,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},

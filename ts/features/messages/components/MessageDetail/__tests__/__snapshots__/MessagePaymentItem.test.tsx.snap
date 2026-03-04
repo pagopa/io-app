@@ -382,43 +382,166 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                               >
                                 <View
                                   collapsable={false}
-                                  style={
+                                  jestAnimatedProps={
                                     {
-                                      "backgroundColor": "#E8EBF1",
-                                      "borderCurve": "continuous",
-                                      "borderRadius": 8,
-                                      "height": 12,
-                                      "opacity": 0.75,
-                                      "width": 120,
+                                      "value": {},
                                     }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "backgroundColor": "#E8EBF1",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 8,
+                                        "height": 12,
+                                        "width": 120,
+                                      },
+                                      {
+                                        "animationDuration": "1250ms",
+                                        "animationIterationCount": "infinite",
+                                        "animationName": {
+                                          "0%, 100%": {
+                                            "opacity": 0.75,
+                                          },
+                                          "50%": {
+                                            "opacity": 0.35,
+                                          },
+                                        },
+                                        "animationTimingFunction": CubicBezierEasing {
+                                          "x1": 0.37,
+                                          "x2": 0.63,
+                                          "y1": 0,
+                                          "y2": 1,
+                                        },
+                                      },
+                                    ]
+                                  }
+                                  style={
+                                    [
+                                      {
+                                        "backgroundColor": "#E8EBF1",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 8,
+                                        "height": 12,
+                                        "width": 120,
+                                      },
+                                      {},
+                                    ]
                                   }
                                 />
                                 <View
                                   collapsable={false}
-                                  style={
+                                  jestAnimatedProps={
                                     {
-                                      "backgroundColor": "#E8EBF1",
-                                      "borderCurve": "continuous",
-                                      "borderRadius": 8,
-                                      "height": 16,
-                                      "opacity": 0.75,
-                                      "width": 180,
+                                      "value": {},
                                     }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "backgroundColor": "#E8EBF1",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 8,
+                                        "height": 16,
+                                        "width": 180,
+                                      },
+                                      {
+                                        "animationDuration": "1250ms",
+                                        "animationIterationCount": "infinite",
+                                        "animationName": {
+                                          "0%, 100%": {
+                                            "opacity": 0.75,
+                                          },
+                                          "50%": {
+                                            "opacity": 0.35,
+                                          },
+                                        },
+                                        "animationTimingFunction": CubicBezierEasing {
+                                          "x1": 0.37,
+                                          "x2": 0.63,
+                                          "y1": 0,
+                                          "y2": 1,
+                                        },
+                                      },
+                                    ]
+                                  }
+                                  style={
+                                    [
+                                      {
+                                        "backgroundColor": "#E8EBF1",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 8,
+                                        "height": 16,
+                                        "width": 180,
+                                      },
+                                      {},
+                                    ]
                                   }
                                 />
                               </View>
                             </View>
                             <View
                               collapsable={false}
-                              style={
+                              jestAnimatedProps={
                                 {
-                                  "backgroundColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 16,
-                                  "height": 24,
-                                  "opacity": 0.75,
-                                  "width": 64,
+                                  "value": {},
                                 }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "backgroundColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 16,
+                                    "height": 24,
+                                    "width": 64,
+                                  },
+                                  {
+                                    "animationDuration": "1250ms",
+                                    "animationIterationCount": "infinite",
+                                    "animationName": {
+                                      "0%, 100%": {
+                                        "opacity": 0.75,
+                                      },
+                                      "50%": {
+                                        "opacity": 0.35,
+                                      },
+                                    },
+                                    "animationTimingFunction": CubicBezierEasing {
+                                      "x1": 0.37,
+                                      "x2": 0.63,
+                                      "y1": 0,
+                                      "y2": 1,
+                                    },
+                                  },
+                                ]
+                              }
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 16,
+                                    "height": 24,
+                                    "width": 64,
+                                  },
+                                  {},
+                                ]
                               }
                             />
                           </View>

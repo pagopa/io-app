@@ -18117,7 +18117,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -18577,7 +18576,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -19037,7 +19035,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -19497,7 +19494,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -19957,7 +19953,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -20417,7 +20412,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -20877,7 +20871,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -21337,7 +21330,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -21797,7 +21789,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -22257,7 +22248,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -22717,7 +22707,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -23177,7 +23166,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -23637,7 +23625,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -24097,7 +24084,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -24557,7 +24543,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -25017,7 +25002,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -25477,7 +25461,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -25937,7 +25920,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -26397,7 +26379,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -26857,7 +26838,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -27317,7 +27297,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -27777,7 +27756,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -28237,7 +28215,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -28697,7 +28674,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -29157,7 +29133,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -29617,7 +29592,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -30077,7 +30051,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -30537,7 +30510,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -30994,7 +30966,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -31451,7 +31422,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -31908,7 +31878,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -32365,7 +32334,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -32822,7 +32790,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -33279,7 +33246,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -33736,7 +33702,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -34193,7 +34158,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -34650,7 +34614,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -35107,7 +35070,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -35564,7 +35526,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -36021,7 +35982,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -36478,7 +36438,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -36935,7 +36894,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -37392,7 +37350,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -37849,7 +37806,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -38306,7 +38262,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -38763,7 +38718,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -39220,7 +39174,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -39677,7 +39630,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -40134,7 +40086,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -40591,7 +40542,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -41048,7 +40998,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -41505,7 +41454,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -41962,7 +41910,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -42419,7 +42366,6 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -42876,7 +42822,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -43480,7 +43425,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -44084,7 +44028,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -44688,7 +44631,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -45292,7 +45234,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -45896,7 +45837,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -46500,7 +46440,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -47176,7 +47115,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -47852,7 +47790,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -48528,7 +48465,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -49132,7 +49068,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -49736,7 +49671,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -50340,7 +50274,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -50944,7 +50877,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -51548,7 +51480,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -52152,7 +52083,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -52828,7 +52758,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -53504,7 +53433,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -54180,7 +54108,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -54784,7 +54711,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -55388,7 +55314,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -55992,7 +55917,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -56596,7 +56520,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -57200,7 +57123,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -57804,7 +57726,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -58480,7 +58401,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -59156,7 +59076,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -59832,7 +59751,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -60433,7 +60351,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -61034,7 +60951,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -61635,7 +61551,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -62236,7 +62151,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -62837,7 +62751,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -63438,7 +63351,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -64111,7 +64023,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -64784,7 +64695,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -65457,7 +65367,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -66058,7 +65967,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -66659,7 +66567,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -67260,7 +67167,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -67861,7 +67767,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -68462,7 +68367,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -69063,7 +68967,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -69736,7 +69639,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -70409,7 +70311,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -71082,7 +70983,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -71683,7 +71583,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -72284,7 +72183,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -72885,7 +72783,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -73486,7 +73383,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -74087,7 +73983,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -74688,7 +74583,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -75361,7 +75255,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -76034,7 +75927,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},

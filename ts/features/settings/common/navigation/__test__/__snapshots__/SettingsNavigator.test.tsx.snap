@@ -3003,7 +3003,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                           allowFontScaling={true}
                                           dynamicTypeRamp="headline"
                                           maxFontSizeMultiplier={1.5}
-                                          role="heading"
                                           style={
                                             [
                                               {},
@@ -3557,7 +3556,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
                                       maxFontSizeMultiplier={1.5}
-                                      role="heading"
                                       style={
                                         [
                                           {},

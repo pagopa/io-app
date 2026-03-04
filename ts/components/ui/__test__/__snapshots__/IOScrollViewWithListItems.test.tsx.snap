@@ -438,7 +438,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                     allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     maxFontSizeMultiplier={1.5}
-                                    role="heading"
                                     style={
                                       [
                                         {},
@@ -2321,7 +2320,6 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                     allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     maxFontSizeMultiplier={1.5}
-                                    role="heading"
                                     style={
                                       [
                                         {},
