@@ -206,6 +206,7 @@ export const createEidIssuanceActorsImplementation = (
     );
 
     return mrtdUtils.initMrtdPoPChallenge({
+      itwVersion,
       issuerConf: input.authenticationContext.issuerConf,
       walletInstanceAttestation: input.walletInstanceAttestation,
       authRedirectUrl: input.authenticationContext.callbackUrl
@@ -226,6 +227,7 @@ export const createEidIssuanceActorsImplementation = (
     assert(input.mrtdContext.mrtd, "MRTD is undefined");
 
     const { callbackUrl } = await mrtdUtils.validateMrtdPoPChallenge({
+      itwVersion,
       issuerConf: input.authenticationContext.issuerConf,
       walletInstanceAttestation: input.walletInstanceAttestation,
       mrtd_auth_session: input.mrtdContext.mrtd_auth_session,
