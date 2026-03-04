@@ -11,7 +11,7 @@ import {
 } from "./itwIntegrityUtils";
 import { WalletInstanceAttestations } from "./itwTypesUtils.ts";
 import { Env } from "./environment.ts";
-import { getIoWallet } from "./itwIoWallet.ts";
+import { ioWalletManager } from "./itwIoWallet.ts";
 
 /**
  * Getter for the integrity hardware keytag to be used for an {@link IntegrityContext}.
@@ -33,7 +33,7 @@ export const registerWalletInstance = async (
   hardwareKeyTag: string,
   sessionToken: string
 ) => {
-  const ioWallet = getIoWallet(itwVersion);
+  const ioWallet = ioWalletManager.get(itwVersion);
   const integrityContext = getIntegrityContext(hardwareKeyTag);
   // This must be used only for API calls mediated through our backend which are related to the wallet instance only
   const appFetch = createItWalletFetch(
@@ -62,7 +62,7 @@ export const getAttestation = async (
   hardwareKeyTag: string,
   sessionToken: string
 ): Promise<WalletInstanceAttestations> => {
-  const ioWallet = getIoWallet(itwVersion);
+  const ioWallet = ioWalletManager.get(itwVersion);
   const integrityContext = getIntegrityContext(hardwareKeyTag);
 
   await regenerateCryptoKey(WIA_KEYTAG);
@@ -102,7 +102,7 @@ export const isWalletInstanceAttestationValid = (
   itwVersion: ItwVersion,
   attestation: string
 ): boolean => {
-  const ioWallet = getIoWallet(itwVersion);
+  const ioWallet = ioWalletManager.get(itwVersion);
   // To keep things simple we store the old and new attestation under the same key,
   // so we might end up with a valid old attestation for the new flow.
   // We let decoding fail and catch the error to force the correct attestation to be fetched again.
@@ -130,7 +130,7 @@ export const getWalletInstanceStatus = (
   hardwareKeyTag: string,
   sessionToken: string
 ) =>
-  getIoWallet(itwVersion).WalletInstance.getWalletInstanceStatus({
+  ioWalletManager.get(itwVersion).WalletInstance.getWalletInstanceStatus({
     id: hardwareKeyTag,
     walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
     appFetch: createItWalletFetch(
@@ -152,7 +152,7 @@ export const getCurrentWalletInstanceStatus = (
   itwVersion: ItwVersion,
   sessionToken: string
 ) => {
-  const ioWallet = getIoWallet(itwVersion);
+  const ioWallet = ioWalletManager.get(itwVersion);
   try {
     return ioWallet.WalletInstance.getCurrentWalletInstanceStatus({
       walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,

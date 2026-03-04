@@ -3,7 +3,7 @@ import {
   ItwVersion
 } from "@pagopa/io-react-native-wallet";
 import { Env } from "./environment";
-import { getIoWallet } from "./itwIoWallet";
+import { ioWalletManager } from "./itwIoWallet";
 
 export type DigitalCredentialsCatalogue =
   CredentialsCatalogue.DigitalCredentialsCatalogue;
@@ -19,6 +19,6 @@ export type DigitalCredentialMetadata =
  * @returns The credentials catalogue parsed JWT
  */
 export const fetchCredentialsCatalogue = (env: Env, itwVersion: ItwVersion) =>
-  getIoWallet(itwVersion).CredentialsCatalogue.fetchAndParseCatalogue(
-    env.WALLET_TA_BASE_URL
-  );
+  ioWalletManager
+    .get(itwVersion)
+    .CredentialsCatalogue.fetchAndParseCatalogue(env.WALLET_TA_BASE_URL);

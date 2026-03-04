@@ -26,7 +26,7 @@ import {
   itwIntegrityServiceStatusSelector
 } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
-import { getIoWallet } from "../../common/utils/itwIoWallet";
+import { ioWalletManager } from "../../common/utils/itwIoWallet";
 import { createCredentialUpgradeActionsImplementation } from "../upgrade/actions";
 import { createCredentialUpgradeActorsImplementation } from "../upgrade/actors";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine";
@@ -90,7 +90,7 @@ export const createEidIssuanceActorsImplementation = (
   }),
 
   verifyTrustFederation: fromPromise(async () => {
-    const ioWallet = getIoWallet(itwVersion);
+    const ioWallet = ioWalletManager.get(itwVersion);
     // Evaluate the issuer trust
     const trustAnchorEntityConfig =
       await ioWallet.Trust.getTrustAnchorEntityConfiguration(

@@ -21,7 +21,7 @@ import { WALLET_SPEC_VERSION } from "./constants";
 import { extractVerification } from "./itwCredentialUtils";
 import { Env } from "./environment";
 import { enrichErrorWithMetadata } from "./itwFailureUtils";
-import { getIoWallet } from "./itwIoWallet";
+import { ioWalletManager } from "./itwIoWallet";
 
 export type RequestCredentialParams = {
   env: Env;
@@ -52,7 +52,7 @@ export const requestCredential = async ({
   walletInstanceAttestation,
   skipMdocIssuance
 }: RequestCredentialParams) => {
-  const ioWallet = getIoWallet(itwVersion);
+  const ioWallet = ioWalletManager.get(itwVersion);
 
   // Get WIA crypto context
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
@@ -132,7 +132,7 @@ export const obtainCredential = async ({
   codeVerifier,
   issuerConf
 }: ObtainCredentialParams) => {
-  const ioWallet = getIoWallet(itwVersion);
+  const ioWallet = ioWalletManager.get(itwVersion);
 
   // Get WIA crypto context
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
@@ -244,7 +244,7 @@ const requestAndParseCredential = async ({
   env,
   itwVersion
 }: RequestAndParseCredentialParams) => {
-  const ioWallet = getIoWallet(itwVersion);
+  const ioWallet = ioWalletManager.get(itwVersion);
   const { credential_configuration_id, credential_identifiers } = authDetails;
   const credentialKeyTag = uuidv4().toString();
   await generate(credentialKeyTag);

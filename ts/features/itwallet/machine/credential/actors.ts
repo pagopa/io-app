@@ -15,7 +15,7 @@ import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { Env } from "../../common/utils/environment";
 import { enrichErrorWithMetadata } from "../../common/utils/itwFailureUtils";
-import { getIoWallet } from "../../common/utils/itwIoWallet";
+import { ioWalletManager } from "../../common/utils/itwIoWallet";
 import { type Context } from "./context";
 
 export type GetWalletAttestationActorOutput = Awaited<
@@ -53,7 +53,7 @@ export const createCredentialIssuanceActorsImplementation = (
   store: ReturnType<typeof useIOStore>
 ) => {
   const verifyTrustFederation = fromPromise<void>(async () => {
-    const ioWallet = getIoWallet(itwVersion);
+    const ioWallet = ioWalletManager.get(itwVersion);
     // Evaluate the issuer trust
     const trustAnchorEntityConfig =
       await ioWallet.Trust.getTrustAnchorEntityConfiguration(

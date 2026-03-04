@@ -2,7 +2,7 @@ import { type ItwVersion } from "@pagopa/io-react-native-wallet";
 import * as Sentry from "@sentry/react-native";
 import { createItWalletFetch } from "../../api/client";
 import { Env } from "./environment";
-import { getIoWallet } from "./itwIoWallet";
+import { ioWalletManager } from "./itwIoWallet";
 
 /**
  * Revoke the current wallet instance.
@@ -17,7 +17,7 @@ export const revokeCurrentWalletInstance = async (
   sessionToken: string,
   integrityKeyTag: string
 ): Promise<void> => {
-  const ioWallet = getIoWallet(itwVersion);
+  const ioWallet = ioWalletManager.get(itwVersion);
   const appFetch = createItWalletFetch(
     sessionToken,
     WALLET_PROVIDER_BASE_URL,

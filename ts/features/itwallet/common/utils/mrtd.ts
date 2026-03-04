@@ -5,7 +5,7 @@ import {
 } from "@pagopa/io-react-native-wallet";
 import { WIA_KEYTAG } from "./itwCryptoContextUtils";
 import { IssuerConfiguration } from "./itwTypesUtils";
-import { getIoWallet } from "./itwIoWallet";
+import { ioWalletManager } from "./itwIoWallet";
 
 export type InitMrtdPoPChallengeParams = {
   itwVersion: ItwVersion;
@@ -31,7 +31,7 @@ export const initMrtdPoPChallenge = async ({
   issuerConf,
   walletInstanceAttestation
 }: InitMrtdPoPChallengeParams) => {
-  const ioWallet = getIoWallet(itwVersion);
+  const ioWallet = ioWalletManager.get(itwVersion);
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
   const { challenge_info } =
@@ -79,7 +79,7 @@ export const validateMrtdPoPChallenge = async ({
   ias,
   mrtd
 }: ValidateMrtdPoPChallengeParams) => {
-  const ioWallet = getIoWallet(itwVersion);
+  const ioWallet = ioWalletManager.get(itwVersion);
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
   const { mrtd_val_pop_nonce, redirect_uri } =
