@@ -43,7 +43,10 @@ import {
   upcomingCredentials
 } from "../../common/utils/itwCredentialUtils.ts";
 import { itwCredentialsByPresenceSelector } from "../../credentials/store/selectors/index.ts";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import {
+  itwLifecycleIsITWalletValidSelector,
+  itwLifecycleIsValidSelector
+} from "../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
 import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
@@ -69,6 +72,7 @@ const ItwCardOnboardingL3Screen = ({ route }: Props) => {
   const { params } = route;
   const navigation = useIONavigation();
   const isWalletEnabled = useIOSelector(itwLifecycleIsValidSelector);
+  const isITWalletEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const [page, setPage] = useState<number>(
     params && !isNaN(Number(params?.page))
       ? clamp(Number(params.page), MAX_INDEX)
@@ -78,7 +82,7 @@ const ItwCardOnboardingL3Screen = ({ route }: Props) => {
   useFocusEffect(trackShowCredentialsList);
 
   const itwAction = useMemo(() => {
-    if (isWalletEnabled) {
+    if (isWalletEnabled && !isITWalletEnabled) {
       return {
         label: I18n.t("features.wallet.onboarding.cta.addRestricted"),
         onPress: () => {
@@ -91,7 +95,7 @@ const ItwCardOnboardingL3Screen = ({ route }: Props) => {
     }
 
     return undefined;
-  }, [isWalletEnabled, navigation]);
+  }, [isWalletEnabled, isITWalletEnabled, navigation]);
 
   if (page === null) {
     return (
