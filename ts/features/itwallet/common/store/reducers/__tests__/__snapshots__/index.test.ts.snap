@@ -5,6 +5,7 @@ exports[`itWalletReducer should match snapshot [if this test fails, remember to 
   "banners": {},
   "credentials": {
     "credentials": {},
+    "legacyCredentials": {},
   },
   "credentialsCatalogue": {
     "catalogue": {
