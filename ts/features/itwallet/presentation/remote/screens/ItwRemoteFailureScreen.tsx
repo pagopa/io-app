@@ -179,7 +179,11 @@ const ContentView = ({ failure }: ContentViewProps) => {
                         screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
                         params: { credentialType: missingCredentials[0] }
                       }
-                    : { screen: ITW_ROUTES.ONBOARDING }
+                    : {
+                        screen: isWhitelisted
+                          ? ITW_ROUTES.L3_ONBOARDING
+                          : ITW_ROUTES.ONBOARDING
+                      }
                 )
             },
             secondaryAction: {

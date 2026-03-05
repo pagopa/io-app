@@ -13,6 +13,13 @@ import {
   StoredVerification
 } from "./itwTypesUtils";
 
+// Credentials that can be obtained with valid a Documenti su IO instance
+export const l2Credentials = [
+  CredentialType.DRIVING_LICENSE,
+  CredentialType.EUROPEAN_DISABILITY_CARD,
+  CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+] as const;
+
 // Credentials that can be actively requested and obtained by the user
 export const availableCredentials = [
   CredentialType.DRIVING_LICENSE,

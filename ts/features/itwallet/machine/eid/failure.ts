@@ -2,6 +2,7 @@ import { CryptoError } from "@pagopa/io-react-native-crypto";
 import { type IntegrityError } from "@pagopa/io-react-native-integrity";
 import { Errors, Trust } from "@pagopa/io-react-native-wallet";
 import {
+  isDeviceCheckInvalidKeyError,
   isFederationError,
   isLocalIntegrityError
 } from "../../common/utils/itwFailureUtils";
@@ -17,6 +18,7 @@ const {
 export enum IssuanceFailureType {
   UNEXPECTED = "UNEXPECTED",
   UNSUPPORTED_DEVICE = "UNSUPPORTED_DEVICE",
+  HARDWARE_KEY_INVALID = "HARDWARE_KEY_INVALID",
   NOT_MATCHING_IDENTITY = "NOT_MATCHING_IDENTITY",
   ISSUER_GENERIC = "ISSUER_GENERIC",
   WALLET_PROVIDER_GENERIC = "WALLET_PROVIDER_GENERIC",
@@ -36,6 +38,7 @@ export type ReasonTypeByFailure = {
     | IntegrityError
     | CryptoError
     | Errors.WalletProviderResponseError;
+  [IssuanceFailureType.HARDWARE_KEY_INVALID]: IntegrityError;
   [IssuanceFailureType.NOT_MATCHING_IDENTITY]: string;
   [IssuanceFailureType.WALLET_REVOCATION_ERROR]: unknown;
   [IssuanceFailureType.UNTRUSTED_ISS]: Trust.Errors.FederationError;
@@ -71,6 +74,13 @@ export const mapEventToFailure = (
   }
 
   const { error } = event;
+
+  if (isDeviceCheckInvalidKeyError(error)) {
+    return {
+      type: IssuanceFailureType.HARDWARE_KEY_INVALID,
+      reason: error
+    };
+  }
 
   if (
     isLocalIntegrityError(error) ||

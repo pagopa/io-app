@@ -229,6 +229,14 @@ export const itwEidIssuanceMachine = setup({
     reset: {
       target: "#itwEidIssuanceMachine.Idle"
     },
+    // This action should only be used in the playground
+    "simulate-failure": {
+      actions: assign(({ event }) => {
+        assertEvent(event, "simulate-failure");
+        return { failure: event.failure };
+      }),
+      target: "#itwEidIssuanceMachine.Failure"
+    },
     // This action restarts the machine, resetting it to the Idle state before starting it again.
     // This is crucial if we want to restart the machine without having a possible race condition with two events sent simultaneously.
     restart: {
