@@ -76,7 +76,6 @@ const trackIdentificationMethodSelected = jest.fn();
 const storeAuthLevel = jest.fn();
 const freezeSimplifiedActivationRequirements = jest.fn();
 const clearSimplifiedActivationRequirements = jest.fn();
-const loadPidIntoContext = jest.fn();
 const navigateToCieCanScreen = jest.fn();
 const navigateToCieInternalAuthAndMrtdScreen = jest.fn();
 const trackItwIdAuthenticationCompleted = jest.fn();
