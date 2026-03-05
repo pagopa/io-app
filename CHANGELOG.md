@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.25.0-rc.5](https://github.com/pagopa/io-app/compare/3.25.0-rc.4...3.25.0-rc.5) (2026-03-02)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-3936](https://pagopa.atlassian.net/browse/SIW-3936)] Update tracking for users without CIE card in L3 upgrade flow ([#7901](https://github.com/pagopa/io-app/issues/7901)) ([623f895](https://github.com/pagopa/io-app/commit/623f8950d2123e2b64ecd19b6097db635f6932be))
+
+
+### Chores
+
+* [[IOPLT-1636](https://pagopa.atlassian.net/browse/IOPLT-1636)] Adds tracking information for ingress_timeout when versionInfo is not loaded ([#7906](https://github.com/pagopa/io-app/issues/7906)) ([f0fad8f](https://github.com/pagopa/io-app/commit/f0fad8f38bc25804be3502a34cb7c85df088f282))
+* [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Bump io-react-native-cie to v1.3.5-rc.2 ([#7905](https://github.com/pagopa/io-app/issues/7905)) ([93cfeab](https://github.com/pagopa/io-app/commit/93cfeab65fa5d7601a41a94c7a0bba1c83ee5c01))
+* **IT-Wallet:** [[SIW-3938](https://pagopa.atlassian.net/browse/SIW-3938)] Update ITW_ID_method assignment during PID issuance for analytics tracking ([#7889](https://github.com/pagopa/io-app/issues/7889)) ([7fefc54](https://github.com/pagopa/io-app/commit/7fefc54d6f1893275305bd89b803d0a2515c0b36))
+
+## [3.25.0-rc.4](https://github.com/pagopa/io-app/compare/3.25.0-rc.3...3.25.0-rc.4) (2026-03-02)
+
+
+### Chores
+
+* [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Bump io-react-native-cie to v1.3.5-rc.1 ([#7903](https://github.com/pagopa/io-app/issues/7903)) ([6bc3dc5](https://github.com/pagopa/io-app/commit/6bc3dc5ff0b88ca96e722277f2d4299c93466791))
+
+## [3.25.0-rc.3](https://github.com/pagopa/io-app/compare/3.25.0-rc.2...3.25.0-rc.3) (2026-02-26)
+
+
+### Features
+
+* [[IOPLT-1609](https://pagopa.atlassian.net/browse/IOPLT-1609)] Add the new `GuidedTour` to create a multi-step tour ([#7866](https://github.com/pagopa/io-app/issues/7866)) ([491c55b](https://github.com/pagopa/io-app/commit/491c55b8ad15479c3aa72ff98abe365f8dc922c0))
+
+
+### Bug Fixes
+
+* [[IOPID-3776](https://pagopa.atlassian.net/browse/IOPID-3776)] Resolve login issue after logout caused by versionInfo check ([#7899](https://github.com/pagopa/io-app/issues/7899)) ([f0b0f8c](https://github.com/pagopa/io-app/commit/f0b0f8c063737c1ecefe7e9893f241ae7ba5c8bf))
+* **IT-Wallet:** [[SIW-3935](https://pagopa.atlassian.net/browse/SIW-3935)] Fix pixelation, centering and flip flicker on skeuomorphic card ([#7891](https://github.com/pagopa/io-app/issues/7891)) ([786d464](https://github.com/pagopa/io-app/commit/786d464d0467143a48bce1aa23eb38c373860b36))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-3961](https://pagopa.atlassian.net/browse/SIW-3961)] Skip status assertion for expired JWTs ([#7887](https://github.com/pagopa/io-app/issues/7887)) ([ba4dcdf](https://github.com/pagopa/io-app/commit/ba4dcdfccc3668df5ccef9e77adfbaf67da408e6)), closes [/#diff-2c4d7ce41c7ab3a00e1babf88236acc32c065e2f2d2d77f2705cd661b436d257R21-R33](https://github.com/pagopa///issues/diff-2c4d7ce41c7ab3a00e1babf88236acc32c065e2f2d2d77f2705cd661b436d257R21-R33) [/#diff-2c4d7ce41c7ab3a00e1babf88236acc32c065e2f2d2d77f2705cd661b436d257L36-L37](https://github.com/pagopa///issues/diff-2c4d7ce41c7ab3a00e1babf88236acc32c065e2f2d2d77f2705cd661b436d257L36-L37) [/#diff-2c4d7ce41c7ab3a00e1babf88236acc32c065e2f2d2d77f2705cd661b436d257L53-L54](https://github.com/pagopa///issues/diff-2c4d7ce41c7ab3a00e1babf88236acc32c065e2f2d2d77f2705cd661b436d257L53-L54) [/#diff-2c4d7ce41c7ab3a00e1babf88236acc32c065e2f2d2d77f2705cd661b436d257L70-L71](https://github.com/pagopa///issues/diff-2c4d7ce41c7ab3a00e1babf88236acc32c065e2f2d2d77f2705cd661b436d257L70-L71)
+* [[IOPLT-1644](https://pagopa.atlassian.net/browse/IOPLT-1644)] Adopt new `reanimated` declarative APIs for `AnimatedCameraMarker` animation ([#7893](https://github.com/pagopa/io-app/issues/7893)) ([647e615](https://github.com/pagopa/io-app/commit/647e615a382e97d4c2faead82b97c628f48b239f))
+
 ## [3.25.0-rc.2](https://github.com/pagopa/io-app/compare/3.25.0-rc.1...3.25.0-rc.2) (2026-02-24)
 
 

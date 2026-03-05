@@ -83,7 +83,7 @@ const renderComponent = () => {
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
       ItwDiscoveryBannerOnboarding,
-      ITW_ROUTES.ONBOARDING,
+      ITW_ROUTES.L3_ONBOARDING,
       {},
       store
     ),

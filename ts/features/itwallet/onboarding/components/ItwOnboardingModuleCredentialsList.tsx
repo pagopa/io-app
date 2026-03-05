@@ -14,7 +14,10 @@ import {
   isUpcomingCredential
 } from "../../common/utils/itwCredentialUtils";
 import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import {
+  itwLifecycleIsITWalletValidSelector,
+  itwLifecycleIsValidSelector
+} from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
   selectCredentialTypeOption,
@@ -25,10 +28,12 @@ import { ItwOnboardingModuleCredential } from "./ItwOnboardingModuleCredential";
 
 type Props = {
   credentialTypesToDisplay: Array<string>;
+  isRestrictedMode?: boolean;
 };
 
 export const ItwOnboardingModuleCredentialsList = ({
-  credentialTypesToDisplay
+  credentialTypesToDisplay,
+  isRestrictedMode
 }: Props) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const navigation = useIONavigation();
@@ -42,6 +47,7 @@ export const ItwOnboardingModuleCredentialsList = ({
   const isItWalletActivationDisabled = useIOSelector(
     itwIsActivationDisabledSelector
   );
+  const isL2WalletValid = useIOSelector(itwLifecycleIsValidSelector);
 
   const isCredentialIssuancePending =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
@@ -51,6 +57,14 @@ export const ItwOnboardingModuleCredentialsList = ({
   const beginCredentialIssuance = useOfflineToastGuard(
     useCallback(
       (type: string) => {
+        const sendSelectCredential = () => {
+          machineRef.send({
+            type: "select-credential",
+            credentialType: type,
+            mode: "issuance"
+          });
+        };
+
         if (isUpcomingCredential(type)) {
           /**
            * The credential is an upcoming one, navigate to the screens which displays
@@ -59,6 +73,12 @@ export const ItwOnboardingModuleCredentialsList = ({
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL
           });
+        } else if (isRestrictedMode && isL2WalletValid) {
+          /**
+           * User has a whitelisted fiscal code but has requested a credential in restricted mode
+           * the user has DocIO enabled
+           */
+          sendSelectCredential();
         } else if (
           isL3Enabled &&
           !isItWalletValid &&
@@ -76,11 +96,7 @@ export const ItwOnboardingModuleCredentialsList = ({
           /**
            * Standard credential issuance
            */
-          machineRef.send({
-            type: "select-credential",
-            credentialType: type,
-            mode: "issuance"
-          });
+          sendSelectCredential();
         }
       },
       [
@@ -88,7 +104,9 @@ export const ItwOnboardingModuleCredentialsList = ({
         navigation,
         isL3Enabled,
         isItWalletValid,
-        isItWalletActivationDisabled
+        isItWalletActivationDisabled,
+        isL2WalletValid,
+        isRestrictedMode
       ]
     )
   );
@@ -97,6 +115,7 @@ export const ItwOnboardingModuleCredentialsList = ({
     <ItwOnboardingModuleCredential
       key={`itw_credential_${type}`}
       type={type}
+      showIcon={!isL3Enabled}
       isActive={itwCredentialsTypes.includes(type)}
       isDisabled={remotelyDisabledCredentials.includes(type)}
       isUpcoming={isUpcomingCredential(type)}

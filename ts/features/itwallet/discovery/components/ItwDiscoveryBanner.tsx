@@ -90,7 +90,7 @@ export const ItwDiscoveryBanner = ({
   const navigateToDocumentOnboardingScreen = () => {
     trackItwDiscoveryBannerTap(trackBannerProperties);
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ONBOARDING
+      screen: ITW_ROUTES.L3_ONBOARDING
     });
   };
 
