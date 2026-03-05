@@ -53,12 +53,7 @@ export type ParsedCredential = CredentialIssuance.ParsedCredential;
 /**
  * Alias for the ParsedStatusAssertion type
  */
-export type ParsedStatusAssertion = Awaited<
-  ReturnType<
-    CredentialStatus.CredentialStatusApi["verifyAndParseStatusAssertion"]
-  >
->["parsedStatusAssertion"];
-
+export type ParsedStatusAssertion = CredentialStatus.ParsedStatusAssertion;
 /**
  * Alias for the WalletInstanceStatus type
  */
