@@ -18,7 +18,7 @@ import {
   zendeskFCICategory,
   zendeskFciId,
   defaultZendeskBonusesCategory,
-  zendeskFciCategoryId
+  zendeskBonusAndInitiativeCategoryId
 } from "../../../utils/supportAssistance";
 import {
   zendeskSelectedCategory,
@@ -57,7 +57,10 @@ const SignatureStatusComponent = ({
       zendeskCategoryId,
       defaultZendeskBonusesCategory.value
     );
-    addTicketCustomField(zendeskFciCategoryId, zendeskFCICategory.value);
+    addTicketCustomField(
+      zendeskBonusAndInitiativeCategoryId,
+      zendeskFCICategory.value
+    );
     addTicketCustomField(zendeskFciId, signatureRequestId ?? "");
     dispatch(
       zendeskSupportStart({
