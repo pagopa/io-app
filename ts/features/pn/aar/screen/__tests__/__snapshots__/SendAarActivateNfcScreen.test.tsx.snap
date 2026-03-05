@@ -374,7 +374,8 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                                   }
                                 >
                                   <View
-                                    accessible={true}
+                                    accessible={false}
+                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       {
                                         "flexDirection": "column",
@@ -469,7 +470,8 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                                   }
                                 >
                                   <View
-                                    accessible={true}
+                                    accessible={false}
+                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       {
                                         "flexDirection": "column",
@@ -564,7 +566,8 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                                   }
                                 >
                                   <View
-                                    accessible={true}
+                                    accessible={false}
+                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       {
                                         "flexDirection": "column",
