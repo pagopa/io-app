@@ -94,9 +94,17 @@ export const createCredentialIssuanceActionsImplementation = (
     });
   },
 
-  navigateToCardOnboardingScreen: () => {
+  navigateToCardOnboardingScreen: ({
+    context
+  }: ActionArgs<
+    Context,
+    CredentialIssuanceEvents,
+    CredentialIssuanceEvents
+  >) => {
     navigation.replace(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ONBOARDING
+      screen: context.isItWalletValid
+        ? ITW_ROUTES.L3_ONBOARDING
+        : ITW_ROUTES.ONBOARDING
     });
   },
 
