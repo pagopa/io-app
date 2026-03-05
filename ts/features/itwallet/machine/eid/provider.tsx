@@ -27,7 +27,7 @@ export const ItwEidIssuanceMachineProvider = (props: PropsWithChildren) => {
   const env = pipe(useIOSelector(selectItwEnv), getEnv);
 
   const eidIssuanceMachine = itwEidIssuanceMachine.provide({
-    guards: createEidIssuanceGuardsImplementation(store, {
+    guards: createEidIssuanceGuardsImplementation(store, itwVersion, {
       bypassIdentityMatch: env.BYPASS_IDENTITY_MATCH
     }),
     actions: createEidIssuanceActionsImplementation(navigation, store, toast),

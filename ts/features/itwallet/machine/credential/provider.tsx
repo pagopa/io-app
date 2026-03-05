@@ -29,7 +29,7 @@ export const ItwCredentialIssuanceMachineProvider = (
   const itwVersion = useIOSelector(selectItwSpecsVersion);
 
   const credentialIssuanceMachine = itwCredentialIssuanceMachine.provide({
-    guards: createCredentialIssuanceGuardsImplementation(store),
+    guards: createCredentialIssuanceGuardsImplementation(store, itwVersion),
     actions: createCredentialIssuanceActionsImplementation(
       navigation,
       store,
