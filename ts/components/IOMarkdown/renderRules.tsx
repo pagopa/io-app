@@ -200,8 +200,13 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @returns The rendered component.
    */
   Emphasis(emphasis: TxtEmphasisNode, render: Renderer) {
+    const isInsideStrong = emphasis.parent?.type === "Strong";
     return (
-      <IOText key={getTxtNodeKey(emphasis)} fontStyle="italic">
+      <IOText
+        key={getTxtNodeKey(emphasis)}
+        fontStyle="italic"
+        {...(isInsideStrong && { weight: "Semibold" })}
+      >
         {emphasis.children.map(render)}
       </IOText>
     );
@@ -212,8 +217,13 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @returns The rendered component.
    */
   Strong(strong: TxtStrongNode, render: Renderer) {
+    const isInsideEmphasis = strong.parent?.type === "Emphasis";
     return (
-      <IOText key={getTxtNodeKey(strong)} weight="Semibold">
+      <IOText
+        key={getTxtNodeKey(strong)}
+        weight="Semibold"
+        {...(isInsideEmphasis && { fontStyle: "italic" })}
+      >
         {strong.children.map(render)}
       </IOText>
     );
