@@ -17,6 +17,7 @@ import { IOStackNavigationRouteProps } from "../../../../../navigation/params/Ap
 import { useIOSelector } from "../../../../../store/hooks";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { itwDisabledIdentificationMethodsSelector } from "../../../common/store/selectors/remoteConfig";
+import { trackItWalletIDMethodSelected } from "../../../analytics";
 import { EidIssuanceLevel } from "../../../machine/eid/context";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
@@ -28,7 +29,6 @@ import {
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import {
   trackItWalletIDMethod,
-  trackItwUserWithoutL3Bottomsheet,
   trackItwUserWithoutL3Requirements
 } from "../../analytics";
 import { useContinueWithBottomSheet } from "../hooks/useContinueWithBottomSheet";
@@ -139,7 +139,11 @@ export const ItwIdentificationModeSelectionScreen = ({
       // If the user is in the L3 upgrade flow, he cannot proceed without a CIE card
       machineRef.send({ type: "go-to-cie-warning", warning: "card" });
     } else {
-      trackItwUserWithoutL3Bottomsheet();
+      trackItwUserWithoutL3Requirements({
+        screen_name: routeName,
+        reason: "user_without_cie",
+        position: "screen"
+      });
       machineRef.send({
         type: "restart",
         mode: "issuance",
@@ -269,6 +273,10 @@ const CiePinMethodModule = () => {
         icon="cieCard"
         onPress={() => {
           if (isL3) {
+            trackItWalletIDMethodSelected({
+              ITW_ID_method: "ciePin",
+              itw_flow: "L3"
+            });
             ciePinBottomSheet.present();
           } else {
             handleOnPress();
@@ -319,6 +327,10 @@ const SpidMethodModule = () => {
         icon="spid"
         onPress={() => {
           if (isL3) {
+            trackItWalletIDMethodSelected({
+              ITW_ID_method: "spid",
+              itw_flow: "L3"
+            });
             spidBottomSheet.present();
           } else {
             handleOnPress();
@@ -368,6 +380,10 @@ const CieIdMethodModule = () => {
         testID="CieIDMethodModuleTestID"
         onPress={() => {
           if (isL3) {
+            trackItWalletIDMethodSelected({
+              ITW_ID_method: "cieId",
+              itw_flow: "L3"
+            });
             cieIdBottomSheet.present();
           } else {
             handleOnPress();

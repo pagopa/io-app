@@ -4502,17 +4502,27 @@
           "itw": "Documenti su IO",
           "other": "Altro"
         },
+        "l3-sections": {
+          "itw": "Documenti",
+          "other": "Bonus e Altro",
+          "added": "Già presenti"
+        },
         "badge": {
           "active": "Già presente",
           "unavailable": "Non disponibile",
           "requested": "In corso",
           "upcoming": "In arrivo",
-          "new": "Novità"
+          "new": "Novità",
+          "valid": "Valido"
         },
         "options": {
           "cgn": "Carta Giovani Nazionale",
           "welfare": "Iniziative welfare",
           "payments": "Metodi di pagamento"
+        },
+        "cta": {
+          "addBonus": "Vuoi aggiungere un bonus o un metodo di pagamento?",
+          "addRestricted": "Aggiungi documenti con funzionalità ridotte"
         }
       }
     },
@@ -5971,6 +5981,12 @@
             "content": "Stai per avviare il reissuing dell'eID e delle credenziali al momento ottenute."
           }
         }
+      },
+      "onboarding": {
+        "restrictedMode": {
+          "title": "Documenti con funzionalità ridotte",
+          "description": "Puoi ottenere una versione digitale dei seguenti documenti utilizzabile solo dal vivo e senza le funzionalità evolute di IT-Wallet"
+        }
       }
     },
     "pushNotifications": {
@@ -5980,6 +5996,13 @@
         "body": "Attiva le notifiche push: se leggi subito le comunicazioni a valore legale, potresti risparmiare sui costi di raccomandata.",
         "cta": "Attiva notifiche push",
         "toast": "Hai attivato le notifiche push"
+      }
+    },
+    "osDismission": {
+      "banner": {
+        "title": "Aggiorna il tuo dispositivo per continuare a usare IO",
+        "body": "Presto la versione attuale del tuo sistema operativo non sarà più supportata.",
+        "action": "Scopri di più"
       }
     },
     "tour": {
