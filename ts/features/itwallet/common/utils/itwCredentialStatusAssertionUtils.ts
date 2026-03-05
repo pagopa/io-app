@@ -14,23 +14,26 @@ export const getCredentialStatusAssertion = async (
 ) => {
   const ioWallet = getIoWallet(itwVersion);
 
-  // Legacy credentials carry the legacy Issuer configuration, which is incompatible with the new API.
-  // In this scenario the new configuration is fetched and used instead of `credential.issuerConf`.
-  const issuerConf = credential.issuerConf;
+  if (!ioWallet.CredentialStatus.statusAssertion.isSupported) {
+    throw new Error(
+      `Status assertion is not supported in IT-Wallet v${itwVersion}`
+    );
+  }
 
   const credentialCryptoContext = createCryptoContextFor(credential.keyTag);
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
-  const rawStatusAssertion = await ioWallet.CredentialStatus.getStatusAssertion(
-    issuerConf,
-    credential.credential,
-    credential.format as CredentialFormat,
-    { credentialCryptoContext, wiaCryptoContext }
-  );
+  const rawStatusAssertion =
+    await ioWallet.CredentialStatus.statusAssertion.get(
+      credential.issuerConf,
+      credential.credential,
+      credential.format as CredentialFormat,
+      { credentialCryptoContext, wiaCryptoContext }
+    );
 
   const { parsedStatusAssertion } =
-    await ioWallet.CredentialStatus.verifyAndParseStatusAssertion(
-      issuerConf,
+    await ioWallet.CredentialStatus.statusAssertion.verifyAndParse(
+      credential.issuerConf,
       rawStatusAssertion,
       credential.credential,
       credential.format as CredentialFormat
