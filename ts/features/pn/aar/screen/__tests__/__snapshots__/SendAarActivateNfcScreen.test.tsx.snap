@@ -320,7 +320,6 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                                     allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     maxFontSizeMultiplier={1.5}
-                                    role="heading"
                                     style={
                                       [
                                         {},
@@ -375,7 +374,8 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                                   }
                                 >
                                   <View
-                                    accessible={true}
+                                    accessible={false}
+                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       {
                                         "flexDirection": "column",
@@ -470,7 +470,8 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                                   }
                                 >
                                   <View
-                                    accessible={true}
+                                    accessible={false}
+                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       {
                                         "flexDirection": "column",
@@ -565,7 +566,8 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                                   }
                                 >
                                   <View
-                                    accessible={true}
+                                    accessible={false}
+                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       {
                                         "flexDirection": "column",

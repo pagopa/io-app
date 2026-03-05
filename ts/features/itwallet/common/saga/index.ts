@@ -21,7 +21,7 @@ import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCo
 import {
   watchItwAnalyticsSaga,
   syncItwAnalyticsProperties,
-  updateNfcAntennaInfoTrackingProperties
+  updateNfcInfoTrackingProperties
 } from "../../analytics/saga";
 import {
   itwFreezeSimplifiedActivationRequirements,
@@ -81,7 +81,7 @@ export function* watchItwOfflineSaga(): SagaIterator {
   yield* fork(syncItwAnalyticsProperties);
 
   // TODO remove this fork when NFC antenna info tracking is not needed anymore
-  yield* fork(updateNfcAntennaInfoTrackingProperties);
+  yield* fork(updateNfcInfoTrackingProperties);
 }
 
 /**

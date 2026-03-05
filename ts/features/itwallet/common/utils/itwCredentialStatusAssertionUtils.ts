@@ -54,8 +54,14 @@ export const getCredentialStatusAssertion = async (
 };
 
 export const shouldRequestStatusAssertion = ({
-  storedStatusAssertion
+  storedStatusAssertion,
+  jwt
 }: CredentialMetadata) => {
+  // Skip status assertion check for expired JWTs to avoid credential_not_found errors with 0.7 credentials
+  if (isAfter(new Date(), new Date(jwt.expiration))) {
+    return false;
+  }
+
   // When no status assertion is present, request a new one
   if (!storedStatusAssertion) {
     return true;

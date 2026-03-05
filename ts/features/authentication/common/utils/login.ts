@@ -56,42 +56,29 @@ export const getIntentFallbackUrl = (intentUrl: string): O.Option<string> => {
 };
 
 /**
- * Extracts the session token from the hash fragment
- * @param hash
+ * Extracts the session token from the URL hash fragment
+ * @param urlParse
  */
-const getTokenFromHash = (hash: unknown): string | undefined => {
+const getTokenFromUrlParse = (urlParse: URLParse): string | undefined => {
+  const { hash } = urlParse;
   if (!hash || typeof hash !== "string") {
     return undefined;
   }
-  const paramsString = hash.startsWith("#") ? hash.slice(1) : hash;
 
   try {
+    const paramsString = hash.startsWith("#") ? hash.slice(1) : hash;
     const searchParams = new URLSearchParams(paramsString);
-    return searchParams.get("token") || undefined;
+    const token = searchParams.get("token") || undefined;
+    if (token) {
+      trackSessionTokenSource("fragment");
+    }
+    return token;
   } catch (e) {
     trackSessionTokenFragmentFailure(
       e instanceof Error ? e.message : String(e)
     );
     return undefined;
   }
-};
-
-/**
- * Extracts the session token using a priority-based strategy:
- * First, it checks the URL hash fragment for the token.
- * If not found in the hash, it checks the query parameters.
- * @param urlParse
- */
-const getTokenFromUrlParse = (urlParse: URLParse) => {
-  const { hash, query } = urlParse;
-
-  const tokenFromHash = getTokenFromHash(hash);
-  if (tokenFromHash) {
-    trackSessionTokenSource("fragment");
-    return tokenFromHash;
-  }
-  trackSessionTokenSource("queryParam");
-  return query.token;
 };
 
 // Prefixes for LOGIN SUCCESS/ERROR

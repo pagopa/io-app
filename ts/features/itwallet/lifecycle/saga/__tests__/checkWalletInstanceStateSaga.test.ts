@@ -2,6 +2,8 @@ import * as O from "fp-ts/lib/Option";
 import { type DeepPartial } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
+import { throwError } from "redux-saga-test-plan/providers";
+import { Errors } from "@pagopa/io-react-native-wallet";
 import { sessionTokenSelector } from "../../../../authentication/common/store/selectors";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { getWalletInstanceStatus } from "../../../common/utils/itwAttestationUtils";
@@ -15,6 +17,7 @@ import {
   getStatusOrResetWalletInstance
 } from "../checkWalletInstanceStateSaga";
 import { handleWalletInstanceResetSaga } from "../handleWalletInstanceResetSaga";
+import { itwUpdateWalletInstanceStatus } from "../../../walletInstance/store/actions";
 
 jest.mock("@pagopa/io-react-native-crypto", () => ({
   deleteKey: jest.fn
@@ -183,6 +186,47 @@ describe("checkWalletInstanceStateSaga", () => {
       .call.fn(handleWalletInstanceResetSaga)
       .not.call.fn(checkIntegrityServiceReadySaga)
       .not.call.fn(checkWalletInstanceStateSaga)
+      .run();
+  });
+
+  it("Resets the wallet instance when the status endpoint returns 404 with a valid key tag", () => {
+    const store: DeepPartial<GlobalState> = {
+      features: {
+        itWallet: {
+          issuance: {
+            integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
+          },
+          credentials: { credentials: {} },
+          environment: { env: "prod" }
+        }
+      }
+    };
+
+    return expectSaga(checkWalletInstanceStateSaga)
+      .withState(store)
+      .provide([
+        [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
+        [matchers.call.fn(checkIntegrityServiceReadySaga), true],
+        [
+          matchers.call.fn(getWalletInstanceStatus),
+          throwError(
+            new Errors.WalletProviderResponseError({
+              message: "Not Found",
+              reason: {
+                detail: "Wallet instance not found",
+                status: 404,
+                title: "Not Found"
+              },
+              statusCode: 404
+            })
+          )
+        ]
+      ])
+      .call.fn(handleWalletInstanceResetSaga)
+      .put(itwUpdateWalletInstanceStatus.cancel())
+      .not.put.like({
+        action: { type: itwUpdateWalletInstanceStatus.failure.toString() }
+      })
       .run();
   });
 });

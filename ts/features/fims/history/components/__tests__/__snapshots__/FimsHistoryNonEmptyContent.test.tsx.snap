@@ -1613,24 +1613,37 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     }
                                     jestAnimatedStyle={
                                       {
-                                        "value": {
-                                          "transform": [
-                                            {
-                                              "rotateZ": "0deg",
-                                            },
-                                          ],
-                                        },
+                                        "value": {},
                                       }
                                     }
-                                    jestInlineStyle={{}}
+                                    jestInlineStyle={
+                                      {
+                                        "animationDuration": 850,
+                                        "animationIterationCount": "infinite",
+                                        "animationName": {
+                                          "from": {
+                                            "transform": [
+                                              {
+                                                "rotateZ": "0deg",
+                                              },
+                                            ],
+                                          },
+                                          "to": {
+                                            "transform": [
+                                              {
+                                                "rotateZ": "360deg",
+                                              },
+                                            ],
+                                          },
+                                        },
+                                        "animationTimingFunction": "linear",
+                                        "transformOrigin": "center",
+                                      }
+                                    }
                                     style={
                                       [
                                         {
-                                          "transform": [
-                                            {
-                                              "rotateZ": "0deg",
-                                            },
-                                          ],
+                                          "transformOrigin": "center",
                                         },
                                       ]
                                     }
@@ -1683,7 +1696,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                             }
                                             gradientTransform={null}
                                             gradientUnits={0}
-                                            name="spinner-secondHalf"
+                                            name="«rj»-secondHalf"
                                             x1="0%"
                                             x2="100%"
                                             y1="0%"
@@ -1700,7 +1713,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                             }
                                             gradientTransform={null}
                                             gradientUnits={0}
-                                            name="spinner-firstHalf"
+                                            name="«rj»-firstHalf"
                                             x1="0%"
                                             x2="100%"
                                             y1="0%"
@@ -1736,7 +1749,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                             }
                                             stroke={
                                               {
-                                                "brushRef": "spinner-secondHalf",
+                                                "brushRef": "«rj»-secondHalf",
                                                 "type": 1,
                                               }
                                             }
@@ -1756,7 +1769,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                             }
                                             stroke={
                                               {
-                                                "brushRef": "spinner-firstHalf",
+                                                "brushRef": "«rj»-firstHalf",
                                                 "type": 1,
                                               }
                                             }
@@ -3431,24 +3444,37 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     }
                                     jestAnimatedStyle={
                                       {
-                                        "value": {
-                                          "transform": [
-                                            {
-                                              "rotateZ": "0deg",
-                                            },
-                                          ],
-                                        },
+                                        "value": {},
                                       }
                                     }
-                                    jestInlineStyle={{}}
+                                    jestInlineStyle={
+                                      {
+                                        "animationDuration": 850,
+                                        "animationIterationCount": "infinite",
+                                        "animationName": {
+                                          "from": {
+                                            "transform": [
+                                              {
+                                                "rotateZ": "0deg",
+                                              },
+                                            ],
+                                          },
+                                          "to": {
+                                            "transform": [
+                                              {
+                                                "rotateZ": "360deg",
+                                              },
+                                            ],
+                                          },
+                                        },
+                                        "animationTimingFunction": "linear",
+                                        "transformOrigin": "center",
+                                      }
+                                    }
                                     style={
                                       [
                                         {
-                                          "transform": [
-                                            {
-                                              "rotateZ": "0deg",
-                                            },
-                                          ],
+                                          "transformOrigin": "center",
                                         },
                                       ]
                                     }
@@ -3501,7 +3527,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                             }
                                             gradientTransform={null}
                                             gradientUnits={0}
-                                            name="spinner-secondHalf"
+                                            name="«r1»-secondHalf"
                                             x1="0%"
                                             x2="100%"
                                             y1="0%"
@@ -3518,7 +3544,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                             }
                                             gradientTransform={null}
                                             gradientUnits={0}
-                                            name="spinner-firstHalf"
+                                            name="«r1»-firstHalf"
                                             x1="0%"
                                             x2="100%"
                                             y1="0%"
@@ -3554,7 +3580,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                             }
                                             stroke={
                                               {
-                                                "brushRef": "spinner-secondHalf",
+                                                "brushRef": "«r1»-secondHalf",
                                                 "type": 1,
                                               }
                                             }
@@ -3574,7 +3600,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                             }
                                             stroke={
                                               {
-                                                "brushRef": "spinner-firstHalf",
+                                                "brushRef": "«r1»-firstHalf",
                                                 "type": 1,
                                               }
                                             }
@@ -5149,24 +5175,37 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                                     }
                                     jestAnimatedStyle={
                                       {
-                                        "value": {
-                                          "transform": [
-                                            {
-                                              "rotateZ": "0deg",
-                                            },
-                                          ],
-                                        },
+                                        "value": {},
                                       }
                                     }
-                                    jestInlineStyle={{}}
+                                    jestInlineStyle={
+                                      {
+                                        "animationDuration": 850,
+                                        "animationIterationCount": "infinite",
+                                        "animationName": {
+                                          "from": {
+                                            "transform": [
+                                              {
+                                                "rotateZ": "0deg",
+                                              },
+                                            ],
+                                          },
+                                          "to": {
+                                            "transform": [
+                                              {
+                                                "rotateZ": "360deg",
+                                              },
+                                            ],
+                                          },
+                                        },
+                                        "animationTimingFunction": "linear",
+                                        "transformOrigin": "center",
+                                      }
+                                    }
                                     style={
                                       [
                                         {
-                                          "transform": [
-                                            {
-                                              "rotateZ": "0deg",
-                                            },
-                                          ],
+                                          "transformOrigin": "center",
                                         },
                                       ]
                                     }
@@ -5219,7 +5258,7 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                                             }
                                             gradientTransform={null}
                                             gradientUnits={0}
-                                            name="spinner-secondHalf"
+                                            name="«rr»-secondHalf"
                                             x1="0%"
                                             x2="100%"
                                             y1="0%"
@@ -5236,7 +5275,7 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                                             }
                                             gradientTransform={null}
                                             gradientUnits={0}
-                                            name="spinner-firstHalf"
+                                            name="«rr»-firstHalf"
                                             x1="0%"
                                             x2="100%"
                                             y1="0%"
@@ -5272,7 +5311,7 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                                             }
                                             stroke={
                                               {
-                                                "brushRef": "spinner-secondHalf",
+                                                "brushRef": "«rr»-secondHalf",
                                                 "type": 1,
                                               }
                                             }
@@ -5292,7 +5331,7 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                                             }
                                             stroke={
                                               {
-                                                "brushRef": "spinner-firstHalf",
+                                                "brushRef": "«rr»-firstHalf",
                                                 "type": 1,
                                               }
                                             }
