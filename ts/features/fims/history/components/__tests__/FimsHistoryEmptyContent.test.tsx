@@ -6,6 +6,15 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { FIMS_ROUTES } from "../../../common/navigation";
 import { FimsHistoryEmptyContent } from "../FimsHistoryEmptyContent";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 jest.mock("../FimsHistoryHeaderComponent.tsx");
 
 describe("fimsHistoryEmptyContent", () => {

@@ -6,6 +6,15 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import DESIGN_SYSTEM_ROUTES from "../../navigation/routes";
 import { DSIOListViewWithLargeHeader } from "../DSIOListViewWithLargeHeader";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(

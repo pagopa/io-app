@@ -19,6 +19,15 @@ import {
 import * as bottomSheet from "../../../../../utils/hooks/bottomSheet";
 import { PreconditionsFooterProps } from "../PreconditionsFooter";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 jest.mock("../PreconditionsContent");
 
 const mockDispatch = jest.fn();

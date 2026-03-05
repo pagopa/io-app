@@ -19,6 +19,15 @@ import {
 import { sendAarMockStates } from "../../utils/testUtils";
 import { SendAARErrorScreen } from "../SendAARErrorScreen";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 const handledRetryStates: Array<AARFlowStateName> = [
   sendAARFlowStates.cieCanAdvisory
 ];

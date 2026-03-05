@@ -13,6 +13,15 @@ import { LandingScreenBannerId } from "../../utils/landingScreenBannerMap";
 import { LandingScreenBannerPicker } from "../LandingScreenBannerPicker";
 import * as hooks from "../../../pushNotifications/hooks/usePushNotificationsBannerTracking";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 jest.mock("../../utils/landingScreenBannerMap", () => ({
   get landingScreenBannerMap() {
     return {

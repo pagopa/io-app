@@ -15,6 +15,15 @@ import * as ANALYTICS from "../../analytics";
 import * as INITIAL_FLOW from "../../screen/SendAARInitialFlowScreen";
 import { SendQRScanFlowHandlerComponent } from "../SendQRScanFlowHandlerComponent";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 const sendNotificationServiceId = "01G40DWQGKY5GRWSNM4303VNRP" as ServiceId;
 const aarUrl = "https://example.com";
 

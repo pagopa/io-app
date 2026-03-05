@@ -7,6 +7,15 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { NOTIFICATIONS_ROUTES } from "../../navigation/routes";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 const mockNavigate = jest.fn();
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual<typeof import("@react-navigation/native")>(

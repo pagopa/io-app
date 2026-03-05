@@ -8,6 +8,15 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { ItwProximitySendDocumentsResponseScreen } from "../ItwProximitySendDocumentsResponseScreen";
 import { ItwProximityMachineContext } from "../../machine/provider";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 describe("ItwProximitySendDocumentsResponseScreen", () => {
   it("should match snapshot", () => {
     expect(renderComponent()).toMatchSnapshot();

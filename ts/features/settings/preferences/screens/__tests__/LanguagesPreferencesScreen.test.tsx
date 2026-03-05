@@ -10,6 +10,15 @@ import LanguagesPreferencesScreen from "../LanguagesPreferencesScreen";
 import { preferredLanguageSelector } from "../../../../../store/reducers/persistedPreferences";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 // Mock the useIOSelector hook
 jest.mock("../../../../../store/hooks", () => ({
   useIOSelector: jest.fn(),
