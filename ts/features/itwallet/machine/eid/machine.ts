@@ -196,7 +196,8 @@ export const itwEidIssuanceMachine = setup({
     isOperationAborted: notImplemented,
     hasIntegrityKeyTag: ({ context }) => context.integrityKeyTag !== undefined,
     hasValidWalletInstanceAttestation: notImplemented,
-    hasLegacyCredentials: ({ context }) => context.legacyCredentials.length > 0,
+    hasCredentialsToUpgrade: ({ context }) =>
+      context.credentialsToUpgrade.length > 0,
     isNFCEnabled: ({ context }) => context.cieContext?.isNFCEnabled || false,
     isReissuance: ({ context }) => context.mode === "reissuance",
     isUpgrade: ({ context }) => context.mode === "upgrade",
@@ -482,7 +483,7 @@ export const itwEidIssuanceMachine = setup({
       ],
       always: [
         {
-          guard: "hasLegacyCredentials",
+          guard: "hasCredentialsToUpgrade",
           target: "#itwEidIssuanceMachine.CredentialsUpgrade"
         },
         {
@@ -1156,7 +1157,7 @@ export const itwEidIssuanceMachine = setup({
       onDone: [
         {
           guard: and([
-            "hasLegacyCredentials",
+            "hasCredentialsToUpgrade",
             or(["isReissuance", "isUpgrade"])
           ]),
           target: "#itwEidIssuanceMachine.CredentialsUpgrade"
@@ -1197,7 +1198,7 @@ export const itwEidIssuanceMachine = setup({
                 pid: context.eid,
                 walletInstanceAttestation:
                   context.walletInstanceAttestation?.jwt,
-                credentials: context.legacyCredentials,
+                credentials: context.credentialsToUpgrade,
                 issuanceMode: context.mode
               };
             },

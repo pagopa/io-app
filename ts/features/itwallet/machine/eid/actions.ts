@@ -56,7 +56,7 @@ export const createEidIssuanceActionsImplementation = (
       return {
         integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),
         walletInstanceAttestation,
-        legacyCredentials: Object.values(credentials)
+        credentialsToUpgrade: Object.values(credentials)
       };
     }
   ),

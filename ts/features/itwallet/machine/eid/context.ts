@@ -135,7 +135,7 @@ export type Context = {
   /**
    * The credentials that need to be upgraded to the new format.
    */
-  legacyCredentials: ReadonlyArray<CredentialMetadata>;
+  credentialsToUpgrade: ReadonlyArray<CredentialMetadata>;
   /**
    * Credentials that failed the upgrade process.
    */
@@ -157,7 +157,7 @@ export const InitialContext: Context = {
   mrtdContext: undefined,
   eid: undefined,
   failure: undefined,
-  legacyCredentials: [],
+  credentialsToUpgrade: [],
   failedCredentials: undefined,
   credentialType: undefined
 };

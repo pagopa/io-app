@@ -1511,7 +1511,7 @@ describe("itwEidIssuanceMachine", () => {
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
       eid: { credential: "", metadata: ItwStoredCredentialsMocks.eid },
-      legacyCredentials: [
+      credentialsToUpgrade: [
         ItwStoredCredentialsMocks.mdl
       ] as ReadonlyArray<CredentialMetadata>
     };
@@ -1877,7 +1877,7 @@ describe("itwEidIssuanceMachine", () => {
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
         level: "l3",
-        legacyCredentials: [
+        credentialsToUpgrade: [
           ItwStoredCredentialsMocks.mdl
         ] as ReadonlyArray<CredentialMetadata>
       }
@@ -1915,7 +1915,7 @@ describe("itwEidIssuanceMachine", () => {
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
         level: "l3",
-        legacyCredentials: [] as ReadonlyArray<CredentialMetadata>
+        credentialsToUpgrade: [] as ReadonlyArray<CredentialMetadata>
       }
     } as MachineSnapshot);
 
@@ -2008,7 +2008,7 @@ describe("itwEidIssuanceMachine", () => {
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
         level: "l3",
-        legacyCredentials: [
+        credentialsToUpgrade: [
           ItwStoredCredentialsMocks.mdl
         ] as ReadonlyArray<CredentialMetadata>
       }

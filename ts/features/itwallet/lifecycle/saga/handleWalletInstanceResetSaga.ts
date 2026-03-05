@@ -3,11 +3,12 @@ import * as Sentry from "@sentry/react-native";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { identity, pipe } from "fp-ts/lib/function";
-import { all, put, select } from "typed-redux-saga/macro";
+import { all, call, put, select } from "typed-redux-saga/macro";
 import { isIos } from "../../../../utils/platform";
 import { walletRemoveCardsByCategory } from "../../../wallet/store/actions/cards";
 import { itwSetWalletInstanceRemotelyActive } from "../../common/store/actions/preferences.ts";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
+import { CredentialsVault } from "../../credentials/utils/vault";
 import {
   itwCredentialsSelector,
   itwCredentialsEidSelector
@@ -32,6 +33,9 @@ export function* handleWalletInstanceResetSaga() {
     yield* put(walletRemoveCardsByCategory("itw"));
     // Set the remote wallet instance as inactive since it has been revoked on the server.
     yield* put(itwSetWalletInstanceRemotelyActive(false));
+
+    // Clear all credentials from the secure storage vault
+    yield* call(CredentialsVault.clear);
 
     // Remove all keys within the wallet.
     // On iOS skip the integrity key tag as it is managed by the App Attest service.
