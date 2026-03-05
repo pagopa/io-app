@@ -616,7 +616,7 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                               [
                                                 {},
                                                 {
-                                                  "color": "#0E0F13",
+                                                  "color": undefined,
                                                   "fontFamily": "Titillio",
                                                   "fontSize": 16,
                                                   "fontStyle": "normal",
@@ -636,7 +636,7 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                               [
                                                 {},
                                                 {
-                                                  "color": "#0E0F13",
+                                                  "color": undefined,
                                                   "fontFamily": "Titillio",
                                                   "fontSize": 16,
                                                   "fontStyle": "normal",
@@ -1714,7 +1714,7 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -1950,7 +1950,7 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -2272,7 +2272,7 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
