@@ -7,7 +7,7 @@ const instances: {
 } = {};
 
 /**
- * Convenience hook to get the IoWallet instance matching the current IT-Wallet specs version.
+ * Convenience hook to get the {@link IoWallet} instance matching the current IT-Wallet specs version.
  * @returns IoWallet
  */
 export const useIoWallet = () => {
@@ -16,7 +16,7 @@ export const useIoWallet = () => {
 };
 
 /**
- * Convenience function to get the IoWallet instance matching the provided IT-Wallet specs version.
+ * Convenience function to get the {@link IoWallet} instance matching the provided IT-Wallet specs version.
  * @param version IT-Wallet version
  * @returns IoWallet
  */
