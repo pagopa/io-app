@@ -708,7 +708,8 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                   }
                                 >
                                   <View
-                                    accessible={true}
+                                    accessible={false}
+                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       {
                                         "flexDirection": "column",
@@ -807,7 +808,8 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                   }
                                 >
                                   <View
-                                    accessible={true}
+                                    accessible={false}
+                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       {
                                         "flexDirection": "column",
@@ -906,7 +908,8 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                   }
                                 >
                                   <View
-                                    accessible={true}
+                                    accessible={false}
+                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       {
                                         "flexDirection": "column",
