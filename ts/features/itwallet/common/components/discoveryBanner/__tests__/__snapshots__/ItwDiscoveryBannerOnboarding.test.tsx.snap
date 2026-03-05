@@ -155,7 +155,7 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                     }
                   }
                 >
-                  ITW_CARD_ONBOARDING
+                  ITW_CARD_L3_ONBOARDING
                 </Text>
               </View>
               <View
@@ -476,7 +476,7 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                     }
                   }
                 >
-                  ITW_CARD_ONBOARDING
+                  ITW_CARD_L3_ONBOARDING
                 </Text>
               </View>
               <View
@@ -1186,7 +1186,7 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'onboarding' ba
                     }
                   }
                 >
-                  ITW_CARD_ONBOARDING
+                  ITW_CARD_L3_ONBOARDING
                 </Text>
               </View>
               <View
@@ -1896,7 +1896,7 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'reactivating' 
                     }
                   }
                 >
-                  ITW_CARD_ONBOARDING
+                  ITW_CARD_L3_ONBOARDING
                 </Text>
               </View>
               <View
