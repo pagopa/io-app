@@ -41,6 +41,8 @@ import {
 import { setIsBlockingScreen, setOfflineAccessReason } from "../store/actions";
 import { OfflineAccessReasonEnum } from "../store/reducer";
 import { checkSessionErrorSelector } from "../store/selectors";
+import { versionInfoDataSelector } from "../../../common/versionInfo/store/reducers/versionInfo";
+import { IOVersionInfo } from "../../../common/versionInfo/types/IOVersionInfo";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (25 * 1000) as Millisecond;
@@ -49,7 +51,8 @@ const getApiFailureValue = (
   isConnected: boolean | undefined,
   sessionLoaded: O.Option<PublicSession>,
   profileLoaded: pot.Pot<InitializedProfile, ProfileError>,
-  checkSession: boolean
+  checkSession: boolean,
+  versionInfo: IOVersionInfo | null
 ): string => {
   const apiFailures: Array<string> = [];
 
@@ -67,6 +70,10 @@ const getApiFailureValue = (
   // Add "get profile" if profileLoaded is error or someError
   if (pot.isError(profileLoaded)) {
     apiFailures.push("get profile");
+  }
+
+  if (versionInfo === null) {
+    apiFailures.push("get version info");
   }
 
   return apiFailures.join(", ");
@@ -249,6 +256,7 @@ const IngressScreenBlockingError = memo(() => {
   const profileLoaded = useIOSelector(profileSelector, isEqual);
   const sessionLoaded = useIOSelector(sessionInfoSelector, isEqual);
   const hasCheckSessionError = useIOSelector(checkSessionErrorSelector);
+  const versionInfo = useIOSelector(versionInfoDataSelector);
 
   useEffect(() => {
     setAccessibilityFocus(operationRef);
@@ -263,7 +271,8 @@ const IngressScreenBlockingError = memo(() => {
           isConnected,
           sessionLoaded,
           profileLoaded,
-          hasCheckSessionError
+          hasCheckSessionError,
+          versionInfo
         );
         if (apiFailureValue !== "" && !hasTrackedRef.current) {
           void trackIngressTimeout(apiFailureValue);
@@ -280,7 +289,8 @@ const IngressScreenBlockingError = memo(() => {
     isMixpanelEnabled,
     profileLoaded,
     sessionLoaded,
-    hasCheckSessionError
+    hasCheckSessionError,
+    versionInfo
   ]);
 
   return (

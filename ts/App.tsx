@@ -30,6 +30,7 @@ import {
 import { isDevEnv } from "./utils/environment";
 import { StatusMessages } from "./components/StatusMessages/StatusMessages";
 import { AppFeedbackProvider } from "./features/appReviews/components/AppFeedbackProvider";
+import { TourProvider } from "./features/tour/components/TourProvider";
 import { IOAlertVisibleContextProvider } from "./components/StatusMessages/IOAlertVisibleContext";
 import { getEnv } from "./features/itwallet/common/utils/environment";
 
@@ -161,17 +162,19 @@ const App = (): JSX.Element => (
             <ToastProvider>
               <Provider store={store}>
                 <PersistGate loading={undefined} persistor={persistor}>
-                  <IOAlertVisibleContextProvider>
-                    <BottomSheetModalProvider>
-                      <LightModalProvider>
-                        <AppFeedbackProvider>
-                          <StatusMessages>
-                            <RootContainer store={store} />
-                          </StatusMessages>
-                        </AppFeedbackProvider>
-                      </LightModalProvider>
-                    </BottomSheetModalProvider>
-                  </IOAlertVisibleContextProvider>
+                  <TourProvider>
+                    <IOAlertVisibleContextProvider>
+                      <BottomSheetModalProvider>
+                        <LightModalProvider>
+                          <AppFeedbackProvider>
+                            <StatusMessages>
+                              <RootContainer store={store} />
+                            </StatusMessages>
+                          </AppFeedbackProvider>
+                        </LightModalProvider>
+                      </BottomSheetModalProvider>
+                    </IOAlertVisibleContextProvider>
+                  </TourProvider>
                 </PersistGate>
               </Provider>
             </ToastProvider>
