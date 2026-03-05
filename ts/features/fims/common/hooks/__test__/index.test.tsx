@@ -25,14 +25,7 @@ import {
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
 
-beforeAll(() => {
-  jest.useFakeTimers();
-});
-
-afterAll(() => {
-  jest.runOnlyPendingTimers();
-  jest.useRealTimers();
-});
+jest.useFakeTimers();
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
