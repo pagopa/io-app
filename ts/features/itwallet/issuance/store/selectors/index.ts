@@ -8,3 +8,10 @@ export const itwIntegrityKeyTagSelector = (state: GlobalState) =>
  */
 export const itwIntegrityServiceStatusSelector = (state: GlobalState) =>
   state.features.itWallet.issuance.integrityServiceStatus;
+
+/**
+ * Selector that returns whether a wallet instance renewal has already failed.
+ * Used to prevent re-entering the recovery block on subsequent actor retries.
+ */
+export const itwWalletInstanceRenewalErrorSelector = (state: GlobalState) =>
+  state.features.itWallet.issuance.walletInstanceRenewalError;

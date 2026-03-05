@@ -7,6 +7,7 @@ import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import {
   itwRemoveIntegrityKeyTag,
   itwSetIntegrityServiceStatus,
+  itwSetWalletInstanceRenewalError,
   itwStoreIntegrityKeyTag
 } from "../actions";
 
@@ -17,10 +18,12 @@ export type IntegrityServiceStatus = "ready" | "unavailable" | "error";
 export type ItwIssuanceState = {
   integrityKeyTag: O.Option<string>;
   integrityServiceStatus?: IntegrityServiceStatus;
+  walletInstanceRenewalError: boolean;
 };
 
 export const itwIssuanceInitialState: ItwIssuanceState = {
-  integrityKeyTag: O.none
+  integrityKeyTag: O.none,
+  walletInstanceRenewalError: false
 };
 
 const reducer = (
@@ -38,11 +41,17 @@ const reducer = (
         ...state,
         integrityKeyTag: O.some(action.payload)
       };
+    case getType(itwSetWalletInstanceRenewalError):
+      return {
+        ...state,
+        walletInstanceRenewalError: action.payload
+      };
     case getType(itwLifecycleStoresReset):
     case getType(itwRemoveIntegrityKeyTag):
       return {
         ...state,
-        integrityKeyTag: O.none
+        integrityKeyTag: O.none,
+        walletInstanceRenewalError: false
       };
   }
   return state;
