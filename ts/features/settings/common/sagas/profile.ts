@@ -15,7 +15,7 @@ import { InitializedProfile } from "../../../../../definitions/backend/Initializ
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
 import { UpdateProfile412ErrorTypesEnum } from "../../../../../definitions/backend/UpdateProfile412ErrorTypes";
 import { UserDataProcessingChoiceEnum } from "../../../../../definitions/backend/UserDataProcessingChoice";
-import { BackendClient } from "../../../../api/backend";
+import { IdentityClient } from "../../../../api/IdentityClientManager";
 import { cgnDetails } from "../../../bonus/cgn/store/actions/details";
 import { cgnDetailSelector } from "../../../bonus/cgn/store/reducers/details";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
@@ -56,7 +56,7 @@ import { tosConfigSelector } from "../../../tos/store/selectors";
 
 // A saga to load the Profile.
 export function* loadProfile(
-  getProfile: ReturnType<typeof BackendClient>["getProfile"]
+  getProfile: IdentityClient["getUserProfile"]
 ): Generator<
   ReduxSagaEffect,
   O.Option<InitializedProfile>,
@@ -93,9 +93,7 @@ export function* loadProfile(
 // A saga to update the Profile.
 // eslint-disable-next-line sonarjs/cognitive-complexity
 function* createOrUpdateProfileSaga(
-  createOrUpdateProfile: ReturnType<
-    typeof BackendClient
-  >["createOrUpdateProfile"],
+  createOrUpdateProfile: IdentityClient["updateProfile"],
   action: ActionType<(typeof profileUpsert)["request"]>
 ): Generator<ReduxSagaEffect, void, any> {
   // Get the current Profile from the state
@@ -272,9 +270,7 @@ function* handleProfileChangesSaga(
 
 // This function listens for Profile upsert requests and calls the needed saga.
 export function* watchProfileUpsertRequestsSaga(
-  createOrUpdateProfile: ReturnType<
-    typeof BackendClient
-  >["createOrUpdateProfile"]
+  createOrUpdateProfile: IdentityClient["updateProfile"]
 ): Iterator<ReduxSagaEffect> {
   yield* takeLatest(
     getType(profileUpsert.request),
@@ -287,7 +283,7 @@ export function* watchProfileUpsertRequestsSaga(
 
 // This function listens for Profile refresh requests and calls the needed saga.
 export function* watchProfileRefreshRequestsSaga(
-  getProfile: ReturnType<typeof BackendClient>["getProfile"]
+  getProfile: IdentityClient["getUserProfile"]
 ): Iterator<ReduxSagaEffect> {
   yield* takeLatest(getType(profileLoadRequest), loadProfile, getProfile);
 }
@@ -295,9 +291,7 @@ export function* watchProfileRefreshRequestsSaga(
 // make a request to start the email validation process that sends to the user
 // an email with a link to validate it
 function* startEmailValidationProcessSaga(
-  startEmailValidationProcess: ReturnType<
-    typeof BackendClient
-  >["startEmailValidationProcess"]
+  startEmailValidationProcess: IdentityClient["startEmailValidationProcess"]
 ): Generator<
   ReduxSagaEffect,
   void,
@@ -416,9 +410,7 @@ function* checkLoadedProfile(
 
 // watch for some actions about profile
 export function* watchProfile(
-  startEmailValidationProcess: ReturnType<
-    typeof BackendClient
-  >["startEmailValidationProcess"]
+  startEmailValidationProcess: IdentityClient["startEmailValidationProcess"]
 ): Iterator<ReduxSagaEffect> {
   // user requests to send again the email validation to profile email
   yield* takeLatest(

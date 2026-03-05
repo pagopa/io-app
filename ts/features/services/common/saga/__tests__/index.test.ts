@@ -1,6 +1,6 @@
 import { testSaga } from "redux-saga-test-plan";
 import { watchServicesSaga } from "..";
-import { BackendClient } from "../../../../../api/backend";
+import { IdentityClient } from "../../../../../api/IdentityClientManager";
 import { createServicesClient, ServicesClient } from "../../api/servicesClient";
 import { apiUrlPrefix } from "../../../../../config";
 import { watchServicesDetailsSaga } from "../../../details/saga";
@@ -15,7 +15,7 @@ import { isFavouriteServicesEnabledSelector } from "../../store/selectors/remote
 describe("index", () => {
   describe("watchServicesSaga", () => {
     it("should follow expected flow", () => {
-      const backendClient = {} as BackendClient;
+      const backendClient = {} as IdentityClient;
       const bearerToken =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.fakePayload.XYZ123abcDEF456ghi789JKL";
       const servicesClient = {} as ServicesClient;

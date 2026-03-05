@@ -17,15 +17,15 @@ import { serviceDetailsByIdSelector } from "../../../services/details/store/sele
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { ThirdPartyMessageUnion } from "../../types/thirdPartyById";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { backendClientManager } from "../../../../api/BackendClientManager";
+import { communicationClientManager } from "../../../../api/CommunicationClientManager";
 import { getKeyInfo } from "../../../lollipop/saga";
 
-// Mock the backendClientManager
-jest.mock("../../../../api/BackendClientManager");
+// Mock the communicationClientManager
+jest.mock("../../../../api/CommunicationClientManager");
 
 const mockGetThirdPartyMessage = jest.fn();
-const mockBackendClientManager = backendClientManager as jest.Mocked<
-  typeof backendClientManager
+const mockCommunicationClientManager = communicationClientManager as jest.Mocked<
+  typeof communicationClientManager
 >;
 
 describe("handleThirdPartyMessage", () => {
@@ -40,8 +40,8 @@ describe("handleThirdPartyMessage", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockBackendClientManager.getBackendClient.mockReturnValue({
-      getThirdPartyMessage: () => mockGetThirdPartyMessage
+    mockCommunicationClientManager.getClient.mockReturnValue({
+      getThirdPartyMessage: mockGetThirdPartyMessage
     } as any);
   });
 

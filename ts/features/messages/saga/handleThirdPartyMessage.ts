@@ -24,7 +24,7 @@ import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
 import { serviceDetailsByIdSelector } from "../../services/details/store/selectors";
 import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
 import { thirdPartyKind } from "../types/thirdPartyById";
-import { backendClientManager } from "../../../api/BackendClientManager";
+import { communicationClientManager } from "../../../api/CommunicationClientManager";
 import { apiUrlPrefix } from "../../../config";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 import { isTestEnv } from "../../../utils/environment";
@@ -46,7 +46,7 @@ export function* handleThirdPartyMessage(
 
   const keyInfo = yield* call(getKeyInfo);
 
-  const { getThirdPartyMessage } = backendClientManager.getBackendClient(
+  const { getThirdPartyMessage } = communicationClientManager.getClient(
     apiUrlPrefix,
     sessionToken,
     keyInfo
@@ -64,14 +64,12 @@ export function* handleThirdPartyMessage(
     tag
   );
 
-  const getThirdPartyMessageRequest = getThirdPartyMessage();
-
   try {
     const result = (yield* call(
       withRefreshApiCall,
-      getThirdPartyMessageRequest({ id }),
+      getThirdPartyMessage({ id }),
       action
-    )) as unknown as SagaCallReturnType<typeof getThirdPartyMessageRequest>;
+    )) as unknown as SagaCallReturnType<typeof getThirdPartyMessage>;
     if (E.isLeft(result)) {
       const reason = readableReport(result.left);
       throw new Error(reason);

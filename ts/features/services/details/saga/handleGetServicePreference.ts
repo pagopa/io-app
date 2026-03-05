@@ -1,7 +1,7 @@
 import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { BackendClient } from "../../../../api/backend";
+import { IdentityClient } from "../../../../api/IdentityClientManager";
 import { loadServicePreference } from "../store/actions/preference";
 import { ServicePreferenceResponseFailure } from "../types/ServicePreferenceResponse";
 import { SagaCallReturnType } from "../../../../types/utils";
@@ -25,7 +25,7 @@ export const mapKinds: Record<
  * @param action
  */
 export function* handleGetServicePreference(
-  getServicePreference: BackendClient["getServicePreference"],
+  getServicePreference: IdentityClient["getServicePreferences"],
   action: ActionType<typeof loadServicePreference.request>
 ) {
   try {

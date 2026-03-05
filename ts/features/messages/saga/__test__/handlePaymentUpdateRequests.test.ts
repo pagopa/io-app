@@ -5,7 +5,7 @@ import { fork } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { backendClientManager } from "../../../../api/BackendClientManager";
+import { communicationClientManager } from "../../../../api/CommunicationClientManager";
 import * as MIXPANEL from "../../../../mixpanel";
 import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
@@ -27,16 +27,16 @@ import {
 import { applicationChangeState } from "../../../../store/actions/application";
 import { Action } from "../../../../store/actions/types";
 
-jest.mock("../../../../api/BackendClientManager");
+jest.mock("../../../../api/CommunicationClientManager");
 
 const mockGetPaymentInfoV2 = jest.fn();
-const mockBackendClientManager = backendClientManager as jest.Mocked<
-  typeof backendClientManager
+const mockCommunicationClientManager = communicationClientManager as jest.Mocked<
+  typeof communicationClientManager
 >;
 
 beforeEach(() => {
   jest.clearAllMocks();
-  mockBackendClientManager.getBackendClient.mockReturnValue({
+  mockCommunicationClientManager.getClient.mockReturnValue({
     getPaymentInfoV2: mockGetPaymentInfoV2
   } as any);
 });

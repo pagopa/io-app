@@ -13,22 +13,21 @@ import {
 } from "../../__mocks__/messages";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { handleLoadPreviousPageMessages } from "../handleLoadPreviousPageMessages";
-import { BackendClient } from "../../../../api/__mocks__/backend";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { backendClientManager } from "../../../../api/BackendClientManager";
+import { communicationClientManager } from "../../../../api/CommunicationClientManager";
 
-// Mock the backendClientManager
-jest.mock("../../../../api/BackendClientManager");
+// Mock the communicationClientManager
+jest.mock("../../../../api/CommunicationClientManager");
 
 const mockGetMessages = jest.fn();
-const mockBackendClientManager = backendClientManager as jest.Mocked<
-  typeof backendClientManager
+const mockCommunicationClientManager = communicationClientManager as jest.Mocked<
+  typeof communicationClientManager
 >;
 
 beforeEach(() => {
   jest.clearAllMocks();
-  mockBackendClientManager.getBackendClient.mockReturnValue({
-    getMessages: mockGetMessages
+  mockCommunicationClientManager.getClient.mockReturnValue({
+    getUserMessages: mockGetMessages
   } as any);
 });
 
@@ -54,7 +53,7 @@ describe("handleLoadPreviousPageMessages", () => {
         .next(sessionToken)
         .call(
           withRefreshApiCall,
-          BackendClient.getMessages(getMessagesPayload),
+          mockGetMessages(getMessagesPayload),
           loadPreviousPageMessages.request(defaultRequestPayload)
         )
         .next(E.right({ status: 200, value: apiPayload }))
@@ -75,7 +74,7 @@ describe("handleLoadPreviousPageMessages", () => {
         .next(sessionToken)
         .call(
           withRefreshApiCall,
-          BackendClient.getMessages(getMessagesPayload),
+          mockGetMessages(getMessagesPayload),
           loadPreviousPageMessages.request(defaultRequestPayload)
         )
         .next(E.right({ status: 500, value: { title: "Backend error" } }))

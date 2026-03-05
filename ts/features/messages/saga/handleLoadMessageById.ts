@@ -13,7 +13,7 @@ import {
   UndefinedBearerTokenPhase
 } from "../analytics";
 import { handleResponse } from "../utils/responseHandling";
-import { backendClientManager } from "../../../api/BackendClientManager";
+import { communicationClientManager } from "../../../api/CommunicationClientManager";
 import { apiUrlPrefix } from "../../../config";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 
@@ -29,7 +29,7 @@ export function* handleLoadMessageById(
     return;
   }
 
-  const { getMessage } = backendClientManager.getBackendClient(
+  const { getUserMessage: getMessage } = communicationClientManager.getClient(
     apiUrlPrefix,
     sessionToken
   );

@@ -6,7 +6,7 @@ import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { PathTraversalSafePathParam } from "../../../../../definitions/backend/PathTraversalSafePathParam";
 import { ServicePreference } from "../../../../../definitions/backend/ServicePreference";
-import { BackendClient } from "../../../../api/backend";
+import { IdentityClient } from "../../../../api/IdentityClientManager";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
@@ -91,7 +91,7 @@ export function* trackPNPushNotificationSettings(
  * @param action
  */
 export function* handleUpsertServicePreference(
-  upsertServicePreferences: BackendClient["upsertServicePreference"],
+  upsertServicePreferences: IdentityClient["upsertServicePreferences"],
   action: ActionType<typeof upsertServicePreference.request>
 ) {
   yield* call(trackPNPushNotificationSettings, action);

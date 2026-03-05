@@ -13,7 +13,7 @@ import {
 } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
-import { backendClientManager } from "../../../api/BackendClientManager";
+import { communicationClientManager } from "../../../api/CommunicationClientManager";
 import { apiUrlPrefix } from "../../../config";
 import { Action } from "../../../store/actions/types";
 import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
@@ -117,7 +117,7 @@ function* updatePaymentInfo(
   }
 
   const { getPaymentInfoV2: getPaymentDataRequestFactory } =
-    backendClientManager.getBackendClient(apiUrlPrefix, sessionToken);
+    communicationClientManager.getClient(apiUrlPrefix, sessionToken);
 
   const getPaymentDataRequest = getPaymentDataRequestFactory({
     rptId: paymentId,

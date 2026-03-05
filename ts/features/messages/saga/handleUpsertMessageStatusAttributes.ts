@@ -12,7 +12,7 @@ import { MessageStatusArchivingChange } from "../../../../definitions/backend/Me
 import { MessageStatusBulkChange } from "../../../../definitions/backend/MessageStatusBulkChange";
 import { MessageStatusChange } from "../../../../definitions/backend/MessageStatusChange";
 import { MessageStatusReadingChange } from "../../../../definitions/backend/MessageStatusReadingChange";
-import { BackendClient } from "../../../api/backend";
+import { CommunicationClient } from "../../../api/CommunicationClientManager";
 import {
   upsertMessageStatusAttributes,
   UpsertMessageStatusAttributesPayload
@@ -38,7 +38,7 @@ import { nextQueuedMessageDataUncachedSelector } from "../store/reducers/archivi
 import { paginatedMessageFromIdForCategorySelector } from "../store/reducers/allPaginated";
 import { MessageListCategory } from "../types/messageListCategory";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
-import { backendClientManager } from "../../../api/BackendClientManager";
+import { communicationClientManager } from "../../../api/CommunicationClientManager";
 import { apiUrlPrefix } from "../../../config";
 
 /**
@@ -194,7 +194,7 @@ export function* raceUpsertMessageStatusAttributes(
   }
 
   const { upsertMessageStatusAttributes: putMessage } =
-    backendClientManager.getBackendClient(apiUrlPrefix, sessionToken);
+    communicationClientManager.getClient(apiUrlPrefix, sessionToken);
 
   yield* race({
     task: call(handleUpsertMessageStatusAttributes, putMessage, action),
@@ -203,7 +203,7 @@ export function* raceUpsertMessageStatusAttributes(
 }
 
 export function* handleUpsertMessageStatusAttributes(
-  putMessage: BackendClient["upsertMessageStatusAttributes"],
+  putMessage: CommunicationClient["upsertMessageStatusAttributes"],
   action: ActionType<typeof upsertMessageStatusAttributes.request>
 ) {
   try {

@@ -14,7 +14,7 @@ import {
 } from "../analytics";
 import { handleResponse } from "../utils/responseHandling";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
-import { backendClientManager } from "../../../api/BackendClientManager";
+import { communicationClientManager } from "../../../api/CommunicationClientManager";
 import { apiUrlPrefix } from "../../../config";
 
 export function* handleLoadPreviousPageMessages(
@@ -31,7 +31,7 @@ export function* handleLoadPreviousPageMessages(
     return;
   }
 
-  const { getMessages } = backendClientManager.getBackendClient(
+  const { getUserMessages: getMessages } = communicationClientManager.getClient(
     apiUrlPrefix,
     sessionToken
   );
