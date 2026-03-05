@@ -16,6 +16,11 @@ import {
   SendAARFailurePhase,
   sendAARFlowStates
 } from "../utils/stateUtils";
+import {
+  AarErrorStatesKind,
+  sendAarProblemJsonErrorCodes
+} from "../utils/aarErrorMappings";
+import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 
 const sendAarFailurePhase: SendAARFailurePhase = "Create Mandate";
 export function* createAarMandateSaga(
@@ -83,10 +88,13 @@ export function* createAarMandateSaga(
           status,
           value
         )})`;
+
         yield* call(trackSendAARFailure, sendAarFailurePhase, reason);
+
         const errorState: AARFlowState = {
           type: sendAARFlowStates.ko,
           previousState: currentState,
+          specificErrorKey: getSpecificErrorKey(status, value),
           ...(value !== undefined && { error: value }),
           debugData: {
             phase: sendAarFailurePhase,
@@ -111,3 +119,12 @@ export function* createAarMandateSaga(
     );
   }
 }
+const getSpecificErrorKey = (status: number, response: AARProblemJson) => {
+  const isTtlError =
+    status === 500 &&
+    response.errors?.[0]?.code ===
+      sendAarProblemJsonErrorCodes.PN_MANDATE_ALREADYEXISTS;
+  return isTtlError
+    ? AarErrorStatesKind.PENDING_DELEGATION
+    : AarErrorStatesKind.GENERIC;
+};

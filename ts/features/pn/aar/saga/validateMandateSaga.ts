@@ -1,24 +1,31 @@
 import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
+import _ from "lodash";
 import { call, put, select } from "typed-redux-saga/macro";
+import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SagaCallReturnType } from "../../../../types/utils";
+import { isTestEnv } from "../../../../utils/environment";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { unknownToReason } from "../../../messages/utils";
 import {
   aarProblemJsonAnalyticsReport,
   trackSendAARFailure,
-  trackSendAarMandateCieDataError
+  trackSendAarMandateCieDataError,
+  trackSendAarMandateCieExpiredError,
+  trackSendAarMandateCieNotRelatedToDelegatorError
 } from "../analytics";
 import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
+import {
+  AarErrorStatesKind,
+  sendAarProblemJsonErrorCodes
+} from "../utils/aarErrorMappings";
 import {
   AARFlowState,
   SendAARFailurePhase,
   sendAARFlowStates
 } from "../utils/stateUtils";
-import { isDevEnv } from "../../../../utils/environment";
-import { aarProblemJsonErrorTrackingMap } from "../utils/aarErrorMappings";
 
 const sendAARFailurePhase: SendAARFailurePhase = "Validate Mandate";
 
@@ -102,15 +109,16 @@ export function* validateMandateSaga(
           status,
           value
         )})`;
-        yield* call(
-          handleMixPanelCustomTrackingIfNeeded,
+        const maybeErrorKey = yield* call(
+          getAndTrackValidationErrorState,
+          value.errors,
           status,
-          value,
           reason
         );
         yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
         const errorState: AARFlowState = {
           type: sendAARFlowStates.ko,
+          specificErrorKey: maybeErrorKey,
           previousState: { ...action.payload },
           ...(value !== undefined && { error: value }),
           debugData: {
@@ -137,36 +145,45 @@ export function* validateMandateSaga(
   }
 }
 
-function handleMixPanelCustomTrackingIfNeeded<
-  S extends Exclude<
-    AcceptMandateSuccessfulResponse["right"]["status"],
-    204 | 401
-  >
->(
-  status: S,
-  value: Extract<
-    AcceptMandateSuccessfulResponse["right"],
-    { status: S }
-  >["value"],
-  reason: string
-) {
-  if (status === 422) {
-    const maybeErrorKey = value.errors
-      ?.map(({ code }) => code.toUpperCase())
-      .find(
-        (code): code is keyof typeof aarProblemJsonErrorTrackingMap =>
-          code in aarProblemJsonErrorTrackingMap
-      );
-
-    if (maybeErrorKey) {
-      aarProblemJsonErrorTrackingMap[maybeErrorKey]();
-      return;
-    }
-  }
-
+const genericHandler = (reason: string) => {
   trackSendAarMandateCieDataError(reason);
-}
+  return AarErrorStatesKind.CIE_GENERIC;
+};
+const responseToHandlerMap = {
+  422: {
+    [sendAarProblemJsonErrorCodes.CIE_EXPIRED_ERROR]: () => {
+      trackSendAarMandateCieExpiredError();
+      return AarErrorStatesKind.CIE_EXPIRED;
+    },
+    [sendAarProblemJsonErrorCodes.CIE_NOT_RELATED_TO_DELEGATOR_ERROR]: () => {
+      trackSendAarMandateCieNotRelatedToDelegatorError();
+      return AarErrorStatesKind.CIE_NOT_RELATED_TO_DELEGATOR;
+    }
+  },
+  500: {
+    [sendAarProblemJsonErrorCodes.PN_MANDATE_NOTFOUND]: () =>
+      AarErrorStatesKind.CIE_TTL_EXPIRED
+  }
+};
+const getAndTrackValidationErrorState = (
+  errors: AARProblemJson["errors"],
+  status: number,
+  reason: string
+): AarErrorStatesKind => {
+  const maybeErrorKey = errors?.[0].code.toUpperCase();
+  if (maybeErrorKey == null) {
+    return genericHandler(reason);
+  }
+  const handler = _.get(
+    responseToHandlerMap,
+    [status, maybeErrorKey],
+    genericHandler
+  );
+  return handler(reason);
+};
 
-export const testable = isDevEnv
-  ? { handleMixPanelCustomTrackingIfNeeded }
+export const testable = isTestEnv
+  ? {
+      getAndTrackValidationErrorState
+    }
   : undefined;

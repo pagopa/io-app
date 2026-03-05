@@ -1,6 +1,7 @@
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { ThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
+import { AarErrorStatesKind } from "./aarErrorMappings";
 
 export type SendAARFlowStatesType = typeof sendAARFlowStates;
 export type SendAARFailurePhase =
@@ -143,6 +144,7 @@ type ValidatingMandate = {
 
 type ErrorState = {
   type: SendAARFlowStatesType["ko"];
+  specificErrorKey?: AarErrorStatesKind;
   previousState: AARFlowState;
   error?: AARProblemJson;
   debugData: {
