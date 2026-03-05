@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.25.0-rc.5](https://github.com/pagopa/io-app/compare/3.25.0-rc.4...3.25.0-rc.5) (2026-03-02)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-3936](https://pagopa.atlassian.net/browse/SIW-3936)] Update tracking for users without CIE card in L3 upgrade flow ([#7901](https://github.com/pagopa/io-app/issues/7901)) ([623f895](https://github.com/pagopa/io-app/commit/623f8950d2123e2b64ecd19b6097db635f6932be))
+
+
+### Chores
+
+* [[IOPLT-1636](https://pagopa.atlassian.net/browse/IOPLT-1636)] Adds tracking information for ingress_timeout when versionInfo is not loaded ([#7906](https://github.com/pagopa/io-app/issues/7906)) ([f0fad8f](https://github.com/pagopa/io-app/commit/f0fad8f38bc25804be3502a34cb7c85df088f282))
+* [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Bump io-react-native-cie to v1.3.5-rc.2 ([#7905](https://github.com/pagopa/io-app/issues/7905)) ([93cfeab](https://github.com/pagopa/io-app/commit/93cfeab65fa5d7601a41a94c7a0bba1c83ee5c01))
+* **IT-Wallet:** [[SIW-3938](https://pagopa.atlassian.net/browse/SIW-3938)] Update ITW_ID_method assignment during PID issuance for analytics tracking ([#7889](https://github.com/pagopa/io-app/issues/7889)) ([7fefc54](https://github.com/pagopa/io-app/commit/7fefc54d6f1893275305bd89b803d0a2515c0b36))
+
+## [3.25.0-rc.4](https://github.com/pagopa/io-app/compare/3.25.0-rc.3...3.25.0-rc.4) (2026-03-02)
+
+
+### Chores
+
+* [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Bump io-react-native-cie to v1.3.5-rc.1 ([#7903](https://github.com/pagopa/io-app/issues/7903)) ([6bc3dc5](https://github.com/pagopa/io-app/commit/6bc3dc5ff0b88ca96e722277f2d4299c93466791))
+
 ## [3.25.0-rc.3](https://github.com/pagopa/io-app/compare/3.25.0-rc.2...3.25.0-rc.3) (2026-02-26)
 
 
