@@ -50,7 +50,7 @@ import {
 import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
 import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
-import { AsyncCredentialsCatalogue } from "./AsyncCredentialsCatalogueWrapper.tsx";
+import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalogueWrapper.tsx";
 
 const MAX_INDEX = 1;
 

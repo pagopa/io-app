@@ -35,7 +35,7 @@ import {
 } from "../../common/utils/itwCredentialUtils";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
-import { AsyncCredentialsCatalogue } from "./AsyncCredentialsCatalogueWrapper.tsx";
+import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalogueWrapper.tsx";
 
 const activeBadge: Badge = {
   variant: "success",

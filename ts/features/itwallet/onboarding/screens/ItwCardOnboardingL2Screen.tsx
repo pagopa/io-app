@@ -16,7 +16,7 @@ import { l2Credentials } from "../../common/utils/itwCredentialUtils.ts";
 import { itwCredentialsByPresenceSelector } from "../../credentials/store/selectors/index.ts";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
 import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
-import { AsyncCredentialsCatalogue } from "./AsyncCredentialsCatalogueWrapper.tsx";
+import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalogueWrapper.tsx";
 
 const ItwCardOnboardingL2Screen = () => {
   useFocusEffect(trackShowCredentialsList);
