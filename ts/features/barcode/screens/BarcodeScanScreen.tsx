@@ -183,7 +183,7 @@ const BarcodeScanScreen = () => {
         });
         break;
       case "ITW_CREDENTIAL_OFFER":
-        navigation.navigate(ITW_ROUTES.MAIN, {
+        navigation.replace(ITW_ROUTES.MAIN, {
           screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER.VALIDATION,
           params: {
             itwCredentialOfferUri: barcode.itwCredentialOfferUri

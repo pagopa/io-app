@@ -125,7 +125,7 @@ export const itwCredentialIssuanceMachine = setup({
       }
     },
     CredentialOfferValidation: {
-      tags: [ItwTags.Loading],
+      description: "Resolves and validates the credential offer URI",
       invoke: {
         src: "processCredentialOffer",
         input: ({ context }) => ({
