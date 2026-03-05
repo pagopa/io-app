@@ -12,13 +12,14 @@ SEND_FUNC_VERSION=1.5.5
 
 declare -a apis=(
   # Backend APIs
-  "./definitions/backend https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_backend.yaml"
+  "./definitions/backend/communication https://raw.githubusercontent.com/pagopa/io-backend/6d5817889669cdbe3daf42094d0097f44ddba88d/openapi/generated/api_communication.yaml"
+  "./definitions/backend/identity      https://raw.githubusercontent.com/pagopa/io-backend/6d5817889669cdbe3daf42094d0097f44ddba88d/openapi/generated/api_identity.yaml"
   # pagoPA APIs
   "./definitions/pagopa assets/paymentManager/spec.json"
   "./definitions/pagopa/walletv2 https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/bonus/specs/bpd/pm/walletv2.json"
   "./definitions/pagopa/walletv3 https://raw.githubusercontent.com/pagopa/pagopa-infra/refs/tags/v1.745.1/src/domains/pay-wallet-app/api/io-payment-wallet/v1/_openapi.json.tpl"
   "./definitions/pagopa/ecommerce https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.731.1/src/domains/ecommerce-app/api/ecommerce-io/v2/_openapi.json.tpl"
-  "./definitions/pagopa/biz-events https://raw.githubusercontent.com/pagopa/pagopa-biz-events-service/refs/tags/0.3.5/openapi/openapi_lap_jwt.json"
+  "./definitions/pagopa/biz-events https://raw.githubusercontent.com/pagopa/pagopa-biz-events-service/refs/tags/0.2.3/openapi/openapi_lap_jwt.json"
   "./definitions/pagopa/platform https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.64.0/src/domains/shared-app/api/session-wallet/v1/_openapi.json.tpl"
   "./definitions/pagopa/cobadge/configuration https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/pagopa/cobadge/abi_definitions.yml"
   "./definitions/pagopa/privative/configuration https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/pagopa/privative/definitions.yml"
