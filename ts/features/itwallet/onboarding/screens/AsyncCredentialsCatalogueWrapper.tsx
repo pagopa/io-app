@@ -1,4 +1,3 @@
-// AsyncCredentialsCatalogue.tsx
 import {
   BannerErrorState,
   ModuleCredential,
