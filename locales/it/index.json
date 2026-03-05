@@ -5328,6 +5328,13 @@
           "secondaryAction": "Chiudi"
         }
       },
+      "hardwareKeyInvalid": {
+        "error": {
+          "title": "Non puoi proseguire con la richiesta",
+          "body": "Una verifica di sicurezza sul tuo dispositivo non è andata a buon fine. Leggi i consigli per risolvere il problema o contatta l’assistenza.",
+          "primaryAction": "Leggi cosa fare"
+        }
+      },
       "reissuanceLandingScreen": {
         "notNecessary": {
           "title": "Hai già confermato la tua identità",
