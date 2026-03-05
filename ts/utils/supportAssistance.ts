@@ -136,7 +136,7 @@ export const zendeskPaymentMethodCategory: ZendeskCategory = {
     "de-DE": "Zahlungsmethode"
   }
 };
-export const zendeskFCIcategory: ZendeskCategory = {
+export const zendeskFCICategory: ZendeskCategory = {
   value: "firma_con_io",
   description: {
     "it-IT": "Firma con IO",
