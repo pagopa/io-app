@@ -5336,12 +5336,7 @@
           "mdl": {
             "content": "Puoi usare la tua Patente su IO solo in Italia esclusivamente per dimostrare l'abilitazione alla guida in caso di controlli delle Forze dell'ordine.",
             "contentL3": "La tua Patente su IO ha lo stesso valore legale del documento fisico, solo sul territorio italiano.",
-            "expired": {
-              "title": "La tua Patente di guida risulta scaduta. Se l'hai già rinnovata, aggiorna il documento digitale.",
-              "sheetTitle": "La tua Patente di guida risulta scaduta",
-              "content": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente.\n\nRinnova il documento presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\n###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).\n\n###### Hai già rinnovato il documento?\n\nSe hai già rinnovato la Patente fisica, aggiorna il documento digitale per ottenerlo aggiornato su IO."
-            },
-            "invalid": {
+             "invalid": {
               "cta": "Rimuovi documento dal Portafoglio"
             }
           },
@@ -5392,8 +5387,7 @@
           "mDL": {
             "expiring": {
               "title": "Patente su IO: documento in scadenza",
-              "content": "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nÈ necessaria una visita medica con un medico autorizzato e provvedere al pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).",
-              "cta": "Scopri di più"
+              "content": "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nÈ necessaria una visita medica con un medico autorizzato e provvedere al pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera)."
             }
           },
           "EuropeanHealthInsuranceCard": {
