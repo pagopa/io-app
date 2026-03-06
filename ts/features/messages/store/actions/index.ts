@@ -38,6 +38,8 @@ export type SuccessGetMessageDataActionType = {
   containsAttachments: boolean;
   containsPayment?: boolean;
   createdAt: Date;
+  fci_message_type?: "request" | "result";
+  fci_result?: "success" | "failure";
   firstTimeOpening: boolean;
   hasFIMSCTA: boolean;
   hasRemoteContent: boolean;

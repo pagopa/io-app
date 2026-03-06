@@ -307,11 +307,30 @@ function* dispatchSuccessAction(
     thirdPartyMessage
   );
 
+  // Compute FCI fields if the message is from "Firma con IO" service
+  const isFCIMessage = paginatedMessage.serviceName === "Firma con IO";
+  const hasFCICTA = isFCIMessage
+    ? computeHasFCICTA(messageDetails, serviceId, thirdPartyMessage)
+    : false;
+  const fci_message_type: "request" | "result" | undefined = isFCIMessage
+    ? hasFCICTA
+      ? "request"
+      : "result"
+    : undefined;
+  const fci_result: "success" | "failure" | undefined =
+    isFCIMessage && !hasFCICTA
+      ? attachmentCount > 0
+        ? "success"
+        : "failure"
+      : undefined;
+
   yield* put(
     getMessageDataAction.success({
       containsAttachments: attachmentCount > 0,
       containsPayment,
       createdAt: paginatedMessage.createdAt,
+      fci_message_type,
+      fci_result,
       firstTimeOpening: !paginatedMessage.isRead,
       hasFIMSCTA,
       hasRemoteContent: !!thirdPartyMessage,
@@ -399,9 +418,41 @@ const computeHasFIMSCTA = (
   return false;
 };
 
+const computeHasFCICTA = (
+  messageDetails: UIMessageDetails,
+  serviceId: ServiceId,
+  thirdPartyMessage: ThirdPartyMessageWithContent | undefined
+) => {
+  const markdownWithCTAs = extractContentFromMessageSources(
+    (messageContent: RemoteContentDetails | UIMessageDetails) =>
+      messageContent.markdown,
+    messageDetails,
+    thirdPartyMessage
+  );
+  const localizedCTAs = localizedCTAsFromFrontMatter(
+    markdownWithCTAs,
+    serviceId
+  );
+  const ctas = ctasFromLocalizedCTAs(localizedCTAs, serviceId);
+
+  const isFCILink = (href: string): boolean => {
+    const upperHref = href.toUpperCase();
+    return upperHref.includes("FCI_MAIN") || upperHref.includes("/FCI/");
+  };
+
+  if (ctas != null && isFCILink(ctas.cta_1.action)) {
+    return true;
+  }
+  if (ctas?.cta_2 != null && isFCILink(ctas.cta_2.action)) {
+    return true;
+  }
+  return false;
+};
+
 export const testable = isTestEnv
   ? {
       commonFailureHandling,
+      computeHasFCICTA,
       computeHasFIMSCTA,
       decodeAndTrackThirdPartyMessageDetailsIfNeeded,
       dispatchSuccessAction,
