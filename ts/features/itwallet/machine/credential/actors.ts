@@ -12,14 +12,10 @@ import {
   StoredCredential
 } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
-import {
-  itwIntegrityKeyTagSelector,
-  itwWalletInstanceRenewalErrorSelector
-} from "../../issuance/store/selectors";
-import {
-  itwSetWalletInstanceRenewalError,
-  itwStoreIntegrityKeyTag
-} from "../../issuance/store/actions";
+import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
+import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
+import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
+import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
 import { Env } from "../../common/utils/environment";
 import {
   enrichErrorWithMetadata,

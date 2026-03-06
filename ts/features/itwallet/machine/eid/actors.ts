@@ -26,15 +26,13 @@ import {
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import * as mrtdUtils from "../../common/utils/mrtd";
-import {
-  itwSetWalletInstanceRenewalError,
-  itwStoreIntegrityKeyTag
-} from "../../issuance/store/actions";
+import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 import {
   itwIntegrityKeyTagSelector,
-  itwIntegrityServiceStatusSelector,
-  itwWalletInstanceRenewalErrorSelector
+  itwIntegrityServiceStatusSelector
 } from "../../issuance/store/selectors";
+import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
+import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 import { createCredentialUpgradeActionsImplementation } from "../upgrade/actions";
 import { createCredentialUpgradeActorsImplementation } from "../upgrade/actors";

@@ -13,12 +13,7 @@ export const itwSetIntegrityServiceStatus = createStandardAction(
   "ITW_SET_INTEGRITY_SERVICE_STATUS"
 )<IntegrityServiceStatus>();
 
-export const itwSetWalletInstanceRenewalError = createStandardAction(
-  "ITW_SET_WALLET_INSTANCE_RENEWAL_ERROR"
-)<boolean>();
-
 export type ItwIssuanceActions =
   | ActionType<typeof itwStoreIntegrityKeyTag>
   | ActionType<typeof itwRemoveIntegrityKeyTag>
-  | ActionType<typeof itwSetIntegrityServiceStatus>
-  | ActionType<typeof itwSetWalletInstanceRenewalError>;
+  | ActionType<typeof itwSetIntegrityServiceStatus>;
