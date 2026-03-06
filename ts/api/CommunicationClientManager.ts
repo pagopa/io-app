@@ -1,4 +1,3 @@
- 
 import _ from "lodash";
 import { v4 as uuid } from "uuid";
 import {
@@ -25,8 +24,16 @@ class CommunicationClientManager extends ApiClientManager<CommunicationClient> {
     return createClient({
       baseUrl,
       fetchApi: lollipopFetch({ nonce: uuid() }, keyInfo),
-      withDefaults: op => params => op({ Bearer: token, ...params })
+      withDefaults: op => params => op({ Bearer: `Bearer ${token}`, ...params }),
+      basePath: "/api/v1"
     });
+  }
+
+  // Override to make `keyInfo` required: unlike the base class, which accepts
+  // it as optional (defaulting to `{}`), this client always needs a valid
+  // KeyInfo to sign requests via Lollipop.
+  override getClient(baseUrl: string, token: string, keyInfo: KeyInfo) {
+    return super.getClient(baseUrl, token, keyInfo);
   }
 }
 

@@ -16,6 +16,7 @@ import { handleResponse } from "../utils/responseHandling";
 import { communicationClientManager } from "../../../api/CommunicationClientManager";
 import { apiUrlPrefix } from "../../../config";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { getKeyInfo } from '../../lollipop/saga';
 
 export function* handleLoadMessageDetails(
   action: ActionType<typeof loadMessageDetails.request>
@@ -29,9 +30,12 @@ export function* handleLoadMessageDetails(
     return;
   }
 
+  const keyInfo = yield* call(getKeyInfo);
+
   const { getUserMessage: getMessage } = communicationClientManager.getClient(
     apiUrlPrefix,
-    sessionToken
+    sessionToken,
+    keyInfo
   );
 
   try {

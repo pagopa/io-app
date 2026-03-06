@@ -38,6 +38,7 @@ import {
   toSpecificMessagePaymentError,
   toTimeoutMessagePaymentError
 } from "../types/paymentErrors";
+import { getKeyInfo } from '../../lollipop/saga';
 
 const PaymentUpdateWorkerCount = 5;
 
@@ -116,8 +117,10 @@ function* updatePaymentInfo(
     return;
   }
 
+  const keyInfo = yield* call(getKeyInfo);
+
   const { getPaymentInfoV2: getPaymentDataRequestFactory } =
-    communicationClientManager.getClient(apiUrlPrefix, sessionToken);
+    communicationClientManager.getClient(apiUrlPrefix, sessionToken, keyInfo);
 
   const getPaymentDataRequest = getPaymentDataRequestFactory({
     rptId: paymentId,

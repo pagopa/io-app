@@ -39,6 +39,7 @@ import { MessageListCategory } from "../types/messageListCategory";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 import { communicationClientManager, CommunicationClient } from "../../../api/CommunicationClientManager";
 import { apiUrlPrefix } from "../../../config";
+import { getKeyInfo } from '../../lollipop/saga';
 
 /**
  * @throws invalid payload
@@ -192,8 +193,10 @@ export function* raceUpsertMessageStatusAttributes(
     return;
   }
 
+  const keyInfo = yield* call(getKeyInfo);
+
   const { upsertMessageStatusAttributes: putMessage } =
-    communicationClientManager.getClient(apiUrlPrefix, sessionToken);
+    communicationClientManager.getClient(apiUrlPrefix, sessionToken, keyInfo);
 
   yield* race({
     task: call(handleUpsertMessageStatusAttributes, putMessage, action),
