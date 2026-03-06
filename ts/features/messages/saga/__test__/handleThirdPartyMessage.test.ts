@@ -24,9 +24,8 @@ import { getKeyInfo } from "../../../lollipop/saga";
 jest.mock("../../../../api/CommunicationClientManager");
 
 const mockGetThirdPartyMessage = jest.fn();
-const mockCommunicationClientManager = communicationClientManager as jest.Mocked<
-  typeof communicationClientManager
->;
+const mockCommunicationClientManager =
+  communicationClientManager as jest.Mocked<typeof communicationClientManager>;
 
 describe("handleThirdPartyMessage", () => {
   const serviceDetails = {

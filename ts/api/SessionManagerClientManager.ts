@@ -1,7 +1,4 @@
- import {
-  createClient,
-  Client
-} from "../../definitions/session_manager/client";
+import { createClient, Client } from "../../definitions/session_manager/client";
 import { KeyInfo } from "../features/lollipop/utils/crypto";
 import { defaultRetryingFetch } from "../utils/fetch";
 import { isDevEnv } from "../utils/environment";

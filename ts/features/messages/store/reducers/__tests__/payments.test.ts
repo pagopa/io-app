@@ -1509,7 +1509,9 @@ describe("paymentStatisticsForMessageUncachedSelector", () => {
                     )
                   ),
                   [paymentId11]: remoteError(
-                    toSpecificMessagePaymentError(PaymentFaultV2Enum.GENERIC_ERROR)
+                    toSpecificMessagePaymentError(
+                      PaymentFaultV2Enum.GENERIC_ERROR
+                    )
                   ),
                   [paymentId12]: remoteStatus
                 }
@@ -1591,7 +1593,9 @@ describe("paymentStatisticsForMessageUncachedSelector", () => {
                     )
                   ),
                   [paymentId11]: remoteError(
-                    toSpecificMessagePaymentError(PaymentFaultV2Enum.GENERIC_ERROR)
+                    toSpecificMessagePaymentError(
+                      PaymentFaultV2Enum.GENERIC_ERROR
+                    )
                   ),
                   [paymentId12]: input
                 }

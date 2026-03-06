@@ -30,9 +30,8 @@ import { Action } from "../../../../store/actions/types";
 jest.mock("../../../../api/CommunicationClientManager");
 
 const mockGetPaymentInfoV2 = jest.fn();
-const mockCommunicationClientManager = communicationClientManager as jest.Mocked<
-  typeof communicationClientManager
->;
+const mockCommunicationClientManager =
+  communicationClientManager as jest.Mocked<typeof communicationClientManager>;
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -221,7 +220,9 @@ describe("handlePaymentUpdateRequests", () => {
               })
             );
         });
-        expect(output).toEqual(Error(PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO));
+        expect(output).toEqual(
+          Error(PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO)
+        );
       })
     );
     it(`should return an error if API result is 500`, () => {
@@ -351,7 +352,9 @@ describe("handlePaymentUpdateRequests", () => {
         Error(PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO)
       );
       expect(output).toEqual(
-        toSpecificMessagePaymentError(PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO)
+        toSpecificMessagePaymentError(
+          PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO
+        )
       );
     });
     it("should return a specifc error for PaymentFaultV2Enum code", () => {
@@ -359,7 +362,9 @@ describe("handlePaymentUpdateRequests", () => {
         PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO
       );
       expect(output).toEqual(
-        toSpecificMessagePaymentError(PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO)
+        toSpecificMessagePaymentError(
+          PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO
+        )
       );
     });
     it("should return a generic error for a generic error", () => {
@@ -419,7 +424,9 @@ describe("handlePaymentUpdateRequests", () => {
         .mockImplementation((_event, _properties) => undefined);
 
       testable!.trackPaymentErrorIfNeeded(
-        toSpecificMessagePaymentError(PaymentFaultV2Enum.PPT_PAGAMENTO_DUPLICATO)
+        toSpecificMessagePaymentError(
+          PaymentFaultV2Enum.PPT_PAGAMENTO_DUPLICATO
+        )
       );
 
       expect(spyOnMixpanelTrack.mock.calls.length).toBe(0);

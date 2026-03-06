@@ -38,7 +38,7 @@ import {
   toSpecificMessagePaymentError,
   toTimeoutMessagePaymentError
 } from "../types/paymentErrors";
-import { getKeyInfo } from '../../lollipop/saga';
+import { getKeyInfo } from "../../lollipop/saga";
 
 const PaymentUpdateWorkerCount = 5;
 

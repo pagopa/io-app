@@ -2,7 +2,10 @@ import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { call, put, race, select, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { CommunicationClient, communicationClientManager } from "../../../api/CommunicationClientManager";
+import {
+  CommunicationClient,
+  communicationClientManager
+} from "../../../api/CommunicationClientManager";
 import { convertUnknownToError } from "../../../utils/errors";
 import { isTestEnv } from "../../../utils/environment";
 import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";

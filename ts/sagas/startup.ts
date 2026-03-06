@@ -323,9 +323,16 @@ export function* initializeApplicationSaga(
   yield* fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel);
 
   // Instantiate backend clients from the session token
-  const comClient = communicationClientManager.getClient(apiUrlPrefix, sessionToken, keyInfo);
+  const comClient = communicationClientManager.getClient(
+    apiUrlPrefix,
+    sessionToken,
+    keyInfo
+  );
   const idClient = identityClientManager.getClient(apiUrlPrefix, sessionToken);
-  const smClient = sessionManagerClientManager.getClient(apiUrlPrefix, sessionToken);
+  const smClient = sessionManagerClientManager.getClient(
+    apiUrlPrefix,
+    sessionToken
+  );
 
   // The following functions all rely on the backend clients
 
@@ -457,10 +464,7 @@ export function* initializeApplicationSaga(
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.
-  yield* fork(
-    watchProfileUpsertRequestsSaga,
-    idClient.updateProfile
-  );
+  yield* fork(watchProfileUpsertRequestsSaga, idClient.updateProfile);
 
   // Start watching when profile is successfully loaded
   yield* fork(watchProfile, idClient.startEmailValidationProcess);

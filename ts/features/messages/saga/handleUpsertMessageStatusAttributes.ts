@@ -37,9 +37,12 @@ import { nextQueuedMessageDataUncachedSelector } from "../store/reducers/archivi
 import { paginatedMessageFromIdForCategorySelector } from "../store/reducers/allPaginated";
 import { MessageListCategory } from "../types/messageListCategory";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
-import { communicationClientManager, CommunicationClient } from "../../../api/CommunicationClientManager";
+import {
+  communicationClientManager,
+  CommunicationClient
+} from "../../../api/CommunicationClientManager";
 import { apiUrlPrefix } from "../../../config";
-import { getKeyInfo } from '../../lollipop/saga';
+import { getKeyInfo } from "../../lollipop/saga";
 
 /**
  * @throws invalid payload

@@ -16,7 +16,7 @@ import { handleResponse } from "../utils/responseHandling";
 import { communicationClientManager } from "../../../api/CommunicationClientManager";
 import { apiUrlPrefix } from "../../../config";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
-import { getKeyInfo } from '../../lollipop/saga';
+import { getKeyInfo } from "../../lollipop/saga";
 
 export function* handleLoadMessageDetails(
   action: ActionType<typeof loadMessageDetails.request>

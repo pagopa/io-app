@@ -1,7 +1,7 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
 import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { PaymentFaultV2Enum as PaymentProblemErrorEnum } from "../../../definitions/backend/communication/PaymentFaultV2";
-import { PaymentRequestsGetResponse } from '../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse';
+import { PaymentRequestsGetResponse } from "../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 
 export type PaymentStartOrigin =
   | "message"

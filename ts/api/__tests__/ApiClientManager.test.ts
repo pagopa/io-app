@@ -1,10 +1,7 @@
 import { ApiClientManager } from "../ApiClientManager";
 
 class ConcreteClientManager extends ApiClientManager<{ id: number }> {
-  protected createClient(
-    _baseUrl: string,
-    _token: string
-  ): { id: number } {
+  protected createClient(_baseUrl: string, _token: string): { id: number } {
     return { id: Math.random() };
   }
 }

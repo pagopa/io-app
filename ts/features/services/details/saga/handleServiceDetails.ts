@@ -23,9 +23,7 @@ export function* handleServiceDetails(
       yield* put(
         loadServiceDetail.failure({
           service_id: action.payload,
-          error: new Error(
-            "Unable to decode ServiceId to ServiceId"
-          )
+          error: new Error("Unable to decode ServiceId to ServiceId")
         })
       );
       return;

@@ -16,7 +16,7 @@ import { handleResponse } from "../utils/responseHandling";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 import { communicationClientManager } from "../../../api/CommunicationClientManager";
 import { apiUrlPrefix } from "../../../config";
-import { getKeyInfo } from '../../lollipop/saga';
+import { getKeyInfo } from "../../lollipop/saga";
 
 export function* handleLoadPreviousPageMessages(
   action: ActionType<typeof loadPreviousPageMessagesAction.request>

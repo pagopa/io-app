@@ -200,7 +200,11 @@ describe("initializeApplicationSaga", () => {
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
-      .call(checkSession, mockSessionManagerClient.getSessionState, formatRequestedTokenString())
+      .call(
+        checkSession,
+        mockSessionManagerClient.getSessionState,
+        formatRequestedTokenString()
+      )
       .next(401)
       .select(isFastLoginEnabledSelector)
       .next(false) // FastLogin FF
@@ -249,7 +253,11 @@ describe("initializeApplicationSaga", () => {
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
-      .call(checkSession, mockSessionManagerClient.getSessionState, formatRequestedTokenString())
+      .call(
+        checkSession,
+        mockSessionManagerClient.getSessionState,
+        formatRequestedTokenString()
+      )
       .next(401)
       .next(true) // FastLogin FF
       .put(

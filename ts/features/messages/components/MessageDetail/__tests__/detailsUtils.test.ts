@@ -137,7 +137,9 @@ describe("detailsUtils", () => {
         ],
         [
           remoteError<MessagePaymentError>(
-            toSpecificMessagePaymentError(PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO)
+            toSpecificMessagePaymentError(
+              PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO
+            )
           ),
           false
         ]

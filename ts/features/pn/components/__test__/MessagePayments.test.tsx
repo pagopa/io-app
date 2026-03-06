@@ -94,7 +94,9 @@ describe("MessagePayments", () => {
                   )
                 ),
                 [paymentIds[6]]: remoteError(
-                  toSpecificMessagePaymentError(PaymentFaultV2Enum.GENERIC_ERROR)
+                  toSpecificMessagePaymentError(
+                    PaymentFaultV2Enum.GENERIC_ERROR
+                  )
                 )
               }
             }
@@ -184,7 +186,9 @@ describe("MessagePayments", () => {
                   )
                 ),
                 [paymentIds[6]]: remoteError(
-                  toSpecificMessagePaymentError(PaymentFaultV2Enum.GENERIC_ERROR)
+                  toSpecificMessagePaymentError(
+                    PaymentFaultV2Enum.GENERIC_ERROR
+                  )
                 )
               }
             }
@@ -468,7 +472,9 @@ describe("MessagePayments", () => {
                   )
                 ),
                 [paymentIds[6]]: remoteError(
-                  toSpecificMessagePaymentError(PaymentFaultV2Enum.GENERIC_ERROR)
+                  toSpecificMessagePaymentError(
+                    PaymentFaultV2Enum.GENERIC_ERROR
+                  )
                 )
               }
             }
@@ -537,7 +543,9 @@ describe("MessagePayments", () => {
                   )
                 ),
                 [paymentIds[6]]: remoteError(
-                  toSpecificMessagePaymentError(PaymentFaultV2Enum.GENERIC_ERROR)
+                  toSpecificMessagePaymentError(
+                    PaymentFaultV2Enum.GENERIC_ERROR
+                  )
                 )
               }
             }

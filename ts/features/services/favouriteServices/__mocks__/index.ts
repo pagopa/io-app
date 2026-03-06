@@ -1,5 +1,8 @@
 import { merge } from "lodash";
-import { NonEmptyString, OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
+import {
+  NonEmptyString,
+  OrganizationFiscalCode
+} from "@pagopa/ts-commons/lib/strings";
 import { ServiceType } from "../types";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";

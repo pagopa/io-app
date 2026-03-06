@@ -19,7 +19,7 @@ import {
   newPushNotificationsToken,
   pushNotificationsTokenUploaded
 } from "../store/actions/installation";
-import { InstallationID } from '../../../../definitions/backend/communication/InstallationID';
+import { InstallationID } from "../../../../definitions/backend/communication/InstallationID";
 
 export const notificationsPlatform: PlatformEnum =
   Platform.select<PlatformEnum>({

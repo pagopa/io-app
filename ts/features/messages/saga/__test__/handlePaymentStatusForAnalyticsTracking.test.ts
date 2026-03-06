@@ -196,7 +196,9 @@ describe("handlePaymentStatusForAnalyticsTracking", () => {
         updatePaymentForMessage.failure({
           messageId,
           paymentId,
-          reason: toSpecificMessagePaymentError(PaymentFaultV2Enum.GENERIC_ERROR),
+          reason: toSpecificMessagePaymentError(
+            PaymentFaultV2Enum.GENERIC_ERROR
+          ),
           serviceId
         })
       );

@@ -19,9 +19,8 @@ const id = paymentValidInvalidAfterDueDate.id;
 jest.mock("../../../../api/CommunicationClientManager");
 
 const mockGetMessage = jest.fn();
-const mockCommunicationClientManager = communicationClientManager as jest.Mocked<
-  typeof communicationClientManager
->;
+const mockCommunicationClientManager =
+  communicationClientManager as jest.Mocked<typeof communicationClientManager>;
 
 beforeEach(() => {
   jest.clearAllMocks();

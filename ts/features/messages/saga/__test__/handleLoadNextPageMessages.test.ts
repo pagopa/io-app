@@ -17,9 +17,8 @@ import { communicationClientManager } from "../../../../api/CommunicationClientM
 jest.mock("../../../../api/CommunicationClientManager");
 
 const mockGetMessages = jest.fn();
-const mockCommunicationClientManager = communicationClientManager as jest.Mocked<
-  typeof communicationClientManager
->;
+const mockCommunicationClientManager =
+  communicationClientManager as jest.Mocked<typeof communicationClientManager>;
 
 beforeEach(() => {
   jest.clearAllMocks();

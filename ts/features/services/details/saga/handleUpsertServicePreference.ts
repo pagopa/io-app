@@ -111,9 +111,7 @@ export function* handleUpsertServicePreference(
         upsertServicePreference.failure({
           id: action.payload.id,
           ...getGenericError(
-            new Error(
-              "Unable to decode ServiceId to ServiceId"
-            )
+            new Error("Unable to decode ServiceId to ServiceId")
           )
         })
       );

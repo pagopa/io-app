@@ -1,5 +1,8 @@
 import * as E from "fp-ts/lib/Either";
-import { NonEmptyString, OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
+import {
+  NonEmptyString,
+  OrganizationFiscalCode
+} from "@pagopa/ts-commons/lib/strings";
 import { testSaga } from "redux-saga-test-plan";
 import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
 import { StandardServiceCategoryEnum } from "../../../../../../definitions/services/StandardServiceCategory";
