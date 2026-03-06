@@ -5931,7 +5931,7 @@
           "confirm": "Sì, rinuncia",
           "cancel": "Indietro"
         },
-        "restrictedMode": {
+        "l2_banner": {
           "title": "I tuoi documenti digitali appariranno qui",
           "description": "Al momento puoi aggiungere solo alcuni documenti, con funzionalità ridotte.",
           "cta": "Aggiungi documento"

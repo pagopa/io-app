@@ -28,12 +28,12 @@ import { ItwOnboardingModuleCredential } from "./ItwOnboardingModuleCredential";
 
 type Props = {
   credentialTypesToDisplay: Array<string>;
-  isRestrictedMode?: boolean;
+  isL2Credential?: boolean;
 };
 
 export const ItwOnboardingModuleCredentialsList = ({
   credentialTypesToDisplay,
-  isRestrictedMode
+  isL2Credential
 }: Props) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const navigation = useIONavigation();
@@ -44,9 +44,6 @@ export const ItwOnboardingModuleCredentialsList = ({
   const itwCredentialsTypes = useIOSelector(itwCredentialsTypesSelector);
   const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
   const isItWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const isItWalletActivationDisabled = useIOSelector(
-    itwIsActivationDisabledSelector
-  );
   const isL2WalletValid = useIOSelector(itwLifecycleIsValidSelector);
 
   const isCredentialIssuancePending =
@@ -73,17 +70,24 @@ export const ItwOnboardingModuleCredentialsList = ({
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL
           });
-        } else if (isRestrictedMode && isL2WalletValid) {
-          /**
-           * User has a whitelisted fiscal code but has requested a credential in restricted mode
-           * the user has DocIO enabled
-           */
-          sendSelectCredential();
-        } else if (
-          isL3Enabled &&
-          !isItWalletValid &&
-          !isItWalletActivationDisabled
-        ) {
+        } else if (isL2Credential && !isItWalletValid) {
+          if (isL2WalletValid) {
+            /**
+             * User has a whitelisted fiscal code but has requested a credential in restricted mode
+             * the user has DocIO enabled
+             */
+            sendSelectCredential();
+          } else {
+            /**
+             * User has a whitelisted fiscal code but has requested a credential in restricted mode
+             * the user has DocIO disabled
+             */
+            navigation.navigate(ITW_ROUTES.MAIN, {
+              screen: ITW_ROUTES.DISCOVERY.INFO,
+              params: { level: "l2-fallback", credentialType: type }
+            });
+          }
+        } else if (isL3Enabled && !isItWalletValid) {
           /**
            * User has a whitelisted fiscal code but has not yet obtained an IT Wallet.
            * If he requests an ITW credential, start the credential issuance flow with contextual PID issuance
@@ -104,9 +108,8 @@ export const ItwOnboardingModuleCredentialsList = ({
         navigation,
         isL3Enabled,
         isItWalletValid,
-        isItWalletActivationDisabled,
         isL2WalletValid,
-        isRestrictedMode
+        isL2Credential
       ]
     )
   );

@@ -6,7 +6,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwIsWalletEmptySelector } from "../../credentials/store/selectors";
 
-export const ItwRestrictedModeBanner = () => {
+export const ItwL2EngagementBanner = () => {
   const navigation = useIONavigation();
   const shouldRender = useIOSelector(itwIsWalletEmptySelector);
 
@@ -15,23 +15,20 @@ export const ItwRestrictedModeBanner = () => {
   }
 
   const handleOnPress = () => {
-    // TODO: redirect to onboarding L3 restricted mode once SIW-3947 is merged
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ONBOARDING
+      screen: ITW_ROUTES.L2_ONBOARDING
     });
   };
 
   return (
     <View style={{ marginHorizontal: -8 }}>
       <Banner
-        testID="itwWalletRestrictedModeBannerTestID"
-        title={I18n.t(
-          "features.itWallet.engagementBanner.restrictedMode.title"
-        )}
+        testID="itwWalletL2BannerTestID"
+        title={I18n.t("features.itWallet.engagementBanner.l2_banner.title")}
         content={I18n.t(
-          "features.itWallet.engagementBanner.restrictedMode.description"
+          "features.itWallet.engagementBanner.l2_banner.description"
         )}
-        action={I18n.t("features.itWallet.engagementBanner.restrictedMode.cta")}
+        action={I18n.t("features.itWallet.engagementBanner.l2_banner.cta")}
         color="neutral"
         onPress={handleOnPress}
         pictogramName="cardAdd"

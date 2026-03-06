@@ -1,6 +1,7 @@
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../store/hooks.ts";
-import { isRestrictedCredential } from "../../common/utils/itwCredentialUtils.ts";
+import { itwIsActivationDisabledSelector } from "../../common/store/selectors/preferences.ts";
+import { isL2Credential } from "../../common/utils/itwCredentialUtils.ts";
 import { itwHasNfcFeatureSelector } from "../../identification/common/store/selectors/index.ts";
 import { EidIssuanceLevel } from "../../machine/eid/context.ts";
 import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
@@ -28,13 +29,16 @@ export const ItwDiscoveryInfoScreen = ({
   route
 }: ItwDiscoveryInfoScreenProps) => {
   const { level = "l2", credentialType } = route.params ?? {};
+  const isItWalletActivationDisabled = useIOSelector(
+    itwIsActivationDisabledSelector
+  );
   const hasNfcFeature = useIOSelector(itwHasNfcFeatureSelector);
   const canContinueWithDocIO = credentialType
-    ? isRestrictedCredential(credentialType)
+    ? isL2Credential(credentialType)
     : false;
 
   if (level === "l3") {
-    if (!hasNfcFeature) {
+    if (isItWalletActivationDisabled || !hasNfcFeature) {
       if (canContinueWithDocIO) {
         return (
           <ItwRestrictedModeFallbackComponent credentialType={credentialType} />

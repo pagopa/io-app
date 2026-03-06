@@ -34,6 +34,7 @@ export const newCredentials = [
 ] as const;
 
 export type NewCredential = (typeof newCredentials)[number];
+export type L2Credential = (typeof l2Credentials)[number];
 
 // Credentials that will be available in the future
 export const upcomingCredentials = [] as ReadonlyArray<string>;
@@ -44,11 +45,8 @@ export const isUpcomingCredential = (type: string): boolean =>
 export const isNewCredential = (type: string): type is NewCredential =>
   newCredentials.includes(type as NewCredential);
 
-// TODO: change to restrictedCredentials once SIW-3947 is merged and closed
-export const isRestrictedCredential = (
-  type: string
-): type is (typeof availableCredentials)[number] =>
-  availableCredentials.includes(type as (typeof availableCredentials)[number]);
+export const isL2Credential = (type: string): type is L2Credential =>
+  l2Credentials.includes(type as L2Credential);
 
 export const itwGetCredentialNameByCredentialType = (
   isItwCredential: boolean
