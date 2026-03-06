@@ -3,7 +3,7 @@ import { ActionType } from "typesafe-actions";
 import { convertUnknownToError } from "../../../utils/errors";
 import { loadMessageById } from "../store/actions";
 import { toUIMessage } from "../store/reducers/transformers";
-import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/communication/CreatedMessageWithContentAndAttachments";
 import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../types/utils";
 import { errorToReason, unknownToReason } from "../utils";

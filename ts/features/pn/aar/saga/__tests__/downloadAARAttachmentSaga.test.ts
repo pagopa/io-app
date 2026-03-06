@@ -1,8 +1,8 @@
 import * as E from "fp-ts/lib/Either";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { testSaga } from "redux-saga-test-plan";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
+import { ServiceId } from "../../../../../../definitions/backend/communication/ServiceId";
+import { ThirdPartyAttachment } from "../../../../../../definitions/backend/communication/ThirdPartyAttachment";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { KeyInfo } from "../../../../lollipop/utils/crypto";

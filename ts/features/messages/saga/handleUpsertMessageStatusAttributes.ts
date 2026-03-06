@@ -8,11 +8,10 @@ import {
 } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import I18n from "i18next";
-import { MessageStatusArchivingChange } from "../../../../definitions/backend/MessageStatusArchivingChange";
-import { MessageStatusBulkChange } from "../../../../definitions/backend/MessageStatusBulkChange";
-import { MessageStatusChange } from "../../../../definitions/backend/MessageStatusChange";
-import { MessageStatusReadingChange } from "../../../../definitions/backend/MessageStatusReadingChange";
-import { CommunicationClient } from "../../../api/CommunicationClientManager";
+import { MessageStatusArchivingChange } from "../../../../definitions/backend/communication/MessageStatusArchivingChange";
+import { MessageStatusBulkChange } from "../../../../definitions/backend/communication/MessageStatusBulkChange";
+import { MessageStatusChange } from "../../../../definitions/backend/communication/MessageStatusChange";
+import { MessageStatusReadingChange } from "../../../../definitions/backend/communication/MessageStatusReadingChange";
 import {
   upsertMessageStatusAttributes,
   UpsertMessageStatusAttributesPayload
@@ -38,7 +37,7 @@ import { nextQueuedMessageDataUncachedSelector } from "../store/reducers/archivi
 import { paginatedMessageFromIdForCategorySelector } from "../store/reducers/allPaginated";
 import { MessageListCategory } from "../types/messageListCategory";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
-import { communicationClientManager } from "../../../api/CommunicationClientManager";
+import { communicationClientManager, CommunicationClient } from "../../../api/CommunicationClientManager";
 import { apiUrlPrefix } from "../../../config";
 
 /**

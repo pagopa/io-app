@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
-import { ServiceId } from "../../../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../../../definitions/backend/communication/ServiceId";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";

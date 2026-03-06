@@ -1,6 +1,6 @@
 import { put, call, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { PaginatedPublicMessagesCollection } from "../../../../definitions/backend/PaginatedPublicMessagesCollection";
+import { PaginatedPublicMessagesCollection } from "../../../../definitions/backend/communication/PaginatedPublicMessagesCollection";
 import {
   loadNextPageMessages,
   loadNextPageMessages as loadNextPageMessagesAction

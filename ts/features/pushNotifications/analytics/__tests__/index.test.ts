@@ -23,8 +23,8 @@ import {
   trackSystemNotificationPermissionScreenOutcome,
   trackSystemNotificationPermissionScreenShown
 } from "..";
-import { PushNotificationsContentTypeEnum } from "../../../../../definitions/backend/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../../../definitions/backend/ReminderStatus";
+import { PushNotificationsContentTypeEnum } from "../../../../../definitions/backend/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "../../../../../definitions/backend/identity/ReminderStatus";
 import * as Mixpanel from "../../../../mixpanel";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";

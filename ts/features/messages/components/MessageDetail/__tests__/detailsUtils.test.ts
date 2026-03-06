@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { PaymentInfoResponse } from "../../../../../../definitions/backend/PaymentInfoResponse";
-import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { PaymentInfoResponse } from "../../../../../../definitions/backend/communication/PaymentInfoResponse";
+import { PaymentFaultV2Enum } from "../../../../../../definitions/backend/communication/PaymentFaultV2";
+import { ServiceId } from "../../../../../../definitions/backend/communication/ServiceId";
 import {
   isError,
   remoteError,
@@ -137,7 +137,7 @@ describe("detailsUtils", () => {
         ],
         [
           remoteError<MessagePaymentError>(
-            toSpecificMessagePaymentError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
+            toSpecificMessagePaymentError(PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO)
           ),
           false
         ]

@@ -4,8 +4,8 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { PathTraversalSafePathParam } from "../../../../../definitions/backend/PathTraversalSafePathParam";
-import { ServicePreference } from "../../../../../definitions/backend/ServicePreference";
+import { ServiceId } from "../../../../../definitions/backend/communication/ServiceId";
+import { ServicePreference } from "../../../../../definitions/backend/identity/ServicePreference";
 import { IdentityClient } from "../../../../api/IdentityClientManager";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
@@ -106,13 +106,13 @@ export function* handleUpsertServicePreference(
   );
 
   try {
-    if (!PathTraversalSafePathParam.is(action.payload.id)) {
+    if (!ServiceId.is(action.payload.id)) {
       yield* put(
         upsertServicePreference.failure({
           id: action.payload.id,
           ...getGenericError(
             new Error(
-              "Unable to decode ServiceId to PathTraversalSafePathParam"
+              "Unable to decode ServiceId to ServiceId"
             )
           )
         })

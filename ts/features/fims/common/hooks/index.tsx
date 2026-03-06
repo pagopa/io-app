@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo } from "react";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/backend/communication/ServiceId";
 import {
   useIODispatch,
   useIOSelector,

@@ -15,11 +15,11 @@ import {
   isProfileFirstOnBoarding,
   hasProfileEmail
 } from "../utils/guards";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/ServicesPreferencesMode";
+import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/identity/ServicesPreferencesMode";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { ReminderStatusEnum } from "../../../../../../definitions/backend/ReminderStatus";
+import { ReminderStatusEnum } from "../../../../../../definitions/backend/identity/ReminderStatus";
 import { ProfileError } from "../types";
-import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/backend/PushNotificationsContentType";
+import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/backend/identity/PushNotificationsContentType";
 
 describe("email profile selector", () => {
   const potProfile: ProfileState = pot.some(mockedProfile);

@@ -3,7 +3,7 @@ import { Channel, channel } from "redux-saga";
 import { testSaga } from "redux-saga-test-plan";
 import { fork } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
+import { PaymentFaultV2Enum } from "../../../../../definitions/backend/communication/PaymentFaultV2";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { communicationClientManager } from "../../../../api/CommunicationClientManager";
 import * as MIXPANEL from "../../../../mixpanel";
@@ -140,9 +140,9 @@ describe("handlePaymentUpdateRequests", () => {
         paymentId,
         serviceId
       });
-      const error = Error(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO);
+      const error = Error(PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO);
       const paymentError = toSpecificMessagePaymentError(
-        Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+        PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO
       );
 
       testSaga(testable!.paymentUpdateRequestWorker, mockChannel)
@@ -216,12 +216,12 @@ describe("handlePaymentUpdateRequests", () => {
               E.right({
                 status: statusCode,
                 value: {
-                  faultCodeDetail: Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+                  faultCodeDetail: PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO
                 }
               })
             );
         });
-        expect(output).toEqual(Error(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO));
+        expect(output).toEqual(Error(PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO));
       })
     );
     it(`should return an error if API result is 500`, () => {
@@ -346,20 +346,20 @@ describe("handlePaymentUpdateRequests", () => {
       const output = testable!.unknownErrorToPaymentError("aborted");
       expect(output).toEqual(toTimeoutMessagePaymentError());
     });
-    it("should return a specifc error for Detail_v2Enum code Error", () => {
+    it("should return a specifc error for PaymentFaultV2Enum code Error", () => {
       const output = testable!.unknownErrorToPaymentError(
-        Error(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
+        Error(PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO)
       );
       expect(output).toEqual(
-        toSpecificMessagePaymentError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
+        toSpecificMessagePaymentError(PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO)
       );
     });
-    it("should return a specifc error for Detail_v2Enum code", () => {
+    it("should return a specifc error for PaymentFaultV2Enum code", () => {
       const output = testable!.unknownErrorToPaymentError(
-        Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+        PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO
       );
       expect(output).toEqual(
-        toSpecificMessagePaymentError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
+        toSpecificMessagePaymentError(PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO)
       );
     });
     it("should return a generic error for a generic error", () => {
@@ -419,7 +419,7 @@ describe("handlePaymentUpdateRequests", () => {
         .mockImplementation((_event, _properties) => undefined);
 
       testable!.trackPaymentErrorIfNeeded(
-        toSpecificMessagePaymentError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO)
+        toSpecificMessagePaymentError(PaymentFaultV2Enum.PPT_PAGAMENTO_DUPLICATO)
       );
 
       expect(spyOnMixpanelTrack.mock.calls.length).toBe(0);

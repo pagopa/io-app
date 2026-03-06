@@ -7,10 +7,10 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import { MessagePaymentBottomSheet } from "../MessagePaymentBottomSheet";
 import { GlobalState } from "../../../../store/reducers/types";
 import { remoteError, remoteReady } from "../../../../common/model/RemoteValue";
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { PaymentFaultV2Enum } from "../../../../../definitions/backend/communication/PaymentFaultV2";
+import { ServiceId } from "../../../../../definitions/backend/communication/ServiceId";
 import { toSpecificMessagePaymentError } from "../../../messages/types/paymentErrors";
-import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
+import { PaymentInfoResponse } from "../../../../../definitions/backend/communication/PaymentInfoResponse";
 
 describe("MessagePaymentBottomSheet", () => {
   it("should match snapshot, no payments", () => {
@@ -49,31 +49,31 @@ describe("MessagePaymentBottomSheet", () => {
                 }),
                 [paymentIdList[1]]: remoteError(
                   toSpecificMessagePaymentError(
-                    Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+                    PaymentFaultV2Enum.PAA_PAGAMENTO_ANNULLATO
                   )
                 ),
                 [paymentIdList[2]]: remoteError(
                   toSpecificMessagePaymentError(
-                    Detail_v2Enum.PAA_PAGAMENTO_SCADUTO
+                    PaymentFaultV2Enum.PAA_PAGAMENTO_SCADUTO
                   )
                 ),
                 [paymentIdList[3]]: remoteError(
                   toSpecificMessagePaymentError(
-                    Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO
+                    PaymentFaultV2Enum.PAA_PAGAMENTO_IN_CORSO
                   )
                 ),
                 [paymentIdList[4]]: remoteError(
                   toSpecificMessagePaymentError(
-                    Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+                    PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO
                   )
                 ),
                 [paymentIdList[5]]: remoteError(
                   toSpecificMessagePaymentError(
-                    Detail_v2Enum.PAA_PAGAMENTO_SCONOSCIUTO
+                    PaymentFaultV2Enum.PAA_PAGAMENTO_SCONOSCIUTO
                   )
                 ),
                 [paymentIdList[6]]: remoteError(
-                  toSpecificMessagePaymentError(Detail_v2Enum.GENERIC_ERROR)
+                  toSpecificMessagePaymentError(PaymentFaultV2Enum.GENERIC_ERROR)
                 )
               }
             }

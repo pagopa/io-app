@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
-import { PaymentInfoResponse } from "../../../../../../definitions/backend/PaymentInfoResponse";
+import { PaymentFaultV2Enum } from "../../../../../../definitions/backend/communication/PaymentFaultV2";
+import { PaymentInfoResponse } from "../../../../../../definitions/backend/communication/PaymentInfoResponse";
 import {
   cancelQueuedPaymentUpdates,
   reloadAllMessages
@@ -38,7 +38,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import * as versionInfo from "../../../../../common/versionInfo/store/reducers/versionInfo";
 import * as profile from "../../../../settings/common/store/selectors";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../../definitions/backend/communication/ServiceId";
 import {
   toGenericMessagePaymentError,
   toSpecificMessagePaymentError,
@@ -127,7 +127,7 @@ describe("Messages payments reducer's tests", () => {
     });
     const paymentsState = paymentsReducer(undefined, requestAction);
     const reason = toSpecificMessagePaymentError(
-      Detail_v2Enum.CANALE_BUSTA_ERRATA
+      PaymentFaultV2Enum.CANALE_BUSTA_ERRATA
     );
     const failureAction = updatePaymentForMessage.failure({
       messageId,
@@ -169,7 +169,7 @@ describe("Messages payments reducer's tests", () => {
     );
     const paymentId3 = "p3";
     const thirdPaymentDetails = toSpecificMessagePaymentError(
-      Detail_v2Enum.CANALE_BUSTA_ERRATA
+      PaymentFaultV2Enum.CANALE_BUSTA_ERRATA
     );
     const failureAction = updatePaymentForMessage.failure({
       messageId,
@@ -217,7 +217,7 @@ describe("Messages payments reducer's tests", () => {
     );
     const messageId3 = "m3";
     const failedPaymentDetails = toSpecificMessagePaymentError(
-      Detail_v2Enum.CANALE_BUSTA_ERRATA
+      PaymentFaultV2Enum.CANALE_BUSTA_ERRATA
     );
     const failureAction = updatePaymentForMessage.failure({
       messageId: messageId3,
@@ -316,7 +316,7 @@ describe("Messages payments reducer's tests", () => {
             toGenericMessagePaymentError("An error")
           ),
           "01234567890012345678912345660": remoteError(
-            toSpecificMessagePaymentError(Detail_v2Enum.GENERIC_ERROR)
+            toSpecificMessagePaymentError(PaymentFaultV2Enum.GENERIC_ERROR)
           ),
           "01234567890012345678912345670": remoteError(
             toTimeoutMessagePaymentError()
@@ -333,7 +333,7 @@ describe("Messages payments reducer's tests", () => {
             toGenericMessagePaymentError("An error")
           ),
           "01234567890012345678912345660": remoteError(
-            toSpecificMessagePaymentError(Detail_v2Enum.GENERIC_ERROR)
+            toSpecificMessagePaymentError(PaymentFaultV2Enum.GENERIC_ERROR)
           ),
           "01234567890012345678912345670": remoteError(
             toTimeoutMessagePaymentError()
@@ -365,7 +365,7 @@ describe("Messages payments reducer's tests", () => {
             toGenericMessagePaymentError("An error")
           ),
           "01234567890012345678912345660": remoteError(
-            toSpecificMessagePaymentError(Detail_v2Enum.GENERIC_ERROR)
+            toSpecificMessagePaymentError(PaymentFaultV2Enum.GENERIC_ERROR)
           ),
           "01234567890012345678912345670": remoteError(
             toTimeoutMessagePaymentError()
@@ -380,7 +380,7 @@ describe("Messages payments reducer's tests", () => {
           ),
           "01234567890012345678912345650": undefined,
           "01234567890012345678912345660": remoteError(
-            toSpecificMessagePaymentError(Detail_v2Enum.GENERIC_ERROR)
+            toSpecificMessagePaymentError(PaymentFaultV2Enum.GENERIC_ERROR)
           ),
           "01234567890012345678912345670": undefined
         }
@@ -491,7 +491,7 @@ describe("PN Payments selectors' tests", () => {
   });
   it("paymentStatusForUISelector should return remoteError for a matching <message Id, payment Id> that is not payable anymore", () => {
     const reason = toSpecificMessagePaymentError(
-      Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      PaymentFaultV2Enum.PPT_PAGAMENTO_DUPLICATO
     );
     const startingState = appReducer(undefined, {} as Action);
     const updatePaymentForMessageAction = updatePaymentForMessage.failure({
@@ -830,7 +830,7 @@ describe("paymentsButtonStateSelector", () => {
               ...appState.entities.messages.payments.paymentStatusListById,
               "01HRSSD1R29DA2HJQHGYJP19T8": {
                 "01234567890012345678912345610": remoteError(
-                  Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+                  PaymentFaultV2Enum.PAA_PAGAMENTO_ANNULLATO
                 )
               } as unknown as MultiplePaymentState["paymentStatusListById"]
             }
@@ -1211,7 +1211,7 @@ describe("paymentStateSelector", () => {
           toGenericMessagePaymentError("An error")
         ),
         "01234567890012345678912345660": remoteError(
-          toSpecificMessagePaymentError(Detail_v2Enum.GENERIC_ERROR)
+          toSpecificMessagePaymentError(PaymentFaultV2Enum.GENERIC_ERROR)
         ),
         "01234567890012345678912345670": remoteError(
           toTimeoutMessagePaymentError()
@@ -1225,7 +1225,7 @@ describe("paymentStateSelector", () => {
         "01234567890012345678912345640": remoteReady({} as PaymentInfoResponse),
         "01234567890012345678912345650": undefined,
         "01234567890012345678912345660": remoteError(
-          toSpecificMessagePaymentError(Detail_v2Enum.GENERIC_ERROR)
+          toSpecificMessagePaymentError(PaymentFaultV2Enum.GENERIC_ERROR)
         ),
         "01234567890012345678912345670": undefined
       });
@@ -1252,37 +1252,37 @@ const errorCases = [
   [toGenericMessagePaymentError("An error"), { errorCount: 1 }],
   [toTimeoutMessagePaymentError(), { errorCount: 1 }],
   [
-    toSpecificMessagePaymentError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO),
+    toSpecificMessagePaymentError(PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO),
     { paidCount: 1 }
   ],
   [
-    toSpecificMessagePaymentError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO),
+    toSpecificMessagePaymentError(PaymentFaultV2Enum.PPT_PAGAMENTO_DUPLICATO),
     { paidCount: 1 }
   ],
   [
-    toSpecificMessagePaymentError(Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO),
+    toSpecificMessagePaymentError(PaymentFaultV2Enum.PAA_PAGAMENTO_ANNULLATO),
     { revokedCount: 1 }
   ],
   [
-    toSpecificMessagePaymentError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO),
+    toSpecificMessagePaymentError(PaymentFaultV2Enum.PAA_PAGAMENTO_SCADUTO),
     { expiredCount: 1 }
   ],
   [
-    toSpecificMessagePaymentError(Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO),
+    toSpecificMessagePaymentError(PaymentFaultV2Enum.PAA_PAGAMENTO_IN_CORSO),
     { ongoingCount: 1 }
   ],
   [
-    toSpecificMessagePaymentError(Detail_v2Enum.PPT_PAGAMENTO_IN_CORSO),
+    toSpecificMessagePaymentError(PaymentFaultV2Enum.PPT_PAGAMENTO_IN_CORSO),
     { ongoingCount: 1 }
   ],
   [
     toSpecificMessagePaymentError(
-      Detail_v2Enum.CANALE_CARRELLO_DUPLICATO_UNKNOWN
+      PaymentFaultV2Enum.CANALE_CARRELLO_DUPLICATO_UNKNOWN
     ),
     { errorCount: 1 }
   ],
   [
-    toSpecificMessagePaymentError(Detail_v2Enum.GENERIC_ERROR),
+    toSpecificMessagePaymentError(PaymentFaultV2Enum.GENERIC_ERROR),
     { errorCount: 1 }
   ]
 ] as const;
@@ -1475,41 +1475,41 @@ describe("paymentStatisticsForMessageUncachedSelector", () => {
                   [paymentId3]: remoteError(toTimeoutMessagePaymentError()),
                   [paymentId4]: remoteError(
                     toSpecificMessagePaymentError(
-                      Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+                      PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO
                     )
                   ),
                   [paymentId5]: remoteError(
                     toSpecificMessagePaymentError(
-                      Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+                      PaymentFaultV2Enum.PPT_PAGAMENTO_DUPLICATO
                     )
                   ),
                   [paymentId6]: remoteError(
                     toSpecificMessagePaymentError(
-                      Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+                      PaymentFaultV2Enum.PAA_PAGAMENTO_ANNULLATO
                     )
                   ),
                   [paymentId7]: remoteError(
                     toSpecificMessagePaymentError(
-                      Detail_v2Enum.PAA_PAGAMENTO_SCADUTO
+                      PaymentFaultV2Enum.PAA_PAGAMENTO_SCADUTO
                     )
                   ),
                   [paymentId8]: remoteError(
                     toSpecificMessagePaymentError(
-                      Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO
+                      PaymentFaultV2Enum.PAA_PAGAMENTO_IN_CORSO
                     )
                   ),
                   [paymentId9]: remoteError(
                     toSpecificMessagePaymentError(
-                      Detail_v2Enum.PPT_PAGAMENTO_IN_CORSO
+                      PaymentFaultV2Enum.PPT_PAGAMENTO_IN_CORSO
                     )
                   ),
                   [paymentId10]: remoteError(
                     toSpecificMessagePaymentError(
-                      Detail_v2Enum.CANALE_CARRELLO_DUPLICATO_UNKNOWN
+                      PaymentFaultV2Enum.CANALE_CARRELLO_DUPLICATO_UNKNOWN
                     )
                   ),
                   [paymentId11]: remoteError(
-                    toSpecificMessagePaymentError(Detail_v2Enum.GENERIC_ERROR)
+                    toSpecificMessagePaymentError(PaymentFaultV2Enum.GENERIC_ERROR)
                   ),
                   [paymentId12]: remoteStatus
                 }
@@ -1557,41 +1557,41 @@ describe("paymentStatisticsForMessageUncachedSelector", () => {
                   [paymentId3]: remoteError(toTimeoutMessagePaymentError()),
                   [paymentId4]: remoteError(
                     toSpecificMessagePaymentError(
-                      Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+                      PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO
                     )
                   ),
                   [paymentId5]: remoteError(
                     toSpecificMessagePaymentError(
-                      Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+                      PaymentFaultV2Enum.PPT_PAGAMENTO_DUPLICATO
                     )
                   ),
                   [paymentId6]: remoteError(
                     toSpecificMessagePaymentError(
-                      Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+                      PaymentFaultV2Enum.PAA_PAGAMENTO_ANNULLATO
                     )
                   ),
                   [paymentId7]: remoteError(
                     toSpecificMessagePaymentError(
-                      Detail_v2Enum.PAA_PAGAMENTO_SCADUTO
+                      PaymentFaultV2Enum.PAA_PAGAMENTO_SCADUTO
                     )
                   ),
                   [paymentId8]: remoteError(
                     toSpecificMessagePaymentError(
-                      Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO
+                      PaymentFaultV2Enum.PAA_PAGAMENTO_IN_CORSO
                     )
                   ),
                   [paymentId9]: remoteError(
                     toSpecificMessagePaymentError(
-                      Detail_v2Enum.PPT_PAGAMENTO_IN_CORSO
+                      PaymentFaultV2Enum.PPT_PAGAMENTO_IN_CORSO
                     )
                   ),
                   [paymentId10]: remoteError(
                     toSpecificMessagePaymentError(
-                      Detail_v2Enum.CANALE_CARRELLO_DUPLICATO_UNKNOWN
+                      PaymentFaultV2Enum.CANALE_CARRELLO_DUPLICATO_UNKNOWN
                     )
                   ),
                   [paymentId11]: remoteError(
-                    toSpecificMessagePaymentError(Detail_v2Enum.GENERIC_ERROR)
+                    toSpecificMessagePaymentError(PaymentFaultV2Enum.GENERIC_ERROR)
                   ),
                   [paymentId12]: input
                 }

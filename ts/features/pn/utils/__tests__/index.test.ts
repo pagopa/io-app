@@ -13,7 +13,7 @@ import {
 } from "..";
 import { GlobalState } from "../../../../store/reducers/types";
 import { CTAS } from "../../../../types/LocalizedCTAs";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/backend/communication/ServiceId";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import { PNMessage } from "../../store/types/types";
 import { SendOpeningSource } from "../../../pushNotifications/analytics";

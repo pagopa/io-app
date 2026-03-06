@@ -6,7 +6,7 @@ import {
   servicePreferencePotByIdSelector,
   servicePreferenceResponseSuccessByIdSelector
 } from "..";
-import { ServiceId } from "../../../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../../../definitions/backend/communication/ServiceId";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { NetworkError, getNetworkError } from "../../../../../../utils/errors";

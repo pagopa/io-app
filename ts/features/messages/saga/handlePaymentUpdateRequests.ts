@@ -12,7 +12,7 @@ import {
   take
 } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
-import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
+import { PaymentFaultV2Enum } from "../../../../definitions/backend/communication/PaymentFaultV2";
 import { communicationClientManager } from "../../../api/CommunicationClientManager";
 import { apiUrlPrefix } from "../../../config";
 import { Action } from "../../../store/actions/types";
@@ -167,8 +167,8 @@ const unknownErrorToPaymentError = (e: unknown): MessagePaymentError => {
   if (lowerCaseReason === "max-retries" || lowerCaseReason === "aborted") {
     return toTimeoutMessagePaymentError();
   }
-  if (reason in Detail_v2Enum) {
-    return toSpecificMessagePaymentError(reason as Detail_v2Enum);
+  if (reason in PaymentFaultV2Enum) {
+    return toSpecificMessagePaymentError(reason as PaymentFaultV2Enum);
   }
   return toGenericMessagePaymentError(reason);
 };
