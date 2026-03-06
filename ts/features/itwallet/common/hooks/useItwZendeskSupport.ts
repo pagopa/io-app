@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { useRoute } from "@react-navigation/native";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
@@ -29,8 +30,6 @@ export type ItwZendeskSupportParams = {
   errorCode?: string;
   /** When provided, appended to the Zendesk ticket log. */
   logData?: string;
-  /** The name of the screen initiating the request. Defaults to "n/a". */
-  startingRoute?: string;
 };
 
 /**
@@ -44,14 +43,10 @@ export const useItwZendeskSupport = () => {
   const dispatch = useIODispatch();
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
+  const { name: startingRoute } = useRoute();
 
   const startItwZendeskSupport = useCallback(
-    ({
-      subcategory,
-      errorCode,
-      logData,
-      startingRoute = "n/a"
-    }: ItwZendeskSupportParams) => {
+    ({ subcategory, errorCode, logData }: ItwZendeskSupportParams) => {
       if (choosenTool !== ToolEnum.zendesk) {
         return;
       }
@@ -79,7 +74,7 @@ export const useItwZendeskSupport = () => {
       );
       dispatch(zendeskSelectedCategory(zendeskItWalletCategory));
     },
-    [choosenTool, dispatch]
+    [choosenTool, dispatch, startingRoute]
   );
 
   return { startItwZendeskSupport };

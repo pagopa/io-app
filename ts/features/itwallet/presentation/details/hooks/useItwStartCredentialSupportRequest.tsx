@@ -1,5 +1,4 @@
 import { useCallback } from "react";
-import { useRoute } from "@react-navigation/native";
 import { trackWalletCredentialSupport } from "../analytics";
 import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
@@ -23,7 +22,6 @@ export const useItwStartCredentialSupportRequest = (
   _faqCategories: Array<FAQsCategoriesType> = []
 ) => {
   const { startItwZendeskSupport } = useItwZendeskSupport();
-  const { name: currentScreenName } = useRoute();
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   return useCallback(() => {
@@ -40,13 +38,11 @@ export const useItwStartCredentialSupportRequest = (
     startItwZendeskSupport({
       subcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
       errorCode,
-      logData: errorCode,
-      startingRoute: currentScreenName
+      logData: errorCode
     });
   }, [
     credential.credentialType,
     credential.storedStatusAssertion,
-    currentScreenName,
     isItwL3,
     startItwZendeskSupport
   ]);

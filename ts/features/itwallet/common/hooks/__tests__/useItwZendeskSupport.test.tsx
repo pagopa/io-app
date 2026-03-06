@@ -11,6 +11,11 @@ import {
   useItwZendeskSupport
 } from "../useItwZendeskSupport";
 
+jest.mock("@react-navigation/native", () => ({
+  ...jest.requireActual("@react-navigation/native"),
+  useRoute: () => ({ name: "MOCK_SCREEN" })
+}));
+
 jest.mock("../../../../../utils/supportAssistance", () => ({
   ...jest.requireActual("../../../../../utils/supportAssistance"),
   assistanceToolRemoteConfig: jest.fn(),
@@ -66,21 +71,11 @@ describe("useItwZendeskSupport", () => {
     expect(action?.payload?.assistanceType?.itWallet).toBe(true);
   });
 
-  it("passes startingRoute to zendeskSupportStart", () => {
-    const actions = renderAndCall({
-      ...baseParams,
-      startingRoute: "MY_SCREEN"
-    });
-
-    const action = actions.find(a => a.type === "ZENDESK_SUPPORT_START");
-    expect(action?.payload?.startingRoute).toBe("MY_SCREEN");
-  });
-
-  it("defaults startingRoute to n/a when not provided", () => {
+  it("uses the current route name as startingRoute", () => {
     const actions = renderAndCall(baseParams);
 
     const action = actions.find(a => a.type === "ZENDESK_SUPPORT_START");
-    expect(action?.payload?.startingRoute).toBe("n/a");
+    expect(action?.payload?.startingRoute).toBe("MOCK_SCREEN");
   });
 
   it("dispatches zendeskSelectedCategory with it_wallet category", () => {
