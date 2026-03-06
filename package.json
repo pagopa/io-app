@@ -277,7 +277,7 @@
     "react-native-webview@^13.13.5": "patch:react-native-webview@npm%3A13.13.5#./.yarn/patches/react-native-webview-npm-13.13.5-802657184f.patch",
     "react-native-pdf@6.7.7": "patch:react-native-pdf@npm%3A6.7.7#./.yarn/patches/react-native-pdf-npm-6.7.7-7aa1e3a631.patch",
     "react-native-webview@^13.16.0": "patch:react-native-webview@npm%3A13.16.0#./.yarn/patches/react-native-webview-npm-13.16.0-82f4e13202.patch",
-    "react-native-screenshot-prevent@^1.2.1": "patch:react-native-screenshot-prevent@npm%3A1.2.1#./.yarn/patches/react-native-screenshot-prevent-npm-1.2.1-d115315590.patch",
+    "react-native-screenshot-prevent@^1.2.1": "patch:react-native-screenshot-prevent@patch%3Areact-native-screenshot-prevent@npm%253A1.2.1%23./.yarn/patches/react-native-screenshot-prevent-npm-1.2.1-d115315590.patch%3A%3Aversion=1.2.1&hash=7682fa&locator=io%2540workspace%253A.#./.yarn/patches/react-native-screenshot-prevent-patch-24552b42ab.patch",
     "react-native-pdf@7.0.3": "patch:react-native-pdf@npm%3A7.0.3#./.yarn/patches/react-native-pdf-npm-7.0.3-6313469aca.patch",
     "react-native@0.81.5": "patch:react-native@npm%3A0.81.5#./.yarn/patches/react-native-npm-0.81.5-d8232ef145.patch"
   },
