@@ -1,5 +1,4 @@
-/* eslint-disable functional/immutable-data */
-import {
+ import {
   createClient,
   Client
 } from "../../definitions/backend/identity/client";
@@ -19,7 +18,7 @@ class IdentityClientManager extends ApiClientManager<IdentityClient> {
     return createClient({
       baseUrl,
       fetchApi: defaultRetryingFetch(),
-      withDefaults: op => params => op({ Bearer: token, ...params })
+      withDefaults: op => params => op({ Bearer: `Bearer ${token}`, ...params })
     });
   }
 }

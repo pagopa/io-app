@@ -1,5 +1,4 @@
-/* eslint-disable functional/immutable-data */
-import {
+ import {
   createClient,
   Client
 } from "../../definitions/session_manager/client";
@@ -19,7 +18,7 @@ class SessionManagerClientManager extends ApiClientManager<SessionManagerClient>
     return createClient({
       baseUrl,
       fetchApi: defaultRetryingFetch(),
-      withDefaults: op => params => op({ Bearer: token, ...params })
+      withDefaults: op => params => op({ Bearer: `Bearer ${token}`, ...params })
     });
   }
 }
