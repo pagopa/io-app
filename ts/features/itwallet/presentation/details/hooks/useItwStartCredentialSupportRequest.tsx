@@ -1,25 +1,22 @@
 import { useCallback } from "react";
-import { trackWalletCredentialSupport } from "../analytics";
-import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
-import { FAQsCategoriesType } from "../../../../../utils/faq.ts";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
 import {
   useItwZendeskSupport,
   ZendeskSubcategoryValue
 } from "../../../common/hooks/useItwZendeskSupport";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { trackWalletCredentialSupport } from "../analytics";
 
 /**
  *
  * @param {StoredCredential} credential A valid wallet credential
- * @param {Array<FAQsCategoriesType>} _faqCategories Unused – kept for backward-compatible API
  * @returns A utility function which tracks and starts the IT Wallet support request with the
  *          correct Zendesk metadata (category, subcategory, error code when available).
  */
 export const useItwStartCredentialSupportRequest = (
-  credential: StoredCredential,
-  _faqCategories: Array<FAQsCategoriesType> = []
+  credential: StoredCredential
 ) => {
   const { startItwZendeskSupport } = useItwZendeskSupport();
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
@@ -37,8 +34,7 @@ export const useItwStartCredentialSupportRequest = (
 
     startItwZendeskSupport({
       subcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
-      errorCode,
-      logData: errorCode
+      errorCode
     });
   }, [
     credential.credentialType,
