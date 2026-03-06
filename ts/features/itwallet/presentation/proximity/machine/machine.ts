@@ -1,5 +1,4 @@
 import { assign, fromCallback, fromPromise, setup, stateIn } from "xstate";
-import { assert } from "../../../../../utils/assert";
 import {
   CheckPermissionsInput,
   CloseActorOutput,
@@ -89,8 +88,10 @@ export const itwProximityMachine = setup({
         "The machine is in idle, ready to start the proximity presentation flow",
       on: {
         start: {
-          actions: assign(({ event }) => ({
+          actions: assign(({ event, context }) => ({
             ...InitialContext,
+            walletInstanceAttestation: context.walletInstanceAttestation,
+            credentials: context.credentials,
             credentialType: event.credentialType
           })),
           target: "Permissions"
@@ -331,11 +332,12 @@ export const itwProximityMachine = setup({
       invoke: {
         id: "proximityCommunicationLogic",
         src: "proximityCommunicationLogic",
-        input: ({ context }) => {
-          assert(context.credentials, "Missing credentials");
-          return {
-            credentials: context.credentials
-          };
+        input: ({ context }) => ({
+          credentials: context.credentials
+        }),
+        onError: {
+          actions: "setFailure",
+          target: "#itwProximityMachine.Failure"
         }
       },
       on: {
@@ -410,20 +412,11 @@ export const itwProximityMachine = setup({
           invoke: {
             id: "sendDocuments",
             src: "sendDocuments",
-            input: ({ context }) => {
-              assert(
-                context.walletInstanceAttestation,
-                "Missing walletInstanceAttestation"
-              );
-              assert(context.credentials, "Missing credentials");
-              assert(context.verifierRequest, "Missing verifierRequest");
-
-              return {
-                walletInstanceAttestation: context.walletInstanceAttestation,
-                credentials: context.credentials,
-                verifierRequest: context.verifierRequest
-              };
-            },
+            input: ({ context }) => ({
+              walletInstanceAttestation: context.walletInstanceAttestation,
+              credentials: context.credentials,
+              verifierRequest: context.verifierRequest
+            }),
             onDone: {
               // There's not evidence of the verifier responding to this request.
               // We are waiting for the onDeviceDisconnected event.

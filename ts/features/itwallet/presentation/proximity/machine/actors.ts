@@ -59,15 +59,12 @@ export type SendErrorResponseActorOutput = Awaited<
 
 export type CloseActorOutput = Awaited<ReturnType<typeof ISO18013_5.close>>;
 
-export type ProximityCommunicationLogicInput = {
-  credentials: NonNullable<Context["credentials"]>;
-};
+export type ProximityCommunicationLogicInput = Pick<Context, "credentials">;
 
-export type SendDocumentsActorInput = {
-  walletInstanceAttestation: NonNullable<Context["walletInstanceAttestation"]>;
-  credentials: NonNullable<Context["credentials"]>;
-  verifierRequest: NonNullable<Context["verifierRequest"]>;
-};
+export type SendDocumentsActorInput = Pick<
+  Context,
+  "walletInstanceAttestation" | "credentials" | "verifierRequest"
+>;
 
 export type SendDocumentsActorOutput = Awaited<
   ReturnType<typeof ISO18013_5.sendResponse>
@@ -133,6 +130,13 @@ export const createProximityActorsImplementation = (env: Env) => {
     ProximityEvents,
     ProximityCommunicationLogicInput
   >(({ sendBack, input }) => {
+    const { credentials } = input;
+
+    assert(
+      credentials,
+      "Missing credentials for proximity communication logic"
+    );
+
     const handleDeviceConnecting = () => {
       sendBack({ type: "device-connecting" });
     };
@@ -165,7 +169,7 @@ export const createProximityActorsImplementation = (env: Env) => {
         // const credentials = itwCredentialsByTypeSelector(store.getState());
         const proximityDetails = getProximityDetails(
           parsedRequest.request,
-          input.credentials
+          credentials
         );
 
         sendBack({
@@ -209,6 +213,13 @@ export const createProximityActorsImplementation = (env: Env) => {
     SendDocumentsActorInput
   >(async ({ input }) => {
     const { verifierRequest, walletInstanceAttestation, credentials } = input;
+
+    assert(verifierRequest, "Missing verifier request");
+    assert(
+      walletInstanceAttestation,
+      "Missing wallet instance attestation for sending documents"
+    );
+    assert(credentials, "Missing credentials for sending documents");
 
     const wiaMdoc = walletInstanceAttestation[CredentialFormat.MDOC];
     assert(wiaMdoc, "Missing Wallet Attestation in MDOC format");
