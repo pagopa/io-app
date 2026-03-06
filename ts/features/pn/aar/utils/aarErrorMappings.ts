@@ -1,5 +1,12 @@
+import _ from "lodash";
 import { ComponentType } from "react";
+import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { isTestEnv } from "../../../../utils/environment";
+import {
+  trackSendAarMandateCieDataError,
+  trackSendAarMandateCieExpiredError,
+  trackSendAarMandateCieNotRelatedToDelegatorError
+} from "../analytics";
 import {
   CieExpiredComponent,
   GenericCieValidationErrorComponent,
@@ -7,12 +14,6 @@ import {
 } from "../components/errors/SendAarCieValidationErrorComponent";
 import { SendAarGenericErrorComponent } from "../components/errors/SendAARErrorComponent";
 
-export enum AarErrorStatesKind {
-  CIE_EXPIRED = "CIE_EXPIRED",
-  CIE_NOT_RELATED_TO_DELEGATOR = "CIE_NOT_RELATED_TO_DELEGATOR",
-  CIE_GENERIC = "CIE_GENERIC",
-  GENERIC = "GENERIC"
-}
 const cieErrors = {
   PN_MANDATE_BADREQUEST: "PN_MANDATE_BADREQUEST",
   PN_GENERIC_INVALIDPARAMETER: "PN_GENERIC_INVALIDPARAMETER",
@@ -28,36 +29,81 @@ const cieErrors = {
 const deliveryErrors = {
   PN_DELIVERY_MANDATENOTFOUND: "PN_DELIVERY_MANDATENOTFOUND"
 } as const;
-export const sendAarProblemJsonErrorCodes = {
+const sendAarProblemJsonErrorCodes = {
   ...cieErrors,
   ...deliveryErrors
-};
-export type SendAarErrorCodes = keyof typeof sendAarProblemJsonErrorCodes;
+} as const;
+type SendAarErrorCodes = keyof typeof sendAarProblemJsonErrorCodes;
 
-const aarProblemJsonComponentMap = {
-  [AarErrorStatesKind.CIE_EXPIRED]: CieExpiredComponent,
-  [AarErrorStatesKind.CIE_NOT_RELATED_TO_DELEGATOR]: UnrelatedCieComponent,
-  [AarErrorStatesKind.CIE_GENERIC]: GenericCieValidationErrorComponent,
-  [AarErrorStatesKind.GENERIC]: SendAarGenericErrorComponent
-} satisfies { [key in AarErrorStatesKind]: ComponentType };
+// -------------- BEHAVIOUR MAPPING LOGIC --------------
+const isCieErrorCode = (code?: string): code is keyof typeof cieErrors =>
+  code != null && code in cieErrors;
+
+export const getAarErrorBehaviour = (
+  problemJson?: AARProblemJson
+): AarErrorBehaviour => {
+  if (problemJson == null) {
+    return aarGenericBehaviour;
+  }
+  const { status, errors } = problemJson;
+  const errorCode = errors?.[0]?.code.toUpperCase();
+  const isCieError = isCieErrorCode(errorCode);
+
+  if (isCieError) {
+    // return either a specific or generic CIE error behaviour
+    return _.get(
+      specificBehavioursByStatus,
+      [status, errorCode],
+      cieGenericBehaviour
+    );
+  }
+
+  return aarGenericBehaviour;
+};
+
+type AarErrorBehaviour = {
+  track: (reason: string) => void;
+  Component: ComponentType;
+};
+
+const specificBehavioursByStatus: {
+  [status: number]: {
+    [errorCode in SendAarErrorCodes]?: AarErrorBehaviour;
+  };
+} = {
+  [422]: {
+    [sendAarProblemJsonErrorCodes.CIE_EXPIRED_ERROR]: {
+      track: trackSendAarMandateCieExpiredError,
+      Component: CieExpiredComponent
+    },
+    [sendAarProblemJsonErrorCodes.CIE_NOT_RELATED_TO_DELEGATOR_ERROR]: {
+      track: trackSendAarMandateCieNotRelatedToDelegatorError,
+      Component: UnrelatedCieComponent
+    }
+  }
+};
+
+const cieGenericBehaviour: AarErrorBehaviour = {
+  track: trackSendAarMandateCieDataError,
+  Component: GenericCieValidationErrorComponent
+};
+
+const aarGenericBehaviour: AarErrorBehaviour = {
+  track: () => undefined,
+  Component: SendAarGenericErrorComponent
+};
+
+// ---------------- HELPER FUNCTION FOR SPECIFIC ERROR TYPES ----------------
 
 export const isAarAttachmentTtlError = (
   error?: string
 ): error is typeof deliveryErrors.PN_DELIVERY_MANDATENOTFOUND =>
   error === deliveryErrors.PN_DELIVERY_MANDATENOTFOUND;
 
-export const getSendAarErrorComponent = (
-  maybeErrorKey?: AarErrorStatesKind
-): ComponentType => {
-  const errorKind =
-    maybeErrorKey != null && maybeErrorKey in AarErrorStatesKind
-      ? maybeErrorKey
-      : AarErrorStatesKind.GENERIC;
-  return aarProblemJsonComponentMap[errorKind];
-};
-
 export const testable = isTestEnv
   ? {
-      aarProblemJsonComponentMap
+      cieErrors,
+      sendAarProblemJsonErrorCodes,
+      specificBehavioursByStatus
     }
-  : {};
+  : undefined;

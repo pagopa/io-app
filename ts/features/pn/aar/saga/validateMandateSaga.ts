@@ -1,30 +1,22 @@
 import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { call, put, select } from "typed-redux-saga/macro";
-import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { unknownToReason } from "../../../messages/utils";
 import {
   aarProblemJsonAnalyticsReport,
-  trackSendAARFailure,
-  trackSendAarMandateCieDataError,
-  trackSendAarMandateCieExpiredError,
-  trackSendAarMandateCieNotRelatedToDelegatorError
+  trackSendAARFailure
 } from "../analytics";
 import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
-import {
-  AarErrorStatesKind,
-  sendAarProblemJsonErrorCodes
-} from "../utils/aarErrorMappings";
+import { getAarErrorBehaviour } from "../utils/aarErrorMappings";
 import {
   AARFlowState,
   SendAARFailurePhase,
   sendAARFlowStates
 } from "../utils/stateUtils";
-import { isTestEnv } from "../../../../utils/environment";
 
 const sendAARFailurePhase: SendAARFailurePhase = "Validate Mandate";
 
@@ -108,16 +100,11 @@ export function* validateMandateSaga(
           status,
           value
         )})`;
-        const maybeErrorKey = yield* call(
-          getAndTrackValidationErrorState,
-          value.errors,
-          status,
-          reason
-        );
+        const { track } = getAarErrorBehaviour(value);
+        track(reason);
         yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
         const errorState: AARFlowState = {
           type: sendAARFlowStates.ko,
-          specificErrorKey: maybeErrorKey,
           previousState: { ...action.payload },
           ...(value !== undefined && { error: value }),
           debugData: {
@@ -143,33 +130,3 @@ export function* validateMandateSaga(
     );
   }
 }
-
-const getAndTrackValidationErrorState = (
-  errors: AARProblemJson["errors"],
-  status: number,
-  reason: string
-) => {
-  const maybeErrorKey = errors?.[0].code.toUpperCase();
-  if (status !== 422 || maybeErrorKey == null) {
-    trackSendAarMandateCieDataError(reason);
-    return AarErrorStatesKind.CIE_GENERIC;
-  }
-
-  switch (maybeErrorKey) {
-    case sendAarProblemJsonErrorCodes.CIE_EXPIRED_ERROR:
-      trackSendAarMandateCieExpiredError();
-      return AarErrorStatesKind.CIE_EXPIRED;
-    case sendAarProblemJsonErrorCodes.CIE_NOT_RELATED_TO_DELEGATOR_ERROR:
-      trackSendAarMandateCieNotRelatedToDelegatorError();
-      return AarErrorStatesKind.CIE_NOT_RELATED_TO_DELEGATOR;
-    default:
-      trackSendAarMandateCieDataError(reason);
-      return AarErrorStatesKind.CIE_GENERIC;
-  }
-};
-
-export const testable = isTestEnv
-  ? {
-      getAndTrackValidationErrorState
-    }
-  : undefined;

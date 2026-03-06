@@ -10,7 +10,7 @@ import { SendAarGenericErrorComponent } from "../components/errors/SendAARErrorC
 import { SendAarNfcNotSupportedComponent } from "../components/errors/SendAarNfcNotSupportedComponent";
 import { SendAarNotAddresseeKoComponent } from "../components/errors/SendAarNotAddresseeKoComponent";
 import { currentAARFlowData } from "../store/selectors";
-import { getSendAarErrorComponent } from "../utils/aarErrorMappings";
+import { getAarErrorBehaviour } from "../utils/aarErrorMappings";
 import { sendAARFlowStates } from "../utils/stateUtils";
 
 export const SendAARErrorScreen = () => {
@@ -40,8 +40,8 @@ export const SendAARErrorScreen = () => {
       return <SendAarNfcNotSupportedComponent />;
     }
     case sendAARFlowStates.ko: {
-      const ErrorComponent = getSendAarErrorComponent(
-        flowData.specificErrorKey
+      const { Component: ErrorComponent } = getAarErrorBehaviour(
+        flowData.error
       );
       return <ErrorComponent />;
     }
