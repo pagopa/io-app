@@ -302,11 +302,18 @@
     }
   },
   "locales": {
+    "it": "italiano",
+    "en": "inglese",
+    "de": "tedesco",
+    "fr": "francese",
+    "sl": "sloveno"
+  },
+  "localesTranslated": {
     "it": "Italiano",
-    "en": "Inglese",
-    "de": "Tedesco",
-    "fr": "Francese",
-    "sl": "Sloveno"
+    "en": "English",
+    "de": "Deutsch",
+    "fr": "Français",
+    "sl": "Slovenščina"
   },
   "clipboard": {
     "copyIntoClipboard": "copia negli appunti",
@@ -315,8 +322,7 @@
     "copyFeedbackButton": "copiato"
   },
   "errors": {
-    "loginError": "C'è stato un errore in fase di login, ripetere la procedura.",
-    "profileUpdateError": "Si è verificato un errore durante l'aggiornamento del tuo profilo."
+    "loginError": "C'è stato un errore in fase di login, ripetere la procedura."
   },
   "permissionRationale": {
     "storage": {
@@ -733,7 +739,7 @@
         },
         "language": {
           "title": "Lingua",
-          "subtitle": "Scegli la lingua"
+          "subtitle": "Scegli la lingua per l’app e per i messaggi"
         },
         "preferred_calendar": {
           "title": "Calendario preferito",
@@ -741,18 +747,29 @@
         },
         "preferred_language": {
           "title": "Lingua preferita",
-          "subtitle": "In quale lingua vuoi usare l'applicazione?",
-          "headers": {
-            "services": "Servizi",
-            "app": "Applicazione"
+          "subtitle": "Queste impostazioni ti permettono di scegliere la lingua dell’app e quella dei messaggi che ricevi dagli enti.",
+          "sections": {
+            "messages": {
+              "title": "Nei messaggi",
+              "description": "Alcuni enti usano questa impostazione per inviarti messaggi nella lingua scelta."
+            },
+            "app": {
+              "title": "In app",
+              "description": "Scegli la lingua da usare su IO. Alcuni contenuti potrebbero essere disponibili solo in italiano."
+            }
           },
           "alert": {
-            "title": "Vuoi cambiare la lingua in",
-            "subtitle": "Dovrai riavviare l'applicazione per applicare il cambiamento"
+            "title": "Vuoi cambiare la lingua dell’app in {{lang}}?",
+            "subtitle": "Riavvia l’app per rendere effettive le modifiche"
           },
-          "toast": {
+          "toastApp": {
             "success": {
-              "title": "Hai cambiato lingua"
+              "title": "Fatto! Riavvia l’app per rendere effettive le modifiche"
+            }
+          },
+          "toastMessages": {
+            "success": {
+              "title": "Fatto!"
             }
           },
           "not_selected": "Non selezionato",

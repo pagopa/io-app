@@ -280,8 +280,7 @@
     "copyFeedbackButton": "copied"
   },
   "errors": {
-    "loginError": "There was an error in the login, repeat the procedure.",
-    "profileUpdateError": "An error occurred while updating your profile."
+    "loginError": "There was an error in the login, repeat the procedure."
   },
   "permissionRationale": {
     "storage": {
@@ -684,18 +683,26 @@
         },
         "preferred_language": {
           "title": "Favourite language",
-          "subtitle": "In which language do you want to use the application?",
-          "headers": {
-            "services": "Services",
-            "app": "Application"
+          "sections": {
+            "messages": {
+              "title": "Messages"
+            },
+            "app": {
+              "title": "Application"
+            }
           },
           "alert": {
-            "title": "Do you want to change the language to",
+            "title": "Do you want to change the language to {{lang}}?",
             "subtitle": "You'll need to restart the application to make this happen"
           },
-          "toast": {
+          "toastApp": {
             "success": {
-              "title": "You've switched the app language"
+              "title": "Done! Restart the app to apply the changes"
+            }
+          },
+          "toastMessages": {
+            "success": {
+              "title": "Done!"
             }
           },
           "not_selected": "Not selected",
