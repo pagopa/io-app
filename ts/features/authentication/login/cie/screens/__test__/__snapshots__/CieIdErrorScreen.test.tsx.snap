@@ -429,7 +429,7 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     [
                       {},
                       {
-                        "color": "#0E0F13",
+                        "color": undefined,
                         "fontFamily": "Titillio",
                         "fontSize": 16,
                         "fontStyle": "normal",
@@ -668,7 +668,7 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     [
                       {},
                       {
-                        "color": "#0E0F13",
+                        "color": undefined,
                         "fontFamily": "Titillio",
                         "fontSize": 16,
                         "fontStyle": "normal",
@@ -1132,7 +1132,7 @@ Inserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura
                     [
                       {},
                       {
-                        "color": "#0E0F13",
+                        "color": undefined,
                         "fontFamily": "Titillio",
                         "fontSize": 16,
                         "fontStyle": "normal",
@@ -1371,7 +1371,7 @@ Inserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura
                     [
                       {},
                       {
-                        "color": "#0E0F13",
+                        "color": undefined,
                         "fontFamily": "Titillio",
                         "fontSize": 16,
                         "fontStyle": "normal",
