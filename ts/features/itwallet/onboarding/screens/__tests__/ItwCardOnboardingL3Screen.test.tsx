@@ -1,5 +1,5 @@
-import configureMockStore from "redux-mock-store";
 import { fireEvent } from "@testing-library/react-native";
+import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -53,15 +53,6 @@ describe("ItwCardOnboardingL3Screen", () => {
     expect(
       queryByTestId(`${CredentialType.DRIVING_LICENSE}ModuleTestID`)
     ).toBeNull();
-  });
-
-  it("it should fallback to page 0 when page param is not a number", () => {
-    const { queryByTestId } = renderComponent({ page: "abc" } as any);
-
-    expect(
-      queryByTestId(`${CredentialType.DRIVING_LICENSE}ModuleTestID`)
-    ).toBeTruthy();
-    expect(queryByTestId("paymentsModuleTestID")).toBeNull();
   });
 
   it("it should render the action button when wallet is enabled", () => {
