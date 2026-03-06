@@ -19,6 +19,6 @@ export const createCredentialUpgradeActionsImplementation = (
     // Removes old credential using the credential type
     store.dispatch(itwCredentialsRemoveByType(credentialType));
     // Stores the new credentials
-    store.dispatch(itwCredentialsStore(credentials));
+    store.dispatch(itwCredentialsStore(credentials.map(c => c.metadata)));
   }
 });

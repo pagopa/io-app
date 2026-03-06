@@ -1,19 +1,33 @@
-import { ActionArgs } from "xstate";
+import { ActionArgs, assign } from "xstate";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { useIOStore } from "../../../../../store/hooks";
+import { serializeFailureReason } from "../../../common/utils/itwStoreUtils";
+import { itwCredentialsAllSelector } from "../../../credentials/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
+import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors";
 import {
   trackItwProximityQrCode,
   trackItwProximityQrCodeLoadingFailure
 } from "../analytics";
-import { serializeFailureReason } from "../../../common/utils/itwStoreUtils";
-import { assert } from "../../../../../utils/assert";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
 import { mapEventToFailure } from "./failure";
 
 export const createProximityActionsImplementation = (
-  navigation: ReturnType<typeof useIONavigation>
+  navigation: ReturnType<typeof useIONavigation>,
+  store: ReturnType<typeof useIOStore>
 ) => ({
+  onInit: assign<Context, ProximityEvents, unknown, ProximityEvents, any>(
+    () => {
+      const state = store.getState();
+
+      return {
+        walletInstanceAttestation: itwWalletInstanceAttestationSelector(state),
+        credentials: itwCredentialsAllSelector(state)
+      };
+    }
+  ),
+
   navigateToGrantPermissionsScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.PROXIMITY.DEVICE_PERMISSIONS
@@ -48,14 +62,8 @@ export const createProximityActionsImplementation = (
     });
   },
 
-  closeProximity: ({
-    context
-  }: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
-    assert(context.credentialType, "credentialType is required");
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
-      params: { credentialType: context.credentialType }
-    });
+  closeProximity: () => {
+    navigation.pop();
   },
 
   trackQrCodeGenerationOutcome: ({

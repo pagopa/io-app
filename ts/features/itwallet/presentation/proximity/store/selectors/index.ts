@@ -2,8 +2,8 @@ import { createSelector } from "reselect";
 import { makeSelectAllCredentials } from "../../../../credentials/store/selectors";
 import {
   CredentialFormat,
-  MdocSupportedCredentialConfiguration,
-  StoredCredential
+  CredentialMetadata,
+  MdocSupportedCredentialConfiguration
 } from "../../../../common/utils/itwTypesUtils";
 
 /**
@@ -26,8 +26,8 @@ const itwCredentialsAsMdocSelector = makeSelectAllCredentials(
  */
 export const itwCredentialsByTypeSelector = createSelector(
   itwCredentialsAsMdocSelector,
-  (credentials): Record<string, StoredCredential> =>
-    Object.values(credentials).reduce<Record<string, StoredCredential>>(
+  (credentials): Record<string, CredentialMetadata> =>
+    Object.values(credentials).reduce<Record<string, CredentialMetadata>>(
       (acc, credential) => {
         const { credentialId, issuerConf } = credential;
 

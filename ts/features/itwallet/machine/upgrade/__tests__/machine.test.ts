@@ -1,13 +1,12 @@
 import { createActor, fromPromise, waitFor } from "xstate";
 import { itwCredentialUpgradeMachine } from "../machine";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { UpgradeCredentialParams, UpgradeCredentialOutput } from "../actors";
 
 const makeCredential = (
-  overrides: Partial<StoredCredential> = {}
-): StoredCredential => ({
+  overrides: Partial<CredentialMetadata> = {}
+): CredentialMetadata => ({
   keyTag: "tag",
-  credential: "credential-data",
   format: "format",
   parsedCredential: {} as any,
   credentialType: "TYPE",
@@ -36,8 +35,6 @@ describe("itwCredentialUpgradeMachine", () => {
     });
     const actor = createActor(machine, {
       input: {
-        walletInstanceAttestation: "attestation",
-        pid: makeCredential(),
         credentials: [],
         issuanceMode: "upgrade"
       }
@@ -77,8 +74,6 @@ describe("itwCredentialUpgradeMachine", () => {
 
     const actor = createActor(machine, {
       input: {
-        walletInstanceAttestation: "attestation",
-        pid: makeCredential(),
         credentials,
         issuanceMode: "upgrade"
       }
@@ -122,8 +117,6 @@ describe("itwCredentialUpgradeMachine", () => {
     ];
     const actor = createActor(machine, {
       input: {
-        walletInstanceAttestation: "attestation",
-        pid: makeCredential(),
         credentials,
         issuanceMode: "upgrade"
       }

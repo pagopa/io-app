@@ -18,7 +18,7 @@ describe("ITW credentials reducer migrations", () => {
     jest.restoreAllMocks();
   });
 
-  it("should migrate from 0 to 1", () => {
+  it("should migrate from -1 to 0", () => {
     const basePersistedGlobalStateAt0 = {
       eid: { _tag: "Some", value: {} },
       credentials: [
@@ -47,7 +47,7 @@ describe("ITW credentials reducer migrations", () => {
     expect(nextState).toStrictEqual(persistedStateAt1);
   });
 
-  it("should migrate from 1 to 2", () => {
+  it("should migrate from 0 to 1", () => {
     jest.spyOn(SdJwt, "decode").mockReturnValue({
       disclosures: [{ decoded: ["", "iat", 1718132000] }],
       sdJwt: {
@@ -112,7 +112,7 @@ describe("ITW credentials reducer migrations", () => {
     expect(nextState).toStrictEqual(persistedStateAt2);
   });
 
-  it("should migrate from 2 to 3", () => {
+  it("should migrate from 1 to 2", () => {
     const basePersistedGlobalStateAt2 = {
       eid: {
         _tag: "Some",
@@ -195,7 +195,7 @@ describe("ITW credentials reducer migrations", () => {
     expect(nextState).toStrictEqual(persistedStateAt3);
   });
 
-  it("should migrate from 3 to 4", () => {
+  it("should migrate from 2 to 3", () => {
     const basePersistedStateAt3 = {
       credentials: {
         PersonIdentificationData: {
@@ -255,7 +255,7 @@ describe("ITW credentials reducer migrations", () => {
     expect(nextState).toStrictEqual(persistedStateAt4);
   });
 
-  it("should migrate from 4 to 5", () => {
+  it("should migrate from 3 to 4", () => {
     const basePersistedStateAt4 = {
       credentials: {
         PersonIdentificationData: {
@@ -316,7 +316,7 @@ describe("ITW credentials reducer migrations", () => {
     expect(nextState).toStrictEqual(persistedStateAt5);
   });
 
-  it("should migrate from 5 to 6", () => {
+  it("should migrate from 4 to 5", () => {
     const basePersistedStateAt5 = {
       credentials: {
         PersonIdentificationData: {
@@ -363,7 +363,7 @@ describe("ITW credentials reducer migrations", () => {
     expect(nextState).toStrictEqual(persistedStateAt6);
   });
 
-  it("should migrate from 6 to 7", () => {
+  it("should migrate from 5 to 6", () => {
     const basePersistedStateAt6 = {
       credentials: {
         dc_sd_jwt_PersonIdentificationData: {
@@ -456,7 +456,7 @@ describe("ITW credentials reducer migrations", () => {
     expect(nextState).toStrictEqual(persistedStateAt7);
   });
 
-  it("should migrate from 7 to 8 (add spec_version and verification)", () => {
+  it("should migrate from 6 to 7 (add spec_version and verification)", () => {
     const mockSdJwtVerification = {
       assurance_level: "high",
       trust_framework: "eidas"
@@ -550,7 +550,7 @@ describe("ITW credentials reducer migrations", () => {
     expect(nextState).toStrictEqual(persistedStateAt8);
   });
 
-  it("should handle verification extraction failure gracefully in migration 7 to 8", () => {
+  it("should handle verification extraction failure gracefully in migration 6 to 7", () => {
     jest.spyOn(SdJwt, "getVerification").mockImplementation(() => {
       throw new Error("Failed to extract verification");
     });
@@ -600,6 +600,71 @@ describe("ITW credentials reducer migrations", () => {
     };
 
     const from7To8Migration = itwCredentialsStateMigrations[7];
+    expect(from7To8Migration).toBeDefined();
+    const nextState = from7To8Migration(basePersistedStateAt7);
+
+    expect(nextState).toStrictEqual(persistedStateAt8);
+  });
+
+  it("should migrate from 7 to 8 (split credentials into legacyCredentials and JWT-free credentials)", () => {
+    const inputCredentials = {
+      dc_sd_jwt_PersonIdentificationData: {
+        credentialId: "dc_sd_jwt_PersonIdentificationData",
+        credentialType: "PersonIdentificationData",
+        format: "dc+sd-jwt",
+        credential: "sd-jwt-credential-string",
+        parsedCredential: {},
+        storedStatusAssertion: undefined,
+        spec_version: "1.0.0",
+        verification: undefined,
+        jwt: {
+          expiration: "2024-06-12T11:33:20.000Z",
+          issuedAt: "2024-06-11T18:53:20.000Z"
+        }
+      },
+      mso_mdoc_mDL: {
+        credentialId: "mso_mdoc_mDL",
+        credentialType: "mDL",
+        format: "mso_mdoc",
+        credential: "mdoc-credential-string",
+        parsedCredential: {},
+        storedStatusAssertion: undefined,
+        spec_version: "1.0.0",
+        verification: undefined,
+        jwt: {
+          expiration: "2024-06-12T11:33:20.000Z",
+          issuedAt: "2024-06-11T18:53:20.000Z"
+        }
+      }
+    };
+
+    const basePersistedStateAt7 = {
+      credentials: inputCredentials,
+      _persist: {
+        version: 7,
+        rehydrated: false
+      }
+    };
+
+    const persistedStateAt8 = {
+      credentials: {
+        dc_sd_jwt_PersonIdentificationData: {
+          ...inputCredentials.dc_sd_jwt_PersonIdentificationData,
+          credential: undefined
+        },
+        mso_mdoc_mDL: {
+          ...inputCredentials.mso_mdoc_mDL,
+          credential: undefined
+        }
+      },
+      legacyCredentials: basePersistedStateAt7.credentials,
+      _persist: {
+        version: 7,
+        rehydrated: false
+      }
+    };
+
+    const from7To8Migration = itwCredentialsStateMigrations[8];
     expect(from7To8Migration).toBeDefined();
     const nextState = from7To8Migration(basePersistedStateAt7);
 

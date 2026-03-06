@@ -49,8 +49,8 @@ import {
 } from "../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
-import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
 import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalogueWrapper.tsx";
+import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
 
 const MAX_INDEX = 1;
 
@@ -75,7 +75,7 @@ const ItwCardOnboardingL3Screen = ({ route }: Props) => {
   const isITWalletEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const [page, setPage] = useState<number>(
     params && !isNaN(Number(params?.page))
-      ? clamp(Number(params.page), MAX_INDEX)
+      ? clamp(Number(params.page), 0, MAX_INDEX)
       : 0
   );
 

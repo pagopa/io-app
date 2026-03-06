@@ -37,7 +37,7 @@ export const createEidIssuanceGuardsImplementation = (
       store.getState()
     );
 
-    const eidFiscalCode = getFiscalCodeFromCredential(context.eid);
+    const eidFiscalCode = getFiscalCodeFromCredential(context.eid?.metadata);
 
     return authenticatedUserFiscalCode === eidFiscalCode;
   },

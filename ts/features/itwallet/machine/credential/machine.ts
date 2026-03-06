@@ -1,5 +1,6 @@
 import { and, assign, fromPromise, not, setup } from "xstate";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { assert } from "../../../../utils/assert";
+import { CredentialBundle } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import {
   GetWalletAttestationActorOutput,
@@ -75,9 +76,12 @@ export const itwCredentialIssuanceMachine = setup({
       ObtainCredentialActorInput
     >(notImplemented),
     obtainStatusAssertion: fromPromise<
-      Array<StoredCredential>,
+      ReadonlyArray<CredentialBundle>,
       ObtainStatusAssertionActorInput
-    >(notImplemented)
+    >(notImplemented),
+    storeCredentials: fromPromise<void, ReadonlyArray<CredentialBundle>>(
+      notImplemented
+    )
   },
   guards: {
     isSessionExpired: notImplemented,
@@ -273,7 +277,7 @@ export const itwCredentialIssuanceMachine = setup({
             onDone: {
               target: "ObtainingStatusAssertion",
               actions: assign(({ event }) => ({
-                credentials: event.output.credentials
+                credentials: event.output
               }))
             },
             onError: {
@@ -318,11 +322,33 @@ export const itwCredentialIssuanceMachine = setup({
       entry: "navigateToCredentialPreviewScreen",
       on: {
         "add-to-wallet": {
-          actions: ["storeCredential", "navigateToWallet", "trackAddCredential"]
+          target: "StoringCredential"
         },
         close: {
           target: "Completed",
           actions: "closeIssuance"
+        }
+      }
+    },
+    StoringCredential: {
+      description:
+        "This state is responsible for storing the obtained credentials in the secure storage then, if success, in the Redux store",
+      invoke: {
+        src: "storeCredentials",
+        input: ({ context }) => {
+          assert(
+            context.credentials,
+            "Credentials must be defined to be stored"
+          );
+          return context.credentials;
+        },
+        onDone: {
+          target: "Completed",
+          actions: ["storeCredential", "navigateToWallet", "trackAddCredential"]
+        },
+        onError: {
+          actions: "setFailure",
+          target: "#itwCredentialIssuanceMachine.Failure"
         }
       }
     },
