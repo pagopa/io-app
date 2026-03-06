@@ -25,8 +25,6 @@ import {
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
 
-jest.useFakeTimers();
-
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
   ...jest.requireActual<typeof import("react-redux")>("react-redux"),
@@ -66,17 +64,8 @@ let authenticationCallbackWithServiceId:
 
 describe("index", () => {
   beforeEach(() => {
-    jest.useFakeTimers();
-  });
-  afterEach(() => {
-    jest.runOnlyPendingTimers();
-    jest.useRealTimers();
     jest.restoreAllMocks();
     jest.resetAllMocks();
-    serviceDataPot = undefined;
-    serviceData = undefined;
-    authenticationCallback = undefined;
-    authenticationCallbackWithServiceId = undefined;
   });
   describe("useAutoFetchingServiceByIdPot", () => {
     const service = {} as ServiceDetails;
