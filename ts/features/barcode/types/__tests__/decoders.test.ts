@@ -4,6 +4,13 @@ import { IO_BARCODE_ALL_TYPES } from "../IOBarcode";
 import { GlobalState } from "../../../../store/reducers/types";
 
 const fakeGlobalState = {
+  features: {
+    itWallet: {
+      environment: {
+        itWalletSpecsVersion: "1.0.0"
+      }
+    }
+  },
   remoteConfig: O.some({
     pn: {
       aarQRCodeRegex:
@@ -111,7 +118,8 @@ describe("test decodeIOBarcode function", () => {
             client_id: "abc123xy",
             request_uri: "https://example.com/callback",
             state: "hyqizm592",
-            request_uri_method: "get"
+            request_uri_method: "get",
+            raw_url: value
           }
         })
       );
@@ -130,7 +138,8 @@ describe("test decodeIOBarcode function", () => {
             client_id: "abc123xy",
             request_uri: "https://example.com/callback",
             state: "hyqizm592",
-            request_uri_method: "post"
+            request_uri_method: "post",
+            raw_url: value
           }
         })
       );
