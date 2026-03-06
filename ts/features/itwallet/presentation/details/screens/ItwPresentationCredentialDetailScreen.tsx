@@ -44,6 +44,7 @@ import {
 import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
+import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import { trackItwProximityShowQrCode } from "../../proximity/analytics";
 import { useItwPresentQRCode } from "../../proximity/hooks/useItwPresentQRCode.tsx";
 import { ItwProximityMachineContext } from "../../proximity/machine/provider.tsx";
@@ -175,6 +176,8 @@ export const ItwPresentationCredentialDetail = ({
 }: ItwPresentationCredentialDetailProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
+  const credentialIssuanceMachineRef =
+    ItwCredentialIssuanceMachineContext.useActorRef();
   const itwProximityMachineRef = ItwProximityMachineContext.useActorRef();
 
   const itwFeaturesEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
@@ -189,6 +192,9 @@ export const ItwPresentationCredentialDetail = ({
     () => getMixPanelCredential(credential.credentialType, isL3Credential),
     [credential.credentialType, isL3Credential]
   );
+  const shouldShowMdlUpdateCta =
+    credential.credentialType === CredentialType.DRIVING_LICENSE &&
+    (status === "expired" || status === "invalid");
 
   useDebugInfo(credential);
   usePreventScreenCapture();
@@ -237,6 +243,20 @@ export const ItwPresentationCredentialDetail = ({
     const credentialType = credential.credentialType;
     const contentClaim = parsedCredential[WellKnownClaim.content];
 
+    if (shouldShowMdlUpdateCta) {
+      return {
+        label: I18n.t(
+          "features.itWallet.presentation.credentialDetails.actions.updateDigitalDocument"
+        ),
+        onPress: () =>
+          credentialIssuanceMachineRef.send({
+            type: "select-credential",
+            credentialType,
+            mode: "reissuance"
+          })
+      };
+    }
+
     if (
       credentialType === CredentialType.DRIVING_LICENSE &&
       itwFeaturesEnabled
@@ -279,11 +299,13 @@ export const ItwPresentationCredentialDetail = ({
     return undefined;
   }, [
     credential,
+    credentialIssuanceMachineRef,
     itwFeaturesEnabled,
     navigation,
     isCheckingPermissions,
     itwProximityMachineRef,
-    mixPanelCredential
+    mixPanelCredential,
+    shouldShowMdlUpdateCta
   ]);
 
   if (status === "unknown") {
