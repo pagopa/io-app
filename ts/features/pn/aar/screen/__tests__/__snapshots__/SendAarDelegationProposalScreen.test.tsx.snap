@@ -6226,7 +6226,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                             [
                                               {},
                                               {
-                                                "color": "#0E0F13",
+                                                "color": undefined,
                                                 "fontFamily": "Titillio",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
@@ -6465,7 +6465,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                             [
                                               {},
                                               {
-                                                "color": "#0E0F13",
+                                                "color": undefined,
                                                 "fontFamily": "Titillio",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",

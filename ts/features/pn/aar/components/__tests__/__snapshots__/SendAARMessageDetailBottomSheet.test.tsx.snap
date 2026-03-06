@@ -877,7 +877,7 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
@@ -1113,7 +1113,7 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -2038,7 +2038,7 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
@@ -2274,7 +2274,7 @@ exports[`BottomSheetContent calls openWebUrl when link is pressed and trackSendA
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -3038,7 +3038,7 @@ exports[`BottomSheetContent doesn't render a link and matches its snapshot when 
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
@@ -3274,7 +3274,7 @@ exports[`BottomSheetContent doesn't render a link and matches its snapshot when 
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",

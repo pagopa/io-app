@@ -468,7 +468,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -1089,7 +1089,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -1598,7 +1598,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -2219,7 +2219,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -2728,7 +2728,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not enable
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -3463,7 +3463,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -4084,7 +4084,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -4593,7 +4593,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when servicePreference cou
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",

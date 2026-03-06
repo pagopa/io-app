@@ -829,7 +829,7 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri i
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -1601,7 +1601,7 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when no redirect_uri 
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",

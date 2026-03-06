@@ -505,7 +505,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -1092,7 +1092,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -1679,7 +1679,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -2266,7 +2266,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -2853,7 +2853,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -3440,7 +3440,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -4027,7 +4027,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -4614,7 +4614,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -5201,7 +5201,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -5788,7 +5788,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -6627,7 +6627,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -7466,7 +7466,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -8305,7 +8305,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -9144,7 +9144,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -9983,7 +9983,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -10822,7 +10822,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -11661,7 +11661,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -12500,7 +12500,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -13339,7 +13339,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -14437,7 +14437,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -15535,7 +15535,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -16633,7 +16633,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -17731,7 +17731,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -18829,7 +18829,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -19927,7 +19927,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -21025,7 +21025,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
@@ -22123,7 +22123,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": undefined,
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",

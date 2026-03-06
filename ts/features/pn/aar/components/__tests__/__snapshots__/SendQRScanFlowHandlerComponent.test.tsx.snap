@@ -319,7 +319,7 @@ exports[`SendQRScanFlowHandlerComponent should match snapshot and track the scre
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -1017,7 +1017,7 @@ exports[`SendQRScanFlowHandlerComponent should match snapshot and track the scre
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",

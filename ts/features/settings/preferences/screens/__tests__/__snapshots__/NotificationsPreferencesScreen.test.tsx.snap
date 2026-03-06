@@ -468,7 +468,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -1921,7 +1921,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -3374,7 +3374,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -4827,7 +4827,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -6280,7 +6280,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -7733,7 +7733,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -9186,7 +9186,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -10639,7 +10639,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -12092,7 +12092,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -13545,7 +13545,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -14998,7 +14998,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -16451,7 +16451,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -17904,7 +17904,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -19357,7 +19357,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -20810,7 +20810,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -22263,7 +22263,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -23716,7 +23716,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -25169,7 +25169,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",

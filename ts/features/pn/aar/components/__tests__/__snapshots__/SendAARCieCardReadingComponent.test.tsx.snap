@@ -1422,7 +1422,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -1651,7 +1651,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         [
                                           {},
                                           {
-                                            "color": "#0E0F13",
+                                            "color": undefined,
                                             "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
@@ -2494,7 +2494,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -2723,7 +2723,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         [
                                           {},
                                           {
-                                            "color": "#0E0F13",
+                                            "color": undefined,
                                             "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
@@ -3566,7 +3566,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -3795,7 +3795,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         [
                                           {},
                                           {
-                                            "color": "#0E0F13",
+                                            "color": undefined,
                                             "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
@@ -4589,7 +4589,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -4818,7 +4818,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         [
                                           {},
                                           {
-                                            "color": "#0E0F13",
+                                            "color": undefined,
                                             "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
@@ -5763,7 +5763,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         [
                                           {},
                                           {
-                                            "color": "#0E0F13",
+                                            "color": undefined,
                                             "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
@@ -6728,7 +6728,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         [
                                           {},
                                           {
-                                            "color": "#0E0F13",
+                                            "color": undefined,
                                             "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
@@ -7693,7 +7693,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         [
                                           {},
                                           {
-                                            "color": "#0E0F13",
+                                            "color": undefined,
                                             "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
@@ -8658,7 +8658,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         [
                                           {},
                                           {
-                                            "color": "#0E0F13",
+                                            "color": undefined,
                                             "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",

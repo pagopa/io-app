@@ -767,7 +767,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -2530,7 +2530,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -4249,7 +4249,7 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",

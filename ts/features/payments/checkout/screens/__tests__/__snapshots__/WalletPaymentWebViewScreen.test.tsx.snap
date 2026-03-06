@@ -319,7 +319,7 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",

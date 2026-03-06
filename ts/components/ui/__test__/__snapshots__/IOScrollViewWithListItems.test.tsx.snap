@@ -1006,7 +1006,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -1777,7 +1777,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -2872,7 +2872,7 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",

@@ -319,7 +319,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -954,7 +954,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -1589,7 +1589,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -2373,7 +2373,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -3138,7 +3138,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -3903,7 +3903,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -4668,7 +4668,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -5433,7 +5433,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -6198,7 +6198,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -6963,7 +6963,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -7859,7 +7859,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -8755,7 +8755,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -9651,7 +9651,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -10547,7 +10547,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -11443,7 +11443,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -12190,7 +12190,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -12937,7 +12937,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -13684,7 +13684,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",

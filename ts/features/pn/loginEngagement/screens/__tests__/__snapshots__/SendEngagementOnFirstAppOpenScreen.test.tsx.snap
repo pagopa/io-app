@@ -557,7 +557,7 @@ exports[`SendEngagementOnFirstAppOpenScreen should match the snapshot 1`] = `
                       [
                         {},
                         {
-                          "color": "#0E0F13",
+                          "color": undefined,
                           "fontFamily": "Titillio",
                           "fontSize": 16,
                           "fontStyle": "normal",
@@ -787,7 +787,7 @@ exports[`SendEngagementOnFirstAppOpenScreen should match the snapshot 1`] = `
                       [
                         {},
                         {
-                          "color": "#0E0F13",
+                          "color": undefined,
                           "fontFamily": "Titillio",
                           "fontSize": 16,
                           "fontStyle": "normal",

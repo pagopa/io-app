@@ -605,7 +605,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -842,7 +842,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -1810,7 +1810,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -2047,7 +2047,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",

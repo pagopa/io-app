@@ -728,7 +728,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -966,7 +966,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",

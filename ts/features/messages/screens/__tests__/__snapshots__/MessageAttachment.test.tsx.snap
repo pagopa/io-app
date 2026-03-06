@@ -468,7 +468,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -1266,7 +1266,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -1775,7 +1775,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
