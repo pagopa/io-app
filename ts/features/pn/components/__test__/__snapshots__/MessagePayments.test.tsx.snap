@@ -11049,7 +11049,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
@@ -13069,7 +13069,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
