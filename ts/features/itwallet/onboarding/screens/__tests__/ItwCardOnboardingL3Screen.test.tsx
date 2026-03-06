@@ -1,5 +1,5 @@
-import { fireEvent } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
+import { fireEvent } from "@testing-library/react-native";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
