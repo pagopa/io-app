@@ -11,7 +11,8 @@ import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { CieWarningType } from "../utils/types";
-import { isRestrictedCredential } from "../../../common/utils/itwCredentialUtils";
+import { isL2Credential } from "../../../common/utils/itwCredentialUtils";
+import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 
 export type ItwIdentificationCieWarningScreenNavigationParams = {
   type: CieWarningType;
@@ -31,7 +32,8 @@ const cieFaqUrls: Record<CieWarningType, string> = {
 export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
   const { type } = params.route.params;
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const isWalletAlreadyActive = useIOSelector(itwLifecycleIsValidSelector);
+  const credentialMachineRef =
+    ItwCredentialIssuanceMachineContext.useActorRef();
   const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
@@ -41,11 +43,8 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
   const reason = type === "card" ? "user_without_cie" : "user_without_pin";
 
   const shouldDisplayKO = useMemo(
-    () =>
-      isWalletAlreadyActive ||
-      !isL3FeaturesEnabled ||
-      !isRestrictedCredential(credentialType ?? ""),
-    [isWalletAlreadyActive, isL3FeaturesEnabled, credentialType]
+    () => isL3FeaturesEnabled && !isL2Credential(credentialType ?? ""),
+    [isL3FeaturesEnabled, credentialType]
   );
 
   const sectionKey = shouldDisplayKO ? "ko-no-cie" : "l2-fallback";
@@ -60,8 +59,12 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
     });
     if (shouldDisplayKO) {
       void Linking.openURL(cieFaqUrls[type]);
-    } else {
-      machineRef.send({ type: "go-to-l2-identification" });
+    } else if (credentialType) {
+      credentialMachineRef.send({
+        type: "select-credential",
+        credentialType,
+        mode: "issuance"
+      });
     }
   };
 

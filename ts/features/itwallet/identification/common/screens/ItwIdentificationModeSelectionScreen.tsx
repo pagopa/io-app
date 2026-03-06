@@ -13,7 +13,10 @@ import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
-import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
+import {
+  IOStackNavigationRouteProps,
+  useIONavigation
+} from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { itwDisabledIdentificationMethodsSelector } from "../../../common/store/selectors/remoteConfig";
@@ -22,6 +25,7 @@ import { EidIssuanceLevel } from "../../../machine/eid/context";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
+  selectCredentialType,
   selectIsLoading,
   selectIssuanceLevel,
   selectIssuanceMode
@@ -32,6 +36,9 @@ import {
   trackItwUserWithoutL3Requirements
 } from "../../analytics";
 import { useContinueWithBottomSheet } from "../hooks/useContinueWithBottomSheet";
+import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
+import { isL2Credential } from "../../../common/utils/itwCredentialUtils";
+import { ITW_ROUTES } from "../../../navigation/routes";
 
 export type ItwIdentificationNavigationParams = {
   eidReissuing?: boolean;
@@ -52,6 +59,7 @@ export const ItwIdentificationModeSelectionScreen = ({
   route
 }: ItwIdentificationModeSelectionScreenProps) => {
   const { name: routeName, params } = route;
+  const navigation = useIONavigation();
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
@@ -67,6 +75,9 @@ export const ItwIdentificationModeSelectionScreen = ({
   const disabledIdentificationMethods = useIOSelector(
     itwDisabledIdentificationMethodsSelector
   );
+  const isL2Active = useIOSelector(itwLifecycleIsValidSelector);
+  const credentialType =
+    ItwEidIssuanceMachineContext.useSelector(selectCredentialType);
 
   const isCiePinDisabled = useMemo(
     () =>
@@ -135,8 +146,18 @@ export const ItwIdentificationModeSelectionScreen = ({
       reason: "user_without_cie",
       position: "screen"
     });
-    machineRef.send({ type: "go-to-cie-warning", warning: "card" });
-  }, [machineRef, routeName]);
+
+    if (!isL2Active && isL2Credential(credentialType ?? "")) {
+      machineRef.send({
+        type: "restart",
+        mode: "issuance",
+        level: "l2-fallback",
+        credentialType
+      });
+    } else {
+      machineRef.send({ type: "go-to-cie-warning", warning: "card" });
+    }
+  }, [machineRef, routeName, credentialType, isL2Active]);
 
   const dismissalDialog = useItwDismissalDialog({
     enabled: params.eidReissuing,
