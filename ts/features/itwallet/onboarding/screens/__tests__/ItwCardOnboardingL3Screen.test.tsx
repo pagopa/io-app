@@ -55,6 +55,15 @@ describe("ItwCardOnboardingL3Screen", () => {
     ).toBeNull();
   });
 
+  it("it should fallback to page 0 when page param is not a number", () => {
+    const { queryByTestId } = renderComponent({ page: "abc" } as any);
+
+    expect(
+      queryByTestId(`${CredentialType.DRIVING_LICENSE}ModuleTestID`)
+    ).toBeTruthy();
+    expect(queryByTestId("paymentsModuleTestID")).toBeNull();
+  });
+
   it("it should render the action button when wallet is enabled", () => {
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")

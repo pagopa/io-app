@@ -73,7 +73,7 @@ const ItwCardOnboardingL3Screen = ({ route }: Props) => {
   const { params } = route;
 
   const [page, setPage] = useState<number>(
-    clamp(params?.page || 0, 0, MAX_INDEX)
+    clamp(Number(params?.page) || 0, 0, MAX_INDEX)
   );
 
   useFocusEffect(trackShowCredentialsList);
