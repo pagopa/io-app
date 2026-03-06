@@ -3,10 +3,8 @@ import configureMockStore from "redux-mock-store";
 import { render } from "@testing-library/react-native";
 import { JSX } from "react";
 import I18n from "i18next";
-import {
-  useItwFailureSupportModal,
-  ZendeskSubcategoryValue
-} from "../useItwFailureSupportModal";
+import { useItwFailureSupportModal } from "../useItwFailureSupportModal";
+import { ZendeskSubcategoryValue } from "../useItwZendeskSupport";
 import {
   IssuanceFailure,
   IssuanceFailureType
@@ -20,6 +18,11 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { GlobalState } from "../../../../../store/reducers/types";
 import { ItwFailure, ItwFailureType } from "../../utils/ItwFailureTypes.ts";
 import { CredentialType } from "../../utils/itwMocksUtils.ts";
+
+jest.mock("@react-navigation/native", () => ({
+  ...jest.requireActual("@react-navigation/native"),
+  useRoute: () => ({ name: "MOCK_SCREEN" })
+}));
 
 jest.mock("../../../../../utils/hooks/bottomSheet", () => ({
   // Mock the bottom sheet to immediately render the component
