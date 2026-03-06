@@ -3388,7 +3388,6 @@ __metadata:
   resolution: "@npmcli/fs@npm:3.1.1"
   dependencies:
     auto-changelog: ^2.4.0
-    lodash: ^4.17.21
     react-native-easing-gradient: ^1.1.1
     react-native-gesture-handler: ^2.25.0
     react-native-haptic-feedback: ^2.3.3
