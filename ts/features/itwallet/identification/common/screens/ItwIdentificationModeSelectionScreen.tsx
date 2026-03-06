@@ -13,14 +13,13 @@ import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
-import {
-  IOStackNavigationRouteProps,
-  useIONavigation
-} from "../../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
+import { trackItWalletIDMethodSelected } from "../../../analytics";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { itwDisabledIdentificationMethodsSelector } from "../../../common/store/selectors/remoteConfig";
-import { trackItWalletIDMethodSelected } from "../../../analytics";
+import { isL2Credential } from "../../../common/utils/itwCredentialUtils";
+import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
 import { EidIssuanceLevel } from "../../../machine/eid/context";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
@@ -36,9 +35,6 @@ import {
   trackItwUserWithoutL3Requirements
 } from "../../analytics";
 import { useContinueWithBottomSheet } from "../hooks/useContinueWithBottomSheet";
-import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
-import { isL2Credential } from "../../../common/utils/itwCredentialUtils";
-import { ITW_ROUTES } from "../../../navigation/routes";
 
 export type ItwIdentificationNavigationParams = {
   eidReissuing?: boolean;
@@ -59,7 +55,6 @@ export const ItwIdentificationModeSelectionScreen = ({
   route
 }: ItwIdentificationModeSelectionScreenProps) => {
   const { name: routeName, params } = route;
-  const navigation = useIONavigation();
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 

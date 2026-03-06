@@ -1,18 +1,16 @@
 import I18n from "i18next";
-import { Linking } from "react-native";
 import { useMemo } from "react";
+import { Linking } from "react-native";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../../store/hooks";
 import { trackItwKoStateAction } from "../../../analytics";
-import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
+import { isL2Credential } from "../../../common/utils/itwCredentialUtils";
+import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { CieWarningType } from "../utils/types";
-import { isL2Credential } from "../../../common/utils/itwCredentialUtils";
-import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 
 export type ItwIdentificationCieWarningScreenNavigationParams = {
   type: CieWarningType;
