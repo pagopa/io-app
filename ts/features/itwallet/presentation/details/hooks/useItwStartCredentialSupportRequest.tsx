@@ -34,7 +34,8 @@ export const useItwStartCredentialSupportRequest = (
 
     startItwZendeskSupport({
       subcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
-      errorCode
+      errorCode,
+      logData: errorCode
     });
   }, [
     credential.credentialType,
