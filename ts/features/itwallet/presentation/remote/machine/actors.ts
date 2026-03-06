@@ -21,6 +21,7 @@ import {
   getInvalidCredentials
 } from "../utils/itwRemotePresentationUtils";
 import { assert } from "../../../../../utils/assert";
+import { IO_UNIVERSAL_LINK_PREFIX } from "../../../../../utils/navigation";
 import {
   itwIntegrityKeyTagSelector,
   itwIntegrityServiceStatusSelector
@@ -121,8 +122,11 @@ export const createRemoteActorsImplementation = (
 
     const ioWallet = getIoWallet(itwVersion);
 
+    const authRequestUrl = `${IO_UNIVERSAL_LINK_PREFIX}/itw/auth?${new URLSearchParams(
+      qrCodePayload
+    )}`;
     const { requestObjectEncodedJwt } =
-      await ioWallet.RemotePresentation.getRequestObject(qrCodePayload.raw_url);
+      await ioWallet.RemotePresentation.getRequestObject(authRequestUrl);
 
     return requestObjectEncodedJwt;
   });

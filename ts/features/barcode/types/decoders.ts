@@ -148,9 +148,9 @@ const decodeItwRemoteBarcode: IOBarcodeRuntimeDecoderFn = (
         request_uri_method: params.get("request_uri_method")
       } as ItwRemoteRequestPayload)
     ),
-    O.map(parsedQrCode => ({
+    O.map(itwRemoteRequestPayload => ({
       type: "ITW_REMOTE",
-      itwRemoteRequestPayload: { ...parsedQrCode, raw_url: data }
+      itwRemoteRequestPayload
     }))
   );
 

@@ -16,15 +16,14 @@ import {
   PresentationDetails
 } from "./itwRemoteTypeUtils";
 
-type PresentationDetail = PresentationDetails[number];
 type PresentationDetailSdJwt = Extract<
-  PresentationDetail,
+  PresentationDetails[number],
   { format: "dc+sd-jwt" }
 >;
 
 // TODO: [SIW-3998] Remove when MDOC remote presentation will be supported
 const isPresentationDetailSdJwt = (
-  input: PresentationDetail
+  input: PresentationDetails[number]
 ): input is PresentationDetailSdJwt => input.format === "dc+sd-jwt";
 
 /**
@@ -127,8 +126,9 @@ export const enrichPresentationDetails = (
 export const groupCredentialsByPurpose = (
   presentationDetails: EnrichedPresentationDetails
 ) => {
-  const required = {} as Record<string, Array<PresentationDetail>>;
-  const optional = {} as Record<string, Array<PresentationDetail>>;
+  type Group = Record<string, EnrichedPresentationDetails>;
+  const required: Group = {};
+  const optional: Group = {};
 
   for (const item of presentationDetails) {
     for (const purpose of item.purposes) {

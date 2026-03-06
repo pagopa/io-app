@@ -32,8 +32,7 @@ const qrCodePayload: ItwRemoteRequestPayload = {
   client_id: T_CLIENT_ID,
   request_uri: T_REQUEST_URI,
   state: T_STATE,
-  request_uri_method: "get",
-  raw_url: `https://rp.example/?client_id=${T_CLIENT_ID}&request_uri=${T_REQUEST_URI}&state=${T_STATE}&request_uri_method=get`
+  request_uri_method: "get"
 };
 
 type MachineSnapshot = StateFrom<ItwRemoteMachine>;

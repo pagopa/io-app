@@ -14,9 +14,7 @@ export type ItwRemoteQrRawPayload = Parameters<
 /**
  * Type for the parameters requested to start the presentation flow
  */
-export type ItwRemoteRequestPayload = RemotePresentation.PresentationParams & {
-  raw_url: string;
-};
+export type ItwRemoteRequestPayload = RemotePresentation.PresentationParams;
 
 /**
  * Alias for the Relying Party's Entity Configuration type
