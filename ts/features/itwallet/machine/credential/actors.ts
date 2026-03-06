@@ -165,7 +165,7 @@ export const createCredentialIssuanceActorsImplementation = (
       }
 
       const { statusAssertion, parsedStatusAssertion } =
-        await getCredentialStatusAssertion(credential, itwVersion).catch(
+        await getCredentialStatusAssertion(credential, env, itwVersion).catch(
           enrichErrorWithMetadata({ credentialId: credential.credentialId })
         );
 

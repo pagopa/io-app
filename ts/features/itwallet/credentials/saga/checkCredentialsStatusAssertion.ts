@@ -15,7 +15,11 @@ import {
   itwLifecycleIsValidSelector
 } from "../../lifecycle/store/selectors";
 import { itwCredentialsStore } from "../store/actions";
-import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
+import {
+  selectItwEnv,
+  selectItwSpecsVersion
+} from "../../common/store/selectors/environment";
+import { getEnv } from "../../common/utils/environment";
 import { syncItwAnalyticsProperties } from "../../analytics/saga";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { trackItwStatusCredentialAssertionFailure } from "../../analytics";
@@ -30,6 +34,7 @@ const { isIssuerResponseError, IssuerResponseErrorCodes: Codes } = Errors;
 export function* updateCredentialStatusAssertionSaga(
   credential: StoredCredential
 ): Generator<ReduxSagaEffect, StoredCredential> {
+  const env = yield* select(selectItwEnv);
   const itwVersion = yield* select(selectItwSpecsVersion);
   const isItwL3 = yield* select(itwLifecycleIsITWalletValidSelector);
   const mixpanelCredential = getMixPanelCredential(
@@ -40,6 +45,7 @@ export function* updateCredentialStatusAssertionSaga(
     const { parsedStatusAssertion, statusAssertion } = yield* call(
       getCredentialStatusAssertion,
       credential,
+      getEnv(env),
       itwVersion
     );
     return {
