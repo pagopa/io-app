@@ -382,17 +382,10 @@ const PlaygroundsSection = () => {
         })
     },
     {
-      value: "CIE",
+      value: "CIE SDK",
       onPress: () =>
         navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
           screen: SETTINGS_ROUTES.CIE_PLAYGROUND
-        })
-    },
-    {
-      value: "CIE IAS+MRTD",
-      onPress: () =>
-        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-          screen: SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND
         })
     },
     {
@@ -400,6 +393,13 @@ const PlaygroundsSection = () => {
       onPress: () =>
         navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
           screen: SETTINGS_ROUTES.NFC_PLAYGROUND
+        })
+    },
+    {
+      value: "Guided Tour",
+      onPress: () =>
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.GUIDED_TOUR_PLAYGROUND
         })
     },
     {

@@ -1,11 +1,11 @@
 package it.pagopa.io.app.modules
 
+import android.content.pm.PackageManager
 import android.nfc.NfcAdapter
 import android.os.Build
 import com.facebook.react.bridge.*
 
-
-class NfcAntennaInfoModule(reactContext: ReactApplicationContext) :
+class NfcInfoModule(reactContext: ReactApplicationContext) :
   ReactContextBaseJavaModule(reactContext) {
 
   override fun getName(): String {
@@ -46,6 +46,19 @@ class NfcAntennaInfoModule(reactContext: ReactApplicationContext) :
     }
 
     promise.resolve(result)
+  }
+
+  @ReactMethod
+  fun isHceSupported(promise: Promise) {
+    try {
+      val hasHceFeature = reactApplicationContext
+        .packageManager
+        .hasSystemFeature(PackageManager.FEATURE_NFC_HOST_CARD_EMULATION)
+
+      promise.resolve(hasHceFeature)
+    } catch (e: Exception) {
+      promise.reject("HCE_INFO_UNAVAILABLE", e.message, e)
+    }
   }
 
 }

@@ -1790,6 +1790,72 @@ describe("itwEidIssuanceMachine", () => {
     expect(navigateToCiePinScreen).toHaveBeenCalledTimes(1);
   });
 
+  it("Should not track identification method selection when switching from CiePin to Spid", () => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: {
+        UserIdentification: {
+          CiePin: "PreparationPin"
+        }
+      },
+      context: {
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA },
+        level: "l3"
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.send({ type: "select-identification-mode", mode: "spid" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        Spid: "IdpSelection"
+      }
+    });
+    expect(trackIdentificationMethodSelected).not.toHaveBeenCalled();
+  });
+
+  it("Should not track identification method selection when switching from CiePin to CieID", () => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: {
+        UserIdentification: {
+          CiePin: "PreparationPin"
+        }
+      },
+      context: {
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA },
+        level: "l3"
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.send({ type: "select-identification-mode", mode: "cieId" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        CieID: "StartingCieIDAuthFlow"
+      }
+    });
+    expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
+      identification: {
+        mode: "cieId",
+        level: "L3"
+      }
+    });
+    expect(trackIdentificationMethodSelected).not.toHaveBeenCalled();
+  });
+
   it("Should return to PreparationPin when navigating back from CieWarning", async () => {
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine

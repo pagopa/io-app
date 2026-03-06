@@ -18,11 +18,19 @@ describe("shouldRequestStatusAssertion", () => {
     spec_version: "1.0.0"
   };
 
+  beforeEach(() => {
+    jest.useFakeTimers().setSystemTime(new Date("2024-08-27T10:30:00+00:00"));
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
   it("return true when the status assertion is missing", () => {
     expect(shouldRequestStatusAssertion(baseMockCredential)).toEqual(true);
   });
 
-  it("return true when the parsed status assertion is null", () => {
+  it("return true when the credential status is unknown", () => {
     const mockCredential: StoredCredential = {
       ...baseMockCredential,
       storedStatusAssertion: {
@@ -33,8 +41,6 @@ describe("shouldRequestStatusAssertion", () => {
   });
 
   it("return true when the status assertion is expired", () => {
-    jest.useFakeTimers().setSystemTime(new Date("2024-08-27T10:30:00+00:00"));
-
     const mockCredential: StoredCredential = {
       ...baseMockCredential,
       storedStatusAssertion: {
@@ -50,8 +56,6 @@ describe("shouldRequestStatusAssertion", () => {
   });
 
   it("return false when the status assertion is still valid", () => {
-    jest.useFakeTimers().setSystemTime(new Date("2024-08-27T10:30:00+00:00"));
-
     const mockCredential: StoredCredential = {
       ...baseMockCredential,
       storedStatusAssertion: {
@@ -67,8 +71,6 @@ describe("shouldRequestStatusAssertion", () => {
   });
 
   it("return true when the credential status is invalid", () => {
-    jest.useFakeTimers().setSystemTime(new Date("2024-08-27T10:30:00+00:00"));
-
     const mockCredential: StoredCredential = {
       ...baseMockCredential,
       storedStatusAssertion: {
@@ -78,15 +80,9 @@ describe("shouldRequestStatusAssertion", () => {
     expect(shouldRequestStatusAssertion(mockCredential)).toEqual(true);
   });
 
-  it("return true when the credential status is unknown", () => {
-    jest.useFakeTimers().setSystemTime(new Date("2024-08-27T10:30:00+00:00"));
+  it("return false when the jwt is expired", () => {
+    jest.setSystemTime(new Date("2026-02-24T10:30:00+00:00"));
 
-    const mockCredential: StoredCredential = {
-      ...baseMockCredential,
-      storedStatusAssertion: {
-        credentialStatus: "unknown"
-      }
-    };
-    expect(shouldRequestStatusAssertion(mockCredential)).toEqual(true);
+    expect(shouldRequestStatusAssertion(baseMockCredential)).toEqual(false);
   });
 });
