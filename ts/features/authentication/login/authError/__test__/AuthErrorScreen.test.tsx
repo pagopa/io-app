@@ -15,6 +15,15 @@ import {
 
 import * as hooks from "../../../../../store/hooks";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 const mockNavigation = jest.fn();
 const mockDispatch = jest.fn();
 

@@ -9,6 +9,15 @@ import { openAppStoreUrl } from "../../../../utils/url";
 import * as ANALYTICS from "../../analytics";
 import { useSpecialCtaPn } from "../useSpecialCtaPn";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 jest.mock("@pagopa/io-app-design-system", () => ({
   ...jest.requireActual("@pagopa/io-app-design-system"),
   IOToast: {

@@ -5,6 +5,15 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { MessageDetailsScrollViewAdditionalSpace } from "../MessageDetailsScrollViewAdditionalSpace";
 import * as payments from "../../../store/reducers/payments";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 describe("MessageDetailsScrollViewAdditionalSpace", () => {
   beforeEach(() => {
     jest.resetAllMocks();

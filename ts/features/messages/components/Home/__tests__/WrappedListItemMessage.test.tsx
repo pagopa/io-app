@@ -17,13 +17,23 @@ import { MessageCategory } from "../../../../../../definitions/backend/MessageCa
 import { toggleScheduledMessageArchivingAction } from "../../../store/actions/archiving";
 import * as homeUtils from "../homeUtils";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 const mockNavigate = jest.fn();
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual<typeof import("@react-navigation/native")>(
     "@react-navigation/native"
   ),
   useNavigation: () => ({
-    navigate: mockNavigate
+    navigate: mockNavigate,
+    addListener: jest.fn(() => jest.fn())
   })
 }));
 const mockDispatch = jest.fn();

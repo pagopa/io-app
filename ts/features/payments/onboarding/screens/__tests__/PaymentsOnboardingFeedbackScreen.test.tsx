@@ -25,7 +25,8 @@ const ASSISTANCE_URL =
 const mockNavigation = {
   popToTop: jest.fn(),
   reset: jest.fn(),
-  getParent: jest.fn(() => ({ setOptions: jest.fn() }))
+  getParent: jest.fn(() => ({ setOptions: jest.fn() })),
+  addListener: jest.fn(() => jest.fn())
 };
 
 jest.mock("@react-navigation/native", () => ({

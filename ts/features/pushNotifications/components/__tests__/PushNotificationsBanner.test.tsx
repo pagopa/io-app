@@ -20,6 +20,15 @@ import { PushNotificationsBanner } from "../PushNotificationsBanner";
 import * as analytics from "../../analytics";
 import { setPushNotificationBannerForceDismissed } from "../../store/actions/userBehaviour";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 describe("PushNotificationsBanner", () => {
   afterEach(() => {
     jest.restoreAllMocks();

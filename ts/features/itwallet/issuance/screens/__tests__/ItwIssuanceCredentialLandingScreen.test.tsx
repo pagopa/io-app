@@ -23,7 +23,8 @@ jest.mock("@react-navigation/native", () => ({
     replace: mockReplace,
     navigate: mockNavigate,
     popToTop: mockPopToTop,
-    reset: mockReset
+    reset: mockReset,
+    addListener: jest.fn(() => jest.fn())
   })
 }));
 

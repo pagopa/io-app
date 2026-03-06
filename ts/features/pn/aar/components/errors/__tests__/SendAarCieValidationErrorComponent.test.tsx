@@ -30,6 +30,15 @@ import {
 import { useAarGenericErrorBottomSheet } from "../hooks/useAarGenericErrorBottomSheet";
 import { SendAarZendeskSecondLevelTag } from "../hooks/useAarStartSendZendeskSupport";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 const mockTerminateFlow = jest.fn();
 const mockSendAarFlowManager = jest.fn();
 const mockDispatch = jest.fn();

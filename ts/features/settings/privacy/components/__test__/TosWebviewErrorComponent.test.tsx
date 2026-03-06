@@ -6,6 +6,15 @@ import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import TosWebviewErrorComponent from "../TosWebviewErrorComponent";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 describe("TosWebviewErrorComponent", () => {
   it("should render the error UI and call handleRetry on retry button press", () => {
     const handleRetryMock = jest.fn();
