@@ -17,6 +17,7 @@ import { IOStackNavigationRouteProps } from "../../../../../navigation/params/Ap
 import { useIOSelector } from "../../../../../store/hooks";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { itwDisabledIdentificationMethodsSelector } from "../../../common/store/selectors/remoteConfig";
+import { trackItWalletIDMethodSelected } from "../../../analytics";
 import { EidIssuanceLevel } from "../../../machine/eid/context";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
@@ -258,6 +259,10 @@ const CiePinMethodModule = () => {
         icon="cieCard"
         onPress={() => {
           if (isL3) {
+            trackItWalletIDMethodSelected({
+              ITW_ID_method: "ciePin",
+              itw_flow: "L3"
+            });
             ciePinBottomSheet.present();
           } else {
             handleOnPress();
@@ -308,6 +313,10 @@ const SpidMethodModule = () => {
         icon="spid"
         onPress={() => {
           if (isL3) {
+            trackItWalletIDMethodSelected({
+              ITW_ID_method: "spid",
+              itw_flow: "L3"
+            });
             spidBottomSheet.present();
           } else {
             handleOnPress();
@@ -357,6 +366,10 @@ const CieIdMethodModule = () => {
         testID="CieIDMethodModuleTestID"
         onPress={() => {
           if (isL3) {
+            trackItWalletIDMethodSelected({
+              ITW_ID_method: "cieId",
+              itw_flow: "L3"
+            });
             cieIdBottomSheet.present();
           } else {
             handleOnPress();
