@@ -610,20 +610,40 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                         >
                                           Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’app, per 
                                           <Text
+                                            allowFontScaling={true}
+                                            maxFontSizeMultiplier={1.5}
                                             style={
-                                              {
-                                                "fontWeight": "600",
-                                              }
+                                              [
+                                                {},
+                                                {
+                                                  "color": undefined,
+                                                  "fontFamily": "Titillio",
+                                                  "fontSize": 16,
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "600",
+                                                  "lineHeight": undefined,
+                                                },
+                                              ]
                                             }
                                           >
                                             fornirti un servizio migliore
                                           </Text>
                                            e 
                                           <Text
+                                            allowFontScaling={true}
+                                            maxFontSizeMultiplier={1.5}
                                             style={
-                                              {
-                                                "fontWeight": "600",
-                                              }
+                                              [
+                                                {},
+                                                {
+                                                  "color": undefined,
+                                                  "fontFamily": "Titillio",
+                                                  "fontSize": 16,
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "600",
+                                                  "lineHeight": undefined,
+                                                },
+                                              ]
                                             }
                                           >
                                             assisterti in caso di necessità.
@@ -1694,7 +1714,7 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -1930,7 +1950,7 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -2252,7 +2272,7 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
