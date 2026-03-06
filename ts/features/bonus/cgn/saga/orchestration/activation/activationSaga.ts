@@ -35,6 +35,7 @@ function* cgnActivationWorkUnit() {
 
 const INITIAL_SCREENS_TO_WALLET_HOME: ReadonlyArray<string> = [
   ITW_ROUTES.ONBOARDING,
+  ITW_ROUTES.L3_ONBOARDING,
   CGN_ROUTES.DETAILS.DETAILS
 ];
 
