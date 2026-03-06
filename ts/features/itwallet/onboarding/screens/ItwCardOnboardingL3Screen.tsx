@@ -61,7 +61,7 @@ const activeBadge: Badge = {
 };
 
 export type ItwCardOnboardingL3NavigationParams = {
-  page: number;
+  page?: number;
 };
 
 type Props = IOStackNavigationRouteProps<
