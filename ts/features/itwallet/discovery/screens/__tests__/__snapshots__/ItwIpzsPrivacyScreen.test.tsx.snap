@@ -1052,20 +1052,40 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                   >
                                     Premendo 
                                     <Text
+                                      allowFontScaling={true}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
-                                        {
-                                          "fontWeight": "600",
-                                        }
+                                        [
+                                          {},
+                                          {
+                                            "color": undefined,
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": undefined,
+                                          },
+                                        ]
                                       }
                                     >
                                       Continua
                                     </Text>
                                      dichiari di aver letto e compreso l’
                                     <Text
+                                      allowFontScaling={true}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
-                                        {
-                                          "fontWeight": "600",
-                                        }
+                                        [
+                                          {},
+                                          {
+                                            "color": undefined,
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": undefined,
+                                          },
+                                        ]
                                       }
                                     >
                                       Informativa Privacy
@@ -2608,20 +2628,40 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                   >
                                     Premendo 
                                     <Text
+                                      allowFontScaling={true}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
-                                        {
-                                          "fontWeight": "600",
-                                        }
+                                        [
+                                          {},
+                                          {
+                                            "color": undefined,
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": undefined,
+                                          },
+                                        ]
                                       }
                                     >
                                       Continua
                                     </Text>
                                      dichiari di aver letto e compreso l’
                                     <Text
+                                      allowFontScaling={true}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
-                                        {
-                                          "fontWeight": "600",
-                                        }
+                                        [
+                                          {},
+                                          {
+                                            "color": undefined,
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": undefined,
+                                          },
+                                        ]
                                       }
                                     >
                                       Informativa Privacy

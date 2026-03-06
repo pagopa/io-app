@@ -64,9 +64,6 @@ jest.mock("../../../../hooks/useHeaderSecondLevel", () => ({
 }));
 
 describe("ActiveSessionCieIdLoginScreen", () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
 
   it("should navigate to incorrect url screen on invalid URL format", () => {
     jest
