@@ -15,13 +15,14 @@ import {
   ItwEidInfoBottomSheetTitle
 } from "../../common/components/ItwEidInfoBottomSheetContent";
 import { ItwEidLifecycleAlert } from "../../common/components/ItwEidLifecycleAlert";
+import { ItwL2EngagementBanner } from "../../common/components/ItwL2EngagementBanner.tsx";
 import { ItwWalletReadyBanner } from "../../common/components/ItwWalletReadyBanner";
 import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingReviewRequest";
 import { useItwStatusIconColor } from "../../common/hooks/useItwStatusIconColor.ts";
 import {
   itwShouldHideEidLifecycleAlert,
   itwShouldRenderNewItWalletSelector,
-  itwShouldRenderRestrictedModeCardBannerSelector,
+  itwShouldRenderL2EngagementBannerSelector,
   itwShouldRenderUpgradeBannerSelector
 } from "../../common/store/selectors";
 import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils.ts";
@@ -31,7 +32,6 @@ import {
 } from "../../credentials/store/selectors";
 import { ItwDiscoveryBanner } from "../../discovery/components/ItwDiscoveryBanner.tsx";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
-import { ItwRestrictedModeBanner } from "../../common/components/ItwRestrictedModeBanner.tsx";
 import { ItwWalletIdStatus } from "./ItwWalletIdStatus.tsx";
 
 const LIFECYCLE_STATUS: Array<ItwJwtCredentialStatus> = [
@@ -47,8 +47,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const shouldRenderUpgradeBanner = useIOSelector(
     itwShouldRenderUpgradeBannerSelector
   );
-  const shouldRenderRestrictedModeBanner = useIOSelector(
-    itwShouldRenderRestrictedModeCardBannerSelector
+  const shouldRenderL2EngagementBanner = useIOSelector(
+    itwShouldRenderL2EngagementBannerSelector
   );
 
   const cards = useIOSelector(state =>
@@ -141,8 +141,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         header={sectionHeader}
         topElement={
           <VStack space={16}>
-            {shouldRenderRestrictedModeBanner ? (
-              <ItwRestrictedModeBanner />
+            {shouldRenderL2EngagementBanner ? (
+              <ItwL2EngagementBanner />
             ) : (
               <ItwDiscoveryBanner flow="wallet" />
             )}

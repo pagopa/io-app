@@ -9,7 +9,7 @@ import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnviron
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
 import {
-  itwShouldRenderRestrictedModeBannerSelector,
+  itwShouldRenderL2EngagementBannerSelector,
   itwShouldRenderWalletDiscoveryBannerSelector
 } from "../../itwallet/common/store/selectors";
 import { ItwDiscoveryBanner } from "../../itwallet/discovery/components/ItwDiscoveryBanner";
@@ -22,7 +22,7 @@ import {
   shouldRenderWalletLoadingStateSelector
 } from "../store/selectors";
 import { withWalletCategoryFilter } from "../utils";
-import { ItwRestrictedModeBanner } from "../../itwallet/common/components/ItwRestrictedModeBanner";
+import { ItwL2EngagementBanner } from "../../itwallet/common/components/ItwL2EngagementBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
@@ -46,8 +46,8 @@ const WalletCardsContainer = () => {
   const shouldRenderItwDiscoveryBanner = useIOSelector(
     itwShouldRenderWalletDiscoveryBannerSelector
   );
-  const shouldRenderItwRestrictedModeBanner = useIOSelector(
-    itwShouldRenderRestrictedModeBannerSelector
+  const shouldRenderL2EngagementBanner = useIOSelector(
+    itwShouldRenderL2EngagementBannerSelector
   );
 
   useItwWalletInstanceRevocationAlert();
@@ -62,7 +62,7 @@ const WalletCardsContainer = () => {
     }
     return (
       <>
-        {shouldRenderItwRestrictedModeBanner && <ItwRestrictedModeBanner />}
+        {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
         {shouldRenderItwDiscoveryBanner && <ItwDiscoveryBanner />}
         <View testID="walletCardsContainerTestID" style={styles.content}>
           {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
@@ -75,7 +75,7 @@ const WalletCardsContainer = () => {
     shouldRenderEmptyState,
     shouldRenderItwCardsContainer,
     shouldRenderItwDiscoveryBanner,
-    shouldRenderItwRestrictedModeBanner
+    shouldRenderL2EngagementBanner
   ]);
 
   return (

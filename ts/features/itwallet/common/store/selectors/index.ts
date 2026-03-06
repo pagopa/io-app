@@ -206,9 +206,7 @@ export const itwShouldRenderRestrictedModeBannerSelector = (
 ) =>
   !itwLifecycleIsValidSelector(state) && itwIsActivationDisabledSelector(state);
 
-export const itwShouldRenderRestrictedModeCardBannerSelector = (
-  state: GlobalState
-) =>
+export const itwShouldRenderL2EngagementBannerSelector = (state: GlobalState) =>
   !offlineAccessReasonSelector(state) &&
   itwLifecycleIsValidSelector(state) &&
   itwIsActivationDisabledSelector(state);
