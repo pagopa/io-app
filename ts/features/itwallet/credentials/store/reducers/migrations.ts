@@ -191,9 +191,13 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
       }));
 
     const mapIssuerConfig = (config: AnyRecord): IssuerConfiguration => {
-      const { oauth_authorization_server, openid_credential_issuer } =
-        config.metadata;
+      const {
+        oauth_authorization_server,
+        openid_credential_issuer,
+        federation_entity
+      } = config.metadata;
       return {
+        federation_entity,
         authorization_endpoint:
           oauth_authorization_server.authorization_endpoint,
         credential_endpoint: openid_credential_issuer.credential_endpoint,
