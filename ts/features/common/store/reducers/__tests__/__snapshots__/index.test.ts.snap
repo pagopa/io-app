@@ -163,6 +163,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "integrityKeyTag": {
         "_tag": "None",
       },
+      "walletInstanceRenewalError": false,
     },
     "preferences": {},
     "securePreferences": {
