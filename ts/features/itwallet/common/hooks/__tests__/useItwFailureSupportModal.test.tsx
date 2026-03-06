@@ -3,10 +3,8 @@ import configureMockStore from "redux-mock-store";
 import { render } from "@testing-library/react-native";
 import { JSX } from "react";
 import I18n from "i18next";
-import {
-  useItwFailureSupportModal,
-  ZendeskSubcategoryValue
-} from "../useItwFailureSupportModal";
+import { useItwFailureSupportModal } from "../useItwFailureSupportModal";
+import { ZendeskSubcategoryValue } from "../useItwZendeskSupport";
 import {
   IssuanceFailure,
   IssuanceFailureType
