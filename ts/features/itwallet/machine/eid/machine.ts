@@ -244,7 +244,8 @@ export const itwEidIssuanceMachine = setup({
         raise(({ event }) => ({
           type: "start",
           mode: event.mode,
-          level: event.level
+          level: event.level,
+          credentialType: event.credentialType
         }))
       ]
     }
@@ -827,7 +828,11 @@ export const itwEidIssuanceMachine = setup({
               states: {
                 Identification: {
                   on: {
-                    back: "#itwEidIssuanceMachine.UserIdentification.Identification"
+                    back: "#itwEidIssuanceMachine.UserIdentification.Identification",
+                    close: {
+                      target: "#itwEidIssuanceMachine.Idle",
+                      actions: "closeIssuance"
+                    }
                   }
                 },
                 PreparationCie: {
@@ -845,6 +850,10 @@ export const itwEidIssuanceMachine = setup({
                 "go-to-l2-identification": {
                   target:
                     "#itwEidIssuanceMachine.UserIdentification.Identification",
+                  actions: assign({ level: "l2-fallback" })
+                },
+                "go-to-tos": {
+                  target: "#itwEidIssuanceMachine.TosAcceptance",
                   actions: assign({ level: "l2-fallback" })
                 },
                 close: {
