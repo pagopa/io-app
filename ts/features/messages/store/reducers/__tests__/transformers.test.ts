@@ -1,4 +1,4 @@
-import { CreatedMessageWithContentAndAttachments } from "../../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { CreatedMessageWithContentAndAttachments } from "../../../../../../definitions/backend/communication/CreatedMessageWithContentAndAttachments";
 import { message_1 } from "../../../__mocks__/message";
 import { toUIMessageDetails } from "../transformers";
 

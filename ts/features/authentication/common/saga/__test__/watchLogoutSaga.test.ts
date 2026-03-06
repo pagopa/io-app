@@ -14,20 +14,8 @@ import { StartupStatusEnum } from "../../../../../store/reducers/startup";
 import { startApplicationInitialization } from "../../../../../store/actions/application";
 import * as error from "../../../../../utils/errors";
 import { bareSessionTokenSelector } from "../../store/selectors";
-import { KeyInfo } from "../../../../lollipop/utils/crypto";
-import { getKeyInfo } from "../../../../lollipop/saga";
 
 const sessionToken = "mock-session-token";
-const defaultKeyInfo: KeyInfo = {
-  keyTag: "FAKE_KEY_TAG",
-  publicKey: {
-    crv: "P_256",
-    kty: "EC",
-    x: "nDbpq45jXUKfWxodyvec3F1e+r0oTSqhakbauVmB59Y=",
-    y: "CtI6Cozk4O5OJ4Q6WyjiUw9/K6TyU0aDdssd25YHZxg="
-  },
-  publicKeyThumbprint: "FAKE_THUMBPRINT"
-};
 
 const logoutRequestAct = logoutRequest({ withApiCall: true });
 const logoutSuccessAct = logoutSuccess();
@@ -58,8 +46,6 @@ describe("logoutSaga", () => {
       .next()
       .select(bareSessionTokenSelector)
       .next(sessionToken)
-      .call(getKeyInfo)
-      .next(defaultKeyInfo)
       .next(E.right({ status: 200 })) // Logout success
       .put(logoutSuccess())
       .next()
@@ -77,8 +63,6 @@ describe("logoutSaga", () => {
       .next()
       .select(bareSessionTokenSelector)
       .next(sessionToken)
-      .call(getKeyInfo)
-      .next(defaultKeyInfo)
       .next(E.right({ status: 500, value: { title: "Error title" } }))
       .put(logoutFailure({ error: new Error("Error title") }))
       .next()
@@ -96,8 +80,6 @@ describe("logoutSaga", () => {
       .next()
       .select(bareSessionTokenSelector)
       .next(sessionToken)
-      .call(getKeyInfo)
-      .next(defaultKeyInfo)
       .next(E.right({ status: 500, value: {} }))
       .put(logoutFailure({ error: new Error("Unknown error") }))
       .next()
@@ -124,8 +106,6 @@ describe("logoutSaga", () => {
       .next()
       .select(bareSessionTokenSelector)
       .next(sessionToken)
-      .call(getKeyInfo)
-      .next(defaultKeyInfo)
       .next(leftResponse)
       .put(logoutFailure({ error: expectedError }))
       .next()
@@ -146,8 +126,6 @@ describe("logoutSaga", () => {
       .next()
       .select(bareSessionTokenSelector)
       .next(sessionToken)
-      .call(getKeyInfo)
-      .next(defaultKeyInfo)
       .throw(thrownError)
       .put(logoutFailure({ error: thrownError }))
       .next()
@@ -167,8 +145,6 @@ describe("logoutSaga", () => {
       .next()
       .select(bareSessionTokenSelector)
       .next(sessionToken)
-      .call(getKeyInfo)
-      .next(defaultKeyInfo)
       .put(logoutSuccess())
       .next()
       .call(resetMixpanelSaga)

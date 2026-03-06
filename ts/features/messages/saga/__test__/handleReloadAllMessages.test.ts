@@ -12,19 +12,18 @@ import {
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { handleReloadAllMessages } from "../handleReloadAllMessages";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { backendClientManager } from "../../../../api/BackendClientManager";
+import { communicationClientManager } from "../../../../api/CommunicationClientManager";
 
-jest.mock("../../../../api/BackendClientManager");
+jest.mock("../../../../api/CommunicationClientManager");
 
 const mockGetMessages = jest.fn();
-const mockBackendClientManager = backendClientManager as jest.Mocked<
-  typeof backendClientManager
->;
+const mockCommunicationClientManager =
+  communicationClientManager as jest.Mocked<typeof communicationClientManager>;
 
 beforeEach(() => {
   jest.clearAllMocks();
-  mockBackendClientManager.getBackendClient.mockReturnValue({
-    getMessages: mockGetMessages
+  mockCommunicationClientManager.getClient.mockReturnValue({
+    getUserMessages: mockGetMessages
   } as any);
 });
 

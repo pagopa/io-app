@@ -1,7 +1,7 @@
 import { Effect } from "redux-saga/effects";
 import { testSaga } from "redux-saga-test-plan";
 import { call, take } from "typed-redux-saga/macro";
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
+import { PaymentFaultV2Enum } from "../../../../../definitions/backend/communication/PaymentFaultV2";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import {
   cancelPaymentStatusTracking,
@@ -119,7 +119,7 @@ describe("handlePaymentStatusForAnalyticsTracking", () => {
           messageId,
           paymentId,
           reason: toSpecificMessagePaymentError(
-            Detail_v2Enum.PAA_PAGAMENTO_SCADUTO
+            PaymentFaultV2Enum.PAA_PAGAMENTO_SCADUTO
           ),
           serviceId
         })
@@ -132,7 +132,7 @@ describe("handlePaymentStatusForAnalyticsTracking", () => {
           messageId,
           paymentId,
           reason: toSpecificMessagePaymentError(
-            Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+            PaymentFaultV2Enum.PAA_PAGAMENTO_ANNULLATO
           ),
           serviceId
         })
@@ -145,7 +145,7 @@ describe("handlePaymentStatusForAnalyticsTracking", () => {
           messageId,
           paymentId,
           reason: toSpecificMessagePaymentError(
-            Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+            PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO
           ),
           serviceId
         })
@@ -158,7 +158,7 @@ describe("handlePaymentStatusForAnalyticsTracking", () => {
           messageId,
           paymentId,
           reason: toSpecificMessagePaymentError(
-            Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+            PaymentFaultV2Enum.PPT_PAGAMENTO_DUPLICATO
           ),
           serviceId
         })
@@ -171,7 +171,7 @@ describe("handlePaymentStatusForAnalyticsTracking", () => {
           messageId,
           paymentId,
           reason: toSpecificMessagePaymentError(
-            Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO
+            PaymentFaultV2Enum.PAA_PAGAMENTO_IN_CORSO
           ),
           serviceId
         })
@@ -184,7 +184,7 @@ describe("handlePaymentStatusForAnalyticsTracking", () => {
           messageId,
           paymentId,
           reason: toSpecificMessagePaymentError(
-            Detail_v2Enum.PPT_PAGAMENTO_IN_CORSO
+            PaymentFaultV2Enum.PPT_PAGAMENTO_IN_CORSO
           ),
           serviceId
         })
@@ -196,7 +196,9 @@ describe("handlePaymentStatusForAnalyticsTracking", () => {
         updatePaymentForMessage.failure({
           messageId,
           paymentId,
-          reason: toSpecificMessagePaymentError(Detail_v2Enum.GENERIC_ERROR),
+          reason: toSpecificMessagePaymentError(
+            PaymentFaultV2Enum.GENERIC_ERROR
+          ),
           serviceId
         })
       );

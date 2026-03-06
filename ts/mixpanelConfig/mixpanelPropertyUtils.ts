@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
-import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesPreferencesMode";
+import { ServicesPreferencesModeEnum } from "../../definitions/backend/identity/ServicesPreferencesMode";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
 import { fastLoginOptInSelector } from "../features/authentication/fastLogin/store/selectors";

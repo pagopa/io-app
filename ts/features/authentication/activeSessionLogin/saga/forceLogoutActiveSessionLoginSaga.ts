@@ -2,17 +2,14 @@ import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { select, put, takeLatest, call } from "typed-redux-saga/macro";
 import * as E from "fp-ts/lib/Either";
 import { ActionType, getType } from "typesafe-actions";
-import { backendClientManager } from "../../../../api/BackendClientManager";
+import { sessionManagerClientManager } from "../../../../api/SessionManagerClientManager";
 import { apiUrlPrefix } from "../../../../config";
 import { resetMixpanelSaga } from "../../../../sagas/mixpanel";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import { SagaCallReturnType, ReduxSagaEffect } from "../../../../types/utils";
 import { convertUnknownToError } from "../../../../utils/errors";
 import { resetAssistanceData } from "../../../../utils/supportAssistance";
-import {
-  getKeyInfo,
-  deleteCurrentLollipopKeyAndGenerateNewKeyTag
-} from "../../../lollipop/saga";
+import { deleteCurrentLollipopKeyAndGenerateNewKeyTag } from "../../../lollipop/saga";
 import { trackLogoutSuccess, trackLogoutFailure } from "../../common/analytics";
 import { sessionCorrupted } from "../../common/store/actions";
 import { sessionTokenSelector } from "../../common/store/selectors";
@@ -32,7 +29,6 @@ export function* logoutUserAfterActiveSessionLoginSaga(
     | ActionType<typeof logoutBeforeSessionCorrupted>
 ) {
   const sessionToken = yield* select(sessionTokenSelector);
-  const keyInfo = yield* call(getKeyInfo);
 
   if (!sessionToken) {
     trackUndefinedBearerToken(
@@ -41,10 +37,9 @@ export function* logoutUserAfterActiveSessionLoginSaga(
     return;
   }
 
-  const { logout } = backendClientManager.getBackendClient(
+  const { logout } = sessionManagerClientManager.getClient(
     apiUrlPrefix,
-    sessionToken,
-    keyInfo
+    sessionToken
   );
 
   try {

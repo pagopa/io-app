@@ -3,7 +3,7 @@ import { ActionType } from "typesafe-actions";
 import { convertUnknownToError } from "../../../utils/errors";
 import { loadMessageById } from "../store/actions";
 import { toUIMessage } from "../store/reducers/transformers";
-import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/communication/CreatedMessageWithContentAndAttachments";
 import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../types/utils";
 import { errorToReason, unknownToReason } from "../utils";
@@ -13,9 +13,10 @@ import {
   UndefinedBearerTokenPhase
 } from "../analytics";
 import { handleResponse } from "../utils/responseHandling";
-import { backendClientManager } from "../../../api/BackendClientManager";
+import { communicationClientManager } from "../../../api/CommunicationClientManager";
 import { apiUrlPrefix } from "../../../config";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { getKeyInfo } from "../../lollipop/saga";
 
 export function* handleLoadMessageById(
   action: ActionType<typeof loadMessageById.request>
@@ -29,9 +30,12 @@ export function* handleLoadMessageById(
     return;
   }
 
-  const { getMessage } = backendClientManager.getBackendClient(
+  const keyInfo = yield* call(getKeyInfo);
+
+  const { getUserMessage: getMessage } = communicationClientManager.getClient(
     apiUrlPrefix,
-    sessionToken
+    sessionToken,
+    keyInfo
   );
 
   try {

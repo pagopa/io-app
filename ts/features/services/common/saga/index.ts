@@ -7,13 +7,13 @@ import { watchSearchSaga } from "../../search/saga";
 import { createServicesClient } from "../api/servicesClient";
 import { watchServicesDetailsSaga } from "../../details/saga";
 import { watchFavouriteServicesSaga } from "../../favouriteServices/saga";
-import { BackendClient } from "../../../../api/backend";
+import { IdentityClient } from "../../../../api/IdentityClientManager";
 import { loadServicePreference } from "../../details/store/actions/preference";
 import { isFavouriteServicesEnabledSelector } from "../store/selectors/remoteConfig";
 import { specialServicePreferencesSaga } from "./specialServicePreferencesSaga";
 
 export function* watchServicesSaga(
-  backendClient: BackendClient,
+  identityClient: IdentityClient,
   bearerToken: string
 ): SagaIterator {
   const servicesClient = yield* call(
@@ -22,7 +22,7 @@ export function* watchServicesSaga(
     bearerToken
   );
 
-  yield* fork(watchServicesDetailsSaga, backendClient, servicesClient);
+  yield* fork(watchServicesDetailsSaga, identityClient, servicesClient);
   yield* fork(watchHomeSaga, servicesClient);
   yield* fork(watchInstitutionSaga, servicesClient);
   yield* fork(watchSearchSaga, servicesClient);

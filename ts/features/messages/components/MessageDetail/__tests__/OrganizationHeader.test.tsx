@@ -1,6 +1,6 @@
 import { act, fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../../definitions/backend/communication/ServiceId";
 import * as USE_IO_NAV from "../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";

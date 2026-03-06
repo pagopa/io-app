@@ -5,11 +5,11 @@ import ROUTES from "../../../../navigation/routes";
 import { requestNotificationPermissions } from "../../utils";
 import { notificationsInfoScreenConsent } from "../../store/actions/profileNotificationPermissions";
 import { profileAndSystemNotificationsPermissions } from "../profileAndSystemNotificationsPermissions";
-import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
-import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
+import { InitializedProfile } from "../../../../../definitions/backend/identity/InitializedProfile";
+import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/identity/ServicesPreferencesMode";
 import { profileUpsert } from "../../../settings/common/store/actions";
-import { PushNotificationsContentTypeEnum } from "../../../../../definitions/backend/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../../../definitions/backend/ReminderStatus";
+import { PushNotificationsContentTypeEnum } from "../../../../../definitions/backend/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "../../../../../definitions/backend/identity/ReminderStatus";
 import {
   trackNotificationsOptInPreviewStatus,
   trackNotificationsOptInReminderStatus,

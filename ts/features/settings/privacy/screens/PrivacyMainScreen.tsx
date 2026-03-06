@@ -15,8 +15,8 @@ import {
 } from "react";
 import { Alert, AlertButton, FlatList, ListRenderItemInfo } from "react-native";
 import I18n from "i18next";
-import { UserDataProcessingChoiceEnum } from "../../../../../definitions/backend/UserDataProcessingChoice";
-import { UserDataProcessingStatusEnum } from "../../../../../definitions/backend/UserDataProcessingStatus";
+import { UserDataProcessingChoiceEnum } from "../../../../../definitions/backend/identity/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "../../../../../definitions/backend/identity/UserDataProcessingStatus";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";

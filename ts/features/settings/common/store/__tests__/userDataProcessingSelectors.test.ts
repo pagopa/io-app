@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { GlobalState } from "../../../../../store/reducers/types";
 
-import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/UserDataProcessingChoice";
+import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/identity/UserDataProcessingChoice";
 import {
   isUserDataProcessingDeleteErrorSelector,
   isUserDataProcessingDeleteLoadingSelector,

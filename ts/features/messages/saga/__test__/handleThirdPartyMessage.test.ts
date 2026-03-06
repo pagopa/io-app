@@ -3,12 +3,12 @@ import { testSaga } from "redux-saga-test-plan";
 import {
   TagEnum,
   TagEnum as TEBASE
-} from "../../../../../definitions/backend/MessageCategoryBase";
-import { TagEnum as TEPAYMENT } from "../../../../../definitions/backend/MessageCategoryPayment";
-import { TagEnum as TESEND } from "../../../../../definitions/backend/MessageCategoryPN";
+} from "../../../../../definitions/backend/communication/MessageCategoryBase";
+import { TagEnum as TEPAYMENT } from "../../../../../definitions/backend/communication/MessageCategoryPayment";
+import { TagEnum as TESEND } from "../../../../../definitions/backend/communication/MessageCategoryPN";
 import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 import { handleThirdPartyMessage, testable } from "../handleThirdPartyMessage";
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
+import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/communication/ThirdPartyMessageWithContent";
 import * as ANALYTICS from "../../analytics";
 import * as SEND_ANALYTICS from "../../../pn/analytics";
 import { loadThirdPartyMessage } from "../../store/actions";
@@ -17,16 +17,15 @@ import { serviceDetailsByIdSelector } from "../../../services/details/store/sele
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { ThirdPartyMessageUnion } from "../../types/thirdPartyById";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { backendClientManager } from "../../../../api/BackendClientManager";
+import { communicationClientManager } from "../../../../api/CommunicationClientManager";
 import { getKeyInfo } from "../../../lollipop/saga";
 
-// Mock the backendClientManager
-jest.mock("../../../../api/BackendClientManager");
+// Mock the communicationClientManager
+jest.mock("../../../../api/CommunicationClientManager");
 
 const mockGetThirdPartyMessage = jest.fn();
-const mockBackendClientManager = backendClientManager as jest.Mocked<
-  typeof backendClientManager
->;
+const mockCommunicationClientManager =
+  communicationClientManager as jest.Mocked<typeof communicationClientManager>;
 
 describe("handleThirdPartyMessage", () => {
   const serviceDetails = {
@@ -40,8 +39,8 @@ describe("handleThirdPartyMessage", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockBackendClientManager.getBackendClient.mockReturnValue({
-      getThirdPartyMessage: () => mockGetThirdPartyMessage
+    mockCommunicationClientManager.getClient.mockReturnValue({
+      getThirdPartyMessage: mockGetThirdPartyMessage
     } as any);
   });
 

@@ -9,7 +9,7 @@ import {
   sessionInformationLoadSuccess
 } from "../store/actions";
 
-import { BackendClient } from "../../../../api/backend";
+import { SessionManagerClient } from "../../../../api/SessionManagerClientManager";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
 import { convertUnknownToError } from "../../../../utils/errors";
 
@@ -21,7 +21,7 @@ import { convertUnknownToError } from "../../../../utils/errors";
  *        a saga.
  */
 export function* loadSessionInformationSaga(
-  getSession: ReturnType<typeof BackendClient>["getSession"],
+  getSession: SessionManagerClient["getSessionState"],
   fields?: string
 ): Generator<
   ReduxSagaEffect,

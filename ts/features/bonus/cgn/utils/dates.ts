@@ -1,5 +1,5 @@
 import I18n from "i18next";
-import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
+import { InitializedProfile } from "../../../../../definitions/backend/identity/InitializedProfile";
 import { formatDateAsShortFormat } from "../../../../utils/dates";
 
 type CgnUserAgeRange = "18-25" | "26-30" | "31-35" | "unrecognized";

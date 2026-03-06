@@ -3,10 +3,10 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { ProfileState } from "../reducers";
-import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
-import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/backend/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../../../../definitions/backend/ReminderStatus";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/ServicesPreferencesMode";
+import { InitializedProfile } from "../../../../../../definitions/backend/identity/InitializedProfile";
+import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/backend/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "../../../../../../definitions/backend/identity/ReminderStatus";
+import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/identity/ServicesPreferencesMode";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { capitalize } from "../../../../../utils/strings";
 import {
