@@ -64,7 +64,6 @@ jest.mock("../../../../hooks/useHeaderSecondLevel", () => ({
 }));
 
 describe("ActiveSessionCieIdLoginScreen", () => {
-
   it("should navigate to incorrect url screen on invalid URL format", () => {
     jest
       .spyOn(Linking, "addEventListener")
