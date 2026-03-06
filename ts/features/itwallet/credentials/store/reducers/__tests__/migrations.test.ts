@@ -1,12 +1,8 @@
 import _ from "lodash";
 import { Mdoc, SdJwt } from "@pagopa/io-react-native-wallet";
 import { itwCredentialsStateMigrations } from "../migrations";
-import { WALLET_SPEC_VERSION } from "../../../../common/utils/constants";
 
 jest.mock("@pagopa/io-react-native-wallet");
-jest.mock("../../../../common/utils/constants", () => ({
-  WALLET_SPEC_VERSION: "1.0.0"
-}));
 
 describe("ITW credentials reducer migrations", () => {
   beforeEach(() => {
@@ -519,7 +515,7 @@ describe("ITW credentials reducer migrations", () => {
             expiration: "2024-06-12T11:33:20.000Z",
             issuedAt: "2024-06-11T18:53:20.000Z"
           },
-          spec_version: WALLET_SPEC_VERSION,
+          spec_version: "1.0.0",
           verification: mockSdJwtVerification
         },
         mso_mdoc_mDL: {
@@ -533,7 +529,7 @@ describe("ITW credentials reducer migrations", () => {
             expiration: "2024-06-12T11:33:20.000Z",
             issuedAt: "2024-06-11T18:53:20.000Z"
           },
-          spec_version: WALLET_SPEC_VERSION,
+          spec_version: "1.0.0",
           verification: mockMdocVerification
         }
       },
@@ -589,7 +585,7 @@ describe("ITW credentials reducer migrations", () => {
             expiration: "2024-06-12T11:33:20.000Z",
             issuedAt: "2024-06-11T18:53:20.000Z"
           },
-          spec_version: WALLET_SPEC_VERSION,
+          spec_version: "1.0.0",
           verification: undefined
         }
       },

@@ -17,7 +17,6 @@ import {
   regenerateCryptoKey,
   WIA_KEYTAG
 } from "./itwCryptoContextUtils";
-import { WALLET_SPEC_VERSION } from "./constants";
 import { extractVerification } from "./itwCredentialUtils";
 import { Env } from "./environment";
 import { getIoWallet } from "./itwIoWallet";
@@ -212,7 +211,7 @@ const getPid = async ({
       expiration: expiration.toISOString(),
       issuedAt: issuedAt?.toISOString()
     },
-    spec_version: WALLET_SPEC_VERSION,
+    spec_version: ioWallet.version,
     verification: extractVerification({ format, credential, parsedCredential })
   };
 };

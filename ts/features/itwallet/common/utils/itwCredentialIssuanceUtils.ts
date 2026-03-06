@@ -17,7 +17,6 @@ import {
   RequestObject,
   StoredCredential
 } from "./itwTypesUtils";
-import { WALLET_SPEC_VERSION } from "./constants";
 import { extractVerification } from "./itwCredentialUtils";
 import { Env } from "./environment";
 import { enrichErrorWithMetadata } from "./itwFailureUtils";
@@ -295,7 +294,7 @@ const requestAndParseCredential = async ({
       expiration: expiration.toISOString(),
       issuedAt: issuedAt?.toISOString()
     },
-    spec_version: WALLET_SPEC_VERSION,
+    spec_version: ioWallet.version,
     verification: extractVerification({ format, credential, parsedCredential })
   };
 };
