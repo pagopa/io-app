@@ -168,7 +168,10 @@ export const createRemoteActorsImplementation = (
     // Prepare credentials to evaluate the Relying Party request
     const credentialsSdJwt = prepareCredentialsForDcqlEvaluation([
       ...Object.values(credentials),
-      { keyTag: WIA_KEYTAG, credential: wiaSdJwt }
+      {
+        keyTag: WIA_KEYTAG,
+        credential: wiaSdJwt.endsWith("~") ? wiaSdJwt : `${wiaSdJwt}~`
+      }
     ]);
 
     // Evaluate the DCQL query against the credentials contained in the Wallet
@@ -205,16 +208,11 @@ export const createRemoteActorsImplementation = (
     const ioWallet = getIoWallet(itwVersion);
 
     // Get required credentials and optional credentials that have been selected by the user
-    const credentialsToPresent = presentationDetails
-      .filter(
-        c =>
-          c.purposes.some(({ required }) => required) ||
-          optionalCredentials.has(c.id)
-      )
-      .map(({ requiredDisclosures, ...rest }) => ({
-        ...rest,
-        requestedClaims: requiredDisclosures.map(disclosure => disclosure.name)
-      }));
+    const credentialsToPresent = presentationDetails.filter(
+      c =>
+        c.purposes.some(({ required }) => required) ||
+        optionalCredentials.has(c.id)
+    );
 
     const remotePresentations =
       await ioWallet.RemotePresentation.prepareRemotePresentations(
