@@ -15,6 +15,7 @@ import {
   UnrelatedCieComponent
 } from "../components/errors/SendAarCieValidationErrorComponent";
 import { SendAarGenericErrorComponent } from "../components/errors/SendAARErrorComponent";
+import { SendAarPendingDelegationErrorComponent } from "../components/errors/SendAarPendingDelegationErrorComponent";
 
 const cieErrors = {
   PN_MANDATE_BADREQUEST: "PN_MANDATE_BADREQUEST",
@@ -91,6 +92,12 @@ const specificBehavioursByStatus: {
     [sendAarProblemJsonErrorCodes.PN_MANDATE_NOTFOUND]: {
       track: constVoid,
       Component: CieValidationExpiredTtlComponent
+    }
+  },
+  [409]: {
+    [sendAarProblemJsonErrorCodes.PN_MANDATE_ALREADYEXISTS]: {
+      track: constVoid,
+      Component: SendAarPendingDelegationErrorComponent
     }
   }
 };

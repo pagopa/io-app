@@ -34,7 +34,7 @@ const makeProblemJson = (
 describe("AarErrorMappings", () => {
   beforeEach(jest.clearAllMocks);
   describe("resolveAarError", () => {
-    [422, 400, 500, 418, 404].forEach(responseStatus => {
+    [422, 400, 500, 418, 404, 409].forEach(responseStatus => {
       Object.values(sendAarProblemJsonErrorCodes).forEach(errCode => {
         const maybeSpecificErrorBehaviour =
           specificBehavioursByStatus[responseStatus] &&
