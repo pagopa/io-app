@@ -415,20 +415,40 @@ exports[`IOMarkdown Should match snapshot 1`] = `
                         >
                           This is an example of 
                           <Text
+                            allowFontScaling={true}
+                            maxFontSizeMultiplier={1.5}
                             style={
-                              {
-                                "fontWeight": "600",
-                              }
+                              [
+                                {},
+                                {
+                                  "color": undefined,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                  "lineHeight": undefined,
+                                },
+                              ]
                             }
                           >
                             bold text
                           </Text>
                            and this is an example of 
                           <Text
+                            allowFontScaling={true}
+                            maxFontSizeMultiplier={1.5}
                             style={
-                              {
-                                "fontStyle": "italic",
-                              }
+                              [
+                                {},
+                                {
+                                  "color": undefined,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
+                                  "fontStyle": "italic",
+                                  "fontWeight": "400",
+                                  "lineHeight": undefined,
+                                },
+                              ]
                             }
                           >
                             italic text
