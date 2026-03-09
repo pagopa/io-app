@@ -853,7 +853,7 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -1092,7 +1092,7 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -1897,7 +1897,7 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -2136,7 +2136,7 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -2946,7 +2946,7 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -3185,7 +3185,7 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
