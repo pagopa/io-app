@@ -2,13 +2,13 @@ import { ActionArgs, assign } from "xstate";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOStore } from "../../../../../store/hooks";
 import { serializeFailureReason } from "../../../common/utils/itwStoreUtils";
-import { itwCredentialsAllSelector } from "../../../credentials/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors";
 import {
   trackItwProximityQrCode,
   trackItwProximityQrCodeLoadingFailure
 } from "../analytics";
+import { itwCredentialsByDocTypeSelector } from "../store/selectors";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
 import { mapEventToFailure } from "./failure";
@@ -23,7 +23,7 @@ export const createProximityActionsImplementation = (
 
       return {
         walletInstanceAttestation: itwWalletInstanceAttestationSelector(state),
-        credentials: itwCredentialsAllSelector(state)
+        credentials: itwCredentialsByDocTypeSelector(state)
       };
     }
   ),

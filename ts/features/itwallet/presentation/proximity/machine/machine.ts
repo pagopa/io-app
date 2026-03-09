@@ -88,11 +88,11 @@ export const itwProximityMachine = setup({
         "The machine is in idle, ready to start the proximity presentation flow",
       on: {
         start: {
-          actions: assign(({ event, context }) => ({
-            ...InitialContext,
-            walletInstanceAttestation: context.walletInstanceAttestation,
-            credentials: context.credentials,
-            credentialType: event.credentialType
+          // Resets context
+          actions: assign(() => ({
+            failure: undefined,
+            proximityDetails: undefined,
+            verifierRequest: undefined
           })),
           target: "Permissions"
         }

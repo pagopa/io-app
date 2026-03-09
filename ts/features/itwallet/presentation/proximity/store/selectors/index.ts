@@ -24,7 +24,7 @@ const itwCredentialsAsMdocSelector = makeSelectAllCredentials(
  * @param state - The global state.
  * @returns The credentials object by doc type.
  */
-export const itwCredentialsByTypeSelector = createSelector(
+export const itwCredentialsByDocTypeSelector = createSelector(
   itwCredentialsAsMdocSelector,
   (credentials): Record<string, CredentialMetadata> =>
     Object.values(credentials).reduce<Record<string, CredentialMetadata>>(
