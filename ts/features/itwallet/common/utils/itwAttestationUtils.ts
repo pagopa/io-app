@@ -26,12 +26,14 @@ export const getIntegrityHardwareKeyTag = async (): Promise<string> =>
  * @param itwVersion - IT-Wallet technical specs version
  * @param hardwareKeyTag - the hardware key tag of the integrity Context
  * @param sessionToken - the session token to use for the API calls
+ * @param options - options to specify if the registration is for a renewal or not
  */
 export const registerWalletInstance = async (
   { WALLET_PROVIDER_BASE_URL }: Env,
   itwVersion: ItwVersion,
   hardwareKeyTag: string,
-  sessionToken: string
+  sessionToken: string,
+  options?: { isRenewal?: boolean }
 ) => {
   const ioWallet = getIoWallet(itwVersion);
   const integrityContext = getIntegrityContext(hardwareKeyTag);
@@ -44,6 +46,7 @@ export const registerWalletInstance = async (
   await ioWallet.WalletInstance.createWalletInstance({
     integrityContext,
     walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
+    isRenewal: options?.isRenewal,
     appFetch
   });
 };

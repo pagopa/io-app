@@ -7,12 +7,17 @@ import { assert } from "../../../../utils/assert";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import * as cieUtils from "../../../authentication/login/cie/utils/cie";
 import { trackItwRequest } from "../../analytics";
+import {
+  trackWalletInstanceRenewalFailure,
+  trackWalletInstanceRenewalSuccess
+} from "../../issuance/analytics";
 import { Env } from "../../common/utils/environment";
 import {
   getAttestation,
   getIntegrityHardwareKeyTag,
   registerWalletInstance
 } from "../../common/utils/itwAttestationUtils";
+import { isAssertionGenerationError } from "../../common/utils/itwFailureUtils";
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
 import { pollForStoreValue } from "../../common/utils/itwStoreUtils";
@@ -21,10 +26,13 @@ import {
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import * as mrtdUtils from "../../common/utils/mrtd";
+import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 import {
   itwIntegrityKeyTagSelector,
   itwIntegrityServiceStatusSelector
 } from "../../issuance/store/selectors";
+import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
+import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { createCredentialUpgradeActionsImplementation } from "../upgrade/actions";
@@ -146,12 +154,67 @@ export const createEidIssuanceActorsImplementation = (
   getWalletAttestation: fromPromise<
     WalletInstanceAttestations,
     GetWalletAttestationActorParams
-  >(({ input }) => {
+  >(async ({ input }) => {
     const sessionToken = sessionTokenSelector(store.getState());
     assert(sessionToken, "sessionToken is undefined");
     assert(input.integrityKeyTag, "integrityKeyTag is undefined");
 
-    return getAttestation(env, itwVersion, input.integrityKeyTag, sessionToken);
+    try {
+      return await getAttestation(
+        env,
+        itwVersion,
+        input.integrityKeyTag,
+        sessionToken
+      );
+    } catch (firstError) {
+      // On iOS, the stored DCAppAttest key can become invalid (DCErrorInvalidKey,
+      // com.apple.devicecheck.error 3), causing GENERATION_ASSERTION_FAILED during
+      // assertion generation. We recover by creating a new wallet instance with a
+      // fresh key and retrying the attestation once.
+      const isRenewalError = itwWalletInstanceRenewalErrorSelector(
+        store.getState()
+      );
+
+      // If the error is not related to assertion generation or if we've already attempted a renewal, we throw the error and prompt the user to retry.
+      if (!isAssertionGenerationError(firstError) || isRenewalError) {
+        throw firstError;
+      }
+
+      // Otherwise, we attempt to recover by creating a new wallet instance,
+      // which will generate a new hardware key tag,
+      // and retrying the attestation with the new key tag.
+      const newHardwareKeyTag = await getIntegrityHardwareKeyTag();
+      store.dispatch(itwStoreIntegrityKeyTag(newHardwareKeyTag));
+      await registerWalletInstance(
+        env,
+        itwVersion,
+        newHardwareKeyTag,
+        sessionToken,
+        {
+          isRenewal: true
+        }
+      );
+
+      return await getAttestation(
+        env,
+        itwVersion,
+        newHardwareKeyTag,
+        sessionToken
+      )
+        .then(attestation => {
+          // Track the successful renewal in Mixpanel
+          trackWalletInstanceRenewalSuccess();
+          return attestation;
+        })
+        .catch(error => {
+          // If the attestation retrieval fails again after renewing the wallet instance,
+          // we set a flag in the store to prevent further renewal attempts and prompt the user with an error.
+          store.dispatch(itwSetWalletInstanceRenewalError(true));
+          // Track the renewal failure in Mixpanel
+          trackWalletInstanceRenewalFailure(error);
+          throw error;
+        });
+    }
   }),
 
   revokeWalletInstance: fromPromise(async () => {
