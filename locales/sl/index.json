@@ -140,7 +140,7 @@
       "message": "To smo prijavili naši ekipi! Zapri aplikacijo in začni znova!"
     },
     "markdown": {
-      "reference": "[demo]I am a custom demo tag at the beginning of the markdown[/demo]\n\n# Naslov h1: Lorem ipsum dolor sit amet, consectetur adipisici elit\n\nTesto semplice\n\n## Naslov h2: sed eiusmod tempor incidunt ut labore et dolore magna aliqua\n\ntesto semplice\n\n### Naslov h3: Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.\n\ngolo besedilo\n\nLorem **ipsum dolor** sit amet, *consectetur* adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Unam incolunt Belgae, aliam Aquitani, tertiam.\n\n\nLorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Magna pars studiorum, prodita quaerimus. Phasellus laoreet lorem vel dolor tempus vehicula. Fabio vel iudice vincam, sunt in culpa qui officia. Idque Caesaris facere voluntate liceret: sese habere. Tu quoque, Brute, fili mi, nihil timor populi, nihil!  \nNec dubitamus multa iter quae et nos invenerat. Cum sociis natoque penatibus et magnis dis parturient. Donec sed odio operae, eu vulputate felis rhoncus. Tityre, tu patulae recubans sub tegmine fagi dolor. At nos hinc posthac, sitientis piros Afros. Non equidem invideo, miror magis posuere velit aliquet.  \nHi omnes lingua, institutis, legibus inter se differunt. Quae vero auctorem tractata ab fiducia dicuntur. Plura mihi bona sunt, inclinet, amari petere vellent. Sed haec quis possit intrepidus aestimare tellus. Curabitur blandit tempus ardua ridiculus sed magna.\n\n[demo]I am a custom demo tag in the middle of the markdown[/demo]\n\nLorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Fabio vel iudice vincam, sunt in culpa qui officia.\n\n\n> Quote o indent\n\nSeznam:\n\n- ena\n- dva\n- tri\n\nO�tevilcen seznam:\n\n1. ena\n2. dva\n3. tri\n\n\nPovezava\n\n[primer povezave](https://io.italia.it)\n\n\nPrimer notranje povezave\n\n[home nastavitve](ioit://PREFERENCES_HOME),\n[seznam storitev](ioit://SERVICES_HOME),\n[profil](ioit://PROFILE_MAIN),\n[denarnica](ioit://WALLET_HOME),\n[zasebnost](ioit://PROFILE_PRIVACY_MAIN),\n[dolocila in pogoji uporabe](ioit://PROFILE_TOS),\n[pravilnik o zasebnosti](ioit://PROFILE_PRIVACY)\n[seznam sporocil](ioit://MESSAGES_LIST)\n\n\nhttps://help.github.com/articles/basic-writing-and-formatting-syntax/\n",
+      "reference": "[demo]I am a custom demo tag at the beginning of the markdown[/demo]\n\n# Naslov h1: Lorem ipsum dolor sit amet, consectetur adipisici elit\n\nTesto semplice\n\n## Naslov h2: sed eiusmod tempor incidunt ut labore et dolore magna aliqua\n\ntesto semplice\n\n### Naslov h3: Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.\n\ngolo besedilo\n\nLorem **ipsum dolor** sit amet, *consectetur* adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Unam incolunt Belgae, aliam Aquitani, tertiam.\n\n\nLorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Magna pars studiorum, prodita quaerimus. Phasellus laoreet lorem vel dolor tempus vehicula. Fabio vel iudice vincam, sunt in culpa qui officia. Idque Caesaris facere voluntate liceret: sese habere. Tu quoque, Brute, fili mi, nihil timor populi, nihil!  \nNec dubitamus multa iter quae et nos invenerat. Cum sociis natoque penatibus et magnis dis parturient. Donec sed odio operae, eu vulputate felis rhoncus. Tityre, tu patulae recubans sub tegmine fagi dolor. At nos hinc posthac, sitientis piros Afros. Non equidem invideo, miror magis posuere velit aliquet.  \nHi omnes lingua, institutis, legibus inter se differunt. Quae vero auctorem tractata ab fiducia dicuntur. Plura mihi bona sunt, inclinet, amari petere vellent. Sed haec quis possit intrepidus aestimare tellus. Curabitur blandit tempus ardua ridiculus sed magna.\n\n[demo]I am a custom demo tag in the middle of the markdown[/demo]\n\nLorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Fabio vel iudice vincam, sunt in culpa qui officia.\n\n\n> Quote o indent\n\nSeznam:\n\n- ena\n- dva\n- tri\n\nOštevilčen seznam:\n\n1. ena\n2. dva\n3. tri\n\n\nPovezava\n\n[primer povezave](https://io.italia.it)\n\n\nPrimer notranje povezave\n\n[home nastavitve](ioit://PREFERENCES_HOME),\n[seznam storitev](ioit://SERVICES_HOME),\n[profil](ioit://PROFILE_MAIN),\n[denarnica](ioit://WALLET_HOME),\n[zasebnost](ioit://PROFILE_PRIVACY_MAIN),\n[določila in pogoji uporabe](ioit://PROFILE_TOS),\n[pravilnik o zasebnosti](ioit://PROFILE_PRIVACY)\n[seznam sporočil](ioit://MESSAGES_LIST)\n\n\nhttps://help.github.com/articles/basic-writing-and-formatting-syntax/\n",
       "decodeError": "Sporočila ni mogoče dešifrirati"
     },
     "buttons": {
@@ -289,7 +289,7 @@
       "clearAsyncStorage": "Izbriši vsebino AsyncStorage",
       "dumpAsyncStorage": "Prenesi vsebino AsyncStorage",
       "contextualHelpTitle": "Kaj lahko storiš v svojem profilu",
-      "contextualHelpContent": "**V razdelku Profil lahko upravlja� vse svoje nastavitve.**\nTu lahko upravlja� svoje nastavitve, svojo zasebnost in svoj racun. V tem razdelku lahko dostopa� tudi do svojih dokumentov v digitalni razlicici, tako da izbere� kartice, ki se prika�ejo na vrhu zaslona.\n",
+      "contextualHelpContent": "**V razdelku Profil lahko upravljaš vse svoje nastavitve.**\nTu lahko upravljaš svoje nastavitve, svojo zasebnost in svoj račun. V tem razdelku lahko dostopaš tudi do svojih dokumentov v digitalni različici, tako da izbereš kartice, ki se prikažejo na vrhu zaslona.\n",
       "developerModeOn": "Aktiviran razvijalski način",
       "cache": {
         "alert": "Ali res želiš počistiti predpomnilnik?",
@@ -365,9 +365,9 @@
           "updated": "Posodobili smo naše Obvestilo ter Določila in pogoje uporabe",
           "infobox": "Prebrati in sprejeti je treba Obvestilo ter Določila in pogoje uporabe",
           "contextualHelpTitlePolicy": "Informacije o obdelavi osebnih podatkov in pogojih uporabe storitve",
-          "contextualHelpContentPolicy": "### Kaj sta Obvestilo in Pogoji uporabe?\n\nPo dolocbah 13. cl. Uredbe EU �t. 2016/679 (obicajno GDPR), v Obvestilih najde� podroben opis, kako aplikacija IO upravlja tvoje osebne podatke. Pogoji uporabe pa dolocajo tvoje pravice in obveznosti pri uporabi aplikacije in njenih storitev.<br/><br/><br/><br/>\n\n",
+          "contextualHelpContentPolicy": "### Kaj sta Obvestilo in Pogoji uporabe?\n\nPo določbah 13. čl. Uredbe EU št. 2016/679 (običajno GDPR), v Obvestilih najdeš podroben opis, kako aplikacija IO upravlja tvoje osebne podatke. Pogoji uporabe pa določajo tvoje pravice in obveznosti pri uporabi aplikacije in njenih storitev.<br/><br/><br/><br/>\n\n",
           "contextualHelpTitle": "Tvoje nastavitve zasebnosti",
-          "contextualHelpContent": "**Tukaj najde� informacije v zvezi z zasebnostjo tvojega profila**: lahko si ogleda� informacije o obdelavi osebnih podatkov, izbri�e� svoj racun in izvozi� osebne podatke, povezane s tvojim profilom.\n"
+          "contextualHelpContent": "**Tukaj najdeš informacije v zvezi z zasebnostjo tvojega profila**: lahko si ogledaš informacije o obdelavi osebnih podatkov, izbrišeš svoj račun in izvoziš osebne podatke, povezane s tvojim profilom.\n"
         },
         "shareData": {
           "title": "Zasebnost",
@@ -390,7 +390,7 @@
               "description": {
                 "one": "Za zaščito tvojih podatkov izvajamo varnostne ukrepe."
               },
-              "cta": "Izvej več"
+              "cta": "Izvedi več"
             },
             "gdpr": {
               "description": {
@@ -468,7 +468,7 @@
       "title": "Nastavitve",
       "subtitle": "Te nastavitve ti omogočajo, da prilagodiš izkušnjo aplikacije IO.",
       "contextualHelpTitle": "Tvoje nastavitve",
-      "contextualHelpContent": "**V Nastavitvah lahko preveri� in spremeni� nastavitve**, ki jih uporabljajo vse storitve na IO.\nTu si lahko ogleda� e-po�tni naslov, telefonsko �tevilko in jezik, povezan z racunom, ter omogoci� ali onemogoci� biometricno prepoznavanje.\n",
+      "contextualHelpContent": "**V Nastavitvah lahko preveriš in spremeniš nastavitve**, ki jih uporabljajo vse storitve na IO.\nTu si lahko ogledaš e-poštni naslov, telefonsko številko in jezik, povezan z računom, ter omogočiš ali onemogočiš biometrično prepoznavanje.\n",
       "list": {
         "wip": "V obdelavi",
         "digitalDomicile": "Digitalni domicil",
@@ -516,7 +516,7 @@
   "cie": {
     "title": "Položi kartico",
     "layCardMessageHeader": "Svojo elektronsko osebno izkaznico (CIE) za nekaj sekund položi na hrbtno stran telefona.",
-    "layCardMessageFooter": "Če ne veste točno, kje je antena NFC, premaknite kartico na druga mesta in počakajte nekaj sekund, da zaslišite zvok.",
+    "layCardMessageFooter": "Če ne veš točno, kje je antena NFC, premakni kartico na druga mesta in počakaj nekaj sekund, da zaslišiš zvok.",
     "booking_url": "https://www.cartaidentita.interno.gov.it/cittadini/sistema-di-prenotazione-della-cie/"
   },
   "spid": {
@@ -552,8 +552,8 @@
       "loginSpidCie": "Prijavi se s SPID-om ali CIE",
       "infoSpidCie": "Uvod v SPID in CIE",
       "loginSpidCieContent": "Od danes naprej se lahko za prijavo poleg SPID-a prijaviš tudi z elektronsko osebno izkaznico (CIE)",
-      "nospid": "Nimaš SPID-a? Izvej več",
-      "nospid-nocie": "Nimaš SPID-a ali CIE? Izvej več",
+      "nospid": "Nimaš SPID-a? Izvedi več",
+      "nospid-nocie": "Nimaš SPID-a ali CIE? Izvedi več",
       "card1-title": "Vsa sporočila na enem mestu",
       "card1-content": "Oglej si vsa sporočila, ki prihajajo iz Javne uprave",
       "card2-title": "Uporabi želene načine plačila",
@@ -571,7 +571,7 @@
       "genericTitle": "Prijavi se s CIE",
       "cie": "CIE",
       "noDataTitle": "Za uporabo IO je potrebno dovoliti pošiljanje podatkov",
-      "authToSendData": "IO obdeluje tvoje osebne podatke v skladu z varnostjo in tvojo zasebnostjo v skladu z navodili **Splo�ne uredbe o varstvu podatkov**, ki jo je izdala Evropska unija ([GDPR, uredba �t. 2016/679](https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=CELEX%3A32016R0679)).\n\nCe �eli�, se lahko poskusi� ponovno prijaviti.\n",
+      "authToSendData": "IO obdeluje tvoje osebne podatke v skladu z varnostjo in tvojo zasebnostjo v skladu z navodili **Splošne uredbe o varstvu podatkov**, ki jo je izdala Evropska unija ([GDPR, uredba št. 2016/679](https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=CELEX%3A32016R0679)).\n\nČe želiš, se lahko poskusiš ponovno prijaviti.\n",
       "nfc": {
         "apduNotSupported": "Operacijski sistem ne podpira branja vaše elektronske osebne izkaznice. Za več informacij se obrni na proizvajalca tvoje naprave.",
         "retry": "Ponovno poskusi",
@@ -584,7 +584,7 @@
           "label": "Polje za vnos pina elektronske osebne izkaznice CIE",
           "hint": "V to polje vnesi 8-mestni PIN tvoje elektronske osebne izkaznice"
         },
-        "pinCardTitle": "Vnesite PIN tvoje osebne izkaznice",
+        "pinCardTitle": "Vnesi PIN tvoje osebne izkaznice",
         "pinCardHeader": "Prijavi se s CIE",
         "pinCardContent": "Koda PIN je sestavljena iz 8 števk. Štiri števke, ki so ti jih dostavili na matičnem uradu in še 4 števke soti skupaj s kartico poslali na dom. Sestavi jih skupaj v tem vrstnem redu in jih prosim vnesi sem.",
 
@@ -691,7 +691,7 @@
       "alert": "Ta e-poštni naslov že uporabljaš",
       "help": {
         "title": "E-naslov",
-        "content": "Ta stran se uporablja za vnos ali spremembo naslova **e-po�te**. Vneseni e-po�tni naslov mora biti potrjen.\n"
+        "content": "Ta stran se uporablja za vnos ali spremembo naslova **e-pošte**. Vneseni e-poštni naslov mora biti potrjen.\n"
       }
     },
     "edit": {
@@ -1027,7 +1027,7 @@
           }
         },
         "add": {
-          "screenTitle": "Ali želiteš dodati to kartico?",
+          "screenTitle": "Ali želiš dodati to kartico?",
           "label": "Mednarodna kartica {{current}} od {{length}}",
           "blocked": "Ta kartica je blokirana in je zato ni mogoče aktivirati za pridružitev pobudam, ki so na voljo na IO. Obrni se na svojo banko.",
           "warning1": "V nekaterih primerih se lahko prikazani podatki razlikujejo od tistih na fizični kartici: ",
@@ -1064,7 +1064,7 @@
       "amex": "Plačila z American Express karticami za zneske nad 1.000 € trenutno niso možna"
     },
     "contextualHelpTitle": "Kaj lahko storiš v svoji Denarnici",
-    "contextualHelpContent": "**Na strani Denarnica so navedeni tvoji nacini placila, bonusi in kartice s popusti ter zgodovina transakcij, izvedenih s pagoPA**, placilno platformo za javno upravo.\nTu lahko placa� tudi vsa papirnata obvestila o placilu z logotipom pagoPA: skeniraj QR kodoR, ki jo najde� v papirnatem obvestilu, in zakljuci placilo neposredno iz aplikacije. IO trenutno podpira samo placila s kreditno/debetno kartico, vendar bo kmalu dodanih vec nacinov placila.\n",
+    "contextualHelpContent": "**Na strani Denarnica so navedeni tvoji načini plačila, bonusi in kartice s popusti ter zgodovina transakcij, izvedenih s pagoPA**, plačilno platformo za javno upravo.\nTu lahko plačaš tudi vsa papirnata obvestila o plačilu z logotipom pagoPA: skeniraj QR kodo, ki jo najdeš v papirnatem obvestilu, in zaključi plačilo neposredno iz aplikacije. IO trenutno podpira samo plačila s kreditno/debetno kartico, vendar bo kmalu dodanih več načinov plačila.\n",
     "creditcards": "Kreditne kartice",
     "paymentMethods": "Načini plačila",
     "paymentMethod": "Način plačila",
@@ -1182,7 +1182,7 @@
       "fetchPspFailure": "Začasna napaka, poskusi znova",
       "noPspsAvailable": "Tega načina plačila ni mogoče uporabiti",
       "contextualHelpTitle": "Izbira načina plačila",
-      "contextualHelpContent": "**Tukaj lahko izbere� nacin placila.** IO trenutno podpira samo placila s kreditno/debetno kartico, kmalu pa bodo dodani tudi drugi nacini placila, kot so PayPal, Satispay in drugi.\r\n",
+      "contextualHelpContent": "**Tukaj lahko izbereš način plačila.** IO trenutno podpira samo plačila s kreditno/debetno kartico, kmalu pa bodo dodani tudi drugi načini plačila, kot so PayPal, Satispay in drugi.\r\n",
       "pickPaymentMethod": {
         "title": "S katerim načinom želiš plačati?",
         "description": "{{firstElement}} · {{secondElement}}",
@@ -1251,7 +1251,7 @@
       "amount": "Znesek (€)",
       "proceed": "Nadaljuj s plačilom",
       "contextualHelpTitle": "Ročni vnos podatkov",
-      "contextualHelpContent": "**Tukaj lahko nadaljuje� s placilom opominov, tako da vpi�e� podatke, ki jih najde� v njem**: �ifra opomina in davcna �tevilka upnika.\nPrepricaj se, da obvestilo podpira placilo prek pagoPA, placilne platforme za javno upravo.\n"
+      "contextualHelpContent": "**Tukaj lahko nadaljuješ s plačilom opominov, tako da vpišeš podatke, ki jih najdeš v njem**: šifra opomina in davčna številka upnika.\nPrepričaj se, da obvestilo podpira plačilo prek pagoPA, plačilne platforme za javno upravo.\n"
     },
     "total": "Skupno",
     "amount": "Znesek €",
@@ -1413,7 +1413,7 @@
         }
       },
       "contextualHelpTitle": "Kako lahko plačaš obvestilo",
-      "contextualHelpContent": "**Tukaj lahko nadaljuje� s spontanim placilom obvestila s pagoPA**, placilno platformo za javno upravo. Placa� lahko tako, da uokviri� QR kodo, ki jo najde� na papirnatem obvestilu, in nato nadaljuje� s placilom neposredno iz aplikacije. Lahko tudi nalo�i� QR kodo iz svoje galerije telefona ali nadaljuje� z rocnim zbiranjem podatkov za prepoznavanje opozorila (Koda obvestila - Codice Avviso).\r\n"
+      "contextualHelpContent": "**Tukaj lahko nadaljuješ s spontanim plačilom obvestila s pagoPA**, plačilno platformo za javno upravo. Plačaš lahko tako, da uokviriš QR kodo, ki jo najdeš na papirnatem obvestilu, in nato nadaljuješ s plačilom neposredno iz aplikacije. Lahko tudi naložiš QR kodo iz svoje galerije telefona ali nadaljuješ z ročnim zbiranjem podatkov za prepoznavanje opozorila (Koda obvestila - Codice Avviso).\r\n"
     },
     "whyAFee": {
       "title": "Zakaj stroški transakcije?",
@@ -1421,7 +1421,7 @@
     },
     "walletCardTransaction": {
       "contextualHelpTitle": "Transakcije, opravljene s to metodo",
-      "contextualHelpContent": "**Tukaj si lahko ogleda� vse transakcije, opravljene s tem nacinom placila.**\nTransakcije so bile mogoce opravljene v tej aplikaciji ali prek pagoPa, placilne platforme za javno upravo, na drugi spletni strani.\nCe si opravil/a placila s pagoPA kot overjen uporabnik, bo� tukaj na�el/la vse uspe�no izvedene transakcije.\n"
+      "contextualHelpContent": "**Tukaj si lahko ogledaš vse transakcije, opravljene s tem načinom plačila.**\nTransakcije so bile mogoče opravljene v tej aplikaciji ali prek pagoPA, plačilne platforme za javno upravo, na drugi spletni strani.\nČe si opravil/a plačila s pagoPA kot overjen uporabnik, boš tukaj našel/la vse uspešno izvedene transakcije.\n"
     },
     "bancomat": {
       "details": {
@@ -1450,7 +1450,7 @@
     "outcomeMessage": {
       "cta": {
         "close": "Zapri",
-        "learnMore": "Izvej več",
+        "learnMore": "Izvedi več",
         "visualizeCard": "Ogled kartice"
       },
       "fallback": {
@@ -1533,7 +1533,7 @@
             "subtitle": "Če si že počakal/a 30 minut in je plačilo še vedno blokirano, nam s spodnjim gumbom pošlji prijavo."
           },
           "PPT_PAGAMENTO_IN_CORSO": {
-            "countdownTitle": "C'è già un'operazione in corso, riprova tra {{minutes}} minuti",
+            "countdownTitle": "Operacija že poteka, poskusi znova čez {{minutes}} minut",
             "countdownExpiredTitle": "Plačilo že poteka, poskusi znova čez nekaj minut"
           }
         },
@@ -1673,7 +1673,7 @@
   },
   "messageDetails": {
     "contextualHelpTitle": "Podrobnosti sporočila",
-    "contextualHelpContent": "Tukaj si lahko ogleda� podrobnosti sporocil, prejetih od ustanove, ki je integriranega z aplikacijo IO.\nCe ima� kakr�ne koli dvome ali vpra�anja o doloceni vsebini sporocila, se lahko obrne� na ustanovo prek kontaktov, ki jih najde� na dnu tega sporocila ali v razdelku �Storitve�.\n",
+    "contextualHelpContent": "Tukaj si lahko ogledaš podrobnosti sporočil, prejetih od ustanove, ki je integriranega z aplikacijo IO.\nČe imaš kakršne koli dvome ali vprašanja o določeni vsebini sporočila, se lahko obrneš na ustanovo prek kontaktov, ki jih najdeš na dnu tega sporočila ali v razdelku »Storitve«.\n",
     "headerTitle": "Sporočilo",
     "emptyMessage": "Brez vsebine",
     "loadingText": "Nalaganje podrobnosti sporočila …",
@@ -1760,7 +1760,7 @@
     "contextualHelpContent": "**Na strani Storitve si lahko ogledaš seznam ustanov, ki ponujajo storitve na IO, in seznam storitev, povezanih s posamezno ustanovo.** Storitve so razdeljene med lokalne, kjer lahko izbereš ustanove, ki te zanimajo, glede na geografsko območje, kjer živiš, državno, tj. centralne uprave, ki ponujajo storitve vsem italijanskim državljanom, in končno vse, kjer lahko najdeš celoten seznam vseh storitev, ki so na voljo na IO (tako lokalnih kot državnih).\nVabimo te, da uporabiš to stran za ogled storitev, ki jih ponuja IO, nastavitev seznama lokalnih storitev in podrobnosti o posameznih storitvah. Kadar koli nova lokalna ali državna storitev dospe na IO, boš prejel/a obvestilo, tako da lahko takoj preveriš, za kaj gre in ali je zate uporabna.\n"
   },
   "identification": {
-    "title": "Podravljen/a!",
+    "title": "Pozdravljen/a!",
     "titleProfileName": "Pozdravljen/a {{profileName}}!",
     "titleValidation": "Potrdi operacijo",
     "logout": "Izhod",
@@ -1882,7 +1882,7 @@
     },
     "12": {
       "title": "Si naredil/a vse pravilno, vendar se še vedno ne moreš prijaviti?",
-      "content": "Morda je te�ava povezana z integracijo med SPID-om in aplikacijo IO. Prijavi te�avo z uporabo gumbov na dnu te strani: potrudili se bomo, da ti pomagamo in ti cim prej omogocimo dostop do aplikacije IO.\r\n"
+      "content": "Morda je težava povezana z integracijo med SPID-om in aplikacijo IO. Prijavi težavo z uporabo gumbov na dnu te strani: potrudili se bomo, da ti pomagamo in ti čim prej omogočimo dostop do aplikacije IO.\r\n"
     },
     "13": {
       "title": "Kako se upravljajo tvoji podatki?",
@@ -1890,7 +1890,7 @@
     },
     "14": {
       "title": "Kako lahko pozneje ponovno prebereš informacije o obdelavi osebnih podatkov?",
-      "content": "Ko je preverjanje pristnosti koncano, se bo� zna�el/la v aplikaciji IO. Na strani profila pod naslovom zasebnost si lahko kadarkoli ogleda� informacije o obdelavi osebnih podatkov uporabnikov aplikacije IO (13. clen Uredbe EU �t. 2016/679).\r\n"
+      "content": "Ko je preverjanje pristnosti končano, se boš znašel/la v aplikaciji IO. Na strani profila pod naslovom zasebnost si lahko kadarkoli ogledaš informacije o obdelavi osebnih podatkov uporabnikov aplikacije IO (13. člen Uredbe EU št. 2016/679).\r\n"
     },
     "15": {
       "title": "Kateri je PIN elektronske osebne izkaznice?",
@@ -1898,7 +1898,7 @@
     },
     "16": {
       "title": "Ali ima tvoj telefon bralnik NFC?",
-      "content": "Podatke CIE je mogoce brati z napravo, opremljeno z vmesnikom NFC (Near Field Communication).\nPreveri, ali tvoja naprava podpira NFC, tako da si ogleda� specifikacije telefona.\nCe ima� napravo Android, preverite tudi, ali je NFC omogocen, tako da odpre� �Nastavitve� v razdelku �Povezave�.\n"
+      "content": "Podatke CIE je mogoče brati z napravo, opremljeno z vmesnikom NFC (Near Field Communication).\nPreveri, ali tvoja naprava podpira NFC, tako da si ogledaš specifikacije telefona.\nČe imaš napravo Android, preveri tudi, ali je NFC omogočen, tako da odpreš »Nastavitve« v razdelku »Povezave«.\n"
     },
     "17": {
       "title": "Za kaj je potrebna koda za odklepanje?",
@@ -1930,7 +1930,7 @@
     },
     "24": {
       "title": "Kaj se zgodi, če arhiviraš sporočila?",
-      "content": "Arhivirana sporocila se premaknejo v zavihek �Arhivirano� v razdelku s sporocili.\nTa sprememba vpliva samo na telefon, ki ga uporablja� za izvajanje operacije arhiviranja: ce se prijavi� z istimi poverilnicami v drugi napravi, bo� vsa sporocila na�el/la v kategoriji �Prejeto�. �e vedno lahko odstrani� sporocila iz arhiva in samodejno jih bo� na�el/la v glavnem zavihku �Sporocila�.\n"
+      "content": "Arhivirana sporočila se premaknejo v zavihek »Arhivirano« v razdelku s sporočili.\nTa sprememba vpliva samo na telefon, ki ga uporabljaš za izvajanje operacije arhiviranja: če se prijaviš z istimi poverilnicami v drugi napravi, boš vsa sporočila našel/la v kategoriji »Prejeto«. Še vedno lahko odstraniš sporočila iz arhiva in samodejno jih boš našel/la v glavnem zavihku »Sporočila«.\n"
     },
     "25": {
       "title": "Ali je mogoče izbrisati sporočila?",
@@ -1998,11 +1998,11 @@
     },
     "41": {
       "title": "Kako lahko odstranim način plačila?",
-      "content": "Tvoji nacini placila so prikazani kot kartice (ali izkaznice) na vrhu zaslona. Z interakcijo s tem podrocjem lahko izbere� eno od predhodno dodanih metod. Tri navpicne pike (zgoraj desno) omogocajo dostop do menija, iz katerega lahko izvede� dve operaciji: doda�/odstrani� nacin placila med priljubljenimi ali trajno odstrani� nacin placila iz aplikacije IO. Ce �eli� nacin odstraniti, izberi to mo�nost.\r\n"
+      "content": "Tvoji načini plačila so prikazani kot kartice (ali izkaznice) na vrhu zaslona. Z interakcijo s tem področjem lahko izbereš eno od predhodno dodanih metod. Tri navpične pike (zgoraj desno) omogočajo dostop do menija, iz katerega lahko izvedeš dve operaciji: dodaš/odstraniš način plačila med priljubljenimi ali trajno odstraniš način plačila iz aplikacije IO. Če želiš način odstraniti, izberi to možnost.\r\n"
     },
     "42": {
       "title": "Kako lahko dodam način plačila?",
-      "content": "V razdelku �Denarnica� na vrhu bo� na�el/la svoja placilna sredstva. Gumb �Dodaj nacin� ti omogoca, da doda� nov nacin placila.\n"
+      "content": "V razdelku »Denarnica« na vrhu boš našel/la svoja plačilna sredstva. Gumb »Dodaj način« ti omogoča, da dodaš nov način plačila.\n"
     },
     "43": {
       "title": "Kje najdem varnostno kodo?",
@@ -2030,7 +2030,7 @@
     },
     "49": {
       "title": "Ali lahko prek IO vzpostaviš stik z ustanovami?",
-      "content": "Iz aplikacije IO ne more� direktno vzpostaviti stika z ustanovami, vendar si lahko ogleda� njihove kontakte v razdelku �Storitve� na zavihku vsake storitve.\r\n"
+      "content": "Iz aplikacije IO ne moreš direktno vzpostaviti stika z ustanovami, vendar si lahko ogledaš njihove kontakte v razdelku »Storitve« na zavihku vsake storitve.\r\n"
     },
     "50": {
       "title": "Kaj se zgodi, če onemogočiš določeno storitev?",
@@ -2150,7 +2150,7 @@
     },
     "79": {
       "title": "Moja kartica PagoBANCOMAT je tudi debetna kartica. Kaj naj izberem?",
-      "content": "Predlagamo, da svojo kartico shrani� bodisi kot **PagoBANCOMAT** in kot **Debetna kartica**. Samo na ta nacin bo� lahko izvajal/a placila na IO in zbiral/a vse transakcije, ki veljajo za Cashback.\n"
+      "content": "Predlagamo, da svojo kartico shraniš bodisi kot **PagoBANCOMAT** in kot **Debetna kartica**. Samo na ta način boš lahko izvajal/a plačila na IO in zbiral/a vse transakcije, ki veljajo za Cashback.\n"
     },
     "80": {
       "title": "Zakaj shranjevanje ne uspe?",
