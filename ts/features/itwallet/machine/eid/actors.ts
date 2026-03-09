@@ -107,7 +107,7 @@ export const createEidIssuanceActorsImplementation = (
 
     // Create the trust chain for the PID provider
     const builtChainJwts = await ioWallet.Trust.buildTrustChain(
-      env.WALLET_PID_PROVIDER_BASE_URL,
+      env.WALLET_PID_PROVIDER_BASE_URL.value(itwVersion),
       trustAnchorEntityConfig
     );
 

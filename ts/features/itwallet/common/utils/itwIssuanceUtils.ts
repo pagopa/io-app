@@ -55,7 +55,7 @@ const startAuthFlow = async ({
   const idpHint = getIdpHint(identification, env);
 
   const { issuerConf } = await ioWallet.CredentialIssuance.evaluateIssuerTrust(
-    env.WALLET_PID_PROVIDER_BASE_URL
+    env.WALLET_PID_PROVIDER_BASE_URL.value(itwVersion)
   );
 
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);

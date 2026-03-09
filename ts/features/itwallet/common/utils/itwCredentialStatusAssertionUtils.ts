@@ -1,5 +1,4 @@
 import {
-  IoWallet,
   ItwVersion,
   createCryptoContextFor
 } from "@pagopa/io-react-native-wallet";
@@ -33,7 +32,7 @@ export const getCredentialStatusAssertion = async (
   // In this scenario the new configuration is fetched and used instead of `credential.issuerConf`.
   const issuerConf =
     credential.format === CredentialFormat.LEGACY_SD_JWT
-      ? await fetchIssuerConfShared(env, ioWallet)
+      ? await fetchIssuerConfShared(env, itwVersion)
       : credential.issuerConf;
 
   const credentialCryptoContext = createCryptoContextFor(credential.keyTag);
@@ -113,10 +112,11 @@ function createIssuerConfSharedFetch(maxAge = 86400) {
   // eslint-disable-next-line functional/no-let
   let timestamp: number = -1;
 
-  return function getIssuerConf(env: Env, ioWallet: IoWallet) {
+  return function getIssuerConf(env: Env, itwVersion: ItwVersion) {
     if (timestamp + maxAge * 1000 < Date.now() || !sharedPromise) {
+      const ioWallet = getIoWallet(itwVersion);
       sharedPromise = ioWallet.CredentialIssuance.evaluateIssuerTrust(
-        env.WALLET_EAA_PROVIDER_BASE_URL
+        env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion)
       ).then(res => res.issuerConf);
       timestamp = Date.now();
     }

@@ -58,7 +58,7 @@ export const requestCredential = async ({
 
   // Evaluate issuer trust
   const { issuerConf } = await ioWallet.CredentialIssuance.evaluateIssuerTrust(
-    env.WALLET_EAA_PROVIDER_BASE_URL
+    env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion)
   );
 
   const credentialIds = getCredentialConfigurationIds(
