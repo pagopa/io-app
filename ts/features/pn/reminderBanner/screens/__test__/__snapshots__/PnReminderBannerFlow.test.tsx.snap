@@ -761,7 +761,7 @@ exports[`error screens should display an error screen in case of missing_sid err
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -1597,7 +1597,7 @@ exports[`error screens should display an error screen in case of preferences err
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -2484,7 +2484,7 @@ exports[`loading screens + error interop should render the correct loading scree
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
