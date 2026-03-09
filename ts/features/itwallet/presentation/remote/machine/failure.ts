@@ -99,6 +99,7 @@ export const mapEventToFailure = (event: RemoteEvents): RemoteFailure => {
       // Missing credentials are identified by their VCT
       reason: {
         missingCredentials: error.details
+          .filter(c => c.format !== "mso_mdoc") // TODO: [SIW-3998] Support MDOC remote presentation
           .flatMap(c => c.vctValues)
           .filter(isDefined)
           .map(getCredentialTypeByVct)
