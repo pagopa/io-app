@@ -267,24 +267,37 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                   }
                                   jestAnimatedStyle={
                                     {
-                                      "value": {
-                                        "transform": [
-                                          {
-                                            "rotateZ": "0deg",
-                                          },
-                                        ],
-                                      },
+                                      "value": {},
                                     }
                                   }
-                                  jestInlineStyle={{}}
+                                  jestInlineStyle={
+                                    {
+                                      "animationDuration": 850,
+                                      "animationIterationCount": "infinite",
+                                      "animationName": {
+                                        "from": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "0deg",
+                                            },
+                                          ],
+                                        },
+                                        "to": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "360deg",
+                                            },
+                                          ],
+                                        },
+                                      },
+                                      "animationTimingFunction": "linear",
+                                      "transformOrigin": "center",
+                                    }
+                                  }
                                   style={
                                     [
                                       {
-                                        "transform": [
-                                          {
-                                            "rotateZ": "0deg",
-                                          },
-                                        ],
+                                        "transformOrigin": "center",
                                       },
                                     ]
                                   }
@@ -337,7 +350,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                           }
                                           gradientTransform={null}
                                           gradientUnits={0}
-                                          name="spinner-secondHalf"
+                                          name="«r0»-secondHalf"
                                           x1="0%"
                                           x2="100%"
                                           y1="0%"
@@ -354,7 +367,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                           }
                                           gradientTransform={null}
                                           gradientUnits={0}
-                                          name="spinner-firstHalf"
+                                          name="«r0»-firstHalf"
                                           x1="0%"
                                           x2="100%"
                                           y1="0%"
@@ -390,7 +403,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                           }
                                           stroke={
                                             {
-                                              "brushRef": "spinner-secondHalf",
+                                              "brushRef": "«r0»-secondHalf",
                                               "type": 1,
                                             }
                                           }
@@ -410,7 +423,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                           }
                                           stroke={
                                             {
-                                              "brushRef": "spinner-firstHalf",
+                                              "brushRef": "«r0»-firstHalf",
                                               "type": 1,
                                             }
                                           }
@@ -797,7 +810,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -1281,24 +1294,37 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                   }
                                   jestAnimatedStyle={
                                     {
-                                      "value": {
-                                        "transform": [
-                                          {
-                                            "rotateZ": "0deg",
-                                          },
-                                        ],
-                                      },
+                                      "value": {},
                                     }
                                   }
-                                  jestInlineStyle={{}}
+                                  jestInlineStyle={
+                                    {
+                                      "animationDuration": 850,
+                                      "animationIterationCount": "infinite",
+                                      "animationName": {
+                                        "from": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "0deg",
+                                            },
+                                          ],
+                                        },
+                                        "to": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "360deg",
+                                            },
+                                          ],
+                                        },
+                                      },
+                                      "animationTimingFunction": "linear",
+                                      "transformOrigin": "center",
+                                    }
+                                  }
                                   style={
                                     [
                                       {
-                                        "transform": [
-                                          {
-                                            "rotateZ": "0deg",
-                                          },
-                                        ],
+                                        "transformOrigin": "center",
                                       },
                                     ]
                                   }
@@ -1351,7 +1377,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                           }
                                           gradientTransform={null}
                                           gradientUnits={0}
-                                          name="spinner-secondHalf"
+                                          name="«r2»-secondHalf"
                                           x1="0%"
                                           x2="100%"
                                           y1="0%"
@@ -1368,7 +1394,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                           }
                                           gradientTransform={null}
                                           gradientUnits={0}
-                                          name="spinner-firstHalf"
+                                          name="«r2»-firstHalf"
                                           x1="0%"
                                           x2="100%"
                                           y1="0%"
@@ -1404,7 +1430,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                           }
                                           stroke={
                                             {
-                                              "brushRef": "spinner-secondHalf",
+                                              "brushRef": "«r2»-secondHalf",
                                               "type": 1,
                                             }
                                           }
@@ -1424,7 +1450,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                           }
                                           stroke={
                                             {
-                                              "brushRef": "spinner-firstHalf",
+                                              "brushRef": "«r2»-firstHalf",
                                               "type": 1,
                                             }
                                           }
@@ -1811,7 +1837,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -2616,7 +2642,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -2854,7 +2880,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -3178,7 +3204,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -3662,24 +3688,37 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                   }
                                   jestAnimatedStyle={
                                     {
-                                      "value": {
-                                        "transform": [
-                                          {
-                                            "rotateZ": "0deg",
-                                          },
-                                        ],
-                                      },
+                                      "value": {},
                                     }
                                   }
-                                  jestInlineStyle={{}}
+                                  jestInlineStyle={
+                                    {
+                                      "animationDuration": 850,
+                                      "animationIterationCount": "infinite",
+                                      "animationName": {
+                                        "from": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "0deg",
+                                            },
+                                          ],
+                                        },
+                                        "to": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "360deg",
+                                            },
+                                          ],
+                                        },
+                                      },
+                                      "animationTimingFunction": "linear",
+                                      "transformOrigin": "center",
+                                    }
+                                  }
                                   style={
                                     [
                                       {
-                                        "transform": [
-                                          {
-                                            "rotateZ": "0deg",
-                                          },
-                                        ],
+                                        "transformOrigin": "center",
                                       },
                                     ]
                                   }
@@ -3732,7 +3771,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                           }
                                           gradientTransform={null}
                                           gradientUnits={0}
-                                          name="spinner-secondHalf"
+                                          name="«r3»-secondHalf"
                                           x1="0%"
                                           x2="100%"
                                           y1="0%"
@@ -3749,7 +3788,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                           }
                                           gradientTransform={null}
                                           gradientUnits={0}
-                                          name="spinner-firstHalf"
+                                          name="«r3»-firstHalf"
                                           x1="0%"
                                           x2="100%"
                                           y1="0%"
@@ -3785,7 +3824,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                           }
                                           stroke={
                                             {
-                                              "brushRef": "spinner-secondHalf",
+                                              "brushRef": "«r3»-secondHalf",
                                               "type": 1,
                                             }
                                           }
@@ -3805,7 +3844,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                           }
                                           stroke={
                                             {
-                                              "brushRef": "spinner-firstHalf",
+                                              "brushRef": "«r3»-firstHalf",
                                               "type": 1,
                                             }
                                           }
@@ -4192,7 +4231,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -4676,24 +4715,37 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                   }
                                   jestAnimatedStyle={
                                     {
-                                      "value": {
-                                        "transform": [
-                                          {
-                                            "rotateZ": "0deg",
-                                          },
-                                        ],
-                                      },
+                                      "value": {},
                                     }
                                   }
-                                  jestInlineStyle={{}}
+                                  jestInlineStyle={
+                                    {
+                                      "animationDuration": 850,
+                                      "animationIterationCount": "infinite",
+                                      "animationName": {
+                                        "from": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "0deg",
+                                            },
+                                          ],
+                                        },
+                                        "to": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "360deg",
+                                            },
+                                          ],
+                                        },
+                                      },
+                                      "animationTimingFunction": "linear",
+                                      "transformOrigin": "center",
+                                    }
+                                  }
                                   style={
                                     [
                                       {
-                                        "transform": [
-                                          {
-                                            "rotateZ": "0deg",
-                                          },
-                                        ],
+                                        "transformOrigin": "center",
                                       },
                                     ]
                                   }
@@ -4746,7 +4798,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                           }
                                           gradientTransform={null}
                                           gradientUnits={0}
-                                          name="spinner-secondHalf"
+                                          name="«r1»-secondHalf"
                                           x1="0%"
                                           x2="100%"
                                           y1="0%"
@@ -4763,7 +4815,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                           }
                                           gradientTransform={null}
                                           gradientUnits={0}
-                                          name="spinner-firstHalf"
+                                          name="«r1»-firstHalf"
                                           x1="0%"
                                           x2="100%"
                                           y1="0%"
@@ -4799,7 +4851,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                           }
                                           stroke={
                                             {
-                                              "brushRef": "spinner-secondHalf",
+                                              "brushRef": "«r1»-secondHalf",
                                               "type": 1,
                                             }
                                           }
@@ -4819,7 +4871,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                           }
                                           stroke={
                                             {
-                                              "brushRef": "spinner-firstHalf",
+                                              "brushRef": "«r1»-firstHalf",
                                               "type": 1,
                                             }
                                           }
@@ -5206,7 +5258,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",

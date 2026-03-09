@@ -171,6 +171,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
     "walletInstance": {
       "attestation": undefined,
+      "renewalError": false,
       "status": {
         "kind": "PotNone",
       },
@@ -180,6 +181,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "ITW_DISCOVERY": true,
     "IT_WALLET_DISCOVERY": true,
     "LV_EXPIRATION_REMINDER": true,
+    "OS_DISMISSION_REMINDER": true,
     "PUSH_NOTIFICATIONS_REMINDER": true,
     "SEND_ACTIVATION_REMINDER": true,
   },
