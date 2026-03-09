@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.25.0-rc.6](https://github.com/pagopa/io-app/compare/3.25.0-rc.3...3.25.0-rc.6) (2026-03-09)
+
+
+### Chores
+
+* **release:** 3.25.0-rc.5 ([fead9e3](https://github.com/pagopa/io-app/commit/fead9e305a84fa2f9b4380f919eaa58a353277d2))
+* [[IOPID-000](https://pagopa.atlassian.net/browse/IOPID-000)] Update label for `CameraPermissionView` component ([#7922](https://github.com/pagopa/io-app/issues/7922)) ([177f799](https://github.com/pagopa/io-app/commit/177f7999fb5cc8488335df362506f8305f3b699a))
+
 ## [3.25.0-rc.5](https://github.com/pagopa/io-app/compare/3.25.0-rc.4...3.25.0-rc.5) (2026-03-02)
 
 
