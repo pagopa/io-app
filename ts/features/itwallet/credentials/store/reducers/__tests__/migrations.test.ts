@@ -1,5 +1,7 @@
 import _ from "lodash";
 import { Mdoc, SdJwt } from "@pagopa/io-react-native-wallet";
+import issuerECv0_7 from "../../../../__mocks__/issuerECv0_7.json";
+import issuerECv1_0 from "../../../../__mocks__/issuerECv1_0.json";
 import { itwCredentialsStateMigrations } from "../migrations";
 
 jest.mock("@pagopa/io-react-native-wallet");
@@ -598,6 +600,207 @@ describe("ITW credentials reducer migrations", () => {
     const from7To8Migration = itwCredentialsStateMigrations[7];
     expect(from7To8Migration).toBeDefined();
     const nextState = from7To8Migration(basePersistedStateAt7);
+
+    expect(nextState).toStrictEqual(persistedStateAt8);
+  });
+
+  it("should handle correct mapping of the legacy issuerConf in migration 8 to 9", () => {
+    const basePersistedStateAt8 = {
+      credentials: {
+        MDL: {
+          credentialId: "MDL",
+          credentialType: "mDL",
+          issuerConf: issuerECv0_7.metadata
+        }
+      },
+      _persist: {
+        version: 8,
+        rehydrated: false
+      }
+    };
+
+    const persistedStateAt8 = {
+      credentials: {
+        MDL: {
+          credentialId: "MDL",
+          credentialType: "mDL",
+          issuerConf: {
+            authorization_endpoint: "https://pre.eaa.wallet.ipzs.it/authorize",
+            credential_endpoint: "https://pre.eaa.wallet.ipzs.it/credential",
+            credential_issuer: "https://pre.eaa.wallet.ipzs.it",
+            pushed_authorization_request_endpoint:
+              "https://pre.eaa.wallet.ipzs.it/as/par",
+            token_endpoint: "https://pre.eaa.wallet.ipzs.it/token",
+            status_assertion_endpoint: "https://pre.eaa.wallet.ipzs.it/status",
+            nonce_endpoint: "",
+            response_modes_supported: ["form_post.jwt", "query"],
+            keys: issuerECv0_7.metadata.openid_credential_issuer.jwks.keys,
+            federation_entity: issuerECv0_7.metadata.federation_entity,
+            credential_configurations_supported: {
+              MDL: {
+                ...issuerECv0_7.metadata.openid_credential_issuer
+                  .credential_configurations_supported.MDL,
+                claims: [
+                  {
+                    path: ["given_name"],
+                    display: [
+                      { name: "Nome", locale: "it-IT" },
+                      { name: "First Name", locale: "en-US" }
+                    ]
+                  },
+                  {
+                    path: ["family_name"],
+                    display: [
+                      { name: "Cognome", locale: "it-IT" },
+                      { name: "Family Name", locale: "en-US" }
+                    ]
+                  },
+                  {
+                    path: ["birth_date"],
+                    display: [
+                      { name: "Data di nascita", locale: "it-IT" },
+                      { name: "Date of birth", locale: "en-US" }
+                    ]
+                  },
+                  {
+                    path: ["place_of_birth"],
+                    display: [
+                      { name: "Luogo di nascita", locale: "it-IT" },
+                      { name: "Place of birth", locale: "en-US" }
+                    ]
+                  },
+                  {
+                    path: ["portrait"],
+                    display: [
+                      { name: "Fotografia", locale: "it-IT" },
+                      { name: "Portrait", locale: "en-US" }
+                    ]
+                  },
+                  {
+                    path: ["issue_date"],
+                    display: [
+                      { name: "Data di rilascio", locale: "it-IT" },
+                      { name: "Issue date", locale: "en-US" }
+                    ]
+                  },
+                  {
+                    path: ["issuing_country"],
+                    display: [
+                      { name: "Paese di rilascio", locale: "it-IT" },
+                      { name: "Issuing country", locale: "en-US" }
+                    ]
+                  },
+                  {
+                    path: ["driving_privileges"],
+                    display: [
+                      { name: "Categoria", locale: "it-IT" },
+                      { name: "Driving privileges", locale: "en-US" }
+                    ]
+                  },
+                  {
+                    path: ["expiry_date"],
+                    display: [
+                      { name: "Scadenza", locale: "it-IT" },
+                      { name: "Expiry date", locale: "en-US" }
+                    ]
+                  },
+                  {
+                    path: ["document_number"],
+                    display: [
+                      { name: "Numero", locale: "it-IT" },
+                      { name: "Document number", locale: "en-US" }
+                    ]
+                  },
+                  {
+                    path: ["restrictions_conditions"],
+                    display: [
+                      { name: "Codici", locale: "it-IT" },
+                      { name: "Restriction condition", locale: "en-US" }
+                    ]
+                  },
+                  {
+                    path: ["driving_privileges_details"],
+                    display: [
+                      { name: "Dettagli patente", locale: "it-IT" },
+                      { name: "Driving privilege details", locale: "en-US" }
+                    ]
+                  },
+                  {
+                    path: ["issuing_authority"],
+                    display: [
+                      { name: "Rilasciato da", locale: "it-IT" },
+                      { name: "Issuing authority", locale: "en-US" }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      _persist: {
+        version: 8,
+        rehydrated: false
+      }
+    };
+
+    const from8To9Migration = itwCredentialsStateMigrations[8];
+    expect(from8To9Migration).toBeDefined();
+    const nextState = from8To9Migration(basePersistedStateAt8);
+
+    expect(nextState).toStrictEqual(persistedStateAt8);
+  });
+
+  it("should handle correct mapping of issuerConf in migration 8 to 9", () => {
+    const basePersistedStateAt8 = {
+      credentials: {
+        dc_sd_jwt_mDL: {
+          credentialId: "dc_sd_jwt_mDL",
+          credentialType: "mDL",
+          issuerConf: issuerECv1_0.metadata
+        }
+      },
+      _persist: {
+        version: 8,
+        rehydrated: false
+      }
+    };
+
+    const persistedStateAt8 = {
+      credentials: {
+        dc_sd_jwt_mDL: {
+          credentialId: "dc_sd_jwt_mDL",
+          credentialType: "mDL",
+          issuerConf: {
+            authorization_endpoint:
+              "https://pre.eaa.wallet.ipzs.it/1-0/authorize",
+            credential_endpoint:
+              "https://pre.eaa.wallet.ipzs.it/1-0/credential",
+            credential_issuer: "https://pre.eaa.wallet.ipzs.it/1-0",
+            pushed_authorization_request_endpoint:
+              "https://pre.eaa.wallet.ipzs.it/1-0/as/par",
+            token_endpoint: "https://pre.eaa.wallet.ipzs.it/1-0/token",
+            status_assertion_endpoint:
+              "https://pre.eaa.wallet.ipzs.it/1-0/status",
+            nonce_endpoint: "https://pre.eaa.wallet.ipzs.it/1-0/nonce",
+            response_modes_supported: ["query", "form_post.jwt"],
+            keys: issuerECv1_0.metadata.openid_credential_issuer.jwks.keys,
+            federation_entity: issuerECv1_0.metadata.federation_entity,
+            credential_configurations_supported:
+              issuerECv1_0.metadata.openid_credential_issuer
+                .credential_configurations_supported
+          }
+        }
+      },
+      _persist: {
+        version: 8,
+        rehydrated: false
+      }
+    };
+
+    const from8To9Migration = itwCredentialsStateMigrations[8];
+    expect(from8To9Migration).toBeDefined();
+    const nextState = from8To9Migration(basePersistedStateAt8);
 
     expect(nextState).toStrictEqual(persistedStateAt8);
   });

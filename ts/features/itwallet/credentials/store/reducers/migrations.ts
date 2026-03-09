@@ -195,13 +195,14 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
         openid_credential_issuer,
         federation_entity
       } = config;
+      const isV1_0 = openid_credential_issuer.credential_issuer.includes("1-0");
       return {
         federation_entity,
         authorization_endpoint:
           oauth_authorization_server.authorization_endpoint,
         credential_endpoint: openid_credential_issuer.credential_endpoint,
         credential_issuer: openid_credential_issuer.credential_issuer,
-        credential_configurations_supported: config.sub.includes("1-0")
+        credential_configurations_supported: isV1_0
           ? openid_credential_issuer.credential_configurations_supported
           : Object.fromEntries(
               Object.entries<AnyRecord>(
@@ -217,7 +218,9 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
         token_endpoint: oauth_authorization_server.token_endpoint,
         status_assertion_endpoint:
           openid_credential_issuer.status_attestation_endpoint,
-        nonce_endpoint: openid_credential_issuer.nonce_endpoint
+        nonce_endpoint: openid_credential_issuer.nonce_endpoint ?? "",
+        response_modes_supported:
+          oauth_authorization_server.response_modes_supported
       };
     };
 
