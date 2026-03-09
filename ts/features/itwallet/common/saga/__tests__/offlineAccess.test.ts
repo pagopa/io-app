@@ -1,10 +1,5 @@
 import { expectSaga } from "redux-saga-test-plan";
 import { select } from "typed-redux-saga/macro";
-import { startupLoadSuccess } from "../../../../../store/actions/startup";
-import {
-  isStartupLoaded,
-  StartupStatusEnum
-} from "../../../../../store/reducers/startup";
 import { progressSelector as identificationStatusSelector } from "../../../../identification/store/selectors";
 import { itwUpdateWalletInstanceStatus } from "../../../walletInstance/store/actions";
 import {
@@ -12,9 +7,12 @@ import {
   itwOfflineAccessCounterUp
 } from "../../store/actions/securePreferences";
 import { watchItwOfflineAccess } from "../offlineAccess";
+import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
+import { setOfflineAccessReason } from "../../../../ingress/store/actions";
+import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
 
 describe("watchItwOfflineAccess", () => {
-  it("should handle offline access counter reset on wallet instance status update", async () => {
+  it("should reset offline access counter on wallet instance status update", async () => {
     await expectSaga(watchItwOfflineAccess)
       .provide([
         [
@@ -23,15 +21,14 @@ describe("watchItwOfflineAccess", () => {
             kind: "identified"
           }
         ],
-        [select(isStartupLoaded), StartupStatusEnum.AUTHENTICATED]
+        [select(offlineAccessReasonSelector), undefined]
       ])
       .dispatch(itwUpdateWalletInstanceStatus.success({} as any))
       .put(itwOfflineAccessCounterReset())
-      .not.put(itwOfflineAccessCounterUp())
       .run();
   });
 
-  it("should increase offline access counter when starting with OFFLINE startup status", async () => {
+  it("should increase offline access counter when starting with defined offline access reason", async () => {
     await expectSaga(watchItwOfflineAccess)
       .provide([
         [
@@ -40,15 +37,13 @@ describe("watchItwOfflineAccess", () => {
             kind: "identified"
           }
         ],
-        [select(isStartupLoaded), StartupStatusEnum.OFFLINE]
+        [select(offlineAccessReasonSelector), "network_error"]
       ])
-      .not.put(itwOfflineAccessCounterReset())
       .put(itwOfflineAccessCounterUp())
-      .not.put(itwOfflineAccessCounterUp())
       .run();
   });
 
-  it("should handle offline access count increase when startup status action is dispatched", async () => {
+  it("should increase offline access counter when setOfflineAccessReason is dispatched with defined reason", async () => {
     await expectSaga(watchItwOfflineAccess)
       .provide([
         [
@@ -57,11 +52,24 @@ describe("watchItwOfflineAccess", () => {
             kind: "identified"
           }
         ],
-        [select(isStartupLoaded), StartupStatusEnum.INITIAL]
+        [select(offlineAccessReasonSelector), undefined]
       ])
-      .dispatch(startupLoadSuccess(StartupStatusEnum.OFFLINE))
-      .not.put(itwOfflineAccessCounterReset())
+      .dispatch(setOfflineAccessReason(OfflineAccessReasonEnum.DEVICE_OFFLINE))
       .put(itwOfflineAccessCounterUp())
+      .run();
+  });
+
+  it("should not increase offline access counter when setOfflineAccessReason is dispatched with undefined reason", async () => {
+    await expectSaga(watchItwOfflineAccess)
+      .provide([
+        [
+          select(identificationStatusSelector),
+          {
+            kind: "identified"
+          }
+        ],
+        [select(offlineAccessReasonSelector), undefined]
+      ])
       .not.put(itwOfflineAccessCounterUp())
       .run();
   });

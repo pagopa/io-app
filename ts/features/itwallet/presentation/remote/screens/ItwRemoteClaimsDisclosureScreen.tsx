@@ -22,6 +22,8 @@ import {
   selectRelyingPartyData
 } from "../machine/selectors.ts";
 import { trackItwRemoteContinuePresentation } from "../analytics";
+import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
+import { ITW_REMOTE_SCREENVIEW_EVENTS } from "../analytics/enum";
 
 const ItwRemoteClaimsDisclosureScreen = () => {
   usePreventScreenCapture();
@@ -58,7 +60,20 @@ const ContentView = () => {
 
   const closePresentation = () => machineRef.send({ type: "close" });
 
-  useHeaderSecondLevel({ title: "", goBack: closePresentation });
+  const dismissalDialog = useItwDismissalDialog({
+    handleDismiss: closePresentation,
+    customLabels: {
+      body: I18n.t(
+        "features.itWallet.presentation.selectiveDisclosure.alert.message"
+      )
+    },
+    dismissalContext: {
+      screen_name: ITW_REMOTE_SCREENVIEW_EVENTS.ITW_REMOTE_DATA_SHARE,
+      itw_flow: "L3"
+    }
+  });
+
+  useHeaderSecondLevel({ title: "", goBack: dismissalDialog.show });
 
   const confirmVerifiablePresentation = () =>
     dispatch(
@@ -90,7 +105,7 @@ const ContentView = () => {
           },
           secondary: {
             label: I18n.t("global.buttons.cancel"),
-            onPress: closePresentation
+            onPress: dismissalDialog.show
           }
         }
       }}

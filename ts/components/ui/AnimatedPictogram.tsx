@@ -1,49 +1,80 @@
 import {
   IOPictograms,
   IOPictogramSizeScale,
-  Pictogram
+  Pictogram,
+  useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import {
-  Skia,
   Canvas,
-  useClock,
+  Group,
+  Skia,
   Skottie,
-  Group
+  useClock
 } from "@shopify/react-native-skia";
+import { useEffect, useMemo } from "react";
 import {
-  useReducedMotion,
   useDerivedValue,
+  useReducedMotion,
   useSharedValue
 } from "react-native-reanimated";
-import { useEffect } from "react";
 
 /* Animated Pictograms */
 import empty from "../../../assets/animated-pictograms/Empty.json";
-import error from "../../../assets/animated-pictograms/Error.json";
+import emptyDark from "../../../assets/animated-pictograms/EmptyDark.json";
+import accessDenied from "../../../assets/animated-pictograms/AccessDenied.json";
+import accessDeniedDark from "../../../assets/animated-pictograms/AccessDeniedDark.json";
 import fatalError from "../../../assets/animated-pictograms/FatalError.json";
+import fatalErrorDark from "../../../assets/animated-pictograms/FatalErrorDark.json";
 import lock from "../../../assets/animated-pictograms/Lock.json";
+import lockDark from "../../../assets/animated-pictograms/LockDark.json";
 import scanCardAndroid from "../../../assets/animated-pictograms/ScanCardAndroid.json";
+import scanCardAndroidDark from "../../../assets/animated-pictograms/ScanCardAndroidDark.json";
 import scanCardiOS from "../../../assets/animated-pictograms/ScanCardiOS.json";
-import search from "../../../assets/animated-pictograms/Search.json";
+import scanCardiOSDark from "../../../assets/animated-pictograms/ScanCardiOSDark.json";
+import searchLens from "../../../assets/animated-pictograms/SearchLens.json";
+import searchLensDark from "../../../assets/animated-pictograms/SearchLensDark.json";
 import success from "../../../assets/animated-pictograms/Success.json";
+import successDark from "../../../assets/animated-pictograms/SuccessDark.json";
 import umbrella from "../../../assets/animated-pictograms/Umbrella.json";
+import umbrellaDark from "../../../assets/animated-pictograms/UmbrellaDark.json";
 import waiting from "../../../assets/animated-pictograms/Waiting.json";
-import warning from "../../../assets/animated-pictograms/Warning.json";
+import waitingDark from "../../../assets/animated-pictograms/WaitingDark.json";
+import attention from "../../../assets/animated-pictograms/Attention.json";
+import attentionDark from "../../../assets/animated-pictograms/AttentionDark.json";
 import welcome from "../../../assets/animated-pictograms/Welcome.json";
+import welcomeDark from "../../../assets/animated-pictograms/WelcomeDark.json";
 
 export const IOAnimatedPictogramsAssets = {
   waiting,
   empty,
-  error,
+  accessDenied,
   fatalError,
   lock,
   scanCardAndroid,
   scanCardiOS,
-  search,
+  searchLens,
   success,
   umbrella,
-  warning,
+  attention,
   welcome
+} as const;
+
+export const IOAnimatedPictogramsAssetsDark: Record<
+  IOAnimatedPictograms,
+  unknown
+> = {
+  waiting: waitingDark,
+  empty: emptyDark,
+  accessDenied: accessDeniedDark,
+  fatalError: fatalErrorDark,
+  lock: lockDark,
+  scanCardAndroid: scanCardAndroidDark,
+  scanCardiOS: scanCardiOSDark,
+  searchLens: searchLensDark,
+  success: successDark,
+  attention: attentionDark,
+  umbrella: umbrellaDark,
+  welcome: welcomeDark
 } as const;
 
 export type IOAnimatedPictograms = keyof typeof IOAnimatedPictogramsAssets;
@@ -54,38 +85,52 @@ export type AnimatedPictogram = {
   loop?: boolean;
 };
 
-const staticPictogramsMap: Record<IOAnimatedPictograms, IOPictograms> = {
-  welcome: "hello",
-  empty: "empty",
-  scanCardiOS: "nfcScaniOS",
-  scanCardAndroid: "nfcScanAndroid",
-  umbrella: "umbrella",
-  error: "accessDenied",
-  fatalError: "fatalError",
-  lock: "passcode",
-  search: "searchLens",
-  success: "success",
-  warning: "attention",
-  waiting: "ended"
+const pictogramsMap: Record<
+  IOAnimatedPictograms,
+  { static: IOPictograms; loop: boolean }
+> = {
+  welcome: { static: "hello", loop: false },
+  empty: { static: "empty", loop: false },
+  scanCardiOS: { static: "nfcScaniOS", loop: true },
+  scanCardAndroid: { static: "nfcScanAndroid", loop: true },
+  umbrella: { static: "umbrella", loop: true },
+  accessDenied: { static: "accessDenied", loop: false },
+  fatalError: { static: "fatalError", loop: false },
+  lock: { static: "passcode", loop: true },
+  searchLens: { static: "searchLens", loop: true },
+  success: { static: "success", loop: false },
+  attention: { static: "attention", loop: false },
+  waiting: { static: "ended", loop: true }
 };
 
 /* Compared to the static pictograms, the animated pictograms
   seems slightly smaller, so we need to scale them a little to
   uniform the perceived size */
-const sizeMultiplier = 1.25;
+const sizeMultiplier = 1.2;
 
-export const AnimatedPictogram = ({
-  name,
-  size,
-  loop = true
-}: AnimatedPictogram) => {
+export const AnimatedPictogram = ({ name, size, loop }: AnimatedPictogram) => {
   const reduceMotion = useReducedMotion();
+  const { themeType } = useIOThemeContext();
+  const isDarkMode = themeType === "dark";
 
-  const animation = Skia.Skottie.Make(
-    JSON.stringify(IOAnimatedPictogramsAssets[name])
+  const loopState = loop ?? pictogramsMap[name].loop;
+
+  /* Ideally, I would have preferred an implementation using
+  dynamic colour overrides from a single JSON Lottie file
+  (or even better, Rive), but the original files don't reliably
+  expose these colours, so we have to proceed with a more
+  resource-intensive approach. */
+  const themeDependentAsset = useMemo(
+    () =>
+      isDarkMode
+        ? IOAnimatedPictogramsAssetsDark[name]
+        : IOAnimatedPictogramsAssets[name],
+    [name, isDarkMode]
   );
 
-  const originalSizeAsset = IOAnimatedPictogramsAssets[name].w;
+  const animation = Skia.Skottie.Make(JSON.stringify(themeDependentAsset));
+
+  const originalSizeAsset = IOAnimatedPictogramsAssets[name].w ?? size;
 
   // See https://shopify.github.io/react-native-skia/docs/skottie
   // for reference
@@ -98,6 +143,9 @@ export const AnimatedPictogram = ({
   }, [name, animationStartTime, clock]);
 
   const frame = useDerivedValue(() => {
+    if (!animation) {
+      return 0;
+    }
     const fps = animation.fps();
     const duration = animation.duration();
     const totalFrames = duration * fps;
@@ -105,13 +153,13 @@ export const AnimatedPictogram = ({
     const elapsedTime = (clock.value - animationStartTime.value) / 1000;
     const currentFrame = elapsedTime * fps;
 
-    return loop
+    return loopState
       ? currentFrame % totalFrames
       : Math.min(currentFrame, totalFrames - 1);
   });
 
-  if (reduceMotion) {
-    return <Pictogram name={staticPictogramsMap[name]} size={size} />;
+  if (reduceMotion || !animation) {
+    return <Pictogram name={pictogramsMap[name].static} size={size} />;
   }
 
   return (

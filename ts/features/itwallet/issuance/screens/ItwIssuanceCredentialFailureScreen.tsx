@@ -3,16 +3,13 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
+import { Linking } from "react-native";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../../store/hooks";
-import {
-  fallbackForLocalizedMessageKeys,
-  getFullLocale
-} from "../../../../utils/locale";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { trackItwKoStateAction } from "../../analytics";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
@@ -20,9 +17,8 @@ import {
   useItwFailureSupportModal,
   ZendeskSubcategoryValue
 } from "../../common/hooks/useItwFailureSupportModal";
-import { itwDeferredIssuanceScreenContentSelector } from "../../common/store/selectors/remoteConfig";
 import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
-import { StatusAttestationError } from "../../common/utils/itwCredentialStatusAttestationUtils";
+import { StatusAssertionError } from "../../common/utils/itwCredentialStatusAssertionUtils.ts";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
 import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
 import {
@@ -39,10 +35,14 @@ import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTrackin
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 
+const ASSERTION_FAILED_FAQ_URL =
+  "https://assistenza.ioapp.it/hc/it/articles/43824826487953-Provo-ad-aggiungere-un-documento-al-Portafoglio-ma-ricevo-un-errore-dal-mio-dispositivo-Apple";
+
 // Errors that allow a user to send a support request to Zendesk
 const zendeskAssistanceErrors = [
   CredentialIssuanceFailureType.UNEXPECTED,
-  CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC
+  CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC,
+  CredentialIssuanceFailureType.HARDWARE_KEY_INVALID
 ];
 
 export const ItwIssuanceCredentialFailureScreen = () => {
@@ -78,11 +78,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const issuerConf = ItwCredentialIssuanceMachineContext.useSelector(
     selectIssuerConfigurationOption
   );
-  const locale = getFullLocale();
-  const localeFallback = fallbackForLocalizedMessageKeys(locale);
-  const deferredIssuanceScreenContent = useIOSelector(
-    itwDeferredIssuanceScreenContentSelector
-  );
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const invalidStatusDetails = getCredentialInvalidStatusDetails(failure, {
@@ -96,11 +91,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
       reason: failure.reason,
       cta_category: "custom_2",
       cta_id: "close_issuance"
-    });
-  };
-  const closeAsyncIssuance = () => {
-    machineRef.send({
-      type: "close"
     });
   };
 
@@ -140,23 +130,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
               : { action: closeAction, secondaryAction: supportModalAction })
           };
         }
-        // NOTE: only the mDL supports the async flow, so this error message is specific to mDL
-        case CredentialIssuanceFailureType.ASYNC_ISSUANCE:
-          return {
-            title:
-              deferredIssuanceScreenContent?.title?.[localeFallback] ??
-              I18n.t("features.itWallet.issuance.asyncCredentialError.title"),
-            subtitle:
-              deferredIssuanceScreenContent?.description?.[localeFallback] ??
-              I18n.t("features.itWallet.issuance.asyncCredentialError.body"),
-            pictogram: "pending",
-            action: {
-              label: I18n.t(
-                "features.itWallet.issuance.asyncCredentialError.primaryAction"
-              ),
-              onPress: closeAsyncIssuance
-            }
-          };
         // Dynamic errors extracted from the entity configuration, with fallback
         case CredentialIssuanceFailureType.INVALID_STATUS: {
           const closeAction = {
@@ -208,6 +181,19 @@ const ContentView = ({ failure }: ContentViewProps) => {
             }
           };
         }
+        case CredentialIssuanceFailureType.HARDWARE_KEY_INVALID:
+          return {
+            title: I18n.t("features.itWallet.hardwareKeyInvalid.error.title"),
+            subtitle: I18n.t("features.itWallet.hardwareKeyInvalid.error.body"),
+            pictogram: "fatalError",
+            action: {
+              label: I18n.t(
+                "features.itWallet.hardwareKeyInvalid.error.primaryAction"
+              ),
+              onPress: () => Linking.openURL(ASSERTION_FAILED_FAQ_URL)
+            },
+            secondaryAction: supportModalAction
+          };
       }
     };
 
@@ -248,7 +234,7 @@ const getCredentialInvalidStatusDetails = (
     O.fromPredicate(isInvalidStatusFailure),
     O.map(({ reason }) => ({
       errorCodeOption: pipe(
-        O.fromEither(StatusAttestationError.decode(reason?.reason)),
+        O.fromEither(StatusAssertionError.decode(reason?.reason)),
         O.map(({ error }) => error)
       ),
       credentialConfigurationId: O.fromNullable(reason?.metadata?.credentialId)

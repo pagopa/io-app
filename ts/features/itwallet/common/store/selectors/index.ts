@@ -1,9 +1,12 @@
 import { GlobalState } from "../../../../../store/reducers/types";
+import { isConnectedSelector } from "../../../../connectivity/store/selectors";
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import {
   itwCredentialsEidStatusSelector,
+  itwCredentialsEidIssuedAtSelector,
   itwIsWalletEmptySelector
 } from "../../../credentials/store/selectors";
+import { isCredentialIssuedBeforePid } from "../../utils/itwCredentialUtils";
 import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsOperationalOrValid,
@@ -11,16 +14,16 @@ import {
 } from "../../../lifecycle/store/selectors";
 import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/selectors";
 import {
+  itwIsBannerHiddenSelector,
   itwIsDiscoveryBannerHiddenSelector,
-  itwIsFeedbackBannerHiddenSelector,
-  itwIsL3EnabledSelector,
-  itwIsOfflineBannerHiddenSelector,
+  itwIsWalletDiscoveryBannerHiddenSelector,
   itwIsWalletUpgradeMDLDetailsBannerHiddenSelector
-} from "./preferences";
+} from "./banners";
 import {
-  isItwEnabledSelector,
-  isItwFeedbackBannerEnabledSelector
-} from "./remoteConfig";
+  itwCredentialUpgradeFailedSelector,
+  itwIsL3EnabledSelector
+} from "./preferences";
+import { isItwEnabledSelector } from "./remoteConfig";
 
 /**
  * Returns if the discovery banner should be rendered. The banner is rendered if:
@@ -48,29 +51,13 @@ export const isItwPersistedDiscoveryBannerRenderableSelector = (
   isItwDiscoveryBannerRenderableSelector(state);
 
 /**
- * Returns if the feedback banner should be visible. The banner is visible if:
- * - The user has online access (not available in the mini-app)
- * - The banner is enabled remotely
- * - The Wallet has valid Wallet Instance and a valid eID
- * - The Wallet has at least one credential
- * - The user did not close the banner
- * @param state the application global state
- * @returns true if the banner should be visible, false otherwise
- */
-export const itwShouldRenderFeedbackBannerSelector = (state: GlobalState) =>
-  !offlineAccessReasonSelector(state) &&
-  isItwFeedbackBannerEnabledSelector(state) &&
-  itwLifecycleIsValidSelector(state) &&
-  !itwIsWalletEmptySelector(state) &&
-  !itwIsFeedbackBannerHiddenSelector(state);
-
-/**
  * Returns if the wallet ready banner should be visible. The banner is visible if:
  * - The user has online access (not available in the mini-app)
  * - The Wallet has valid Wallet Instance with a known status, and a valid eID
  * - The Wallet Instance is not in a failure status
- * - The eID is not expired
+ * - The eID is not expired or expiring
  * - The Wallet is empty
+ * - Fiscal code is not whitelisted for IT-Wallet L3
  * @param state the application global state
  * @returns true if the banner should be visible, false otherwise
  */
@@ -79,7 +66,9 @@ export const itwShouldRenderWalletReadyBannerSelector = (state: GlobalState) =>
   itwLifecycleIsValidSelector(state) &&
   !itwIsWalletInstanceStatusFailureSelector(state) &&
   itwCredentialsEidStatusSelector(state) !== "jwtExpired" &&
-  itwIsWalletEmptySelector(state);
+  itwCredentialsEidStatusSelector(state) !== "jwtExpiring" &&
+  itwIsWalletEmptySelector(state) &&
+  !itwIsL3EnabledSelector(state);
 
 /**
  * Selectors that returns if the wallet is available for offline access. It joins three
@@ -89,19 +78,6 @@ export const itwShouldRenderWalletReadyBannerSelector = (state: GlobalState) =>
  */
 export const itwOfflineAccessAvailableSelector = (state: GlobalState) =>
   itwLifecycleIsOperationalOrValid(state) && !itwIsWalletEmptySelector(state);
-
-/**
- * Returns if the offline banner should be visible. The banner is visible if:
- * - The user has online access (not available in the mini-app)
- * - The Wallet has a valid Wallet Instance
- * - The user did not close the banner
- * @param state the application global state
- * @returns true if the banner should be visible, false otherwise
- */
-export const itwShouldRenderOfflineBannerSelector = (state: GlobalState) =>
-  !offlineAccessReasonSelector(state) &&
-  itwLifecycleIsValidSelector(state) &&
-  !itwIsOfflineBannerHiddenSelector(state);
 
 /**
  * Returns if the L3 upgrade banner should be rendered. The banner is rendered if:
@@ -115,6 +91,22 @@ export const itwShouldRenderL3UpgradeBannerSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
   itwIsL3EnabledSelector(state) &&
   !itwLifecycleIsITWalletValidSelector(state);
+
+/**
+ * Returns whether a credential should be upgraded in IT Wallet.
+ */
+export const itwShouldUpgradeCredentialSelector =
+  (credentialType: string, issuedAt?: string) => (state: GlobalState) => {
+    const isItwPid = itwLifecycleIsITWalletValidSelector(state);
+    const pidIssuedAt = itwCredentialsEidIssuedAtSelector(state);
+    const upgradeFailures = itwCredentialUpgradeFailedSelector(state);
+
+    const hasUpgradeFailed = upgradeFailures.includes(credentialType);
+    const isIssuedBeforePid =
+      isItwPid && isCredentialIssuedBeforePid(issuedAt, pidIssuedAt);
+
+    return isIssuedBeforePid || hasUpgradeFailed;
+  };
 
 /**
  * Returns whether the new IT-Wallet variant should be rendered.
@@ -143,3 +135,64 @@ export const itwShouldRenderWalletUpgradeMDLDetailsBannerSelector = (
   itwIsL3EnabledSelector(state) &&
   !itwLifecycleIsITWalletValidSelector(state) &&
   !itwIsWalletUpgradeMDLDetailsBannerHiddenSelector(state);
+
+/**
+ * Returns whether the eID lifecycle alert should be hidden in wallet.
+ * When the ITW upgrade banner is displayed, the eID lifecycle alert
+ * is hidden so that the user does not need to perform eID reissuance.
+ * The alert is hidden if:
+ * - The new IT Wallet design is being rendered
+ * - The L3 upgrade banner is being displayed
+ * - The eID is expiring and the device is offline
+ */
+export const itwShouldHideEidLifecycleAlert = (state: GlobalState): boolean =>
+  itwShouldRenderNewItWalletSelector(state) ||
+  itwShouldRenderL3UpgradeBannerSelector(state) ||
+  (itwCredentialsEidStatusSelector(state) === "jwtExpiring" &&
+    !isConnectedSelector(state));
+
+/**
+ * Returns whether the new IT-Wallet activation banner should be rendered.
+ * - The IT Wallet feature flag is enabled
+ * - The wallet is not offline
+ * - The L3 feature flag is enabled
+ * - The wallet is not valid (not yet active)
+ */
+export const itwShouldRenderDiscoveryBannerSelector = (state: GlobalState) =>
+  isItwEnabledSelector(state) &&
+  !offlineAccessReasonSelector(state) &&
+  itwIsL3EnabledSelector(state) &&
+  !itwLifecycleIsValidSelector(state);
+
+/**
+ * Returns whether the new IT-Wallet activation banner in the messages inbox screen should be rendered
+ */
+export const itwShouldRenderInboxDiscoveryBannerSelector = (
+  state: GlobalState
+) =>
+  itwShouldRenderDiscoveryBannerSelector(state) &&
+  !itwIsBannerHiddenSelector("discovery_messages_inbox")(state);
+
+/**
+ * Returns whether the new IT-Wallet activation banner in the messages inbox screen should be rendered
+ */
+export const itwShouldRenderWalletDiscoveryBannerSelector = (
+  state: GlobalState
+) =>
+  itwShouldRenderDiscoveryBannerSelector(state) &&
+  !itwIsBannerHiddenSelector("discovery_wallet")(state);
+
+/**
+ * Returns whether the new IT-Wallet upgrade banner should be rendered.
+ * - The IT Wallet feature flag is enabled
+ * - The wallet is not offline
+ * - The L3 feature flag is enabled
+ * - The wallet is active but not an IT Wallet instance
+ * - The banner was not dismissed by the user
+ */
+export const itwShouldRenderUpgradeBannerSelector = (state: GlobalState) =>
+  isItwEnabledSelector(state) &&
+  !offlineAccessReasonSelector(state) &&
+  itwIsL3EnabledSelector(state) &&
+  !itwLifecycleIsITWalletValidSelector(state) &&
+  !itwIsWalletDiscoveryBannerHiddenSelector(state);

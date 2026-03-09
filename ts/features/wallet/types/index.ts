@@ -1,4 +1,5 @@
 import { Prettify } from "../../../types/helpers";
+import { CdcCardProps } from "../../bonus/cdc/wallet/components/CdcCard";
 import { CgnWalletCardProps } from "../../bonus/cgn/components/CgnWalletCard";
 import { IdPayWalletCardProps } from "../../idpay/wallet/components/IdPayWalletCard";
 import { ItwCredentialCard } from "../../itwallet/common/components/ItwCredentialCard";
@@ -58,6 +59,13 @@ export type WalletCardItw = Prettify<
   } & ItwCredentialCard
 >;
 
+// Specific type for CDC bonus cards
+export type WalletCardCdc = Prettify<
+  {
+    type: "cdc";
+  } & CdcCardProps
+>;
+
 // This card type renders a loading skeleton, used as a placeholder for other cards
 export type WalletCardPlaceholder = {
   type: "placeholder";
@@ -67,6 +75,7 @@ export type WalletCardPlaceholder = {
 export type WalletCard = WalletCardBase &
   (
     | WalletCardBonus
+    | WalletCardCdc
     | WalletCardCgn
     | WalletCardPayment
     | WalletCardItw

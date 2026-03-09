@@ -7,7 +7,8 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
 import I18n from "i18next";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
+import { View } from "react-native";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import {
@@ -17,15 +18,10 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { identificationRequest } from "../../../../identification/store/actions/index.ts";
-import {
-  CREDENTIAL_STATUS_MAP,
-  getMixPanelCredential,
-  trackCredentialDetail,
-  trackWalletCredentialShowFAC_SIMILE,
-  trackWalletCredentialShowTrustmark
-} from "../../../analytics";
+import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
+import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
 import ItwCredentialNotFound from "../../../common/components/ItwCredentialNotFound.tsx";
-import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
+import { PoweredByItWalletText } from "../../../common/components/PoweredByItWalletText.tsx";
 import { itwSetReviewPending } from "../../../common/store/actions/preferences.ts";
 import {
   itwIsL3EnabledSelector,
@@ -52,12 +48,16 @@ import { trackItwProximityShowQrCode } from "../../proximity/analytics";
 import { useItwPresentQRCode } from "../../proximity/hooks/useItwPresentQRCode.tsx";
 import { ItwProximityMachineContext } from "../../proximity/machine/provider.tsx";
 import { selectIsLoading } from "../../proximity/machine/selectors.ts";
+import {
+  trackCredentialDetail,
+  trackWalletCredentialShowFAC_SIMILE,
+  trackWalletCredentialShowTrustmark
+} from "../analytics";
 import { ItwPresentationAdditionalInfoSection } from "../components/ItwPresentationAdditionalInfoSection.tsx";
 import { ItwPresentationClaimsSection } from "../components/ItwPresentationClaimsSection.tsx";
 import { ItwPresentationCredentialInfoAlert } from "../components/ItwPresentationCredentialInfoAlert.tsx";
 import { ItwPresentationCredentialStatusAlert } from "../components/ItwPresentationCredentialStatusAlert.tsx";
 import { ItwPresentationCredentialUnknownStatus } from "../components/ItwPresentationCredentialUnknownStatus.tsx";
-import { ItwPresentationCredentialVerificationExpired } from "../components/ItwPresentationCredentialVerificationExpired.tsx";
 import { ItwPresentationDetailsFooter } from "../components/ItwPresentationDetailsFooter.tsx";
 import { ItwPresentationDetailsHeader } from "../components/ItwPresentationDetailsHeader.tsx";
 import {
@@ -139,7 +139,7 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
             navigation.replace(ITW_ROUTES.MAIN, {
               screen: ITW_ROUTES.DISCOVERY.INFO,
               params: {
-                isL3
+                level: isL3 ? "l3" : "l2"
               }
             })
         }}
@@ -173,34 +173,36 @@ type ItwPresentationCredentialDetailProps = {
 export const ItwPresentationCredentialDetail = ({
   credential
 }: ItwPresentationCredentialDetailProps) => {
-  const itwProximityMachineRef = ItwProximityMachineContext.useActorRef();
-  const isCheckingPermissions =
-    ItwProximityMachineContext.useSelector(selectIsLoading);
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-  const isMultilevel = isMultiLevelCredential(credential);
+  const itwProximityMachineRef = ItwProximityMachineContext.useActorRef();
+
+  const itwFeaturesEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isL3Credential = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
-  const mixPanelCredential = getMixPanelCredential(
-    credential.credentialType,
-    isL3Credential
+  const isCheckingPermissions =
+    ItwProximityMachineContext.useSelector(selectIsLoading);
+
+  const mixPanelCredential = useMemo(
+    () => getMixPanelCredential(credential.credentialType, isL3Credential),
+    [credential.credentialType, isL3Credential]
   );
-  const itwFeaturesEnabled = useItwFeaturesEnabled(credential);
 
   useDebugInfo(credential);
   usePreventScreenCapture();
 
-  useFocusEffect(() => {
-    if (status !== "jwtExpired") {
+  useFocusEffect(
+    useCallback(() => {
+      const isMultilevel = isMultiLevelCredential(credential);
       trackCredentialDetail({
         credential: mixPanelCredential,
         credential_status: CREDENTIAL_STATUS_MAP[status],
         credential_type: isMultilevel ? "multiple" : "unique"
       });
-    }
-  });
+    }, [status, credential, mixPanelCredential])
+  );
 
   /**
    * Show the credential trustmark screen after user identification
@@ -246,7 +248,10 @@ export const ItwPresentationCredentialDetail = ({
         loading: isCheckingPermissions,
         onPress: () => {
           trackItwProximityShowQrCode();
-          itwProximityMachineRef.send({ type: "start" });
+          itwProximityMachineRef.send({
+            type: "start",
+            credentialType
+          });
         }
       };
     }
@@ -285,12 +290,6 @@ export const ItwPresentationCredentialDetail = ({
     return <ItwPresentationCredentialUnknownStatus credential={credential} />;
   }
 
-  if (status === "jwtExpired") {
-    return (
-      <ItwPresentationCredentialVerificationExpired credential={credential} />
-    );
-  }
-
   return (
     <ItwPresentationDetailsScreenBase
       credential={credential}
@@ -311,6 +310,11 @@ export const ItwPresentationCredentialDetail = ({
             />
           )}
           <ItwPresentationDetailsFooter credential={credential} />
+          {isL3Credential && (
+            <View style={{ alignItems: "center" }}>
+              <PoweredByItWalletText />
+            </View>
+          )}
         </VStack>
       </ContentWrapper>
     </ItwPresentationDetailsScreenBase>

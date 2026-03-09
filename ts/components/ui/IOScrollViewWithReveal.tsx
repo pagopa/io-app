@@ -3,7 +3,6 @@ import {
   HeaderSecondLevel,
   hexToRgba,
   IOButton,
-  IOButtonBlockSpecificProps,
   IOButtonLinkSpecificProps,
   IOColors,
   IOSpacer,
@@ -39,16 +38,12 @@ import Animated, {
 import { useFooterActionsMargin } from "../../hooks/useFooterActionsMargin";
 import { WithTestID } from "../../types/WithTestID";
 import { useIOAlertVisible } from "../StatusMessages/IOAlertVisibleContext";
-
-type ButtonBlockProps = Omit<
-  IOButtonBlockSpecificProps,
-  "fullWidth" | "variant" | "color"
->;
+import { ButtonBlockProps } from "./utils/buttons";
 
 type ButtonLinkProps = Omit<IOButtonLinkSpecificProps, "color" | "variant">;
 
 export type IOScrollViewRevealActions = {
-  primary: ButtonBlockProps;
+  primary: Omit<ButtonBlockProps, "color">;
   anchor: ButtonLinkProps;
 };
 
@@ -135,7 +130,7 @@ export const IOScrollViewWithReveal = ({
   const { bottomMargin, needSafeAreaMargin } = useFooterActionsMargin();
 
   /* GENERATE EASING GRADIENT */
-  const APP_BG_COLOR: ColorValue = IOColors[theme["appBackground-accent"]];
+  const APP_BG_COLOR: ColorValue = IOColors[theme["appBackground-primary"]];
 
   const { colors, locations } = easeGradient({
     colorStops: {
@@ -304,17 +299,12 @@ export const IOScrollViewWithReveal = ({
               }}
               style={[{ alignSelf: "center" }, anchorLinkAnimatedStyle]}
             >
-              <IOButton variant="link" color="contrast" {...actions.anchor} />
+              <IOButton variant="link" {...actions.anchor} />
               <VSpacer size={spaceBetweenActionAndLink} />
             </Animated.View>
 
             <View style={{ marginBottom: extraBottomMargin }}>
-              <IOButton
-                variant="solid"
-                color="contrast"
-                fullWidth
-                {...actions.primary}
-              />
+              <IOButton variant="solid" fullWidth {...actions.primary} />
             </View>
           </View>
         </View>

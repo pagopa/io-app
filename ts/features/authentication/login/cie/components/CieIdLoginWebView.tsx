@@ -14,7 +14,6 @@ import { getCieIDLoginUri, isAuthenticationUrl } from "../utils";
 import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLoginSource";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { loggedInAuthSelector } from "../../../common/store/selectors";
 import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
 import { onLoginUriChanged } from "../../../common/utils/login";
@@ -32,7 +31,7 @@ import {
 } from "../utils/cie";
 import { useOnboardingAbortAlert } from "../../../../onboarding/hooks/useOnboardingAbortAlert";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
+import { remoteApiLoginUrlPrefixSelector } from "../../../activeSessionLogin/store/selectors";
 import { LoadingOverlay } from "../shared/LoadingSpinnerOverlay";
 import {
   CieIdLoginProps,
@@ -103,7 +102,8 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
       // TODO: move the error tracking in the `AuthErrorScreen`
       trackLoginSpidError(code || message, {
         idp: IdpCIE_ID.id,
-        ...(message ? { "error message": message } : {})
+        ...(message ? { "error message": message } : {}),
+        flow: "auth"
       });
       dispatch(
         loginFailure({
@@ -164,7 +164,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
   }, [handleLoginFailure, checkIfUrlIsWhitelisted]);
 
   const handleLoginSuccess = useCallback(
-    (token: SessionToken) => {
+    (token: string) => {
       dispatch(loginSuccess({ token, idp: "cieid" }));
     },
     [dispatch]

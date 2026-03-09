@@ -1,0 +1,79 @@
+import { FeatureInfo, VSpacer } from "@pagopa/io-app-design-system";
+import i18n from "i18next";
+import { useEffect } from "react";
+import { IOScrollViewCentredContent } from "../../../../../components/ui/IOScrollViewCentredContent";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { openWebUrl } from "../../../../../utils/url";
+import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
+import { useIOSelector } from "../../../../../store/hooks";
+import { sendAarInAppDelegationUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import {
+  trackSendAarNotificationOpeningNfcNotSupported,
+  trackSendAarNotificationOpeningNfcNotSupportedClosure,
+  trackSendAarNotificationOpeningNfcNotSupportedInfo
+} from "../../analytics";
+
+export const SendAarNfcNotSupportedComponent = () => {
+  const { terminateFlow } = useSendAarFlowManager();
+  const { setOptions } = useIONavigation();
+  const helpCenterUrl = useIOSelector(sendAarInAppDelegationUrlSelector);
+
+  useEffect(() => {
+    setOptions({ headerShown: true });
+  }, [setOptions]);
+
+  useEffect(() => {
+    trackSendAarNotificationOpeningNfcNotSupported();
+  }, []);
+
+  const featureInfoText = i18n.t(
+    "features.pn.aar.flow.delegated.nfcNotSupported.featureInfoText",
+    { returnObjects: true }
+  );
+
+  return (
+    <IOScrollViewCentredContent
+      pictogram="updateOS"
+      title={i18n.t("features.pn.aar.flow.delegated.nfcNotSupported.title")}
+      description={i18n.t(
+        "features.pn.aar.flow.delegated.nfcNotSupported.body"
+      )}
+      actions={{
+        type: "SingleButton",
+        primary: {
+          icon: "instruction",
+          testID: "help-center-cta",
+          onPress: () => {
+            trackSendAarNotificationOpeningNfcNotSupportedInfo();
+            openWebUrl(helpCenterUrl);
+          },
+          label: i18n.t("features.pn.aar.flow.delegated.nfcNotSupported.cta")
+        }
+      }}
+      alwaysBounceVertical={false}
+      headerConfig={{
+        title: "",
+        type: "singleAction",
+        firstAction: {
+          icon: "closeLarge",
+          onPress: () => {
+            trackSendAarNotificationOpeningNfcNotSupportedClosure();
+            terminateFlow();
+          },
+          accessibilityLabel: i18n.t(
+            "global.accessibility.contextualHelp.close"
+          ),
+          testID: "close-x"
+        }
+      }}
+      contentContainerStyle={{
+        paddingHorizontal: 32
+      }}
+    >
+      <VSpacer size={24} />
+      <FeatureInfo iconName="contactless" body={featureInfoText[0]} />
+      <VSpacer size={24} />
+      <FeatureInfo iconName="history" body={featureInfoText[1]} />
+    </IOScrollViewCentredContent>
+  );
+};

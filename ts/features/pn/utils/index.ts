@@ -1,19 +1,16 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as RA from "fp-ts/lib/ReadonlyArray";
 import I18n from "i18next";
 import { PNMessage } from "../store/types/types";
 import { NotificationStatus } from "../../../../definitions/pn/NotificationStatus";
 import { CTAS } from "../../../types/LocalizedCTAs";
 import { isServiceDetailNavigationLink } from "../../../utils/internalLink";
 import { GlobalState } from "../../../store/reducers/types";
-import { NotificationRecipient } from "../../../../definitions/pn/NotificationRecipient";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
-import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { TimelineStatus } from "../components/Timeline";
+import { SendOpeningSource } from "../../pushNotifications/analytics";
 
 export const maxVisiblePaymentCount = 5;
 
@@ -85,50 +82,39 @@ export const extractPNOptInMessageInfoIfAvailable = (
     }))
   );
 
-export const paymentsFromPNMessagePot = (
+export const paymentsFromSendMessage = (
   userFiscalCode: string | undefined,
-  messagePot: pot.Pot<O.Option<PNMessage>, Error>
-) =>
-  pipe(
-    messagePot,
-    pot.toOption,
-    O.flatten,
-    O.map(message =>
-      pipe(
-        message.recipients,
-        RA.filterMap(paymentFromUserFiscalCodeAndRecipient(userFiscalCode))
-      )
-    ),
-    O.toUndefined
-  );
+  sendMessage: PNMessage | undefined
+): ReadonlyArray<NotificationPaymentInfo> | undefined => {
+  if (sendMessage == null) {
+    return undefined;
+  }
 
-const paymentFromUserFiscalCodeAndRecipient =
-  (userFiscalCode: string | undefined) =>
-  (recipient: NotificationRecipient): O.Option<NotificationPaymentInfo> =>
-    pipe(
-      recipient.payment,
-      O.fromNullable,
-      O.filter(() => recipient.taxId === userFiscalCode)
-    );
+  const recipients = sendMessage.recipients;
+  const filteredPayments = recipients.reduce<
+    ReadonlyArray<NotificationPaymentInfo>
+  >((accumulator, recipient) => {
+    if (
+      // Payment must be defined
+      recipient.payment != null &&
+      // Payment is valid if no input fiscal code to compare to has been provided
+      // or if the taxId property matches the provided userFiscalCode
+      (userFiscalCode == null || recipient.taxId === userFiscalCode)
+    ) {
+      return [...accumulator, recipient.payment];
+    }
+    return accumulator;
+  }, []);
+  return filteredPayments.length > 0 ? filteredPayments : undefined;
+};
 
-export const isCancelledFromPNMessagePot = (
-  potMessage: pot.Pot<O.Option<PNMessage>, Error>
-) =>
-  pipe(
-    pot.getOrElse(potMessage, O.none),
-    O.chainNullableK(message => message.isCancelled),
-    O.getOrElse(() => false)
-  );
+export const isSENDMessageCancelled = (sendMessage: PNMessage | undefined) =>
+  sendMessage?.isCancelled ?? false;
 
-export const containsF24FromPNMessagePot = (
-  potMessage: pot.Pot<O.Option<PNMessage>, Error>
-) =>
-  pipe(
-    pot.getOrElse(potMessage, O.none),
-    O.chainNullableK(message => message.attachments),
-    O.getOrElse<ReadonlyArray<ThirdPartyAttachment>>(() => []),
-    RA.some(attachment => attachment.category === ATTACHMENT_CATEGORY.F24)
-  );
+export const doesSENDMessageIncludeF24 = (sendMessage: PNMessage | undefined) =>
+  sendMessage?.attachments?.some(
+    attachment => attachment.category === ATTACHMENT_CATEGORY.F24
+  ) ?? false;
 
 export const canShowMorePaymentsLink = (
   isCancelled: boolean,
@@ -141,3 +127,6 @@ export const shouldUseBottomSheetForPayments = (
   payments?: ReadonlyArray<NotificationPaymentInfo>
 ): payments is ReadonlyArray<NotificationPaymentInfo> =>
   !isCancelled && (payments?.length ?? 0) > 1;
+
+export const openingSourceIsAarMessage = (openingSource: SendOpeningSource) =>
+  openingSource === "aar";

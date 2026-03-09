@@ -1,7 +1,8 @@
-import { Trust, Errors } from "@pagopa/io-react-native-wallet";
-import { type IntegrityError } from "@pagopa/io-react-native-integrity";
 import { CryptoError } from "@pagopa/io-react-native-crypto";
+import { type IntegrityError } from "@pagopa/io-react-native-integrity";
+import { Errors, Trust } from "@pagopa/io-react-native-wallet";
 import {
+  isAssertionGenerationError,
   isFederationError,
   isLocalIntegrityError
 } from "../../common/utils/itwFailureUtils";
@@ -10,18 +11,21 @@ import { type EidIssuanceEvents } from "./events";
 const {
   isIssuerResponseError,
   isWalletProviderResponseError,
-  WalletProviderResponseErrorCodes: Codes
+  WalletProviderResponseErrorCodes: Codes,
+  IssuerResponseErrorCodes: IssuerCodes
 } = Errors;
 
 export enum IssuanceFailureType {
   UNEXPECTED = "UNEXPECTED",
   UNSUPPORTED_DEVICE = "UNSUPPORTED_DEVICE",
+  HARDWARE_KEY_INVALID = "HARDWARE_KEY_INVALID",
   NOT_MATCHING_IDENTITY = "NOT_MATCHING_IDENTITY",
   ISSUER_GENERIC = "ISSUER_GENERIC",
   WALLET_PROVIDER_GENERIC = "WALLET_PROVIDER_GENERIC",
   WALLET_REVOCATION_ERROR = "WALLET_REVOCATION_ERROR",
   UNTRUSTED_ISS = "UNTRUSTED_ISS",
-  CIE_NOT_REGISTERED = "CIE_NOT_REGISTERED"
+  CIE_NOT_REGISTERED = "CIE_NOT_REGISTERED",
+  MRTD_CHALLENGE_INIT_ERROR = "MRTD_CHALLENGE_INIT_ERROR"
 }
 
 /**
@@ -34,10 +38,12 @@ export type ReasonTypeByFailure = {
     | IntegrityError
     | CryptoError
     | Errors.WalletProviderResponseError;
+  [IssuanceFailureType.HARDWARE_KEY_INVALID]: IntegrityError;
   [IssuanceFailureType.NOT_MATCHING_IDENTITY]: string;
   [IssuanceFailureType.WALLET_REVOCATION_ERROR]: unknown;
   [IssuanceFailureType.UNTRUSTED_ISS]: Trust.Errors.FederationError;
   [IssuanceFailureType.CIE_NOT_REGISTERED]: string;
+  [IssuanceFailureType.MRTD_CHALLENGE_INIT_ERROR]: Errors.IssuerResponseError;
   [IssuanceFailureType.UNEXPECTED]: unknown;
 };
 
@@ -69,12 +75,28 @@ export const mapEventToFailure = (
 
   const { error } = event;
 
+  if (isAssertionGenerationError(error)) {
+    return {
+      type: IssuanceFailureType.HARDWARE_KEY_INVALID,
+      reason: error
+    };
+  }
+
   if (
     isLocalIntegrityError(error) ||
     isWalletProviderResponseError(error, Codes.WalletInstanceIntegrityFailed)
   ) {
     return {
       type: IssuanceFailureType.UNSUPPORTED_DEVICE,
+      reason: error
+    };
+  }
+
+  if (
+    isIssuerResponseError(error, IssuerCodes.MrtdChallengeInitRequestFailed)
+  ) {
+    return {
+      type: IssuanceFailureType.MRTD_CHALLENGE_INIT_ERROR,
       reason: error
     };
   }

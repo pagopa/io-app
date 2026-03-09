@@ -11,7 +11,7 @@ import { AUTHENTICATION_ROUTES } from "../features/authentication/common/navigat
 import { isConnectedSelector } from "../features/connectivity/store/selectors";
 import { OfflineAccessReasonEnum } from "../features/ingress/store/reducer";
 import { offlineAccessReasonSelector } from "../features/ingress/store/selectors";
-import { trackItwOfflineBottomSheet } from "../features/itwallet/analytics";
+import { trackItwOfflineBottomSheet } from "../features/itwallet/wallet/analytics";
 import { useOfflineAlertDetailModal } from "../features/itwallet/common/hooks/useOfflineAlertDetailModal";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import { useAppRestartAction } from "../features/itwallet/wallet/hooks/useAppRestartAction";
@@ -57,6 +57,23 @@ type AlertProps = {
   alertProps?: AlertEdgeToEdgeProps;
   bottomSheet?: JSX.Element;
 };
+
+/**
+ * Helper to build the event properties for Mixpanel events related to banners.
+ * @param eventType the type of the event, either "action" or "screen_view"
+ * @param banner_page the current route where the banner is shown
+ * @param banner_landing the URL of the banner, if any
+ * @returns the event properties object
+ */
+const buildMPEventProperties = (
+  eventType: "action" | "screen_view",
+  banner_page: string,
+  banner_landing?: string
+) =>
+  buildEventProperties("UX", eventType, {
+    banner_page,
+    banner_landing
+  });
 
 /**
  * Helper hook to derive the connectivity state based on the current connectivity status,
@@ -305,6 +322,34 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
     isAlertVisible
   ]);
 
+  useEffect(() => {
+    if (connectivityAlert) {
+      // Visibility is handled by the connectivity useEffect
+      return;
+    }
+    if (!currentStatusMessage || currentStatusMessage.length === 0) {
+      setAlertVisible(false);
+    } else {
+      setAlertVisible(true);
+      mixpanelTrack(
+        "REMOTE_BANNER",
+        buildMPEventProperties(
+          "screen_view",
+          currentRoute,
+          currentStatusMessage[0].web_url
+            ? currentStatusMessage[0].web_url[localeFallback]
+            : undefined
+        )
+      );
+    }
+  }, [
+    connectivityAlert,
+    currentStatusMessage,
+    setAlertVisible,
+    currentRoute,
+    localeFallback
+  ]);
+
   return useMemo(() => {
     if (connectivityAlert) {
       return {
@@ -327,12 +372,20 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
           action:
             firstAlert.label_cta?.[localeFallback] ||
             I18n.t("global.sectionStatus.moreInfo"),
-          onPress: () => openWebUrl(url[localeFallback])
+          onPress: () => {
+            mixpanelTrack(
+              "TAP_REMOTE_BANNER",
+              buildMPEventProperties(
+                "action",
+                currentRoute,
+                url[localeFallback]
+              )
+            );
+            openWebUrl(url[localeFallback]);
+          }
         })
       )
     );
-
-    setAlertVisible(currentStatusMessage.length > 0);
 
     return {
       alertProps: {
@@ -344,8 +397,8 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
   }, [
     connectivityAlert,
     currentStatusMessage,
-    setAlertVisible,
     localeFallback,
-    bottomSheet
+    bottomSheet,
+    currentRoute
   ]);
 };

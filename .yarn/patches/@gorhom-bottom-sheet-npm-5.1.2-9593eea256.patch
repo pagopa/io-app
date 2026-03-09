@@ -1,0 +1,93 @@
+diff --git a/lib/commonjs/components/bottomSheet/BottomSheet.js b/lib/commonjs/components/bottomSheet/BottomSheet.js
+index e5f96e95c8c4adebefc1581bdbe035c291aca696..857186e03f427c2f333dff79a95b2e76caa92304 100644
+--- a/lib/commonjs/components/bottomSheet/BottomSheet.js
++++ b/lib/commonjs/components/bottomSheet/BottomSheet.js
+@@ -1255,9 +1255,6 @@ const BottomSheetComponent = /*#__PURE__*/(0, _react.forwardRef)(function Bottom
+             }, "BottomSheetBackgroundContainer"), /*#__PURE__*/(0, _jsxRuntime.jsxs)(_reactNativeReanimated.default.View, {
+               pointerEvents: "box-none",
+               style: contentMaskContainerStyle,
+-              accessible: _providedAccessible ?? undefined,
+-              accessibilityRole: _providedAccessibilityRole ?? undefined,
+-              accessibilityLabel: _providedAccessibilityLabel ?? undefined,
+               children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(DraggableView, {
+                 style: contentContainerStyle,
+                 children: children
+diff --git a/lib/commonjs/components/bottomSheetBackdrop/BottomSheetBackdrop.js b/lib/commonjs/components/bottomSheetBackdrop/BottomSheetBackdrop.js
+index 669fae00ebf658b21239b7de5246aa7ce33dfa37..fdf1256fae078c76b2f58537490c46a0efa89969 100644
+--- a/lib/commonjs/components/bottomSheetBackdrop/BottomSheetBackdrop.js
++++ b/lib/commonjs/components/bottomSheetBackdrop/BottomSheetBackdrop.js
+@@ -100,10 +100,6 @@ const BottomSheetBackdropComponent = ({
+   const AnimatedView = /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNativeReanimated.default.View, {
+     style: containerStyle,
+     pointerEvents: pointerEvents,
+-    accessible: _providedAccessible ?? undefined,
+-    accessibilityRole: _providedAccessibilityRole ?? undefined,
+-    accessibilityLabel: _providedAccessibilityLabel ?? undefined,
+-    accessibilityHint: _providedAccessibilityHint ? _providedAccessibilityHint : `Tap to ${typeof pressBehavior === 'string' ? pressBehavior : 'move'} the Bottom Sheet`,
+     children: children
+   });
+   return pressBehavior !== 'none' ? /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNativeGestureHandler.GestureDetector, {
+diff --git a/lib/module/components/bottomSheet/BottomSheet.js b/lib/module/components/bottomSheet/BottomSheet.js
+index 5ad2bbdd2d366eea5ee46da2b239c38e10ec79d4..f9ccc6c727d90e950666392fb2ccbb275d5786ae 100644
+--- a/lib/module/components/bottomSheet/BottomSheet.js
++++ b/lib/module/components/bottomSheet/BottomSheet.js
+@@ -1247,9 +1247,6 @@ const BottomSheetComponent = /*#__PURE__*/forwardRef(function BottomSheet(props,
+             }, "BottomSheetBackgroundContainer"), /*#__PURE__*/_jsxs(Animated.View, {
+               pointerEvents: "box-none",
+               style: contentMaskContainerStyle,
+-              accessible: _providedAccessible ?? undefined,
+-              accessibilityRole: _providedAccessibilityRole ?? undefined,
+-              accessibilityLabel: _providedAccessibilityLabel ?? undefined,
+               children: [/*#__PURE__*/_jsx(DraggableView, {
+                 style: contentContainerStyle,
+                 children: children
+diff --git a/lib/module/components/bottomSheetBackdrop/BottomSheetBackdrop.js b/lib/module/components/bottomSheetBackdrop/BottomSheetBackdrop.js
+index 395541e42a967a06e25c4bb0a72499932bf3b9d5..4b00a18b5a1659abe375fc6aaacc23229d7711b1 100644
+--- a/lib/module/components/bottomSheetBackdrop/BottomSheetBackdrop.js
++++ b/lib/module/components/bottomSheetBackdrop/BottomSheetBackdrop.js
+@@ -94,10 +94,6 @@ const BottomSheetBackdropComponent = ({
+   const AnimatedView = /*#__PURE__*/_jsx(Animated.View, {
+     style: containerStyle,
+     pointerEvents: pointerEvents,
+-    accessible: _providedAccessible ?? undefined,
+-    accessibilityRole: _providedAccessibilityRole ?? undefined,
+-    accessibilityLabel: _providedAccessibilityLabel ?? undefined,
+-    accessibilityHint: _providedAccessibilityHint ? _providedAccessibilityHint : `Tap to ${typeof pressBehavior === 'string' ? pressBehavior : 'move'} the Bottom Sheet`,
+     children: children
+   });
+   return pressBehavior !== 'none' ? /*#__PURE__*/_jsx(GestureDetector, {
+diff --git a/src/components/bottomSheet/BottomSheet.tsx b/src/components/bottomSheet/BottomSheet.tsx
+index a6f048e7581eefb63c41cf2a383d9f2561e5e7e3..d09c8b8c4b67fc5814e2dad92f735efa003f7e3d 100644
+--- a/src/components/bottomSheet/BottomSheet.tsx
++++ b/src/components/bottomSheet/BottomSheet.tsx
+@@ -1921,9 +1921,6 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
+                 <Animated.View
+                   pointerEvents="box-none"
+                   style={contentMaskContainerStyle}
+-                  accessible={_providedAccessible ?? undefined}
+-                  accessibilityRole={_providedAccessibilityRole ?? undefined}
+-                  accessibilityLabel={_providedAccessibilityLabel ?? undefined}
+                 >
+                   <DraggableView
+                     key="BottomSheetRootDraggableView"
+diff --git a/src/components/bottomSheetBackdrop/BottomSheetBackdrop.tsx b/src/components/bottomSheetBackdrop/BottomSheetBackdrop.tsx
+index ee10bde83fd6494109331f8ffc653520868ecfbc..010add45c1fd5a4295ea39674df1aff6795c88b5 100644
+--- a/src/components/bottomSheetBackdrop/BottomSheetBackdrop.tsx
++++ b/src/components/bottomSheetBackdrop/BottomSheetBackdrop.tsx
+@@ -139,16 +139,6 @@ const BottomSheetBackdropComponent = ({
+     <Animated.View
+       style={containerStyle}
+       pointerEvents={pointerEvents}
+-      accessible={_providedAccessible ?? undefined}
+-      accessibilityRole={_providedAccessibilityRole ?? undefined}
+-      accessibilityLabel={_providedAccessibilityLabel ?? undefined}
+-      accessibilityHint={
+-        _providedAccessibilityHint
+-          ? _providedAccessibilityHint
+-          : `Tap to ${
+-              typeof pressBehavior === 'string' ? pressBehavior : 'move'
+-            } the Bottom Sheet`
+-      }
+     >
+       {children}
+     </Animated.View>

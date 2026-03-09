@@ -4,15 +4,15 @@ import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { applicationChangeState } from "../../../../../store/actions/application";
+import * as HOOKS from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as URLUTILS from "../../../../../utils/url";
-import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import { NOTIFICATIONS_ROUTES } from "../../../../pushNotifications/navigation/routes";
 import PN_ROUTES from "../../../navigation/routes";
 import * as ANALYTICS from "../../analytics";
 import * as INITIAL_FLOW from "../../screen/SendAARInitialFlowScreen";
-import * as GENERIC_UTILS from "../../utils/generic";
 import { SendQRScanFlowHandlerComponent } from "../SendQRScanFlowHandlerComponent";
 
 const sendNotificationServiceId = "01G40DWQGKY5GRWSNM4303VNRP" as ServiceId;
@@ -20,6 +20,7 @@ const aarUrl = "https://example.com";
 
 const mockPopToTop = jest.fn();
 const mockReplace = jest.fn();
+const mockNavigate = jest.fn();
 
 jest.mock("@react-navigation/native", () => {
   const navigationModule = jest.requireActual("@react-navigation/native");
@@ -28,13 +29,16 @@ jest.mock("@react-navigation/native", () => {
     useNavigation: () => ({
       ...navigationModule.useNavigation(),
       popToTop: mockPopToTop,
-      replace: mockReplace
+      replace: mockReplace,
+      navigate: mockNavigate
     })
   };
 });
-const phase2Spy = jest.spyOn(GENERIC_UTILS, "isSendAARPhase2Enabled");
-const enablePhase2 = () => phase2Spy.mockImplementation(() => true);
-const disablePhase2 = () => phase2Spy.mockImplementation(() => false);
+
+jest.mock("../../../../../store/hooks", () => ({
+  ...jest.requireActual("../../../../../store/hooks"),
+  useIOSelector: jest.fn()
+}));
 
 describe("SendQRScanFlowHandlerComponent", () => {
   const mockOpenWebUrl = jest.fn();
@@ -51,7 +55,7 @@ describe("SendQRScanFlowHandlerComponent", () => {
 
   beforeAll(() => {
     jest.spyOn(URLUTILS, "openWebUrl").mockImplementation(mockOpenWebUrl);
-    disablePhase2();
+    (HOOKS.useIOSelector as jest.Mock).mockReturnValue(false);
   });
 
   afterEach(() => {
@@ -121,26 +125,23 @@ describe("SendQRScanFlowHandlerComponent", () => {
           expect(mockReplace.mock.calls.length).toBe(1);
           expect(mockReplace.mock.calls[0].length).toBe(2);
           expect(mockReplace.mock.calls[0][0]).toBe(
-            MESSAGES_ROUTES.MESSAGES_NAVIGATOR
+            PN_ROUTES.ENGAGEMENT_SCREEN
           );
           expect(mockReplace.mock.calls[0][1]).toEqual({
-            screen: PN_ROUTES.MAIN,
-            params: {
-              screen: PN_ROUTES.ENGAGEMENT_SCREEN
-            }
+            sendOpeningSource: "aar",
+            sendUserType: "not_set"
           });
           expect(mockPopToTop.mock.calls.length).toBe(0);
         } else if (shouldNavigateToNotificationPermissionsScreen) {
           expect(mockReplace.mock.calls.length).toBe(1);
           expect(mockReplace.mock.calls[0].length).toBe(2);
           expect(mockReplace.mock.calls[0][0]).toBe(
-            MESSAGES_ROUTES.MESSAGES_NAVIGATOR
+            NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT
           );
-          expect(mockReplace.mock.calls[0][1]).toEqual({
-            screen: PN_ROUTES.MAIN,
-            params: {
-              screen: PN_ROUTES.QR_SCAN_PUSH_ENGAGEMENT
-            }
+          expect(mockReplace.mock.calls[0][1]).toMatchObject({
+            flow: "send_notification_opening",
+            sendOpeningSource: "aar",
+            sendUserType: "not_set"
           });
           expect(mockPopToTop.mock.calls.length).toBe(0);
         } else {
@@ -148,6 +149,7 @@ describe("SendQRScanFlowHandlerComponent", () => {
           expect(mockPopToTop.mock.calls.length).toBe(1);
           expect(mockPopToTop.mock.calls[0].length).toBe(0);
         }
+        expect(mockNavigate).not.toHaveBeenCalled();
       });
     })
   );
@@ -174,7 +176,7 @@ describe("SendQRScanFlowHandlerComponent", () => {
   });
 });
 
-describe("SendQRScanFlowHandlerComponent - AAR phase toggle", () => {
+describe("SendQRScanFlowHandlerComponent - AAR enabled", () => {
   const componentMock = jest.fn();
   const componentSpy = jest
     .spyOn(INITIAL_FLOW, "SendAARInitialFlowScreen")
@@ -183,11 +185,11 @@ describe("SendQRScanFlowHandlerComponent - AAR phase toggle", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     act(() => {
-      enablePhase2();
+      (HOOKS.useIOSelector as jest.Mock).mockReturnValue(true);
     });
   });
 
-  it("should render the initial flow screen if phase 2 is enabled", () => {
+  it("should render the initial flow screen if aAREnabled='true'", () => {
     expect(componentSpy).not.toHaveBeenCalled();
     renderComponent(true, true);
     expect(componentMock.mock.calls[0][0]).toEqual({

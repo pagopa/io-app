@@ -9,7 +9,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { remoteError, remoteReady } from "../../../../common/model/RemoteValue";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { toSpecificError } from "../../../messages/store/actions";
+import { toSpecificMessagePaymentError } from "../../../messages/types/paymentErrors";
 import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
 
 describe("MessagePaymentBottomSheet", () => {
@@ -48,22 +48,32 @@ describe("MessagePaymentBottomSheet", () => {
                   description: "Uno due tre"
                 }),
                 [paymentIdList[1]]: remoteError(
-                  toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO)
+                  toSpecificMessagePaymentError(
+                    Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+                  )
                 ),
                 [paymentIdList[2]]: remoteError(
-                  toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO)
+                  toSpecificMessagePaymentError(
+                    Detail_v2Enum.PAA_PAGAMENTO_SCADUTO
+                  )
                 ),
                 [paymentIdList[3]]: remoteError(
-                  toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO)
+                  toSpecificMessagePaymentError(
+                    Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO
+                  )
                 ),
                 [paymentIdList[4]]: remoteError(
-                  toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
+                  toSpecificMessagePaymentError(
+                    Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+                  )
                 ),
                 [paymentIdList[5]]: remoteError(
-                  toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_SCONOSCIUTO)
+                  toSpecificMessagePaymentError(
+                    Detail_v2Enum.PAA_PAGAMENTO_SCONOSCIUTO
+                  )
                 ),
                 [paymentIdList[6]]: remoteError(
-                  toSpecificError(Detail_v2Enum.GENERIC_ERROR)
+                  toSpecificMessagePaymentError(Detail_v2Enum.GENERIC_ERROR)
                 )
               }
             }
@@ -103,6 +113,8 @@ const renderComponent = (
         payments={payments}
         presentPaymentsBottomSheetRef={mockPresentPaymentsBottomSheetRef}
         serviceId={"01J5X3CYV736B41KSZS8DYR75Q" as ServiceId}
+        sendOpeningSource={"message"}
+        sendUserType={"recipient"}
       />
     ),
     PN_ROUTES.MESSAGE_DETAILS,

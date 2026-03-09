@@ -1,11 +1,11 @@
 import { WithTestID } from "@pagopa/io-app-design-system";
+import { useMemo } from "react";
 import { Platform, StyleSheet } from "react-native";
 import Animated, {
   FadeInDown,
   FadeOutDown,
   LinearTransition
 } from "react-native-reanimated";
-import { useMemo } from "react";
 import { WalletCard } from "../types";
 import { renderWalletCardFn } from "../utils";
 
@@ -69,8 +69,7 @@ export const WalletCardsCategoryContainer = ({
 const styles = StyleSheet.create({
   container: {
     display: "flex",
-    flexDirection: "column",
-    marginBottom: 16
+    flexDirection: "column"
   },
   listHeader: {
     marginHorizontal: 8

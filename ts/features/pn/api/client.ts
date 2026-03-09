@@ -1,11 +1,11 @@
 import { createClient } from "../../../../definitions/pn/client";
-import { SessionToken } from "../../../types/SessionToken";
+import { fetchMaxRetries, fetchTimeout } from "../../../config";
 import { defaultRetryingFetch } from "../../../utils/fetch";
 
-export const createPnClient = (baseUrl: string, token: SessionToken) =>
+export const createPnClient = (baseUrl: string, token: string) =>
   createClient<"Bearer">({
     baseUrl,
-    fetchApi: defaultRetryingFetch(),
+    fetchApi: defaultRetryingFetch(fetchTimeout, fetchMaxRetries, 418), // mock status code to force no retry, for custom 429 handling
     withDefaults: op => params =>
       op({
         ...params,

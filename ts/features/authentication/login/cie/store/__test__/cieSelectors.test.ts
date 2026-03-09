@@ -13,11 +13,8 @@ describe("CIE selectors", () => {
       }
     },
     cie: {
-      hasNFCFeature: pot.some(true),
-      hasApiLevelSupport: pot.none,
       isCieSupported: pot.toError(pot.none, new Error("fail")),
-      isNfcEnabled: pot.some(false),
-      readingEvent: pot.none
+      isNfcEnabled: pot.some(false)
     }
   } as any;
 
@@ -35,14 +32,6 @@ describe("CIE selectors", () => {
     );
   });
 
-  it("should return correct value for hasNFCFeatureSelector", () => {
-    expect(selectors.hasNFCFeatureSelector(baseState)).toEqual(pot.some(true));
-  });
-
-  it("should return correct value for hasApiLevelSupportSelector", () => {
-    expect(selectors.hasApiLevelSupportSelector(baseState)).toEqual(pot.none);
-  });
-
   it("should return correct value for isCieSupportedSelector", () => {
     expect(selectors.isCieSupportedSelector(baseState).kind).toBe(
       "PotNoneError"
@@ -51,9 +40,5 @@ describe("CIE selectors", () => {
 
   it("should return correct value for isNfcEnabledSelector", () => {
     expect(selectors.isNfcEnabledSelector(baseState)).toEqual(pot.some(false));
-  });
-
-  it("should return correct value for readingEventSelector", () => {
-    expect(selectors.readingEventSelector(baseState)).toEqual(pot.none);
   });
 });

@@ -11,7 +11,7 @@ type Props = {
 
 /**
  * Rendered when it is not possible to determine the status of a credential,
- * i.e. the API call to fetch the status attestation from the issuer failed.
+ * i.e. the API call to fetch the status assertion from the issuer failed.
  */
 export const ItwPresentationCredentialUnknownStatus = ({
   credential
@@ -28,15 +28,15 @@ export const ItwPresentationCredentialUnknownStatus = ({
     <OperationResultScreenContent
       pictogram="updateOS"
       title={I18n.t(
-        "features.itWallet.presentation.statusAttestationUnknown.title",
+        "features.itWallet.presentation.statusAssertionUnknown.title",
         { credentialName }
       )}
       subtitle={I18n.t(
-        "features.itWallet.presentation.statusAttestationUnknown.content"
+        "features.itWallet.presentation.statusAssertionUnknown.content"
       )}
       action={{
         label: I18n.t(
-          "features.itWallet.presentation.statusAttestationUnknown.primaryAction"
+          "features.itWallet.presentation.statusAssertionUnknown.primaryAction"
         ),
         onPress: () => navigation.goBack()
       }}

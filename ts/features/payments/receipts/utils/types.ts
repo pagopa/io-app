@@ -17,5 +17,4 @@ export const DownloadReceiptHeaders = t.type({
   })
 });
 
-export type ReceiptHeaders = t.TypeOf<typeof ReceiptsHeaders>;
 export type DownloadReceiptHeaders = t.TypeOf<typeof DownloadReceiptHeaders>;

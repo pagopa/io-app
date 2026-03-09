@@ -1,44 +1,51 @@
 import {
   Banner,
+  ListItemHeader,
   RadioGroup,
   RadioItem,
   useIOToast,
-  VSpacer
+  VSpacer,
+  VStack
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
+import _ from "lodash";
 import {
-  useContext,
   createRef,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
   useState
 } from "react";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import { Alert, View } from "react-native";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import _ from "lodash";
-import I18n from "i18next";
-import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
-import { availableTranslations } from "../../../../i18n";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
 import { Locales } from "../../../../../locales/locales";
-import { profileUpsert } from "../../common/store/actions";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import { AlertModal } from "../../../../components/ui/AlertModal";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { LightModalContext } from "../../../../components/ui/LightModal";
+import { availableTranslations } from "../../../../i18n";
+import {
+  AppLocale,
+  preferredLanguageSaveSuccess
+} from "../../../../store/actions/persistedPreferences";
+
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { sectionStatusByKeySelector } from "../../../../store/reducers/backendStatus/sectionStatus";
+import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
+import { usePrevious } from "../../../../utils/hooks/usePrevious";
 import {
   fromLocaleToPreferredLanguage,
   getFullLocale
 } from "../../../../utils/locale";
-import { profileSelector } from "../../common/store/selectors";
-import { usePrevious } from "../../../../utils/hooks/usePrevious";
-import { preferredLanguageSaveSuccess } from "../../../../store/actions/persistedPreferences";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { openWebUrl } from "../../../../utils/url";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { sectionStatusByKeySelector } from "../../../../store/reducers/backendStatus/sectionStatus";
-import { LightModalContext } from "../../../../components/ui/LightModal";
-import { AlertModal } from "../../../../components/ui/AlertModal";
+import { profileUpsert } from "../../common/store/actions";
+import { profileSelector } from "../../common/store/selectors";
+import { isAppLocaleSelectionEnabled } from "../../../../config";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.language.contextualHelpTitle",
@@ -48,6 +55,8 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 /**
  * Allows the user to select one of the available Languages as preferred
  */
+
+type AppLocaleId = `app-locale-${AppLocale}`;
 
 const LanguagesPreferencesScreen = () => {
   const viewRef = createRef<View>();
@@ -113,6 +122,27 @@ const LanguagesPreferencesScreen = () => {
   );
 
   const [selectedItem, setSelectedItem] = useState(initialSelectedItem);
+
+  const appLocaleOptions: Array<RadioItem<AppLocaleId>> = useMemo(
+    () =>
+      (["it", "en", "de", "fr", "sl"] as const).map(locale => ({
+        value: I18n.t(`locales.${locale}`, {
+          defaultValue: locale
+        }),
+        id: `app-locale-${locale}` as AppLocaleId
+      })),
+    []
+  );
+
+  const [selectedAppLocale, setSelectedAppLocale] = useState<AppLocaleId>(
+    `app-locale-${I18n.language as AppLocale}` as AppLocaleId
+  );
+
+  const handleAppLocaleChange = useCallback((localeId: AppLocaleId) => {
+    const locale = localeId.replace("app-locale-", "") as AppLocale;
+    setSelectedAppLocale(localeId);
+    Alert.alert("Language selected", locale);
+  }, []);
 
   useEffect(() => {
     // start updating
@@ -209,28 +239,59 @@ const LanguagesPreferencesScreen = () => {
         headerActionsProp={{ showHelp: true }}
         contextualHelpMarkdown={contextualHelpMarkdown}
       >
-        <VSpacer size={16} />
-        <RadioGroup<string>
-          type="radioListItem"
-          items={renderedItem}
-          selectedItem={selectedItem}
-          onPress={onLanguageSelected}
-        />
-        <VSpacer size={16} />
-        {isBannerVisible && (
-          <Banner
-            ref={viewRef}
-            color="neutral"
-            content={bannerInfoSelector.message[getFullLocale()]}
-            pictogramName="charity"
-            action={I18n.t(
-              "profile.preferences.list.preferred_language.banner.button"
+        <VStack space={24}>
+          <View>
+            {isAppLocaleSelectionEnabled && (
+              <ListItemHeader
+                iconName="institution"
+                label={I18n.t(
+                  "profile.preferences.list.preferred_language.headers.services"
+                )}
+              />
             )}
-            onPress={() =>
-              openWebUrl(bannerInfoSelector.web_url?.[getFullLocale()] || "")
-            }
-          />
-        )}
+            <RadioGroup<string>
+              type="radioListItem"
+              items={renderedItem}
+              selectedItem={selectedItem}
+              onPress={onLanguageSelected}
+            />
+            {isBannerVisible && (
+              <>
+                <VSpacer />
+                <Banner
+                  ref={viewRef}
+                  color="neutral"
+                  content={bannerInfoSelector.message[getFullLocale()]}
+                  pictogramName="charity"
+                  action={I18n.t(
+                    "profile.preferences.list.preferred_language.banner.button"
+                  )}
+                  onPress={() =>
+                    openWebUrl(
+                      bannerInfoSelector.web_url?.[getFullLocale()] || ""
+                    )
+                  }
+                />
+              </>
+            )}
+          </View>
+          {isAppLocaleSelectionEnabled && (
+            <View>
+              <ListItemHeader
+                iconName="device"
+                label={I18n.t(
+                  "profile.preferences.list.preferred_language.headers.app"
+                )}
+              />
+              <RadioGroup<AppLocaleId>
+                type="radioListItem"
+                items={appLocaleOptions}
+                selectedItem={selectedAppLocale}
+                onPress={handleAppLocaleChange}
+              />
+            </View>
+          )}
+        </VStack>
       </IOScrollViewWithLargeHeader>
     </LoadingSpinnerOverlay>
   );

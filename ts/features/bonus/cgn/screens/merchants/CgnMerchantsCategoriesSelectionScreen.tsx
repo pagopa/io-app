@@ -18,7 +18,7 @@ export const CgnMerchantsHomeTabRoutes = {
   CGN_MERCHANTS_ALL: "CGN_MERCHANTS_ALL"
 } as const;
 
-export type CgnMerchantsHomeTabParamsList = {
+type CgnMerchantsHomeTabParamsList = {
   [CgnMerchantsHomeTabRoutes.CGN_CATEGORIES]: undefined;
   [CgnMerchantsHomeTabRoutes.CGN_MERCHANTS_ALL]: undefined;
 };

@@ -9,7 +9,12 @@ import {
 import * as AR from "fp-ts/lib/Array";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ComponentProps, useContext } from "react";
+import {
+  ComponentProps,
+  forwardRef,
+  useContext,
+  useImperativeHandle
+} from "react";
 import { Image, ImageStyle, StyleProp } from "react-native";
 import Animated, {
   useAnimatedRef,
@@ -47,6 +52,10 @@ type Props = OwnProps &
     ComponentProps<typeof IOScrollViewWithLargeHeader>,
     "contextualHelp" | "contextualHelpMarkdown" | "faqCategories"
   >;
+
+export type BonusInformationComponentRef = {
+  scrollTo: (y: number) => void;
+};
 
 const getTosFooter = (
   maybeBonusTos: O.Option<string>,
@@ -101,7 +110,7 @@ const imageHeight: number = 270;
 /**
  * A screen to explain how the bonus activation works and how it will be assigned
  */
-const BonusInformationComponent = (props: Props) => {
+const BonusInformationComponent = forwardRef((props: Props, ref) => {
   const { showModal, hideModal } = useContext(LightModalContext);
   const bonusType = props.bonus;
   const { imageStyle: imageProps } = props;
@@ -173,6 +182,12 @@ const BonusInformationComponent = (props: Props) => {
         primary: requestButtonProps
       };
 
+  useImperativeHandle(ref, () => ({
+    scrollTo: (y: number) => {
+      animatedScrollViewRef.current?.scrollTo({ y, animated: true });
+    }
+  }));
+
   return (
     <IOScrollView
       animatedRef={animatedScrollViewRef}
@@ -220,6 +235,6 @@ const BonusInformationComponent = (props: Props) => {
       </ContentWrapper>
     </IOScrollView>
   );
-};
+});
 
 export default BonusInformationComponent;

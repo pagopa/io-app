@@ -22,11 +22,6 @@ type ListItemSwitchIconProps =
   | { icon: IOIcons; paymentLogo?: never }
   | { icon?: never; paymentLogo?: never };
 
-export type InstrumentEnrollmentSwitchRef = {
-  switchStatus: boolean;
-  setSwitchStatus: (status: boolean) => void;
-};
-
 type InstrumentEnrollmentSwitchProps = {
   wallet: Wallet;
   isStaged: boolean;
@@ -103,7 +98,7 @@ const IdPayInstrumentEnrollmentSwitch = (
   );
 };
 
-export const cardLogoByBrand: {
+const cardLogoByBrand: {
   [key in CreditCardType]: IOLogoPaymentType | undefined;
 } = {
   MASTERCARD: "mastercard",

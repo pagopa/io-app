@@ -13,7 +13,7 @@ const CgnActivationIneligibleScreen = () => {
   const onExit = useCallback(() => dispatch(cgnActivationCancel()), [dispatch]);
   return (
     <OperationResultScreenContent
-      pictogram="error"
+      pictogram="accessDenied"
       title={I18n.t("bonus.cgn.activation.ineligible.title")}
       subtitle={I18n.t("bonus.cgn.activation.ineligible.body")}
       action={{
@@ -21,8 +21,6 @@ const CgnActivationIneligibleScreen = () => {
         accessibilityLabel: I18n.t("global.buttons.close"),
         onPress: onExit
       }}
-      enableAnimatedPictogram
-      loop={false}
     />
   );
 };

@@ -6,7 +6,6 @@ import {
   takeEvery,
   takeLatest
 } from "typed-redux-saga/macro";
-import { SessionToken } from "../../../types/SessionToken";
 import { clearCache } from "../../settings/common/store/actions";
 import { logoutSuccess } from "../../authentication/common/store/actions";
 import {
@@ -19,11 +18,11 @@ import {
   loadThirdPartyMessage,
   reloadAllMessages,
   removeCachedAttachment,
+  setMessageSagasRegisteredAction,
   startPaymentStatusTracking,
   upsertMessageStatusAttributes
 } from "../store/actions";
 import { retryDataAfterFastLoginSessionExpirationSelector } from "../store/reducers/messageGetStatus";
-import { BackendClient } from "../../../api/backend";
 import { retrievingDataPreconditionStatusAction } from "../store/actions/preconditions";
 import { startProcessingMessageArchivingAction } from "../store/actions/archiving";
 import { handleDownloadAttachment } from "./handleDownloadAttachment";
@@ -51,58 +50,32 @@ import { handlePaymentUpdateRequests } from "./handlePaymentUpdateRequests";
  * @param backendClient
  * @param bearerToken
  */
-export function* watchMessagesSaga(
-  backendClient: BackendClient,
-  bearerToken: SessionToken
-): SagaIterator {
-  yield* takeLatest(
-    loadNextPageMessages.request,
-    handleLoadNextPageMessages,
-    backendClient.getMessages
-  );
+export function* watchMessagesSaga(): SagaIterator {
+  yield* takeLatest(loadNextPageMessages.request, handleLoadNextPageMessages);
 
   yield* takeLatest(
     loadPreviousPageMessages.request,
-    handleLoadPreviousPageMessages,
-    backendClient.getMessages
+    handleLoadPreviousPageMessages
   );
 
-  yield* takeLatest(
-    reloadAllMessages.request,
-    handleReloadAllMessages,
-    backendClient.getMessages
-  );
+  yield* takeLatest(reloadAllMessages.request, handleReloadAllMessages);
 
-  yield* takeEvery(
-    loadMessageById.request,
-    handleLoadMessageById,
-    backendClient.getMessage
-  );
+  yield* takeEvery(loadMessageById.request, handleLoadMessageById);
 
-  yield* takeLatest(
-    loadMessageDetails.request,
-    handleLoadMessageDetails,
-    backendClient.getMessage
-  );
+  yield* takeLatest(loadMessageDetails.request, handleLoadMessageDetails);
 
   yield* takeLatest(
     retrievingDataPreconditionStatusAction,
-    handleMessagePrecondition,
-    backendClient.getThirdPartyMessagePrecondition
+    handleMessagePrecondition
   );
 
-  yield* takeLatest(
-    loadThirdPartyMessage.request,
-    handleThirdPartyMessage,
-    backendClient.getThirdPartyMessage
-  );
+  yield* takeLatest(loadThirdPartyMessage.request, handleThirdPartyMessage);
 
   // Be aware that this saga must use the takeEvery
   // due to compatibility with the old messages home
   yield* takeEvery(
     upsertMessageStatusAttributes.request,
-    raceUpsertMessageStatusAttributes,
-    backendClient.upsertMessageStatusAttributes
+    raceUpsertMessageStatusAttributes
   );
   yield* takeLatest(
     startProcessingMessageArchivingAction,
@@ -110,14 +83,10 @@ export function* watchMessagesSaga(
   );
 
   // handle the request for a new downloadAttachment
-  yield* takeLatest(
-    downloadAttachment.request,
-    handleDownloadAttachment,
-    bearerToken
-  );
+  yield* takeLatest(downloadAttachment.request, handleDownloadAttachment);
 
   // handle the request for updating a message's payment
-  yield* fork(handlePaymentUpdateRequests, backendClient.getPaymentInfoV2);
+  yield* fork(handlePaymentUpdateRequests);
 
   // handle the request for removing a downloaded attachment
   yield* takeEvery(removeCachedAttachment, handleClearAttachment);
@@ -136,6 +105,9 @@ export function* watchMessagesSaga(
 
   // handle message details data loading composition
   yield* takeLatest(getMessageDataAction.request, handleLoadMessageData);
+
+  // Signal that message's sagas are ready
+  yield* put(setMessageSagasRegisteredAction());
 
   const retryDataOrUndefined = yield* select(
     retryDataAfterFastLoginSessionExpirationSelector

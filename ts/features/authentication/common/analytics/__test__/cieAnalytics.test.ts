@@ -28,7 +28,9 @@ describe("cieAnalytics", () => {
     (buildEventProperties as jest.Mock).mockReturnValue(mockProps);
     trackLoginCiePinScreen();
     expect(mixpanelTrack).toHaveBeenCalledWith("LOGIN_CIE_PIN", mockProps);
-    expect(buildEventProperties).toHaveBeenCalledWith("UX", "screen_view");
+    expect(buildEventProperties).toHaveBeenCalledWith("UX", "screen_view", {
+      flow: "auth"
+    });
   });
 
   it("tracks LOGIN_CIE_PIN_INFO action", () => {
@@ -36,7 +38,9 @@ describe("cieAnalytics", () => {
     (buildEventProperties as jest.Mock).mockReturnValue(mockProps);
     trackLoginCiePinInfo();
     expect(mixpanelTrack).toHaveBeenCalledWith("LOGIN_CIE_PIN_INFO", mockProps);
-    expect(buildEventProperties).toHaveBeenCalledWith("UX", "action");
+    expect(buildEventProperties).toHaveBeenCalledWith("UX", "action", {
+      flow: "auth"
+    });
   });
 
   it("tracks LOGIN_CIE_CARD_READER screen view", () => {
@@ -47,7 +51,9 @@ describe("cieAnalytics", () => {
       "LOGIN_CIE_CARD_READER",
       mockProps
     );
-    expect(buildEventProperties).toHaveBeenCalledWith("UX", "screen_view");
+    expect(buildEventProperties).toHaveBeenCalledWith("UX", "screen_view", {
+      flow: "auth"
+    });
   });
 
   it("tracks LOGIN_CIE_CARD_READING_SUCCESS confirm", () => {
@@ -58,7 +64,9 @@ describe("cieAnalytics", () => {
       "LOGIN_CIE_CARD_READING_SUCCESS",
       mockProps
     );
-    expect(buildEventProperties).toHaveBeenCalledWith("UX", "confirm");
+    expect(buildEventProperties).toHaveBeenCalledWith("UX", "confirm", {
+      flow: "auth"
+    });
   });
 
   it("tracks LOGIN_CIE_CONSENT_DATA_USAGE screen view", () => {
@@ -69,7 +77,9 @@ describe("cieAnalytics", () => {
       "LOGIN_CIE_CONSENT_DATA_USAGE",
       mockProps
     );
-    expect(buildEventProperties).toHaveBeenCalledWith("UX", "screen_view");
+    expect(buildEventProperties).toHaveBeenCalledWith("UX", "screen_view", {
+      flow: "auth"
+    });
   });
 
   it("tracks LOGIN_CIE_CARD_READING_ERROR with KO category", () => {
@@ -80,7 +90,9 @@ describe("cieAnalytics", () => {
       "LOGIN_CIE_CARD_READING_ERROR",
       mockProps
     );
-    expect(buildEventProperties).toHaveBeenCalledWith("KO", undefined);
+    expect(buildEventProperties).toHaveBeenCalledWith("KO", undefined, {
+      flow: "auth"
+    });
   });
 
   it("tracks LOGIN_CIE_DATA_SHARING_ERROR with KO category", () => {
@@ -91,6 +103,8 @@ describe("cieAnalytics", () => {
       "LOGIN_CIE_DATA_SHARING_ERROR",
       mockProps
     );
-    expect(buildEventProperties).toHaveBeenCalledWith("KO", undefined);
+    expect(buildEventProperties).toHaveBeenCalledWith("KO", undefined, {
+      flow: "auth"
+    });
   });
 });

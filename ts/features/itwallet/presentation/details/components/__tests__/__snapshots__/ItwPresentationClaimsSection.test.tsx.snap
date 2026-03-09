@@ -34,12 +34,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -67,26 +64,18 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -94,15 +83,13 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -156,16 +143,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   ITW_PRESENTATION_CREDENTIAL_DETAIL
@@ -222,18 +204,14 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -303,13 +281,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -441,6 +415,35 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               testID="toggle-claim-visibility"
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "height": 24,
+                                      "width": 24,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -451,7 +454,13 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       "height": 24,
                                       "width": 24,
                                     },
-                                    false,
+                                    {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
                                   ]
                                 }
                               >
@@ -460,17 +469,25 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   accessibilityLabel=""
                                   accessible={false}
                                   align="xMidYMid"
-                                  animatedProps={
-                                    {
-                                      "color": undefined,
-                                    }
-                                  }
                                   bbHeight={36}
                                   bbWidth={36}
+                                  collapsable={false}
                                   color="#0B3EE3"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {
+                                        "color": "rgba(11, 62, 227, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
@@ -554,7 +571,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -647,7 +665,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -678,7 +697,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
+                                  numberOfLines={4}
                                   style={
                                     [
                                       {},
@@ -740,7 +759,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -833,7 +853,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -864,7 +885,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
+                                  numberOfLines={4}
                                   style={
                                     [
                                       {},
@@ -926,7 +947,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -957,7 +979,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
+                                  numberOfLines={4}
                                   style={
                                     [
                                       {},
@@ -1019,7 +1041,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -1050,7 +1073,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
+                                  numberOfLines={4}
                                   style={
                                     [
                                       {},
@@ -1112,7 +1135,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -1205,7 +1229,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -1236,7 +1261,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
+                                  numberOfLines={4}
                                   style={
                                     [
                                       {},
@@ -1298,7 +1323,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -1329,7 +1355,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
+                                  numberOfLines={4}
                                   style={
                                     [
                                       {},
@@ -1391,7 +1417,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -1422,7 +1449,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
+                                  numberOfLines={4}
                                   style={
                                     [
                                       {},
@@ -1484,7 +1511,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -1515,7 +1543,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
+                                  numberOfLines={4}
                                   style={
                                     [
                                       {},
@@ -1545,7 +1573,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Emissione versione digitale Istituto Poligrafico e Zecca di Stato"
                           accessible={false}
                           style={
                             {
@@ -1577,7 +1604,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
+                                accessibilityLabel="Emissione versione digitale Istituto Poligrafico e Zecca di Stato"
                                 accessible={true}
+                                importantForAccessibility="yes"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -1627,7 +1656,10 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 </Text>
                               </View>
                             </View>
-                            <View>
+                            <View
+                              accessible={false}
+                              importantForAccessibility="auto"
+                            >
                               <View
                                 accessibilityLabel="Info Emissione versione digitale"
                                 accessibilityRole="button"
@@ -1663,6 +1695,35 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -1673,7 +1734,13 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "height": 24,
                                         "width": 24,
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                     ]
                                   }
                                 >
@@ -1682,17 +1749,25 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    animatedProps={
-                                      {
-                                        "color": undefined,
-                                      }
-                                    }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    collapsable={false}
                                     color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {
+                                          "color": "rgba(11, 62, 227, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
@@ -1756,7 +1831,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           enableDynamicSizing={true}
                           footerComponent={[Function]}
                           handleComponent={[Function]}
-                          hardwareAccelerated={false}
                           importantForAccessibility="yes"
                           maxDynamicContentSize={1334}
                           onDismiss={[Function]}
@@ -1768,7 +1842,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               "overflow": "hidden",
                             }
                           }
-                          visible={true}
                         >
                           <RCTScrollView
                             overScrollMode="never"
@@ -1862,30 +1935,68 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       }
                                     >
                                       Per sapere come tratta i tuoi dati consulta l’
-                                      <Text
+                                      <View
                                         accessibilityRole="link"
-                                        allowFontScaling={true}
-                                        dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.5}
-                                        onPress={[Function]}
+                                        accessibilityState={
+                                          {
+                                            "busy": undefined,
+                                            "checked": undefined,
+                                            "disabled": undefined,
+                                            "expanded": undefined,
+                                            "selected": undefined,
+                                          }
+                                        }
+                                        accessibilityValue={
+                                          {
+                                            "max": undefined,
+                                            "min": undefined,
+                                            "now": undefined,
+                                            "text": undefined,
+                                          }
+                                        }
+                                        accessible={true}
+                                        collapsable={false}
+                                        focusable={true}
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onResponderGrant={[Function]}
+                                        onResponderMove={[Function]}
+                                        onResponderRelease={[Function]}
+                                        onResponderTerminate={[Function]}
+                                        onResponderTerminationRequest={[Function]}
+                                        onStartShouldSetResponder={[Function]}
                                         style={
-                                          [
-                                            {
-                                              "textDecorationLine": "underline",
-                                            },
-                                            {
-                                              "color": "#0B3EE3",
-                                              "fontFamily": "Titillio",
-                                              "fontSize": 16,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "600",
-                                              "lineHeight": 24,
-                                            },
-                                          ]
+                                          {
+                                            "height": 19,
+                                          }
                                         }
                                       >
-                                        Informativa Privacy
-                                      </Text>
+                                        <Text
+                                          accessibilityRole="link"
+                                          allowFontScaling={true}
+                                          dynamicTypeRamp="body"
+                                          maxFontSizeMultiplier={1.5}
+                                          onPress={[Function]}
+                                          style={
+                                            [
+                                              {
+                                                "textDecorationLine": "underline",
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
+                                                "fontFamily": "Titillio",
+                                                "fontSize": 16,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": 24,
+                                              },
+                                            ]
+                                          }
+                                        >
+                                          Informativa Privacy
+                                        </Text>
+                                      </View>
                                       .
                                     </Text>
                                   </View>
@@ -1956,12 +2067,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -1989,26 +2097,18 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -2016,15 +2116,13 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -2078,16 +2176,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   ITW_PRESENTATION_CREDENTIAL_DETAIL
@@ -2144,18 +2237,14 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -2225,13 +2314,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -2363,6 +2448,35 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               testID="toggle-claim-visibility"
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "height": 24,
+                                      "width": 24,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -2373,7 +2487,13 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       "height": 24,
                                       "width": 24,
                                     },
-                                    false,
+                                    {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
                                   ]
                                 }
                               >
@@ -2382,17 +2502,25 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   accessibilityLabel=""
                                   accessible={false}
                                   align="xMidYMid"
-                                  animatedProps={
-                                    {
-                                      "color": undefined,
-                                    }
-                                  }
                                   bbHeight={36}
                                   bbWidth={36}
+                                  collapsable={false}
                                   color="#0B3EE3"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {
+                                        "color": "rgba(11, 62, 227, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
@@ -2476,7 +2604,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -2571,6 +2700,28 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -2579,12 +2730,41 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -2598,7 +2778,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -2613,7 +2793,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
-                                  accessible={true}
+                                  accessible={false}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "flexDirection": "column",
@@ -2644,7 +2825,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     maxFontSizeMultiplier={1.5}
-                                    numberOfLines={2}
+                                    numberOfLines={4}
                                     style={
                                       [
                                         {},
@@ -2707,7 +2888,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -2802,6 +2984,28 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -2810,12 +3014,41 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -2829,7 +3062,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -2844,7 +3077,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
-                                  accessible={true}
+                                  accessible={false}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "flexDirection": "column",
@@ -2875,7 +3109,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     maxFontSizeMultiplier={1.5}
-                                    numberOfLines={2}
+                                    numberOfLines={4}
                                     style={
                                       [
                                         {},
@@ -2940,6 +3174,28 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -2948,12 +3204,41 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -2967,7 +3252,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -2982,7 +3267,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
-                                  accessible={true}
+                                  accessible={false}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "flexDirection": "column",
@@ -3013,7 +3299,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     maxFontSizeMultiplier={1.5}
-                                    numberOfLines={2}
+                                    numberOfLines={4}
                                     style={
                                       [
                                         {},
@@ -3078,6 +3364,28 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -3086,12 +3394,41 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -3105,7 +3442,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -3120,7 +3457,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
-                                  accessible={true}
+                                  accessible={false}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "flexDirection": "column",
@@ -3151,7 +3489,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     maxFontSizeMultiplier={1.5}
-                                    numberOfLines={2}
+                                    numberOfLines={4}
                                     style={
                                       [
                                         {},
@@ -3183,7 +3521,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Data di Scadenza 22/02/2025"
-                          accessible={false}
+                          accessible={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -3214,7 +3552,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -3264,7 +3603,10 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 </Text>
                               </View>
                             </View>
-                            <View>
+                            <View
+                              accessible={false}
+                              importantForAccessibility="no-hide-descendants"
+                            >
                               <View
                                 accessible={true}
                                 style={
@@ -3360,6 +3702,28 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -3368,12 +3732,41 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -3387,7 +3780,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -3402,7 +3795,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
-                                  accessible={true}
+                                  accessible={false}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "flexDirection": "column",
@@ -3433,7 +3827,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     maxFontSizeMultiplier={1.5}
-                                    numberOfLines={2}
+                                    numberOfLines={4}
                                     style={
                                       [
                                         {},
@@ -3498,6 +3892,28 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -3506,12 +3922,41 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -3525,7 +3970,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -3540,7 +3985,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
-                                  accessible={true}
+                                  accessible={false}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "flexDirection": "column",
@@ -3571,7 +4017,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     maxFontSizeMultiplier={1.5}
-                                    numberOfLines={2}
+                                    numberOfLines={4}
                                     style={
                                       [
                                         {},
@@ -3634,7 +4080,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -3665,7 +4112,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
+                                  numberOfLines={4}
                                   style={
                                     [
                                       {},
@@ -3729,6 +4176,28 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -3737,12 +4206,41 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   "paddingVertical": 12,
                                 },
                                 {
-                                  "backgroundColor": undefined,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -3756,7 +4254,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   {
                                     "transform": [
                                       {
-                                        "scale": undefined,
+                                        "scale": 1,
                                       },
                                     ],
                                   },
@@ -3771,7 +4269,8 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
-                                  accessible={true}
+                                  accessible={false}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "flexDirection": "column",
@@ -3802,7 +4301,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     maxFontSizeMultiplier={1.5}
-                                    numberOfLines={2}
+                                    numberOfLines={4}
                                     style={
                                       [
                                         {},
@@ -3833,7 +4332,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Emissione versione digitale Istituto Poligrafico e Zecca di Stato"
                           accessible={false}
                           style={
                             {
@@ -3865,7 +4363,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
+                                accessibilityLabel="Emissione versione digitale Istituto Poligrafico e Zecca di Stato"
                                 accessible={true}
+                                importantForAccessibility="yes"
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -3915,7 +4415,10 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 </Text>
                               </View>
                             </View>
-                            <View>
+                            <View
+                              accessible={false}
+                              importantForAccessibility="auto"
+                            >
                               <View
                                 accessibilityLabel="Info Emissione versione digitale"
                                 accessibilityRole="button"
@@ -3951,6 +4454,35 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -3961,7 +4493,13 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "height": 24,
                                         "width": 24,
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                     ]
                                   }
                                 >
@@ -3970,17 +4508,25 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    animatedProps={
-                                      {
-                                        "color": undefined,
-                                      }
-                                    }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    collapsable={false}
                                     color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {
+                                          "color": "rgba(11, 62, 227, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
@@ -4044,7 +4590,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           enableDynamicSizing={true}
                           footerComponent={[Function]}
                           handleComponent={[Function]}
-                          hardwareAccelerated={false}
                           importantForAccessibility="yes"
                           maxDynamicContentSize={1334}
                           onDismiss={[Function]}
@@ -4056,7 +4601,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               "overflow": "hidden",
                             }
                           }
-                          visible={true}
                         >
                           <RCTScrollView
                             overScrollMode="never"
@@ -4150,30 +4694,68 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       }
                                     >
                                       Per sapere come tratta i tuoi dati consulta l’
-                                      <Text
+                                      <View
                                         accessibilityRole="link"
-                                        allowFontScaling={true}
-                                        dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.5}
-                                        onPress={[Function]}
+                                        accessibilityState={
+                                          {
+                                            "busy": undefined,
+                                            "checked": undefined,
+                                            "disabled": undefined,
+                                            "expanded": undefined,
+                                            "selected": undefined,
+                                          }
+                                        }
+                                        accessibilityValue={
+                                          {
+                                            "max": undefined,
+                                            "min": undefined,
+                                            "now": undefined,
+                                            "text": undefined,
+                                          }
+                                        }
+                                        accessible={true}
+                                        collapsable={false}
+                                        focusable={true}
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onResponderGrant={[Function]}
+                                        onResponderMove={[Function]}
+                                        onResponderRelease={[Function]}
+                                        onResponderTerminate={[Function]}
+                                        onResponderTerminationRequest={[Function]}
+                                        onStartShouldSetResponder={[Function]}
                                         style={
-                                          [
-                                            {
-                                              "textDecorationLine": "underline",
-                                            },
-                                            {
-                                              "color": "#0B3EE3",
-                                              "fontFamily": "Titillio",
-                                              "fontSize": 16,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "600",
-                                              "lineHeight": 24,
-                                            },
-                                          ]
+                                          {
+                                            "height": 19,
+                                          }
                                         }
                                       >
-                                        Informativa Privacy
-                                      </Text>
+                                        <Text
+                                          accessibilityRole="link"
+                                          allowFontScaling={true}
+                                          dynamicTypeRamp="body"
+                                          maxFontSizeMultiplier={1.5}
+                                          onPress={[Function]}
+                                          style={
+                                            [
+                                              {
+                                                "textDecorationLine": "underline",
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
+                                                "fontFamily": "Titillio",
+                                                "fontSize": 16,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": 24,
+                                              },
+                                            ]
+                                          }
+                                        >
+                                          Informativa Privacy
+                                        </Text>
+                                      </View>
                                       .
                                     </Text>
                                   </View>

@@ -2,11 +2,6 @@ import { useEffect } from "react";
 
 import { RemoteFailure, RemoteFailureType } from "../machine/failure";
 import {
-  ItwL3UpgradeTrigger,
-  trackItwUpgradeL3Mandatory
-} from "../../../analytics";
-import {
-  getOrderedCredential,
   trackItwRemoteIdentityNeedsVerification,
   trackItwRemoteMandatoryCredentialMissing,
   trackItwRemoteInvalidMandatoryCredential,
@@ -14,9 +9,15 @@ import {
   trackItwRemoteRPInvalidAuthResponse,
   trackItwRemoteRequestObjectFailure,
   trackItwRemoteUnexpectedFailure,
-  trackItwRemoteUntrustedRP
+  trackItwRemoteUntrustedRP,
+  trackItwUpgradeL3Mandatory
 } from "../analytics";
-import { serializeFailureReason } from "../../../common/utils/itwStoreUtils";
+import { ItwL3UpgradeTrigger } from "../analytics/utils/types";
+import { getOrderedCredential } from "../analytics/utils";
+import {
+  serializeFailureReason,
+  shouldSerializeReason
+} from "../../../common/utils/itwStoreUtils";
 
 type Params = {
   failure: RemoteFailure;
@@ -71,13 +72,8 @@ export const useItwRemoteEventsTracking = ({ failure }: Params) => {
         return trackItwRemoteRPInvalidAuthResponse(serializedFailure);
 
       case RemoteFailureType.UNEXPECTED:
-        const shouldSerializeReason =
-          !failure.reason ||
-          (typeof failure.reason === "object" &&
-            Object.keys(failure.reason).length === 0);
-
         return trackItwRemoteUnexpectedFailure(
-          shouldSerializeReason ? serializedFailure : failure
+          shouldSerializeReason(failure) ? serializedFailure : failure
         );
     }
   }, [failure]);

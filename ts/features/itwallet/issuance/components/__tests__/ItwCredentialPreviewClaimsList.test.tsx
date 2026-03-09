@@ -16,6 +16,7 @@ describe("ItwCredentialPreviewClaimsList", () => {
 
 function renderComponent() {
   const globalState = appReducer(undefined, applicationChangeState("active"));
+
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <ItwCredentialPreviewClaimsList data={ItwStoredCredentialsMocks.ts} />

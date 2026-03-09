@@ -46,6 +46,8 @@ export const MessageDetailsPayment = ({
         noticeNumber={paymentData.noticeNumber}
         rptId={rptId}
         serviceId={serviceId}
+        sendOpeningSource={"not_set"}
+        sendUserType={"not_set"}
       />
     </>
   );

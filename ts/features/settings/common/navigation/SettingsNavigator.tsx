@@ -1,38 +1,40 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import LogoutScreen from "../screens/LogoutScreen";
+import { isGestureEnabled } from "../../../../utils/navigation";
+import AuthenticationNavigator from "../../../authentication/common/navigation/AuthenticationNavigator";
 import { DesignSystemNavigator } from "../../../design-system/navigation/navigator";
 import LollipopPlayground from "../../../lollipop/playgrounds/LollipopPlayground";
-import CalendarsPreferencesScreen from "../../preferences/screens/CalendarsPreferencesScreen";
+import ProfileAboutApp from "../../aboutApp/screens/ProfileAboutApp";
+import { AppFeedbackPlayground } from "../../devMode/playgrounds/AppFeedbackPlayground";
 import CgnLandingPlayground from "../../devMode/playgrounds/CgnLandingPlayground";
-import DownloadProfileDataScreen from "../../privacy/screens/DownloadProfileDataScreen";
+import { CiePlaygroundsNavigator } from "../../devMode/playgrounds/Cie/navigation/CiePlaygroundsNavigator";
+import { IdPayCodePlayGround } from "../../devMode/playgrounds/IdPayCodePlayground";
+import IdPayOnboardingPlayground from "../../devMode/playgrounds/IdPayOnboardingPlayground";
+import { IOMarkdownPlayground } from "../../devMode/playgrounds/IOMarkdownPlayground";
+import { GuidedTourPlayground } from "../../devMode/playgrounds/GuidedTourPlayground";
+import { NfcPlayground } from "../../devMode/playgrounds/NfcPlayground";
+import AppearancePreferenceScreen from "../../preferences/screens/AppearancePreferenceScreen";
+import CalendarsPreferencesScreen from "../../preferences/screens/CalendarsPreferencesScreen";
 import EmailForwardingScreen from "../../preferences/screens/EmailForwardingScreen";
-import EmailInsertScreen from "../../userData/shared/screens/EmailInsertScreen";
-import EmailValidationSendEmailScreen from "../../userData/shared/screens/EmailValidationSendEmailScreen";
-import FiscalCodeScreen from "../../userData/screens/FiscalCodeScreen";
 import LanguagesPreferencesScreen from "../../preferences/screens/LanguagesPreferencesScreen";
 import { NotificationsPreferencesScreen } from "../../preferences/screens/NotificationsPreferencesScreen";
-import PinScreen from "../../security/screens/PinScreen";
 import PreferencesScreen from "../../preferences/screens/PreferencesScreen";
+import ServicesPreferenceScreen from "../../preferences/screens/ServicesPreferenceScreen";
+import DownloadProfileDataScreen from "../../privacy/screens/DownloadProfileDataScreen";
 import PrivacyMainScreen from "../../privacy/screens/PrivacyMainScreen";
-import ProfileAboutApp from "../../aboutApp/screens/ProfileAboutApp";
-import ProfileDataScreen from "../../userData/screens/ProfileDataScreen";
 import RemoveAccountDetails from "../../privacy/screens/RemoveAccountDetailsScreen";
 import RemoveAccountInfo from "../../privacy/screens/RemoveAccountInfoScreen";
 import RemoveAccountSuccess from "../../privacy/screens/RemoveAccountSuccessScreen";
-import SecurityScreen from "../../security/screens/SecurityScreen";
-import ServicesPreferenceScreen from "../../preferences/screens/ServicesPreferenceScreen";
 import ShareDataScreen from "../../privacy/screens/ShareDataScreen";
 import TosScreen from "../../privacy/screens/TosScreen";
-import { IdPayCodePlayGround } from "../../devMode/playgrounds/IdPayCodePlayground";
-import IdPayOnboardingPlayground from "../../devMode/playgrounds/IdPayOnboardingPlayground";
-import { isGestureEnabled } from "../../../../utils/navigation";
-import TrialSystemPlayground from "../../devMode/playgrounds/TrialSystemPlayground";
+import PinScreen from "../../security/screens/PinScreen";
+import SecurityScreen from "../../security/screens/SecurityScreen";
+import FiscalCodeScreen from "../../userData/screens/FiscalCodeScreen";
+import ProfileDataScreen from "../../userData/screens/ProfileDataScreen";
+import EmailInsertScreen from "../../userData/shared/screens/EmailInsertScreen";
+import EmailValidationSendEmailScreen from "../../userData/shared/screens/EmailValidationSendEmailScreen";
+import LogoutScreen from "../screens/LogoutScreen";
 import ProfileMainScreen from "../screens/ProfileMainScreen";
-import { IOMarkdownPlayground } from "../../devMode/playgrounds/IOMarkdownPlayground";
-import { AppFeedbackPlayground } from "../../devMode/playgrounds/AppFeedbackPlayground";
-import AppearancePreferenceScreen from "../../preferences/screens/AppearancePreferenceScreen";
-import { CiePlayground } from "../../devMode/playgrounds/CiePlayground";
-import AuthenticationNavigator from "../../../authentication/common/navigation/AuthenticationNavigator";
+import { SendPlaygroundScreen } from "../../devMode/playgrounds/SendPlaygroundScreen";
 import { SettingsParamsList } from "./params/SettingsParamsList";
 import { SETTINGS_ROUTES } from "./routes";
 
@@ -150,10 +152,6 @@ const SettingsStackNavigator = () => (
       component={CgnLandingPlayground}
     />
     <Stack.Screen
-      name={SETTINGS_ROUTES.TRIALS_SYSTEM_PLAYGROUND}
-      component={TrialSystemPlayground}
-    />
-    <Stack.Screen
       options={{
         headerShown: false
       }}
@@ -188,8 +186,22 @@ const SettingsStackNavigator = () => (
     />
     <Stack.Screen
       name={SETTINGS_ROUTES.CIE_PLAYGROUND}
-      component={CiePlayground}
+      component={CiePlaygroundsNavigator}
+      options={{ headerShown: false }}
     />
+    <Stack.Screen
+      name={SETTINGS_ROUTES.NFC_PLAYGROUND}
+      component={NfcPlayground}
+    />
+    <Stack.Screen
+      name={SETTINGS_ROUTES.GUIDED_TOUR_PLAYGROUND}
+      component={GuidedTourPlayground}
+    />
+    <Stack.Screen
+      name={SETTINGS_ROUTES.SEND_PLAYGROUND}
+      component={SendPlaygroundScreen}
+    />
+
     <Stack.Screen
       name={SETTINGS_ROUTES.AUTHENTICATION}
       component={AuthenticationNavigator}

@@ -20,11 +20,24 @@ const config = {
     customSerializer: createSentryMetroSerializer()
   },
   transformer: {
-    babelTransformerPath: require.resolve("react-native-svg-transformer")
+    babelTransformerPath: require.resolve(
+      "react-native-svg-transformer/react-native"
+    )
   },
   resolver: {
     sourceExts: [...sourceExts, "svg"],
-    assetExts: assetExts.filter(ext => ext !== "svg")
+    assetExts: assetExts.filter(ext => ext !== "svg"),
+
+    resolveRequest: (context, moduleName, platform) => {
+      if (moduleName === "crypto") {
+        return context.resolveRequest(
+          context,
+          "react-native-quick-crypto",
+          platform
+        );
+      }
+      return context.resolveRequest(context, moduleName, platform);
+    }
   }
 };
 

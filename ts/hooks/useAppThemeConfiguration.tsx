@@ -1,45 +1,35 @@
 import { useIOThemeContext } from "@pagopa/io-app-design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Appearance, ColorSchemeName, useColorScheme } from "react-native";
 import { useEffect } from "react";
-import { constVoid } from "fp-ts/lib/function";
-import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
+import { Appearance, ColorSchemeName, useColorScheme } from "react-native";
+import { updateNavigationBarColor } from "../features/settings/preferences/screens/AppearancePreferenceScreen";
 
 export const THEME_PERSISTENCE_KEY = "selectedAppThemeConfiguration";
 export type ColorModeChoice = "auto" | "dark" | "light";
 
 export const useAppThemeConfiguration = () => {
-  const { setTheme } = useIOThemeContext();
+  const { setTheme, themeType } = useIOThemeContext();
   const systemColorScheme = useColorScheme();
 
-  useOnFirstRender(() => {
+  useEffect(() => {
     AsyncStorage.getItem(THEME_PERSISTENCE_KEY)
       .then(value => {
-        if (value === undefined || value === null) {
-          Appearance.setColorScheme("light");
-          setTheme("light");
+        if (value === null || value === "auto") {
+          Appearance.setColorScheme(null);
+          setTheme(systemColorScheme);
           return;
         }
-        Appearance.setColorScheme(
-          value === "auto" ? undefined : (value as ColorSchemeName)
-        );
-        setTheme(
-          value === "auto" ? systemColorScheme : (value as ColorSchemeName)
-        );
+        const colorScheme = value as ColorSchemeName;
+        Appearance.setColorScheme(colorScheme);
+        setTheme(colorScheme);
       })
       .catch(() => {
         Appearance.setColorScheme("light");
         setTheme("light");
       });
-  });
+  }, [setTheme, systemColorScheme]);
 
   useEffect(() => {
-    AsyncStorage.getItem(THEME_PERSISTENCE_KEY)
-      .then(value => {
-        if (value === "auto") {
-          setTheme(systemColorScheme);
-        }
-      })
-      .catch(constVoid);
-  }, [systemColorScheme, setTheme]);
+    updateNavigationBarColor(themeType);
+  }, [themeType]);
 };

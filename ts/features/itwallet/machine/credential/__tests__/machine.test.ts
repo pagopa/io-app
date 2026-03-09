@@ -9,7 +9,7 @@ import {
   waitFor as waitForActor
 } from "xstate";
 import {
-  ItwStatusAttestationMocks,
+  ItwStatusAssertionMocks,
   ItwStoredCredentialsMocks
 } from "../../../common/utils/itwMocksUtils";
 import {
@@ -22,7 +22,7 @@ import {
   GetWalletAttestationActorOutput,
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
-  ObtainStatusAttestationActorInput,
+  ObtainStatusAssertionActorInput,
   RequestCredentialActorInput,
   RequestCredentialActorOutput
 } from "../actors";
@@ -91,12 +91,11 @@ const T_REQUESTED_CREDENTIAL: RequestObject = {
   scope: "",
   state: ""
 };
-const T_STORED_STATUS_ATTESTATION: StoredCredential["storedStatusAttestation"] =
-  {
-    credentialStatus: "valid",
-    statusAttestation: "abcdefghijklmnopqrstuvwxyz",
-    parsedStatusAttestation: ItwStatusAttestationMocks.mdl
-  };
+const T_STORED_STATUS_ASSERTION: StoredCredential["storedStatusAssertion"] = {
+  credentialStatus: "valid",
+  statusAssertion: "abcdefghijklmnopqrstuvwxyz",
+  parsedStatusAssertion: ItwStatusAssertionMocks.mdl
+};
 
 describe("itwCredentialIssuanceMachine", () => {
   const onInit = jest.fn();
@@ -104,11 +103,10 @@ describe("itwCredentialIssuanceMachine", () => {
   const navigateToCredentialPreviewScreen = jest.fn();
   const navigateToFailureScreen = jest.fn();
   const navigateToWallet = jest.fn();
+  const navigateToCredentialIntroductionScreen = jest.fn();
   const closeIssuance = jest.fn();
   const storeWalletInstanceAttestation = jest.fn();
   const storeCredential = jest.fn();
-  const flagCredentialAsRequested = jest.fn();
-  const unflagCredentialAsRequested = jest.fn();
   const handleSessionExpired = jest.fn();
   const trackStartAddCredential = jest.fn();
   const trackAddCredential = jest.fn();
@@ -119,27 +117,26 @@ describe("itwCredentialIssuanceMachine", () => {
   const getWalletAttestation = jest.fn();
   const requestCredential = jest.fn();
   const obtainCredential = jest.fn();
-  const obtainStatusAttestation = jest.fn();
+  const obtainStatusAssertion = jest.fn();
 
   const isSessionExpired = jest.fn();
-  const isDeferredIssuance = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn();
   const isStatusError = jest.fn();
   const isSkipNavigation = jest.fn();
   const isEidExpired = jest.fn();
+  const hasCredentialIntroContent = jest.fn();
 
   const mockedMachine = itwCredentialIssuanceMachine.provide({
     actions: {
       onInit: assign(onInit),
       navigateToTrustIssuerScreen,
       navigateToCredentialPreviewScreen,
+      navigateToCredentialIntroductionScreen,
       navigateToFailureScreen,
       navigateToWallet,
       closeIssuance,
       storeWalletInstanceAttestation,
       storeCredential,
-      flagCredentialAsRequested,
-      unflagCredentialAsRequested,
       handleSessionExpired,
       trackStartAddCredential,
       trackAddCredential,
@@ -158,17 +155,17 @@ describe("itwCredentialIssuanceMachine", () => {
         ObtainCredentialActorOutput,
         ObtainCredentialActorInput
       >(obtainCredential),
-      obtainStatusAttestation: fromPromise<
+      obtainStatusAssertion: fromPromise<
         Array<StoredCredential>,
-        ObtainStatusAttestationActorInput
-      >(obtainStatusAttestation)
+        ObtainStatusAssertionActorInput
+      >(obtainStatusAssertion)
     },
     guards: {
       isSessionExpired,
-      isDeferredIssuance,
       hasValidWalletInstanceAttestation,
       isStatusError,
-      isEidExpired
+      isEidExpired,
+      hasCredentialIntroContent
     }
   });
 
@@ -184,7 +181,7 @@ describe("itwCredentialIssuanceMachine", () => {
     jest.resetAllMocks();
   });
 
-  it("Should obtain a credential with a valid status attestation", async () => {
+  it("Should obtain a credential with a valid status assertion", async () => {
     hasValidWalletInstanceAttestation.mockImplementation(() => false);
     getWalletAttestation.mockImplementation(() =>
       Promise.resolve({ jwt: T_WIA })
@@ -264,11 +261,11 @@ describe("itwCredentialIssuanceMachine", () => {
       })
     );
 
-    obtainStatusAttestation.mockImplementation(() =>
+    obtainStatusAssertion.mockImplementation(() =>
       Promise.resolve([
         {
           ...ItwStoredCredentialsMocks.mdl,
-          storedStatusAttestation: T_STORED_STATUS_ATTESTATION
+          storedStatusAssertion: T_STORED_STATUS_ASSERTION
         }
       ])
     );
@@ -288,14 +285,14 @@ describe("itwCredentialIssuanceMachine", () => {
     });
     expect(obtainCredential).toHaveBeenCalledTimes(1);
 
-    // Step 2: get the status attestation
+    // Step 2: get the status assertion
     const intermediateState2 = await waitForActor(actor, snapshot =>
-      snapshot.matches({ Issuance: "ObtainingStatusAttestation" })
+      snapshot.matches({ Issuance: "ObtainingStatusAssertion" })
     );
     expect(intermediateState2.value).toStrictEqual({
-      Issuance: "ObtainingStatusAttestation"
+      Issuance: "ObtainingStatusAssertion"
     });
-    expect(obtainStatusAttestation).toHaveBeenCalledTimes(1);
+    expect(obtainStatusAssertion).toHaveBeenCalledTimes(1);
 
     expect(actor.getSnapshot().value).toStrictEqual(
       "DisplayingCredentialPreview"
@@ -305,7 +302,7 @@ describe("itwCredentialIssuanceMachine", () => {
         credentials: [
           {
             ...ItwStoredCredentialsMocks.mdl,
-            storedStatusAttestation: T_STORED_STATUS_ATTESTATION
+            storedStatusAssertion: T_STORED_STATUS_ASSERTION
           }
         ]
       })
@@ -622,7 +619,7 @@ describe("itwCredentialIssuanceMachine", () => {
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Issuing]));
     await waitFor(() => expect(obtainCredential).toHaveBeenCalledTimes(1));
-    await waitFor(() => expect(obtainStatusAttestation).not.toHaveBeenCalled());
+    await waitFor(() => expect(obtainStatusAssertion).not.toHaveBeenCalled());
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
@@ -760,5 +757,25 @@ describe("itwCredentialIssuanceMachine", () => {
     await waitFor(() =>
       expect(navigateToTrustIssuerScreen).toHaveBeenCalledTimes(1)
     );
+  });
+
+  it("should navigate to the introduction screen if the catalogue contains the Auth Source user information", async () => {
+    isEidExpired.mockImplementation(() => false);
+    hasValidWalletInstanceAttestation.mockImplementation(() => true);
+    hasCredentialIntroContent.mockImplementation(() => true);
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    actor.send({
+      type: "select-credential",
+      credentialType: "education_degree",
+      mode: "issuance"
+    });
+
+    await waitForActor(actor, snapshot =>
+      snapshot.matches("CredentialIntroduction")
+    );
+    expect(navigateToCredentialIntroductionScreen).toHaveBeenCalledTimes(1);
   });
 });

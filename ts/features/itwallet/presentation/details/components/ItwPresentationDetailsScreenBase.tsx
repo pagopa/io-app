@@ -1,22 +1,22 @@
-import {
-  ButtonSolidProps,
-  FooterActions,
-  useFooterActionsMeasurements,
-  useIOToast
-} from "@pagopa/io-app-design-system";
+import { useIOToast } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { Fragment, ReactNode } from "react";
+import { ReactNode } from "react";
 import Animated, {
   useAnimatedRef,
-  useAnimatedScrollHandler,
   useSharedValue
 } from "react-native-reanimated";
+import {
+  IOScrollView,
+  IOScrollViewActions
+} from "../../../../../components/ui/IOScrollView.tsx";
+import { ButtonBlockProps } from "../../../../../components/ui/utils/buttons.ts";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
-import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
-import { getHeaderPropsByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
+import { useIOSelector } from "../../../../../store/hooks.ts";
+import { useHeaderPropsByCredentialType } from "../../../common/utils/itwStyleUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors/index.ts";
 
-export type CredentialCtaProps = Omit<ButtonSolidProps, "fullWidth">;
+export type CredentialCtaProps = ButtonBlockProps;
 
 export type ItwPresentationDetailsScreenBaseProps = {
   credential: StoredCredential;
@@ -31,18 +31,12 @@ const ItwPresentationDetailsScreenBase = ({
   children,
   ctaProps
 }: ItwPresentationDetailsScreenBaseProps) => {
+  const itwFeaturesEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
-  const itwFeaturesEnabled = useItwFeaturesEnabled(credential);
   const toast = useIOToast();
   const scrollTranslationY = useSharedValue(0);
 
-  const { footerActionsMeasurements, handleFooterActionsMeasurements } =
-    useFooterActionsMeasurements();
-
-  const headerProps = getHeaderPropsByCredentialType(
-    credential.credentialType,
-    itwFeaturesEnabled
-  );
+  const headerProps = useHeaderPropsByCredentialType(credential.credentialType);
 
   // Support requests for ITW credentials are temporarily disabled until
   // final release.
@@ -66,36 +60,18 @@ const ItwPresentationDetailsScreenBase = ({
     ...headerProps
   });
 
-  const scrollHandler = useAnimatedScrollHandler(({ contentOffset }) => {
-    // eslint-disable-next-line functional/immutable-data
-    scrollTranslationY.value = contentOffset.y;
-  });
+  const actions: IOScrollViewActions | undefined = ctaProps
+    ? { type: "SingleButton", primary: ctaProps }
+    : undefined;
 
   return (
-    <Fragment>
-      <Animated.ScrollView
-        ref={animatedScrollViewRef}
-        contentContainerStyle={{
-          paddingBottom: footerActionsMeasurements.safeBottomAreaHeight || 24
-        }}
-        onScroll={scrollHandler}
-        scrollEventThrottle={8}
-        snapToOffsets={[0, scrollTriggerOffsetValue]}
-        snapToEnd={false}
-        decelerationRate="normal"
-      >
-        {children}
-      </Animated.ScrollView>
-      {ctaProps && (
-        <FooterActions
-          onMeasure={handleFooterActionsMeasurements}
-          actions={{
-            type: "SingleButton",
-            primary: ctaProps
-          }}
-        />
-      )}
-    </Fragment>
+    <IOScrollView
+      animatedRef={animatedScrollViewRef}
+      includeContentMargins={false}
+      actions={actions}
+    >
+      {children}
+    </IOScrollView>
   );
 };
 

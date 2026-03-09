@@ -2,11 +2,11 @@ import { IOToast } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
+import { View } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
-import I18n from "i18next";
-import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
 import { mixpanelTrack } from "../../../../mixpanel";
 import {
   AppParamsList,
@@ -14,6 +14,7 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { barcodesScannerConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 import {
   BarcodeFailure,
   BarcodeScanBaseScreenComponent,
@@ -130,19 +131,26 @@ const PaymentsBarcodeScanScreen = () => {
 
   return (
     <>
-      <BarcodeScanBaseScreenComponent
-        barcodeFormats={barcodeFormats}
-        barcodeTypes={barcodeTypes}
-        onBarcodeSuccess={handleBarcodeSuccess}
-        onBarcodeError={handleBarcodeError}
-        onFileInputPressed={showFilePicker}
-        onManualInputPressed={handleManualInputPressed}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["wallet"]}
-        barcodeAnalyticsFlow="avviso"
-        isDisabled={isFilePickerVisible || isFileReaderLoading}
-        isLoading={isFileReaderLoading}
-      />
+      <View
+        style={{ flex: 1 }}
+        importantForAccessibility={
+          isFilePickerVisible ? "no-hide-descendants" : "auto"
+        }
+      >
+        <BarcodeScanBaseScreenComponent
+          barcodeFormats={barcodeFormats}
+          barcodeTypes={barcodeTypes}
+          onBarcodeSuccess={handleBarcodeSuccess}
+          onBarcodeError={handleBarcodeError}
+          onFileInputPressed={showFilePicker}
+          onManualInputPressed={handleManualInputPressed}
+          contextualHelpMarkdown={contextualHelpMarkdown}
+          faqCategories={["wallet"]}
+          barcodeAnalyticsFlow="avviso"
+          isDisabled={isFilePickerVisible || isFileReaderLoading}
+          isLoading={isFileReaderLoading}
+        />
+      </View>
       {filePickerBottomSheet}
     </>
   );

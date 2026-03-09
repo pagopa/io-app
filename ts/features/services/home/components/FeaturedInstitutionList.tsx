@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react";
-import { ListItemHeader } from "@pagopa/io-app-design-system";
+import { BannerErrorState, ListItemHeader } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { View } from "react-native";
 import { Institution } from "../../../../../definitions/services/Institution";
@@ -12,7 +12,8 @@ import { featuredInstitutionsGet } from "../store/actions";
 import {
   featuredInstitutionsSelector,
   isErrorFeaturedInstitutionsSelector,
-  isLoadingFeaturedInstitutionsSelector
+  isLoadingFeaturedInstitutionsSelector,
+  shouldRenderFeaturedInstitutionListSelector
 } from "../store/selectors";
 import {
   FeaturedInstitutionsCarousel,
@@ -23,11 +24,19 @@ export const FeaturedInstitutionList = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
-  const featuredInstitutions = useIOSelector(featuredInstitutionsSelector);
+  const institutions = useIOSelector(featuredInstitutionsSelector);
   const isError = useIOSelector(isErrorFeaturedInstitutionsSelector);
   const isLoading = useIOSelector(isLoadingFeaturedInstitutionsSelector);
+  const shouldRender = useIOSelector(
+    shouldRenderFeaturedInstitutionListSelector
+  );
 
-  useOnFirstRender(() => dispatch(featuredInstitutionsGet.request()));
+  const fetchFeaturedInstitutions = useCallback(
+    () => dispatch(featuredInstitutionsGet.request()),
+    [dispatch]
+  );
+
+  useOnFirstRender(fetchFeaturedInstitutions);
 
   const handlePress = useCallback(
     ({ fiscal_code, name }: Institution) => {
@@ -48,36 +57,55 @@ export const FeaturedInstitutionList = () => {
     [navigation]
   );
 
-  const mappedFeaturedInstitutions = useMemo(
+  const mappedInstitutions = useMemo(
     () =>
-      featuredInstitutions.map(props => ({
+      institutions.map(props => ({
         ...props,
         onPress: () => handlePress(props)
       })),
-    [featuredInstitutions, handlePress]
+    [institutions, handlePress]
   );
 
-  const isVisible = useMemo(
-    () => isLoading || mappedFeaturedInstitutions.length > 0,
-    [isLoading, mappedFeaturedInstitutions]
-  );
-
-  if (isError || !isVisible) {
+  if (!shouldRender) {
     return null;
   }
+
+  const Content = () => {
+    if (isLoading && institutions.length === 0) {
+      return (
+        <FeaturedInstitutionsCarouselSkeleton testID="featured-institution-list-skeleton" />
+      );
+    }
+
+    if (isError) {
+      return (
+        <BannerErrorState
+          label={I18n.t(
+            "services.home.featured.institutions.error.banner.label"
+          )}
+          actionText={I18n.t(
+            "services.home.featured.institutions.error.banner.cta"
+          )}
+          onPress={fetchFeaturedInstitutions}
+          testID="featured-institution-list-error"
+        />
+      );
+    }
+
+    return (
+      <FeaturedInstitutionsCarousel
+        institutions={mappedInstitutions}
+        testID="featured-institution-list"
+      />
+    );
+  };
 
   return (
     <View>
       <ListItemHeader
         label={I18n.t("services.home.featured.institutions.title")}
       />
-      {isLoading ? (
-        <FeaturedInstitutionsCarouselSkeleton />
-      ) : (
-        <FeaturedInstitutionsCarousel
-          institutions={mappedFeaturedInstitutions}
-        />
-      )}
+      <Content />
     </View>
   );
 };

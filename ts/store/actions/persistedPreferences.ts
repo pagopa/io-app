@@ -8,6 +8,9 @@ import { ColorModeChoice } from "../../hooks/useAppThemeConfiguration";
 
 export type TypefaceChoice = "comfortable" | "standard";
 
+// These different locales only apply to the app labels
+export type AppLocale = "it" | "en" | "de" | "fr" | "sl";
+
 export const preferenceFingerprintIsEnabledSaveSuccess = createStandardAction(
   "PREFERENCES_FINGERPRINT_SAVE_SUCCESS"
 )<{ isFingerprintEnabled: boolean }>();
@@ -60,10 +63,6 @@ export const preferencesThemeSet = createStandardAction(
   "PREFERENCES_THEME_SET_ENABLED"
 )<ColorModeChoice>();
 
-export const preferencesAarFeatureSetEnabled = createStandardAction(
-  "PREFERENCES_AAR_FEATURE_SET_ENABLED"
-)<{ isAarFeatureEnabled: boolean }>();
-
 export type PersistedPreferencesActions = ActionType<
   | typeof preferenceFingerprintIsEnabledSaveSuccess
   | typeof preferredCalendarSaveSuccess
@@ -78,5 +77,4 @@ export type PersistedPreferencesActions = ActionType<
   | typeof preferencesExperimentalDesignEnabled
   | typeof preferencesFontSet
   | typeof preferencesThemeSet
-  | typeof preferencesAarFeatureSetEnabled
 >;

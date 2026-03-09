@@ -1,9 +1,8 @@
-import { IOColors, IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
+import I18n from "i18next";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
-import { Dimensions, StyleSheet, View } from "react-native";
-import I18n from "i18next";
 import { IOScrollView } from "../../../components/ui/IOScrollView";
 import { useHeaderFirstLevel } from "../../../hooks/useHeaderFirstLevel";
 import { useTabItemPressWhenScreenActive } from "../../../hooks/useTabItemPressWhenScreenActive";
@@ -16,22 +15,26 @@ import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
+  trackItwSurveyRequest,
   trackOpenWalletScreen,
   trackWalletAdd
 } from "../../itwallet/analytics";
+import { itwMixPanelCredentialDetailsSelector } from "../../itwallet/analytics/store/selectors/index.ts";
+import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
+import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences.ts";
+import { itwIsL3EnabledSelector } from "../../itwallet/common/store/selectors/preferences.ts";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
+import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { walletUpdate } from "../store/actions";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
 import { isWalletScreenRefreshingSelector } from "../store/selectors";
-import { itwShouldRenderNewItWalletSelector } from "../../itwallet/common/store/selectors";
-import { WALLET_L3_BG_COLOR } from "../../itwallet/common/utils/constants";
-import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
-import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 
 export type WalletHomeNavigationParams = Readonly<{
   // Triggers the "New element added" toast display once the user returns to this screen
   newMethodAdded?: boolean;
+  // Triggers the "Required EID feedback" bottom sheet display once the user returns to this screen
+  requiredEidFeedback?: boolean;
 }>;
 
 type ScreenProps = IOStackNavigationRouteProps<
@@ -39,16 +42,25 @@ type ScreenProps = IOStackNavigationRouteProps<
   "WALLET_HOME"
 >;
 
-const screenHeight = Dimensions.get("screen").height;
-
 const WalletHomeScreen = ({ route }: ScreenProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const isRefreshingContent = useIOSelector(isWalletScreenRefreshingSelector);
-  const hasNewItwInterface = useIOSelector(itwShouldRenderNewItWalletSelector);
+  const mixPanelCredentialDetails = useIOSelector(
+    itwMixPanelCredentialDetailsSelector
+  );
+  const isItWalletEnabled = useIOSelector(itwIsL3EnabledSelector);
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
+  const isRequiredEidFeedback = useRef(
+    route.params?.requiredEidFeedback || false
+  );
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
+  const itwFeedbackBottomSheet = useItwEidFeedbackBottomSheet({
+    onPrimaryAction: () => {
+      dispatch(itwSetPidReissuingSurveyHidden(true));
+    }
+  });
 
   // We need to use a local state to separate the UI state from the redux state
   // This prevents to display the refresh indicator when the refresh is triggered by other components
@@ -65,9 +77,11 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   const handleAddToWalletButtonPress = useCallback(() => {
     trackWalletAdd();
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ONBOARDING
+      screen: isItWalletEnabled
+        ? ITW_ROUTES.L3_ONBOARDING
+        : ITW_ROUTES.ONBOARDING
     });
-  }, [navigation]);
+  }, [navigation, isItWalletEnabled]);
 
   useHeaderFirstLevel({
     currentRoute: ROUTES.WALLET_HOME,
@@ -77,12 +91,12 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
       animatedRef: scrollViewContentRef,
       actions: [
         {
-          accessibilityLabel: I18n.t("features.wallet.home.cta"),
+          accessibilityLabel: I18n.t("features.wallet.home.screen.legacy.cta"),
           icon: "add",
           onPress: handleAddToWalletButtonPress
         }
       ],
-      variant: hasNewItwInterface ? "contrast" : "primary"
+      variant: "primary"
     }
   });
 
@@ -105,18 +119,37 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     dispatch(walletUpdate());
   });
 
+  useFocusEffect(
+    useCallback(() => {
+      trackOpenWalletScreen(mixPanelCredentialDetails);
+    }, [mixPanelCredentialDetails])
+  );
+
   /**
    * Handles the "New element added" toast display once the user returns to this screen
    */
   useFocusEffect(
     useCallback(() => {
-      trackOpenWalletScreen();
       if (isNewElementAdded.current) {
         IOToast.success(I18n.t("features.wallet.home.toast.newMethod"));
         // eslint-disable-next-line functional/immutable-data
         isNewElementAdded.current = false;
       }
-    }, [isNewElementAdded])
+      if (isRequiredEidFeedback.current) {
+        trackItwSurveyRequest({
+          survey_id: "confirm_eid_flow_exit",
+          survey_page: route.name
+        });
+        itwFeedbackBottomSheet.present();
+        // eslint-disable-next-line functional/immutable-data
+        isRequiredEidFeedback.current = false;
+      }
+    }, [
+      isNewElementAdded,
+      isRequiredEidFeedback,
+      itwFeedbackBottomSheet,
+      route.name
+    ])
   );
 
   const handleRefreshWallet = useCallback(() => {
@@ -126,42 +159,22 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
 
   return (
     <>
-      {hasNewItwInterface && (
-        <>
-          <FocusAwareStatusBar
-            backgroundColor={WALLET_L3_BG_COLOR}
-            barStyle="light-content"
-          />
-          {
-            // This View is displayed when a refresh control is triggered // and
-            // is responsible for coloring the underlying content with // the same
-            // blue used in the new Wallet L3.
-          }
-          <View style={[StyleSheet.absoluteFillObject, styles.itwBlueBg]} />
-        </>
-      )}
       <IOScrollView
         animatedRef={scrollViewContentRef}
         centerContent={true}
         excludeSafeAreaMargins={true}
         refreshControlProps={{
-          tintColor: hasNewItwInterface ? IOColors.white : undefined,
+          tintColor: undefined,
           refreshing: isRefreshing,
           onRefresh: handleRefreshWallet
         }}
       >
-        {!hasNewItwInterface && <WalletCategoryFilterTabs />}
+        <WalletCategoryFilterTabs />
         <WalletCardsContainer />
       </IOScrollView>
+      {itwFeedbackBottomSheet.bottomSheet}
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  itwBlueBg: {
-    height: screenHeight,
-    backgroundColor: WALLET_L3_BG_COLOR
-  }
-});
 
 export { WalletHomeScreen };

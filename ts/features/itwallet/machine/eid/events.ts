@@ -1,14 +1,24 @@
-import { ErrorActorEvent } from "xstate";
+import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
+import { DoneActorEvent, ErrorActorEvent } from "xstate";
 import { SpidIdp } from "../../../../utils/idps";
-import { CiePreparationType } from "../../identification/cie/components/ItwCiePreparationBaseScreenContent";
-import { EidIssuanceMode } from "./context";
+import { CieWarningType } from "../../identification/cie/utils/types";
+import { Output } from "../upgrade/output";
+import type { IssuanceFailure } from "./failure";
+import { EidIssuanceLevel, EidIssuanceMode } from "./context";
 
 export type IdentificationMode = "spid" | "ciePin" | "cieId";
 
+/**
+ * This event is used to either start the issuance process or restart it.
+ * - "start" is used to start the issuance process from the beginning, going from the initial state (Idle) to the next state.
+ * - "restart" is used to restart the issuance process, **going back** to the initial state (Idle) from any other state
+ *    and starting the issuance process from the beginning.
+ */
 export type Start = {
-  type: "start";
-  mode?: EidIssuanceMode;
-  isL3?: boolean;
+  type: "start" | "restart";
+  mode: EidIssuanceMode;
+  level: EidIssuanceLevel;
+  credentialType?: string;
 };
 
 export type AcceptTos = {
@@ -38,7 +48,7 @@ export type SelectIdentificationMode = {
 
 export type GoToCieWarning = {
   type: "go-to-cie-warning";
-  warning: CiePreparationType;
+  warning: CieWarningType;
 };
 
 export type SelectSpidIdp = {
@@ -53,6 +63,21 @@ export type CiePinEntered = {
 
 export type UserIdentificationCompleted = {
   type: "user-identification-completed";
+  authRedirectUrl: string;
+};
+
+export type CieCanEntered = {
+  type: "cie-can-entered";
+  can: string;
+};
+
+export type MrtdChallengedSigned = {
+  type: "mrtd-challenged-signed";
+  data: InternalAuthAndMrtdResponse;
+};
+
+export type MrtdPoPVerificationCompleted = {
+  type: "mrtd-pop-verification-completed";
   authRedirectUrl: string;
 };
 
@@ -83,7 +108,12 @@ export type RevokeWalletInstance = {
 export type ExternalErrorEvent = {
   type: "error";
   // Add a custom error code to the error event to distinguish between different errors. Add a new error code for each different error if needed.
-  scope: "ipzs-privacy" | "spid-login" | "cieid-login";
+  scope:
+    | "ipzs-privacy"
+    | "spid-login"
+    | "cieid-login"
+    | "cie-auth"
+    | "cie-mrtd-pop";
   error?: Error;
 };
 
@@ -99,6 +129,11 @@ export type GoToL2IdentificationMode = {
   type: "go-to-l2-identification";
 };
 
+export type SimulateFailure = {
+  type: "simulate-failure";
+  failure: IssuanceFailure;
+};
+
 export type EidIssuanceEvents =
   | Start
   | AcceptTos
@@ -107,6 +142,9 @@ export type EidIssuanceEvents =
   | SelectSpidIdp
   | CiePinEntered
   | UserIdentificationCompleted
+  | CieCanEntered
+  | MrtdChallengedSigned
+  | MrtdPoPVerificationCompleted
   | AddToWallet
   | GoToWallet
   | AddNewCredential
@@ -118,7 +156,9 @@ export type EidIssuanceEvents =
   | RevokeWalletInstance
   | ErrorActorEvent
   | ExternalErrorEvent
+  | DoneActorEvent<Output>
   | GoToCieWarning
   | Next
   | GoToL2IdentificationMode
-  | Reset;
+  | Reset
+  | SimulateFailure;

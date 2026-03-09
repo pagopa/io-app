@@ -29,6 +29,7 @@ import {
   storeNewPaymentAttemptAction,
   storePaymentOutcomeToHistory,
   storePaymentsBrowserTypeAction,
+  storePaymentIsOnboardedAction,
   removeExpiredPaymentsOngoingFailedAction
 } from "../actions";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
@@ -51,7 +52,7 @@ import * as receiptsAnalytics from "../../../receipts/analytics";
 import { createSetTransform } from "../../../../../store/transforms/setTransform";
 import * as analytics from "../../../checkout/analytics";
 
-export type PaymentsOngoingFailedClockTime = {
+type PaymentsOngoingFailedClockTime = {
   wallClock: number;
   appClock: number;
 };
@@ -72,7 +73,7 @@ const INITIAL_STATE: PaymentsHistoryState = {
   paymentsOngoingFailed: {}
 };
 
-export const ARCHIVE_SIZE = 15;
+const ARCHIVE_SIZE = 15;
 
 const reducer = (
   state: PaymentsHistoryState = INITIAL_STATE,
@@ -241,10 +242,10 @@ const reducer = (
         ...state,
         analyticsData: {
           ...state.analyticsData,
-          transactionsHomeLength: action.payload?.length ?? 0,
+          transactionsHomeLength: action.payload?.data.length ?? 0,
           paymentsHomeStatus: getPaymentsHomeStatus(
             state.analyticsData?.savedPaymentMethods?.length ?? 0,
-            action.payload?.length ?? 0
+            action.payload?.data.length ?? 0
           )
         }
       };
@@ -278,7 +279,8 @@ const reducer = (
           receiptOrganizationFiscalCode:
             action.payload.carts?.[0]?.payee?.taxCode,
           receiptOrganizationName: action.payload.carts?.[0]?.payee?.name,
-          receiptPayerFiscalCode: action.payload.infoNotice?.payer?.taxCode
+          receiptPayerFiscalCode: action.payload.infoNotice?.payer?.taxCode,
+          receiptEventId: action.payload.infoNotice?.eventId
         }
       };
     case getType(getPaymentsReceiptDownloadAction.request): {
@@ -303,6 +305,14 @@ const reducer = (
         analyticsData: {
           ...state.analyticsData,
           browserType: action.payload
+        }
+      };
+    case getType(storePaymentIsOnboardedAction):
+      return {
+        ...state,
+        analyticsData: {
+          ...state.analyticsData,
+          is_onboarded: action.payload
         }
       };
     case getType(removeExpiredPaymentsOngoingFailedAction):
@@ -405,7 +415,7 @@ const persistConfig: PersistConfig = {
   transforms: [createSetTransform(["receiptsOpened"])]
 };
 
-export const walletPaymentHistoryPersistor = persistReducer<
+const walletPaymentHistoryPersistor = persistReducer<
   PaymentsHistoryState,
   Action
 >(persistConfig, reducer);

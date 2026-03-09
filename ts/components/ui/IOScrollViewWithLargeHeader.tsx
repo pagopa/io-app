@@ -7,12 +7,14 @@ import {
   H2,
   HeaderSecondLevel,
   useIOTheme,
-  VSpacer
+  VSpacer,
+  VStack
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import { ComponentProps, forwardRef, ReactNode, useState } from "react";
 
 import { LayoutChangeEvent, View } from "react-native";
+import Animated, { AnimatedRef } from "react-native-reanimated";
 import I18n from "i18next";
 import {
   BackProps,
@@ -47,7 +49,9 @@ type Props = WithTestID<
     ignoreAccessibilityCheck?: ComponentProps<
       typeof HeaderSecondLevel
     >["ignoreAccessibilityCheck"];
+    animatedRef?: AnimatedRef<Animated.ScrollView>;
     topElement?: ReactNode;
+    alwaysBounceVertical?: boolean;
   } & SupportRequestParams
 >;
 
@@ -74,7 +78,9 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
       excludeEndContentMargin,
       testID,
       ignoreAccessibilityCheck = false,
-      topElement = undefined
+      animatedRef,
+      topElement = undefined,
+      alwaysBounceVertical
     },
     ref
   ) => {
@@ -113,28 +119,32 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
     return (
       <IOScrollView
         actions={actions}
+        animatedRef={animatedRef}
         headerConfig={headerProps}
         snapOffset={titleHeight}
         includeContentMargins={false}
         excludeEndContentMargin={excludeEndContentMargin}
         testID={testID}
         topElement={topElement}
+        alwaysBounceVertical={alwaysBounceVertical}
       >
         <ContentWrapper onLayout={getTitleHeight}>
-          {title.section && (
-            <BodySmall weight="Semibold" color={theme["textBody-tertiary"]}>
-              {title.section}
-            </BodySmall>
-          )}
-          <H2
-            color={theme["textHeading-default"]}
-            testID={title?.testID}
-            ref={ref}
-            accessibilityLabel={title.accessibilityLabel ?? title.label}
-            accessibilityRole="header"
-          >
-            {title.label}
-          </H2>
+          <VStack space={8}>
+            {title.section && (
+              <BodySmall weight="Semibold" color={theme["textBody-tertiary"]}>
+                {title.section}
+              </BodySmall>
+            )}
+            <H2
+              color={theme["textHeading-default"]}
+              testID={title?.testID}
+              ref={ref}
+              accessibilityLabel={title.accessibilityLabel ?? title.label}
+              accessibilityRole="header"
+            >
+              {title.label}
+            </H2>
+          </VStack>
         </ContentWrapper>
 
         {description && (

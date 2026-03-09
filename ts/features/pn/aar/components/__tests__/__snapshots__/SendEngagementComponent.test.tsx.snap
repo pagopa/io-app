@@ -63,18 +63,14 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -144,13 +140,9 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -219,6 +211,16 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                           ]
                         }
                         decelerationRate="normal"
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -1291,6 +1293,29 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                         }
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "bottom": 0,
+                                "left": 0,
+                                "position": "absolute",
+                                "right": 0,
+                                "top": 0,
+                              },
+                              false,
+                            ]
+                          }
                           pointerEvents="none"
                           style={
                             [
@@ -1306,10 +1331,28 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "opacity": 1,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
-                                  "opacity": undefined,
+                                  "opacity": 1,
                                 },
                                 false,
                               ]
@@ -1319,26 +1362,26 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                               colors={
                                 [
                                   16777215,
-                                  218103807,
-                                  419430399,
-                                  620756991,
-                                  822083583,
-                                  1040187391,
-                                  1241513983,
-                                  1442840575,
-                                  1644167167,
-                                  1845493759,
-                                  2046820351,
-                                  2264924159,
+                                  33554431,
+                                  83886079,
+                                  150994943,
+                                  268435455,
+                                  385875967,
+                                  520093695,
+                                  687865855,
+                                  855638015,
+                                  1056964607,
+                                  1258291199,
+                                  1476395007,
+                                  1711276031,
+                                  1946157055,
+                                  2214592511,
                                   2466250751,
-                                  2667577343,
-                                  2868903935,
-                                  3070230527,
-                                  3271557119,
-                                  3489660927,
-                                  3690987519,
-                                  3892314111,
-                                  4093640703,
+                                  2751463423,
+                                  3036676095,
+                                  3338665983,
+                                  3640655871,
+                                  3959422975,
                                   4294967295,
                                 ]
                               }
@@ -1449,6 +1492,48 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                             testID="primary-action"
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -1460,9 +1545,15 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "backgroundColor": undefined,
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                  {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
                                   },
                                   {
                                     "paddingHorizontal": 16,
@@ -1479,114 +1570,178 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                               }
                             >
                               <View
-                                skipExiting={true}
-                              >
-                                <View
-                                  exiting={[Function]}
-                                  style={
+                                collapsable={false}
+                                exiting={[Function]}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                  }
+                                }
+                                style={
+                                  [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                <View
+                                  accessibilityRole="progressbar"
+                                  accessible={true}
+                                  style={
+                                    {
+                                      "height": 24,
+                                      "width": 24,
                                     }
                                   }
+                                  testID="LoadingSpinnerTestID"
                                 >
                                   <View
-                                    accessibilityRole="progressbar"
-                                    accessible={true}
-                                    style={
+                                    collapsable={false}
+                                    jestAnimatedProps={
                                       {
-                                        "height": 24,
-                                        "width": 24,
+                                        "value": {},
                                       }
                                     }
-                                    testID="LoadingSpinnerTestID"
-                                  >
-                                    <View
-                                      collapsable={false}
-                                      style={
-                                        {
-                                          "transform": [
-                                            {
-                                              "rotateZ": "0deg",
-                                            },
-                                          ],
-                                        }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
                                       }
-                                      testID="LoadingSpinnerAnimatedTestID"
+                                    }
+                                    jestInlineStyle={
+                                      {
+                                        "animationDuration": 850,
+                                        "animationIterationCount": "infinite",
+                                        "animationName": {
+                                          "from": {
+                                            "transform": [
+                                              {
+                                                "rotateZ": "0deg",
+                                              },
+                                            ],
+                                          },
+                                          "to": {
+                                            "transform": [
+                                              {
+                                                "rotateZ": "360deg",
+                                              },
+                                            ],
+                                          },
+                                        },
+                                        "animationTimingFunction": "linear",
+                                        "transformOrigin": "center",
+                                      }
+                                    }
+                                    style={
+                                      [
+                                        {
+                                          "transformOrigin": "center",
+                                        },
+                                      ]
+                                    }
+                                    testID="LoadingSpinnerAnimatedTestID"
+                                  >
+                                    <RNSVGSvgView
+                                      align="xMidYMid"
+                                      bbHeight={24}
+                                      bbWidth={24}
+                                      fill="none"
+                                      focusable={false}
+                                      height={24}
+                                      meetOrSlice={0}
+                                      minX={0}
+                                      minY={0}
+                                      style={
+                                        [
+                                          {
+                                            "backgroundColor": "transparent",
+                                            "borderWidth": 0,
+                                          },
+                                          {
+                                            "flex": 0,
+                                            "height": 24,
+                                            "width": 24,
+                                          },
+                                        ]
+                                      }
+                                      vbHeight={24}
+                                      vbWidth={24}
+                                      width={24}
                                     >
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight={24}
-                                        bbWidth={24}
-                                        fill="none"
-                                        focusable={false}
-                                        height={24}
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
-                                        style={
+                                      <RNSVGGroup
+                                        fill={null}
+                                        propList={
                                           [
-                                            {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            {
-                                              "flex": 0,
-                                              "height": 24,
-                                              "width": 24,
-                                            },
+                                            "fill",
                                           ]
                                         }
-                                        vbHeight={24}
-                                        vbWidth={24}
-                                        width={24}
                                       >
+                                        <RNSVGDefs>
+                                          <RNSVGLinearGradient
+                                            gradient={
+                                              [
+                                                0,
+                                                16777215,
+                                                1,
+                                                -1,
+                                              ]
+                                            }
+                                            gradientTransform={null}
+                                            gradientUnits={0}
+                                            name="«r0»-secondHalf"
+                                            x1="0%"
+                                            x2="100%"
+                                            y1="0%"
+                                            y2="0%"
+                                          />
+                                          <RNSVGLinearGradient
+                                            gradient={
+                                              [
+                                                0,
+                                                -1,
+                                                1,
+                                                -1,
+                                              ]
+                                            }
+                                            gradientTransform={null}
+                                            gradientUnits={0}
+                                            name="«r0»-firstHalf"
+                                            x1="0%"
+                                            x2="100%"
+                                            y1="0%"
+                                            y2="0%"
+                                          />
+                                        </RNSVGDefs>
                                         <RNSVGGroup
-                                          fill={null}
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
                                           propList={
                                             [
-                                              "fill",
+                                              "strokeWidth",
                                             ]
                                           }
+                                          strokeWidth={3}
                                         >
-                                          <RNSVGDefs>
-                                            <RNSVGLinearGradient
-                                              gradient={
-                                                [
-                                                  0,
-                                                  16777215,
-                                                  1,
-                                                  -1,
-                                                ]
-                                              }
-                                              gradientTransform={null}
-                                              gradientUnits={0}
-                                              name="spinner-secondHalf"
-                                              x1="0%"
-                                              x2="100%"
-                                              y1="0%"
-                                              y2="0%"
-                                            />
-                                            <RNSVGLinearGradient
-                                              gradient={
-                                                [
-                                                  0,
-                                                  -1,
-                                                  1,
-                                                  -1,
-                                                ]
-                                              }
-                                              gradientTransform={null}
-                                              gradientUnits={0}
-                                              name="spinner-firstHalf"
-                                              x1="0%"
-                                              x2="100%"
-                                              y1="0%"
-                                              y2="0%"
-                                            />
-                                          </RNSVGDefs>
-                                          <RNSVGGroup
+                                          <RNSVGPath
+                                            d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -1595,77 +1750,61 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                                             }
                                             propList={
                                               [
-                                                "strokeWidth",
+                                                "stroke",
                                               ]
                                             }
-                                            strokeWidth={3}
-                                          >
-                                            <RNSVGPath
-                                              d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
-                                              fill={
-                                                {
-                                                  "payload": 4278190080,
-                                                  "type": 0,
-                                                }
+                                            stroke={
+                                              {
+                                                "brushRef": "«r0»-secondHalf",
+                                                "type": 1,
                                               }
-                                              propList={
-                                                [
-                                                  "stroke",
-                                                ]
+                                            }
+                                          />
+                                          <RNSVGPath
+                                            d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
+                                            fill={
+                                              {
+                                                "payload": 4278190080,
+                                                "type": 0,
                                               }
-                                              stroke={
-                                                {
-                                                  "brushRef": "spinner-secondHalf",
-                                                  "type": 1,
-                                                }
+                                            }
+                                            propList={
+                                              [
+                                                "stroke",
+                                              ]
+                                            }
+                                            stroke={
+                                              {
+                                                "brushRef": "«r0»-firstHalf",
+                                                "type": 1,
                                               }
-                                            />
-                                            <RNSVGPath
-                                              d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
-                                              fill={
-                                                {
-                                                  "payload": 4278190080,
-                                                  "type": 0,
-                                                }
+                                            }
+                                          />
+                                          <RNSVGPath
+                                            d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
+                                            fill={
+                                              {
+                                                "payload": 4278190080,
+                                                "type": 0,
                                               }
-                                              propList={
-                                                [
-                                                  "stroke",
-                                                ]
+                                            }
+                                            propList={
+                                              [
+                                                "stroke",
+                                                "strokeLinecap",
+                                              ]
+                                            }
+                                            stroke={
+                                              {
+                                                "payload": 4294967295,
+                                                "type": 0,
                                               }
-                                              stroke={
-                                                {
-                                                  "brushRef": "spinner-firstHalf",
-                                                  "type": 1,
-                                                }
-                                              }
-                                            />
-                                            <RNSVGPath
-                                              d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
-                                              fill={
-                                                {
-                                                  "payload": 4278190080,
-                                                  "type": 0,
-                                                }
-                                              }
-                                              propList={
-                                                [
-                                                  "stroke",
-                                                  "strokeLinecap",
-                                                ]
-                                              }
-                                              stroke={
-                                                {
-                                                  "payload": 4294967295,
-                                                  "type": 0,
-                                                }
-                                              }
-                                              strokeLinecap={1}
-                                            />
-                                          </RNSVGGroup>
+                                            }
+                                            strokeLinecap={1}
+                                          />
                                         </RNSVGGroup>
-                                      </RNSVGSvgView>
-                                    </View>
+                                      </RNSVGGroup>
+                                    </RNSVGSvgView>
                                   </View>
                                 </View>
                               </View>
@@ -1687,6 +1826,29 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                       >
                         <View
                           accessibilityRole="header"
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(255, 255, 255, 1)",
+                                "borderColor": "rgba(210, 214, 227, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "borderBottomWidth": 1,
+                                "borderColor": "rgba(210,214,227,0)",
+                              },
+                              {},
+                            ]
+                          }
                           style={
                             [
                               {
@@ -1695,13 +1857,38 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                               },
                               {},
                               {
-                                "backgroundColor": undefined,
-                                "borderColor": undefined,
+                                "backgroundColor": "rgba(255, 255, 255, 1)",
+                                "borderColor": "rgba(210, 214, 227, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "marginTop": 0,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "flexGrow": 1,
+                                  "height": 56,
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 24,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -1742,13 +1929,34 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                               <Text
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "opacity": 0,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "color": "#0E0F13",
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -1761,7 +1969,7 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                                         "textAlign": "center",
                                       },
                                       {
-                                        "opacity": undefined,
+                                        "opacity": 0,
                                       },
                                     ],
                                   ]
@@ -1814,6 +2022,35 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                                 testID="close-button"
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -1824,7 +2061,13 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                                         "height": 24,
                                         "width": 24,
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                     ]
                                   }
                                 >
@@ -1833,17 +2076,25 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    animatedProps={
-                                      {
-                                        "color": undefined,
-                                      }
-                                    }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    collapsable={false}
                                     color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {
+                                          "color": "rgba(14, 15, 19, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
@@ -1908,22 +2159,14 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -1994,18 +2237,14 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -2075,13 +2314,9 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -2150,6 +2385,16 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                           ]
                         }
                         decelerationRate="normal"
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -3222,6 +3467,29 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                         }
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "bottom": 0,
+                                "left": 0,
+                                "position": "absolute",
+                                "right": 0,
+                                "top": 0,
+                              },
+                              false,
+                            ]
+                          }
                           pointerEvents="none"
                           style={
                             [
@@ -3237,10 +3505,28 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "opacity": 1,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
-                                  "opacity": undefined,
+                                  "opacity": 1,
                                 },
                                 false,
                               ]
@@ -3250,26 +3536,26 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                               colors={
                                 [
                                   16777215,
-                                  218103807,
-                                  419430399,
-                                  620756991,
-                                  822083583,
-                                  1040187391,
-                                  1241513983,
-                                  1442840575,
-                                  1644167167,
-                                  1845493759,
-                                  2046820351,
-                                  2264924159,
+                                  33554431,
+                                  83886079,
+                                  150994943,
+                                  268435455,
+                                  385875967,
+                                  520093695,
+                                  687865855,
+                                  855638015,
+                                  1056964607,
+                                  1258291199,
+                                  1476395007,
+                                  1711276031,
+                                  1946157055,
+                                  2214592511,
                                   2466250751,
-                                  2667577343,
-                                  2868903935,
-                                  3070230527,
-                                  3271557119,
-                                  3489660927,
-                                  3690987519,
-                                  3892314111,
-                                  4093640703,
+                                  2751463423,
+                                  3036676095,
+                                  3338665983,
+                                  3640655871,
+                                  3959422975,
                                   4294967295,
                                 ]
                               }
@@ -3380,6 +3666,48 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                             testID="primary-action"
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -3391,9 +3719,15 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "backgroundColor": undefined,
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                  {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
                                   },
                                   {
                                     "paddingHorizontal": 16,
@@ -3410,6 +3744,30 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -3428,15 +3786,38 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={true}
+                                  collapsable={false}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "color": "rgba(255, 255, 255, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#FFFFFF",
+                                      },
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -3451,7 +3832,7 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                                           "color": "#FFFFFF",
                                         },
                                         {
-                                          "color": undefined,
+                                          "color": "rgba(255, 255, 255, 1)",
                                         },
                                       ],
                                     ]
@@ -3478,6 +3859,29 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                       >
                         <View
                           accessibilityRole="header"
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(255, 255, 255, 1)",
+                                "borderColor": "rgba(210, 214, 227, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "borderBottomWidth": 1,
+                                "borderColor": "rgba(210,214,227,0)",
+                              },
+                              {},
+                            ]
+                          }
                           style={
                             [
                               {
@@ -3486,13 +3890,38 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                               },
                               {},
                               {
-                                "backgroundColor": undefined,
-                                "borderColor": undefined,
+                                "backgroundColor": "rgba(255, 255, 255, 1)",
+                                "borderColor": "rgba(210, 214, 227, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "marginTop": 0,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "flexGrow": 1,
+                                  "height": 56,
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 24,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -3533,13 +3962,34 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                               <Text
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "opacity": 0,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "color": "#0E0F13",
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -3552,7 +4002,7 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                                         "textAlign": "center",
                                       },
                                       {
-                                        "opacity": undefined,
+                                        "opacity": 0,
                                       },
                                     ],
                                   ]
@@ -3605,6 +4055,35 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                                 testID="close-button"
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -3615,7 +4094,13 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                                         "height": 24,
                                         "width": 24,
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                     ]
                                   }
                                 >
@@ -3624,17 +4109,25 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    animatedProps={
-                                      {
-                                        "color": undefined,
-                                      }
-                                    }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    collapsable={false}
                                     color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {
+                                          "color": "rgba(14, 15, 19, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
@@ -3699,22 +4192,14 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>

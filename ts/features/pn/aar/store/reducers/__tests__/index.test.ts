@@ -1,30 +1,47 @@
-import * as O from "fp-ts/lib/Option";
+import { aarFlowReducer, INITIAL_AAR_FLOW_STATE } from "..";
 import {
-  aarFlowReducer,
-  currentAARFlowData,
-  currentAARFlowStateType,
-  INITIAL_AAR_FLOW_STATE,
-  isAAREnabled
-} from "..";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import * as appVersion from "../../../../../../utils/appVersion";
+  AARFlowStateName,
+  isValidAARStateTransition
+} from "../../../utils/stateUtils";
 import {
   sendAarMockStateFactory,
   sendAarMockStates,
   sendAarStateNames
 } from "../../../utils/testUtils";
 import {
-  AARFlowState,
-  isValidAARStateTransition
-} from "../../../utils/stateUtils";
-import { setAarFlowState, terminateAarFlow } from "../../actions";
+  setAarFlowState,
+  terminateAarFlow,
+  TerminateAarFlowPayload
+} from "../../actions";
 
 describe("aarFlowReducer and related functions", () => {
   describe("Basic reducer behavior and selectors", () => {
     sendAarMockStates.forEach(payload => {
-      it(`state '${payload.type}' should reset upon receiving terminateAarFlow`, () => {
-        const state = aarFlowReducer(payload, terminateAarFlow());
-        expect(state).toEqual(INITIAL_AAR_FLOW_STATE);
+      [payload, "non_valid", undefined].forEach(actionParamFlowState => {
+        it(`state '${payload.type}' should${
+          actionParamFlowState === "non_valid" ? " not" : ""
+        } reset upon receiving terminateAarFlow with ${
+          actionParamFlowState === "non_valid" ? "an invalid" : "a valid"
+        } flowState as parameter`, () => {
+          const actionPayload: TerminateAarFlowPayload = {
+            messageId: "test",
+            currentFlowState: actionParamFlowState as
+              | AARFlowStateName
+              | undefined
+          };
+          const state = aarFlowReducer(
+            payload,
+            terminateAarFlow(actionPayload)
+          );
+          const shouldResetState =
+            (actionParamFlowState ?? payload.type) === payload.type;
+
+          if (shouldResetState) {
+            expect(state).toEqual(INITIAL_AAR_FLOW_STATE);
+          } else {
+            expect(state).toEqual(payload);
+          }
+        });
       });
     });
   });
@@ -52,77 +69,6 @@ describe("aarFlowReducer and related functions", () => {
           }
         });
       });
-    });
-  });
-});
-
-describe("isAAREnabled selector", () => {
-  [
-    { local: true, remote: true, expect: true },
-    { local: true, remote: false, expect: false },
-    { local: false, remote: true, expect: false },
-    { local: false, remote: false, expect: false }
-  ].forEach(({ local, remote, expect: expected }) => {
-    it(`Should return ${expected} when isAARLocalEnabled='${local}' and isAARRemoteEnabled='${remote}'`, () => {
-      const state = {
-        persistedPreferences: {
-          isAarFeatureEnabled: local
-        },
-        remoteConfig: O.some({
-          pn: {
-            aar: {
-              min_app_version: {
-                android: remote ? "1.0.0.0" : "3.0.0.0",
-                ios: remote ? "1.0.0.0" : "3.0.0.0"
-              }
-            }
-          }
-        })
-      } as GlobalState;
-      jest
-        .spyOn(appVersion, "getAppVersion")
-        .mockImplementation(() => "2.0.0.0");
-
-      const isAarFeatureEnabled = isAAREnabled(state);
-      expect(isAarFeatureEnabled).toBe(expected);
-    });
-  });
-
-  describe(" selectors", () => {
-    it("should return the correct AAR flow state from the global state", () => {
-      const mockAARState: AARFlowState = {
-        type: "fetchingNotificationData",
-        iun: "1234567890",
-        fullNameDestinatario: "Mario Rossi"
-      };
-
-      const mockState = {
-        features: {
-          pn: {
-            aarFlow: mockAARState
-          }
-        }
-      } as unknown as GlobalState;
-
-      const result = currentAARFlowData(mockState);
-      const resultType = currentAARFlowStateType(mockState);
-      expect(resultType).toEqual(mockAARState.type);
-      expect(result).toEqual(mockAARState);
-    });
-
-    it("should return INITIAL_AAR_FLOW_STATE when explicitly set", () => {
-      const mockState = {
-        features: {
-          pn: {
-            aarFlow: INITIAL_AAR_FLOW_STATE
-          }
-        }
-      } as unknown as GlobalState;
-
-      const result = currentAARFlowData(mockState);
-      const resultType = currentAARFlowStateType(mockState);
-      expect(result).toEqual(INITIAL_AAR_FLOW_STATE);
-      expect(resultType).toEqual(INITIAL_AAR_FLOW_STATE.type);
     });
   });
 });

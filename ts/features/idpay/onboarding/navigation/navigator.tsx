@@ -15,6 +15,7 @@ import IdPayInputFormVerificationScreen from "../screens/IdPayInputFormVerificat
 import IdPayLoadingScreen from "../screens/IdPayLoadingScreen";
 import IdPayMultiValuePrerequisitesScreen from "../screens/IdPayMultiValuePrerequisitesScreen";
 import IdPayPDNDPrerequisitesScreen from "../screens/IdPayPDNDPrerequisitesScreen";
+import { IdPayFeatureFlagGuard } from "../../common/components/IdPayFeatureFlagGuard";
 import { IdPayOnboardingParamsList } from "./params";
 import { IdPayOnboardingRoutes } from "./routes";
 
@@ -22,11 +23,13 @@ const Stack = createStackNavigator<IdPayOnboardingParamsList>();
 
 export const IdPayOnboardingNavigator = () => (
   <IdPayOnboardingMachineProvider>
-    <InnerNavigator />
+    <IdPayFeatureFlagGuard>
+      <InnerNavigator />
+    </IdPayFeatureFlagGuard>
   </IdPayOnboardingMachineProvider>
 );
 
-export const InnerNavigator = () => {
+const InnerNavigator = () => {
   const idPayOnboardingMachineRef = IdPayOnboardingMachineContext.useActorRef();
 
   return (

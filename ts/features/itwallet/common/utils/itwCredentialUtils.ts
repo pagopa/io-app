@@ -1,10 +1,48 @@
 import { IOColors, Tag, useIOTheme } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { SdJwt } from "@pagopa/io-react-native-wallet";
+import { SdJwt, Mdoc } from "@pagopa/io-react-native-wallet";
 import I18n from "i18next";
+import { isBefore } from "date-fns";
 import { CredentialType } from "./itwMocksUtils";
-import { ItwCredentialStatus } from "./itwTypesUtils";
+import {
+  CredentialFormat,
+  ItwCredentialStatus,
+  StoredCredential,
+  StoredVerification
+} from "./itwTypesUtils";
+
+// Credentials that can be obtained with valid a Documenti su IO instance
+export const l2Credentials = [
+  CredentialType.DRIVING_LICENSE,
+  CredentialType.EUROPEAN_DISABILITY_CARD,
+  CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+] as const;
+
+// Credentials that can be actively requested and obtained by the user
+export const availableCredentials = [
+  CredentialType.DRIVING_LICENSE,
+  CredentialType.EUROPEAN_DISABILITY_CARD,
+  CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+] as const;
+
+// New credentials that can be actively requested and obtained by the user
+export const newCredentials = [
+  CredentialType.EDUCATION_DEGREE,
+  CredentialType.EDUCATION_ENROLLMENT,
+  CredentialType.RESIDENCY
+] as const;
+
+export type NewCredential = (typeof newCredentials)[number];
+
+// Credentials that will be available in the future
+export const upcomingCredentials = [] as ReadonlyArray<string>;
+
+export const isUpcomingCredential = (type: string): boolean =>
+  upcomingCredentials.includes(type);
+
+export const isNewCredential = (type: string): type is NewCredential =>
+  newCredentials.includes(type as NewCredential);
 
 export const itwGetCredentialNameByCredentialType = (
   isItwCredential: boolean
@@ -97,17 +135,74 @@ export const validCredentialStatuses: Array<ItwCredentialStatus> = [
 ];
 
 /**
- * Extracts the verification claim from the SD-JWT,
- * checks whether the `assurance_level` field is equal to `"high"`,
- * and returns `true` only in that case.
+ * Extracts the verification object from a stored credential based on its format.
+ * Only persists `trust_framework` and `assurance_level`, excluding `evidence`
+ * which is being dropped in spec v1.3.3.
+ * @param credential - The stored credential fields needed to extract verification
+ * @returns The slim verification object or undefined if extraction fails
+ */
+export const extractVerification = ({
+  format,
+  credential,
+  parsedCredential
+}: Pick<StoredCredential, "format" | "credential" | "parsedCredential">):
+  | StoredVerification
+  | undefined => {
+  try {
+    const verification = (() => {
+      switch (format) {
+        case CredentialFormat.SD_JWT:
+          return SdJwt.getVerification(credential);
+        case CredentialFormat.MDOC:
+          return Mdoc.getVerificationFromParsedCredential(parsedCredential);
+        default:
+          return undefined;
+      }
+    })();
+    if (!verification) {
+      return undefined;
+    }
+    const { trust_framework, assurance_level } = verification;
+    return { trust_framework, assurance_level };
+  } catch {
+    return undefined;
+  }
+};
+
+/**
+ * Checks whether the `assurance_level` field is equal to `"high"` or the
+ * `trust_framework` field is equal to `"it_l2+document_proof"`,
+ * and returns `true` only if one of these conditions is met.
  *
- * @param sdJwt - The SD-JWT string to check
+ * `"it_l2+document_proof"` indicates that the credential has been issued with
+ * a substantial authentication (SPID, CieID) plus an MRTD PoP verification,
+ *
+ * @param storedCredential - The stored credential to check
  * @returns boolean indicating if the credential is an ITW credential (L3)
  */
-export const isItwCredential = (sdJwt: string): boolean =>
-  pipe(
-    O.tryCatch(() => SdJwt.getVerification(sdJwt)),
-    O.chain(O.fromNullable),
-    O.chainNullableK(({ assurance_level }) => assurance_level === "high"),
-    O.getOrElse(() => false)
+export const isItwCredential = (
+  storedCredential: StoredCredential
+): boolean => {
+  const verification = storedCredential.verification;
+  return (
+    verification?.assurance_level === "high" ||
+    verification?.trust_framework === "it_l2+document_proof"
   );
+};
+
+/**
+ * Checks if the credential was issued before the PID.
+ * @param credentialIssuedAt - Credential issuance date
+ * @param pidIssuedAt - PID issuance date
+ * @returns true if credential was issued before PID, false otherwise
+ */
+export const isCredentialIssuedBeforePid = (
+  credentialIssuedAt?: string,
+  pidIssuedAt?: string
+): boolean => {
+  if (!credentialIssuedAt || !pidIssuedAt) {
+    return false;
+  }
+
+  return isBefore(new Date(credentialIssuedAt), new Date(pidIssuedAt));
+};

@@ -21,13 +21,13 @@ const getStatusBadgeVariant = (
     case StatusEnum.NOT_REFUNDABLE_ONLY_IBAN:
     case StatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT:
     case VoucherStatusEnum.ACTIVE:
-    case VoucherStatusEnum.USED:
       return "success";
     case StatusEnum.UNSUBSCRIBED:
     case VoucherStatusEnum.EXPIRED:
       return "error";
     case VoucherStatusEnum.EXPIRING:
       return "warning";
+    case VoucherStatusEnum.USED:
     default:
       return "default";
   }
@@ -57,7 +57,11 @@ export const IdPayInitiativeStatusItem = ({
           flexDirection: "row"
         }}
       >
-        <H6>{I18n.t("idpay.initiative.beneficiaryDetails.status")}</H6>
+        <H6>
+          {voucherStatus
+            ? I18n.t("idpay.initiative.beneficiaryDetails.voucherStatus")
+            : I18n.t("idpay.initiative.beneficiaryDetails.status")}
+        </H6>
         <Badge
           text={statusString}
           variant={getStatusBadgeVariant(voucherStatus ?? status)}

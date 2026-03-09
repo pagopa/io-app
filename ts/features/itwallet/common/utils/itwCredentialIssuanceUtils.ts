@@ -17,6 +17,8 @@ import {
   RequestObject,
   StoredCredential
 } from "./itwTypesUtils";
+import { WALLET_SPEC_VERSION } from "./constants";
+import { extractVerification } from "./itwCredentialUtils";
 import { Env } from "./environment";
 import { enrichErrorWithMetadata } from "./itwFailureUtils";
 
@@ -26,6 +28,12 @@ export type RequestCredentialParams = {
   walletInstanceAttestation: string;
   skipMdocIssuance: boolean;
 };
+
+/**
+ * List of credentials that cannot be issued in parallel, only sequentially.
+ * Currently only the mDL must be requested sequentially because of locking issues.
+ */
+const SEQUENTIAL_ISSUANCE_CREDENTIALS = ["mDL"];
 
 /**
  * Requests a credential from the issuer.
@@ -59,6 +67,7 @@ export const requestCredential = async ({
     await Credential.Issuance.startUserAuthorization(
       issuerConf,
       credentialIds,
+      { proofType: "none" },
       {
         walletInstanceAttestation,
         redirectUri: env.ISSUANCE_REDIRECT_URI,
@@ -90,7 +99,6 @@ export type ObtainCredentialParams = {
   clientId: string;
   codeVerifier: string;
   issuerConf: IssuerConfiguration;
-  operationType?: "reissuing";
 };
 
 /**
@@ -103,7 +111,6 @@ export type ObtainCredentialParams = {
  * @param clientId - The client ID
  * @param codeVerifier - The code verifier
  * @param issuerConf - The issuer configuration
- * @param operationType - The operation type, e.g., "reissuing"
  * @returns The obtained credential
  */
 export const obtainCredential = async ({
@@ -114,8 +121,7 @@ export const obtainCredential = async ({
   walletInstanceAttestation,
   clientId,
   codeVerifier,
-  issuerConf,
-  operationType
+  issuerConf
 }: ObtainCredentialParams) => {
   // Get WIA crypto context
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
@@ -148,85 +154,35 @@ export const obtainCredential = async ({
     }
   );
 
-  // TODO: [SIW-2839] remove this entire `if` block after the async issuance dismissal
-  if (
-    credentialType === "mDL" &&
-    !operationType &&
-    accessToken.authorization_details.length > 1
-  ) {
-    const sdJwtCredId = extractCredentialIdFromEC(
-      issuerConf,
-      "mDL",
-      CredentialFormat.SD_JWT
-    );
-    const sdJwtAuthDetails = accessToken.authorization_details.find(
-      auth => auth.credential_configuration_id === sdJwtCredId
-    );
-    if (!sdJwtAuthDetails) {
-      throw new Error("Missing authorization details for SD-JWT mDL");
+  const params: Omit<RequestAndParseCredentialParams, "authDetails"> = {
+    accessToken,
+    clientId,
+    credentialType,
+    env,
+    dPopCryptoContext,
+    issuerConf
+  };
+
+  if (SEQUENTIAL_ISSUANCE_CREDENTIALS.includes(credentialType)) {
+    const credentials: Array<StoredCredential> = [];
+    for (const authDetails of accessToken.authorization_details) {
+      const credential = await requestAndParseCredential({
+        ...params,
+        authDetails
+      });
+      // eslint-disable-next-line functional/immutable-data
+      credentials.push(credential);
     }
-
-    // A 201 status code (async issuance) thrown here is caught in the machine and leads to the async failure screen.
-    // The code requesting the mDoc credential is never reached.
-    const sdJwtCredential = await requestAndParseCredential({
-      accessToken,
-      clientId,
-      credentialType,
-      authDetails: sdJwtAuthDetails,
-      env,
-      dPopCryptoContext,
-      issuerConf
-    });
-
-    // If we get here it means no error was thrown, so the response must be a 200 OK. We can request the mdoc in reissuing mode.
-    const mdocCredId = extractCredentialIdFromEC(
-      issuerConf,
-      "mDL",
-      CredentialFormat.MDOC
-    );
-    const mdocAuthDetails = accessToken.authorization_details.find(
-      auth => auth.credential_configuration_id === mdocCredId
-    );
-    if (!mdocAuthDetails) {
-      return {
-        credentials: [sdJwtCredential]
-      };
-    }
-
-    const mdocCredential = await requestAndParseCredential({
-      accessToken,
-      clientId,
-      credentialType,
-      authDetails: mdocAuthDetails,
-      env,
-      dPopCryptoContext,
-      issuerConf,
-      operationType: "reissuing"
-    });
-
-    return {
-      credentials: [mdocCredential, sdJwtCredential]
-    };
+    return { credentials };
   }
 
   const credentials = await Promise.all(
     accessToken.authorization_details.map(authDetails =>
-      requestAndParseCredential({
-        accessToken,
-        clientId,
-        credentialType,
-        authDetails,
-        env,
-        dPopCryptoContext,
-        issuerConf,
-        operationType
-      })
+      requestAndParseCredential({ ...params, authDetails })
     )
   );
 
-  return {
-    credentials
-  };
+  return { credentials };
 };
 
 const getCredentialConfigurationIds = (
@@ -263,7 +219,6 @@ type RequestAndParseCredentialParams = {
   clientId: string;
   env: Env;
   dPopCryptoContext: CryptoContext;
-  operationType?: "reissuing";
 };
 
 const requestAndParseCredential = async ({
@@ -273,8 +228,7 @@ const requestAndParseCredential = async ({
   authDetails,
   clientId,
   dPopCryptoContext,
-  env,
-  operationType
+  env
 }: RequestAndParseCredentialParams) => {
   const { credential_configuration_id, credential_identifiers } = authDetails;
   const credentialKeyTag = uuidv4().toString();
@@ -293,21 +247,24 @@ const requestAndParseCredential = async ({
     {
       dPopCryptoContext,
       credentialCryptoContext
-    },
-    operationType
+    }
   ).catch(
     enrichErrorWithMetadata({
       credentialId: credential_configuration_id
     })
   );
-
   // Parse and verify the credential. The ignoreMissingAttributes flag must be set to false or omitted in production.
+  // The ignoreMissingAttributes must be set to false for mDoc credentials since
+  // there are some attributes that should not be presented during Proximity presentation.
   const { parsedCredential, issuedAt, expiration } =
     await Credential.Issuance.verifyAndParseCredential(
       issuerConf,
       credential,
       credential_configuration_id,
-      { credentialCryptoContext, ignoreMissingAttributes: true },
+      {
+        credentialCryptoContext,
+        ignoreMissingAttributes: format === CredentialFormat.SD_JWT
+      },
       env.X509_CERT_ROOT
     );
 
@@ -322,21 +279,8 @@ const requestAndParseCredential = async ({
     jwt: {
       expiration: expiration.toISOString(),
       issuedAt: issuedAt?.toISOString()
-    }
+    },
+    spec_version: WALLET_SPEC_VERSION,
+    verification: extractVerification({ format, credential, parsedCredential })
   };
-};
-
-const extractCredentialIdFromEC = (
-  issuerConf: IssuerConfiguration,
-  credentialType: string,
-  format: CredentialFormat
-) => {
-  const { credential_configurations_supported } =
-    issuerConf.openid_credential_issuer;
-  const credentialConfig = Object.entries(
-    credential_configurations_supported
-  ).find(
-    ([, config]) => config.scope === credentialType && config.format === format
-  );
-  return credentialConfig ? credentialConfig[0] : undefined;
 };

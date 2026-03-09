@@ -1,0 +1,90 @@
+diff --git a/lib/typescript/internal/privateTypes.d.ts b/lib/typescript/internal/privateTypes.d.ts
+index d0a848c7a8ddee8e9283c4402627646c2fbf3356..b9ef76c4ed2d661478e4ee12ca445f510044a422 100644
+--- a/lib/typescript/internal/privateTypes.d.ts
++++ b/lib/typescript/internal/privateTypes.d.ts
+@@ -82,12 +82,8 @@ interface ExposedNativeMethods {
+     getInstallReferrerSync: () => string;
+     getInstanceId: () => Promise<string>;
+     getInstanceIdSync: () => string;
+-    getIpAddress: () => Promise<string>;
+-    getIpAddressSync: () => string;
+     getLastUpdateTime: () => Promise<number>;
+     getLastUpdateTimeSync: () => number;
+-    getMacAddress: () => Promise<string>;
+-    getMacAddressSync: () => string;
+     getMaxMemory: () => Promise<number>;
+     getMaxMemorySync: () => number;
+     getPreviewSdkInt: () => Promise<number>;
+diff --git a/src/index.ts b/src/index.ts
+index 6932229f1cdefdaca9c11b5d94328683686ed421..3064903fb6d416cea39ccef94d9791cd806a30b1 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -60,13 +60,6 @@ export const [getAndroidId, getAndroidIdSync] = getSupportedPlatformInfoFunction
+   defaultValue: 'unknown',
+ });
+ 
+-export const [getIpAddress, getIpAddressSync] = getSupportedPlatformInfoFunctions({
+-  supportedPlatforms: ['android', 'ios', 'windows'],
+-  getter: () => RNDeviceInfo.getIpAddress(),
+-  syncGetter: () => RNDeviceInfo.getIpAddressSync(),
+-  defaultValue: 'unknown',
+-});
+-
+ export const [isCameraPresent, isCameraPresentSync] = getSupportedPlatformInfoFunctions({
+   supportedPlatforms: ['android', 'windows', 'web'],
+   getter: () => RNDeviceInfo.isCameraPresent(),
+@@ -74,24 +67,6 @@ export const [isCameraPresent, isCameraPresentSync] = getSupportedPlatformInfoFu
+   defaultValue: false,
+ });
+ 
+-export async function getMacAddress() {
+-  if (Platform.OS === 'android') {
+-    return RNDeviceInfo.getMacAddress();
+-  } else if (Platform.OS === 'ios') {
+-    return '02:00:00:00:00:00';
+-  }
+-  return 'unknown';
+-}
+-
+-export function getMacAddressSync() {
+-  if (Platform.OS === 'android') {
+-    return RNDeviceInfo.getMacAddressSync();
+-  } else if (Platform.OS === 'ios') {
+-    return '02:00:00:00:00:00';
+-  }
+-  return 'unknown';
+-}
+-
+ export const getDeviceId = () =>
+   getSupportedPlatformInfoSync({
+     defaultValue: 'unknown',
+@@ -981,12 +956,8 @@ const DeviceInfo: DeviceInfoModule = {
+   getInstallReferrerSync,
+   getInstanceId,
+   getInstanceIdSync,
+-  getIpAddress,
+-  getIpAddressSync,
+   getLastUpdateTime,
+   getLastUpdateTimeSync,
+-  getMacAddress,
+-  getMacAddressSync,
+   getManufacturer,
+   getManufacturerSync,
+   getMaxMemory,
+diff --git a/src/internal/privateTypes.ts b/src/internal/privateTypes.ts
+index de65647fcc3b7a8e2df53f0062f62aa093801b99..fc25770f72bec94a65961bb88bd7f3a21c1955ef 100644
+--- a/src/internal/privateTypes.ts
++++ b/src/internal/privateTypes.ts
+@@ -93,12 +93,8 @@ interface ExposedNativeMethods {
+   getInstallReferrerSync: () => string;
+   getInstanceId: () => Promise<string>;
+   getInstanceIdSync: () => string;
+-  getIpAddress: () => Promise<string>;
+-  getIpAddressSync: () => string;
+   getLastUpdateTime: () => Promise<number>;
+   getLastUpdateTimeSync: () => number;
+-  getMacAddress: () => Promise<string>;
+-  getMacAddressSync: () => string;
+   getMaxMemory: () => Promise<number>;
+   getMaxMemorySync: () => number;
+   getPreviewSdkInt: () => Promise<number>;

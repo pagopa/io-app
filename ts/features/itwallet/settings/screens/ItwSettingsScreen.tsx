@@ -1,37 +1,41 @@
-import {
-  ButtonSolidProps,
-  ContentWrapper,
-  IOToast,
-  VStack
-} from "@pagopa/io-app-design-system";
+import { ContentWrapper, IOToast, VStack } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import { TxtLinkNode } from "@textlint/ast-node-types";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { Alert, View } from "react-native";
-import { useRoute } from "@react-navigation/native";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { linkNodeToReactNative } from "../../../../components/IOMarkdown/renderRules";
 import { Renderer } from "../../../../components/IOMarkdown/types";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { ButtonBlockProps } from "../../../../components/ui/utils/buttons";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import {
-  trackItwTapUpgradeBanner,
-  trackWalletStartDeactivation
+  trackItwSettings,
+  trackItwStartActivation,
+  trackItwStartDeactivation
 } from "../../analytics";
 import { ItwEidLifecycleAlert } from "../../common/components/ItwEidLifecycleAlert";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
+
+const MIXPANEL_SCREEN_NAME = ITW_SCREENVIEW_EVENTS.ITW_SETTINGS;
 
 const ItwSettingsScreen = () => {
   const navigation = useIONavigation();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const { name: routeName } = useRoute();
+
+  useFocusEffect(trackItwSettings);
 
   const handleRevokeOnPress = useCallback(() => {
-    trackWalletStartDeactivation("ITW_PID");
+    trackItwStartDeactivation({
+      credential: "ITW_PID",
+      screen_name: MIXPANEL_SCREEN_NAME
+    });
     Alert.alert(
       I18n.t("features.itWallet.presentation.itWalletId.dialog.revoke.title"),
       I18n.t("features.itWallet.presentation.itWalletId.dialog.revoke.message"),
@@ -54,14 +58,14 @@ const ItwSettingsScreen = () => {
   }, [machineRef]);
 
   const handleObtainItwOnPress = useCallback(() => {
-    trackItwTapUpgradeBanner(routeName);
+    trackItwStartActivation(MIXPANEL_SCREEN_NAME);
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
-      params: { isL3: true }
+      params: { level: "l3" }
     });
-  }, [navigation, routeName]);
+  }, [navigation]);
 
-  const ctaProps: ButtonSolidProps = useMemo(
+  const ctaProps: ButtonBlockProps = useMemo(
     () => ({
       label: I18n.t(
         `features.itWallet.settings.manage.cta.${
@@ -105,10 +109,12 @@ export const generateLinkRuleWithCallback = () => ({
   Link(link: TxtLinkNode, render: Renderer) {
     return linkNodeToReactNative(
       link,
-      () => {
-        IOToast.info(
-          I18n.t("features.itWallet.generic.featureUnavailable.title")
-        );
+      {
+        onPress: () => {
+          IOToast.info(
+            I18n.t("features.itWallet.generic.featureUnavailable.title")
+          );
+        }
       },
       render
     );

@@ -12,12 +12,13 @@ import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { ReactNode } from "react";
-import { View } from "react-native";
 import I18n from "i18next";
+import { ReactNode, useCallback } from "react";
+import { View } from "react-native";
 import {
   InitiativeDTO,
-  InitiativeRewardTypeEnum
+  InitiativeRewardTypeEnum,
+  VoucherStatusEnum
 } from "../../../../../definitions/idpay/InitiativeDTO";
 import { InitiativeDetailDTO } from "../../../../../definitions/idpay/InitiativeDetailDTO";
 import {
@@ -28,11 +29,19 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch } from "../../../../store/hooks";
 import { format } from "../../../../utils/dates";
 import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
+import { idPayGenerateStaticCode } from "../../barcode/store/actions";
+import { trackIDPayStaticCodeGeneration } from "../../common/analytics";
+import { useIDPayStaticCodeModal } from "../../common/hooks/useIDPayStaticCodeModal";
 import { useIdPaySupportModal } from "../../common/hooks/useIdPaySupportModal";
 import { formatNumberCurrencyCentsOrDefault } from "../../common/utils/strings";
 import { IDPayDetailsRoutes } from "../navigation";
+import {
+  idPayBeneficiaryDetailsGet,
+  idPayOnboardingStatusGet
+} from "../store/actions";
 import {
   IdPayInitiativeRulesInfoBox,
   IdPayInitiativeRulesInfoBoxSkeleton
@@ -61,7 +70,31 @@ const formatDate = (fmt: string) => (date: Date) => format(date, fmt);
 const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const { startIdPaySupport } = useIdPaySupportModal();
+
   const { initiativeDetails, beneficiaryDetails, isLoading } = props;
+  const dispatch = useIODispatch();
+
+  const handleDismiss = useCallback(() => {
+    if (!initiativeDetails?.initiativeId) {
+      return;
+    }
+    dispatch(
+      idPayBeneficiaryDetailsGet.request({
+        initiativeId: initiativeDetails.initiativeId
+      })
+    );
+    dispatch(
+      idPayOnboardingStatusGet.request({
+        initiativeId: initiativeDetails.initiativeId
+      })
+    );
+  }, [dispatch, initiativeDetails]);
+
+  const { bottomSheet, present } = useIDPayStaticCodeModal({
+    initiativeId: initiativeDetails?.initiativeId ?? "",
+    initiativeName: initiativeDetails?.initiativeName ?? "",
+    onDismiss: handleDismiss
+  });
 
   if (isLoading) {
     return <BeneficiaryDetailsContentSkeleton />;
@@ -81,7 +114,7 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
   const endDateString = pipe(
     initiativeDetails.voucherEndDate,
     O.fromNullable,
-    O.map(formatDate("DD/MM/YYYY, HH:mm")),
+    O.map(formatDate("DD/MM/YYYY")),
     O.getOrElse(() => "-")
   );
 
@@ -122,7 +155,7 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
   const voucherStartDateString = pipe(
     initiativeDetails.voucherStartDate,
     O.fromNullable,
-    O.map(formatDate("DD MMM YYYY, HH:mm")),
+    O.map(formatDate("DD MMM YYYY")),
     O.getOrElse(() => "-")
   );
 
@@ -234,6 +267,20 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
           {i !== data.length - 1 && <Divider />}
         </View>
       ));
+
+  const handleGenerateStaticCode = () => {
+    trackIDPayStaticCodeGeneration({
+      initiativeId: initiativeDetails.initiativeId,
+      initiativeName: initiativeDetails.initiativeName
+    });
+    dispatch(
+      idPayGenerateStaticCode.request({
+        initiativeId: initiativeDetails.initiativeId
+      })
+    );
+    present();
+  };
+
   const renderBeneficiaryDetailsContent = () => {
     switch (initiativeType) {
       case InitiativeRewardTypeEnum.DISCOUNT:
@@ -266,6 +313,17 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
             />
             {renderTableRow(enrollmentData)}
             <VSpacer size={16} />
+            {initiativeDetails.voucherStatus !== VoucherStatusEnum.USED &&
+              initiativeDetails.voucherStatus !== VoucherStatusEnum.EXPIRED && (
+                <ListItemAction
+                  icon="docAttach"
+                  variant="primary"
+                  label={I18n.t(
+                    "idpay.initiative.beneficiaryDetails.buttons.staticCode"
+                  )}
+                  onPress={handleGenerateStaticCode}
+                />
+              )}
             <ListItemAction
               icon="security"
               variant="primary"
@@ -274,6 +332,7 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
               )}
               onPress={handlePrivacyLinkPress}
             />
+            {bottomSheet}
           </>
         );
       default:

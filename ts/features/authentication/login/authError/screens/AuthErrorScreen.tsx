@@ -22,6 +22,8 @@ import {
   setRetryActiveSessionLogin
 } from "../../../activeSessionLogin/store/actions";
 import { CieIdLoginProps } from "../../cie/shared/utils";
+import ROUTES from "../../../../../navigation/routes";
+import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 
 type CommonAuthErrorScreenProps = {
   errorCodeOrMessage?: string;
@@ -111,7 +113,9 @@ const AuthErrorScreen = () => {
   const onCancel = useCallback(() => {
     if (isActiveSessionLogin) {
       dispatch(setFinishedActiveSessionLoginFlow());
-      navigation.popToTop();
+      navigation.navigate(ROUTES.MAIN, {
+        screen: MESSAGES_ROUTES.MESSAGES_HOME
+      });
       return;
     }
 

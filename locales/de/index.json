@@ -688,7 +688,8 @@
       "accessibility": {
         "carousel": {
           "label": "Vorstellung von IO",
-          "hint": "Karussell mit einer einführenden Anleitung zur IO-Funktionalität. Wähle, um den Inhalt kennenzulernen."
+          "hint": "Karussell mit einer einführenden Anleitung zur IO-Funktionalität. Wähle, um den Inhalt kennenzulernen.",
+          "step": "Folie {{current}} von {{total}}"
         }
       },
       "cie_bottom_sheet": {
@@ -953,7 +954,6 @@
     "opt_in": {
       "contextualHelpTitle": "Authentifizierung",
       "contextualHelpContent": "Hier findest du Informationen darüber, wie du dich bei IO authentifizieren kannst, sowie einige Sicherheitstipps.",
-      "news": "Neu",
       "title": "Ab sofort kannst du leichter auf IO zugreifen",
       "identity_check": "Du musst dich nicht mehr alle 30 Tage mit SPID oder CIE identifizieren, sondern nur noch einmal im Jahr oder wenn du die App verlässt",
       "security_suggests": "Einige Sicherheitstipps",
@@ -1386,12 +1386,6 @@
         "title": "Möchtest du in der App bezahlen?",
         "content": "Finde heraus, welche Zahlungsmethoden du in dein Konto aufnehmen kannst.",
         "cta": "Mehr erfahren"
-      },
-      "error": {
-        "title": "Es ist ein Fehler aufgetreten",
-        "subtitle": "Versuche es erneut oder kontaktiere den Support",
-        "primaryButton": "Schließen",
-        "secondaryButton": "Erneut versuchen"
       }
     },
     "wallet": "Konto",
@@ -2315,12 +2309,6 @@
           "title": "Zahlungsmethode in der App aktivieren",
           "subtitle": "Bevor du die Zahlung erneut versuchst, wähle die Zahlungsmethode in deinem Konto aus und aktiviere die Funktion 'In-App-Zahlungen'."
         },
-        "PAYMENT_METHODS_NOT_AVAILABLE": {
-          "title": "Möchtest du mit Karte bezahlen? Füge sie jetzt hinzu!",
-          "subtitle": "Die Methode wird im Konto gespeichert, so dass du beim nächsten Mal einfacher bezahlen kannst.",
-          "primaryAction": "Karte hinzufügen",
-          "secondaryAction": "Andere Methoden verwenden"
-        },
         "PAYMENT_REVERSED": {
           "title": "Die Zahlung ist fehlgeschlagen",
           "subtitle": "Der autorisierte Betrag wurde auf deine Zahlungsmethode zurücküberwiesen. Die Überweisung kann einige Zeit dauern.",
@@ -2699,7 +2687,8 @@
       "institutions": {
         "title": "National"
       },
-      "searchLink": "Suche nach allen verfügbaren Diensten"
+      "searchLink": "Suche nach allen verfügbaren Diensten",
+      "favourites": "Bevorzugte Dienste"
     },
     "institution": {
       "failure": {
@@ -2760,6 +2749,9 @@
         "tosLink": "Nutzungsbedingungen",
         "privacyLink": "Datenschutzerklärung"
       }
+    },
+    "favouriteServices": {
+      "title": "Meine Favoriten"
     }
   },
   "identification": {
@@ -3230,8 +3222,12 @@
     },
     "wallet": {
       "home": {
-        "emptyMessage": "Verwahre hier deine Zahlungsmethoden, die Nationale Jugendkarte, Boni und Rabatte.",
-        "cta": "Dem Konto hinzufügen",
+        "screen": {
+          "legacy": {
+            "emptyMessage": "Verwahre hier deine Zahlungsmethoden, die Nationale Jugendkarte, Boni und Rabatte.",
+            "cta": "Dem Konto hinzufügen"
+          }
+        },
         "toast": {
           "newMethod": "Element hinzugefügt!"
         },
@@ -3293,10 +3289,6 @@
       "methods": {
         "title": "Zahlungsmethoden",
         "button": "Hinzufügen",
-        "banner": {
-          "content": "Füge dem Konto eine Zahlungsmethode hinzu, damit du nicht jedes Mal die Daten eingeben musst.",
-          "action": "Zahlungsmethode hinzufügen"
-        },
         "status": {
           "expired": "Abgelaufen"
         },
@@ -3305,6 +3297,11 @@
             "label": "Das Laden der Zahlungsmethoden ist fehlgeschlagen.",
             "retryButton": "Erneut versuchen"
           }
+        },
+        "banner": {
+          "title": "Wie möchten Sie bezahlen?",
+          "content": "Entdecken Sie, welche Zahlungsmethoden Sie in der IO-App nutzen können, um pagoPA-Zahlungsaufforderungen zu bezahlen.",
+          "action": "Verfügbare Zahlungsmethoden entdecken"
         }
       },
       "transactions": {
@@ -3323,7 +3320,6 @@
           "loading": "Die Quittung wird geladen...",
           "title": "pagoPA-Quittung",
           "shareButton": "Speichern oder teilen",
-          "error": "Die Quittung konnte nicht abgerufen werden.",
           "download": "Quittung abrufen",
           "hideFromList": "Von der Liste verstecken",
           "delete": {
@@ -3468,9 +3464,6 @@
             "action": "Start"
           }
         },
-        "title": "Die digitale Version deiner Dokumente in IO",
-        "content": "###### Dokumente in IO: So funktioniert es \n Du kannst jetzt die **digitale Version deiner persönlichen Dokumente**, wie z. B. deinen Führerschein und deine Gesundheitskarte, zu deinem IO-Konto hinzufügen.\n\nAktiviere die Funktion **Dokumente in IO**, um sie immer auf deinem Gerät zur Hand zu haben.  \n ###### Es geht schnell und einfach \n Du benötigst deine **SPID** oder **CIE** (Elektronische Identitätskarte) Zugangsdaten, um die Aktivierung abzuschließen: dies ist ein notwendiger Sicherheitsschritt, um die Sicherheit deiner Daten zu gewährleisten.",
-        "tos": "Indem du auf **Weiter** tippst, bestätigst du, dass du die [Datenschutzbestimmungen und Nutzungsbedingungen]({{tos_url}}) gelesen und verstanden hast.",
         "upcomingWalletBanner": {
           "title": "Demnächst: deine Dokumente in IO",
           "content": "Bald kannst du digitale Versionen deiner persönlichen Dokumente wie Führerschein und Gesundheitskarte in dein IO-Konto einfügen!",
@@ -3490,27 +3483,6 @@
         }
       },
       "identification": {
-        "mode": {
-          "l2": {
-            "title": "Überprüfe deine Identität",
-            "description": "Dies ist ein notwendiger Schritt, um die Sicherheit deiner Daten zu gewährleisten.",
-            "header": "Wähle, wie du dich identifizieren willst",
-            "method": {
-              "spid": {
-                "title": "SPID",
-                "subtitle": "Zugangsdaten und App (oder SMS) verwenden"
-              },
-              "ciePin": {
-                "title": "CIE + PIN",
-                "subtitle": "Elektronische Identitätskarte und PIN verwenden"
-              },
-              "cieId": {
-                "title": "CieID",
-                "subtitle": "CieID-Zugangsdaten und -App verwenden"
-              }
-            }
-          }
-        },
         "nfc": {
           "title": "NFC aktivieren, um fortzufahren",
           "description": "Damit IO deine CIE lesen kann, aktiviere NFC in den Einstellungen deines Geräts.",
@@ -3596,11 +3568,6 @@
           "body": "Vergewissere dich, dass du im Besitz des gültigen physischen Dokuments bist, bevor du dessen digitale Version anforderst.",
           "primaryAction": "Verstanden"
         },
-        "asyncCredentialError": {
-          "title": "Das Führerscheinamt bearbeitet deinen Antrag",
-          "body": "Du erhältst in der App eine Mitteilung, dass du fortfahren kannst, sobald dein Antrag bearbeitet ist.",
-          "primaryAction": "Verstanden"
-        },
         "credentialAlreadyAdded": {
           "title": "Du hast dieses Dokument bereits",
           "body": "Die digitale Version des Dokuments befindet sich bereits in deinem Konto.",
@@ -3664,9 +3631,6 @@
           },
           "expiring": {
             "content": "Es verbleiben noch {{days}} Tage, bevor das Dokument abläuft."
-          },
-          "verificationExpiring": {
-            "content": "Überprüfe die digitale Version deines Dokuments bis zum {{date}}."
           }
         },
         "bottomSheets": {
@@ -3777,13 +3741,6 @@
           "subtitle": "Der Dienst konnte nicht deaktiviert werden. Bitte versuche es erneut."
         }
       },
-      "feedback": {
-        "banner": {
-          "title": "Sag uns, was du denkst",
-          "content": "Erzähle uns von deinen Erfahrungen mit der Funktion Dokumente in IO.",
-          "action": "Start"
-        }
-      },
       "walletInstanceRevoked": {
         "alert": {
           "cta": "Mehr erfahren",
@@ -3803,6 +3760,13 @@
           }
         }
       }
+    },
+    "tour": {
+      "next": "Weiter",
+      "back": "Zurück",
+      "skip": "Überspringen",
+      "done": "Fertig",
+      "stepIndicator": "Schritt {{current}} von {{total}}"
     }
   },
   "support": {
@@ -3905,7 +3869,7 @@
       "undefined": {
         "title": "Wir brauchen deine Zustimmung",
         "label": "Erlaube den Zugriff, um QR-Codes mit der Kamera deines Geräts scannen zu können.",
-        "action": "Zugriff gewähren"
+        "action": "Fortfahren"
       },
       "denied": {
         "title": "Du hast den Zugriff verweigert, die Kamera zu benutzen",

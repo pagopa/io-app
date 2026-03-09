@@ -23,6 +23,7 @@ const ItwPrivacyWebViewComponent = ({ source, onLoadEnd, onError }: Props) => {
     const height = parseInt(event.nativeEvent.data, 10);
     setContentHeight(height);
   };
+
   return (
     <WebView
       javaScriptEnabled={true}

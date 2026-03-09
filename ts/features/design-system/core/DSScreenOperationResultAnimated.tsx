@@ -7,8 +7,7 @@ const DSScreenOperationResultAnimated = () => {
 
   return (
     <OperationResultScreenContent
-      enableAnimatedPictogram
-      pictogram="umbrella"
+      pictogram="success"
       title="Non siamo riusciti a recuperare i dati della carta"
       subtitle="Attendi qualche minuto e riprova."
       action={{

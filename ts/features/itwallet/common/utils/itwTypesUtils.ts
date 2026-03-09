@@ -1,9 +1,10 @@
-import { type Credential as LegacyCredential } from "@pagopa/io-react-native-wallet-legacy";
 import {
   Credential,
+  SdJwt,
   Trust,
   WalletInstance
 } from "@pagopa/io-react-native-wallet";
+import { type Credential as LegacyCredential } from "@pagopa/io-react-native-wallet-legacy";
 import { CredentialType } from "./itwMocksUtils.ts";
 
 /**
@@ -65,9 +66,9 @@ export type ParsedCredential = Awaited<
 >["parsedCredential"];
 
 /**
- * Alias for the ParsedStatusAttestation type
+ * Alias for the ParsedStatusAssertion type
  */
-export type ParsedStatusAttestation = Awaited<
+export type ParsedStatusAssertion = Awaited<
   ReturnType<Credential.Status.VerifyAndParseStatusAssertion>
 >["parsedStatusAssertion"]["payload"];
 
@@ -84,11 +85,28 @@ export type WalletInstanceStatus = Awaited<
 export type WalletInstanceRevocationReason =
   WalletInstanceStatus["revocation_reason"];
 
-export type StoredStatusAttestation =
+/**
+ * Alias for the Verification type
+ */
+export type Verification = NonNullable<
+  ReturnType<typeof SdJwt.getVerification>
+>;
+
+/**
+ * Slim version of Verification for storage.
+ * Only persists the fields actually used by the app.
+ * The `evidence` field is excluded as it's being dropped in spec v1.3.3.
+ */
+export type StoredVerification = Pick<
+  Verification,
+  "trust_framework" | "assurance_level"
+>;
+
+export type StoredStatusAssertion =
   | {
       credentialStatus: "valid";
-      statusAttestation: string;
-      parsedStatusAttestation: ParsedStatusAttestation;
+      statusAssertion: string;
+      parsedStatusAssertion: ParsedStatusAssertion;
     }
   | {
       credentialStatus: "invalid" | "unknown";
@@ -107,7 +125,7 @@ export type StoredCredential = {
   credentialType: string;
   credentialId: string;
   issuerConf: IssuerConfiguration | LegacyIssuerConfiguration; // The Wallet might still contain older credentials
-  storedStatusAttestation?: StoredStatusAttestation;
+  storedStatusAssertion?: StoredStatusAssertion;
   /**
    * The SD-JWT issuance and expiration dates in ISO format.
    * These might be different from the underlying document's dates.
@@ -117,6 +135,8 @@ export type StoredCredential = {
     expiration: string;
     issuedAt?: string;
   };
+  spec_version: string;
+  verification?: StoredVerification;
 };
 
 // Digital credential status

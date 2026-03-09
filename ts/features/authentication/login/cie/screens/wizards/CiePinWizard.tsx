@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import {
   ContentWrapper,
   IOButton,
@@ -21,8 +21,10 @@ import {
   trackWizardCiePinInfoSelected,
   trackWizardCiePinSelected
 } from "../../analytics";
-import { useIOStore } from "../../../../../../store/hooks";
+import { useIOSelector, useIOStore } from "../../../../../../store/hooks";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
+import { isActiveSessionLoginSelector } from "../../../../activeSessionLogin/store/selectors";
 
 export const CIE_PIN_LINK =
   "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk/";
@@ -34,6 +36,8 @@ const CiePinWizard = () => {
   const { error } = useIOToast();
   const { navigateToCiePinInsertion } = useNavigateToLoginMethod();
   const label = I18n.t("authentication.wizards.cie_pin_wizard.title");
+  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
+  const flow = isActiveSessionLogin ? "reauth" : "auth";
 
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
     title: I18n.t("authentication.wizards.cie_pin_wizard.bottom_sheet.title"),
@@ -65,9 +69,9 @@ const CiePinWizard = () => {
     }
   });
 
-  useEffect(() => {
-    void trackCiePinWizardScreen();
-  }, []);
+  useOnFirstRender(() => {
+    void trackCiePinWizardScreen(flow);
+  });
 
   // eslint-disable-next-line arrow-body-style
   useFocusEffect(() => {
@@ -84,7 +88,7 @@ const CiePinWizard = () => {
         "authentication.wizards.cie_pin_wizard.actions.primary.label"
       ),
       onPress: () => {
-        void trackWizardCiePinSelected(store.getState());
+        void trackWizardCiePinSelected(store.getState(), flow);
         navigateToCiePinInsertion();
       }
     },
@@ -102,7 +106,7 @@ const CiePinWizard = () => {
   });
 
   const handlePresent = () => {
-    void trackWizardCiePinInfoSelected();
+    void trackWizardCiePinInfoSelected(flow);
     present();
   };
 

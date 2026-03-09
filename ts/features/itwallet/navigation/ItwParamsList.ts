@@ -1,8 +1,10 @@
 import { ItwDiscoveryInfoScreenNavigationParams } from "../discovery/screens/ItwDiscoveryInfoScreen";
+import { ItwCieInternalAuthAndMrtdScreenParams } from "../identification/cie/screens/ItwCieInternalAuthAndMrtdScreen.tsx";
 import { ItwIdentificationCieWarningScreenNavigationParams } from "../identification/cie/screens/ItwIdentificationCieWarningScreen.tsx";
-import { ItwL2IdentificationNavigationParams } from "../identification/common/screens/ItwL2IdentificationModeSelectionScreen.tsx";
-import { ItwIssuanceCredentialAsyncContinuationNavigationParams } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
+import { ItwIdentificationNavigationParams } from "../identification/common/screens/ItwIdentificationModeSelectionScreen.tsx";
+import { ItwIssuanceCredentialLandingScreenNavigationParams } from "../issuance/screens/ItwIssuanceCredentialLandingScreen.tsx";
 import { ItwIssuanceCredentialTrustIssuerNavigationParams } from "../issuance/screens/ItwIssuanceCredentialTrustIssuerScreen";
+import { ItwCardOnboardingL3NavigationParams } from "../onboarding/screens/ItwCardOnboardingL3Screen.tsx";
 import { ItwPlaygroundParamsList } from "../playgrounds/navigation/ItwPlaygroundParamsList.ts";
 import { ItwPresentationCredentialAttachmentNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwPresentationCredentialCardModalNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialCardModal";
@@ -13,8 +15,16 @@ import { ITW_ROUTES } from "./routes";
 
 export type ItwParamsList = {
   [ITW_ROUTES.ONBOARDING]: undefined;
+  [ITW_ROUTES.L3_ONBOARDING]: ItwCardOnboardingL3NavigationParams | undefined;
+  [ITW_ROUTES.L2_ONBOARDING]: undefined;
   // OFFLINE WALLET
   [ITW_ROUTES.OFFLINE.WALLET]: undefined;
+  // LANDING SCREENS
+  [ITW_ROUTES.LANDING.DISCOVERY]: undefined;
+  [ITW_ROUTES.LANDING
+    .CREDENTIAL_ISSUANCE]: ItwIssuanceCredentialLandingScreenNavigationParams;
+  [ITW_ROUTES.LANDING.CREDENTIAL_ASYNC_FLOW_CONTINUATION]: undefined;
+  [ITW_ROUTES.LANDING.EID_REISSUANCE]: undefined;
   // DISCOVERY
   [ITW_ROUTES.DISCOVERY.INFO]:
     | ItwDiscoveryInfoScreenNavigationParams
@@ -22,9 +32,7 @@ export type ItwParamsList = {
   [ITW_ROUTES.DISCOVERY.IPZS_PRIVACY]: undefined;
   [ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN]: undefined;
   // IDENTIFICATION
-  [ITW_ROUTES.IDENTIFICATION.MODE_SELECTION
-    .L2]: ItwL2IdentificationNavigationParams;
-  [ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L3]: undefined;
+  [ITW_ROUTES.IDENTIFICATION.MODE_SELECTION]: ItwIdentificationNavigationParams;
   // IDENTIFICATION ERRORS
   [ITW_ROUTES.IDENTIFICATION
     .CIE_WARNING]: ItwIdentificationCieWarningScreenNavigationParams;
@@ -33,27 +41,29 @@ export type ItwParamsList = {
   [ITW_ROUTES.IDENTIFICATION.SPID.LOGIN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE_ID.LOGIN]: undefined;
   // IDENTIFICATION CIE + PIN
-  [ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION_SCREEN]: undefined;
-  [ITW_ROUTES.IDENTIFICATION.CIE.PIN_PREPARATION_SCREEN]: undefined;
+  [ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.PIN_SCREEN]: undefined;
+  [ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.NFC_SCREEN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN]: undefined;
-  [ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC]: undefined;
+  [ITW_ROUTES.IDENTIFICATION.CIE.AUTH_SCREEN]: undefined;
+  [ITW_ROUTES.IDENTIFICATION.CIE
+    .INTERNAL_AUTH_MRTD_SCREEN]: ItwCieInternalAuthAndMrtdScreenParams;
   // IDENTIFICATION L2+
-  [ITW_ROUTES.IDENTIFICATION.CIE.CAN_PREPARATION_SCREEN]: undefined;
+  [ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CAN_SCREEN]: undefined;
+  [ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CARD_SCREEN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.CAN_SCREEN]: undefined;
   // ISSUANCE
   [ITW_ROUTES.ISSUANCE.EID_PREVIEW]: undefined;
   [ITW_ROUTES.ISSUANCE.EID_RESULT]: undefined;
   [ITW_ROUTES.ISSUANCE.EID_FAILURE]: undefined;
+  [ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION]: undefined;
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER]:
     | ItwIssuanceCredentialTrustIssuerNavigationParams
     | undefined;
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW]: undefined;
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_FAILURE]: undefined;
-  [ITW_ROUTES.ISSUANCE
-    .CREDENTIAL_ASYNC_FLOW_CONTINUATION]: ItwIssuanceCredentialAsyncContinuationNavigationParams;
   [ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL]: undefined;
-  [ITW_ROUTES.ISSUANCE.IT_WALLET_INACTIVE]: undefined;
+  [ITW_ROUTES.ISSUANCE.UPGRADE_CREDENTIALS]: undefined;
   // PRESENTATION
   [ITW_ROUTES.PRESENTATION
     .CREDENTIAL_DETAIL]: ItwPresentationCredentialDetailNavigationParams;

@@ -5,7 +5,7 @@ import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { trackOpenItwTosAccepted } from "../../analytics";
+import { trackOpenItwTosAccepted } from "../analytics";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
@@ -13,6 +13,8 @@ import {
 } from "../../machine/eid/selectors";
 import ItwPrivacyWebViewComponent from "../components/ItwPrivacyWebViewComponent";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { useIOSelector } from "../../../../store/hooks";
+import { itwIpzsPrivacyUrlSelector } from "../../common/store/selectors/remoteConfig";
 
 const ItwIpzsPrivacyScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -24,8 +26,7 @@ const ItwIpzsPrivacyScreen = () => {
     isL3FeaturesEnabledSelector
   );
 
-  // TODO [SIW-2992] add this url to remote config
-  const privacyUrl = "https://util.wallet.ipzs.it/privacy.html";
+  const privacyUrl = useIOSelector(itwIpzsPrivacyUrlSelector);
 
   const handleContinuePress = () => {
     trackOpenItwTosAccepted(isL3 ? "L3" : "L2");
@@ -48,9 +49,7 @@ const ItwIpzsPrivacyScreen = () => {
   });
 
   if (isLoadingMachine) {
-    return (
-      <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
-    );
+    return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
   }
 
   return (
@@ -91,7 +90,7 @@ const ItwIpzsPrivacyScreen = () => {
         </ContentWrapper>
         <ItwPrivacyWebViewComponent
           source={{
-            uri: privacyUrl
+            uri: privacyUrl ?? ""
           }}
           onLoadEnd={onLoadEnd}
           onError={onError}

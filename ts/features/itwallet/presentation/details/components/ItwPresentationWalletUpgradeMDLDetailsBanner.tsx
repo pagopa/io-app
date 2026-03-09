@@ -1,17 +1,17 @@
 import { Banner } from "@pagopa/io-app-design-system";
-import { useCallback, useMemo } from "react";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
+import { useCallback, useMemo } from "react";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { ITW_ROUTES } from "../../../navigation/routes";
-import { itwSetWalletUpgradeMDLDetailsBannerHidden } from "../../../common/store/actions/preferences";
 import { useIODispatch } from "../../../../../store/hooks";
 import {
-  trackITWalletBannerVisualized,
-  trackItWalletBannerClosure,
-  trackItWalletBannerTap
+  trackItwBannerVisualized,
+  trackItwBannerClosure,
+  trackItwBannerTap
 } from "../../../analytics";
 import { ITW_SCREENVIEW_EVENTS } from "../../../analytics/enum";
+import { itwCloseBanner } from "../../../common/store/actions/banners";
+import { ITW_ROUTES } from "../../../navigation/routes";
 
 /**
  * Banner promoting IT Wallet upgrade in MDL details to enable
@@ -36,21 +36,21 @@ export const ItwPresentationWalletUpgradeMDLDetailsBanner = () => {
 
   useFocusEffect(
     useCallback(() => {
-      trackITWalletBannerVisualized(trackBannerProperties);
+      trackItwBannerVisualized(trackBannerProperties);
     }, [trackBannerProperties])
   );
 
   const handleOnPress = () => {
-    trackItWalletBannerTap(trackBannerProperties);
+    trackItwBannerTap(trackBannerProperties);
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
-      params: { isL3: true }
+      params: { level: "l3" }
     });
   };
 
   const handleOnClose = () => {
-    trackItWalletBannerClosure(trackBannerProperties);
-    dispatch(itwSetWalletUpgradeMDLDetailsBannerHidden(true));
+    trackItwBannerClosure(trackBannerProperties);
+    dispatch(itwCloseBanner("upgradeMDLDetails"));
   };
 
   return (

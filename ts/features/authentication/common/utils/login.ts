@@ -3,20 +3,24 @@ import URLParse from "url-parse";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { SessionToken } from "../../../../types/SessionToken";
 import { trackLoginSpidError } from "../analytics/spidAnalytics";
 import { spidRelayState } from "../../../../config";
 import { IdpData } from "../../../../../definitions/content/IdpData";
 import { isStringNullyOrEmpty } from "../../../../utils/strings";
 import { getAppVersion } from "../../../../utils/appVersion";
 import { isLocalEnv } from "../../../../utils/environment";
+import { LoginType } from "../../activeSessionLogin/screens/analytics";
+import {
+  trackSessionTokenFragmentFailure,
+  trackSessionTokenSource
+} from "../analytics";
 /**
  * Helper functions for handling the SPID login flow through a webview.
  */
 
 type LoginSuccess = {
   success: true;
-  token: SessionToken;
+  token: string;
 };
 
 type LoginFailure = {
@@ -51,21 +55,48 @@ export const getIntentFallbackUrl = (intentUrl: string): O.Option<string> => {
   return O.none;
 };
 
+/**
+ * Extracts the session token from the URL hash fragment
+ * @param urlParse
+ */
+const getTokenFromUrlParse = (urlParse: URLParse): string | undefined => {
+  const { hash } = urlParse;
+  if (!hash || typeof hash !== "string") {
+    return undefined;
+  }
+
+  try {
+    const paramsString = hash.startsWith("#") ? hash.slice(1) : hash;
+    const searchParams = new URLSearchParams(paramsString);
+    const token = searchParams.get("token") || undefined;
+    if (token) {
+      trackSessionTokenSource("fragment");
+    }
+    return token;
+  } catch (e) {
+    trackSessionTokenFragmentFailure(
+      e instanceof Error ? e.message : String(e)
+    );
+    return undefined;
+  }
+};
+
 // Prefixes for LOGIN SUCCESS/ERROR
 const LOGIN_SUCCESS_PAGE = "profile.html";
 const LOGIN_FAILURE_PAGE = "error.html";
 
 export const extractLoginResult = (
   url: string,
-  idp?: keyof IdpData
+  idp?: keyof IdpData,
+  flow: LoginType = "auth"
 ): LoginResult | undefined => {
   const urlParse = new URLParse(url, true);
 
   // LOGIN_SUCCESS
   if (urlParse.pathname.includes(LOGIN_SUCCESS_PAGE)) {
-    const token = urlParse.query.token;
+    const token = getTokenFromUrlParse(urlParse);
     if (!isStringNullyOrEmpty(token)) {
-      return { success: true, token: token as SessionToken };
+      return { success: true, token: token as string };
     }
     return { success: false };
   }
@@ -77,7 +108,8 @@ export const extractLoginResult = (
     if (idp !== "cie" && idp !== "cieid") {
       trackLoginSpidError(errorCode, {
         idp: idp || "not_set",
-        ...(errorMessage ? { "error message": errorMessage } : {})
+        ...(errorMessage ? { "error message": errorMessage } : {}),
+        flow
       });
     }
     return {
@@ -107,13 +139,14 @@ export const getIdpLoginUri = (
 export const onLoginUriChanged =
   (
     onFailure: (errorCode?: string, errorMessage?: string) => void,
-    onSuccess: (_: SessionToken) => void,
-    idp?: keyof IdpData
+    onSuccess: (_: string) => void,
+    idp?: keyof IdpData,
+    flow: LoginType = "auth"
   ) =>
   (navState: WebViewNavigation): boolean => {
     if (navState.url) {
       // If the url is not related to login this will be `null`
-      const loginResult = extractLoginResult(navState.url, idp);
+      const loginResult = extractLoginResult(navState.url, idp, flow);
       if (loginResult) {
         if (loginResult.success) {
           // In case of successful login

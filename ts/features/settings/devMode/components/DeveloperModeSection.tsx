@@ -13,50 +13,49 @@ import {
   VSpacer,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as Sentry from "@sentry/react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useContext, ComponentProps } from "react";
-import { Alert, FlatList, ListRenderItemInfo } from "react-native";
+import * as Sentry from "@sentry/react-native";
 import I18n from "i18next";
+import { ComponentProps, useContext } from "react";
+import { Alert, FlatList, ListRenderItemInfo } from "react-native";
 import { evaluateAndDisplayIntercept } from "../../../../qualtrics";
 import { AlertModal } from "../../../../components/ui/AlertModal";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import { isPlaygroundsEnabled } from "../../../../config";
-import { isFastLoginEnabledSelector } from "../../../authentication/fastLogin/store/selectors";
-import { lollipopPublicKeySelector } from "../../../lollipop/store/reducers/lollipop";
-import { toThumbprint } from "../../../lollipop/utils/crypto";
-import { notificationsInstallationSelector } from "../../../pushNotifications/store/reducers/installation";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { sessionExpired } from "../../../authentication/common/store/actions";
 import { setDebugModeEnabled } from "../../../../store/actions/debug";
 import {
-  preferencesAarFeatureSetEnabled,
   preferencesIdPayTestSetEnabled,
-  preferencesPagoPaTestEnvironmentSetEnabled,
-  preferencesPnTestEnvironmentSetEnabled
+  preferencesPagoPaTestEnvironmentSetEnabled
 } from "../../../../store/actions/persistedPreferences";
-import { clearCache } from "../../common/store/actions";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import {
-  sessionTokenSelector,
-  walletTokenSelector
-} from "../../../authentication/common/store/selectors";
 import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
 import {
-  isAARLocalEnabled,
   isIdPayLocallyEnabledSelector,
-  isPagoPATestEnabledSelector,
-  isPnTestEnabledSelector
+  isPagoPATestEnabledSelector
 } from "../../../../store/reducers/persistedPreferences";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { getDeviceId } from "../../../../utils/device";
 import { isDevEnv, isLocalEnv } from "../../../../utils/environment";
-import { SETTINGS_ROUTES } from "../../common/navigation/routes";
-import { isActiveSessionLoginLocallyEnabledSelector } from "../../../authentication/loginPreferences/store/selectors/index.ts";
-import { setActiveSessionLoginLocalFlag } from "../../../authentication/loginPreferences/store/actions/index.ts";
-import { ITW_ROUTES } from "../../../itwallet/navigation/routes.ts";
-import { setStartActiveSessionLogin } from "../../../authentication/activeSessionLogin/store/actions/index.ts";
+import {
+  setActiveSessionLoginLocalFlag,
+  setStartActiveSessionLogin
+} from "../../../authentication/activeSessionLogin/store/actions/index.ts";
+import { isActiveSessionLoginLocallyEnabledSelector } from "../../../authentication/activeSessionLogin/store/selectors/index.ts";
 import { AUTHENTICATION_ROUTES } from "../../../authentication/common/navigation/routes.ts";
+import { sessionExpired } from "../../../authentication/common/store/actions";
+import {
+  sessionTokenSelector,
+  walletTokenSelector
+} from "../../../authentication/common/store/selectors";
+import { isFastLoginEnabledSelector } from "../../../authentication/fastLogin/store/selectors";
+import { ITW_ROUTES } from "../../../itwallet/navigation/routes.ts";
+import { lollipopPublicKeySelector } from "../../../lollipop/store/reducers/lollipop";
+import { toThumbprint } from "../../../lollipop/utils/crypto";
+import { notificationsInstallationSelector } from "../../../pushNotifications/store/reducers/installation";
+import { SETTINGS_ROUTES } from "../../common/navigation/routes";
+import { clearCache } from "../../common/store/actions";
+import { isPnRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig.ts";
 import ExperimentalDesignEnableSwitch from "./ExperimentalDesignEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -329,6 +328,7 @@ const PlaygroundsSection = () => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const isIdPayTestEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
+  const isSendEnabled = useIOSelector(isPnRemoteEnabledSelector);
 
   const playgroundsNavListItems: ReadonlyArray<PlaygroundsNavListItem> = [
     {
@@ -350,13 +350,6 @@ const PlaygroundsSection = () => {
       onPress: () =>
         navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
           screen: SETTINGS_ROUTES.CGN_LANDING_PLAYGROUND
-        })
-    },
-    {
-      value: I18n.t("profile.main.trial.titleSection"),
-      onPress: () =>
-        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-          screen: SETTINGS_ROUTES.TRIALS_SYSTEM_PLAYGROUND
         })
     },
     {
@@ -390,20 +383,44 @@ const PlaygroundsSection = () => {
         })
     },
     {
-      value: "CIE",
+      value: "CIE SDK",
       onPress: () =>
         navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
           screen: SETTINGS_ROUTES.CIE_PLAYGROUND
         })
     },
     {
-      value: "Active session login playground",
+      value: "NFC",
+      onPress: () =>
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.NFC_PLAYGROUND
+        })
+    },
+    {
+      value: "Guided Tour",
+      onPress: () =>
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.GUIDED_TOUR_PLAYGROUND
+        })
+    },
+    {
+      value: I18n.t(
+        "profile.main.loginEnvironment.activeSession.playground.title"
+      ),
       onPress: () => {
         dispatch(setStartActiveSessionLogin());
         navigation.navigate(SETTINGS_ROUTES.AUTHENTICATION, {
           screen: AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN
         });
       }
+    },
+    {
+      condition: isSendEnabled,
+      value: "SEND",
+      onPress: () =>
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.SEND_PLAYGROUND
+        })
     }
   ];
 
@@ -454,12 +471,10 @@ const DeveloperTestEnvironmentSection = ({
 }) => {
   const dispatch = useIODispatch();
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
-  const isPnTestEnabled = useIOSelector(isPnTestEnabledSelector);
   const isIdPayTestEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
   const isActiveSessionLoginLocallyEnabled = useIOSelector(
     isActiveSessionLoginLocallyEnabledSelector
   );
-  const isAarFeatureEnabled = useIOSelector(isAARLocalEnabled);
 
   const onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {
@@ -496,23 +511,37 @@ const DeveloperTestEnvironmentSection = ({
     }
   };
 
-  const onPnEnvironmentToggle = (enabled: boolean) => {
-    dispatch(
-      preferencesPnTestEnvironmentSetEnabled({ isPnTestEnabled: enabled })
-    );
-  };
-
   const onIdPayTestToggle = (enabled: boolean) => {
     dispatch(preferencesIdPayTestSetEnabled({ isIdPayTestEnabled: enabled }));
     handleShowModal();
   };
 
   const onActiveSessionLoginToggle = (enabled: boolean) => {
-    dispatch(setActiveSessionLoginLocalFlag(enabled));
-  };
-
-  const onAarFeatureToggle = (enabled: boolean) => {
-    dispatch(preferencesAarFeatureSetEnabled({ isAarFeatureEnabled: enabled }));
+    if (enabled) {
+      Alert.alert(
+        I18n.t(
+          "profile.main.loginEnvironment.activeSession.localFeatureFlag.alertTitle"
+        ),
+        I18n.t(
+          "profile.main.loginEnvironment.activeSession.localFeatureFlag.alertMessage"
+        ),
+        [
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t(
+              "profile.main.loginEnvironment.activeSession.localFeatureFlag.alertConfirmButton"
+            ),
+            onPress: () => dispatch(setActiveSessionLoginLocalFlag(enabled))
+          }
+        ],
+        { cancelable: true }
+      );
+    } else {
+      dispatch(setActiveSessionLoginLocalFlag(enabled));
+    }
   };
 
   const testEnvironmentsListItems: ReadonlyArray<TestEnvironmentsListItem> = [
@@ -526,23 +555,18 @@ const DeveloperTestEnvironmentSection = ({
       disabled: isLocalEnv
     },
     {
-      label: I18n.t("profile.main.pnEnvironment.pnEnv"),
-      value: isPnTestEnabled,
-      onSwitchValueChange: onPnEnvironmentToggle
-    },
-    {
-      label: I18n.t("profile.main.pnEnvironment.aarEnv"),
-      value: isAarFeatureEnabled,
-      onSwitchValueChange: onAarFeatureToggle
-    },
-    {
       label: I18n.t("profile.main.idpay.idpayTest"),
       description: I18n.t("profile.main.idpay.idpayTestAlert"),
       value: isIdPayTestEnabled,
       onSwitchValueChange: onIdPayTestToggle
     },
     {
-      label: I18n.t("profile.main.loginEnvironment.activeSession.switchTitle"),
+      label: I18n.t(
+        "profile.main.loginEnvironment.activeSession.localFeatureFlag.switchTitle"
+      ),
+      description: I18n.t(
+        "profile.main.loginEnvironment.activeSession.localFeatureFlag.switchDescription"
+      ),
       value: isActiveSessionLoginLocallyEnabled,
       onSwitchValueChange: onActiveSessionLoginToggle
     }

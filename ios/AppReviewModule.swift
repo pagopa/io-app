@@ -1,6 +1,6 @@
 //
 //  AppReviewModule.swift
-//  ItaliaApp
+//  IO
 //
 //  Created by Cristiano Tofani on 19/03/25.
 //
@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 import StoreKit
-import SwiftUICore
+import SwiftUI
 
 
 /** `@objc` attribute exposes Swift methods to the Objective-C runtime**/

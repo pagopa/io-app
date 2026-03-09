@@ -67,7 +67,7 @@ export const itwLifecycleIsITWalletValidSelector = createSelector(
         eid: eidOption,
         integrityKeyTag: integrityKeyTagOption
       }),
-      O.map(({ eid }) => isItwCredential(eid.credential)),
+      O.map(({ eid }) => isItwCredential(eid)),
       O.getOrElse(() => false)
     )
 );

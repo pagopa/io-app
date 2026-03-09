@@ -3,7 +3,7 @@ on: workflow_dispatch
 jobs:
   distribute-android:
     environment: prod
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
@@ -24,7 +24,7 @@ jobs:
           ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}
   distribute-ios:
     environment: prod
-    runs-on: macos-15-xlarge
+    runs-on: macos-26-xlarge
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
@@ -54,7 +54,7 @@ jobs:
           APP_STORE_API_KEY_ISSUER_ID: ${{secrets.APP_STORE_API_KEY_ISSUER_ID}}
   notify-new-version:
     environment: dev
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs:
         - distribute-android
         - distribute-ios

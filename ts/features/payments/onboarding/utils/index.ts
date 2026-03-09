@@ -3,7 +3,6 @@ import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv
 import { PaymentMethodStatusEnum } from "../../../../../definitions/pagopa/walletv3/PaymentMethodStatus";
 
 export const ONBOARDING_CALLBACK_URL_SCHEMA = "iowallet";
-export const ONBOARDING_OUTCOME_PATH = "/wallets/outcomes";
 
 export const isMethodOnboardable = ({
   methodManagement,

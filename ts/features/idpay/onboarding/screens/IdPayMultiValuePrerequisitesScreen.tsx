@@ -10,12 +10,12 @@ import {
   _typeEnum as SelfCriteriaMultiTypeEnum
 } from "../../../../../definitions/idpay/SelfCriteriaMultiDTO";
 import {
-  _typeEnum as SelfCriteriaMultiTypeVariationEnum,
-  SelfCriteriaMultiTypeDTO
+  SelfCriteriaMultiTypeDTO,
+  _typeEnum as SelfCriteriaMultiTypeVariationEnum
 } from "../../../../../definitions/idpay/SelfCriteriaMultiTypeDTO";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   trackIDPayOnboardingAlert,
@@ -46,12 +46,6 @@ const IdPayMultiValuePrerequisitesScreen = () => {
   const initiative =
     IdPayOnboardingMachineContext.useSelector(selectInitiative);
 
-  const initiativeName = pipe(
-    initiative,
-    O.map(i => i.initiativeName),
-    O.toUndefined
-  );
-
   const initiativeId = pipe(
     initiative,
     O.map(i => i.initiativeId),
@@ -60,8 +54,7 @@ const IdPayMultiValuePrerequisitesScreen = () => {
 
   useOnFirstRender(() =>
     trackIDPayOnboardingMultiSelfDeclaration({
-      initiativeId,
-      initiativeName
+      initiativeId
     })
   );
 
@@ -73,11 +66,15 @@ const IdPayMultiValuePrerequisitesScreen = () => {
       initialPage={0}
     >
       {multiSelfDeclarations.map((selfDeclaration, index) => (
-        <View key={index}>
+        <View
+          key={index}
+          style={{
+            flex: 1
+          }}
+        >
           <MultiValuePrerequisiteItemScreenContent
             selfDeclaration={selfDeclaration}
             initiativeId={initiativeId}
-            initiativeName={initiativeName}
           />
         </View>
       ))}
@@ -88,13 +85,11 @@ const IdPayMultiValuePrerequisitesScreen = () => {
 type MultiValuePrerequisiteItemScreenContentProps = {
   selfDeclaration: SelfCriteriaMultiDTO | SelfCriteriaMultiTypeDTO;
   initiativeId?: string;
-  initiativeName?: string;
 };
 
 const MultiValuePrerequisiteItemScreenContent = ({
   selfDeclaration,
-  initiativeId,
-  initiativeName
+  initiativeId
 }: MultiValuePrerequisiteItemScreenContentProps) => {
   const machine = IdPayOnboardingMachineContext.useActorRef();
 
@@ -111,16 +106,15 @@ const MultiValuePrerequisiteItemScreenContent = ({
   const handleContinuePress = () => {
     if (selectedValueIndex === undefined) {
       IOToast.error(
-        I18n.t("idpay.onboarding.boolPrerequisites.emptyValueError")
+        I18n.t("idpay.onboarding.multiPrerequisites.emptyValueError")
       );
       trackIDPayOnboardingAlert({
         screen: "multi_self_declaration",
-        initiativeId,
-        initiativeName
+        initiativeId
       });
       return;
     }
-    const value = selfDeclaration.value?.[selectedValueIndex].description;
+    const value = selfDeclaration.value?.[selectedValueIndex].value;
     if (!selfDeclaration.code || !value) {
       IOToast.error(I18n.t("global.genericError"));
       return;

@@ -34,7 +34,7 @@ const IdPayTimelineDiscountTransactionDetailsComponent = (props: Props) => {
           return (
             <>
               <Alert
-                variant="error"
+                variant="info"
                 content={I18n.t(
                   "idpay.initiative.operationDetails.discount.details.alerts.CANCELLED"
                 )}

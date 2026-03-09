@@ -31,7 +31,7 @@ describe("Test BonusCardStatus", () => {
       initiativeId: "1"
     } as InitiativeDTO;
     it("should display the correct content", () => {
-      const T_VALIDITY_TEXT = I18n.t("bonusCard.validUntil", {
+      const T_VALIDITY_TEXT = I18n.t("idpay.wallet.card.validThrough", {
         endDate: format(T_END_DATE, "DD/MM/YY")
       });
       const { queryByText } = renderComponent(MOCKED_ACTIVE_INITIATIVE);
@@ -63,7 +63,7 @@ describe("Test BonusCardStatus", () => {
       initiativeId: "1"
     } as InitiativeDTO;
     it("should display the correct content", () => {
-      const T_VALIDITY_TEXT = I18n.t("bonusCard.expired", {
+      const T_VALIDITY_TEXT = I18n.t("idpay.wallet.card.ended", {
         endDate: format(T_END_DATE, "DD/MM/YY")
       });
       const { queryByText } = renderComponent(MOCKED_EXPIRED_INITIATIVE);

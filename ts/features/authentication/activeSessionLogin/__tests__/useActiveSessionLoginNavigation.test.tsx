@@ -2,6 +2,8 @@ import { act, renderHook } from "@testing-library/react-native";
 import useActiveSessionLoginNavigation from "../utils/useActiveSessionLoginNavigation";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
 import { setFinishedActiveSessionLoginFlow } from "../store/actions";
+import ROUTES from "../../../../navigation/routes";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 
 // Mock dependencies
 const mockPopToTop = jest.fn();
@@ -40,7 +42,9 @@ describe("useActiveSessionLoginNavigation", () => {
     expect(mockDispatch).toHaveBeenCalledWith(
       setFinishedActiveSessionLoginFlow()
     );
-    expect(mockPopToTop).toHaveBeenCalled();
+    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.MAIN, {
+      screen: MESSAGES_ROUTES.MESSAGES_HOME
+    });
     expect(mockReset).not.toHaveBeenCalled();
   });
 
@@ -54,7 +58,7 @@ describe("useActiveSessionLoginNavigation", () => {
     });
 
     expect(mockDispatch).not.toHaveBeenCalled();
-    expect(mockPopToTop).not.toHaveBeenCalled();
+    expect(mockNavigate).not.toHaveBeenCalled();
     expect(mockReset).toHaveBeenCalledWith({
       index: 0,
       routes: [{ name: AUTHENTICATION_ROUTES.MAIN }]

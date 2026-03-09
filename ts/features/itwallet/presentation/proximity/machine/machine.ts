@@ -82,7 +82,10 @@ export const itwProximityMachine = setup({
         "The machine is in idle, ready to start the proximity presentation flow",
       on: {
         start: {
-          actions: assign({ ...InitialContext }),
+          actions: assign(({ event }) => ({
+            ...InitialContext,
+            credentialType: event.credentialType
+          })),
           target: "Permissions"
         }
       }
@@ -464,7 +467,8 @@ export const itwProximityMachine = setup({
       description: "The documents have been successfully sent to the Verifier",
       on: {
         close: {
-          actions: "navigateToWallet"
+          actions: "navigateToWallet",
+          target: "Idle"
         }
       }
     },

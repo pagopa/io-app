@@ -5,30 +5,20 @@ import { ReceiptsCategoryFilter } from "../types";
 
 export type HideReceiptTrigger = "tap" | "swipe";
 
-export type PaymentReceiptAnalyticsProps = {
+type PaymentReceiptAnalyticsProps = {
   organization_name: string;
   payment_status: string;
   first_time_opening: boolean;
   user: PaymentsAnalyticsReceiptUser;
   organization_fiscal_code: string;
   trigger: HideReceiptTrigger;
+  reason?: string;
 };
 
 export const trackPaymentsReceiptListing = () => {
   mixpanelTrack(
     "PAYMENTS_RECEIPT_LISTING",
     buildEventProperties("UX", "screen_view")
-  );
-};
-
-export const trackPaymentsOpenOldReceiptListing = (
-  entryPoint: "payments_receipt_listing"
-) => {
-  mixpanelTrack(
-    "OPEN_RECEIPT_OLD_LISTING",
-    buildEventProperties("UX", "action", {
-      entry_point: entryPoint
-    })
   );
 };
 

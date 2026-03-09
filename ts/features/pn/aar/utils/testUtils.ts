@@ -1,38 +1,134 @@
-import { AARFlowState, sendAARFlowStates } from "./stateUtils";
+import { FiscalCode, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageBodyMarkdown";
+import { MessageSubject } from "../../../../../definitions/backend/MessageSubject";
+import { EphemeralAarMessageDataActionPayload } from "../store/actions";
+import { ThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
+import { AARFlowState, RecipientInfo, sendAARFlowStates } from "./stateUtils";
 
-export const sendAarMockStateFactory: Record<
-  AARFlowState["type"],
-  () => AARFlowState
-> = {
+const iun = "000000000001";
+const recipientInfo: RecipientInfo = {
+  denomination: "Mario Rossi",
+  taxId: "RSSMRA74D22A001Q"
+};
+const qrCode = "https://www.google.com";
+const pnServiceId = "SERVICEID123" as NonEmptyString;
+const mandateId = "MANDATE123";
+const verificationCode = "validation_code";
+const can = "123456";
+
+export const sendAarMockStateFactory: {
+  [K in AARFlowState["type"]]: () => Extract<AARFlowState, { type: K }>;
+} = {
   none: () => ({ type: "none" }),
   displayingAARToS: () => ({
     type: "displayingAARToS",
-    qrCode: "https://www.google.com"
+    qrCode
   }),
   fetchingQRData: () => ({
     type: "fetchingQRData",
-    qrCode: "https://www.google.com"
+    qrCode
   }),
   fetchingNotificationData: () => ({
     type: "fetchingNotificationData",
-    iun: "000000000001",
-    fullNameDestinatario: "Mario Rossi"
+    iun,
+    recipientInfo
   }),
   displayingNotificationData: () => ({
     type: "displayingNotificationData",
-    fullNameDestinatario: "Mario Rossi",
-    notification: {}
+    recipientInfo,
+    notification: {},
+    iun,
+    pnServiceId,
+    mandateId
   }),
   notAddresseeFinal: () => ({
     type: "notAddresseeFinal",
-    fullNameDestinatario: "Mario Rossi",
-    qrCode: "https://www.google.com",
-    iun: "000000000001"
+    recipientInfo,
+    qrCode,
+    iun
+  }),
+  notAddressee: () => ({
+    type: "notAddressee",
+    recipientInfo,
+    qrCode,
+    iun
+  }),
+  nfcNotSupportedFinal: () => ({
+    type: "nfcNotSupportedFinal",
+    recipientInfo,
+    qrCode,
+    iun
+  }),
+  creatingMandate: () => ({
+    type: "creatingMandate",
+    recipientInfo,
+    qrCode,
+    iun
+  }),
+  cieCanAdvisory: () => ({
+    type: "cieCanAdvisory",
+    recipientInfo,
+    iun,
+    mandateId,
+    verificationCode
+  }),
+  cieCanInsertion: () => ({
+    type: "cieCanInsertion",
+    recipientInfo,
+    iun,
+    mandateId,
+    verificationCode
+  }),
+  cieScanningAdvisory: () => ({
+    type: "cieScanningAdvisory",
+    recipientInfo,
+    iun,
+    mandateId,
+    verificationCode,
+    can
+  }),
+  androidNFCActivation: () => ({
+    type: "androidNFCActivation",
+    recipientInfo,
+    iun,
+    mandateId,
+    verificationCode,
+    can
+  }),
+  cieScanning: () => ({
+    type: "cieScanning",
+    recipientInfo,
+    iun,
+    mandateId,
+    verificationCode,
+    can
+  }),
+  validatingMandate: () => ({
+    type: "validatingMandate",
+    recipientInfo,
+    iun,
+    mandateId,
+    signedVerificationCode: "signed_validation_code",
+    unsignedVerificationCode: verificationCode,
+    mrtdData: {
+      dg1: "",
+      dg11: "",
+      sod: ""
+    },
+    nisData: {
+      nis: "",
+      publicKey: "",
+      signedChallenge: "",
+      sod: ""
+    }
   }),
   ko: () => ({
     type: "ko",
-    errorKind: "CIE REJECTED",
-    previousState: { type: "none" }
+    previousState: { type: "none" },
+    debugData: {
+      phase: "Entry Point",
+      reason: "Sample reason"
+    }
   })
 };
 
@@ -40,3 +136,13 @@ export const sendAarStateNames = Object.values(sendAARFlowStates);
 export const sendAarMockStates = sendAarStateNames.map(t =>
   sendAarMockStateFactory[t]()
 );
+export const mockEphemeralAarMessageDataActionPayload: EphemeralAarMessageDataActionPayload =
+  {
+    iun: "IUN123" as NonEmptyString,
+    thirdPartyMessage: {} as unknown as ThirdPartyMessage,
+    fiscalCode: "TAXCODE123" as FiscalCode,
+    pnServiceID: pnServiceId,
+    markdown: "*".repeat(81) as MessageBodyMarkdown,
+    subject: "subject" as MessageSubject,
+    mandateId: "MANDATE123"
+  };

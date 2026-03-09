@@ -8,15 +8,20 @@ import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import {
+  trackItWalletIDMethodSelected,
   trackItwDeactivated,
-  trackSaveCredentialSuccess,
-  updateITWStatusAndPIDProperties
+  trackItwIdAuthenticationCompleted,
+  trackItwIdVerifiedDocument,
+  trackSaveCredentialSuccess
 } from "../../analytics";
+import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import {
-  itwSetAuthLevel,
+  itwClearSimplifiedActivationRequirements,
   itwFreezeSimplifiedActivationRequirements,
-  itwClearSimplifiedActivationRequirements
+  itwSetAuthLevel,
+  itwSetCredentialUpgradeFailed
 } from "../../common/store/actions/preferences";
+import { itwIsPidReissuingSurveyHiddenSelector } from "../../common/store/selectors/preferences";
 import {
   itwCredentialsRemoveByType,
   itwCredentialsStore
@@ -31,10 +36,10 @@ import {
 } from "../../issuance/store/actions";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -64,7 +69,7 @@ export const createEidIssuanceActionsImplementation = (
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
-      params: { isL3: context.isL3 }
+      params: { level: context.level }
     });
   },
 
@@ -74,17 +79,11 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToL3IdentificationScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L3
-    });
-  },
-
-  navigateToL2IdentificationScreen: ({
+  navigateToIdentificationScreen: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L2,
+      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
       params: { eidReissuing: context.mode === "reissuance" }
     });
   },
@@ -146,35 +145,28 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToCredentialCatalog: () => {
-    navigation.reset({
-      index: 1,
-      routes: [
-        {
-          name: ROUTES.MAIN,
-          params: {
-            screen: ROUTES.WALLET_HOME
-          }
-        },
-        {
-          name: ITW_ROUTES.MAIN,
-          params: {
-            screen: ITW_ROUTES.ONBOARDING
-          }
-        }
-      ]
+  navigateToCredentialCatalog: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    navigation.replace(ITW_ROUTES.MAIN, {
+      screen:
+        context.level === "l3"
+          ? ITW_ROUTES.L3_ONBOARDING
+          : context.level === "l2-fallback"
+          ? ITW_ROUTES.L2_ONBOARDING
+          : ITW_ROUTES.ONBOARDING
     });
   },
 
-  navigateToCiePreparationScreen: () => {
+  navigateToCieNfcPreparationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION_SCREEN
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.NFC_SCREEN
     });
   },
 
   navigateToCiePinPreparationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.PIN_PREPARATION_SCREEN
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.PIN_SCREEN
     });
   },
 
@@ -184,9 +176,42 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToCieReadCardScreen: () => {
+  navigateToCieCardPreparationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CARD_SCREEN
+    });
+  },
+
+  navigateToCieCanPreparationScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CAN_SCREEN
+    });
+  },
+
+  navigateToCieCanScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.CAN_SCREEN
+    });
+  },
+
+  navigateToCieAuthenticationScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.AUTH_SCREEN
+    });
+  },
+
+  navigateToCieInternalAuthAndMrtdScreen: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assert(context.mrtdContext, "mrtdContext is undefined");
+    assert(context.mrtdContext.can, "CAN is undefined");
+
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.INTERNAL_AUTH_MRTD_SCREEN,
+      params: {
+        can: context.mrtdContext.can,
+        challenge: context.mrtdContext.challenge
+      }
     });
   },
 
@@ -209,8 +234,31 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  closeIssuance: () => {
-    navigation.popToTop();
+  navigateToUpgradeCredentialsScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ISSUANCE.UPGRADE_CREDENTIALS
+    });
+  },
+
+  closeIssuance: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    navigation.reset({
+      index: 1,
+      routes: [
+        {
+          name: ROUTES.MAIN,
+          params: {
+            screen: ROUTES.WALLET_HOME,
+            params: {
+              requiredEidFeedback:
+                context.mode === "reissuance" &&
+                !itwIsPidReissuingSurveyHiddenSelector(store.getState())
+            }
+          }
+        }
+      ]
+    });
   },
 
   storeIntegrityKeyTag: ({
@@ -257,18 +305,6 @@ export const createEidIssuanceActionsImplementation = (
     toast.success(I18n.t("features.itWallet.issuance.credentialResult.toast"));
   },
 
-  trackWalletInstanceCreation: ({
-    context
-  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    const isL3 = context.isL3 && !context.isL2Fallback;
-    trackSaveCredentialSuccess(isL3 ? "ITW_PID" : "ITW_ID_V2");
-    updateITWStatusAndPIDProperties(store.getState());
-  },
-  trackWalletInstanceRevocation: () => {
-    const isItwL3 = itwLifecycleIsITWalletValidSelector(store.getState());
-    trackItwDeactivated(store.getState(), isItwL3 ? "ITW_PID" : "ITW_ID_V2");
-  },
-
   storeAuthLevel: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
@@ -284,6 +320,19 @@ export const createEidIssuanceActionsImplementation = (
     store.dispatch(itwClearSimplifiedActivationRequirements());
   },
 
+  storeCredentialUpgradeFailures: ({
+    event
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assertEvent(event, "xstate.done.actor.credentialUpgradeMachine");
+    store.dispatch(
+      itwSetCredentialUpgradeFailed(
+        event.output.failedCredentials.map(
+          failedCredential => failedCredential.credentialType
+        )
+      )
+    );
+  },
+
   loadPidIntoContext: assign<
     Context,
     EidIssuanceEvents,
@@ -293,5 +342,66 @@ export const createEidIssuanceActionsImplementation = (
   >(() => {
     const pid = itwCredentialsEidSelector(store.getState());
     return { eid: O.toUndefined(pid) };
-  })
+  }),
+
+  trackWalletInstanceCreation: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    const identificationMethod =
+      context.identification?.mode ??
+      // Simplified PID activation skips identification but still requires ITW_ID_method for analytics.
+      (context.level === "l3" ? "ciePin" : undefined);
+
+    trackSaveCredentialSuccess({
+      credential: context.level === "l3" ? "ITW_PID" : "ITW_ID_V2",
+      ITW_ID_method: identificationMethod,
+      credential_details: itwMixPanelCredentialDetailsSelector(store.getState())
+    });
+  },
+
+  trackWalletInstanceRevocation: () => {
+    const isItwL3 = itwLifecycleIsITWalletValidSelector(store.getState());
+    trackItwDeactivated(isItwL3 ? "ITW_PID" : "ITW_ID_V2");
+  },
+
+  trackIdentificationMethodSelected: ({
+    context,
+    event
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assertEvent(event, "select-identification-mode");
+    if (context.level === "l3") {
+      return;
+    }
+
+    trackItWalletIDMethodSelected({
+      ITW_ID_method: event.mode,
+      itw_flow: "L2"
+    });
+  },
+
+  // Track SPID+CIE first phase
+  trackItwIdAuthenticationCompleted: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assert(context.identification, "identification context is undefined");
+    assert(
+      context.identification.mode !== "ciePin",
+      "identification mode can not be ciePin"
+    );
+
+    trackItwIdAuthenticationCompleted(context.identification.mode);
+  },
+
+  // Track SPID+CIE final phase
+  trackItwIdVerifiedDocument: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assert(context.identification, "identification context is undefined");
+    assert(
+      context.identification.mode !== "ciePin",
+      "identification mode can not be ciePin"
+    );
+
+    trackItwIdVerifiedDocument(context.identification.mode);
+  }
 });

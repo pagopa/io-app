@@ -79,11 +79,13 @@ export const selectWalletCardsByCategory = createSelector(
  * Selects the cards by their type
  * @param type - The type of the cards to select
  */
-export const selectWalletCardsByType = createSelector(
-  selectSortedWalletCards,
-  (_: GlobalState, type: WalletCardType) => type,
-  (cards, type) => cards.filter(({ type: cardType }) => cardType === type)
-);
+export const selectWalletCardsByType = <T extends WalletCardType>(
+  state: GlobalState,
+  type: T
+): Array<Extract<WalletCard, { type: T }>> =>
+  selectSortedWalletCards(state).filter(
+    (card): card is Extract<WalletCard, { type: T }> => card.type === type
+  );
 
 /**
  * Currently, if a card is not part of the IT Wallet, it is considered as "other"
@@ -126,12 +128,24 @@ export const isWalletEmptySelector = (state: GlobalState) =>
   selectWalletCategories(state).size === 0;
 
 /**
- * The wallet can be considered empty only if we do not have cards stores and there are no errors
+ * The wallet can be considered loading when cards/placeholders are loading AND the wallet is empty.
+ * When the wallet is not empty, we show the existing cards alongside the loading placeholders.
+ */
+export const shouldRenderWalletLoadingStateSelector = (state: GlobalState) =>
+  isWalletEmptySelector(state) &&
+  (selectIsWalletLoading(state) ||
+    pot.isLoading(paymentsWalletUserMethodsSelector(state)) ||
+    pot.isLoading(cgnDetailSelector(state)));
+
+/**
+ * The wallet can be considered empty only if we do not have cards stored and there are no errors.
+ *
+ * Error state is checked on payments methods and CGN details, as they are the data sources for wallet cards.
  */
 export const shouldRenderWalletEmptyStateSelector = (state: GlobalState) =>
-  isWalletEmptySelector(state) && // No cards to display
-  pot.isSome(paymentsWalletUserMethodsSelector(state)) && // Payment methods are loaded without errors
-  !pot.isError(cgnDetailSelector(state)); // CGN is not in error state
+  isWalletEmptySelector(state) &&
+  !pot.isError(paymentsWalletUserMethodsSelector(state)) &&
+  !pot.isError(cgnDetailSelector(state));
 
 /**
  * Returns true if the wallet screen is refreshing

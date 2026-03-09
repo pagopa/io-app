@@ -1,13 +1,19 @@
 import { ReactElement } from "react";
 import { GlobalState } from "../../../store/reducers/types";
-import { ItwDiscoveryBanner } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBanner";
-import { isItwPersistedDiscoveryBannerRenderableSelector } from "../../itwallet/common/store/selectors";
-import { LoginExpirationBanner } from "../../authentication/loginPreferences/components/LoginExpirationBanner";
-import { isSessionExpirationBannerRenderableSelector } from "../../authentication/loginPreferences/store/selectors";
+import { LoginExpirationBanner } from "../../authentication/activeSessionLogin/components/LoginExpirationBanner";
+import { showSessionExpirationBannerRenderableSelector } from "../../authentication/activeSessionLogin/store/selectors";
+import { ItwDiscoveryBannerLegacy } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBanner";
+import {
+  isItwPersistedDiscoveryBannerRenderableSelector,
+  itwShouldRenderInboxDiscoveryBannerSelector
+} from "../../itwallet/common/store/selectors";
+import { ItwDiscoveryBanner } from "../../itwallet/discovery/components/ItwDiscoveryBanner";
 import { PNActivationReminderBanner } from "../../pn/reminderBanner/components/PNActivationReminderBanner";
 import { isPnActivationReminderBannerRenderableSelector } from "../../pn/reminderBanner/reducer/bannerDismiss";
 import { PushNotificationsBanner } from "../../pushNotifications/components/PushNotificationsBanner";
 import { isPushNotificationsBannerRenderableSelector } from "../../pushNotifications/store/selectors";
+import OsDismissionBanner from "../../osDismission/components/OsDismissionBanner";
+import { isOsDismissionBannerRenderableSelector } from "../../osDismission/store/selectors";
 
 type ComponentWithCloseHandler = (closeHandler: () => void) => ReactElement;
 type ComponentAndLogic = {
@@ -22,22 +28,40 @@ export type LandingScreenBannerId =
   keyof typeof LANDING_SCREEN_BANNERS_ENABLED_MAP;
 
 export const LANDING_SCREEN_BANNERS_ENABLED_MAP = {
+  OS_DISMISSION_REMINDER: true,
   PUSH_NOTIFICATIONS_REMINDER: true,
-  ITW_DISCOVERY: true,
+  IT_WALLET_DISCOVERY: true,
+  ITW_DISCOVERY: true /** Legacy Documenti su IO */,
   LV_EXPIRATION_REMINDER: true,
   SEND_ACTIVATION_REMINDER: true
 } as const;
 
 export const landingScreenBannerMap: BannerMapById = {
+  OS_DISMISSION_REMINDER: {
+    component: closeHandler => (
+      <OsDismissionBanner handleOnClose={closeHandler} />
+    ),
+    isRenderableSelector: isOsDismissionBannerRenderableSelector
+  },
   PUSH_NOTIFICATIONS_REMINDER: {
     component: closeHandler => (
       <PushNotificationsBanner closeHandler={closeHandler} />
     ),
     isRenderableSelector: isPushNotificationsBannerRenderableSelector
   },
+  IT_WALLET_DISCOVERY: {
+    component: closeHandler => (
+      <ItwDiscoveryBanner
+        flow="messages_inbox"
+        style={{ marginHorizontal: 24, marginVertical: 16 }}
+        onDismiss={closeHandler}
+      />
+    ),
+    isRenderableSelector: itwShouldRenderInboxDiscoveryBannerSelector
+  },
   ITW_DISCOVERY: {
     component: closeHandler => (
-      <ItwDiscoveryBanner closable handleOnClose={closeHandler} />
+      <ItwDiscoveryBannerLegacy closable handleOnClose={closeHandler} />
     ),
     isRenderableSelector: isItwPersistedDiscoveryBannerRenderableSelector
   },
@@ -45,7 +69,7 @@ export const landingScreenBannerMap: BannerMapById = {
     component: closeHandler => (
       <LoginExpirationBanner handleOnClose={closeHandler} />
     ),
-    isRenderableSelector: isSessionExpirationBannerRenderableSelector
+    isRenderableSelector: showSessionExpirationBannerRenderableSelector
   },
   SEND_ACTIVATION_REMINDER: {
     component: closeHandler => (

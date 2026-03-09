@@ -11,6 +11,7 @@ import {
 } from "../OperationResultScreenContent";
 
 const defaultProps: OperationResultScreenContentProps = {
+  pictogram: "umbrella",
   title: "title",
   subtitle: "subtitle",
   action: {

@@ -16,6 +16,7 @@ import {
   newPushNotificationsToken,
   pushNotificationsTokenUploaded
 } from "../actions/installation";
+import { consolidateActiveSessionLoginData } from "../../../authentication/activeSessionLogin/store/actions";
 
 export const TokenRegistrationResendDelay = 1000 * 60 * 60 * 24;
 
@@ -116,6 +117,7 @@ export const installationReducer = (
     case getType(sessionInvalid):
     case getType(logoutRequest): // even if the logout fails
     case getType(clearCache):
+    case getType(consolidateActiveSessionLoginData):
       return {
         ...state,
         registeredToken: undefined,

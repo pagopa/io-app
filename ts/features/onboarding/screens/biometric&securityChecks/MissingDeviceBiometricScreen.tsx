@@ -1,17 +1,17 @@
 import { ListItemInfo } from "@pagopa/io-app-design-system";
-import { useMemo } from "react";
 import I18n from "i18next";
-import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
+import { useMemo } from "react";
+import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
+import { IOScrollViewWithListItems } from "../../../../components/ui/IOScrollViewWithListItems";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { isProfileFirstOnBoardingSelector } from "../../../settings/common/store/selectors";
 import { getFlowType } from "../../../../utils/analytics";
 import { FAQsCategoriesType } from "../../../../utils/faq";
-import { useOnboardingAbortAlert } from "../../hooks/useOnboardingAbortAlert";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { IOScrollViewWithListItems } from "../../../../components/ui/IOScrollViewWithListItems";
-import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
+import { isProfileFirstOnBoardingSelector } from "../../../settings/common/store/selectors";
+import { useOnboardingAbortAlert } from "../../hooks/useOnboardingAbortAlert";
 import { trackBiometricConfigurationEducationalScreen } from "./analytics";
 
 const FAQ_CATEGORIES: ReadonlyArray<FAQsCategoriesType> = [

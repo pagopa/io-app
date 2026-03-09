@@ -10,17 +10,20 @@ import {
   WebViewHttpErrorEvent,
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
-import { trackLoginCieDataSharingError } from "../../../common/analytics/cieAnalytics";
+import {
+  trackLoginCieConsentDataUsageScreen,
+  trackLoginCieDataSharingError
+} from "../../../common/analytics/cieAnalytics";
 import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useOnboardingAbortAlert } from "../../../../onboarding/hooks/useOnboardingAbortAlert";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch } from "../../../../../store/hooks";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
 import { onLoginUriChanged } from "../../../common/utils/login";
 import { LoaderComponent } from "../../../activeSessionLogin/shared/components/LoaderComponent";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 
 export type CieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
@@ -45,7 +48,7 @@ const CieConsentDataUsageScreen = () => {
   const { showAlert } = useOnboardingAbortAlert();
   const navigation = useIONavigation();
   const loginSuccessDispatch = useCallback(
-    (token: SessionToken) => dispatch(loginSuccess({ token, idp: "cie" })),
+    (token: string) => dispatch(loginSuccess({ token, idp: "cie" })),
     [dispatch]
   );
 
@@ -86,7 +89,7 @@ const CieConsentDataUsageScreen = () => {
   );
 
   const handleLoginSuccess = useCallback(
-    (token: SessionToken) => {
+    (token: string) => {
       setIsLoginSuccess(true);
       setHasError(false);
       loginSuccessDispatch(token);
@@ -118,6 +121,11 @@ const CieConsentDataUsageScreen = () => {
     },
     [handleLoginFailure, handleLoginSuccess]
   );
+
+  // fix of https://github.com/pagopa/io-app/pull/5750/files#diff-89c251a9a9539e3470c6001c13917f0881272bfa692f61bdc4a6f191b0435fa3
+  useOnFirstRender(() => {
+    void trackLoginCieConsentDataUsageScreen();
+  });
 
   useEffect(() => {
     if (hasError && errorCodeOrMessage === "22") {

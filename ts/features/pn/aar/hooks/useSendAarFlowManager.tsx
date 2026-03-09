@@ -1,9 +1,16 @@
+import { useNavigation } from "@react-navigation/native";
 import { useCallback } from "react";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { PnParamsList } from "../../navigation/params";
+import { trackSendAARToSAccepted } from "../analytics";
 import { setAarFlowState, terminateAarFlow } from "../store/actions";
-import { currentAARFlowData } from "../store/reducers";
-import { AARFlowState, sendAARFlowStates } from "../utils/stateUtils";
+import { currentAARFlowData } from "../store/selectors";
+import {
+  AARFlowState,
+  maybeIunFromAarFlowState,
+  sendAARFlowStates
+} from "../utils/stateUtils";
 
 type SendAarFlowManager = {
   terminateFlow: () => void;
@@ -16,18 +23,21 @@ export type SendAarFlowHandlerType = {
 };
 
 export const useSendAarFlowManager = (): SendAarFlowManager => {
-  const navigation = useIONavigation();
+  const navigation = useNavigation<IOStackNavigationProp<PnParamsList>>();
   const dispatch = useIODispatch();
   const currentFlowData = useIOSelector(currentAARFlowData);
 
   const handleTerminateFlow = useCallback(() => {
-    dispatch(terminateAarFlow());
+    dispatch(
+      terminateAarFlow({ messageId: maybeIunFromAarFlowState(currentFlowData) })
+    );
     navigation.popToTop();
-  }, [dispatch, navigation]);
+  }, [dispatch, navigation, currentFlowData]);
 
   const goToNextState = () => {
     switch (currentFlowData.type) {
       case sendAARFlowStates.displayingAARToS:
+        trackSendAARToSAccepted();
         dispatch(
           setAarFlowState({
             type: sendAARFlowStates.fetchingQRData,

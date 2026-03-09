@@ -7,7 +7,10 @@ import { OnboardingInitiativeDTO } from "../../../../../definitions/idpay/Onboar
 import { StatusEnum as OnboardingStatusEnum } from "../../../../../definitions/idpay/OnboardingStatusDTO";
 import { IdPayTags } from "../../common/machine/tags";
 import { InitiativeFailureType } from "../../configuration/types/failure";
-import { OnboardingFailure } from "../types/OnboardingFailure";
+import {
+  OnboardingFailure,
+  OnboardingFailureEnum
+} from "../types/OnboardingFailure";
 import { Context, InitialContext } from "./context";
 import { IdPayOnboardingEvents } from "./events";
 import {
@@ -101,7 +104,7 @@ export const idPayOnboardingMachine = setup({
       "error" in event && event.error === InitiativeFailureType.SESSION_EXPIRED,
     isTooManyRequests: ({ event }: { event: IdPayOnboardingEvents }) =>
       "error" in event &&
-      event.error === InitiativeFailureType.TOO_MANY_REQUESTS,
+      event.error === OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS,
 
     shouldShowEnableNotificationOnClose: ({ context }) =>
       !context.isPushNotificationsEnabled,

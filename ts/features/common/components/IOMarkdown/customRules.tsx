@@ -14,6 +14,7 @@ import {
 } from "@textlint/ast-node-types";
 import I18n from "i18next";
 import {
+  accessibleLinkNodeToReactNative,
   headerNodeToReactNative,
   htmlNodeToReactNative,
   linkNodeToReactNative,
@@ -58,7 +59,7 @@ const DEFAULT_HEADING_MARGINS: HeadingMargins = {
   marginEnd: 4
 };
 
-const handleOpenLink = (linkTo: (path: string) => void, url: string) => {
+export const handleOpenLink = (linkTo: (path: string) => void, url: string) => {
   if (isIoInternalLink(url)) {
     handleInternalLink(linkTo, url);
     // Non-secure HTTP links have to be supported since
@@ -96,7 +97,7 @@ export const generateMessagesAndServicesRules = (
   Link(link: TxtLinkNode, render: Renderer) {
     return linkNodeToReactNative(
       link,
-      () => handleOpenLink(linkTo, link.url),
+      { onPress: () => handleOpenLink(linkTo, link.url) },
       render
     );
   },
@@ -122,3 +123,14 @@ export const testable = isTestEnv
       replaceBrWithNewline
     }
   : undefined;
+
+export const generateAccessibleLinkRule =
+  (): Partial<IOMarkdownRenderRules> => ({
+    Link(link: TxtLinkNode, render: Renderer) {
+      return accessibleLinkNodeToReactNative(
+        link,
+        { onPress: () => openWebUrl(link.url) },
+        render
+      );
+    }
+  });

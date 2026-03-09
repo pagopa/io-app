@@ -1,14 +1,8 @@
-import { IOColors, IOIcons } from "@pagopa/io-app-design-system";
-
 /**
  * Defines the number of asterisks used to mask the value of claims in the credential details
  */
 export const HIDDEN_CLAIM_TEXT = "******";
 
-/**
- * The new Wallet L3 background color
- */
-export const WALLET_L3_BG_COLOR = IOColors["blueIO-500"];
 /**
  * Defines the colors used in the gradient of the ITW components
  */
@@ -25,13 +19,17 @@ export const itwGradientColors = [
   "#1943E8",
   "#0B3EE3"
 ];
+
 /**
- * IT-Wallet ID brand colors
+ * The current wallet specification version.
+ * TODO: [SIW-XXXX] Retrieve this value from the io-react-native-wallet package
  */
-export const IT_WALLET_ID_BG_LIGHT = "#DBE0FF";
-export const IT_WALLET_ID_BG = "#A8B4FF";
-export const IT_WALLET_ID_GRADIENT = ["#D5D5FF", "#CEE2FA"];
+export const WALLET_SPEC_VERSION = "1.0.0";
+
 /**
- * IT-Wallet ID logo
+ * Qualtrics survey URLs
  */
-export const IT_WALLET_ID_LOGO: IOIcons = "sparkles";
+export const IT_WALLET_SURVEY_EID_REISSUANCE_SUCCESS =
+  "https://pagopa.qualtrics.com/jfe/form/SV_3JmGHi0IjGYESYC";
+export const IT_WALLET_SURVEY_EID_REISSUANCE_FAILURE =
+  "https://pagopa.qualtrics.com/jfe/form/SV_5bhV8w1e2ujl9xs";

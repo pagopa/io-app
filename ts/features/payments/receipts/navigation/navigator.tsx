@@ -6,6 +6,7 @@ import {
 import { isGestureEnabled } from "../../../../utils/navigation";
 import WalletTransactionCartItemDetailsScreen from "../screens/ReceiptCartItemDetailsScreen";
 import { ReceiptDetailsScreen } from "../screens/ReceiptDetailsScreen";
+import ReceiptDownloadErrorScreen from "../screens/ReceiptDownloadErrorScreen";
 import { ReceiptListScreen } from "../screens/ReceiptListScreen";
 import ReceiptPreviewScreen from "../screens/ReceiptPreviewScreen";
 import { PaymentsReceiptParamsList } from "./params";
@@ -38,10 +39,15 @@ export const PaymentsReceiptNavigator = () => (
       component={ReceiptPreviewScreen}
       options={{ gestureEnabled: isGestureEnabled }}
     />
+    <Stack.Screen
+      name={PaymentsReceiptRoutes.PAYMENT_RECEIPT_ERROR_SCREEN}
+      component={ReceiptDownloadErrorScreen}
+      options={{ gestureEnabled: isGestureEnabled, headerShown: false }}
+    />
   </Stack.Navigator>
 );
 
-export type ReceiptStackNavigationProp<
+type ReceiptStackNavigationProp<
   ParamList extends ParamListBase,
   RouteName extends keyof ParamList = string
 > = StackNavigationProp<PaymentsReceiptParamsList & ParamList, RouteName>;

@@ -2,13 +2,22 @@
 
 exports[`stateUtils snapshots flowStates 1`] = `
 {
+  "androidNFCActivation": "androidNFCActivation",
+  "cieCanAdvisory": "cieCanAdvisory",
+  "cieCanInsertion": "cieCanInsertion",
+  "cieScanning": "cieScanning",
+  "cieScanningAdvisory": "cieScanningAdvisory",
+  "creatingMandate": "creatingMandate",
   "displayingAARToS": "displayingAARToS",
   "displayingNotificationData": "displayingNotificationData",
   "fetchingNotificationData": "fetchingNotificationData",
   "fetchingQRData": "fetchingQRData",
   "ko": "ko",
+  "nfcNotSupportedFinal": "nfcNotSupportedFinal",
   "none": "none",
+  "notAddressee": "notAddressee",
   "notAddresseeFinal": "notAddresseeFinal",
+  "validatingMandate": "validatingMandate",
 }
 `;
 
@@ -22,17 +31,51 @@ Map {
   },
   "fetchingQRData" => Set {
     "fetchingNotificationData",
+    "notAddresseeFinal",
+    "notAddressee",
     "ko",
   },
   "fetchingNotificationData" => Set {
     "displayingNotificationData",
-    "notAddresseeFinal",
     "ko",
   },
   "displayingNotificationData" => Set {},
   "notAddresseeFinal" => Set {},
   "ko" => Set {
     "fetchingQRData",
+    "fetchingNotificationData",
+    "cieCanAdvisory",
+  },
+  "notAddressee" => Set {
+    "creatingMandate",
+    "nfcNotSupportedFinal",
+  },
+  "creatingMandate" => Set {
+    "cieCanAdvisory",
+    "ko",
+  },
+  "cieCanAdvisory" => Set {
+    "cieCanInsertion",
+  },
+  "cieCanInsertion" => Set {
+    "cieCanAdvisory",
+    "cieScanningAdvisory",
+  },
+  "cieScanningAdvisory" => Set {
+    "cieCanInsertion",
+    "androidNFCActivation",
+    "cieScanning",
+  },
+  "androidNFCActivation" => Set {
+    "cieScanning",
+  },
+  "cieScanning" => Set {
+    "cieScanningAdvisory",
+    "cieCanAdvisory",
+    "validatingMandate",
+  },
+  "validatingMandate" => Set {
+    "ko",
     "fetchingNotificationData",
   },
 }

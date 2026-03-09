@@ -93,20 +93,7 @@ export const itwDisabledCredentialsSelector = createSelector(
 );
 
 /**
- * Return the remote config content for the deferred issuance screen content.
- */
-export const itwDeferredIssuanceScreenContentSelector = createSelector(
-  itwRemoteConfigSelector,
-  itwConfig =>
-    pipe(
-      itwConfig,
-      O.map(itw => itw.deferred_issuance_screen_content),
-      O.toUndefined
-    )
-);
-
-/**
- * Return the remote config content for the deferred issuance screen content.
+ * Return the remote config content for the iPatente CTA's visibility.
  */
 export const itwIsIPatenteCtaEnabledSelector = createSelector(
   itwRemoteConfigSelector,
@@ -127,6 +114,19 @@ export const itwIPatenteCtaConfigSelector = createSelector(
     pipe(
       itwConfig,
       O.map(itw => itw.ipatente_cta_config),
+      O.toUndefined
+    )
+);
+
+/**
+ * Return the remote config about ipzs privacy url for the IPZS privacy screen.
+ */
+export const itwIpzsPrivacyUrlSelector = createSelector(
+  itwRemoteConfigSelector,
+  itwConfig =>
+    pipe(
+      itwConfig,
+      O.map(itw => itw.ipzs_privacy_url),
       O.toUndefined
     )
 );

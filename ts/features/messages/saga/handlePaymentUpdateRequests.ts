@@ -11,30 +11,37 @@ import {
   select,
   take
 } from "typed-redux-saga/macro";
-import { ActionType } from "typesafe-actions";
-import { BackendClient } from "../../../api/backend";
+import { ActionType, isActionOf } from "typesafe-actions";
+import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
+import { backendClientManager } from "../../../api/BackendClientManager";
+import { apiUrlPrefix } from "../../../config";
+import { Action } from "../../../store/actions/types";
+import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import { SagaCallReturnType } from "../../../types/utils";
+import { isTestEnv } from "../../../utils/environment";
+import { readablePrivacyReport } from "../../../utils/reporters";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
+import {
+  UndefinedBearerTokenPhase,
+  trackMessagePaymentFailure,
+  trackUndefinedBearerToken
+} from "../analytics";
 import {
   cancelQueuedPaymentUpdates,
-  isGenericError,
-  PaymentError,
-  toGenericError,
-  toSpecificError,
-  toTimeoutError,
   updatePaymentForMessage
 } from "../store/actions";
-import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
-import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
-import { SagaCallReturnType } from "../../../types/utils";
-import { readablePrivacyReport } from "../../../utils/reporters";
-import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
-import { isTestEnv } from "../../../utils/environment";
-import { trackMessagePaymentFailure } from "../analytics";
+import {
+  MessagePaymentError,
+  isMessagePaymentGenericError,
+  toGenericMessagePaymentError,
+  toSpecificMessagePaymentError,
+  toTimeoutMessagePaymentError
+} from "../types/paymentErrors";
 
 const PaymentUpdateWorkerCount = 5;
 
-export function* handlePaymentUpdateRequests(
-  getPaymentDataRequestFactory: BackendClient["getPaymentInfoV2"]
-) {
+export function* handlePaymentUpdateRequests() {
   // Create a channel where 'updatePaymentForMessage.request' actions will be enqueued
   const paymentUpdateChannel = yield* actionChannel(
     updatePaymentForMessage.request
@@ -43,18 +50,13 @@ export function* handlePaymentUpdateRequests(
   // Create workers to process 'updatePaymentForMessage.request' actions 'concurrently'
   yield* all(
     [...Array(PaymentUpdateWorkerCount).keys()].map(() =>
-      fork(
-        paymentUpdateRequestWorker,
-        paymentUpdateChannel,
-        getPaymentDataRequestFactory
-      )
+      fork(paymentUpdateRequestWorker, paymentUpdateChannel)
     )
   );
 
   while (true) {
     // Listen for cancellation request
     yield* take(cancelQueuedPaymentUpdates);
-
     // Flush the channel
     yield* flush(paymentUpdateChannel);
   }
@@ -63,8 +65,7 @@ export function* handlePaymentUpdateRequests(
 function* paymentUpdateRequestWorker(
   paymentStatusChannel: Channel<
     ActionType<typeof updatePaymentForMessage.request>
-  >,
-  getPaymentDataRequestFactory: BackendClient["getPaymentInfoV2"]
+  >
 ) {
   while (true) {
     // Listen for 'updatePaymentForMessage.request' action in the channel
@@ -79,10 +80,14 @@ function* paymentUpdateRequestWorker(
         hasVerifiedPayment: call(
           updatePaymentInfo,
           paymentStatusRequest,
-          isPagoPATestEnabled,
-          getPaymentDataRequestFactory
+          isPagoPATestEnabled
         ),
-        wasCancelled: take(cancelQueuedPaymentUpdates)
+        wasCancelled: take(
+          // only cancel the worker if the request is for its messageId
+          (actionParam: Action) =>
+            isActionOf(cancelQueuedPaymentUpdates, actionParam) &&
+            actionParam.payload.messageId === messageId
+        )
       });
     } catch (e) {
       const reason = yield* call(unknownErrorToPaymentError, e);
@@ -100,10 +105,19 @@ function* paymentUpdateRequestWorker(
 
 function* updatePaymentInfo(
   paymentStatusRequest: ActionType<typeof updatePaymentForMessage.request>,
-  isPagoPATestEnabled: boolean,
-  getPaymentDataRequestFactory: BackendClient["getPaymentInfoV2"]
+  isPagoPATestEnabled: boolean
 ) {
   const { messageId, paymentId, serviceId } = paymentStatusRequest.payload;
+
+  const sessionToken = yield* select(sessionTokenSelector);
+
+  if (!sessionToken) {
+    trackUndefinedBearerToken(UndefinedBearerTokenPhase.getPaymentsInfo);
+    return;
+  }
+
+  const { getPaymentInfoV2: getPaymentDataRequestFactory } =
+    backendClientManager.getBackendClient(apiUrlPrefix, sessionToken);
 
   const getPaymentDataRequest = getPaymentDataRequestFactory({
     rptId: paymentId,
@@ -147,16 +161,16 @@ function* updatePaymentInfo(
   }
 }
 
-const unknownErrorToPaymentError = (e: unknown): PaymentError => {
+const unknownErrorToPaymentError = (e: unknown): MessagePaymentError => {
   const reason = unknownErrorToString(e);
   const lowerCaseReason = reason.toLowerCase();
   if (lowerCaseReason === "max-retries" || lowerCaseReason === "aborted") {
-    return toTimeoutError();
+    return toTimeoutMessagePaymentError();
   }
   if (reason in Detail_v2Enum) {
-    return toSpecificError(reason as Detail_v2Enum);
+    return toSpecificMessagePaymentError(reason as Detail_v2Enum);
   }
-  return toGenericError(reason);
+  return toGenericMessagePaymentError(reason);
 };
 
 const unknownErrorToString = (e: unknown): string => {
@@ -173,8 +187,8 @@ const unknownErrorToString = (e: unknown): string => {
   return "Unknown error with no data";
 };
 
-const trackPaymentErrorIfNeeded = (error: PaymentError) => {
-  if (isGenericError(error)) {
+const trackPaymentErrorIfNeeded = (error: MessagePaymentError) => {
+  if (isMessagePaymentGenericError(error)) {
     trackMessagePaymentFailure(error.message);
   }
 };

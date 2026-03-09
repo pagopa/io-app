@@ -2,7 +2,7 @@ import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { useSpecialCtaCdc } from "../../../bonus/cdc/hooks/useSpecialCtaCdc";
+import { useSpecialCtaCdc } from "../../../bonus/cdc/common/hooks/useSpecialCtaCdc";
 import { ServiceDetailsScreenBase } from "../types";
 import { getServiceActionsProps } from "../utils";
 

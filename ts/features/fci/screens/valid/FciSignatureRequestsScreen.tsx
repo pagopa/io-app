@@ -22,7 +22,7 @@ import {
 } from "../../../zendesk/store/actions";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
 import { SignatureRequestListView } from "../../../../../definitions/fci/SignatureRequestListView";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 const FciSignatureRequestsScreen = () => {

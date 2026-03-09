@@ -1,8 +1,4 @@
-import { ParamListBase } from "@react-navigation/native";
-import {
-  createStackNavigator,
-  StackNavigationProp
-} from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import { isGestureEnabled } from "../../../../utils/navigation";
 import { WalletPaymentDetailScreen } from "../screens/WalletPaymentDetailScreen";
 import { WalletPaymentFailureScreen } from "../screens/WalletPaymentFailureScreen";
@@ -11,6 +7,7 @@ import { WalletPaymentInputNoticeNumberScreen } from "../screens/WalletPaymentIn
 import { WalletPaymentMakeScreen } from "../screens/WalletPaymentMakeScreen";
 import { WalletPaymentOutcomeScreen } from "../screens/WalletPaymentOutcomeScreen";
 import WalletPaymentWebViewScreen from "../screens/WalletPaymentWebViewScreen";
+import PaymentsContextualOnboardingWebViewScreen from "../../onboarding/screens/PaymentsContextualOnboardingWebViewScreen";
 import { PaymentsCheckoutParamsList } from "./params";
 import { PaymentsCheckoutRoutes } from "./routes";
 
@@ -75,16 +72,12 @@ export const PaymentsCheckoutNavigator = () => (
         gestureEnabled: false
       }}
     />
+    <Stack.Screen
+      name={PaymentsCheckoutRoutes.PAYMENT_ONBOARDING_WEB_VIEW}
+      component={PaymentsContextualOnboardingWebViewScreen}
+      options={{
+        gestureEnabled: false
+      }}
+    />
   </Stack.Navigator>
 );
-
-export type PaymentsCheckoutStackNavigationProp<
-  ParamList extends ParamListBase,
-  RouteName extends keyof ParamList = string
-> = StackNavigationProp<PaymentsCheckoutParamsList & ParamList, RouteName>;
-
-export type PaymentsCheckoutStackNavigation =
-  PaymentsCheckoutStackNavigationProp<
-    PaymentsCheckoutParamsList,
-    keyof PaymentsCheckoutParamsList
-  >;

@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { addMonths } from "date-fns";
 import _ from "lodash";
 import { combineReducers } from "redux";
 import {
@@ -14,6 +15,9 @@ import { isDevEnv } from "../../../../../utils/environment";
 import itwCredentialsReducer, {
   ItwCredentialsState
 } from "../../../credentials/store/reducers";
+import itwCredentialsCatalogueReducer, {
+  ItwCredentialsCatalogueState
+} from "../../../credentialsCatalogue/store/reducers";
 import identificationReducer, {
   ItwIdentificationState
 } from "../../../identification/common/store/reducers";
@@ -23,6 +27,7 @@ import issuanceReducer, {
 import wiaReducer, {
   ItwWalletInstanceState
 } from "../../../walletInstance/store/reducers";
+import bannersReducer, { ItwBannersState } from "./banners";
 import environmentReducer, { ItwEnvironmentState } from "./environment";
 import preferencesReducer, { ItwPreferencesState } from "./preferences";
 import securePreferencesReducer, {
@@ -37,6 +42,8 @@ export type ItWalletState = {
   walletInstance: ItwWalletInstanceState & PersistPartial;
   preferences: ItwPreferencesState;
   securePreferences: ItwSecurePreferencesState & PersistPartial;
+  credentialsCatalogue: ItwCredentialsCatalogueState;
+  banners: ItwBannersState;
 };
 
 export type PersistedItWalletState = ReturnType<typeof persistedReducer>;
@@ -48,10 +55,12 @@ const itwReducer = combineReducers({
   credentials: itwCredentialsReducer,
   walletInstance: wiaReducer,
   preferences: preferencesReducer,
-  securePreferences: securePreferencesReducer
+  securePreferences: securePreferencesReducer,
+  credentialsCatalogue: itwCredentialsCatalogueReducer,
+  banners: bannersReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 5;
+const CURRENT_REDUX_ITW_STORE_VERSION = 10;
 
 export const migrations: MigrationManifest = {
   // Added preferences store
@@ -92,15 +101,69 @@ export const migrations: MigrationManifest = {
       "preferences.requestedCredentials",
       requestedCredentials
     );
+  },
+
+  // Removed offlineBannerHidden from preferences
+  "6": (state: PersistedState): PersistedState =>
+    _.omit(state, "preferences.offlineBannerHidden"),
+
+  // Removed reissuanceFeedbackBannerHidden from preferences
+  "7": (state: PersistedState): PersistedState =>
+    _.omit(state, "preferences.reissuanceFeedbackBannerHidden"),
+
+  // Removed hideFeedbackBannerUntilDate from preferences
+  "8": (state: PersistedState): PersistedState =>
+    _.omit(state, "preferences.hideFeedbackBannerUntilDate"),
+
+  // Removed requestedCredentials from preferences
+  "9": (state: PersistedState): PersistedState =>
+    _.omit(state, "preferences.requestedCredentials"),
+
+  // Added banners reducer
+  "10": (state: PersistedState): PersistedState => {
+    const hideDiscoveryBannerUntilDate = _.get(
+      state,
+      "preferences.hideDiscoveryBannerUntilDate"
+    );
+    const walletUpgradeMDLDetailsBannerHidden = _.get(
+      state,
+      "preferences.walletUpgradeMDLDetailsBannerHidden"
+    );
+
+    _.set(state, "banners", {
+      discovery: hideDiscoveryBannerUntilDate
+        ? {
+            dismissedOn: addMonths(
+              hideDiscoveryBannerUntilDate,
+              -6
+            ).toISOString(),
+            dismissCount: 1
+          }
+        : {},
+      upgradeMDLDetails: walletUpgradeMDLDetailsBannerHidden
+        ? {
+            dismissedOn: new Date().toISOString(),
+            dismissCount: 1
+          }
+        : {}
+    });
+
+    return _.omit(state, [
+      "preferences.hideDiscoveryBannerUntilDate",
+      "preferences.walletUpgradeMDLDetailsBannerHidden"
+    ]);
   }
 };
 
 const itwPersistConfig: PersistConfig = {
   key: "itWallet",
   storage: AsyncStorage,
-  whitelist: ["preferences", "environment"] satisfies Array<
-    keyof ItWalletState
-  >,
+  whitelist: [
+    "preferences",
+    "environment",
+    "credentialsCatalogue",
+    "banners"
+  ] satisfies Array<keyof ItWalletState>,
   version: CURRENT_REDUX_ITW_STORE_VERSION,
   migrate: createMigrate(migrations, { debug: isDevEnv })
 };

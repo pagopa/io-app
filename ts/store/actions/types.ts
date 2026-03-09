@@ -18,7 +18,7 @@ import {
   CieLoginConfigActions
 } from "../../features/authentication/login/cie/store/actions";
 import { SpidConfigActions } from "../../features/authentication/login/idp/store/actions";
-import { LoginPreferencesActions } from "../../features/authentication/loginPreferences/store/actions";
+import { CdcActions } from "../../features/bonus/cdc/common/store/actions";
 import { BonusActions } from "../../features/bonus/common/store/actions";
 import { ConnectivityActions } from "../../features/connectivity/store/actions";
 import { FciActions } from "../../features/fci/store/actions";
@@ -36,6 +36,8 @@ import { MixpanelFeatureActions } from "../../features/mixpanel/store/actions";
 import { OnboardingActions } from "../../features/onboarding/store/actions";
 import { PaymentsActions as PaymentsFeatureActions } from "../../features/payments/common/store/actions";
 import { AARFlowStateActions } from "../../features/pn/aar/store/actions";
+import { SENDLoginEngagementActions } from "../../features/pn/loginEngagement/store/actions";
+import { SENDLollipopLambdaActions } from "../../features/pn/lollipopLambda/store/actions";
 import { PnActions } from "../../features/pn/store/actions";
 import { NotificationPermissionsActions } from "../../features/pushNotifications/store/actions/environment";
 import { NotificationsActions } from "../../features/pushNotifications/store/actions/installation";
@@ -46,7 +48,7 @@ import { ServicesActions } from "../../features/services/common/store/actions";
 import { ProfileActions } from "../../features/settings/common/store/actions";
 import { UserDataProcessingActions } from "../../features/settings/common/store/actions/userDataProcessing";
 import { PinSetActions } from "../../features/settings/security/store/actions/pinset";
-import { TrialSystemActions } from "../../features/trialSystem/store/actions";
+import { TourActions } from "../../features/tour/store/actions";
 import { UtmLinkActions } from "../../features/utmLink/store/actions";
 import { WalletActions } from "../../features/wallet/store/actions";
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
@@ -112,7 +114,6 @@ export type Action =
   | CieLoginConfigActions
   | FimsActions
   | ItwActions
-  | TrialSystemActions
   | AppearanceSettingsActions
   | IngressScreenActions
   | MixpanelFeatureActions
@@ -121,9 +122,12 @@ export type Action =
   | AppFeedbackActions
   | UtmLinkActions
   | ConnectivityActions
-  | LoginPreferencesActions
   | AARFlowStateActions
-  | BackgroundLinkingActions;
+  | SENDLollipopLambdaActions
+  | BackgroundLinkingActions
+  | SENDLoginEngagementActions
+  | CdcActions
+  | TourActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

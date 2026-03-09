@@ -1,16 +1,10 @@
 import * as O from "fp-ts/lib/Option";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
-import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
-import mockedProfile from "../../__mocks__/initializedProfile";
-
 import { sessionExpired } from "../../features/authentication/common/store/actions";
 import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../../features/authentication/common/store/selectors";
-import { profileSelector } from "../../features/settings/common/store/selectors";
-import { SessionToken } from "../../types/SessionToken";
 import { previousInstallationDataDeleteSaga } from "../installation";
 import {
   initMixpanel,
@@ -25,7 +19,6 @@ import {
   initializeApplicationSaga,
   testWaitForNavigatorServiceInitialization
 } from "../startup";
-import { watchProfileEmailValidationChangedSaga } from "../../features/mailCheck/sagas/watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
 import {
   checkLollipopSessionAssertionAndInvalidateIfNeeded,
@@ -51,12 +44,14 @@ import {
   shouldExitForOfflineAccess,
   watchSessionRefreshInOfflineSaga
 } from "../../features/ingress/saga";
+import { watchForceLogoutSaga } from "../../features/authentication/common/saga/watchForceLogoutSaga";
 import {
-  watchForceLogoutOnDifferentCF,
-  watchForceLogoutSaga
-} from "../../features/authentication/common/saga/watchForceLogoutSaga";
+  isAppSupportedSelector,
+  versionInfoDataSelector
+} from "../../common/versionInfo/store/reducers/versionInfo";
+import { VersionInfo } from "../../../definitions/content/VersionInfo";
 
-const aSessionToken = "a_session_token" as SessionToken;
+const aSessionToken = "mock-session-token";
 const aSessionInfo = O.some({
   spidLevel: "https://www.spid.gov.it/SpidL2",
   walletToken: "wallet_token",
@@ -71,6 +66,20 @@ const aPublicKey = O.some({
   x: "nDbpq45jXUKfWxodyvec3F1e+r0oTSqhakbauVmB59Y=",
   y: "CtI6Cozk4O5OJ4Q6WyjiUw9/K6TyU0aDdssd25YHZxg="
 });
+const aVersionInfo: VersionInfo = {
+  min_app_version: {
+    android: "1.0.0",
+    ios: "1.0.0"
+  },
+  latest_released_app_version: {
+    android: "6.0.0",
+    ios: "6.0.0"
+  },
+  rollout_app_version: {
+    android: "6.0.0",
+    ios: "6.0.0"
+  }
+};
 
 jest.mock("react-native-background-timer", () => ({
   startTimer: jest.fn()
@@ -85,12 +94,6 @@ jest.mock("../../api/backend", () => ({
     isSameClient: jest.fn()
   })
 }));
-
-const profile: InitializedProfile = {
-  ...mockedProfile,
-  is_email_enabled: false,
-  is_email_validated: undefined
-};
 
 describe("initializeApplicationSaga", () => {
   it("should call handleTransientError if check session response is 200 but session is none", () => {
@@ -110,10 +113,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .fork(notificationPermissionsListener)
       .next()
-      .select(profileSelector)
-      .next(pot.some(profile))
-      .fork(watchProfileEmailValidationChangedSaga, O.none)
-      .next()
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
@@ -125,6 +124,10 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(versionInfoDataSelector)
+      .next(aVersionInfo)
+      .select(isAppSupportedSelector)
+      .next(true)
       .select(isBlockingScreenSelector)
       .next()
       .select(sessionTokenSelector)
@@ -132,8 +135,6 @@ describe("initializeApplicationSaga", () => {
       .next(trackKeychainFailures)
       .next(getKeyInfo)
       .fork(watchForceLogoutSaga)
-      .next()
-      .fork(watchForceLogoutOnDifferentCF)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
@@ -167,10 +168,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .fork(notificationPermissionsListener)
       .next()
-      .select(profileSelector)
-      .next(pot.some(profile))
-      .fork(watchProfileEmailValidationChangedSaga, O.none)
-      .next(pot.some(profile))
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
@@ -178,11 +175,14 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
-
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(versionInfoDataSelector)
+      .next(aVersionInfo)
+      .select(isAppSupportedSelector)
+      .next(true)
       .select(isBlockingScreenSelector)
       .next()
       .select(sessionTokenSelector)
@@ -190,8 +190,6 @@ describe("initializeApplicationSaga", () => {
       .next(trackKeychainFailures)
       .next(getKeyInfo)
       .fork(watchForceLogoutSaga)
-      .next()
-      .fork(watchForceLogoutOnDifferentCF)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
@@ -219,10 +217,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .fork(notificationPermissionsListener)
       .next()
-      .select(profileSelector)
-      .next(pot.some(profile))
-      .fork(watchProfileEmailValidationChangedSaga, O.none)
-      .next(pot.some(profile))
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
@@ -230,11 +224,14 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
-
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(versionInfoDataSelector)
+      .next(aVersionInfo)
+      .select(isAppSupportedSelector)
+      .next(true)
       .select(isBlockingScreenSelector)
       .next()
       .select(sessionTokenSelector)
@@ -242,8 +239,6 @@ describe("initializeApplicationSaga", () => {
       .next(trackKeychainFailures)
       .next(getKeyInfo)
       .fork(watchForceLogoutSaga)
-      .next()
-      .fork(watchForceLogoutOnDifferentCF)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
@@ -276,10 +271,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .fork(notificationPermissionsListener)
       .next()
-      .select(profileSelector)
-      .next(pot.some(profile))
-      .fork(watchProfileEmailValidationChangedSaga, O.none)
-      .next(pot.some(profile))
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
@@ -287,11 +278,14 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
-
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(versionInfoDataSelector)
+      .next(aVersionInfo)
+      .select(isAppSupportedSelector)
+      .next(true)
       .select(isBlockingScreenSelector)
       .next()
       .select(sessionTokenSelector)
@@ -299,8 +293,6 @@ describe("initializeApplicationSaga", () => {
       .next(trackKeychainFailures)
       .next(getKeyInfo)
       .fork(watchForceLogoutSaga)
-      .next()
-      .fork(watchForceLogoutOnDifferentCF)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
@@ -346,10 +338,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .fork(notificationPermissionsListener)
       .next()
-      .select(profileSelector)
-      .next(pot.some(profile))
-      .fork(watchProfileEmailValidationChangedSaga, O.none)
-      .next(pot.some(profile))
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
@@ -357,11 +345,14 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
-
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(versionInfoDataSelector)
+      .next(aVersionInfo)
+      .select(isAppSupportedSelector)
+      .next(true)
       .select(isBlockingScreenSelector)
       .next()
       .select(sessionTokenSelector)
@@ -369,8 +360,6 @@ describe("initializeApplicationSaga", () => {
       .next(trackKeychainFailures)
       .next(getKeyInfo)
       .fork(watchForceLogoutSaga)
-      .next()
-      .fork(watchForceLogoutOnDifferentCF)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
@@ -403,10 +392,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .fork(notificationPermissionsListener)
       .next()
-      .select(profileSelector)
-      .next(pot.some(profile))
-      .fork(watchProfileEmailValidationChangedSaga, O.none)
-      .next(pot.some(profile))
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
@@ -414,11 +399,14 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
-
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(versionInfoDataSelector)
+      .next(aVersionInfo)
+      .select(isAppSupportedSelector)
+      .next(true)
       .select(isBlockingScreenSelector)
       .next()
       .select(sessionTokenSelector)
@@ -426,8 +414,6 @@ describe("initializeApplicationSaga", () => {
       .next(trackKeychainFailures)
       .next(getKeyInfo)
       .fork(watchForceLogoutSaga)
-      .next()
-      .fork(watchForceLogoutOnDifferentCF)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()

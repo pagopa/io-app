@@ -4,6 +4,7 @@ import {
   setIsBlockingScreen,
   setOfflineAccessReason
 } from "../actions";
+import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import { Action } from "../../../../store/actions/types";
 
 export enum OfflineAccessReasonEnum {
@@ -15,10 +16,16 @@ export enum OfflineAccessReasonEnum {
 export type IngressScreenState = {
   isBlockingScreen: boolean;
   offlineAccessReason?: OfflineAccessReasonEnum;
+  checkSession: {
+    hasError: boolean;
+  };
 };
 
 export const initialIngressScreenState: IngressScreenState = {
-  isBlockingScreen: false
+  isBlockingScreen: false,
+  checkSession: {
+    hasError: false
+  }
 };
 
 export const ingressScreenReducer = (
@@ -42,6 +49,17 @@ export const ingressScreenReducer = (
       return {
         ...state,
         offlineAccessReason: undefined
+      };
+    case getType(checkCurrentSession.request):
+    case getType(checkCurrentSession.success):
+      return {
+        ...state,
+        checkSession: { hasError: false }
+      };
+    case getType(checkCurrentSession.failure):
+      return {
+        ...state,
+        checkSession: { hasError: true }
       };
     default:
       return state;

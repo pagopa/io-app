@@ -96,8 +96,6 @@ export const IdPayConfigurationSuccessScreen = () => {
         }
       ]}
       {...renderActionsProps()}
-      enableAnimatedPictogram
-      loop={false}
     />
   );
 };

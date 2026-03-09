@@ -23,10 +23,17 @@ jest.mock("react-redux", () => ({
   useDispatch: () => mockDispatch
 }));
 
+// Avoid Skottie errrors because the `jest` environment doesn't support it
+jest.mock("../../../../../components/ui/AnimatedPictogram", () => ({
+  AnimatedPictogram: () => null,
+  IOAnimatedPictogramsAssets: {}
+}));
+
 describe("EmptyList", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
+    jest.restoreAllMocks();
     mockAccessibilityInfo(false);
   });
   it("should match snapshot, INBOX   category, pot.none", () => {

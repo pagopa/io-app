@@ -1,16 +1,17 @@
-import { Alert } from "react-native";
 import I18n from "i18next";
-import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
+import { Alert } from "react-native";
+import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import {
-  ItwScreenFlowContext,
   trackItwDismissalAction,
   trackItwDismissalContext
 } from "../../analytics";
+import { ItwScreenFlowContext } from "../../analytics/utils/types";
 
 type ItwDismissalDialogProps = {
   handleDismiss?: () => void;
   dismissalContext?: ItwScreenFlowContext;
+  enabled?: boolean;
   customLabels?: {
     title?: string;
     body?: string;
@@ -24,25 +25,28 @@ type ItwDismissalDialogProps = {
  * This hook also handles the hardware back button to show the dialog when the user presses the back button.
  * @param handleDismiss - An optionalfunction that will be called when the user confirms the dismissal.
  * @param dismissalContext - An optional dismissal context to be used for analytics tracking.
+ * @param enabled - If false, disables the internal hardware back handler.
  * @param customLabels - Optional object to override the default title, message, confirm button label, and cancel button label.
  * @returns a function that can be used to show the dialog
  */
-export const useItwDismissalDialog = (props?: ItwDismissalDialogProps) => {
+export const useItwDismissalDialog = ({
+  handleDismiss,
+  dismissalContext,
+  enabled = true,
+  customLabels = {}
+}: ItwDismissalDialogProps = {}) => {
   const navigation = useIONavigation();
 
-  const { handleDismiss, dismissalContext, customLabels = {} } = props ?? {};
-
-  const labels = {
-    title:
-      customLabels.title ?? I18n.t("features.itWallet.generic.alert.title"),
-    body: customLabels.body ?? I18n.t("features.itWallet.generic.alert.body"),
-    confirm:
-      customLabels.confirmLabel ??
-      I18n.t("features.itWallet.generic.alert.confirm"),
-    cancel:
-      customLabels.cancelLabel ??
-      I18n.t("features.itWallet.generic.alert.cancel")
-  };
+  const title =
+    customLabels.title ?? I18n.t("features.itWallet.generic.alert.title");
+  const body =
+    customLabels.body ?? I18n.t("features.itWallet.generic.alert.body");
+  const confirmLabel =
+    customLabels.confirmLabel ??
+    I18n.t("features.itWallet.generic.alert.confirm");
+  const cancelLabel =
+    customLabels.cancelLabel ??
+    I18n.t("features.itWallet.generic.alert.cancel");
 
   const trackUserAction = (label: string) => {
     if (dismissalContext) {
@@ -58,26 +62,29 @@ export const useItwDismissalDialog = (props?: ItwDismissalDialogProps) => {
       trackItwDismissalContext(dismissalContext);
     }
 
-    Alert.alert(labels.title, labels.body, [
+    Alert.alert(title, body, [
       {
-        text: labels.confirm,
-        style: "destructive",
+        text: cancelLabel,
+        style: "cancel",
         onPress: () => {
-          trackUserAction(labels.confirm);
-          (handleDismiss || navigation.goBack)();
+          trackUserAction(cancelLabel);
         }
       },
       {
-        text: labels.cancel,
-        style: "cancel",
+        text: confirmLabel,
+        style: "destructive",
         onPress: () => {
-          trackUserAction(labels.cancel);
+          trackUserAction(confirmLabel);
+          (handleDismiss || navigation.goBack)();
         }
       }
     ]);
   };
 
-  useHardwareBackButton(() => {
+  useHardwareBackButtonWhenFocused(() => {
+    if (!enabled) {
+      return false;
+    }
     show();
     return true;
   });

@@ -33,9 +33,10 @@ import {
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { HIDDEN_CLAIM_TEXT } from "../utils/constants.ts";
-import { getMixPanelCredential, trackCopyListItem } from "../../analytics";
+import { getMixPanelCredential } from "../../analytics/utils/index.ts";
 import { useIOSelector } from "../../../../store/hooks";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { trackCopyListItem } from "../../analytics";
 import { ItwCredentialMultiClaim } from "./ItwCredentialMultiClaim.tsx";
 
 /**
@@ -147,7 +148,7 @@ const PlainTextClaimItem = ({
 
   return (
     <ListItemInfo
-      numberOfLines={2}
+      numberOfLines={4}
       label={label}
       value={displayValue}
       onLongPress={isCopyable && !hidden ? handleLongPress : undefined}

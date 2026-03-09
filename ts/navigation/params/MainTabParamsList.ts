@@ -6,7 +6,7 @@ import { WalletHomeNavigationParams } from "../../features/wallet/screens/Wallet
 export type MainTabParamsList = {
   [MESSAGES_ROUTES.MESSAGES_HOME]: undefined;
   [ROUTES.WALLET_HOME]: WalletHomeNavigationParams;
-  [ROUTES.BARCODE_SCAN]: undefined;
+  [ROUTES.BARCODE_SCAN_TAB_EMPTY]: undefined;
   [SERVICES_ROUTES.SERVICES_HOME]: undefined;
   [ROUTES.PAYMENTS_HOME]: undefined;
 };

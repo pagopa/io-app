@@ -11,6 +11,7 @@ import { IdPayIbanOnboardingScreen } from "../screens/IdPayIbanOnboardingScreen"
 import { IdPayDiscountInstrumentsScreen } from "../screens/IdPayDiscountInstrumentsScreen";
 import { IdPayInitiativeConfigurationIntroScreen } from "../screens/IdPayInitiativeConfigurationIntroScreen";
 import { IdPayInstrumentsEnrollmentScreen } from "../screens/IdPayInstrumentsEnrollmentScreen";
+import { IdPayFeatureFlagGuard } from "../../common/components/IdPayFeatureFlagGuard";
 import { IdPayConfigurationParamsList } from "./params";
 import { IdPayConfigurationRoutes } from "./routes";
 
@@ -18,7 +19,9 @@ const Stack = createStackNavigator<IdPayConfigurationParamsList>();
 
 export const IdPayConfigurationNavigator = () => (
   <IDPayConfigurationMachineProvider>
-    <InnerNavigator />
+    <IdPayFeatureFlagGuard>
+      <InnerNavigator />
+    </IdPayFeatureFlagGuard>
   </IDPayConfigurationMachineProvider>
 );
 

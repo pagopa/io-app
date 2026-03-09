@@ -20,10 +20,10 @@ import {
 import { useIOSelector } from "../../../store/hooks";
 import {
   barcodesScannerConfigSelector,
+  isIdPayEnabledInScanScreenSelector,
   isPnRemoteEnabledSelector
 } from "../../../store/reducers/backendStatus/remoteConfig";
-import { isIdPayLocallyEnabledSelector } from "../../../store/reducers/persistedPreferences.ts";
-import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../utils/contextualHelp.ts";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { FCI_ROUTES } from "../../fci/navigation/routes";
 import { IdPayPaymentRoutes } from "../../idpay/payment/navigation/routes";
@@ -53,7 +53,9 @@ import { getIOBarcodesByType } from "../utils/getBarcodesByType";
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const openDeepLink = useOpenDeepLink();
-  const isIdPayEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
+  const isIdPayEnabledInScanScreen = useIOSelector(
+    isIdPayEnabledInScanScreenSelector
+  );
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const isSendEnabled = useIOSelector(isPnRemoteEnabledSelector);
 
@@ -73,7 +75,11 @@ const BarcodeScanScreen = () => {
   );
 
   const barcodeTypes: Array<IOBarcodeType> = IO_BARCODE_ALL_TYPES.filter(type =>
-    type === "IDPAY" ? isIdPayEnabled : type === "SEND" ? isSendEnabled : true
+    type === "IDPAY"
+      ? isIdPayEnabledInScanScreen
+      : type === "SEND"
+      ? isSendEnabled
+      : true
   );
 
   /**
@@ -167,7 +173,7 @@ const BarcodeScanScreen = () => {
         });
         break;
       case "SEND":
-        navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
           screen: PN_ROUTES.MAIN,
           params: {
             screen: PN_ROUTES.QR_SCAN_FLOW,
@@ -240,7 +246,7 @@ const BarcodeScanScreen = () => {
   const handleManualInputPressed = () => {
     analytics.trackBarcodeManualEntryPath("home");
 
-    if (isIdPayEnabled) {
+    if (isIdPayEnabledInScanScreen) {
       manualInputModal.present();
     } else {
       handlePagoPACodeInput();
@@ -262,18 +268,25 @@ const BarcodeScanScreen = () => {
 
   return (
     <>
-      <BarcodeScanBaseScreenComponent
-        barcodeFormats={barcodeFormats}
-        barcodeTypes={barcodeTypes}
-        onBarcodeSuccess={handleBarcodeSuccess}
-        onBarcodeError={handleBarcodeError}
-        onFileInputPressed={showFilePicker}
-        onManualInputPressed={handleManualInputPressed}
-        contextualHelp={emptyContextualHelp}
-        barcodeAnalyticsFlow="home"
-        isLoading={isFileReaderLoading}
-        isDisabled={isFilePickerVisible || isFileReaderLoading}
-      />
+      <View
+        style={{ flex: 1 }}
+        importantForAccessibility={
+          isFilePickerVisible ? "no-hide-descendants" : "auto"
+        }
+      >
+        <BarcodeScanBaseScreenComponent
+          barcodeFormats={barcodeFormats}
+          barcodeTypes={barcodeTypes}
+          onBarcodeSuccess={handleBarcodeSuccess}
+          onBarcodeError={handleBarcodeError}
+          onFileInputPressed={showFilePicker}
+          onManualInputPressed={handleManualInputPressed}
+          contextualHelp={emptyContextualHelp}
+          barcodeAnalyticsFlow="home"
+          isLoading={isFileReaderLoading}
+          isDisabled={isFilePickerVisible || isFileReaderLoading}
+        />
+      </View>
       {filePickerBottomSheet}
       {manualInputModal.bottomSheet}
     </>

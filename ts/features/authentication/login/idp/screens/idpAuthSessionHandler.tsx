@@ -11,7 +11,8 @@ import * as O from "fp-ts/lib/Option";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
 import { useCallback, useEffect, useMemo } from "react";
-import { AppState, SafeAreaView, StyleSheet, View } from "react-native";
+import { AppState, StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import I18n from "i18next";
 import { mixpanelTrack } from "../../../../../mixpanel";
 
@@ -37,8 +38,7 @@ import { assistanceToolConfigSelector } from "../../../../../store/reducers/back
 import { idpContextualHelpDataFromIdSelector } from "../../../../../store/reducers/content";
 import { isMixpanelEnabled } from "../../../../../store/reducers/persistedPreferences";
 import themeVariables from "../../../../../theme/variables";
-import { SessionToken } from "../../../../../types/SessionToken";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../../utils/contextualHelp";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
@@ -62,10 +62,10 @@ import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { setNativeLoginRequestInfo } from "../store/actions";
 import { nativeLoginRequestInfoSelector } from "../store/selectors";
 import { getSpidErrorCodeDescription } from "../utils/spidErrorCode";
-import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
 import {
   isActiveSessionFastLoginEnabledSelector,
-  isActiveSessionLoginSelector
+  isActiveSessionLoginSelector,
+  remoteApiLoginUrlPrefixSelector
 } from "../../../activeSessionLogin/store/selectors";
 
 const styles = StyleSheet.create({
@@ -248,7 +248,7 @@ export const AuthSessionPage = () => {
   );
 
   const handleLoginSuccess = useCallback(
-    (token: SessionToken) => {
+    (token: string) => {
       setRequestInfo({
         requestState: "AUTHORIZED",
         nativeAttempts: requestInfo.nativeAttempts

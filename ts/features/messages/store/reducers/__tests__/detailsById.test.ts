@@ -1,15 +1,19 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
+import {
+  populateStoresWithEphemeralAarMessageData,
+  terminateAarFlow
+} from "../../../../pn/aar/store/actions";
+import { mockEphemeralAarMessageDataActionPayload } from "../../../../pn/aar/utils/testUtils";
 import {
   paymentValidInvalidAfterDueDate,
   successLoadMessageDetails
 } from "../../../__mocks__/message";
-
-import { loadMessageDetails } from "../../actions";
 import { PaymentData, UIMessageDetails } from "../../../types";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
-import { GlobalState } from "../../../../../store/reducers/types";
+import { loadMessageDetails } from "../../actions";
 import {
   detailsByIdReducer,
   messageDetailsByIdSelector,
@@ -67,6 +71,48 @@ describe("detailsById reducer", () => {
         expect(pot.isSome(entry)).toBe(true);
         expect(pot.toUndefined(entry)).toBeDefined();
       });
+    });
+  });
+  describe("populateStoresWithEphemeralAarMessageData", () => {
+    it("should add the message details to the state upon receiving populatestoresWithEphemeralAarMessageData", () => {
+      const actionRequest = populateStoresWithEphemeralAarMessageData(
+        mockEphemeralAarMessageDataActionPayload
+      );
+      const entry = detailsByIdReducer(undefined, actionRequest)[
+        mockEphemeralAarMessageDataActionPayload.iun
+      ];
+      expect(pot.isSome(entry)).toBe(true);
+    });
+    it("should remove an AAR message's details from the state upon receiving terminateAarFlow", () => {
+      const stateWithAarMessage = detailsByIdReducer(
+        undefined,
+        populateStoresWithEphemeralAarMessageData(
+          mockEphemeralAarMessageDataActionPayload
+        )
+      );
+      const actionRequestStandardDetail = loadMessageDetails.success(
+        successLoadMessageDetails
+      );
+      const stateWithStandardMessage = detailsByIdReducer(
+        undefined,
+        actionRequestStandardDetail
+      );
+
+      const stateWithAarAndStandardMessages = {
+        ...stateWithAarMessage,
+        ...stateWithStandardMessage
+      };
+
+      const actionTerminate = terminateAarFlow({
+        messageId: mockEphemeralAarMessageDataActionPayload.iun
+      });
+
+      // without standard messages
+      const finalState = detailsByIdReducer(
+        stateWithAarAndStandardMessages,
+        actionTerminate
+      );
+      expect(finalState).toEqual(stateWithStandardMessage);
     });
   });
 });

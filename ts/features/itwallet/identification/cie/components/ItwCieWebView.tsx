@@ -1,25 +1,22 @@
+import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { ComponentProps, createRef } from "react";
 import { Platform, StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import WebView, {
   WebViewMessageEvent,
   WebViewNavigation
 } from "react-native-webview";
-import { pipe } from "fp-ts/lib/function";
 import {
   WebViewErrorEvent,
   WebViewHttpErrorEvent,
   WebViewNavigationEvent
 } from "react-native-webview/lib/WebViewTypes";
-import I18n from "i18next";
-import { selectItwEnv } from "../../../common/store/selectors/environment";
-import { useIOSelector } from "../../../../../store/hooks";
-import { getEnv } from "../../../common/utils/environment";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
-import { ItwCieMachineContext } from "../machine/provider";
-import {
-  selectAuthenticationUrl,
-  selectAuthorizationUrl
-} from "../machine/selectors";
+import { useIOSelector } from "../../../../../store/hooks";
+import { selectItwEnv } from "../../../common/store/selectors/environment";
+import { getEnv } from "../../../common/utils/environment";
+import { WebViewError } from "../utils/error";
 
 const iOSUserAgent =
   "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1";
@@ -61,11 +58,14 @@ const isL3AuthUrl = (url: string) =>
     ? url.includes("authnRequestString")
     : url.includes("OpenApp");
 
+type ItwCieWebViewProps = ComponentProps<typeof WebView> & {
+  onWebViewError: (error: WebViewError) => void;
+};
+
 /**
  * Base WebView component used for the CIE flow
  */
-const ItwCieWebView = (props: ComponentProps<typeof WebView>) => {
-  const cieActor = ItwCieMachineContext.useActorRef();
+const ItwCieWebView = ({ onWebViewError, ...props }: ItwCieWebViewProps) => {
   const webView = createRef<WebView>();
 
   const handleOnError = (
@@ -88,8 +88,8 @@ const ItwCieWebView = (props: ComponentProps<typeof WebView>) => {
         }
       },
       message =>
-        cieActor.send({
-          type: "webview-error",
+        onWebViewError({
+          name: "WEBVIEW_ERROR",
           message
         })
     );
@@ -120,19 +120,24 @@ const ItwCieWebView = (props: ComponentProps<typeof WebView>) => {
   );
 };
 
+type ItwCieAuthenticationWebviewProps = {
+  authenticationUrl: string;
+  onServiceProviderUrlReceived: (url: string) => void;
+  onWebViewError: (error: WebViewError) => void;
+};
+
 /**
  * Webview used to fetch the authentication url to use a servide provider for the CIE authentication
  * It displayes a loading spinner, with the webview working in the background
  */
-export const ItwCieAuthenticationWebview = () => {
-  const cieActor = ItwCieMachineContext.useActorRef();
-  const authenticationUrl = ItwCieMachineContext.useSelector(
-    selectAuthenticationUrl
-  );
-
+export const ItwCieAuthenticationWebview = ({
+  authenticationUrl,
+  onServiceProviderUrlReceived,
+  onWebViewError
+}: ItwCieAuthenticationWebviewProps) => {
   const handleMessage = async (event: WebViewMessageEvent) => {
     const url = event.nativeEvent.data;
-    cieActor.send({ type: "set-service-provider-url", url });
+    onServiceProviderUrlReceived(url);
   };
 
   const handleShouldStartLoadWithRequest = (
@@ -152,36 +157,42 @@ export const ItwCieAuthenticationWebview = () => {
 
   return (
     <>
-      <ItwCieWebView
-        source={{ uri: authenticationUrl }}
-        onMessage={handleMessage}
-        onShouldStartLoadWithRequest={handleShouldStartLoadWithRequest}
-      />
+      {authenticationUrl && (
+        <ItwCieWebView
+          source={{ uri: authenticationUrl }}
+          onMessage={handleMessage}
+          onShouldStartLoadWithRequest={handleShouldStartLoadWithRequest}
+          onWebViewError={onWebViewError}
+        />
+      )}
       <View style={StyleSheet.absoluteFillObject}>
-        <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
+        <LoadingScreenContent title={I18n.t("global.genericWaiting")} />
       </View>
     </>
   );
 };
 
+type ItwCieAuthorizationWebviewProps = {
+  authorizationUrl: string;
+  onAuthorizationComplete: (redirectUrl: string) => void;
+  onWebViewError: (error: WebViewError) => void;
+};
+
 /**
  * Webview used to display to the user the authorization request after the CIE authentication
  */
-export const ItwCieAuthorizationWebview = () => {
-  const cieActor = ItwCieMachineContext.useActorRef();
-  const authorizationUrl = ItwCieMachineContext.useSelector(
-    selectAuthorizationUrl
-  );
+export const ItwCieAuthorizationWebview = ({
+  authorizationUrl,
+  onAuthorizationComplete,
+  onWebViewError
+}: ItwCieAuthorizationWebviewProps) => {
   const { ISSUANCE_REDIRECT_URI } = pipe(useIOSelector(selectItwEnv), getEnv);
 
   const handleShouldStartLoadWithRequest = (
     event: WebViewNavigation
   ): boolean => {
     if (event.url.includes(ISSUANCE_REDIRECT_URI)) {
-      cieActor.send({
-        type: "complete-authentication",
-        redirectUrl: event.url
-      });
+      onAuthorizationComplete(event.url);
       return false;
     } else {
       return true;
@@ -189,9 +200,18 @@ export const ItwCieAuthorizationWebview = () => {
   };
 
   return (
-    <ItwCieWebView
-      source={{ uri: authorizationUrl || "" }}
-      onShouldStartLoadWithRequest={handleShouldStartLoadWithRequest}
-    />
+    <SafeAreaView style={{ flex: 1 }}>
+      <ItwCieWebView
+        source={{ uri: authorizationUrl }}
+        onShouldStartLoadWithRequest={handleShouldStartLoadWithRequest}
+        onWebViewError={onWebViewError}
+        originWhitelist={[
+          "https://*",
+          "intent://*",
+          "http://*",
+          ISSUANCE_REDIRECT_URI
+        ]}
+      />
+    </SafeAreaView>
   );
 };

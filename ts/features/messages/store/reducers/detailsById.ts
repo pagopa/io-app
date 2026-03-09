@@ -3,11 +3,16 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 
-import { loadMessageDetails, reloadAllMessages } from "../actions";
-import { clearCache } from "../../../settings/common/store/actions";
+import _ from "lodash";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
+import {
+  populateStoresWithEphemeralAarMessageData,
+  terminateAarFlow
+} from "../../../pn/aar/store/actions";
+import { clearCache } from "../../../settings/common/store/actions";
 import { UIMessageDetails } from "../../types";
+import { loadMessageDetails, reloadAllMessages } from "../actions";
 
 /**
  * A list of messages and pagination data.
@@ -50,6 +55,26 @@ export const detailsByIdReducer = (
         [action.payload.id]: pot.noneError(error.message || "UNKNOWN")
       };
     }
+    case getType(populateStoresWithEphemeralAarMessageData): {
+      const { iun, markdown, pnServiceID, subject } = action.payload;
+      const messageData: UIMessageDetails = {
+        hasRemoteContent: true,
+        hasThirdPartyData: true,
+        id: iun,
+        markdown,
+        serviceId: pnServiceID,
+        subject
+      };
+      return {
+        ...state,
+        [iun]: pot.some(messageData)
+      };
+    }
+    case getType(terminateAarFlow):
+      if (action.payload.messageId === undefined) {
+        return state;
+      }
+      return _.omit(state, action.payload.messageId);
 
     case getType(clearCache):
     case getType(reloadAllMessages.request):

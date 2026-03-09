@@ -75,7 +75,7 @@ const WalletDetailsPaymentMethodInitiatives = (
           weight="Semibold"
           onPress={navigateToPairableInitiativesList}
         >
-          {I18n.t("idpay.wallet.preview.showAll")}
+          {I18n.t("idpay.wallet.card.showAll")}
         </Body>
       </View>
       <VSpacer size={16} />

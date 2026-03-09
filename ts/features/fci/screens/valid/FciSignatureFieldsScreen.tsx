@@ -7,6 +7,7 @@ import {
   useFooterActionsMeasurements,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { isEqual } from "lodash";
 import { Route, StackActions, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
@@ -31,14 +32,14 @@ import { LightModalContext } from "../../../../components/ui/LightModal";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import {
   trackFciShowSignatureFields,
   trackFciStartSignature
 } from "../../analytics";
 import DocumentWithSignature from "../../components/DocumentWithSignature";
-import GenericErrorComponent from "../../components/GenericErrorComponent";
 import SignatureFieldItem from "../../components/SignatureFieldItem";
+import SignatureStatusComponent from "../../components/SignatureStatusComponent";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import { useFciSignatureFieldInfo } from "../../hooks/useFciSignatureFieldInfo";
 import { FCI_ROUTES } from "../../navigation/routes";
@@ -114,7 +115,7 @@ const FciSignatureFieldsScreen = () => {
           docSignatures,
           RA.fromOption,
           RA.map(doc => doc.signature_fields),
-          RA.map(fields => fields.filter(f => f === signatureField)),
+          RA.map(fields => fields.filter(f => isEqual(f, signatureField))),
           RA.flatten
         )
       ),
@@ -165,7 +166,7 @@ const FciSignatureFieldsScreen = () => {
         fciUpdateDocumentSignaturesRequest({
           ...doc,
           signature_fields: !value
-            ? [...doc.signature_fields.filter(f => f !== item)]
+            ? [...doc.signature_fields.filter(f => !isEqual(f, item))]
             : [...doc.signature_fields, item]
         })
       )
@@ -226,7 +227,7 @@ const FciSignatureFieldsScreen = () => {
             RA.findFirst(doc => doc.document_id === docId),
             O.chain(document => O.fromNullable(document)),
             O.map(doc => doc.signature_fields),
-            O.map(RA.filter(f => f === item)),
+            O.map(RA.filter(f => isEqual(f, item))),
             O.fold(constFalse, RA.isNonEmpty)
           )}
           onChange={v => onChange(v, item)}
@@ -275,9 +276,10 @@ const FciSignatureFieldsScreen = () => {
 
   if (isError) {
     return (
-      <GenericErrorComponent
+      <SignatureStatusComponent
         title={I18n.t("features.fci.errors.generic.default.title")}
         subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
+        pictogram={"umbrella"}
         onPress={() => dispatch(fciEndRequest())}
         testID={"FciGenericErrorTestID"}
       />

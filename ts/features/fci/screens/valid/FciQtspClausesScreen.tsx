@@ -12,15 +12,15 @@ import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
 import { servicePreferencePotByIdSelector } from "../../../services/details/store/selectors";
 import { isServicePreferenceResponseSuccess } from "../../../services/details/types/ServicePreferenceResponse";
 import { trackFciUxConversion } from "../../analytics";
-import GenericErrorComponent from "../../components/GenericErrorComponent";
 import LinkedText from "../../components/LinkedText";
 import LoadingComponent from "../../components/LoadingComponent";
 import QtspClauseListItem from "../../components/QtspClauseListItem";
+import SignatureStatusComponent from "../../components/SignatureStatusComponent";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import { useFciCheckService } from "../../hooks/useFciCheckService";
 import { FCI_ROUTES } from "../../navigation/routes";
@@ -36,6 +36,7 @@ import {
   fciQtspPrivacyTextSelector,
   fciQtspPrivacyUrlSelector
 } from "../../store/reducers/fciQtspClauses";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 const FciQtspClausesScreen = () => {
   const dispatch = useIODispatch();
@@ -84,12 +85,20 @@ const FciQtspClausesScreen = () => {
     });
   };
 
+  useHeaderSecondLevel({
+    title: "",
+    supportRequest: true,
+    contextualHelp: emptyContextualHelp,
+    headerShown: isPollFilledDocumentReady && !fciPollFilledDocumentError
+  });
+
   if (fciPollFilledDocumentError && !isPollFilledDocumentReady) {
     return (
-      <GenericErrorComponent
+      <SignatureStatusComponent
         title={I18n.t("features.fci.errors.generic.default.title")}
         subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
         onPress={() => dispatch(fciEndRequest())}
+        pictogram={"umbrella"}
         assistance={true}
         testID="PollingErrorComponentTestID"
       />
@@ -110,11 +119,9 @@ const FciQtspClausesScreen = () => {
       renderItem={({ item }) => (
         <QtspClauseListItem
           clause={item}
-          onChange={value =>
-            value
-              ? setClausesChecked(clausesChecked + 1)
-              : setClausesChecked(clausesChecked - 1)
-          }
+          onChange={value => {
+            setClausesChecked(prev => (value ? prev + 1 : prev - 1));
+          }}
           onLinkPress={openUrl}
         />
       )}

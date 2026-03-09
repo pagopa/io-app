@@ -8,7 +8,7 @@ import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import I18n from "i18next";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
@@ -18,12 +18,12 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import {
-  getMixPanelCredential,
   trackCredentialPreview,
   trackIssuanceCredentialScrollToBottom,
   trackItwExit,
   trackSaveCredentialToWallet
-} from "../../analytics";
+} from "../analytics";
+import { getMixPanelCredential } from "../../analytics/utils";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
@@ -63,9 +63,7 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
       // to the Failure state.
       () => (
         <LoadingScreenContent
-          contentTitle={I18n.t(
-            "features.itWallet.issuance.credentialPreview.loading"
-          )}
+          title={I18n.t("features.itWallet.issuance.credentialPreview.loading")}
         />
       ),
       props => <ContentView {...props} />
@@ -87,18 +85,19 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   const route = useRoute();
   const isMultilevel = isMultiLevelCredential(credential);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
-
   const mixPanelCredential = useMemo(
     () => getMixPanelCredential(credentialType, isItwL3),
     [credentialType, isItwL3]
   );
 
-  useFocusEffect(() => {
-    trackCredentialPreview({
-      credential: mixPanelCredential,
-      credential_type: isMultilevel ? "multiple" : "unique"
-    });
-  });
+  useFocusEffect(
+    useCallback(() => {
+      trackCredentialPreview({
+        credential: mixPanelCredential,
+        credential_type: isMultilevel ? "multiple" : "unique"
+      });
+    }, [mixPanelCredential, isMultilevel])
+  );
 
   const dismissDialog = useItwDismissalDialog({
     handleDismiss: () => {

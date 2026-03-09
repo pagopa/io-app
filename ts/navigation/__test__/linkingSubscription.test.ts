@@ -10,6 +10,8 @@ import { applicationChangeState } from "../../store/actions/application";
 import { appReducer } from "../../store/reducers";
 import { GlobalState } from "../../store/reducers/types";
 import { linkingSubscription } from "../linkingSubscription";
+import { initiateAarFlow } from "../../features/pn/aar/store/actions";
+import { IO_LOGIN_CIE_URL_SCHEME } from "../../features/authentication/login/cie/utils/cie";
 
 describe("linkingSubscription", () => {
   beforeEach(() => {
@@ -91,19 +93,11 @@ describe("linkingSubscription", () => {
       } logged in, and the link passed ${
         isAARLink ? "is" : "isn't"
       } a valid AAR link`, () => {
-        const {
-          store,
-          mockDispatch,
-          mockCurrySubscription,
-          addEventListenerSpy
-        } = initializeTests();
+        const { mockDispatch, mockCurrySubscription, addEventListenerSpy } =
+          initializeTests();
         const mockNav = jest.fn();
         const testUrl = `https://example.com/${isAARLink}/${isLoggedIn}`;
-        const mockState = store.getState();
 
-        jest
-          .spyOn(DEEP_LINKING, "navigateToSendAarFlowIfEnabled")
-          .mockImplementation(mockNav);
         jest
           .spyOn(UTIL_GUARDS, "isLoggedIn")
           .mockImplementation(() => isLoggedIn);
@@ -122,7 +116,9 @@ describe("linkingSubscription", () => {
           );
 
           if (isAARLink) {
-            expect(mockNav).toHaveBeenCalledWith(mockState, testUrl);
+            expect(mockDispatch).toHaveBeenCalledWith(
+              initiateAarFlow({ aarUrl: testUrl })
+            );
           } else {
             expect(mockNav).not.toHaveBeenCalled();
           }
@@ -131,6 +127,47 @@ describe("linkingSubscription", () => {
           expect(mockDispatch).toHaveBeenCalledWith(storeLinkingUrl(testUrl));
         }
       });
+    });
+  });
+  const blacklistTestCases = [
+    { url: `${IO_LOGIN_CIE_URL_SCHEME}`, shouldBlackList: true },
+    { url: `${IO_LOGIN_CIE_URL_SCHEME}somePath`, shouldBlackList: true },
+    {
+      url: `    ${IO_LOGIN_CIE_URL_SCHEME}`,
+      shouldBlackList: true
+    },
+    {
+      url: `    ${IO_LOGIN_CIE_URL_SCHEME}somePath`,
+      shouldBlackList: true
+    },
+    { url: `${IO_LOGIN_CIE_URL_SCHEME.toUpperCase()}`, shouldBlackList: true },
+    {
+      url: `https://example.com/${IO_LOGIN_CIE_URL_SCHEME}`,
+      shouldBlackList: false
+    },
+    {
+      url: `https://example.com/somePath`,
+      shouldBlackList: false
+    }
+  ];
+  blacklistTestCases.forEach(({ url, shouldBlackList }) => {
+    it(`${
+      shouldBlackList ? "shouldn't" : "should"
+    } store the DeepLink URL when not logged and passed the following URL: "${url}"`, () => {
+      const { mockDispatch, mockCurrySubscription, addEventListenerSpy } =
+        initializeTests();
+
+      jest.spyOn(UTIL_GUARDS, "isLoggedIn").mockImplementation(() => false);
+
+      mockCurrySubscription(jest.fn());
+
+      runEventListenerCallback(addEventListenerSpy, { url });
+
+      if (shouldBlackList) {
+        expect(mockDispatch).not.toHaveBeenCalledWith(storeLinkingUrl(url));
+      } else {
+        expect(mockDispatch).toHaveBeenCalledWith(storeLinkingUrl(url));
+      }
     });
   });
 });
@@ -156,7 +193,6 @@ const initializeTests = () => {
   const mockCurrySubscription = linkingSubscription(mockDispatch, store);
 
   return {
-    store,
     addEventListenerSpy,
     mockCurrySubscription,
     mockDispatch

@@ -23,16 +23,10 @@ import {
   useMemo,
   useState
 } from "react";
-import { FlatList, ListRenderItemInfo } from "react-native";
+import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import IOMarkdown from "../../../components/IOMarkdown";
-import { ContextualHelpProps } from "../../../components/screens/BaseScreenComponent";
-import {
-  getContextualHelpConfig,
-  getContextualHelpData,
-  reloadContextualHelpDataThreshold
-} from "../../../components/screens/BaseScreenComponent/utils";
 import {
   IOScrollView,
   IOScrollViewActions
@@ -50,6 +44,12 @@ import {
 } from "../../../store/reducers/backendStatus/remoteConfig";
 import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/content";
 import { FAQType, getFAQsFromCategories } from "../../../utils/faq";
+import {
+  ContextualHelpProps,
+  getContextualHelpConfig,
+  getContextualHelpData,
+  reloadContextualHelpDataThreshold
+} from "../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
 import {
@@ -390,7 +390,8 @@ const ZendeskSupportHelpCenter = () => {
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
-          ignoreSafeAreaMargin={true}
+          /* Avoid status bar overlapping on Android */
+          ignoreSafeAreaMargin={Platform.OS === "ios" ? true : false}
           title={I18n.t("support.helpCenter.header")}
           transparent={false}
           type="singleAction"

@@ -1,4 +1,3 @@
-import { SessionToken } from "../../../../types/SessionToken";
 import { SpidIdp } from "../../../../utils/idps";
 import {
   setStartActiveSessionLogin,
@@ -7,15 +6,17 @@ import {
   activeSessionLoginSuccess,
   activeSessionLoginFailure,
   consolidateActiveSessionLoginData,
-  setFinishedActiveSessionLoginFlow
+  setFinishedActiveSessionLoginFlow,
+  closeSessionExpirationBanner
 } from "../store/actions";
 import {
-  activeSessionLoginReducer,
   ActiveSessionLoginState,
-  testable
+  testable,
+  testableReducer
 } from "../store/reducer";
 
 const testableInitialState = testable!;
+const activeSessionLoginReducer = testableReducer!;
 
 describe("activeSessionLoginReducer", () => {
   it("should return initial state by default", () => {
@@ -54,7 +55,7 @@ describe("activeSessionLoginReducer", () => {
   });
 
   it("should handle activeSessionLoginSuccess", () => {
-    const mockToken = "mock-session-token" as SessionToken;
+    const mockToken = "mock-token";
     const state = activeSessionLoginReducer(
       testableInitialState,
       activeSessionLoginSuccess(mockToken)
@@ -77,11 +78,16 @@ describe("activeSessionLoginReducer", () => {
 
   it("should reset state on consolidateActiveSessionLoginData", () => {
     const modifiedState: ActiveSessionLoginState = {
+      activeSessionLoginLocalFlag: false,
       isActiveSessionLogin: true,
       isUserLoggedIn: true,
       loginInfo: {
-        token: "token" as SessionToken,
+        token: "mock-token",
         fastLoginOptIn: true
+      },
+      engagement: {
+        hasBlockingScreenBeenVisualized: false,
+        showSessionExpirationBanner: true
       }
     };
     if (
@@ -105,11 +111,16 @@ describe("activeSessionLoginReducer", () => {
 
   it("should reset state on setFinishedActiveSessionLoginFlow", () => {
     const modifiedState: ActiveSessionLoginState = {
+      activeSessionLoginLocalFlag: false,
       isActiveSessionLogin: true,
       isUserLoggedIn: true,
       loginInfo: {
-        token: "token" as SessionToken,
+        token: "mock-token",
         fastLoginOptIn: true
+      },
+      engagement: {
+        hasBlockingScreenBeenVisualized: false,
+        showSessionExpirationBanner: true
       }
     };
     const state = activeSessionLoginReducer(
@@ -117,5 +128,23 @@ describe("activeSessionLoginReducer", () => {
       setFinishedActiveSessionLoginFlow()
     );
     expect(state).toEqual(testableInitialState);
+  });
+
+  it("should handle closeSessionExpirationBanner", () => {
+    const initialStateWithBannerVisible: ActiveSessionLoginState = {
+      ...testableInitialState,
+      engagement: {
+        ...testableInitialState.engagement,
+        showSessionExpirationBanner: true
+      }
+    };
+    const state = activeSessionLoginReducer(
+      initialStateWithBannerVisible,
+      closeSessionExpirationBanner()
+    );
+    expect(state.engagement.showSessionExpirationBanner).toBe(false);
+    expect(state.engagement.hasBlockingScreenBeenVisualized).toBe(
+      initialStateWithBannerVisible.engagement.hasBlockingScreenBeenVisualized
+    );
   });
 });

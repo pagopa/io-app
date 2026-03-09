@@ -5,7 +5,6 @@ import {
   ListItemHeader
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { RouteProp } from "@react-navigation/native";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { LayoutChangeEvent, SectionList, SectionListData } from "react-native";
 import Animated, {
@@ -29,21 +28,16 @@ import { ReceiptFadeInOutAnimationView } from "../components/ReceiptFadeInOutAni
 import { ReceiptListItemTransaction } from "../components/ReceiptListItemTransaction";
 import { ReceiptLoadingList } from "../components/ReceiptLoadingList";
 import { ReceiptSectionListHeader } from "../components/ReceiptSectionListHeader";
-import { PaymentsReceiptParamsList } from "../navigation/params";
 import { PaymentsReceiptRoutes } from "../navigation/routes";
 import { getPaymentsReceiptAction } from "../store/actions";
 import { walletReceiptListPotSelector } from "../store/selectors";
 import { ReceiptsCategoryFilter } from "../types";
 import { groupTransactionsByMonth } from "../utils";
 
-export type ReceiptListScreenProps = RouteProp<
-  PaymentsReceiptParamsList,
-  "PAYMENT_RECEIPT_DETAILS"
->;
-
-const AnimatedSectionList = Animated.createAnimatedComponent(
-  SectionList as new () => SectionList<NoticeListItem>
-);
+const AnimatedSectionList =
+  Animated.createAnimatedComponent<typeof SectionList<NoticeListItem>>(
+    SectionList
+  );
 
 const ReceiptListScreen = () => {
   const dispatch = useIODispatch();
@@ -74,7 +68,8 @@ const ReceiptListScreen = () => {
       params: {
         transactionId: transaction.eventId,
         isPayer: transaction.isPayer,
-        isCart: transaction.isCart
+        isCart: transaction.isCart,
+        isDebtor: transaction.isDebtor
       }
     });
   };
@@ -174,9 +169,7 @@ const ReceiptListScreen = () => {
     noticeCategory === "payer"
       ? {
           title: I18n.t("features.payments.transactions.list.emptyPayer.title"),
-          pictogram: "empty",
-          enableAnimatedPictogram: true,
-          loop: false
+          pictogram: "empty"
         }
       : {
           title: I18n.t("features.payments.transactions.list.empty.title"),
@@ -226,13 +219,17 @@ const ReceiptListScreen = () => {
       }
       testID="PaymentsTransactionsListTestID"
       ItemSeparatorComponent={Divider}
-      renderSectionHeader={({ section }) => (
-        <ListItemHeader label={section.title} />
-      )}
+      renderSectionHeader={({
+        section
+      }: {
+        section: SectionListData<NoticeListItem>;
+      }) => <ListItemHeader label={section.title} />}
       ListEmptyComponent={EmptyStateList}
       ListFooterComponent={renderLoadingFooter}
-      keyExtractor={item => `transaction_${item.eventId}`}
-      renderItem={({ item }) => (
+      keyExtractor={(item: NoticeListItem, index: number) =>
+        `transaction_${item.eventId}${index}`
+      }
+      renderItem={({ item }: { item: NoticeListItem }) => (
         <ReceiptFadeInOutAnimationView>
           <ReceiptListItemTransaction
             openedItemRef={openedItemRef}

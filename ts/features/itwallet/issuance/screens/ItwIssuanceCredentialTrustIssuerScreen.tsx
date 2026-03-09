@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import {
   ContentWrapper,
   FeatureInfo,
@@ -13,23 +12,22 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
+import { useCallback, useRef } from "react";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import {
-  getMixPanelCredential,
-  trackIssuanceCredentialScrollToBottom,
-  trackItwExit,
-  trackOpenItwTos
-} from "../../analytics";
+import { trackOpenItwTos } from "../../analytics";
+import { getMixPanelCredential } from "../../analytics/utils";
 import { ItwDataExchangeIcons } from "../../common/components/ItwDataExchangeIcons";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
+import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
@@ -39,25 +37,27 @@ import {
   RequestObject,
   StoredCredential
 } from "../../common/utils/itwTypesUtils";
-import { generateLinkRuleWithCallback } from "../../common/utils/markdown";
+import { generateItwIOMarkdownRules } from "../../common/utils/markdown";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
   selectCredentialTypeOption,
   selectIsIssuing,
   selectIsLoading,
   selectRequestedCredentialOption
 } from "../../machine/credential/selectors";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
-import { ITW_ROUTES } from "../../navigation/routes";
-import { ItwRequestedClaimsList } from "../components/ItwRequestedClaimsList";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
+import {
+  trackIssuanceCredentialScrollToBottom,
+  trackItwExit
+} from "../analytics";
+import { ItwRequestedClaimsList } from "../components/ItwRequestedClaimsList";
 
 export type ItwIssuanceCredentialTrustIssuerNavigationParams = {
+  animationEnabled?: boolean;
   credentialType?: string;
-  asyncContinuation?: boolean; // TODO to be removed in [SIW-2839]
   isUpgrade?: boolean;
 };
 
@@ -71,7 +71,7 @@ type ScreenProps =
   | ItwIssuanceCredentialTrustIssuerNavigationParams;
 
 const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
-  const { credentialType, asyncContinuation, isUpgrade } =
+  const { credentialType, isUpgrade } =
     ("route" in props ? props.route.params : props) ?? {};
 
   const eidOption = useIOSelector(itwCredentialsEidSelector);
@@ -98,17 +98,14 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
         machineRef.send({
           type: "select-credential",
           credentialType,
-          mode: isUpgrade ? "upgrade" : "issuance",
-          isAsyncContinuation: asyncContinuation // TODO to be removed in [SIW-2839]
+          mode: isUpgrade ? "upgrade" : "issuance"
         });
       }
-    }, [credentialType, asyncContinuation, machineRef, isUpgrade])
+    }, [credentialType, machineRef, isUpgrade])
   );
 
   if (isLoading) {
-    return (
-      <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
-    );
+    return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
   }
 
   return pipe(
@@ -135,6 +132,7 @@ type ContentViewProps = {
  */
 const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const route = useRoute();
+  const hasScrolledToBottom = useRef(false);
   const privacyUrl = useIOSelector(state =>
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
@@ -143,7 +141,6 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isIssuing =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsIssuing);
-
   const theme = useIOTheme();
 
   const handleContinuePress = () => {
@@ -173,15 +170,21 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   });
   const requiredClaims = claims.map(claim => ({
     claim,
-    source: getCredentialNameFromType(eid.credentialType)
+    source: getCredentialNameFromType(eid.credentialType, "", isItwL3)
   }));
 
+  // Added hasScrolledToBottom ref to avoid sending multiple scroll-to-bottom events when navigating between screens
   const trackScrollToBottom = (crossed: boolean) => {
-    if (crossed) {
+    if (crossed && !hasScrolledToBottom.current) {
+      // eslint-disable-next-line functional/immutable-data
+      hasScrolledToBottom.current = true;
       trackIssuanceCredentialScrollToBottom(
         mixPanelCredential,
         ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER
       );
+    } else if (!crossed && hasScrolledToBottom.current) {
+      // eslint-disable-next-line functional/immutable-data
+      hasScrolledToBottom.current = false;
     }
   };
 
@@ -214,6 +217,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
             credentialName: getCredentialNameFromType(credentialType)
           })}
         </H2>
+        <VSpacer size={16} />
         <IOMarkdown
           content={I18n.t(
             "features.itWallet.issuance.credentialAuth.subtitle",
@@ -222,7 +226,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
             }
           )}
         />
-        <VSpacer size={8} />
+        <VSpacer size={24} />
         <ListItemHeader
           label={I18n.t(
             "features.itWallet.issuance.credentialAuth.requiredClaims"
@@ -250,7 +254,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
           content={I18n.t("features.itWallet.issuance.credentialAuth.tos", {
             privacyUrl
           })}
-          rules={generateLinkRuleWithCallback(trackOpenItwTos)}
+          rules={generateItwIOMarkdownRules({ linkCallback: trackOpenItwTos })}
         />
       </ContentWrapper>
     </ForceScrollDownView>

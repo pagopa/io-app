@@ -1,4 +1,5 @@
 import { put } from "typed-redux-saga/macro";
+import { getCdcStatusWallet } from "../../bonus/cdc/wallet/store/actions";
 import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 import { idPayWalletGet } from "../../idpay/wallet/store/actions";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
@@ -14,4 +15,6 @@ export function* handleWalletUpdateSaga() {
   yield* put(idPayWalletGet.request());
   // Updates the CGN details
   yield* put(cgnDetails.request());
+  // Updates the CDC status
+  yield* put(getCdcStatusWallet.request());
 }

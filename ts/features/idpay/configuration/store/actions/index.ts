@@ -17,12 +17,12 @@ export const idpayInitiativeInstrumentsGet = createAsyncAction(
   "IDPAY_INITIATIVE_INSTRUMENTS_GET_FAILURE"
 )<IdPayInitiativeInstrumentsGetPayloadType, InstrumentListDTO, NetworkError>();
 
-export type IdPayInitiativeInstrumentsDeletePayloadType = {
+type IdPayInitiativeInstrumentsDeletePayloadType = {
   initiativeId: string;
   instrumentId: string;
 };
 
-export type IdPayInitiativeInstrumentsDeleteErrorPayloadType = {
+type IdPayInitiativeInstrumentsDeleteErrorPayloadType = {
   instrumentId: string;
   error: NetworkError;
 };

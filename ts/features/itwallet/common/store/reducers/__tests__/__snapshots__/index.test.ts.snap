@@ -2,8 +2,14 @@
 
 exports[`itWalletReducer should match snapshot [if this test fails, remember to add a migration to the store before updating the snapshot] 1`] = `
 {
+  "banners": {},
   "credentials": {
     "credentials": {},
+  },
+  "credentialsCatalogue": {
+    "catalogue": {
+      "kind": "PotNone",
+    },
   },
   "environment": {
     "env": "prod",
@@ -18,14 +24,14 @@ exports[`itWalletReducer should match snapshot [if this test fails, remember to 
       "_tag": "None",
     },
   },
-  "preferences": {
-    "requestedCredentials": {},
-  },
+  "preferences": {},
   "securePreferences": {
     "offlineAccessCounter": 0,
+    "unverifiedCredentialsAccessCounter": 0,
   },
   "walletInstance": {
     "attestation": undefined,
+    "renewalError": false,
     "status": {
       "kind": "PotNone",
     },

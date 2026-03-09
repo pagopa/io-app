@@ -63,18 +63,14 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -144,13 +140,9 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -207,68 +199,85 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
                         }
                       }
                     >
-                      <View
+                      <RNCSafeAreaView
+                        edges={
+                          {
+                            "bottom": "additive",
+                            "left": "off",
+                            "right": "off",
+                            "top": "off",
+                          }
+                        }
                         style={
-                          [
-                            {
-                              "flex": 1,
-                              "overflow": "hidden",
-                            },
-                            undefined,
-                          ]
+                          {
+                            "flex": 1,
+                          }
                         }
                       >
-                        <RNCWebView
-                          allowsBackForwardNavigationGestures={true}
-                          allowsPictureInPictureMediaPlayback={true}
-                          androidCameraAccessDisabled={true}
-                          androidMicrophoneAccessDisabled={true}
-                          cacheEnabled={true}
-                          fraudulentWebsiteWarningEnabled={true}
-                          hasOnFileDownload={false}
-                          hasOnOpenWindowEvent={false}
-                          injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
-                          injectedJavaScriptForMainFrameOnly={true}
-                          javaScriptEnabled={true}
-                          messagingEnabled={false}
-                          messagingModuleName=""
-                          newSource={
-                            {
-                              "uri": "https://google.com",
-                            }
-                          }
-                          onContentProcessDidTerminate={[Function]}
-                          onHttpError={[Function]}
-                          onLoadingError={[Function]}
-                          onLoadingFinish={[Function]}
-                          onLoadingProgress={[Function]}
-                          onLoadingStart={[Function]}
-                          onMessage={[Function]}
-                          onShouldStartLoadWithRequest={[Function]}
-                          source={
-                            {
-                              "uri": "https://google.com",
-                            }
-                          }
+                        <View
                           style={
                             [
                               {
                                 "flex": 1,
                                 "overflow": "hidden",
                               },
-                              {
-                                "backgroundColor": "#ffffff",
-                              },
-                              {
-                                "flex": 1,
-                              },
+                              undefined,
                             ]
                           }
-                          testID="webview"
-                          textInteractionEnabled={true}
-                          useSharedProcessPool={true}
-                        />
-                      </View>
+                        >
+                          <RNCWebView
+                            allowsBackForwardNavigationGestures={true}
+                            allowsPictureInPictureMediaPlayback={true}
+                            androidCameraAccessDisabled={true}
+                            androidMicrophoneAccessDisabled={true}
+                            cacheEnabled={true}
+                            fraudulentWebsiteWarningEnabled={true}
+                            hasOnFileDownload={false}
+                            hasOnOpenWindowEvent={false}
+                            injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
+                            injectedJavaScriptForMainFrameOnly={true}
+                            javaScriptEnabled={true}
+                            messagingEnabled={false}
+                            messagingModuleName=""
+                            newSource={
+                              {
+                                "uri": "https://google.com",
+                              }
+                            }
+                            onContentProcessDidTerminate={[Function]}
+                            onHttpError={[Function]}
+                            onLoadingError={[Function]}
+                            onLoadingFinish={[Function]}
+                            onLoadingProgress={[Function]}
+                            onLoadingStart={[Function]}
+                            onMessage={[Function]}
+                            onShouldStartLoadWithRequest={[Function]}
+                            paymentRequestEnabled={true}
+                            source={
+                              {
+                                "uri": "https://google.com",
+                              }
+                            }
+                            style={
+                              [
+                                {
+                                  "flex": 1,
+                                  "overflow": "hidden",
+                                },
+                                {
+                                  "backgroundColor": "#ffffff",
+                                },
+                                {
+                                  "flex": 1,
+                                },
+                              ]
+                            }
+                            testID="webview"
+                            textInteractionEnabled={true}
+                            useSharedProcessPool={true}
+                          />
+                        </View>
+                      </RNCSafeAreaView>
                     </View>
                     <View
                       collapsable={false}
@@ -283,6 +292,29 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
                       >
                         <View
                           accessibilityRole="header"
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "borderBottomWidth": 1,
+                                "borderColor": "rgba(210,214,227,0)",
+                              },
+                              {},
+                            ]
+                          }
                           style={
                             [
                               {
@@ -298,6 +330,31 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "marginTop": 0,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "flexGrow": 1,
+                                  "height": 56,
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 24,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -338,13 +395,34 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
                               <Text
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "opacity": 1,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "color": "#0E0F13",
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -409,6 +487,35 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -419,7 +526,13 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
                                         "height": 24,
                                         "width": 24,
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                     ]
                                   }
                                 >
@@ -428,17 +541,25 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    animatedProps={
-                                      {
-                                        "color": undefined,
-                                      }
-                                    }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    collapsable={false}
                                     color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {
+                                          "color": "rgba(14, 15, 19, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
@@ -503,22 +624,14 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>

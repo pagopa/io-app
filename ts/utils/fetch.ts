@@ -64,10 +64,12 @@ export function toRetriableFetch(
  */
 export function defaultRetryingFetch(
   timeout: Millisecond = fetchTimeout,
-  maxRetries: number = fetchMaxRetries
+  maxRetries: number = fetchMaxRetries,
+  retryOnStatusCode: number = 429
 ): typeof fetch {
   const timeoutFetch = toFetchTimeout(timeout);
-  const retriableFetch = toRetriableFetch(maxRetries, 429);
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const retriableFetch = toRetriableFetch(maxRetries, retryOnStatusCode);
 
   return retriableFetch((input: RequestInfo | URL, init?: RequestInit) =>
     timeoutFetch(input, init)
@@ -111,6 +113,7 @@ export const constantPollingFetch = (
 ): typeof fetch => {
   const constantBackoff = () => delay as Millisecond;
   const timeoutFetch = toFetchTimeout(timeout);
+  // eslint-disable-next-line @typescript-eslint/no-shadow
   const retriableFetch = toRetriableFetch(
     retries,
     404,

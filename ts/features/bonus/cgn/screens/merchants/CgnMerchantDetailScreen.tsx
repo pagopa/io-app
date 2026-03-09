@@ -12,20 +12,17 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
 
+import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {
-  Image,
-  LayoutChangeEvent,
-  SafeAreaView,
-  StyleSheet,
-  View
-} from "react-native";
+import { Image, LayoutChangeEvent, StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue
 } from "react-native-reanimated";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import I18n from "i18next";
+import {
+  SafeAreaView,
+  useSafeAreaInsets
+} from "react-native-safe-area-context";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { isReady } from "../../../../../common/model/RemoteValue";

@@ -28,10 +28,10 @@ const fonts = {
     android: "ReadexPro",
     ios: "Readex Pro"
   }),
-  DMMono: Platform.select({
-    android: "DMMono",
-    web: "DMMono",
-    ios: "DM Mono"
+  FiraCode: Platform.select({
+    android: "FiraCode",
+    web: "FiraCode",
+    ios: "Fira Code"
   })
 };
 

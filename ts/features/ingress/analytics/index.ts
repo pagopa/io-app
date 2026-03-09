@@ -1,5 +1,6 @@
 import { mixpanelTrack } from "../../../mixpanel";
 import { buildEventProperties } from "../../../utils/analytics";
+import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 
 export function trackIngressServicesSlowDown() {
   void mixpanelTrack(
@@ -8,8 +9,11 @@ export function trackIngressServicesSlowDown() {
   );
 }
 
-export function trackIngressTimeout() {
-  void mixpanelTrack("INGRESS_TIMEOUT", buildEventProperties("KO", undefined));
+export function trackIngressTimeout(API_failure: string) {
+  void mixpanelTrack(
+    "INGRESS_TIMEOUT",
+    buildEventProperties("KO", undefined, { API_failure })
+  );
 }
 
 export function trackIngressCdnSystemError() {
@@ -24,4 +28,23 @@ export function trackIngressNoInternetConnection() {
     "INGRESS_NO_INTERNET_CONNECTION",
     buildEventProperties("KO", undefined)
   );
+}
+
+// Offline wallet banner tracking
+const props = {
+  banner_id: "INGRESS_SCREEN_WALLET_OFFLINE",
+  banner_page: "INGRESS_SCREEN",
+  banner_landing: ITW_ROUTES.OFFLINE.WALLET
+};
+
+export function trackSettingsDiscoverBannerVisualized() {
+  const eventName = "BANNER";
+  const buildedProps = buildEventProperties("UX", "screen_view", props);
+  void mixpanelTrack(eventName, buildedProps);
+}
+
+export function trackIngressOfflineWalletBannerCTAClicked() {
+  const eventName = "TAP_BANNER";
+  const buildedProps = buildEventProperties("UX", "action", props);
+  void mixpanelTrack(eventName, buildedProps);
 }

@@ -4,14 +4,17 @@ import {
   CredentialIssuanceFailureType
 } from "../../machine/credential/failure";
 import {
-  getMixPanelCredential,
   trackAddCredentialFailure,
   trackAddCredentialUnexpectedFailure,
   trackCredentialInvalidStatusFailure,
   trackCredentialNotEntitledFailure,
-  trackItwAddCredentialNotTrustedIssuer,
-  trackItWalletDeferredIssuing
-} from "../../analytics";
+  trackItwAddCredentialNotTrustedIssuer
+} from "../analytics";
+import { getMixPanelCredential } from "../../analytics/utils";
+import {
+  serializeFailureReason,
+  shouldSerializeReason
+} from "../../common/utils/itwStoreUtils";
 
 type Params = {
   failure: CredentialIssuanceFailure;
@@ -35,10 +38,6 @@ export const useCredentialEventsTracking = ({
     }
 
     const credential = getMixPanelCredential(credentialType, isItwL3);
-
-    if (failure.type === CredentialIssuanceFailureType.ASYNC_ISSUANCE) {
-      return trackItWalletDeferredIssuing(credential);
-    }
 
     if (
       failure.type === CredentialIssuanceFailureType.INVALID_STATUS &&
@@ -90,8 +89,12 @@ export const useCredentialEventsTracking = ({
     }
 
     if (failure.type === CredentialIssuanceFailureType.UNEXPECTED) {
+      const reasonToTrack = shouldSerializeReason(failure)
+        ? serializeFailureReason(failure)
+        : failure;
+
       return trackAddCredentialUnexpectedFailure({
-        reason: failure.reason,
+        reason: reasonToTrack.reason,
         type: failure.type,
         credential
       });

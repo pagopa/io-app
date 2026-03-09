@@ -21,10 +21,17 @@ jest.mock("react-redux", () => ({
   useDispatch: () => mockDispatch
 }));
 
+// Avoid Skottie errrors because the `jest` environment doesn't support it
+jest.mock("../../../../../components/ui/AnimatedPictogram", () => ({
+  AnimatedPictogram: () => null,
+  IOAnimatedPictogramsAssets: {}
+}));
+
 describe("MessageList", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
+    jest.restoreAllMocks();
     mockAccessibilityInfo(false);
   });
   it("should dispatch 'loadNextPageMessages.request' when output from 'getLoadNextPageMessagesActionIfNeeded' is not undefined", () => {

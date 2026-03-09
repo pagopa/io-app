@@ -2,6 +2,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useIOStore } from "../../../../store/hooks";
 import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwSessionExpiredError } from "../../api/client";
 import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestationUtils";
 import { getFiscalCodeFromCredential } from "../../common/utils/itwClaimsUtils";
@@ -62,8 +63,10 @@ export const createEidIssuanceGuardsImplementation = (
       !!pid &&
       itwIsSimplifiedActivationRequired(state) && // The flag for simplified activation is enabled
       itwIsL3EnabledSelector(state) && // The user has been whitelisted to officially activate IT-Wallet
-      isItwCredential(pid.credential) && // Extra check to ensure the PID is a valid L3 credential
+      isItwCredential(pid) && // Extra check to ensure the PID is a valid L3 credential
       getCredentialStatus(pid) === "valid"
     );
-  }
+  },
+
+  isWalletValid: () => itwLifecycleIsValidSelector(store.getState())
 });

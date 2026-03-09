@@ -1,12 +1,14 @@
 #!/bin/bash
 
-IO_BACKEND_VERSION=v16.17.0
+IO_BACKEND_VERSION=v17.5.2
 # need to change after merge on io-services-metadata
-IO_SERVICES_METADATA_VERSION=1.0.84
+IO_SERVICES_METADATA_VERSION=1.0.97
 # Session manager version
 IO_SESSION_MANAGER_VERSION=1.8.0
-# IO Wallet Backend version
-IO_WALLET_BACKEND_VERSION=v16.14.0
+# IO Wallet user function version
+IO_WALLET_USER_FUNC_VERSION=4.1.11
+# Send function version
+SEND_FUNC_VERSION=1.5.5
 
 declare -a apis=(
   # Backend APIs
@@ -14,20 +16,18 @@ declare -a apis=(
   # pagoPA APIs
   "./definitions/pagopa assets/paymentManager/spec.json"
   "./definitions/pagopa/walletv2 https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/bonus/specs/bpd/pm/walletv2.json"
-  "./definitions/pagopa/walletv3 https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.202.0/src/domains/pay-wallet-app/api/io-payment-wallet/v1/_openapi.json.tpl"
-  "./definitions/pagopa/ecommerce https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.202.0/src/domains/ecommerce-app/api/ecommerce-io/v2/_openapi.json.tpl"
-  "./definitions/pagopa/biz-events https://raw.githubusercontent.com/pagopa/pagopa-biz-events-service/refs/tags/0.1.87/openapi/openapi_lap_jwt.json"
+  "./definitions/pagopa/walletv3 https://raw.githubusercontent.com/pagopa/pagopa-infra/refs/tags/v1.745.1/src/domains/pay-wallet-app/api/io-payment-wallet/v1/_openapi.json.tpl"
+  "./definitions/pagopa/ecommerce https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.731.1/src/domains/ecommerce-app/api/ecommerce-io/v2/_openapi.json.tpl"
+  "./definitions/pagopa/biz-events https://raw.githubusercontent.com/pagopa/pagopa-biz-events-service/refs/tags/0.3.5/openapi/openapi_lap_jwt.json"
   "./definitions/pagopa/platform https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.64.0/src/domains/shared-app/api/session-wallet/v1/_openapi.json.tpl"
   "./definitions/pagopa/cobadge/configuration https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/pagopa/cobadge/abi_definitions.yml"
   "./definitions/pagopa/privative/configuration https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/pagopa/privative/definitions.yml"
   # IDPay APIs
-  "./definitions/idpay https://raw.githubusercontent.com/pagopa/cstar-securehub-infra-api-spec/refs/tags/v2.30.0/src/idpay/apim/api/idpay_appio_full/openapi.appio.full.yml"
+  "./definitions/idpay https://raw.githubusercontent.com/pagopa/cstar-securehub-infra-api-spec/refs/tags/v3.10.2/src/idpay/apim/api/idpay_appio_full/openapi.appio.full.yml"
   # Services APIs
   "./definitions/services https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_services_app_backend.yaml"
   # Lollipop APIs
   "./definitions/lollipop https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_lollipop_first_consumer.yaml"
-  # Trial system APIs
-  "./definitions/trial_system https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_trial_system.yaml"
   # Fims APIs
   "./definitions/fims_history https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_io_fims.yaml"
   "./definitions/fims_sso https://raw.githubusercontent.com/pagopa/io-fims/a93f1a1abf5230f103d9f489b139902b87288061/apps/op-app/openapi.yaml"
@@ -40,13 +40,15 @@ declare -a apis=(
   "./definitions/cgn/merchants https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_cgn_operator_search.yaml"
   # PN APIs
   "./definitions/pn https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_pn.yaml"
-  "./definitions/pn/aar assets/send/aar.yaml"
+  "./definitions/pn/aar https://raw.githubusercontent.com/pagopa/io-messages/refs/tags/send-func@$SEND_FUNC_VERSION/apps/send-func/openapi/aar-notification.yaml"
+  "./definitions/pn/lollipop-lambda https://raw.githubusercontent.com/pagopa/io-messages/refs/tags/send-func@$SEND_FUNC_VERSION/apps/send-func/openapi/lollipop-integration-check.yaml"
   # FCI APIs
   "./definitions/fci https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_io_sign.yaml"
   # ITW APIs
-  "./definitions/itw https://raw.githubusercontent.com/pagopa/io-backend/$IO_WALLET_BACKEND_VERSION/api_io_wallet.yaml"
+  "./definitions/itw https://raw.githubusercontent.com/pagopa/io-wallet/io-wallet-user-func@$IO_WALLET_USER_FUNC_VERSION/apps/io-wallet-user-func/openapi-external/user_v1/swagger.yaml"
   # Connectivity APIs (used for connectivity checks)
   "./definitions/connectivity https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_public.yaml"
+  "./definitions/cdc https://raw.githubusercontent.com/pagopa/io-backend/refs/tags/$IO_BACKEND_VERSION/openapi/generated/api_cdc.yaml"
 )
 
 for elem in "${apis[@]}"; do

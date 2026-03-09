@@ -4,7 +4,6 @@ import { buildEventProperties } from "../../../../utils/analytics";
 import { OnboardingFailureEnum } from "../types/OnboardingFailure";
 
 type DefaultOnboardingEventProperties = {
-  initiativeName?: string;
   initiativeId?: string;
 };
 
@@ -44,12 +43,21 @@ export const trackIDPayOnboardingNotificationOK = (
   );
 };
 
-export const trackIDPayOnboardingNotificationKO = (
+export const trackIDPayOnboardingNotificationCancel = (
   props: DefaultOnboardingEventProperties
 ) => {
   mixpanelTrack(
     "IDPAY_SERVICE_NOTIFICATION_DENIED",
     buildEventProperties("UX", "action", props)
+  );
+};
+
+export const trackIDPayOnboardingNotificationError = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_SERVICE_NOTIFICATION_ERROR",
+    buildEventProperties("KO", "screen_view", props)
   );
 };
 
@@ -233,7 +241,7 @@ export const trackIDPayOnboardingAppUpdateConfirm = (
   props: DefaultOnboardingEventProperties
 ) => {
   mixpanelTrack(
-    "APP_UPDATE_REQUESTED",
+    "APP_UPDATE_ACCEPTED",
     buildEventProperties("UX", "action", { ...props, flow: "idpay" })
   );
 };

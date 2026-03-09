@@ -26,7 +26,7 @@ export function IdPayCardStatus({ initiative }: InitiativeProps) {
             color={isDark ? "white" : "grey-650"}
             testID="idpay-card-status-active"
           >
-            {I18n.t("bonusCard.validUntil", {
+            {I18n.t("idpay.wallet.card.validThrough", {
               endDate: format(initiative.voucherEndDate, "DD/MM/YY")
             })}
           </LabelMini>
@@ -50,7 +50,7 @@ export function IdPayCardStatus({ initiative }: InitiativeProps) {
           <Tag
             testID="idpay-card-status-expired"
             variant="error"
-            text={I18n.t("bonusCard.expired", {
+            text={I18n.t("idpay.wallet.card.ended", {
               endDate: format(initiative.voucherEndDate, "DD/MM/YY")
             })}
           />

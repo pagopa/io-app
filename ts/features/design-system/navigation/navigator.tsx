@@ -35,6 +35,7 @@ import { DSFooterActionsNotFixed } from "../core/DSFooterActionsNotFixed";
 import { DSFooterActionsSticky } from "../core/DSFooterActionsSticky";
 import { DSForceScrollDownView } from "../core/DSForceScrollDownView";
 import { DSForceScrollDownViewCustomSlot } from "../core/DSForceScrollDownViewCustomSlot";
+import { DSForceScrollDownViewTitleTransition } from "../core/DSForceScrollDownViewTitleTransition";
 import { DSFullScreenModal } from "../core/DSFullScreenModal";
 import { DSHapticFeedback } from "../core/DSHapticFeedback";
 import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
@@ -49,12 +50,12 @@ import { DSIOScrollViewWithListItems } from "../core/DSIOScrollViewWithListItems
 import { DSIOScrollViewWithoutActions } from "../core/DSIOScrollViewWithoutActions";
 import { DSIcons } from "../core/DSIcons";
 import { DSIridescentTrustmark } from "../core/DSIridescentTrustmark";
+import { DSItwBrandExploration } from "../core/DSItwBrandExploration";
 import { DSLayout } from "../core/DSLayout";
-import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
-import { DSLegacyButtons } from "../core/DSLegacyButtons";
 import { DSListItems } from "../core/DSListItems";
 import { DSLoaders } from "../core/DSLoaders";
 import { DSLoadingScreen } from "../core/DSLoadingScreen";
+import { DSLoadingScreenExtendedProps } from "../core/DSLoadingScreenExtendedProps";
 import { DSLogos } from "../core/DSLogos";
 import { DSModules } from "../core/DSModules";
 import { DSNumberPad } from "../core/DSNumberPad";
@@ -391,6 +392,18 @@ export const DesignSystemNavigator = () => {
           }}
         />
 
+        <Stack.Screen
+          name={
+            DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ITW_BRAND_EXPLORATION.route
+          }
+          component={DSItwBrandExploration}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ITW_BRAND_EXPLORATION.title,
+            headerShown: false
+          }}
+        />
+
         {/* HEADERS */}
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.HEADERS.FIRST_LEVEL.route}
@@ -486,6 +499,19 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
+          name={
+            DESIGN_SYSTEM_ROUTES.SCREENS.FORSCESCROLLDOWNVIEW_TITLE_TRANSITION
+              .route
+          }
+          component={DSForceScrollDownViewTitleTransition}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.SCREENS.FORSCESCROLLDOWNVIEW_TITLE_TRANSITION
+                .title
+          }}
+        />
+
+        <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.SCREENS.BONUS_CARD_SCREEN.route}
           component={DSBonusCardScreen}
         />
@@ -495,6 +521,18 @@ export const DesignSystemNavigator = () => {
           component={DSLoadingScreen}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.SCREENS.LOADING_SCREEN.title
+          }}
+        />
+
+        <Stack.Screen
+          name={
+            DESIGN_SYSTEM_ROUTES.SCREENS.LOADING_SCREEN_EXTENDED_PROPS.route
+          }
+          component={DSLoadingScreenExtendedProps}
+          options={{
+            headerShown: false,
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.SCREENS.LOADING_SCREEN_EXTENDED_PROPS.title
           }}
         />
 
@@ -591,24 +629,6 @@ export const DesignSystemNavigator = () => {
             options={customModalHeaderConf}
           />
         </Stack.Group>
-
-        {/* LEGACY */}
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.route}
-          component={DSLegacyButtons}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.title
-          }}
-        />
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.ADVICE.route}
-          component={DSLegacyAdvice}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.ADVICE.title
-          }}
-        />
       </Stack.Navigator>
     </ThemeProvider>
   );

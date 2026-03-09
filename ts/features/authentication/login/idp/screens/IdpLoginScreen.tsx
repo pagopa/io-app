@@ -21,7 +21,6 @@ import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
 } from "../../../../../hooks/useHeaderSecondLevel";
-import { mixpanelTrack } from "../../../../../mixpanel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import {
   idpLoginUrlChanged,
@@ -36,9 +35,8 @@ import {
 } from "../../../common/store/selectors";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { idpContextualHelpDataFromIdSelector } from "../../../../../store/reducers/content";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { trackSpidLoginError } from "../../../../../utils/analytics";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../../utils/contextualHelp";
 import {
   getIdpLoginUri,
   getIntentFallbackUrl,
@@ -56,7 +54,8 @@ import { ErrorType as SpidLoginErrorType } from "../store/types";
 import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
 import { usePosteIDApp2AppEducational } from "../hooks/usePosteIDApp2AppEducational";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
+import { remoteApiLoginUrlPrefixSelector } from "../../../activeSessionLogin/store/selectors";
+import { trackSpidLoginIntent } from "../../../activeSessionLogin/screens/analytics";
 
 const styles = StyleSheet.create({
   refreshIndicatorContainer: {
@@ -186,7 +185,7 @@ const IdpLoginScreen = () => {
   );
 
   const handleLoginSuccess = useCallback(
-    (token: SessionToken) => {
+    (token: string) => {
       handleSendAssistanceLog(choosenTool, `login success`);
       if (idp) {
         dispatch(loginSuccess({ token, idp }));
@@ -228,9 +227,7 @@ const IdpLoginScreen = () => {
       // if an intent is coming from the IDP login form, extract the fallbackUrl and use it in Linking.openURL
       const idpIntent = getIntentFallbackUrl(url);
       if (O.isSome(idpIntent)) {
-        void mixpanelTrack("SPID_LOGIN_INTENT", {
-          idp: loggedOutWithIdpAuth?.idp
-        });
+        void trackSpidLoginIntent(loggedOutWithIdpAuth?.idp);
         void Linking.openURL(idpIntent.value);
         return false;
       }

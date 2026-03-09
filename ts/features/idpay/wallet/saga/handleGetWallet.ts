@@ -6,9 +6,10 @@ import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { handleRemoveMissingCards } from "../../../wallet/saga/handleRemoveMissingCards";
+import { walletAddCards } from "../../../wallet/store/actions/cards";
 import { IDPayClient } from "../../common/api/client";
 import { idPayWalletGet } from "../store/actions";
-import { walletAddCards } from "../../../wallet/store/actions/cards";
 
 /**
  * Handle the remote call to retrieve the IDPay wallet
@@ -53,6 +54,15 @@ export function* handleGetIDPayWallet(
             }))
           )
         );
+        // Create set of keys from latest API response and remove stored cards
+        const newKeys = new Set(
+          initiatives.initiativeList.map(
+            initiative => `idpay_${initiative.initiativeId}`
+          )
+        );
+
+        yield* handleRemoveMissingCards(newKeys, "idPay");
+
         yield* put(idPayWalletGet.success(initiatives));
         return;
       }

@@ -58,7 +58,7 @@ const RootModal: FunctionComponent<Props> = (props: Props) => {
   if (fastLoginModals) {
     if (props.tokenRefreshing.kind === "no-pin-error") {
       trackLoginSessionTimeoutPrePin();
-    } else {
+    } else if (props.tokenRefreshing.kind === "transient-error") {
       trackLoginSessionTimeoutPostPin();
     }
     return fastLoginModals;

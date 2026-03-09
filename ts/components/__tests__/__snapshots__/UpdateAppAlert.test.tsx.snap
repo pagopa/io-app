@@ -34,12 +34,9 @@ exports[`UpdateAppAlert should match snapshot 1`] = `
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -67,26 +64,18 @@ exports[`UpdateAppAlert should match snapshot 1`] = `
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -94,15 +83,13 @@ exports[`UpdateAppAlert should match snapshot 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -156,16 +143,11 @@ exports[`UpdateAppAlert should match snapshot 1`] = `
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   ANY_ROUTE
@@ -222,18 +204,14 @@ exports[`UpdateAppAlert should match snapshot 1`] = `
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -303,13 +281,9 @@ exports[`UpdateAppAlert should match snapshot 1`] = `
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -643,6 +617,48 @@ exports[`UpdateAppAlert should match snapshot 1`] = `
                                   testID="primary-update-app"
                                 >
                                   <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "backgroundColor": "rgba(11, 62, 227, 1)",
+                                          "transform": [
+                                            {
+                                              "scale": 1,
+                                            },
+                                          ],
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "borderCurve": "continuous",
+                                          "elevation": 0,
+                                          "flexDirection": "row",
+                                          "justifyContent": "center",
+                                          "overflow": "hidden",
+                                          "textAlignVertical": "center",
+                                        },
+                                        {
+                                          "paddingHorizontal": 24,
+                                        },
+                                        {
+                                          "backgroundColor": "#0B3EE3",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
+                                        },
+                                        {},
+                                      ]
+                                    }
                                     style={
                                       [
                                         {
@@ -654,9 +670,15 @@ exports[`UpdateAppAlert should match snapshot 1`] = `
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
-                                        false,
                                         {
-                                          "backgroundColor": undefined,
+                                          "transform": [
+                                            {
+                                              "scale": 1,
+                                            },
+                                          ],
+                                        },
+                                        {
+                                          "backgroundColor": "rgba(11, 62, 227, 1)",
                                         },
                                         {
                                           "paddingHorizontal": 24,
@@ -673,6 +695,30 @@ exports[`UpdateAppAlert should match snapshot 1`] = `
                                     }
                                   >
                                     <View
+                                      collapsable={false}
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      jestInlineStyle={
+                                        [
+                                          {
+                                            "alignItems": "center",
+                                            "flexDirection": "row",
+                                            "justifyContent": "center",
+                                          },
+                                          {
+                                            "columnGap": 8,
+                                          },
+                                          false,
+                                        ]
+                                      }
                                       style={
                                         [
                                           {
@@ -691,15 +737,38 @@ exports[`UpdateAppAlert should match snapshot 1`] = `
                                         accessibilityElementsHidden={true}
                                         accessible={false}
                                         allowFontScaling={true}
+                                        collapsable={false}
                                         ellipsizeMode="tail"
                                         importantForAccessibility="no-hide-descendants"
+                                        jestAnimatedProps={
+                                          {
+                                            "value": {},
+                                          }
+                                        }
+                                        jestAnimatedStyle={
+                                          {
+                                            "value": {
+                                              "color": "rgba(255, 255, 255, 1)",
+                                            },
+                                          }
+                                        }
+                                        jestInlineStyle={
+                                          [
+                                            {
+                                              "textAlign": "auto",
+                                            },
+                                            {
+                                              "color": "#FFFFFF",
+                                            },
+                                          ]
+                                        }
                                         maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -714,7 +783,7 @@ exports[`UpdateAppAlert should match snapshot 1`] = `
                                                 "color": "#FFFFFF",
                                               },
                                               {
-                                                "color": undefined,
+                                                "color": "rgba(255, 255, 255, 1)",
                                               },
                                             ],
                                           ]
@@ -790,6 +859,47 @@ exports[`UpdateAppAlert should match snapshot 1`] = `
                                   testID="secondary-update-app"
                                 >
                                   <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "transform": [
+                                            {
+                                              "scale": 1,
+                                            },
+                                          ],
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "borderCurve": "continuous",
+                                          "elevation": 0,
+                                          "flexDirection": "row",
+                                          "justifyContent": "center",
+                                          "overflow": "hidden",
+                                          "textAlignVertical": "center",
+                                        },
+                                        {
+                                          "paddingHorizontal": 0,
+                                        },
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderColor": "#0B3EE3",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": undefined,
+                                        },
+                                        {},
+                                      ]
+                                    }
                                     style={
                                       [
                                         {
@@ -801,7 +911,13 @@ exports[`UpdateAppAlert should match snapshot 1`] = `
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
-                                        false,
+                                        {
+                                          "transform": [
+                                            {
+                                              "scale": 1,
+                                            },
+                                          ],
+                                        },
                                         {},
                                         {
                                           "paddingHorizontal": 0,
@@ -818,6 +934,30 @@ exports[`UpdateAppAlert should match snapshot 1`] = `
                                     }
                                   >
                                     <View
+                                      collapsable={false}
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      jestInlineStyle={
+                                        [
+                                          {
+                                            "alignItems": "center",
+                                            "flexDirection": "row",
+                                            "justifyContent": "center",
+                                          },
+                                          {
+                                            "columnGap": 8,
+                                          },
+                                          false,
+                                        ]
+                                      }
                                       style={
                                         [
                                           {
@@ -836,15 +976,38 @@ exports[`UpdateAppAlert should match snapshot 1`] = `
                                         accessibilityElementsHidden={true}
                                         accessible={false}
                                         allowFontScaling={true}
+                                        collapsable={false}
                                         ellipsizeMode="tail"
                                         importantForAccessibility="no-hide-descendants"
+                                        jestAnimatedProps={
+                                          {
+                                            "value": {},
+                                          }
+                                        }
+                                        jestAnimatedStyle={
+                                          {
+                                            "value": {
+                                              "color": "rgba(11, 62, 227, 1)",
+                                            },
+                                          }
+                                        }
+                                        jestInlineStyle={
+                                          [
+                                            {
+                                              "textAlign": "auto",
+                                            },
+                                            {
+                                              "color": "#0B3EE3",
+                                            },
+                                          ]
+                                        }
                                         maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -859,7 +1022,7 @@ exports[`UpdateAppAlert should match snapshot 1`] = `
                                                 "color": "#0B3EE3",
                                               },
                                               {
-                                                "color": undefined,
+                                                "color": "rgba(11, 62, 227, 1)",
                                               },
                                             ],
                                           ]

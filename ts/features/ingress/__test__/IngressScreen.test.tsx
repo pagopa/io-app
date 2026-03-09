@@ -11,6 +11,7 @@ import * as selectors from "../../connectivity/store/selectors";
 import * as itwSelectors from "../../itwallet/common/store/selectors";
 import * as ioHook from "../../../store/hooks";
 import { identificationRequest } from "../../identification/store/actions";
+import { IdentificationBackActionType } from "../../identification/store/reducers";
 
 jest.useFakeTimers();
 
@@ -78,7 +79,9 @@ describe(IngressScreen, () => {
             false,
             undefined,
             undefined,
-            expect.any(Object)
+            expect.any(Object),
+            undefined,
+            IdentificationBackActionType.CLOSE_APP
           )
         );
       });
@@ -90,7 +93,7 @@ describe(IngressScreen, () => {
       jest.clearAllTimers();
       jest.clearAllMocks();
     });
-    it("Should update LoadingScreenContent contentTitle after 5 sec and display the cdn unreachable blocking screen after 10", async () => {
+    it("Should update LoadingScreenContent contentTitle after 5 sec and display the cdn unreachable blocking screen after 20", async () => {
       const {
         getDeviceBlockingScreen,
         queryByText,
@@ -99,7 +102,7 @@ describe(IngressScreen, () => {
       } = await renderComponentWithSlowdowns();
 
       await act(() => {
-        jest.advanceTimersByTime(5000);
+        jest.advanceTimersByTime(20000);
       });
 
       expect(getDeviceBlockingScreen()).toBeTruthy();
@@ -112,7 +115,7 @@ describe(IngressScreen, () => {
       expect(getFirstText()).toBeNull();
       expect(getSecondText()).toBeNull();
     });
-    it("Should update LoadingScreenContent contentTitle after 5s and display the slowdowns blocking screen after 10s", async () => {
+    it("Should update LoadingScreenContent contentTitle after 5s and display the slowdowns blocking screen after 20s", async () => {
       jest
         .spyOn(backendStatusSelectors, "isBackendStatusLoadedSelector")
         .mockImplementation(() => true);
@@ -125,7 +128,7 @@ describe(IngressScreen, () => {
       } = await renderComponentWithSlowdowns();
 
       await act(() => {
-        jest.advanceTimersByTime(5000);
+        jest.advanceTimersByTime(20000);
       });
 
       expect(getDeviceBlockingScreen()).toBeTruthy();

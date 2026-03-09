@@ -24,6 +24,10 @@ import PN_ROUTES from "../navigation/routes";
 import { paymentsButtonStateSelector } from "../store/reducers/payments";
 import { canShowMorePaymentsLink } from "../utils";
 import { getRptIdStringFromPayment } from "../utils/rptId";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
 
 const styles = StyleSheet.create({
   morePaymentsSkeletonContainer: {
@@ -35,7 +39,7 @@ const styles = StyleSheet.create({
   }
 });
 
-type MessagePaymentsProps = {
+export type MessagePaymentsProps = {
   messageId: string;
   isCancelled: boolean;
   payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
@@ -43,6 +47,8 @@ type MessagePaymentsProps = {
   maxVisiblePaymentCount: number;
   presentPaymentsBottomSheetRef: MutableRefObject<(() => void) | undefined>;
   serviceId: ServiceId;
+  sendOpeningSource: SendOpeningSource;
+  sendUserType: SendUserType;
 };
 
 const readonlyArrayHasNoData = <T,>(maybeArray: ReadonlyArray<T> | undefined) =>
@@ -98,7 +104,9 @@ export const MessagePayments = ({
   completedPaymentNoticeCodes,
   maxVisiblePaymentCount,
   presentPaymentsBottomSheetRef,
-  serviceId
+  serviceId,
+  sendOpeningSource,
+  sendUserType
 }: MessagePaymentsProps) => {
   const navigation = useNavigation();
   const theme = useIOTheme();
@@ -185,6 +193,8 @@ export const MessagePayments = ({
                 rptId={rptId}
                 noticeNumber={payment.noticeCode}
                 serviceId={serviceId}
+                sendOpeningSource={sendOpeningSource}
+                sendUserType={sendUserType}
               />
             );
           })}

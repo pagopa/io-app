@@ -37,10 +37,10 @@ const IdPayCodeResultScreen = () => {
 
   const screenContent = isFailure ? (
     <OperationResultScreenContent
+      pictogram={"umbrella"}
       title={I18n.t(
         `idpay.initiative.discountDetails.IDPayCode.failureScreen.header.GENERIC`
       )}
-      pictogram={"umbrella"}
       action={{
         label: I18n.t(
           "idpay.initiative.discountDetails.IDPayCode.failureScreen.cta"
@@ -50,8 +50,6 @@ const IdPayCodeResultScreen = () => {
         ),
         onPress: handleClose
       }}
-      enableAnimatedPictogram
-      loop
     />
   ) : (
     <OperationResultScreenContent
@@ -72,8 +70,6 @@ const IdPayCodeResultScreen = () => {
       subtitle={I18n.t(
         "idpay.initiative.discountDetails.IDPayCode.successScreen.body"
       )}
-      enableAnimatedPictogram
-      loop={false}
     />
   );
 

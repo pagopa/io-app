@@ -9,6 +9,7 @@ import { WalletCardBaseComponent } from "../components/WalletCardBaseComponent";
 import { WalletCardSkeleton } from "../components/WalletCardSkeleton";
 import { shouldRenderWalletCategorySelector } from "../store/selectors";
 import { WalletCard, WalletCardCategoryFilter, WalletCardType } from "../types";
+import { CdcWalletCard } from "../../bonus/cdc/wallet/components/CdcWalletCard";
 
 /**
  * Wallet card component mapper which translates a WalletCardType to a
@@ -24,6 +25,7 @@ export const walletCardComponentMapper: Record<
   idPay: IdPayWalletCard,
   payment: PaymentWalletCard,
   itw: ItwCredentialWalletCard,
+  cdc: CdcWalletCard,
   placeholder: WalletCardSkeleton
 };
 

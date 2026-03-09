@@ -6,6 +6,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import * as connectivitySelectors from "../../../../connectivity/store/selectors";
 import * as ingressSelectors from "../../../../ingress/store/selectors";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
+import * as eIDSelectors from "../../../credentials/store/selectors";
 import {
   ItwCredentialWalletCard,
   ItwCredentialWalletCardProps
@@ -51,10 +52,13 @@ describe("WrappedItwCredentialCard", () => {
     jest
       .spyOn(ingressSelectors, "offlineAccessReasonSelector")
       .mockReturnValue(undefined);
+    jest
+      .spyOn(eIDSelectors, "itwCredentialsEidIssuedAtSelector")
+      .mockReturnValue("2025-10-01T08:00:00.000Z");
 
     const { getByTestId } = renderComponent({
       credentialType: tCredentialType,
-      isItwCredential: false
+      issuedAt: "2025-09-01T08:00:00.000Z"
     });
     const button = getByTestId("ItwCredentialWalletCardTestID");
     fireEvent.press(button);
@@ -77,10 +81,13 @@ describe("WrappedItwCredentialCard", () => {
     jest
       .spyOn(ingressSelectors, "offlineAccessReasonSelector")
       .mockReturnValue(undefined);
+    jest
+      .spyOn(eIDSelectors, "itwCredentialsEidIssuedAtSelector")
+      .mockReturnValue("2025-10-01T08:00:00.000Z");
 
     const { getByTestId } = renderComponent({
       credentialType: tCredentialType,
-      isItwCredential: false
+      issuedAt: "2025-09-01T08:00:00.000Z"
     });
     const button = getByTestId("ItwCredentialWalletCardTestID");
     fireEvent.press(button);

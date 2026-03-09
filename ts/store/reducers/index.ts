@@ -29,6 +29,7 @@ import authenticationReducer, {
 import { fastLoginOptInInitialState } from "../../features/authentication/fastLogin/store/reducers/optInReducer";
 import { cieReducer } from "../../features/authentication/login/cie/store/reducers";
 import { cieLoginInitialState } from "../../features/authentication/login/cie/store/reducers/cieLogin";
+import { activeSessionLoginInitialState } from "../../features/authentication/activeSessionLogin/store/reducer";
 import bonusReducer from "../../features/bonus/common/store/reducers";
 import { featuresPersistor } from "../../features/common/store/reducers";
 import {
@@ -45,7 +46,6 @@ import { profileSettingsReducerInitialState } from "../../features/profileSettin
 import { persistedNotificationsReducer } from "../../features/pushNotifications/store/reducers";
 import profileReducer from "../../features/settings/common/store/reducers";
 import userDataProcessingReducer from "../../features/settings/common/store/reducers/userDataProcessing";
-import { trialSystemActivationStatusReducer } from "../../features/trialSystem/store/reducers";
 import { whatsNewInitialState } from "../../features/whatsnew/store/reducers";
 import { isDevEnv } from "../../utils/environment";
 import { Action } from "../actions/types";
@@ -169,8 +169,7 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   content: contentReducer,
   emailValidation: emailValidationReducer,
   crossSessions: crossSessionsReducer,
-  lollipop: lollipopPersistor,
-  trialSystem: trialSystemActivationStatusReducer
+  lollipop: lollipopPersistor
 });
 
 export function createRootReducer(
@@ -202,6 +201,12 @@ export function createRootReducer(
               ...authenticationInitialState,
 
               _persist: state.authentication._persist
+            },
+            installation: {
+              ...state.installation
+            },
+            versionInfo: {
+              ...state.versionInfo
             },
             // cie status must be kept
             cie: {
@@ -262,8 +267,10 @@ export function createRootReducer(
                       .isCieIDTourGuideEnabled,
                   _persist: state.features.loginFeatures.cieLogin._persist
                 },
-                loginPreferences: {
-                  ...state.features.loginFeatures.loginPreferences
+                activeSessionLogin: {
+                  ...activeSessionLoginInitialState,
+                  _persist:
+                    state.features.loginFeatures.activeSessionLogin._persist
                 }
               },
               profileSettings: {
@@ -291,6 +298,9 @@ export function createRootReducer(
                 // before the persistance is updated, we do not find ourselves
                 // with a dirty state.
                 ...state.features.pn
+              },
+              services: {
+                ...state.features.services
               },
               _persist: state.features._persist
             },

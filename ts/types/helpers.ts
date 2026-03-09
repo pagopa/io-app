@@ -33,3 +33,17 @@ export type Only<T, U> = {
  * Creates a type that can be either T with none of the properties from U, or U with none of the properties from T
  */
 export type Either<T, U> = Only<T, U> | Only<U, T>;
+
+/**
+ * Creates a type by omitting certain keys from a discriminated union type
+ * https://github.com/microsoft/TypeScript/issues/54525
+ */
+export type DiscriminatedOmit<
+  T,
+  K extends string | number | symbol
+> = T extends any ? Omit<T, K> : never;
+
+/**
+ * A type representing an array that contains at least one element.
+ */
+export type NonEmptyArray<T> = [T, ...Array<T>];

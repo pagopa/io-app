@@ -1,14 +1,12 @@
 import { ActionArgs } from "xstate";
-import { StackActions } from "@react-navigation/native";
-import NavigationService from "../../../../../navigation/NavigationService";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../../navigation/routes";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import {
   trackItwProximityQrCode,
   trackItwProximityQrCodeLoadingFailure
 } from "../analytics";
 import { serializeFailureReason } from "../../../common/utils/itwStoreUtils";
+import { assert } from "../../../../../utils/assert";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
 import { mapEventToFailure } from "./failure";
@@ -41,17 +39,7 @@ export const createProximityActionsImplementation = (
   },
 
   navigateToWallet: () => {
-    navigation.reset({
-      index: 0,
-      routes: [
-        {
-          name: ROUTES.MAIN,
-          params: {
-            screen: ROUTES.WALLET_HOME
-          }
-        }
-      ]
-    });
+    navigation.popToTop();
   },
 
   navigateToFailureScreen: () => {
@@ -60,8 +48,14 @@ export const createProximityActionsImplementation = (
     });
   },
 
-  closeProximity: () => {
-    NavigationService.dispatchNavigationAction(StackActions.popToTop());
+  closeProximity: ({
+    context
+  }: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
+    assert(context.credentialType, "credentialType is required");
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
+      params: { credentialType: context.credentialType }
+    });
   },
 
   trackQrCodeGenerationOutcome: ({

@@ -1,8 +1,12 @@
 import _ from "lodash";
-import { SdJwt } from "@pagopa/io-react-native-wallet";
+import { Mdoc, SdJwt } from "@pagopa/io-react-native-wallet";
 import { itwCredentialsStateMigrations } from "../migrations";
+import { WALLET_SPEC_VERSION } from "../../../../common/utils/constants";
 
 jest.mock("@pagopa/io-react-native-wallet");
+jest.mock("../../../../common/utils/constants", () => ({
+  WALLET_SPEC_VERSION: "1.0.0"
+}));
 
 describe("ITW credentials reducer migrations", () => {
   beforeEach(() => {
@@ -310,5 +314,295 @@ describe("ITW credentials reducer migrations", () => {
     const nextState = from4To5Migration(basePersistedStateAt4);
 
     expect(nextState).toStrictEqual(persistedStateAt5);
+  });
+
+  it("should migrate from 5 to 6", () => {
+    const basePersistedStateAt5 = {
+      credentials: {
+        PersonIdentificationData: {
+          credentialId: "dc_sd_jwt_PersonIdentificationData",
+          credentialType: "PersonIdentificationData",
+          storedStatusAttestation: {
+            credentialStatus: "valid",
+            statusAttestation: "abc123",
+            parsedStatusAttestation: {}
+          },
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          }
+        }
+      },
+      _persist: {
+        version: 0,
+        rehydrated: false
+      }
+    };
+    const persistedStateAt6 = {
+      credentials: {
+        dc_sd_jwt_PersonIdentificationData: {
+          credentialId: "dc_sd_jwt_PersonIdentificationData",
+          credentialType: "PersonIdentificationData",
+          storedStatusAttestation: undefined,
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          }
+        }
+      },
+      _persist: {
+        version: 0,
+        rehydrated: false
+      }
+    };
+
+    const from4To5Migration = itwCredentialsStateMigrations[5];
+    expect(from4To5Migration).toBeDefined();
+    const nextState = from4To5Migration(basePersistedStateAt5);
+
+    expect(nextState).toStrictEqual(persistedStateAt6);
+  });
+
+  it("should migrate from 6 to 7", () => {
+    const basePersistedStateAt6 = {
+      credentials: {
+        dc_sd_jwt_PersonIdentificationData: {
+          credentialId: "dc_sd_jwt_PersonIdentificationData",
+          credentialType: "PersonIdentificationData",
+          storedStatusAttestation: {
+            credentialStatus: "valid",
+            statusAttestation: "abc123",
+            parsedStatusAttestation: {}
+          },
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          }
+        },
+        MDL: {
+          credentialId: "MDL",
+          credentialType: "mDL",
+          storedStatusAttestation: {
+            credentialStatus: "invalid",
+            errorCode: "bad"
+          },
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          }
+        },
+        dc_sd_jwt_residency: {
+          credentialId: "dc_sd_jwt_residency",
+          credentialType: "residency",
+          storedStatusAssertion: undefined,
+          jwt: {
+            expiration: "2026-10-02T07:17:23.000Z",
+            issuedAt: "2025-10-02T07:17:23.000Z"
+          }
+        }
+      },
+      _persist: {
+        version: 0,
+        rehydrated: false
+      }
+    };
+    const persistedStateAt7 = {
+      credentials: {
+        dc_sd_jwt_PersonIdentificationData: {
+          credentialId: "dc_sd_jwt_PersonIdentificationData",
+          credentialType: "PersonIdentificationData",
+          storedStatusAssertion: {
+            credentialStatus: "valid",
+            statusAssertion: "abc123",
+            parsedStatusAssertion: {}
+          },
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          }
+        },
+        MDL: {
+          credentialId: "MDL",
+          credentialType: "mDL",
+          storedStatusAssertion: {
+            credentialStatus: "invalid",
+            errorCode: "bad"
+          },
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          }
+        },
+        dc_sd_jwt_residency: {
+          credentialId: "dc_sd_jwt_residency",
+          credentialType: "residency",
+          storedStatusAssertion: undefined,
+          jwt: {
+            expiration: "2026-10-02T07:17:23.000Z",
+            issuedAt: "2025-10-02T07:17:23.000Z"
+          }
+        }
+      },
+      _persist: {
+        version: 0,
+        rehydrated: false
+      }
+    };
+
+    const from6To7Migration = itwCredentialsStateMigrations[6];
+    expect(from6To7Migration).toBeDefined();
+    const nextState = from6To7Migration(basePersistedStateAt6);
+
+    expect(nextState).toStrictEqual(persistedStateAt7);
+  });
+
+  it("should migrate from 7 to 8 (add spec_version and verification)", () => {
+    const mockSdJwtVerification = {
+      assurance_level: "high",
+      trust_framework: "eidas"
+    };
+    const mockMdocVerification = {
+      assurance_level: "substantial",
+      trust_framework: "it_l2+document_proof"
+    };
+
+    jest
+      .spyOn(SdJwt, "getVerification")
+      .mockReturnValue(mockSdJwtVerification as any);
+    jest
+      .spyOn(Mdoc, "getVerificationFromParsedCredential")
+      .mockReturnValue(mockMdocVerification as any);
+
+    const basePersistedStateAt7 = {
+      credentials: {
+        dc_sd_jwt_PersonIdentificationData: {
+          credentialId: "dc_sd_jwt_PersonIdentificationData",
+          credentialType: "PersonIdentificationData",
+          format: "dc+sd-jwt",
+          credential: "sd-jwt-credential-string",
+          parsedCredential: {},
+          storedStatusAssertion: undefined,
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          }
+        },
+        mso_mdoc_mDL: {
+          credentialId: "mso_mdoc_mDL",
+          credentialType: "mDL",
+          format: "mso_mdoc",
+          credential: "mdoc-credential-string",
+          parsedCredential: { deviceKeyInfo: {} },
+          storedStatusAssertion: undefined,
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          }
+        }
+      },
+      _persist: {
+        version: 7,
+        rehydrated: false
+      }
+    };
+
+    const persistedStateAt8 = {
+      credentials: {
+        dc_sd_jwt_PersonIdentificationData: {
+          credentialId: "dc_sd_jwt_PersonIdentificationData",
+          credentialType: "PersonIdentificationData",
+          format: "dc+sd-jwt",
+          credential: "sd-jwt-credential-string",
+          parsedCredential: {},
+          storedStatusAssertion: undefined,
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          },
+          spec_version: WALLET_SPEC_VERSION,
+          verification: mockSdJwtVerification
+        },
+        mso_mdoc_mDL: {
+          credentialId: "mso_mdoc_mDL",
+          credentialType: "mDL",
+          format: "mso_mdoc",
+          credential: "mdoc-credential-string",
+          parsedCredential: { deviceKeyInfo: {} },
+          storedStatusAssertion: undefined,
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          },
+          spec_version: WALLET_SPEC_VERSION,
+          verification: mockMdocVerification
+        }
+      },
+      _persist: {
+        version: 7,
+        rehydrated: false
+      }
+    };
+
+    const from7To8Migration = itwCredentialsStateMigrations[7];
+    expect(from7To8Migration).toBeDefined();
+    const nextState = from7To8Migration(basePersistedStateAt7);
+
+    expect(nextState).toStrictEqual(persistedStateAt8);
+  });
+
+  it("should handle verification extraction failure gracefully in migration 7 to 8", () => {
+    jest.spyOn(SdJwt, "getVerification").mockImplementation(() => {
+      throw new Error("Failed to extract verification");
+    });
+
+    const basePersistedStateAt7 = {
+      credentials: {
+        dc_sd_jwt_PersonIdentificationData: {
+          credentialId: "dc_sd_jwt_PersonIdentificationData",
+          credentialType: "PersonIdentificationData",
+          format: "dc+sd-jwt",
+          credential: "invalid-credential",
+          parsedCredential: {},
+          storedStatusAssertion: undefined,
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          }
+        }
+      },
+      _persist: {
+        version: 7,
+        rehydrated: false
+      }
+    };
+
+    const persistedStateAt8 = {
+      credentials: {
+        dc_sd_jwt_PersonIdentificationData: {
+          credentialId: "dc_sd_jwt_PersonIdentificationData",
+          credentialType: "PersonIdentificationData",
+          format: "dc+sd-jwt",
+          credential: "invalid-credential",
+          parsedCredential: {},
+          storedStatusAssertion: undefined,
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          },
+          spec_version: WALLET_SPEC_VERSION,
+          verification: undefined
+        }
+      },
+      _persist: {
+        version: 7,
+        rehydrated: false
+      }
+    };
+
+    const from7To8Migration = itwCredentialsStateMigrations[7];
+    expect(from7To8Migration).toBeDefined();
+    const nextState = from7To8Migration(basePersistedStateAt7);
+
+    expect(nextState).toStrictEqual(persistedStateAt8);
   });
 });

@@ -12,6 +12,7 @@ import {
   IdPayOperationsListScreenParams,
   IdPayOperationsListScreen
 } from "../screens/IdPayOperationsListScreen";
+import { IdPayFeatureFlagGuard } from "../../common/components/IdPayFeatureFlagGuard";
 
 export const IDPayDetailsRoutes = {
   IDPAY_DETAILS_MAIN: "IDPAY_DETAILS_MAIN",
@@ -29,21 +30,23 @@ export type IDPayDetailsParamsList = {
 const Stack = createStackNavigator<IDPayDetailsParamsList>();
 
 export const IDpayDetailsNavigator = () => (
-  <Stack.Navigator
-    initialRouteName={IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING}
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
-  >
-    <Stack.Screen
-      name={IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING}
-      component={IdPayInitiativeDetailsScreen}
-    />
-    <Stack.Screen
-      name={IDPayDetailsRoutes.IDPAY_DETAILS_TIMELINE}
-      component={IdPayOperationsListScreen}
-    />
-    <Stack.Screen
-      name={IDPayDetailsRoutes.IDPAY_DETAILS_BENEFICIARY}
-      component={IdPayBeneficiaryDetailsScreen}
-    />
-  </Stack.Navigator>
+  <IdPayFeatureFlagGuard>
+    <Stack.Navigator
+      initialRouteName={IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING}
+      screenOptions={{ gestureEnabled: isGestureEnabled }}
+    >
+      <Stack.Screen
+        name={IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING}
+        component={IdPayInitiativeDetailsScreen}
+      />
+      <Stack.Screen
+        name={IDPayDetailsRoutes.IDPAY_DETAILS_TIMELINE}
+        component={IdPayOperationsListScreen}
+      />
+      <Stack.Screen
+        name={IDPayDetailsRoutes.IDPAY_DETAILS_BENEFICIARY}
+        component={IdPayBeneficiaryDetailsScreen}
+      />
+    </Stack.Navigator>
+  </IdPayFeatureFlagGuard>
 );

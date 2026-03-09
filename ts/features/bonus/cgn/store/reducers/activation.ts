@@ -57,7 +57,7 @@ const reducer = (
 };
 
 // Selectors
-export const activationSelector = (state: GlobalState): ActivationState =>
+const activationSelector = (state: GlobalState): ActivationState =>
   state.bonus.cgn.activation;
 
 export const isCgnActivationLoading = createSelector<

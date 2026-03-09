@@ -167,14 +167,12 @@ jobs:
 
   send-slack-notification:
     # Run this job only if the user chose 'Update App Version'
-    if: github.event.inputs.action == 'Update App Version' && success()
-    continue-on-error: true
+    if: github.event.inputs.action == 'Update App Version'
     runs-on: ubuntu-latest
     needs: update-trigger-app-version
     environment: dev
     steps:
       - name: Send Slack Notification on Success
-        if: success()
         continue-on-error: true
         env:
           IO_APP_SLACK_HELPER_BOT_TOKEN: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}

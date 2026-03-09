@@ -42,7 +42,7 @@ const getNextNavigationStep = (
       )
     : navigateToCgnActivationLoading;
 
-export const isLoadingScreen = (screenName: string) =>
+const isLoadingScreen = (screenName: string) =>
   screenName === CGN_ROUTES.ACTIVATION.LOADING;
 
 export function* cgnActivationWorker(cgnActivationSaga: CgnActivationType) {

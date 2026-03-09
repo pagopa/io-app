@@ -15,11 +15,24 @@ import { JSX } from "react";
 import RootContainer from "./RootContainer";
 import { persistor, store } from "./boot/configureStoreAndPersistor";
 import { LightModalProvider } from "./components/ui/LightModal";
-import { sentryDsn } from "./config";
+import {
+  apiLoginUrlPrefix,
+  apiUrlPrefix,
+  bonusApiUrlPrefix,
+  idPayApiBaseUrl,
+  idPayApiUatBaseUrl,
+  pagoPaApiUrlPrefix,
+  pagoPaApiUrlPrefixTest,
+  sentryDsn,
+  walletApiBaseUrl,
+  walletApiUatBaseUrl
+} from "./config";
 import { isDevEnv } from "./utils/environment";
 import { StatusMessages } from "./components/StatusMessages/StatusMessages";
 import { AppFeedbackProvider } from "./features/appReviews/components/AppFeedbackProvider";
+import { TourProvider } from "./features/tour/components/TourProvider";
 import { IOAlertVisibleContextProvider } from "./components/StatusMessages/IOAlertVisibleContext";
+import { getEnv } from "./features/itwallet/common/utils/environment";
 
 export type ReactNavigationInstrumentation = ReturnType<
   typeof Sentry.reactNavigationIntegration
@@ -74,6 +87,16 @@ const beforeSendHandler = <T extends ErrorEvent | TransactionEvent>(
     return safeEvent;
   }
 
+  // Always send events related to "Already closed" error from PDF renderer
+  if (
+    event.exception?.values?.[0]?.value?.match(
+      /java.lang.IllegalStateException: Already closed/
+    ) ||
+    event.exception?.values?.[0]?.value?.match(/PDF renderer/)
+  ) {
+    return safeEvent;
+  }
+
   // Apply sampling for non-required events (20% sampling rate)
   const sampleRate = 0.2;
   return Math.random() <= sampleRate ? eventExcludeHttp500 : null;
@@ -95,6 +118,19 @@ Sentry.init({
     /ANR/i,
     /ApplicationNotResponding/i,
     /Background ANR/i
+  ],
+  tracePropagationTargets: [
+    apiLoginUrlPrefix,
+    apiUrlPrefix,
+    pagoPaApiUrlPrefix,
+    pagoPaApiUrlPrefixTest,
+    bonusApiUrlPrefix,
+    idPayApiBaseUrl,
+    idPayApiUatBaseUrl,
+    walletApiBaseUrl,
+    walletApiUatBaseUrl,
+    getEnv("pre").WALLET_PROVIDER_BASE_URL,
+    getEnv("prod").WALLET_PROVIDER_BASE_URL
   ],
   enableCaptureFailedRequests: false,
   enableAppHangTracking: false,
@@ -126,17 +162,19 @@ const App = (): JSX.Element => (
             <ToastProvider>
               <Provider store={store}>
                 <PersistGate loading={undefined} persistor={persistor}>
-                  <IOAlertVisibleContextProvider>
-                    <BottomSheetModalProvider>
-                      <LightModalProvider>
-                        <AppFeedbackProvider>
-                          <StatusMessages>
-                            <RootContainer store={store} />
-                          </StatusMessages>
-                        </AppFeedbackProvider>
-                      </LightModalProvider>
-                    </BottomSheetModalProvider>
-                  </IOAlertVisibleContextProvider>
+                  <TourProvider>
+                    <IOAlertVisibleContextProvider>
+                      <BottomSheetModalProvider>
+                        <LightModalProvider>
+                          <AppFeedbackProvider>
+                            <StatusMessages>
+                              <RootContainer store={store} />
+                            </StatusMessages>
+                          </AppFeedbackProvider>
+                        </LightModalProvider>
+                      </BottomSheetModalProvider>
+                    </IOAlertVisibleContextProvider>
+                  </TourProvider>
                 </PersistGate>
               </Provider>
             </ToastProvider>

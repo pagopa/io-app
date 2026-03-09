@@ -6,7 +6,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { useRef, useCallback, useEffect, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View, AppState } from "react-native";
 import {
   IOPictogramSizeScale,
   Pictogram,
@@ -204,6 +204,22 @@ const EmailValidationSendEmailScreen = () => {
     navigation
   ]);
 
+  // manage AppState to pause/resume polling when app goes to background/foreground
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", nextAppState => {
+      if (nextAppState === "background") {
+        stopPollingSaga();
+      } else if (nextAppState === "active" && !isEmailValidated) {
+        startPollingSaga();
+      }
+    });
+
+    // Cleanup: remove event listener when component unmounts
+    return () => {
+      subscription?.remove();
+    };
+  }, [isEmailValidated, startPollingSaga, stopPollingSaga]);
+
   useEffect(() => {
     if (
       prevEmailValidation &&
@@ -213,6 +229,7 @@ const EmailValidationSendEmailScreen = () => {
       if (pot.isError(emailValidation.sendEmailValidationRequest)) {
         IOToast.error(I18n.t("global.actions.retry"));
         setShowCountdown(false);
+        stopPollingSaga();
       }
       // send validation email OK
       if (pot.isSome(emailValidation.sendEmailValidationRequest)) {
@@ -220,7 +237,11 @@ const EmailValidationSendEmailScreen = () => {
         setShowCountdown(true);
       }
     }
-  }, [emailValidation.sendEmailValidationRequest, prevEmailValidation]);
+  }, [
+    emailValidation.sendEmailValidationRequest,
+    prevEmailValidation,
+    stopPollingSaga
+  ]);
 
   useEffect(() => {
     if (isEmailValidated) {

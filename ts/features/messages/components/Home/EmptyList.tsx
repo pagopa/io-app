@@ -1,19 +1,21 @@
-import { useCallback, useMemo } from "react";
-import { constUndefined, pipe } from "fp-ts/lib/function";
+import { IOPictograms } from "@pagopa/io-app-design-system";
 import * as B from "fp-ts/lib/boolean";
-import { ButtonSolidProps, IOPictograms } from "@pagopa/io-app-design-system";
+import { constUndefined, pipe } from "fp-ts/lib/function";
+import { useCallback, useMemo } from "react";
+
 import I18n from "i18next";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { ButtonBlockProps } from "../../../../components/ui/utils/buttons";
+import { pageSize } from "../../../../config";
 import {
   useIODispatch,
   useIOSelector,
   useIOStore
 } from "../../../../store/hooks";
-import { emptyListReasonSelector } from "../../store/reducers/allPaginated";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { reloadAllMessages } from "../../store/actions";
-import { pageSize } from "../../../../config";
-import { MessageListCategory } from "../../types/messageListCategory";
+import { emptyListReasonSelector } from "../../store/reducers/allPaginated";
 import { isArchivingInProcessingModeSelector } from "../../store/reducers/archiving";
+import { MessageListCategory } from "../../types/messageListCategory";
 
 export type EmptyListProps = {
   category: MessageListCategory;
@@ -21,7 +23,7 @@ export type EmptyListProps = {
 
 type ScreenDataType = {
   action?: Pick<
-    ButtonSolidProps,
+    ButtonBlockProps,
     "label" | "accessibilityLabel" | "onPress" | "testID"
   >;
   pictogram: IOPictograms;

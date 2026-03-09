@@ -1,11 +1,15 @@
-import { ActionType, createAsyncAction } from "typesafe-actions";
-import { NetworkError } from "../../../../../utils/errors";
-import { NoticeListWrapResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeListWrapResponse";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 import { NoticeDetailResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
-import { ReceiptsCategoryFilter } from "../../types";
+import { NoticeListWrapResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeListWrapResponse";
+import { NetworkError } from "../../../../../utils/errors";
 import { HideReceiptTrigger } from "../../analytics";
+import { ReceiptDownloadFailure, ReceiptsCategoryFilter } from "../../types";
 
-export type PaymentsReceiptPayload = {
+type PaymentsReceiptPayload = {
   firstLoad?: boolean;
   noticeCategory?: ReceiptsCategoryFilter;
   size?: number;
@@ -13,9 +17,14 @@ export type PaymentsReceiptPayload = {
   onSuccess?: (continuationToken?: string) => void;
 };
 
-export type PaymentsReceiptSuccessPayload = {
+type PaymentsReceiptSuccessPayload = {
   data: NoticeListWrapResponse["notices"];
   appendElements?: boolean;
+};
+
+type PaymentsLatestReceiptSuccessPayload = {
+  data: NoticeListWrapResponse["notices"];
+  continuationToken?: string;
 };
 
 export const getPaymentsReceiptAction = createAsyncAction(
@@ -30,9 +39,9 @@ export const getPaymentsLatestReceiptAction = createAsyncAction(
   "PAYMENTS_LATEST_RECEIPT_LIST_SUCCESS",
   "PAYMENTS_LATEST_RECEIPT_LIST_FAILURE",
   "PAYMENTS_LATEST_RECEIPT_LIST_CANCEL"
-)<void, NoticeListWrapResponse["notices"], NetworkError, void>();
+)<void, PaymentsLatestReceiptSuccessPayload, NetworkError, void>();
 
-export type PaymentsTransactionDetailsPayload = {
+type PaymentsTransactionDetailsPayload = {
   transactionId: string;
   isPayer?: boolean;
 };
@@ -49,10 +58,11 @@ export const getPaymentsReceiptDetailsAction = createAsyncAction(
   void
 >();
 
-export type PaymentsTransactionReceiptPayload = {
+type PaymentsTransactionReceiptPayload = {
   transactionId: string;
   onSuccess?: () => void;
   onError?: () => void;
+  onErrorGeneration?: () => void;
 };
 
 export type PaymentsTransactionReceiptInfoPayload = {
@@ -71,7 +81,7 @@ export const getPaymentsReceiptDownloadAction = createAsyncAction(
 )<
   PaymentsTransactionReceiptPayload,
   PaymentsTransactionReceiptInfoPayload,
-  NetworkError,
+  NetworkError | ReceiptDownloadFailure,
   void
 >();
 
@@ -87,9 +97,14 @@ export const hidePaymentsReceiptAction = createAsyncAction(
   "PAYMENTS_RECEIPT_HIDE_CANCEL"
 )<PaymentsTransactionReceiptDeletePayload, any, NetworkError, void>();
 
+export const setNeedsHomeListRefreshAction = createStandardAction(
+  "PAYMENTS_RECEIPT_SET_NEEDS_HOME_LIST_REFRESH"
+)<boolean>();
+
 export type PaymentsReceiptActions =
   | ActionType<typeof getPaymentsReceiptAction>
   | ActionType<typeof getPaymentsLatestReceiptAction>
   | ActionType<typeof getPaymentsReceiptDetailsAction>
   | ActionType<typeof getPaymentsReceiptDownloadAction>
-  | ActionType<typeof hidePaymentsReceiptAction>;
+  | ActionType<typeof hidePaymentsReceiptAction>
+  | ActionType<typeof setNeedsHomeListRefreshAction>;

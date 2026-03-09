@@ -10,6 +10,13 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "showAppearanceBanner": true,
   },
   "backgroundLinking": {},
+  "cdc": {
+    "wallet": {
+      "cdcStatus": {
+        "kind": "PotNoneLoading",
+      },
+    },
+  },
   "connectivityStatus": {
     "isConnected": undefined,
   },
@@ -105,6 +112,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
         "kind": "PotNone",
       },
     },
+    "staticCode": {},
     "timeline": {
       "details": {
         "kind": "PotNone",
@@ -128,11 +136,20 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
   },
   "ingress": {
+    "checkSession": {
+      "hasError": false,
+    },
     "isBlockingScreen": false,
   },
   "itWallet": {
+    "banners": {},
     "credentials": {
       "credentials": {},
+    },
+    "credentialsCatalogue": {
+      "catalogue": {
+        "kind": "PotNone",
+      },
     },
     "environment": {
       "env": "prod",
@@ -147,14 +164,14 @@ exports[`featuresPersistor should match snapshot 1`] = `
         "_tag": "None",
       },
     },
-    "preferences": {
-      "requestedCredentials": {},
-    },
+    "preferences": {},
     "securePreferences": {
       "offlineAccessCounter": 0,
+      "unverifiedCredentialsAccessCounter": 0,
     },
     "walletInstance": {
       "attestation": undefined,
+      "renewalError": false,
       "status": {
         "kind": "PotNone",
       },
@@ -162,12 +179,19 @@ exports[`featuresPersistor should match snapshot 1`] = `
   },
   "landingBanners": {
     "ITW_DISCOVERY": true,
+    "IT_WALLET_DISCOVERY": true,
     "LV_EXPIRATION_REMINDER": true,
+    "OS_DISMISSION_REMINDER": true,
     "PUSH_NOTIFICATIONS_REMINDER": true,
     "SEND_ACTIVATION_REMINDER": true,
   },
   "loginFeatures": {
     "activeSessionLogin": {
+      "activeSessionLoginLocalFlag": false,
+      "engagement": {
+        "hasBlockingScreenBeenVisualized": false,
+        "showSessionExpirationBanner": true,
+      },
       "isActiveSessionLogin": false,
       "isUserLoggedIn": false,
     },
@@ -196,10 +220,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
     "loginInfo": {
       "userFromSuccessLogin": false,
-    },
-    "loginPreferences": {
-      "activeSessionLoginLocalFlag": false,
-      "showSessionExpirationBanner": true,
     },
     "nativeLogin": {
       "enabled": true,
@@ -233,6 +253,14 @@ exports[`featuresPersistor should match snapshot 1`] = `
       },
       "authorizationUrl": {
         "kind": "PotNone",
+      },
+      "contextualPayment": {
+        "onboardedWalletId": undefined,
+        "onboardingUrl": {
+          "kind": "PotNone",
+        },
+        "orderId": undefined,
+        "webViewPayload": undefined,
       },
       "currentStep": 0,
       "paymentDetails": {
@@ -284,7 +312,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "result": {
         "kind": "PotNone",
       },
-      "rptIdToResume": undefined,
       "selectedPaymentMethodId": undefined,
     },
     "pagoPaPlatform": {
@@ -304,6 +331,8 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "latestTransactions": {
         "kind": "PotNone",
       },
+      "latestTransactionsContinuationToken": undefined,
+      "needsHomeListRefresh": false,
       "receiptDocument": {
         "kind": "PotNone",
       },
@@ -327,12 +356,30 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "bannerDismiss": {
       "dismissed": false,
     },
+    "loginEngagement": {
+      "hasSendEngagementScreenBeenDismissed": false,
+    },
+    "lollipopLambda": {
+      "type": "idle",
+    },
+    "tempAarMandate": {
+      "mandate": {
+        "kind": "undefined",
+      },
+      "validation": {
+        "kind": "undefined",
+      },
+    },
   },
   "profileSettings": {},
   "services": {
     "details": {
       "dataById": {},
       "preferencesById": {},
+    },
+    "favouriteServices": {
+      "dataById": {},
+      "sortType": "addedAt_desc",
     },
     "home": {
       "featuredInstitutions": {
@@ -355,6 +402,12 @@ exports[`featuresPersistor should match snapshot 1`] = `
         "kind": "PotNone",
       },
     },
+  },
+  "tour": {
+    "activeGroupId": undefined,
+    "activeStepIndex": 0,
+    "completed": [],
+    "items": {},
   },
   "utmLink": {
     "utmCampaign": undefined,

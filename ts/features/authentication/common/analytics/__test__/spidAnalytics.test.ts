@@ -1,4 +1,5 @@
 import {
+  EventProperties,
   trackLoginSpidError,
   trackLoginSpidIdpSelected
 } from "../spidAnalytics";
@@ -21,9 +22,10 @@ jest.mock("../../../../../mixpanelConfig/profileProperties", () => ({
 }));
 
 describe("spidAnalytics", () => {
-  const mockProps = {
+  const mockProps: EventProperties = {
     idp: "test-idp",
-    "error message": "Something went wrong"
+    "error message": "Something went wrong",
+    flow: "auth"
   };
 
   beforeEach(() => {

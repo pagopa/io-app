@@ -1,19 +1,25 @@
 import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIODispatch } from "../../../../store/hooks";
-import { setLggedOutUserWithDifferentCF } from "../store/actions";
+import { setLoggedOutUserWithDifferentCF } from "../store/actions";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { startApplicationInitialization } from "../../../../store/actions/application";
+import { startupLoadSuccess } from "../../../../store/actions/startup";
+import { StartupStatusEnum } from "../../../../store/reducers/startup";
+import { trackLoginWithNewCF, trackLoginWithNewCFConfirm } from "./analytics";
 
 export const DifferentCFErrorScreen = () => {
   const dispatch = useIODispatch();
 
   useOnFirstRender(() => {
-    dispatch(setLggedOutUserWithDifferentCF());
+    dispatch(setLoggedOutUserWithDifferentCF());
+    void trackLoginWithNewCF();
   });
 
   const handleNavigateToLandingScreen = () => {
+    dispatch(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
     dispatch(startApplicationInitialization());
+    void trackLoginWithNewCFConfirm();
   };
 
   return (

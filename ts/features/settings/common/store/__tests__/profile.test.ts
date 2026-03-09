@@ -722,7 +722,7 @@ describe("profileIsUpdatingSelector", () => {
     const isUpdating = profileIsUpdatingSelector(globalState);
     expect(isUpdating).toBe(true);
   });
-  it("should return false for a pot.none profile", () => {
+  it("should return false for a pot.someError profile", () => {
     const globalState = {
       profile: pot.someError({}, new ProfileError("test error"))
     } as GlobalState;

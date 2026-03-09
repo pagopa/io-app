@@ -63,18 +63,14 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -144,13 +140,9 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -207,7 +199,15 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                         }
                       }
                     >
-                      <View
+                      <RNCSafeAreaView
+                        edges={
+                          {
+                            "bottom": "additive",
+                            "left": "additive",
+                            "right": "additive",
+                            "top": "additive",
+                          }
+                        }
                         style={
                           {
                             "flex": 1,
@@ -453,7 +453,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                   ]
                                 }
                               >
-                                Accedi subito
+                                 Sta per scadere l’accesso
                               </Text>
                               <View
                                 style={
@@ -484,7 +484,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                   ]
                                 }
                               >
-                                Autenticati ora per usare l’app senza interruzioni. Così sarà sempre pronta quando ti serve.
+                                Autenticati ora per non perderti comunicazioni importanti e per avere l’app sempre pronta quando ti serve.
                               </Text>
                             </View>
                           </View>
@@ -537,6 +537,48 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                             testID="landing-button-login-cie"
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -548,9 +590,15 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "backgroundColor": undefined,
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                  {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
                                   },
                                   {
                                     "paddingHorizontal": 16,
@@ -567,7 +615,30 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                               }
                             >
                               <View
-                                entering={[Function]}
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -587,17 +658,25 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                   accessibilityLabel=""
                                   accessible={false}
                                   align="xMidYMid"
-                                  animatedProps={
-                                    {
-                                      "color": undefined,
-                                    }
-                                  }
                                   bbHeight={30}
                                   bbWidth={30}
-                                  color="#555C70"
+                                  collapsable={false}
+                                  color="rgba(255, 255, 255, 1)"
                                   focusable={false}
                                   height={30}
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {
+                                        "color": "rgba(255, 255, 255, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
@@ -648,15 +727,38 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={true}
+                                  collapsable={false}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "color": "rgba(255, 255, 255, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#FFFFFF",
+                                      },
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -671,7 +773,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                           "color": "#FFFFFF",
                                         },
                                         {
-                                          "color": undefined,
+                                          "color": "rgba(255, 255, 255, 1)",
                                         },
                                       ],
                                     ]
@@ -730,6 +832,48 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                             testID="landing-button-login-spid"
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -741,9 +885,15 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "backgroundColor": undefined,
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                  {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
                                   },
                                   {
                                     "paddingHorizontal": 16,
@@ -760,7 +910,30 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                               }
                             >
                               <View
-                                entering={[Function]}
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -780,17 +953,25 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                   accessibilityLabel=""
                                   accessible={false}
                                   align="xMidYMid"
-                                  animatedProps={
-                                    {
-                                      "color": undefined,
-                                    }
-                                  }
                                   bbHeight={30}
                                   bbWidth={30}
-                                  color="#555C70"
+                                  collapsable={false}
+                                  color="rgba(255, 255, 255, 1)"
                                   focusable={false}
                                   height={30}
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {
+                                        "color": "rgba(255, 255, 255, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
@@ -841,15 +1022,38 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={true}
+                                  collapsable={false}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "color": "rgba(255, 255, 255, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#FFFFFF",
+                                      },
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -864,7 +1068,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                           "color": "#FFFFFF",
                                         },
                                         {
-                                          "color": undefined,
+                                          "color": "rgba(255, 255, 255, 1)",
                                         },
                                       ],
                                     ]
@@ -927,6 +1131,42 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                   testID="bottom-sheet-login-with-cie-pin"
                                 >
                                   <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "transform": [
+                                            {
+                                              "scale": 1,
+                                            },
+                                          ],
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
+                                          "borderRadius": 8,
+                                          "borderWidth": 1,
+                                          "flexDirection": "row",
+                                          "justifyContent": "space-between",
+                                          "paddingHorizontal": 16,
+                                          "paddingVertical": 16,
+                                        },
+                                        {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
+                                      ]
+                                    }
                                     style={
                                       [
                                         {
@@ -947,7 +1187,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                         {
                                           "transform": [
                                             {
-                                              "scale": undefined,
+                                              "scale": 1,
                                             },
                                           ],
                                         },
@@ -1030,6 +1270,63 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                           </Text>
                                         </View>
                                       </View>
+                                      <RNSVGSvgView
+                                        accessibilityElementsHidden={true}
+                                        accessibilityLabel=""
+                                        accessible={false}
+                                        align="xMidYMid"
+                                        bbHeight={24}
+                                        bbWidth={24}
+                                        color="#0B3EE3"
+                                        focusable={false}
+                                        height={24}
+                                        importantForAccessibility="no-hide-descendants"
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          [
+                                            {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            {
+                                              "flex": 0,
+                                              "height": 24,
+                                              "width": 24,
+                                            },
+                                          ]
+                                        }
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={24}
+                                      >
+                                        <RNSVGGroup
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                        >
+                                          <RNSVGPath
+                                            clipRule={0}
+                                            d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
+                                            fill={
+                                              {
+                                                "type": 2,
+                                              }
+                                            }
+                                            fillRule={0}
+                                            propList={
+                                              [
+                                                "fill",
+                                                "fillRule",
+                                              ]
+                                            }
+                                          />
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
                                     </View>
                                   </View>
                                 </View>
@@ -1075,6 +1372,42 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                   testID="bottom-sheet-login-with-cie-id"
                                 >
                                   <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "transform": [
+                                            {
+                                              "scale": 1,
+                                            },
+                                          ],
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
+                                          "borderRadius": 8,
+                                          "borderWidth": 1,
+                                          "flexDirection": "row",
+                                          "justifyContent": "space-between",
+                                          "paddingHorizontal": 16,
+                                          "paddingVertical": 16,
+                                        },
+                                        {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
+                                      ]
+                                    }
                                     style={
                                       [
                                         {
@@ -1095,7 +1428,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                         {
                                           "transform": [
                                             {
-                                              "scale": undefined,
+                                              "scale": 1,
                                             },
                                           ],
                                         },
@@ -1270,6 +1603,38 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                   testID="bottom-sheet-login-wizards"
                                 >
                                   <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "transform": [
+                                            {
+                                              "scale": 1,
+                                            },
+                                          ],
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "alignContent": "center",
+                                          "alignItems": "flex-start",
+                                          "borderCurve": "continuous",
+                                          "borderRadius": 8,
+                                          "flexDirection": "row",
+                                          "padding": 16,
+                                        },
+                                        {
+                                          "backgroundColor": "#DBF9FA",
+                                        },
+                                      ]
+                                    }
                                     style={
                                       [
                                         {
@@ -1286,7 +1651,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                         {
                                           "transform": [
                                             {
-                                              "scale": undefined,
+                                              "scale": 1,
                                             },
                                           ],
                                         },
@@ -1547,7 +1912,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                             </View>
                           </RCTScrollView>
                         </View>
-                      </View>
+                      </RNCSafeAreaView>
                     </View>
                     <View
                       collapsable={false}
@@ -1562,6 +1927,29 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                       >
                         <View
                           accessibilityRole="header"
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "borderBottomWidth": 1,
+                                "borderColor": "rgba(210,214,227,0)",
+                              },
+                              {},
+                            ]
+                          }
                           style={
                             [
                               {
@@ -1577,6 +1965,31 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "marginTop": 0,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "flexGrow": 1,
+                                  "height": 56,
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 24,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -1617,13 +2030,34 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                               <Text
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "opacity": 1,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "color": "#0E0F13",
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -1688,6 +2122,35 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -1698,7 +2161,13 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                         "height": 24,
                                         "width": 24,
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                     ]
                                   }
                                 >
@@ -1707,17 +2176,25 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    animatedProps={
-                                      {
-                                        "color": undefined,
-                                      }
-                                    }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    collapsable={false}
                                     color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {
+                                          "color": "rgba(14, 15, 19, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
@@ -1782,22 +2259,14 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>

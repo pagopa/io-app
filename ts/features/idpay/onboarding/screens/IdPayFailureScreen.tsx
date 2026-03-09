@@ -1,13 +1,15 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import { getInstructionsButtonConfig } from "../../../../components/ui/utils/buttons";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { useIOSelector } from "../../../../store/hooks";
+import { idPayInitiativeConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { getFullLocale } from "../../../../utils/locale";
 import useIDPayFailureSupportModal from "../../common/hooks/useIDPayFailureSupportModal";
 import {
   trackIDPayOnboardingErrorHelp,
@@ -20,9 +22,6 @@ import {
   selectServiceId
 } from "../machine/selectors";
 import { OnboardingFailureEnum } from "../types/OnboardingFailure";
-import { useIOSelector } from "../../../../store/hooks";
-import { idPayInitiativeConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { getFullLocale } from "../../../../utils/locale";
 
 const IdPayFailureScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
@@ -39,12 +38,6 @@ const IdPayFailureScreen = () => {
     O.toUndefined
   );
 
-  const initiativeName = pipe(
-    initiative,
-    O.map(i => i.initiativeName),
-    O.toUndefined
-  );
-
   const { bottomSheet, present } = useIDPayFailureSupportModal(
     serviceId,
     initiativeId
@@ -54,10 +47,9 @@ const IdPayFailureScreen = () => {
     idPayInitiativeConfigSelector(initiativeId)
   );
 
-  const accessDeniedAction =
-    initiativeConfig && initiativeConfig.url && initiativeConfig.url[locale]
-      ? getInstructionsButtonConfig(initiativeConfig.url[locale])
-      : undefined;
+  const accessDeniedAction = initiativeConfig?.cac?.[locale]
+    ? getInstructionsButtonConfig(initiativeConfig.cac[locale] ?? "")
+    : undefined;
 
   const defaultCloseAction = useMemo(
     () => ({
@@ -106,7 +98,6 @@ const IdPayFailureScreen = () => {
         onPress: () => {
           trackIDPayOnboardingErrorHelp({
             initiativeId,
-            initiativeName,
             flow: "onboarding",
             reason: failureOption
           });
@@ -117,7 +108,7 @@ const IdPayFailureScreen = () => {
       enableAnimatedPictogram: true,
       loop: true
     }),
-    [failureOption, initiativeId, initiativeName, machine, present]
+    [failureOption, initiativeId, machine, present]
   );
 
   const mapFailureToContentProps = (
@@ -137,33 +128,29 @@ const IdPayFailureScreen = () => {
         };
       case OnboardingFailureEnum.ONBOARDING_UNSATISFIED_REQUIREMENTS:
         return {
-          pictogram: "error",
+          pictogram: "accessDenied",
           title: I18n.t(
             "idpay.onboarding.failure.message.UNSATISFIED_REQUIREMENTS.title"
           ),
           subtitle: I18n.t(
             "idpay.onboarding.failure.message.UNSATISFIED_REQUIREMENTS.subtitle"
           ),
-          action: defaultCloseAction,
-          enableAnimatedPictogram: true,
-          loop: false
+          action: defaultCloseAction
         };
       case OnboardingFailureEnum.ONBOARDING_USER_NOT_IN_WHITELIST:
         return {
-          pictogram: "error",
+          pictogram: "accessDenied",
           title: I18n.t(
             "idpay.onboarding.failure.message.USER_NOT_IN_WHITELIST.title"
           ),
           subtitle: I18n.t(
             "idpay.onboarding.failure.message.USER_NOT_IN_WHITELIST.subtitle"
           ),
-          action: defaultCloseAction,
-          enableAnimatedPictogram: true,
-          loop: false
+          action: defaultCloseAction
         };
       case OnboardingFailureEnum.ONBOARDING_INITIATIVE_NOT_STARTED:
         return {
-          pictogram: "eventClose",
+          pictogram: "ended",
           title: I18n.t(
             "idpay.onboarding.failure.message.INITIATIVE_NOT_STARTED.title"
           ),
@@ -192,13 +179,11 @@ const IdPayFailureScreen = () => {
           subtitle: I18n.t(
             "idpay.onboarding.failure.message.BUDGET_EXHAUSTED.subtitle"
           ),
-          action: defaultCloseAction,
-          enableAnimatedPictogram: true,
-          loop: false
+          action: defaultCloseAction
         };
       case OnboardingFailureEnum.ONBOARDING_USER_UNSUBSCRIBED:
         return {
-          pictogram: "error",
+          pictogram: "accessDenied",
           title: I18n.t(
             "idpay.onboarding.failure.message.USER_UNSUBSCRIBED.title"
           ),
@@ -206,9 +191,7 @@ const IdPayFailureScreen = () => {
             "idpay.onboarding.failure.message.USER_UNSUBSCRIBED.subtitle"
           ),
           action: defaultCloseAction,
-          secondaryAction: goToInitiativeAction,
-          enableAnimatedPictogram: true,
-          loop: false
+          secondaryAction: goToInitiativeAction
         };
       case OnboardingFailureEnum.ONBOARDING_ALREADY_ONBOARDED:
         return {
@@ -216,9 +199,7 @@ const IdPayFailureScreen = () => {
           title: I18n.t(
             "idpay.onboarding.failure.message.USER_ONBOARDED.title"
           ),
-          action: goToInitiativeAction,
-          enableAnimatedPictogram: true,
-          loop: false
+          action: goToInitiativeAction
         };
       case OnboardingFailureEnum.NOT_ELIGIBLE:
         return {
@@ -274,13 +255,14 @@ const IdPayFailureScreen = () => {
     O.getOrElse(() => genericErrorProps)
   );
 
-  useOnFirstRender(() => {
-    trackIDPayOnboardingFailure({
-      initiativeId,
-      initiativeName,
-      reason: failureOption
-    });
-  });
+  useEffect(() => {
+    if (O.some(failureOption) && O.isSome(failureOption)) {
+      trackIDPayOnboardingFailure({
+        initiativeId,
+        reason: failureOption
+      });
+    }
+  }, [initiativeId, failureOption]);
 
   return (
     <>

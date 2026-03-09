@@ -21,7 +21,7 @@ const LogoutScreen = () => {
   return (
     <LoadingScreenContent
       testID="logout-test-id"
-      contentTitle={I18n.t("profile.logout.loading")}
+      title={I18n.t("profile.logout.loading")}
     />
   );
 };

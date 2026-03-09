@@ -15,7 +15,7 @@ export type ReceiptCartItemDetailsScreenParams = {
   cartItem: CartItem;
 };
 
-export type ReceiptCartItemDetailsScreenProps = RouteProp<
+type ReceiptCartItemDetailsScreenProps = RouteProp<
   PaymentsReceiptParamsList,
   "PAYMENT_RECEIPT_CART_ITEM_DETAILS"
 >;
@@ -73,6 +73,9 @@ const ReceiptCartItemDetailsScreen = () => {
             label={I18n.t("transaction.details.operation.debtor")}
             value={getDebtorText(cartItem.debtor)}
             copyableValue={getDebtorTextString(cartItem.debtor)}
+            accessibilityLabel={`${I18n.t(
+              "transaction.details.operation.debtor"
+            )}; ${getDebtorTextString(cartItem.debtor)}`}
           />
           <Divider />
         </>
@@ -84,9 +87,9 @@ const ReceiptCartItemDetailsScreen = () => {
               clipboardSetStringWithFeedback(cartItem.refNumberValue)
             }
             label={I18n.t("transaction.details.operation.noticeCode")}
-            accessibilityLabel={I18n.t(
+            accessibilityLabel={`${I18n.t(
               "transaction.details.operation.noticeCodeAccessible"
-            )}
+            )}; ${cartItem.refNumberValue}`}
             value={cartItem.refNumberValue}
           />
           <Divider />
@@ -98,7 +101,6 @@ const ReceiptCartItemDetailsScreen = () => {
             clipboardSetStringWithFeedback(cartItem.payee?.taxCode ?? "")
           }
           label={I18n.t("transaction.details.operation.taxCode")}
-          accessibilityLabel={I18n.t("transaction.details.operation.taxCode")}
           value={cartItem.payee?.taxCode}
           numberOfLines={4}
         />

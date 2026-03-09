@@ -30,6 +30,11 @@ export enum IdentificationResult {
   "success" = "success"
 }
 
+export enum IdentificationBackActionType {
+  DEFAULT = "DEFAULT",
+  CLOSE_APP = "CLOSE_APP"
+}
+
 export type IdentificationGenericData = {
   message: string;
 };
@@ -51,6 +56,7 @@ type IdentificationStartedState = {
   identificationCancelData?: IdentificationCancelData;
   identificationSuccessData?: IdentificationSuccessData;
   shufflePad?: boolean;
+  identificationContext?: IdentificationBackActionType;
 };
 
 type IdentificationIdentifiedState = {

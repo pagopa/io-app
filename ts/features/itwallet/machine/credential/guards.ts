@@ -1,4 +1,4 @@
-import { pipe } from "fp-ts/lib/function";
+import { constFalse, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ItwSessionExpiredError } from "../../api/client";
 import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestationUtils";
@@ -14,9 +14,6 @@ export const createCredentialIssuanceGuardsImplementation = (
   isSessionExpired: ({ event }: { event: CredentialIssuanceEvents }) =>
     "error" in event && event.error instanceof ItwSessionExpiredError,
 
-  isDeferredIssuance: ({ context }: { context: Context }) =>
-    context.failure?.type === CredentialIssuanceFailureType.ASYNC_ISSUANCE,
-
   hasValidWalletInstanceAttestation: ({ context }: { context: Context }) =>
     pipe(
       O.fromNullable(context.walletInstanceAttestation?.jwt),
@@ -31,5 +28,13 @@ export const createCredentialIssuanceGuardsImplementation = (
     const eidStatus = itwCredentialsEidStatusSelector(store.getState());
 
     return eidStatus === "jwtExpired";
-  }
+  },
+
+  hasCredentialIntroContent: ({ context }: { context: Context }) =>
+    pipe(
+      O.fromNullable(context.credentialType),
+      O.chainNullableK(type => context.credentialsCatalogue?.[type]),
+      O.map(metadata => !!metadata.authentic_sources[0]?.user_information),
+      O.getOrElse(constFalse)
+    )
 });

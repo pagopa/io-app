@@ -37,3 +37,13 @@ export const trackWalletPaymentRemoveMethodFailure = (
     "WALLET_PAYMENT_METHOD_REMOVE_FAILURE",
     buildEventProperties("KO", undefined, props)
   );
+
+export const trackWalletPaymentMethodUpdateTap = (
+  props: Partial<
+    Omit<WalletPaymentRemoveAnalyticsProps, "payment_method_status">
+  >
+) =>
+  mixpanelTrack(
+    "WALLET_PAYMENT_METHOD_UPDATE",
+    buildEventProperties("UX", "action", props)
+  );

@@ -3,9 +3,9 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { ToolEnum } from "../../definitions/content/AssistanceToolConfig";
 import { ZendeskCategory } from "../../definitions/content/ZendeskCategory";
-import { ZendeskConfig } from "../features/zendesk/store/reducers";
 import { getValueOrElse } from "../common/model/RemoteValue";
 import { zendeskEnabled } from "../config";
+import { ZendeskConfig } from "../features/zendesk/store/reducers";
 
 export type ZendeskAppConfig = {
   key: string;
@@ -81,7 +81,7 @@ export const assistanceToolRemoteConfig = (aTC: ToolEnum | undefined) =>
   pipe(
     aTC,
     O.fromNullable,
-    O.getOrElse(() => ToolEnum.none)
+    O.getOrElseW(() => ToolEnum.none)
   );
 
 // If is not possible to get the zendeskConfig remotely assume panicMode is not active.
@@ -167,6 +167,24 @@ export const defaultZendeskIDPayCategory: ZendeskCategory = {
     "it-IT": "IDPay",
     "en-EN": "IDPay",
     "de-DE": "IDPay"
+  }
+};
+
+export const defaultZendeskBonusesCategory: ZendeskCategory = {
+  value: "bonus_e_iniziative",
+  description: {
+    "it-IT": "Bonus e iniziative",
+    "en-EN": "Bonuses and initiatives",
+    "de-DE": "Bonus und Initiativen"
+  }
+};
+
+export const zendeskSendCategory: ZendeskCategory = {
+  value: "io_send",
+  description: {
+    "it-IT": "SEND",
+    "en-EN": "SEND",
+    "de-DE": "SEND"
   }
 };
 

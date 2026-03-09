@@ -4,23 +4,28 @@ import { useState, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "i18next";
 import { ProgressBar } from "../../../bonus/common/components/ProgressBar";
+import { calculateIdPayBarcodeSecondsToExpire } from "../utils";
+import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
 
 type Props = {
-  secondsToExpiration: number;
+  barcode: TransactionBarCodeResponse;
   secondsExpirationTotal: number;
   setIsExpired: (isExpired: boolean) => void;
 };
 
 export const IdPayBarcodeExpireProgressBar = ({
-  secondsToExpiration,
+  barcode,
   secondsExpirationTotal,
   setIsExpired
 }: Props) => {
-  const [seconds, setSeconds] = useState(secondsToExpiration);
+  const [seconds, setSeconds] = useState(
+    calculateIdPayBarcodeSecondsToExpire(barcode)
+  );
   const isCodeExpired = seconds === 0;
   useEffect(() => {
     const timer = setInterval(() => {
       setSeconds(currentSecs => currentSecs - 1);
+      setSeconds(calculateIdPayBarcodeSecondsToExpire(barcode));
     }, 1000);
     if (seconds <= 0) {
       setSeconds(0);

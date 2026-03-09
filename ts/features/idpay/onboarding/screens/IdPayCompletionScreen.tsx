@@ -1,7 +1,8 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { BodyProps } from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -23,12 +24,6 @@ const IdPayCompletionScreen = () => {
   const dispatch = useIODispatch();
 
   const initiative = useSelector(selectInitiative);
-
-  const initiativeName = pipe(
-    initiative,
-    O.map(i => i.initiativeName),
-    O.toUndefined
-  );
 
   const initiativeId = pipe(
     initiative,
@@ -60,8 +55,7 @@ const IdPayCompletionScreen = () => {
     });
 
     trackIDPayOnboardingSuccess({
-      initiativeId,
-      initiativeName
+      initiativeId
     });
   });
 
@@ -72,18 +66,46 @@ const IdPayCompletionScreen = () => {
       </SafeAreaView>
     );
   }
+
+  const subtitle: Array<BodyProps> = [
+    {
+      text: I18n.t("idpay.onboarding.success.requestSent.subtitleStart"),
+      style: {
+        textAlign: "center"
+      }
+    },
+    {
+      text: I18n.t("idpay.onboarding.success.requestSent.subtitleBoldStart"),
+      style: {
+        textAlign: "center"
+      },
+      weight: "Semibold"
+    },
+    {
+      text: I18n.t("idpay.onboarding.success.requestSent.subtitleCenter"),
+      style: {
+        textAlign: "center"
+      }
+    },
+    {
+      text: I18n.t("idpay.onboarding.success.requestSent.subtitleEnd"),
+      style: {
+        textAlign: "center"
+      },
+      weight: "Semibold"
+    }
+  ];
+
   return (
     <OperationResultScreenContent
+      pictogram="success"
       title={I18n.t("idpay.onboarding.success.requestSent.title")}
-      subtitle={I18n.t("idpay.onboarding.success.requestSent.body")}
+      subtitle={subtitle}
       action={{
         label: I18n.t("idpay.onboarding.success.button.continue"),
         accessibilityLabel: I18n.t("idpay.onboarding.success.button.continue"),
         onPress: handleClosePress
       }}
-      pictogram="success"
-      enableAnimatedPictogram
-      loop={false}
     />
   );
 };

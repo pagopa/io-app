@@ -9,20 +9,20 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import _ from "lodash";
 import { useCallback, useEffect, useRef, useState } from "react";
-import I18n from "i18next";
-import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { customEmailChannelSetEnabled } from "../../../../store/actions/persistedPreferences";
-import { profileUpsert } from "../../common/store/actions";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
+import { usePrevious } from "../../../../utils/hooks/usePrevious";
+import { profileUpsert } from "../../common/store/actions";
 import {
   isEmailEnabledSelector,
   profileEmailSelector,
   profileSelector
 } from "../../common/store/selectors";
-import { usePrevious } from "../../../../utils/hooks/usePrevious";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.email.forward.contextualHelpTitle",

@@ -5,7 +5,7 @@ import {
   PaymentsAnalyticsHomeStatus
 } from "../../common/types/PaymentAnalytics";
 
-export type PaymentHomeAnalyticsProps = {
+type PaymentHomeAnalyticsProps = {
   payments_home_status: PaymentsAnalyticsHomeStatus;
   saved_payment_method: number;
   wallet_item: "payment_method";
@@ -15,6 +15,7 @@ export type PaymentHomeAnalyticsProps = {
 type PaymentMethodAnalyticsProps = {
   payment_method_selected: string;
   payment_method_status: "valid" | "invalid";
+  source: "payments" | "wallet";
 };
 
 export const trackPaymentsHome = (
@@ -30,17 +31,6 @@ export const trackPaymentsOpenReceiptListing = () => {
   void mixpanelTrack(
     "OPEN_RECEIPT_LISTING",
     buildEventProperties("UX", "action")
-  );
-};
-
-export const trackPaymentsOpenOldReceiptListing = (
-  entryPoint: "payments_home" | "payments_receipt_listing"
-) => {
-  void mixpanelTrack(
-    "OPEN_RECEIPT_OLD_LISTING",
-    buildEventProperties("UX", "action", {
-      entry_point: entryPoint
-    })
   );
 };
 

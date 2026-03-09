@@ -1,3 +1,4 @@
+import MockDate from "mockdate";
 import { createMigrate } from "redux-persist";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import itWalletReducer, { migrations } from "../index";
@@ -86,5 +87,78 @@ describe("itWalletReducer migrations", () => {
       preferences: { requestedCredentials: {}, authLevel: "L2" },
       environment: { env: "prod" }
     });
+  });
+
+  it("should migrate the store to version 5 and rename MDL to mDL", async () => {
+    const previousState = {
+      _persist: { version: 4, rehydrated: false },
+      preferences: { requestedCredentials: { MDL: "2025-10-01T00:00:00Z" } }
+    };
+
+    const newState = await migrate(previousState, 5);
+
+    expect(newState).toEqual({
+      _persist: { version: 4, rehydrated: false },
+      preferences: { requestedCredentials: { mDL: "2025-10-01T00:00:00Z" } }
+    });
+  });
+
+  it("should migrate the store to version 6 and remove offlineBannerHidden", async () => {
+    const previousState = {
+      _persist: { version: 5, rehydrated: false },
+      preferences: { offlineBannerHidden: true, requestedCredentials: {} }
+    };
+
+    const newState = await migrate(previousState, 6);
+
+    expect(newState).toEqual({
+      _persist: { version: 5, rehydrated: false },
+      preferences: { requestedCredentials: {} }
+    });
+  });
+
+  it("should migrate the store to version 9 and remove requestedCredentials", async () => {
+    const previousState = {
+      _persist: { version: 7, rehydrated: false },
+      preferences: { requestedCredentials: { MDL: true } }
+    };
+
+    const newState = await migrate(previousState, 9);
+
+    expect(newState).toEqual({
+      _persist: { version: 7, rehydrated: false },
+      preferences: {}
+    });
+  });
+
+  it("should migrate the store to version 10 and add banners state", async () => {
+    const mockDate = "2025-01-14T20:43:21.361Z";
+    MockDate.set(mockDate);
+
+    const previousState = {
+      _persist: { version: 9, rehydrated: false },
+      preferences: {
+        hideDiscoveryBannerUntilDate: "2025-01-11T20:43:21.361Z",
+        walletUpgradeMDLDetailsBannerHidden: true
+      }
+    };
+
+    const newState = await migrate(previousState, 10);
+
+    expect(newState).toEqual({
+      _persist: { version: 9, rehydrated: false },
+      preferences: {},
+      banners: {
+        discovery: {
+          dismissedOn: "2024-07-11T20:43:21.361Z",
+          dismissCount: 1
+        },
+        upgradeMDLDetails: {
+          dismissedOn: "2025-01-14T20:43:21.361Z",
+          dismissCount: 1
+        }
+      }
+    });
+    MockDate.reset();
   });
 });

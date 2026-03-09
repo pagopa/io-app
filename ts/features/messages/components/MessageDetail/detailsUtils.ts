@@ -3,17 +3,12 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";
 import { trackCTAPressed, trackPaymentStart } from "../../analytics";
 import { CTA } from "../../../../types/LocalizedCTAs";
-import {
-  isError,
-  isReady,
-  RemoteValue
-} from "../../../../common/model/RemoteValue";
+import { isReady, RemoteValue } from "../../../../common/model/RemoteValue";
 import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
 import {
-  isGenericError,
-  isTimeoutError,
-  PaymentError
-} from "../../store/actions";
+  isTimeoutOrGenericOrOngoingPaymentError,
+  MessagePaymentError
+} from "../../types/paymentErrors";
 
 export const computeAndTrackCTAPressAnalytics = (
   isFirstCTA: boolean,
@@ -46,8 +41,5 @@ export const computeAndTrackPaymentStart = (
 };
 
 export const shouldUpdatePaymentUponReturning = (
-  payment: RemoteValue<PaymentInfoResponse, PaymentError>
-) =>
-  isReady(payment) ||
-  (isError(payment) &&
-    (isGenericError(payment.error) || isTimeoutError(payment.error)));
+  payment: RemoteValue<PaymentInfoResponse, MessagePaymentError>
+) => isReady(payment) || isTimeoutOrGenericOrOngoingPaymentError(payment);

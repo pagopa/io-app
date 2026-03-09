@@ -18,6 +18,7 @@ import {
 } from "@react-navigation/native";
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 
+import I18n from "i18next";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -26,10 +27,8 @@ import {
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import I18n from "i18next";
 import { IdpData } from "../../../../../../definitions/content/IdpData";
 import IOMarkdown from "../../../../../components/IOMarkdown";
-import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
 import {
   BottomTopAnimation,
   LightModalContext
@@ -41,20 +40,25 @@ import {
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
+import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
+import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { openWebUrl } from "../../../../../utils/url";
 import {
+  isActiveSessionLoginSelector,
+  remoteApiLoginUrlPrefixSelector
+} from "../../../activeSessionLogin/store/selectors";
+import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";
+import {
   trackLoginCiePinInfo,
   trackLoginCiePinScreen
 } from "../../../common/analytics/cieAnalytics";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
 import { loginSuccess } from "../../../common/store/actions";
 import { getIdpLoginUri } from "../../../common/utils/login";
 import {
@@ -67,14 +71,6 @@ import {
   isNfcEnabledSelector
 } from "../store/selectors";
 import { cieFlowForDevServerEnabled } from "../utils";
-import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
-import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
-import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";
-
-// The MP events related to this page have been commented on
-// (or disabled for active session login),
-// pending their correct integration into the flow.
-// Task: https://pagopa.atlassian.net/browse/IOPID-3343
 
 const CIE_PIN_LENGTH = 8;
 
@@ -96,11 +92,10 @@ const CiePinScreen = () => {
   const dispatch = useIODispatch();
 
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
+  const flow = isActiveSessionLogin ? "reauth" : "auth";
 
   useOnFirstRender(() => {
-    if (!isActiveSessionLogin) {
-      trackLoginCiePinScreen();
-    }
+    trackLoginCiePinScreen(flow);
   });
 
   const requestNfcEnabledCheck = useCallback(
@@ -109,7 +104,7 @@ const CiePinScreen = () => {
   );
 
   const doLoginSuccess = useCallback(
-    (token: SessionToken, idp: keyof IdpData) =>
+    (token: string, idp: keyof IdpData) =>
       dispatch(loginSuccess({ token, idp })),
     [dispatch]
   );
@@ -255,9 +250,7 @@ const CiePinScreen = () => {
               asLink
               accessibilityRole="button"
               onPress={() => {
-                if (!isActiveSessionLogin) {
-                  trackLoginCiePinInfo();
-                }
+                trackLoginCiePinInfo(flow);
                 present();
               }}
             >
@@ -293,13 +286,11 @@ const CiePinScreen = () => {
                 accessibilityRole="link"
                 action={I18n.t("login.help_banner_action")}
                 onPress={() => {
-                  if (!isActiveSessionLogin) {
-                    trackHelpCenterCtaTapped(
-                      "LOGIN_CIE_PIN",
-                      helpCenterHowToLoginWithEicUrl,
-                      routeName
-                    );
-                  }
+                  trackHelpCenterCtaTapped(
+                    "LOGIN_CIE_PIN",
+                    helpCenterHowToLoginWithEicUrl,
+                    routeName
+                  );
                   openWebUrl(helpCenterHowToLoginWithEicUrl, () => {
                     error(I18n.t("global.jserror.title"));
                   });

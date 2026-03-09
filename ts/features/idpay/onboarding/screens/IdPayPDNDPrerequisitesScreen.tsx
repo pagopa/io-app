@@ -1,15 +1,11 @@
-import {
-  FooterActions,
-  ModuleSummary,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { ModuleSummary, VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { Fragment, useState } from "react";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { trackIDPayOnboardingPDNDAcceptance } from "../analytics";
@@ -22,7 +18,7 @@ import {
 } from "../machine/selectors";
 import { getPDNDCriteriaDescription } from "../utils/strings";
 
-export const IdPayPDNDPrerequisitesScreen = () => {
+const IdPayPDNDPrerequisitesScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
 
@@ -39,32 +35,22 @@ export const IdPayPDNDPrerequisitesScreen = () => {
   const continueOnPress = () => machine.send({ type: "next" });
   const goBackOnPress = () => machine.send({ type: "back" });
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
+  const { present, bottomSheet } = useIOBottomSheetModal({
     title: I18n.t(
       "idpay.onboarding.PDNDPrerequisites.prerequisites.info.header"
     ),
     component: (
-      <IOMarkdown
-        content={I18n.t(
-          "idpay.onboarding.PDNDPrerequisites.prerequisites.info.body",
-          {
-            provider: authority
-          }
-        )}
-      />
-    ),
-    footer: (
-      <FooterActions
-        actions={{
-          primary: {
-            label: I18n.t(
-              "idpay.onboarding.PDNDPrerequisites.prerequisites.info.understoodCTA"
-            ),
-            onPress: () => dismiss()
-          },
-          type: "SingleButton"
-        }}
-      />
+      <>
+        <IOMarkdown
+          content={I18n.t(
+            "idpay.onboarding.PDNDPrerequisites.prerequisites.info.body",
+            {
+              provider: authority
+            }
+          )}
+        />
+        <VSpacer size={24} />
+      </>
     )
   });
 
@@ -79,8 +65,7 @@ export const IdPayPDNDPrerequisitesScreen = () => {
 
   useOnFirstRender(() =>
     trackIDPayOnboardingPDNDAcceptance({
-      initiativeId,
-      initiativeName
+      initiativeId
     })
   );
 

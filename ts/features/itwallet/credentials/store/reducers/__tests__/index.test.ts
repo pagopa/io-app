@@ -2,7 +2,7 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import {
-  ParsedStatusAttestation,
+  ParsedStatusAssertion,
   StoredCredential
 } from "../../../../common/utils/itwTypesUtils";
 import { itwCredentialsRemove, itwCredentialsStore } from "../../actions";
@@ -22,7 +22,8 @@ const mockedEid: StoredCredential = {
   jwt: {
     issuedAt: "2024-09-30T07:32:49.000Z",
     expiration: "2025-09-30T07:32:50.000Z"
-  }
+  },
+  spec_version: "1.0.0"
 };
 
 const mockedCredential: StoredCredential = {
@@ -36,7 +37,8 @@ const mockedCredential: StoredCredential = {
   jwt: {
     issuedAt: "2024-09-30T07:32:49.000Z",
     expiration: "2025-09-30T07:32:50.000Z"
-  }
+  },
+  spec_version: "1.0.0"
 };
 
 const mockedCredential2: StoredCredential = {
@@ -50,7 +52,8 @@ const mockedCredential2: StoredCredential = {
   jwt: {
     issuedAt: "2024-09-30T07:32:49.000Z",
     expiration: "2025-09-30T07:32:50.000Z"
-  }
+  },
+  spec_version: "1.0.0"
 };
 
 describe("ITW credentials reducer", () => {
@@ -157,10 +160,10 @@ describe("ITW credentials reducer", () => {
   it("should update existing credentials overwriting the previous instances", () => {
     const updatedCredential: StoredCredential = {
       ...mockedCredential,
-      storedStatusAttestation: {
+      storedStatusAssertion: {
         credentialStatus: "valid" as const,
-        statusAttestation: "abc",
-        parsedStatusAttestation: { exp: 1000 } as ParsedStatusAttestation
+        statusAssertion: "abc",
+        parsedStatusAssertion: { exp: 1000 } as ParsedStatusAssertion
       }
     };
 

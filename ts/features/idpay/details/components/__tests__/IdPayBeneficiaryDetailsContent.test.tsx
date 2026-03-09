@@ -34,7 +34,7 @@ jest.mock("@react-navigation/native", () => {
 
 const T_INITIATIVE_ID = "ABC123";
 const T_END_DATE = new Date(2023, 0, 1, 10, 0);
-const T_END_DATE_TEXT = "01/01/2023, 10:00";
+const T_END_DATE_TEXT = "01/01/2023";
 const T_AMOUNT = 7000;
 const T_AMOUNT_TEXT = "70,00 €";
 const T_ACCRUED = 2000;

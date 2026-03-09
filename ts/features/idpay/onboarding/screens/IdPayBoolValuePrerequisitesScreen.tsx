@@ -13,7 +13,7 @@ import { SelfCriteriaBoolDTO } from "../../../../../definitions/idpay/SelfCriter
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import {
@@ -34,12 +34,6 @@ const IdPayBoolValuePrerequisitesScreen = () => {
   const machine = useActorRef();
 
   const initiative = useSelector(selectInitiative);
-
-  const initiativeName = pipe(
-    initiative,
-    O.map(i => i.initiativeName),
-    O.toUndefined
-  );
 
   const initiativeId = pipe(
     initiative,
@@ -62,8 +56,7 @@ const IdPayBoolValuePrerequisitesScreen = () => {
       );
       trackIDPayOnboardingAlert({
         screen: "intent_declaration",
-        initiativeId,
-        initiativeName
+        initiativeId
       });
       return;
     }
@@ -95,8 +88,7 @@ const IdPayBoolValuePrerequisitesScreen = () => {
 
   useOnFirstRender(() =>
     trackIDPayOnboardingSelfDeclaration({
-      initiativeId,
-      initiativeName
+      initiativeId
     })
   );
 

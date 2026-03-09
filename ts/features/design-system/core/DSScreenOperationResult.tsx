@@ -30,7 +30,7 @@ const DSScreenOperationResult = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram="umbrella"
+      pictogram="updateOS"
       title="C’è un problema temporaneo, riprova."
       subtitle={bodyPropsArray}
       action={{

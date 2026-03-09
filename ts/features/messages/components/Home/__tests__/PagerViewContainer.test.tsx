@@ -2,7 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RefObject } from "react";
 import { NativeSyntheticEvent } from "react-native";
 import PagerView from "react-native-pager-view";
-import { OnPageSelectedEventData } from "react-native-pager-view/lib/typescript/specs/PagerViewNativeComponent";
+import { OnPageSelectedEventData } from "react-native-pager-view/lib/typescript/PagerViewNativeComponent";
 import { createStore } from "redux";
 import { pageSize } from "../../../../../config";
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -25,10 +25,17 @@ jest.mock("react-redux", () => ({
   useDispatch: () => mockDispatch
 }));
 
+// Avoid Skottie errrors because the `jest` environment doesn't support it
+jest.mock("../../../../../components/ui/AnimatedPictogram", () => ({
+  AnimatedPictogram: () => null,
+  IOAnimatedPictogramsAssets: {}
+}));
+
 describe("PagerViewContainer", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
+    jest.restoreAllMocks();
     mockAccessibilityInfo(false);
   });
   it("should not dispatch 'reloadAllMessages.request' upon first rendering for INBOX with useEffect (since it is dispatched by the PagerView's pageSelected callback)", () => {

@@ -5,7 +5,12 @@ import { IOBarcode, IOBarcodeOrigin } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 
 export type BarcodeAnalyticsFlow = "home" | "avviso" | "idpay"; // Should be extended for every feature
-export type BarcodeAnalyticsCode = "avviso" | "data_matrix" | "idpay" | "SEND"; // Should be extended for every feature
+export type BarcodeAnalyticsCode =
+  | "avviso"
+  | "data_matrix"
+  | "idpay"
+  | "SEND"
+  | "ITW presentazione remota"; // Should be extended for every feature
 export type BarcodeAnalyticsDataEntry = "qr code" | "file";
 
 const getEventCodeFromBarcode = (
@@ -21,6 +26,10 @@ const getEventCodeFromBarcode = (
 
   if (barcode.type === "SEND") {
     return "SEND";
+  }
+
+  if (barcode.type === "ITW_REMOTE") {
+    return "ITW presentazione remota";
   }
 
   return undefined;

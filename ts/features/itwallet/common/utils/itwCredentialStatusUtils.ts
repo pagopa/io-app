@@ -20,7 +20,7 @@ type GetCredentialStatusOptions = {
 };
 
 /**
- * Get the overall status of the credential, taking into account the status attestation,
+ * Get the overall status of the credential, taking into account the status assertion,
  * the physical document's expiration date and the JWT's expiration date.
  * Overlapping statuses are handled according to a specific order (see `IO-WALLET-DR-0018`).
  *
@@ -36,13 +36,8 @@ export const getCredentialStatus = (
   const {
     jwt,
     parsedCredential,
-    storedStatusAttestation: statusAttestation
+    storedStatusAssertion: statusAssertion
   } = credential;
-  // We could not determine the status of the credential.
-  // This happens when the status attestation API call fails.
-  if (statusAttestation?.credentialStatus === "unknown") {
-    return "unknown";
-  }
 
   const now = Date.now();
 
@@ -57,15 +52,15 @@ export const getCredentialStatus = (
   );
 
   const isIssuerAttestedExpired =
-    statusAttestation?.credentialStatus === "invalid" &&
-    statusAttestation.errorCode === "credential_expired";
+    statusAssertion?.credentialStatus === "invalid" &&
+    statusAssertion.errorCode === "credential_expired";
 
   if (isIssuerAttestedExpired || documentExpireDays <= 0) {
     return "expired";
   }
 
   // Invalid must prevail over non-expired statuses
-  if (statusAttestation?.credentialStatus === "invalid") {
+  if (statusAssertion?.credentialStatus === "invalid") {
     return "invalid";
   }
 
@@ -85,19 +80,25 @@ export const getCredentialStatus = (
     return "expiring";
   }
 
+  // We could not determine the status of the credential.
+  // This happens when the status assertion API call fails.
+  if (statusAssertion?.credentialStatus === "unknown") {
+    return "unknown";
+  }
+
   return "valid";
 };
 
 /**
- * Get the credential status and the error message corresponding to the status attestation error, if present.
+ * Get the credential status and the error message corresponding to the status assertion error, if present.
  * The message is dynamic and extracted from the issuer configuration.
  */
 export const getCredentialStatusObject = (credential: StoredCredential) => {
-  const { storedStatusAttestation, issuerConf, credentialId } = credential;
+  const { storedStatusAssertion, issuerConf, credentialId } = credential;
 
   const errorCode =
-    storedStatusAttestation?.credentialStatus === "invalid"
-      ? storedStatusAttestation.errorCode
+    storedStatusAssertion?.credentialStatus === "invalid"
+      ? storedStatusAssertion.errorCode
       : undefined;
 
   const message = pipe(

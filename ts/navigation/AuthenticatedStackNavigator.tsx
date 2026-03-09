@@ -5,8 +5,8 @@ import {
 import { Platform } from "react-native";
 import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import { BarcodeScanScreen } from "../features/barcode/screens/BarcodeScanScreen";
-import { CdcNavigator } from "../features/bonus/cdc/navigation/navigator.tsx";
-import { CDC_ROUTES } from "../features/bonus/cdc/navigation/routes.ts";
+import { CdcNavigator } from "../features/bonus/cdc/common/navigation/navigator.tsx";
+import { CDC_ROUTES } from "../features/bonus/cdc/common/navigation/routes.ts";
 import {
   CgnActivationNavigator,
   CgnDetailsNavigator,
@@ -42,6 +42,7 @@ import CheckEmailNavigator from "../features/mailCheck/navigation/CheckEmailNavi
 import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { MessagesSearchScreen } from "../features/messages/screens/MessagesSearchScreen";
+import OnboardingNavigator from "../features/onboarding/navigation/OnboardingNavigator.tsx";
 import { PageNotFound } from "../features/pageNotFound/screens/index.tsx";
 import { WalletBarcodeNavigator } from "../features/payments/barcode/navigation/navigator";
 import { PaymentsBarcodeRoutes } from "../features/payments/barcode/navigation/routes";
@@ -54,6 +55,7 @@ import { PaymentsOnboardingRoutes } from "../features/payments/onboarding/naviga
 import { PaymentsReceiptNavigator } from "../features/payments/receipts/navigation/navigator";
 import { PaymentsReceiptRoutes } from "../features/payments/receipts/navigation/routes";
 import { NOTIFICATIONS_ROUTES } from "../features/pushNotifications/navigation/routes";
+import { PushNotificationEngagementScreen } from "../features/pushNotifications/screens/PushNotificationEngagementScreen.tsx";
 import { SystemNotificationPermissionsScreen } from "../features/pushNotifications/screens/SystemNotificationPermissionsScreen";
 import ServicesNavigator from "../features/services/common/navigation/navigator";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
@@ -66,11 +68,9 @@ import { useIOSelector } from "../store/hooks";
 import {
   isCdcAppVersionSupportedSelector,
   isCGNEnabledSelector,
-  isFciEnabledSelector,
-  isIdPayEnabledSelector
+  isFciEnabledSelector
 } from "../store/reducers/backendStatus/remoteConfig";
 import { isGestureEnabled } from "../utils/navigation";
-import OnboardingNavigator from "../features/onboarding/navigation/OnboardingNavigator.tsx";
 import { AppParamsList } from "./params/AppParamsList";
 import ROUTES from "./routes";
 import { MainTabNavigator } from "./TabNavigator";
@@ -85,7 +85,6 @@ const AuthenticatedStackNavigator = () => {
   const cdcEnabled = useIOSelector(isCdcAppVersionSupportedSelector);
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFciEnabled = useIOSelector(isFciEnabledSelector);
-  const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
 
   return (
     <Stack.Navigator
@@ -134,6 +133,11 @@ const AuthenticatedStackNavigator = () => {
           headerShown: true,
           presentation: "modal"
         }}
+      />
+      <Stack.Screen
+        name={NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT}
+        component={PushNotificationEngagementScreen}
+        options={TransitionPresets.ModalSlideFromBottomIOS}
       />
       <Stack.Screen
         name={MESSAGES_ROUTES.MESSAGES_SEARCH}
@@ -236,7 +240,8 @@ const AuthenticatedStackNavigator = () => {
       <Stack.Group
         screenOptions={{
           headerShown: false,
-          presentation: "modal"
+          /* Avoid buggy modal behavior on Android */
+          presentation: Platform.OS === "ios" ? "modal" : "card"
         }}
       >
         <Stack.Screen
@@ -258,64 +263,60 @@ const AuthenticatedStackNavigator = () => {
         />
       )}
 
-      {isIdPayEnabled && (
-        <>
-          <Stack.Screen
-            name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
-            component={IdPayOnboardingNavigator}
-            options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
-          />
-          <Stack.Screen
-            name={IDPayDetailsRoutes.IDPAY_DETAILS_MAIN}
-            component={IDpayDetailsNavigator}
-            options={{
-              gestureEnabled: isGestureEnabled,
-              ...hideHeaderOptions
-            }}
-          />
-          <Stack.Screen
-            name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR}
-            component={IdPayConfigurationNavigator}
-            options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
-          />
-          <Stack.Screen
-            name={IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN}
-            component={IdPayUnsubscriptionNavigator}
-            options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
-          />
-          {/*
-            This screen is outside the IDPayPaymentNavigator to enable the slide from bottom animation.
-            FIXME IOBP-383: Using react-navigation 6.x we can achive this using a Stack.Group inside the IDPayPaymentNavigator
-          */}
-          <Stack.Screen
-            name={IdPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN}
-            component={IDPayPaymentCodeScanScreen}
-            options={{
-              ...hideHeaderOptions,
-              ...TransitionPresets.ModalSlideFromBottomIOS,
-              gestureEnabled: isGestureEnabled
-            }}
-          />
-          <Stack.Screen
-            name={IdPayPaymentRoutes.IDPAY_PAYMENT_MAIN}
-            component={IdPayPaymentNavigator}
-            options={{ gestureEnabled: false, ...hideHeaderOptions }}
-          />
-          <Stack.Screen
-            name={IdPayCodeRoutes.IDPAY_CODE_MAIN}
-            options={hideHeaderOptions}
-            component={IdPayCodeNavigator}
-          />
-          <Stack.Screen
-            name={IdPayBarcodeRoutes.IDPAY_BARCODE_MAIN}
-            options={{
-              gestureEnabled: isGestureEnabled,
-              ...hideHeaderOptions
-            }}
-            component={IdPayBarcodeNavigator}
-          />
-        </>
-      )}
+      <Stack.Screen
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
+        component={IdPayOnboardingNavigator}
+        options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
+      />
+      <Stack.Screen
+        name={IDPayDetailsRoutes.IDPAY_DETAILS_MAIN}
+        component={IDpayDetailsNavigator}
+        options={{
+          gestureEnabled: isGestureEnabled,
+          ...hideHeaderOptions
+        }}
+      />
+      <Stack.Screen
+        name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR}
+        component={IdPayConfigurationNavigator}
+        options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
+      />
+      <Stack.Screen
+        name={IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN}
+        component={IdPayUnsubscriptionNavigator}
+        options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
+      />
+      {/*
+        This screen is outside the IDPayPaymentNavigator to enable the slide from bottom animation.
+        FIXME IOBP-383: Using react-navigation 6.x we can achive this using a Stack.Group inside the IDPayPaymentNavigator
+      */}
+      <Stack.Screen
+        name={IdPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN}
+        component={IDPayPaymentCodeScanScreen}
+        options={{
+          ...hideHeaderOptions,
+          ...TransitionPresets.ModalSlideFromBottomIOS,
+          gestureEnabled: isGestureEnabled
+        }}
+      />
+      <Stack.Screen
+        name={IdPayPaymentRoutes.IDPAY_PAYMENT_MAIN}
+        component={IdPayPaymentNavigator}
+        options={{ gestureEnabled: false, ...hideHeaderOptions }}
+      />
+      <Stack.Screen
+        name={IdPayCodeRoutes.IDPAY_CODE_MAIN}
+        options={hideHeaderOptions}
+        component={IdPayCodeNavigator}
+      />
+      <Stack.Screen
+        name={IdPayBarcodeRoutes.IDPAY_BARCODE_MAIN}
+        options={{
+          gestureEnabled: isGestureEnabled,
+          ...hideHeaderOptions
+        }}
+        component={IdPayBarcodeNavigator}
+      />
 
       <Stack.Screen
         name={PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR}

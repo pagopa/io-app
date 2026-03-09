@@ -122,8 +122,6 @@ const IDPayPaymentResultScreen = () => {
       title={I18n.t("idpay.payment.result.success.title")}
       action={defaultCloseAction}
       testID="paymentSuccessScreenTestID"
-      enableAnimatedPictogram
-      loop={false}
     />
   );
 };
@@ -154,30 +152,24 @@ const mapFailureToContentProps = (
       };
     case PaymentFailureEnum.PAYMENT_USER_NOT_ONBOARDED:
       return {
-        pictogram: "error",
+        pictogram: "accessDenied",
         title: I18n.t("idpay.payment.result.failure.USER_NOT_ONBOARDED.title"),
         subtitle: I18n.t(
           "idpay.payment.result.failure.USER_NOT_ONBOARDED.subtitle"
-        ),
-        enableAnimatedPictogram: true,
-        loop: false
+        )
       };
     case PaymentFailureEnum.PAYMENT_USER_UNSUBSCRIBED:
       return {
-        pictogram: "error",
+        pictogram: "accessDenied",
         title: I18n.t("idpay.payment.result.failure.USER_UNSUBSCRIBED.title"),
         subtitle: I18n.t(
           "idpay.payment.result.failure.USER_UNSUBSCRIBED.subtitle"
-        ),
-        enableAnimatedPictogram: true,
-        loop: false
+        )
       };
     case PaymentFailureEnum.PAYMENT_ALREADY_AUTHORIZED:
       return {
         pictogram: "success",
-        title: I18n.t("idpay.payment.result.failure.ALREADY_AUTHORIZED.title"),
-        enableAnimatedPictogram: true,
-        loop: false
+        title: I18n.t("idpay.payment.result.failure.ALREADY_AUTHORIZED.title")
       };
     case PaymentFailureEnum.PAYMENT_BUDGET_EXHAUSTED:
       return {
@@ -185,9 +177,7 @@ const mapFailureToContentProps = (
         title: I18n.t("idpay.payment.result.failure.BUDGET_EXHAUSTED.title"),
         subtitle: I18n.t(
           "idpay.payment.result.failure.BUDGET_EXHAUSTED.subtitle"
-        ),
-        enableAnimatedPictogram: true,
-        loop: false
+        )
       };
     case PaymentFailureEnum.PAYMENT_ALREADY_ASSIGNED:
       return {
@@ -195,9 +185,7 @@ const mapFailureToContentProps = (
         title: I18n.t("idpay.payment.result.failure.ALREADY_ASSIGNED.title"),
         subtitle: I18n.t(
           "idpay.payment.result.failure.ALREADY_ASSIGNED.subtitle"
-        ),
-        enableAnimatedPictogram: true,
-        loop: false
+        )
       };
     case PaymentFailureEnum.PAYMENT_INITIATIVE_INVALID_DATE:
       return {
@@ -213,9 +201,7 @@ const mapFailureToContentProps = (
         ),
         subtitle: I18n.t(
           "idpay.onboarding.failure.message.PAYMENT_GENERIC_ERROR.subtitle"
-        ),
-        enableAnimatedPictogram: true,
-        loop: true
+        )
       };
     default:
       return genericErrorProps;

@@ -1,4 +1,3 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -28,16 +27,12 @@ import {
   checkSession,
   watchCheckSessionSaga
 } from "../features/authentication/common/saga/watchCheckSessionSaga";
-import {
-  watchForceLogoutOnDifferentCF,
-  watchForceLogoutSaga
-} from "../features/authentication/common/saga/watchForceLogoutSaga";
+import { watchForceLogoutSaga } from "../features/authentication/common/saga/watchForceLogoutSaga";
 import { sessionExpired } from "../features/authentication/common/store/actions";
 import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../features/authentication/common/store/selectors";
-import { setSecurityAdviceReadyToShow } from "../features/authentication/fastLogin/store/actions/securityAdviceActions";
 import { refreshSessionToken } from "../features/authentication/fastLogin/store/actions/tokenRefreshActions";
 import {
   isFastLoginEnabledSelector,
@@ -49,7 +44,10 @@ import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { watchFciSaga } from "../features/fci/saga";
 import { watchFimsSaga } from "../features/fims/common/saga";
 import { startAndReturnIdentificationResult } from "../features/identification/sagas";
-import { IdentificationResult } from "../features/identification/store/reducers";
+import {
+  IdentificationBackActionType,
+  IdentificationResult
+} from "../features/identification/store/reducers";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
 import {
   shouldExitForOfflineAccess,
@@ -72,18 +70,14 @@ import { checkAcknowledgedEmailSaga } from "../features/mailCheck/sagas/checkAck
 import { watchEmailNotificationPreferencesSaga } from "../features/mailCheck/sagas/checkEmailNotificationPreferencesSaga";
 import { checkEmailSaga } from "../features/mailCheck/sagas/checkEmailSaga";
 import { watchEmailValidationSaga } from "../features/mailCheck/sagas/emailValidationPollingSaga";
-import { watchProfileEmailValidationChangedSaga } from "../features/mailCheck/sagas/watchProfileEmailValidationChangedSaga";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
-import { watchMessagesSaga } from "../features/messages/saga";
 import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
 import { checkAcknowledgedFingerprintSaga } from "../features/onboarding/saga/biometric/checkAcknowledgedFingerprintSaga";
 import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnboardingSaga";
 import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbortOnboardingSaga";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
 import { watchAarFlowSaga } from "../features/pn/aar/saga/watchAARFlowSaga";
-import { isAAREnabled } from "../features/pn/aar/store/reducers";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
-import { maybeHandlePendingBackgroundActions } from "../features/pushNotifications/sagas/common";
 import { notificationPermissionsListener } from "../features/pushNotifications/sagas/notificationPermissionsListener";
 import { profileAndSystemNotificationsPermissions } from "../features/pushNotifications/sagas/profileAndSystemNotificationsPermissions";
 import { pushNotificationTokenUpload } from "../features/pushNotifications/sagas/pushNotificationTokenUpload";
@@ -98,11 +92,8 @@ import {
 } from "../features/settings/common/sagas/profile";
 import { watchUserDataProcessingSaga } from "../features/settings/common/sagas/userDataProcessing";
 import { loadUserDataProcessing } from "../features/settings/common/store/actions/userDataProcessing";
-import { profileSelector } from "../features/settings/common/store/selectors";
 import { isProfileFirstOnBoarding } from "../features/settings/common/store/utils/guards";
 import { handleApplicationStartupTransientError } from "../features/startup/sagas";
-import { watchTrialSystemSaga } from "../features/trialSystem/store/sagas/watchTrialSystemSaga";
-import { watchWalletSaga } from "../features/wallet/saga";
 import {
   watchGetZendeskTokenSaga,
   watchZendeskGetSessionSaga
@@ -123,6 +114,7 @@ import {
   startupTransientError
 } from "../store/actions/startup";
 import {
+  isAarRemoteEnabled,
   isIdPayEnabledSelector,
   isPnRemoteEnabledSelector,
   remoteConfigSelector
@@ -140,6 +132,19 @@ import {
   waitForMainNavigator,
   waitForNavigatorServiceInitialization
 } from "../navigation/saga/navigation";
+import { checkShouldDisplaySendEngagementScreen } from "../features/pn/loginEngagement/sagas/checkShouldDisplaySendEngagementScreen";
+import { navigateToActiveSessionLogin } from "../features/authentication/activeSessionLogin/saga/navigateToActiveSessionLogin";
+import { showSessionExpirationBlockingScreenSelector } from "../features/authentication/activeSessionLogin/store/selectors";
+import { watchCdcSaga } from "../features/bonus/cdc/common/saga";
+import { watchMessagesSaga } from "../features/messages/saga";
+import { watchWalletSaga } from "../features/wallet/saga";
+import { watchSendLollipopLambda } from "../features/pn/lollipopLambda/saga";
+import {
+  isAppSupportedSelector,
+  versionInfoDataSelector
+} from "../common/versionInfo/store/reducers/versionInfo";
+import { versionInfoLoadSuccess } from "../common/versionInfo/store/actions/versionInfo";
+import { maybeHandlePendingBackgroundActions } from "./backgroundActions";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
@@ -210,22 +215,6 @@ export function* initializeApplicationSaga(
   // Retrieve and listen for notification permissions status changes
   yield* fork(notificationPermissionsListener);
 
-  /**
-   * Get last logged in Profile from the state
-   */
-  const lastLoggedInProfileState: ReturnType<typeof profileSelector> =
-    yield* select(profileSelector);
-
-  const lastEmailValidated = pot.isSome(lastLoggedInProfileState)
-    ? O.fromNullable(lastLoggedInProfileState.value.is_email_validated)
-    : O.none;
-
-  /**
-   * Watch for profile changes
-   * TODO: https://pagopa.atlassian.net/browse/IOPID-3040
-   */
-  yield* fork(watchProfileEmailValidationChangedSaga, lastEmailValidated);
-
   // We need to generate a key in the application startup flow
   // to use this information on old app version already logged in users.
   // Here we are blocking the application startup, but we have the
@@ -284,8 +273,21 @@ export function* initializeApplicationSaga(
     yield* take(backendStatusLoadSuccess);
   }
 
+  // Before proceeding, ensure that version info is loaded and app is supported
+  // we need to check that the min app version is satisfied to proceed any other step
+  const versionInfo = yield* select(versionInfoDataSelector);
+  if (versionInfo === null) {
+    yield* take(versionInfoLoadSuccess);
+  }
+
+  const isAppSupported = yield* select(isAppSupportedSelector);
+  if (!isAppSupported) {
+    return;
+  }
+
   // ingress screen
-  const isBlockingScreen = yield* select(isBlockingScreenSelector);
+  // eslint-disable-next-line functional/no-let
+  let isBlockingScreen = yield* select(isBlockingScreenSelector);
   if (isBlockingScreen) {
     return;
   }
@@ -319,7 +321,6 @@ export function* initializeApplicationSaga(
 
   // Watches for session expiration or corruption and resets the application state accordingly
   yield* fork(watchForceLogoutSaga);
-  yield* fork(watchForceLogoutOnDifferentCF);
   yield* fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel);
 
   // Instantiate a backend client from the session token
@@ -378,7 +379,7 @@ export function* initializeApplicationSaga(
   yield* fork(watchServicesSaga, backendClient, sessionToken);
 
   // Start watching for Messages actions
-  yield* fork(watchMessagesSaga, backendClient, sessionToken);
+  yield* fork(watchMessagesSaga);
 
   // start watching for FIMS actions
   yield* fork(watchFimsSaga, sessionToken);
@@ -433,8 +434,12 @@ export function* initializeApplicationSaga(
 
   const userFromSuccessLogin = yield* select(userFromSuccessLoginSelector);
 
-  if (userFromSuccessLogin) {
-    yield* call(shouldTrackLevelSecurityMismatchSaga, maybeSessionInformation);
+  if (userFromSuccessLogin || isActiveLoginSuccessProp) {
+    yield* call(
+      shouldTrackLevelSecurityMismatchSaga,
+      maybeSessionInformation,
+      isActiveLoginSuccessProp
+    );
   }
 
   const publicKey = yield* select(lollipopPublicKeySelector);
@@ -475,6 +480,11 @@ export function* initializeApplicationSaga(
   }
   yield* put(startupTransientError(startupTransientErrorInitialState));
 
+  isBlockingScreen = yield* select(isBlockingScreenSelector);
+  if (isBlockingScreen) {
+    return;
+  }
+
   // eslint-disable-next-line functional/no-let
   let userProfile = maybeUserProfile.value;
 
@@ -510,7 +520,17 @@ export function* initializeApplicationSaga(
     // FIXME: This is an unsafe cast caused by a wrongly described type.
     const identificationResult: SagaCallReturnType<
       typeof startAndReturnIdentificationResult
-    > = yield* call(startAndReturnIdentificationResult, maybeStoredPin.value);
+    > = yield* call(
+      startAndReturnIdentificationResult,
+      maybeStoredPin.value,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      IdentificationBackActionType.CLOSE_APP
+    );
 
     if (identificationResult === IdentificationResult.pinreset) {
       // If we are here the user had chosen to reset the unlock code
@@ -622,13 +642,14 @@ export function* initializeApplicationSaga(
     isPnRemoteEnabledSelector
   );
 
-  const aAREnabled = yield* select(isAAREnabled);
-
   if (pnEnabled) {
     // Start watching for PN actions
     yield* fork(watchPnSaga, sessionToken);
 
-    if (aAREnabled) {
+    yield* fork(watchSendLollipopLambda, sessionToken, keyInfo);
+
+    const aarRemoteEnabled = yield* select(isAarRemoteEnabled);
+    if (aarRemoteEnabled) {
       yield* fork(watchAarFlowSaga, sessionToken, keyInfo);
     }
   }
@@ -642,9 +663,6 @@ export function* initializeApplicationSaga(
     yield* fork(watchIDPaySaga, bpdToken);
   }
 
-  // Start watching for trial system saga
-  yield* fork(watchTrialSystemSaga, sessionToken);
-
   // Start watching for itw saga
   yield* fork(watchItwSaga);
 
@@ -652,6 +670,9 @@ export function* initializeApplicationSaga(
   const walletToken = maybeSessionInformation.value.walletToken as string;
   // Start watching for Wallet V3 actions
   yield* fork(watchPaymentsSaga, walletToken);
+
+  // Start watching for CDC actions
+  yield* fork(watchCdcSaga, sessionToken);
 
   // Check that profile is up to date (e.g. inbox enabled)
   yield* call(checkProfileEnabledSaga, userProfile);
@@ -718,10 +739,21 @@ export function* initializeApplicationSaga(
   yield* fork(watchEmailNotificationPreferencesSaga);
 
   // Check if we have any pending background action to be handled
-  yield* call(maybeHandlePendingBackgroundActions, true);
+  const isHandlingBackgroundActions = yield* call(
+    maybeHandlePendingBackgroundActions,
+    true
+  );
 
-  // This tells the security advice bottomsheet that it can be shown
-  yield* put(setSecurityAdviceReadyToShow(true));
+  const showSessionExpirationBlockingScreen = yield* select(
+    showSessionExpirationBlockingScreenSelector
+  );
+
+  if (!isHandlingBackgroundActions && showSessionExpirationBlockingScreen) {
+    yield* call(navigateToActiveSessionLogin);
+  } else if (!isHandlingBackgroundActions) {
+    // Check if should navigate to the send activation screen
+    yield* fork(checkShouldDisplaySendEngagementScreen, isFirstOnboarding);
+  }
 
   yield* put(
     applicationInitialized({

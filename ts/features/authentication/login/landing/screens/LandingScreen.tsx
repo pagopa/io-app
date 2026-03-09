@@ -1,18 +1,14 @@
-/**
- * A screen where the user can choose to login with SPID or get more informations.
- * It includes a carousel with highlights on the app functionalities
- */
 import {
   Banner,
   ContentWrapper,
   IOButton,
   ModuleNavigation,
-  Tooltip,
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import JailMonkey from "jail-monkey";
 import {
   ComponentProps,
@@ -23,17 +19,14 @@ import {
   useState
 } from "react";
 import { Alert, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import I18n from "i18next";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { LandingCardComponent } from "../../../../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import SectionStatusComponent from "../../../../../components/SectionStatus";
-import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
 import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../../config";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { sessionExpired } from "../../../common/store/actions";
 import {
   useIODispatch,
   useIOSelector,
@@ -56,26 +49,27 @@ import {
 } from "../../../common/analytics";
 import { Carousel } from "../../../common/components/Carousel";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import {
+  sessionCorrupted,
+  sessionExpired
+} from "../../../common/store/actions";
 
+import { startupLoadSuccess } from "../../../../../store/actions/startup";
+import { StartupStatusEnum } from "../../../../../store/reducers/startup";
+import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
+import { identificationRequest } from "../../../../identification/store/actions";
+import { setOfflineAccessReason } from "../../../../ingress/store/actions";
+import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
+import { itwOfflineAccessAvailableSelector } from "../../../../itwallet/common/store/selectors";
 import {
   isSessionCorruptedSelector,
   isSessionExpiredSelector
 } from "../../../common/store/selectors";
-import { cieIDDisableTourGuide } from "../../cie/store/actions";
-import {
-  isCieIDTourGuideEnabledSelector,
-  isCieLoginUatEnabledSelector
-} from "../../cie/store/selectors";
+import { isCieLoginUatEnabledSelector } from "../../cie/store/selectors";
 import { SpidLevel } from "../../cie/utils";
 import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
 import { LandingSessionExpiredComponent } from "../components/LandingSessionExpiredComponent";
 import { useInfoBottomsheetComponent } from "../hooks/useInfoBottomsheetComponent";
-import { setOfflineAccessReason } from "../../../../ingress/store/actions";
-import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
-import { identificationRequest } from "../../../../identification/store/actions";
-import { startupLoadSuccess } from "../../../../../store/actions/startup";
-import { StartupStatusEnum } from "../../../../../store/reducers/startup";
-import { itwOfflineAccessAvailableSelector } from "../../../../itwallet/common/store/selectors";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.landing.contextualHelpTitle",
@@ -86,13 +80,14 @@ const SPACE_BETWEEN_BUTTONS = 8;
 const SPACE_AROUND_BUTTON_LINK = 16;
 const SPID_LEVEL: SpidLevel = "SpidL2";
 
+/**
+ * A screen where the user can choose to login with SPID or get more informations.
+ * It includes a carousel with highlights on the app functionalities
+ */
 export const LandingScreen = () => {
   const { error } = useIOToast();
   const store = useIOStore();
-  const insets = useSafeAreaInsets();
-  const isCieIDTourGuideEnabled = useIOSelector(
-    isCieIDTourGuideEnabledSelector
-  );
+
   const itwOfflineAccessAvailable = useIOSelector(
     itwOfflineAccessAvailableSelector
   );
@@ -342,7 +337,7 @@ export const LandingScreen = () => {
       : "session_corrupted";
 
     return (
-      <View style={{ flex: 1 }} testID="LandingScreen">
+      <SafeAreaView style={{ flex: 1 }} testID="LandingScreen">
         {isSessionExpired || isSessionCorrupted ? (
           <LandingSessionExpiredComponent
             ref={accessibilityFirstFocuseViewRef}
@@ -360,19 +355,13 @@ export const LandingScreen = () => {
               color: "primary",
               icon: "instruction",
               onPress: () => {
-                // TODO: this logic will need to be uncommented
-                // (and moved outside the if block, since it will become common logic)
-                // once the tracking strategy for active session login is implemented.
-                // For now, we only track the sessionExpired case because the tracking strategy
-                // is defined for it, while it's still missing for active session login.
-                // Related task: https://pagopa.atlassian.net/browse/IOPID-3343
-                if (isSessionExpired) {
-                  trackHelpCenterCtaTapped(
-                    sessionExpired.toString(),
-                    helpCenterHowToDoWhenSessionIsExpiredUrl,
-                    routeName
-                  );
-                }
+                trackHelpCenterCtaTapped(
+                  isSessionExpired
+                    ? sessionExpired.toString()
+                    : sessionCorrupted.toString(),
+                  helpCenterHowToDoWhenSessionIsExpiredUrl,
+                  routeName
+                );
                 openWebUrl(helpCenterHowToDoWhenSessionIsExpiredUrl, () => {
                   error(I18n.t("global.jserror.title"));
                 });
@@ -389,23 +378,15 @@ export const LandingScreen = () => {
 
         <SectionStatusComponent sectionKey={"login"} />
         <ContentWrapper>
-          <Tooltip
-            closeIconAccessibilityLabel={I18n.t("global.buttons.close")}
-            isVisible={isCieIDTourGuideEnabled}
-            onClose={() => dispatch(cieIDDisableTourGuide())}
-            title={I18n.t("authentication.landing.tour_guide.title")}
-            content={I18n.t("authentication.landing.tour_guide.content")}
-          >
-            <IOButton
-              fullWidth
-              variant="solid"
-              color={isCieUatEnabled ? "danger" : "primary"}
-              label={I18n.t("authentication.landing.loginCie")}
-              icon="cieLetter"
-              onPress={navigateToCiePinScreen}
-              testID="landing-button-login-cie"
-            />
-          </Tooltip>
+          <IOButton
+            fullWidth
+            variant="solid"
+            color={isCieUatEnabled ? "danger" : "primary"}
+            label={I18n.t("authentication.landing.loginCie")}
+            icon="cieLetter"
+            onPress={navigateToCiePinScreen}
+            testID="landing-button-login-cie"
+          />
           <VSpacer size={SPACE_BETWEEN_BUTTONS} />
           <IOButton
             fullWidth
@@ -435,11 +416,10 @@ export const LandingScreen = () => {
               <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
             </View>
           )}
-          {insets.bottom !== 0 && <VSpacer size={SPACE_AROUND_BUTTON_LINK} />}
           {bottomSheet}
           {infoBottomsheetComponent}
         </ContentWrapper>
-      </View>
+      </SafeAreaView>
     );
   };
 

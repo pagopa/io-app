@@ -21,6 +21,7 @@ import {
   loginSuccess,
   logoutFailure,
   logoutSuccess,
+  sessionCorrupted,
   sessionExpired,
   sessionInformationLoadFailure,
   sessionInformationLoadSuccess,
@@ -46,7 +47,13 @@ import { buildEventProperties } from "../../utils/analytics";
 import { trackServicesAction } from "../../features/services/common/analytics";
 import { trackMessagesActionsPostDispatch } from "../../features/messages/analytics";
 import { trackIdentificationAction } from "../../features/identification/analytics";
-import { trackOfflineAccessReason } from "../../features/itwallet/analytics";
+import { updateOfflineAccessReason } from "../../features/itwallet/analytics/properties/propertyUpdaters";
+import {
+  trackLoginFailure,
+  trackLogoutFailure,
+  trackLogoutSuccess
+} from "../../features/authentication/common/analytics";
+import { trackSessionCorrupted } from "../../features/authentication/activeSessionLogin/analytics";
 import { trackContentAction } from "./contentAnalytics";
 
 const trackAction =
@@ -77,15 +84,18 @@ const trackAction =
       // dispatch to mixpanel when the email is validated
       case getType(profileEmailValidationChanged):
         return mixpanelTrack(action.type, { isEmailValidated: action.payload });
-
-      case getType(upsertUserDataProcessing.failure):
       case getType(logoutFailure):
+        return trackLogoutFailure(action.payload.error.message);
+      case getType(upsertUserDataProcessing.failure):
         return mixpanelTrack(action.type, {
           reason: action.payload.error.message
         });
       // Failures with reason as Error and optional description
       case getType(cieAuthenticationError):
-        return mixpanelTrack(action.type, action.payload);
+        return mixpanelTrack(
+          action.type,
+          buildEventProperties("KO", undefined, action.payload)
+        );
       // Failures with reason as Error
       case getType(sessionInformationLoadFailure):
       case getType(profileLoadFailure):
@@ -109,10 +119,12 @@ const trackAction =
       //
       // authentication
       case getType(loginFailure):
-        return mixpanelTrack(action.type, {
+        return trackLoginFailure({
           idp: action.payload.idp,
-          reason: action.payload.error.message
+          reason: action.payload.error.message,
+          flow: "auth"
         });
+
       case getType(loginSuccess):
         return mixpanelTrack(action.type, {
           idp: action.payload.idp
@@ -124,10 +136,20 @@ const trackAction =
         );
       case getType(analyticsAuthenticationStarted):
       case getType(analyticsAuthenticationCompleted):
+        return mixpanelTrack(
+          action.type,
+          buildEventProperties("TECH", undefined, {
+            flow: action.payload
+          })
+        );
+      case getType(logoutSuccess):
+        return trackLogoutSuccess();
+      case getType(sessionCorrupted):
+        return trackSessionCorrupted();
       case getType(sessionInformationLoadSuccess):
       case getType(sessionExpired):
       case getType(sessionInvalid):
-      case getType(logoutSuccess):
+
       // profile
       case getType(profileUpsert.success):
       case getType(profileLoadRequest):
@@ -174,7 +196,7 @@ export const actionTracking =
       void trackIdentificationAction(action);
 
       // Define MP super property that indicates the reason for offline access
-      void trackOfflineAccessReason(action, middleware.getState());
+      void updateOfflineAccessReason(action);
 
       const fciEnvironment = fciEnvironmentSelector(middleware.getState());
       void trackFciAction(fciEnvironment)(action);

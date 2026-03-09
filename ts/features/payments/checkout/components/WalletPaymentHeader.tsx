@@ -11,7 +11,7 @@ import I18n from "i18next";
 import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useWalletPaymentGoBackHandler } from "../hooks/useWalletPaymentGoBackHandler";
 import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
@@ -20,7 +20,10 @@ import { walletPaymentPspListSelector } from "../store/selectors/psps";
 import { WalletPaymentStepEnum } from "../types";
 import { WalletPaymentStepScreenNames } from "../utils";
 import * as analytics from "../analytics";
-import { walletPaymentWebViewPayloadSelector } from "../store/selectors";
+import {
+  walletContextualOnboardingWebViewPayloadSelector,
+  walletPaymentWebViewPayloadSelector
+} from "../store/selectors";
 import { isPaymentsWebViewFlowEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 type WalletPaymentHeaderProps = {
@@ -33,6 +36,9 @@ const WalletPaymentHeader = ({ currentStep }: WalletPaymentHeaderProps) => {
   const goBackHandler = useWalletPaymentGoBackHandler();
   const webViewPaymentPayload = useIOSelector(
     walletPaymentWebViewPayloadSelector
+  );
+  const contextualOnboardingWebViewPayload = useIOSelector(
+    walletContextualOnboardingWebViewPayloadSelector
   );
   const isWebViewEnabled = useIOSelector(isPaymentsWebViewFlowEnabledSelector);
 
@@ -73,9 +79,12 @@ const WalletPaymentHeader = ({ currentStep }: WalletPaymentHeaderProps) => {
   }, [navigation, dispatch, goBackHandler, currentStep, pspList]);
 
   useHardwareBackButton(() => {
-    // If the webViewPaymentPayload is defined and the webView is enabled
+    // If the webViewPaymentPayload or the contextualOnboardingWebViewPayload is defined and the webView is enabled
     // we handle the back behavior in the webView component
-    if (webViewPaymentPayload && isWebViewEnabled) {
+    if (
+      (webViewPaymentPayload || contextualOnboardingWebViewPayload) &&
+      isWebViewEnabled
+    ) {
       return false;
     } else {
       handleGoBack();

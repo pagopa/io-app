@@ -1,3 +1,4 @@
+import { IOColors } from "@pagopa/io-app-design-system";
 import { render } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import { Store, createStore } from "redux";
@@ -12,7 +13,8 @@ describe("Test BonusCardCounter", () => {
       it("should display the skeleton", () => {
         const { queryByTestId } = renderComponent({
           isLoading: true,
-          type: "Value"
+          type: "Value",
+          skeletonColor: IOColors["blueItalia-100"]
         });
         expect(queryByTestId("BonusCardCounterSkeletonTestID")).not.toBeNull();
         expect(queryByTestId("BonusCardCounterTestID")).toBeNull();
@@ -43,7 +45,8 @@ describe("Test BonusCardCounter", () => {
       it("should display the skeleton", () => {
         const { queryByTestId } = renderComponent({
           isLoading: true,
-          type: "ValueWithProgress"
+          type: "ValueWithProgress",
+          skeletonColor: IOColors["blueItalia-100"]
         });
         expect(queryByTestId("BonusCardCounterSkeletonTestID")).not.toBeNull();
         expect(queryByTestId("BonusCardCounterTestID")).toBeNull();

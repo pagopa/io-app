@@ -9,9 +9,10 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import * as URL_UTILS from "../../../../../utils/url";
 import PN_ROUTES from "../../../navigation/routes";
 import * as FLOW_MANAGER from "../../hooks/useSendAarFlowManager";
-import * as REDUCER from "../../store/reducers";
+import * as SELECTORS from "../../store/selectors";
 import { sendAARFlowStates } from "../../utils/stateUtils";
 import { SendAARTosComponent } from "../SendAARTosComponent";
+import * as ANALYTICS from "../../analytics";
 
 const qrCodeMock = "TEST";
 const mockPrivacyUrls = {
@@ -20,7 +21,7 @@ const mockPrivacyUrls = {
 };
 
 const privacyUrlSpy = jest.spyOn(REMOTE_CONFIG, "pnPrivacyUrlsSelector");
-const flowDataSpy = jest.spyOn(REDUCER, "currentAARFlowData");
+const flowDataSpy = jest.spyOn(SELECTORS, "currentAARFlowData");
 const managerSpy = jest.spyOn(FLOW_MANAGER, "useSendAarFlowManager");
 describe("SendAARTosComponent", () => {
   const mockGoNextState = jest.fn();
@@ -51,13 +52,19 @@ describe("SendAARTosComponent", () => {
     fireEvent.press(button);
     expect(mockGoNextState).toHaveBeenCalledTimes(1);
   });
-  it("quits out of the flow on secondary button press", () => {
+  it("quits out of the flow on secondary button press and call 'trackSendAARToSDismissed' ", () => {
+    const spiedOnMockedTrackSendAARToSDismissed = jest
+      .spyOn(ANALYTICS, "trackSendAARToSDismissed")
+      .mockImplementation();
+
     const { getByTestId } = renderComponent(qrCodeMock);
 
     const button = getByTestId("secondary_button");
     expect(mockTerminateFlow).toHaveBeenCalledTimes(0);
     fireEvent.press(button);
     expect(mockTerminateFlow).toHaveBeenCalledTimes(1);
+    expect(spiedOnMockedTrackSendAARToSDismissed.mock.calls.length).toBe(1);
+    expect(spiedOnMockedTrackSendAARToSDismissed.mock.calls[0].length).toBe(0);
   });
   it("should match snapshot", () => {
     const { toJSON } = renderComponent(qrCodeMock);

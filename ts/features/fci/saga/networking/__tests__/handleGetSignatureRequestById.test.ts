@@ -13,7 +13,6 @@ import {
   fciSignatureRequestFromId
 } from "../../../store/actions";
 import { SignatureRequestDetailView } from "../../../../../../definitions/fci/SignatureRequestDetailView";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { EnvironmentEnum } from "../../../../../../definitions/fci/Environment";
 
@@ -37,13 +36,13 @@ describe("handleGetSignatureRequestById", () => {
   };
   const getSignatureDetailByIdRequest = mockBackendFciClient({
     id: "mockedId",
-    Bearer: "mockedToken"
+    Bearer: "mock-token"
   });
   it("Should dispatch fciSignatureRequestFromId.success with the response payload if the response is right and the status code is 200", () => {
     testSaga(
       handleGetSignatureRequestById,
       mockBackendFciClient,
-      "mockedToken" as SessionToken,
+      "mock-token",
       loadAction
     )
       .next()
@@ -67,7 +66,7 @@ describe("handleGetSignatureRequestById", () => {
     testSaga(
       handleGetSignatureRequestById,
       mockBackendFciClient,
-      "mockedToken" as SessionToken,
+      "mock-token",
       loadAction
     )
       .next()
@@ -81,7 +80,7 @@ describe("handleGetSignatureRequestById", () => {
     testSaga(
       handleGetSignatureRequestById,
       mockBackendFciClient,
-      "mockedToken" as SessionToken,
+      "mock-token",
       loadAction
     )
       .next()
@@ -98,11 +97,10 @@ describe("handleGetSignatureRequestById", () => {
       .isDone();
   });
   it("Should dispatch fciSignatureRequestFromId.failure with the error message as payload if an exception is raised", () => {
-    // const mockedError = new Error("mockedErrorMessage");
     testSaga(
       handleGetSignatureRequestById,
       mockBackendFciClient,
-      "mockedToken" as SessionToken,
+      "mock-token",
       loadAction
     )
       .next()

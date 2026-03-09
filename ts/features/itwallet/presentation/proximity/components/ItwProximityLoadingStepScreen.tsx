@@ -1,4 +1,3 @@
-import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { ItwProximityMachineContext } from "../machine/provider";
@@ -42,10 +41,6 @@ export const ItwProximityLoadingStepScreen = () => {
   const { subtitle, title } = getLoadingStepScreenContentProps();
 
   return (
-    <LoadingScreenContent testID="loader" contentTitle={title}>
-      <ContentWrapper style={{ alignItems: "center" }}>
-        <Body style={{ textAlign: "center" }}>{subtitle}</Body>
-      </ContentWrapper>
-    </LoadingScreenContent>
+    <LoadingScreenContent testID="loader" title={title} subtitle={subtitle} />
   );
 };

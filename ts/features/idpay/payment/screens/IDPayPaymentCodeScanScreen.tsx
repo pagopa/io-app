@@ -1,6 +1,6 @@
 import { IOToast } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import { Alert } from "react-native";
+import { Alert, View } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
@@ -10,7 +10,7 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import {
   BarcodeFailure,
   BarcodeScanBaseScreenComponent,
@@ -22,8 +22,9 @@ import {
 import * as analytics from "../../../barcode/analytics";
 import { IOBarcodeOrigin } from "../../../barcode/types/IOBarcode";
 import { IdPayPaymentRoutes } from "../navigation/routes";
+import { IdPayFeatureFlagGuard } from "../../common/components/IdPayFeatureFlagGuard";
 
-const IDPayPaymentCodeScanScreen = () => {
+const IDPayPaymentCodeScan = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const openDeepLink = useOpenDeepLink();
 
@@ -87,21 +88,34 @@ const IDPayPaymentCodeScanScreen = () => {
 
   return (
     <>
-      <BarcodeScanBaseScreenComponent
-        barcodeFormats={barcodeFormats}
-        barcodeTypes={barcodeTypes}
-        onBarcodeSuccess={handleBarcodeSuccess}
-        onBarcodeError={handleBarcodeError}
-        onFileInputPressed={showFilePicker}
-        onManualInputPressed={navigateToCodeInputScreen}
-        contextualHelp={emptyContextualHelp}
-        barcodeAnalyticsFlow="idpay"
-        isDisabled={isFilePickerVisible || isFileReaderLoading}
-        isLoading={isFileReaderLoading}
-      />
+      <View
+        style={{ flex: 1 }}
+        importantForAccessibility={
+          isFilePickerVisible ? "no-hide-descendants" : "auto"
+        }
+      >
+        <BarcodeScanBaseScreenComponent
+          barcodeFormats={barcodeFormats}
+          barcodeTypes={barcodeTypes}
+          onBarcodeSuccess={handleBarcodeSuccess}
+          onBarcodeError={handleBarcodeError}
+          onFileInputPressed={showFilePicker}
+          onManualInputPressed={navigateToCodeInputScreen}
+          contextualHelp={emptyContextualHelp}
+          barcodeAnalyticsFlow="idpay"
+          isDisabled={isFilePickerVisible || isFileReaderLoading}
+          isLoading={isFileReaderLoading}
+        />
+      </View>
       {filePickerBottomSheet}
     </>
   );
 };
+
+const IDPayPaymentCodeScanScreen = () => (
+  <IdPayFeatureFlagGuard>
+    <IDPayPaymentCodeScan />
+  </IdPayFeatureFlagGuard>
+);
 
 export { IDPayPaymentCodeScanScreen };

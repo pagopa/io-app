@@ -1,33 +1,69 @@
 import { useEffect } from "react";
-import { IdentificationContext } from "../../machine/eid/context";
+import {
+  EidIssuanceLevel,
+  IdentificationContext
+} from "../../machine/eid/context";
 import {
   IssuanceFailure,
   IssuanceFailureType
 } from "../../machine/eid/failure";
+import { ItwFlow } from "../../analytics/utils/types";
 import {
   trackIdNotMatch,
   trackItwCieIdCieNotRegistered,
+  trackItwIdRequestFederationFailed,
   trackItwIdRequestFailure,
   trackItwIdRequestUnexpectedFailure,
-  trackItwUnsupportedDevice
-} from "../../analytics";
-import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
+  trackItwUnsupportedDevice,
+  trackMrtdPoPChallengeInfoFailed
+} from "../analytics";
+import {
+  serializeFailureReason,
+  shouldSerializeReason
+} from "../../common/utils/itwStoreUtils";
+
+type EidTrackedCredential = "ITW_ID" | "ITW_PID";
 
 type Params = {
   failure: IssuanceFailure;
   identification?: IdentificationContext;
+  issuanceLevel?: EidIssuanceLevel;
+  credential: EidTrackedCredential;
 };
+/**
+ * Maps the eID issuance level to the corresponding ItwFlow value.
+ * @param issuanceLevel - The eID issuance level.
+ * @returns The corresponding ItwFlow value.
+ */
 
+const mapIssuanceLevelToFlow = (issuanceLevel?: EidIssuanceLevel): ItwFlow => {
+  switch (issuanceLevel) {
+    case "l3":
+      return "L3";
+    case "l2":
+    case "l2-fallback":
+      return "L2";
+    default:
+      return "not_available";
+  }
+};
 /**
  * Track errors occurred during the eID issuance process for analytics.
  */
-export const useEidEventsTracking = ({ failure, identification }: Params) => {
+export const useEidEventsTracking = ({
+  failure,
+  identification,
+  issuanceLevel,
+  credential
+}: Params) => {
+  const itwFlow: ItwFlow = mapIssuanceLevelToFlow(issuanceLevel);
+
   useEffect(() => {
     if (
       failure.type === IssuanceFailureType.NOT_MATCHING_IDENTITY &&
       identification
     ) {
-      return trackIdNotMatch(identification.mode);
+      return trackIdNotMatch(identification.mode, itwFlow);
     }
 
     if (failure.type === IssuanceFailureType.UNSUPPORTED_DEVICE) {
@@ -39,7 +75,8 @@ export const useEidEventsTracking = ({ failure, identification }: Params) => {
         ITW_ID_method: identification.mode,
         reason: failure.reason,
         type: failure.type,
-        caused_by: "CredentialIssuer"
+        caused_by: "CredentialIssuer",
+        itw_flow: itwFlow
       });
     }
 
@@ -51,7 +88,16 @@ export const useEidEventsTracking = ({ failure, identification }: Params) => {
         ITW_ID_method: identification.mode,
         reason: failure.reason,
         type: failure.type,
-        caused_by: "WalletProvider"
+        caused_by: "WalletProvider",
+        itw_flow: itwFlow
+      });
+    }
+
+    if (failure.type === IssuanceFailureType.UNTRUSTED_ISS) {
+      return trackItwIdRequestFederationFailed({
+        credential,
+        reason: failure.reason,
+        type: failure.type
       });
     }
 
@@ -59,7 +105,17 @@ export const useEidEventsTracking = ({ failure, identification }: Params) => {
       failure.type === IssuanceFailureType.CIE_NOT_REGISTERED &&
       identification
     ) {
-      return trackItwCieIdCieNotRegistered(identification.level);
+      return trackItwCieIdCieNotRegistered(itwFlow);
+    }
+
+    if (
+      failure.type === IssuanceFailureType.MRTD_CHALLENGE_INIT_ERROR &&
+      identification
+    ) {
+      return trackMrtdPoPChallengeInfoFailed({
+        ITW_ID_method: identification.mode,
+        reason: failure.reason.message
+      });
     }
 
     if (failure.type === IssuanceFailureType.UNEXPECTED) {
@@ -69,14 +125,11 @@ export const useEidEventsTracking = ({ failure, identification }: Params) => {
        * 2. If failure.reason is an empty object with no keys, we serialize it to extract message property.
        * To maintain compatibility with the existing failure tracking, we keep the original `failure` object when `failure.reason` is not empty.
        */
-      const shouldSerializeReason =
-        !failure.reason ||
-        (typeof failure.reason === "object" &&
-          Object.keys(failure.reason).length === 0);
-
       return trackItwIdRequestUnexpectedFailure(
-        shouldSerializeReason ? serializeFailureReason(failure) : failure
+        shouldSerializeReason(failure)
+          ? { ...serializeFailureReason(failure), itw_flow: itwFlow }
+          : { ...failure, itw_flow: itwFlow }
       );
     }
-  }, [failure, identification]);
+  }, [failure, identification, itwFlow, credential]);
 };

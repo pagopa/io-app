@@ -5,10 +5,16 @@ import { useIOSelector } from "../../../../store/hooks";
 import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { openWebUrl } from "../../../../utils/url";
 import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
+import { trackSendAARToSDismissed } from "../analytics";
 
 export const SendAARTosComponent = () => {
   const tosConfig = useIOSelector(pnPrivacyUrlsSelector);
   const { goToNextState, terminateFlow } = useSendAarFlowManager();
+
+  const onSecondaryAction = () => {
+    trackSendAARToSDismissed();
+    terminateFlow();
+  };
 
   const bodyPropsArray: Array<BodyProps> = [
     {
@@ -53,7 +59,7 @@ export const SendAARTosComponent = () => {
       }}
       secondaryAction={{
         label: i18n.t("features.pn.aar.flow.aarTos.secondaryAction"),
-        onPress: terminateFlow,
+        onPress: onSecondaryAction,
         testID: "secondary_button"
       }}
     />

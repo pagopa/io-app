@@ -1,20 +1,30 @@
-import { useCallback } from "react";
+import { ContentWrapper, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
+import { Canvas } from "@shopify/react-native-skia";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { VSpacer } from "@pagopa/io-app-design-system";
-import { ItwPresentationPidDetail } from "../components/ItwPresentationPidDetail";
+import { useCallback } from "react";
+import { useWindowDimensions, View } from "react-native";
 import { useIOSelector } from "../../../../../store/hooks";
+import { trackCredentialDetail } from "../analytics";
+import { mapPIDStatusToMixpanel } from "../../../analytics/utils";
+import {
+  ItwBrandedSkiaGradient,
+  ItwSkiaBrandedGradientVariant
+} from "../../../common/components/ItwBrandedSkiaGradient";
+import { PoweredByItWalletText } from "../../../common/components/PoweredByItWalletText";
+import {
+  ItwJwtCredentialStatus,
+  StoredCredential
+} from "../../../common/utils/itwTypesUtils";
 import {
   itwCredentialsEidSelector,
   itwCredentialsEidStatusSelector
 } from "../../../credentials/store/selectors";
-import { ItwPresentationPidScaffoldScreen } from "../components/ItwPresentationPidScaffoldScreen";
+import { ItwPresentationDetailsScreenBase } from "../components/ItwPresentationDetailsScreenBase";
+import { ItwPresentationPidDetail } from "../components/ItwPresentationPidDetail";
 import { ItwPresentationPidDetailFooter } from "../components/ItwPresentationPidDetailFooter";
-import {
-  mapPIDStatusToMixpanel,
-  trackCredentialDetail
-} from "../../../analytics";
+import { ItwPresentationPidDetailHeader } from "../components/ItwPresentationPidDetailHeader";
 
 export const ItwPresentationPidDetailScreen = () => {
   const pidOption = useIOSelector(itwCredentialsEidSelector);
@@ -31,17 +41,50 @@ export const ItwPresentationPidDetailScreen = () => {
     }, [maybeEidStatus])
   );
 
-  return pipe(
-    pidOption,
-    O.fold(
-      constNull, // This should never happen
-      credential => (
-        <ItwPresentationPidScaffoldScreen credential={credential}>
+  const getContent = (credential: StoredCredential) => (
+    <ItwPresentationDetailsScreenBase credential={credential}>
+      {/* Header with logo and description */}
+      <ItwPresentationPidDetailHeader />
+
+      {/* Brand gradient below header */}
+      <PidStatusGradient />
+
+      {/* Page content */}
+      <ContentWrapper>
+        <VStack style={{ paddingVertical: 16 }} space={16}>
           <ItwPresentationPidDetail credential={credential} />
-          <VSpacer />
           <ItwPresentationPidDetailFooter credential={credential} />
-        </ItwPresentationPidScaffoldScreen>
-      )
-    )
+          <View style={{ alignItems: "center" }}>
+            <PoweredByItWalletText />
+          </View>
+        </VStack>
+      </ContentWrapper>
+    </ItwPresentationDetailsScreenBase>
+  );
+
+  return pipe(pidOption, O.fold(constNull, getContent));
+};
+
+const PidStatusGradient = () => {
+  const { width } = useWindowDimensions();
+  const pidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+
+  const borderVariantByPidStatus: Record<
+    ItwJwtCredentialStatus,
+    ItwSkiaBrandedGradientVariant
+  > = {
+    valid: "default",
+    jwtExpiring: "warning",
+    jwtExpired: "error"
+  };
+
+  return (
+    <Canvas style={{ width, height: 3 }}>
+      <ItwBrandedSkiaGradient
+        width={width}
+        height={3}
+        variant={borderVariantByPidStatus[pidStatus || "valid"]}
+      />
+    </Canvas>
   );
 };
