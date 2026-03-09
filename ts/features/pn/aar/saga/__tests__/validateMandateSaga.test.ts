@@ -5,13 +5,9 @@ import { isPnTestEnabledSelector } from "../../../../../store/reducers/persisted
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import {
   aarProblemJsonAnalyticsReport,
-  trackSendAARFailure,
-  trackSendAarMandateCieDataError,
-  trackSendAarMandateCieExpiredError,
-  trackSendAarMandateCieNotRelatedToDelegatorError
+  trackSendAARFailure
 } from "../../analytics";
 import { setAarFlowState } from "../../store/actions";
-import { AarErrorStatesKind } from "../../utils/aarErrorMappings";
 import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
 import {
   sendAarMockStateFactory,
@@ -19,11 +15,8 @@ import {
 } from "../../utils/testUtils";
 import {
   AcceptMandateSuccessfulResponse,
-  testable,
   validateMandateSaga
 } from "../validateMandateSaga";
-
-const { getAndTrackValidationErrorState } = testable!;
 
 const mockValidatingMandateState = sendAarMockStateFactory.validatingMandate();
 const mockValidatingMandateAction = setAarFlowState(mockValidatingMandateState);
@@ -38,14 +31,10 @@ const mockAcceptMandate = jest.fn();
 const getMockKoState = (
   prevState: AARFlowState,
   error: AARProblemJson | undefined,
-  errorKind: AarErrorStatesKind | undefined,
   reason: string
 ): AARFlowState => ({
   type: "ko",
   previousState: { ...prevState },
-  ...(errorKind != null && {
-    specificErrorKey: errorKind
-  }),
   ...(error != null && { error }),
   debugData: {
     phase: "Validate Mandate",
@@ -53,12 +42,7 @@ const getMockKoState = (
   }
 });
 
-jest.mock("../../analytics", () => ({
-  ...jest.requireActual("../../analytics"),
-  trackSendAarMandateCieExpiredError: jest.fn(),
-  trackSendAarMandateCieNotRelatedToDelegatorError: jest.fn(),
-  trackSendAarMandateCieDataError: jest.fn()
-}));
+jest.mock("../../analytics");
 
 describe("validateMandateSaga", () => {
   afterEach(jest.clearAllMocks);
@@ -151,27 +135,28 @@ describe("validateMandateSaga", () => {
 
   it.each([
     {
+      name: "500 generic error",
       res: E.right({
         status: 500,
         value: { status: 500, detail: "A detail" }
-      }),
-      errorState: AarErrorStatesKind.CIE_GENERIC
+      })
     },
     {
+      name: "404 generic error",
       res: E.right({
         status: 404,
         value: { status: 404, detail: "A detail" }
-      }),
-      errorState: AarErrorStatesKind.CIE_GENERIC
+      })
     },
     {
+      name: "418 generic error",
       res: E.right({
         status: 418,
         value: { status: 418, detail: "A detail" }
-      }),
-      errorState: AarErrorStatesKind.CIE_GENERIC
+      })
     },
     {
+      name: "422 CIE_EXPIRED_ERROR",
       res: E.right({
         status: 422,
         value: {
@@ -179,10 +164,10 @@ describe("validateMandateSaga", () => {
           detail: "A detail",
           errors: [{ code: "CIE_EXPIRED_ERROR" }]
         }
-      }),
-      errorState: AarErrorStatesKind.CIE_EXPIRED
+      })
     },
     {
+      name: "422 CIE_NOT_RELATED_TO_DELEGATOR_ERROR",
       res: E.right({
         status: 422,
         value: {
@@ -190,10 +175,10 @@ describe("validateMandateSaga", () => {
           detail: "A detail",
           errors: [{ code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR" }]
         }
-      }),
-      errorState: AarErrorStatesKind.CIE_NOT_RELATED_TO_DELEGATOR
+      })
     },
     {
+      name: "500 with body status 422 CIE_NOT_RELATED_TO_DELEGATOR_ERROR",
       res: E.right({
         status: 500,
         value: {
@@ -201,10 +186,10 @@ describe("validateMandateSaga", () => {
           detail: "A detail",
           errors: [{ code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR" }]
         }
-      }),
-      errorState: AarErrorStatesKind.CIE_GENERIC
+      })
     },
     {
+      name: "500 with body status 422 CIE_EXPIRED_ERROR",
       res: E.right({
         status: 500,
         value: {
@@ -212,12 +197,11 @@ describe("validateMandateSaga", () => {
           detail: "A detail",
           errors: [{ code: "CIE_EXPIRED_ERROR" }]
         }
-      }),
-      errorState: AarErrorStatesKind.CIE_GENERIC
+      })
     }
-  ] as Array<{ res: AcceptMandateSuccessfulResponse; errorState: AarErrorStatesKind }>)(
-    "should dispatch the correct KO state when the response is %o",
-    ({ res, errorState }) => {
+  ] as Array<{ name: string; res: AcceptMandateSuccessfulResponse }>)(
+    "should dispatch the correct KO state for $name",
+    ({ res }) => {
       const error = res.right.value;
       const reason = `HTTP request failed (${aarProblemJsonAnalyticsReport(
         res.right.status,
@@ -239,23 +223,11 @@ describe("validateMandateSaga", () => {
           mockValidatingMandateAction
         )
         .next(res)
-        .call(
-          getAndTrackValidationErrorState,
-          error?.errors,
-          res.right.status,
-          reason
-        )
-        .next(errorState)
         .call(trackSendAARFailure, "Validate Mandate", reason)
         .next()
         .put(
           setAarFlowState(
-            getMockKoState(
-              mockValidatingMandateState,
-              error,
-              errorState,
-              reason
-            )
+            getMockKoState(mockValidatingMandateState, error, reason)
           )
         )
         .next()
@@ -313,7 +285,6 @@ describe("validateMandateSaga", () => {
           getMockKoState(
             mockValidatingMandateState,
             undefined,
-            undefined,
             `An error was thrown ()`
           )
         )
@@ -343,243 +314,10 @@ describe("validateMandateSaga", () => {
       .next()
       .put(
         setAarFlowState(
-          getMockKoState(
-            mockValidatingMandateState,
-            undefined,
-            undefined,
-            failureReason
-          )
+          getMockKoState(mockValidatingMandateState, undefined, failureReason)
         )
       )
       .next()
       .isDone();
   });
 });
-
-describe("getAndTrackValidationErrorState", () => {
-  beforeEach(jest.clearAllMocks);
-
-  it.each([
-    "CIE_EXPIRED_ERROR",
-    "cie_expired_error",
-    "Cie_Expired_Error",
-    "cIe_ExPiReD_eRrOr"
-  ])(
-    'should call "trackSendAarMandateCieExpiredError" event and return the correct error kind for status 422 and errorCode "%s"',
-    code => {
-      const res = getAndTrackValidationErrorState(
-        [{ code }],
-        422,
-        "Some reason"
-      );
-
-      expect(trackSendAarMandateCieExpiredError).toHaveBeenCalledTimes(1);
-      expect(trackSendAarMandateCieExpiredError).toHaveBeenCalledWith();
-      expect(
-        trackSendAarMandateCieNotRelatedToDelegatorError
-      ).not.toHaveBeenCalled();
-      expect(trackSendAarMandateCieDataError).not.toHaveBeenCalled();
-      expect(res).toBe(AarErrorStatesKind.CIE_EXPIRED);
-    }
-  );
-
-  it.each([
-    "CIE_NOT_RELATED_TO_DELEGATOR_ERROR",
-    "cie_not_related_to_delegator_error",
-    "Cie_Not_Related_To_Delegator_Error",
-    "cIe_NoT_rElAtEd_To_DeLeGaToR_eRrOr"
-  ])(
-    'should call "trackSendAarMandateCieNotRelatedToDelegatorError" event and return the correct error kind for status 422 and errorCode "%s"',
-    code => {
-      const res = getAndTrackValidationErrorState(
-        [{ code }],
-        422,
-        "Some reason"
-      );
-
-      expect(
-        trackSendAarMandateCieNotRelatedToDelegatorError
-      ).toHaveBeenCalledTimes(1);
-      expect(trackSendAarMandateCieExpiredError).not.toHaveBeenCalled();
-      expect(trackSendAarMandateCieDataError).not.toHaveBeenCalled();
-      expect(res).toBe(AarErrorStatesKind.CIE_NOT_RELATED_TO_DELEGATOR);
-    }
-  );
-
-  it.each([
-    "PN_MANDATE_NOTFOUND",
-    "pn_mandate_notfound",
-    "Pn_Mandate_NotFound",
-    "pN_mAnDaTe_nOtFoUnD"
-  ])(
-    'should not track any CIE event and return the correct error kind for status 422 and errorCode "%s"',
-    code => {
-      const res = getAndTrackValidationErrorState(
-        [{ code }],
-        500,
-        "Some reason"
-      );
-
-      expect(
-        trackSendAarMandateCieNotRelatedToDelegatorError
-      ).not.toHaveBeenCalled();
-      expect(trackSendAarMandateCieExpiredError).not.toHaveBeenCalled();
-      expect(trackSendAarMandateCieDataError).not.toHaveBeenCalled();
-      expect(res).toBe(AarErrorStatesKind.CIE_TTL_EXPIRED);
-    }
-  );
-
-  const genericErrorCases = [
-    {
-      status: 400
-    },
-
-    {
-      status: 400,
-      errors: [{ code: "CIE_EXPIRED_ERROR" }]
-    },
-    {
-      status: 400,
-      errors: [{ code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR" }]
-    },
-    {
-      status: 422
-    },
-    {
-      status: 422,
-      errors: [{ code: "ANY_ERROR_CODE" }]
-    },
-    {
-      status: 422,
-      errors: [{ code: "NOT_A_CIE_NOT_RELATED_TO_DELEGATOR_ERROR" }]
-    },
-    {
-      status: 422,
-      errors: [{ code: "NOT_A_CIE_EXPIRED_ERROR" }]
-    },
-    {
-      status: 500
-    },
-    {
-      status: 500,
-      errors: [{ code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR" }]
-    },
-    {
-      status: 500,
-      errors: [{ code: "CIE_EXPIRED_ERROR" }]
-    }
-  ];
-  const specificErrorCases = [
-    {
-      status: 400,
-      errors: [{ code: "CIE_EXPIRED_ERROR" }],
-      result: AarErrorStatesKind.CIE_GENERIC
-    },
-    {
-      status: 422,
-      errors: [{ code: "CIE_EXPIRED_ERROR" }],
-      result: AarErrorStatesKind.CIE_EXPIRED
-    },
-    {
-      status: 422,
-      errors: [{ code: "NON_MAPPED_ERROR" }, { code: "CIE_EXPIRED_ERROR" }],
-      result: AarErrorStatesKind.CIE_GENERIC
-    },
-    {
-      status: 422,
-      errors: [
-        {
-          code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR"
-        }
-      ],
-      result: AarErrorStatesKind.CIE_NOT_RELATED_TO_DELEGATOR
-    },
-    {
-      status: 422,
-      errors: [
-        {
-          code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR"
-        },
-        {
-          code: "CIE_EXPIRED_ERROR"
-        }
-      ],
-      result: AarErrorStatesKind.CIE_NOT_RELATED_TO_DELEGATOR
-    },
-    {
-      status: 422,
-      errors: [
-        {
-          code: "CIE_EXPIRED_ERROR"
-        },
-        {
-          code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR"
-        }
-      ],
-      result: AarErrorStatesKind.CIE_EXPIRED
-    },
-    {
-      status: 422,
-      errors: [
-        {
-          code: "NOT_MAPPED"
-        },
-        {
-          code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR"
-        }
-      ],
-      result: AarErrorStatesKind.CIE_GENERIC
-    },
-    {
-      status: 500,
-      result: AarErrorStatesKind.CIE_GENERIC
-    },
-    {
-      status: 500,
-      errors: [{ code: "PN_MANDATE_NOTFOUND" }],
-      result: AarErrorStatesKind.CIE_TTL_EXPIRED
-    },
-    {
-      status: 422,
-      errors: [{ code: "PN_MANDATE_NOTFOUND" }],
-      result: AarErrorStatesKind.CIE_GENERIC
-    },
-    {
-      status: 500,
-      errors: [
-        {
-          code: "CIE_EXPIRED_ERROR"
-        },
-        {
-          code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR"
-        }
-      ],
-      result: AarErrorStatesKind.CIE_GENERIC
-    }
-  ];
-  it.each(genericErrorCases)(
-    'should track "trackSendAarMandateCieDataError" event and return a generic error for %o',
-    ({ status, errors }) => {
-      const reason = "Some reason";
-
-      const res = getAndTrackValidationErrorState(errors, status, reason);
-
-      expect(trackSendAarMandateCieDataError).toHaveBeenCalledTimes(1);
-      expect(trackSendAarMandateCieDataError).toHaveBeenCalledWith(reason);
-      expect(
-        trackSendAarMandateCieNotRelatedToDelegatorError
-      ).not.toHaveBeenCalled();
-      expect(trackSendAarMandateCieExpiredError).not.toHaveBeenCalled();
-      expect(res).toBe(AarErrorStatesKind.CIE_GENERIC);
-    }
-  );
-  it.each(specificErrorCases)(
-    "should return the correct result when called with: %o",
-    ({ status, errors, result }) => {
-      const reason = "Some reason";
-      const res = getAndTrackValidationErrorState(errors, status, reason);
-      expect(res).toBe(result);
-    }
-  );
-});
-// --- complex `.each` test cases ---

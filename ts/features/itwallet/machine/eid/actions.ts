@@ -16,11 +16,12 @@ import {
 } from "../../analytics";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import {
-  itwSetAuthLevel,
-  itwFreezeSimplifiedActivationRequirements,
   itwClearSimplifiedActivationRequirements,
+  itwFreezeSimplifiedActivationRequirements,
+  itwSetAuthLevel,
   itwSetCredentialUpgradeFailed
 } from "../../common/store/actions/preferences";
+import { itwIsPidReissuingSurveyHiddenSelector } from "../../common/store/selectors/preferences";
 import {
   itwCredentialsRemoveByType,
   itwCredentialsStore
@@ -35,11 +36,10 @@ import {
 } from "../../issuance/store/actions";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import { itwIsPidReissuingSurveyHiddenSelector } from "../../common/store/selectors/preferences";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -145,9 +145,16 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToCredentialCatalog: () => {
+  navigateToCredentialCatalog: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     navigation.replace(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ONBOARDING
+      screen:
+        context.level === "l3"
+          ? ITW_ROUTES.L3_ONBOARDING
+          : context.level === "l2-fallback"
+          ? ITW_ROUTES.L2_ONBOARDING
+          : ITW_ROUTES.ONBOARDING
     });
   },
 

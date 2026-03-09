@@ -3869,7 +3869,7 @@
       "undefined": {
         "title": "Wir brauchen deine Zustimmung",
         "label": "Erlaube den Zugriff, um QR-Codes mit der Kamera deines Geräts scannen zu können.",
-        "action": "Zugriff gewähren"
+        "action": "Fortfahren"
       },
       "denied": {
         "title": "Du hast den Zugriff verweigert, die Kamera zu benutzen",
