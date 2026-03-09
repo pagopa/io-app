@@ -190,9 +190,7 @@ export const createEidIssuanceActorsImplementation = (
         itwVersion,
         newHardwareKeyTag,
         sessionToken,
-        {
-          isRenewal: true
-        }
+        { isRenewal: true }
       );
 
       return await getAttestation(
