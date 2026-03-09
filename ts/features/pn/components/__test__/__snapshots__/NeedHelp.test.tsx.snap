@@ -877,7 +877,7 @@ Se hai bisogno di supporto su SEND, consulta le risorse di assistenza
                                         [
                                           {},
                                           {
-                                            "color": "#0E0F13",
+                                            "color": undefined,
                                             "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",

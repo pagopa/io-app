@@ -3,10 +3,13 @@ import I18n from "i18next";
 import { memo, useMemo } from "react";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
+import { useIOSelector } from "../../../../store/hooks";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 
 type Props = {
   type: string;
   onPress: (type: string) => void;
+  showIcon?: boolean;
   isActive?: boolean;
   isDisabled?: boolean;
   isCredentialIssuancePending?: boolean;
@@ -30,6 +33,11 @@ const activeBadge: Badge = {
   text: I18n.t("features.wallet.onboarding.badge.active")
 };
 
+const activeL3Badge: Badge = {
+  variant: "success",
+  text: I18n.t("features.wallet.onboarding.badge.valid")
+};
+
 const disabledBadge: Badge = {
   variant: "default",
   text: I18n.t("features.wallet.onboarding.badge.unavailable")
@@ -50,9 +58,39 @@ const newBadge: Badge = {
   text: I18n.t("features.wallet.onboarding.badge.new")
 };
 
+const getBadge = (args: {
+  isActive?: boolean;
+  isDisabled?: boolean;
+  isRequested?: boolean;
+  isUpcoming?: boolean;
+  isNew?: boolean;
+  isL3Enabled: boolean;
+}): Badge | undefined => {
+  const { isActive, isDisabled, isRequested, isUpcoming, isNew, isL3Enabled } =
+    args;
+
+  if (isActive) {
+    return isL3Enabled ? activeL3Badge : activeBadge;
+  }
+  if (isDisabled) {
+    return disabledBadge;
+  }
+  if (isRequested) {
+    return requestedBadge;
+  }
+  if (isUpcoming) {
+    return upcomingBadge;
+  }
+  if (isNew) {
+    return newBadge;
+  }
+  return undefined;
+};
+
 const ItwOnboardingModuleCredential = ({
   type,
   onPress,
+  showIcon = true,
   isActive,
   isDisabled,
   isUpcoming,
@@ -61,24 +99,20 @@ const ItwOnboardingModuleCredential = ({
   isCredentialIssuancePending,
   isRequested = false
 }: Props) => {
-  const badge = useMemo((): Badge | undefined => {
-    if (isActive) {
-      return activeBadge;
-    }
-    if (isDisabled) {
-      return disabledBadge;
-    }
-    if (isRequested) {
-      return requestedBadge;
-    }
-    if (isUpcoming) {
-      return upcomingBadge;
-    }
-    if (isNew) {
-      return newBadge;
-    }
-    return undefined;
-  }, [isActive, isDisabled, isNew, isRequested, isUpcoming]);
+  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
+
+  const badge = useMemo(
+    () =>
+      getBadge({
+        isActive,
+        isDisabled,
+        isRequested,
+        isUpcoming,
+        isNew,
+        isL3Enabled
+      }),
+    [isActive, isDisabled, isRequested, isUpcoming, isNew, isL3Enabled]
+  );
 
   const handleOnPress = () => {
     onPress(type);
@@ -86,15 +120,20 @@ const ItwOnboardingModuleCredential = ({
 
   const isPressable = !(isActive || isDisabled);
 
-  return (
-    <ModuleCredential
-      testID={`${type}ModuleTestID`}
-      icon={credentialIconByType[type]}
-      label={getCredentialNameFromType(type)}
-      onPress={isPressable ? handleOnPress : undefined}
-      isFetching={isCredentialIssuancePending && isSelectedCredential}
-      badge={badge}
-    />
+  const baseProps = {
+    testID: `${type}ModuleTestID`,
+    label: getCredentialNameFromType(type),
+    onPress: isPressable ? handleOnPress : undefined,
+    isFetching: isCredentialIssuancePending && isSelectedCredential,
+    badge
+  };
+
+  const icon = showIcon ? credentialIconByType[type] : undefined;
+
+  return icon ? (
+    <ModuleCredential {...baseProps} icon={icon as IOIcons} />
+  ) : (
+    <ModuleCredential {...baseProps} />
   );
 };
 
