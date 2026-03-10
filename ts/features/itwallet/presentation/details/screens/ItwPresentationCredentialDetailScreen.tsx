@@ -44,7 +44,6 @@ import {
 import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
-import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import { trackItwProximityShowQrCode } from "../../proximity/analytics";
 import { useItwPresentQRCode } from "../../proximity/hooks/useItwPresentQRCode.tsx";
 import { ItwProximityMachineContext } from "../../proximity/machine/provider.tsx";
@@ -176,8 +175,6 @@ export const ItwPresentationCredentialDetail = ({
 }: ItwPresentationCredentialDetailProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-  const credentialIssuanceMachineRef =
-    ItwCredentialIssuanceMachineContext.useActorRef();
   const itwProximityMachineRef = ItwProximityMachineContext.useActorRef();
 
   const itwFeaturesEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
@@ -246,13 +243,15 @@ export const ItwPresentationCredentialDetail = ({
     if (shouldShowMdlUpdateCta) {
       return {
         label: I18n.t(
-          "features.itWallet.presentation.credentialDetails.actions.updateDigitalDocument"
+          "features.itWallet.presentation.credentialDetails.actions.updateDigitalCredential"
         ),
         onPress: () =>
-          credentialIssuanceMachineRef.send({
-            type: "select-credential",
-            credentialType,
-            mode: "reissuance"
+          navigation.navigate(ITW_ROUTES.MAIN, {
+            screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
+            params: {
+              credentialType,
+              mode: "reissuance"
+            }
           })
       };
     }
@@ -299,7 +298,6 @@ export const ItwPresentationCredentialDetail = ({
     return undefined;
   }, [
     credential,
-    credentialIssuanceMachineRef,
     itwFeaturesEnabled,
     navigation,
     isCheckingPermissions,
