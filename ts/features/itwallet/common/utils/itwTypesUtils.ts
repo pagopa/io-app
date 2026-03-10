@@ -5,7 +5,6 @@ import {
   CredentialStatus,
   CredentialIssuance
 } from "@pagopa/io-react-native-wallet";
-import { type Credential as LegacyCredential } from "@pagopa/io-react-native-wallet-legacy";
 import { CredentialType } from "./itwMocksUtils.ts";
 
 /**
@@ -17,13 +16,6 @@ export type RequestObject = RemotePresentation.RequestObject;
  * Alias type for the relying party entity configuration.
  */
 export type RpEntityConfiguration = RemotePresentation.RelyingPartyConfig;
-
-/**
- * Alias for the IssuerConfiguration type v0.7.1
- */
-export type LegacyIssuerConfiguration = Awaited<
-  ReturnType<LegacyCredential.Issuance.EvaluateIssuerTrust>
->["issuerConf"];
 
 /**
  * Alias for the IssuerConfiguration type

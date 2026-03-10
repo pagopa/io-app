@@ -84,7 +84,7 @@ export const getAttestation = async (
   });
 
   return attestations
-    .filter(({ type }) => type === "wallet_app_attestation")
+    .filter(({ type }) => type === "wallet_instance_attestation")
     .reduce(
       (acc, { format, attestation }) => ({
         ...acc,
