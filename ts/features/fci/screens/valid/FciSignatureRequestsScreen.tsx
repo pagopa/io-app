@@ -20,6 +20,7 @@ import {
 } from "../../../../utils/supportAssistance";
 import {
   zendeskSelectedCategory,
+  zendeskSelectedSubcategory,
   zendeskSupportStart
 } from "../../../zendesk/store/actions";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
@@ -55,6 +56,7 @@ const FciSignatureRequestsScreen = () => {
       })
     );
     dispatch(zendeskSelectedCategory(defaultZendeskBonusesCategory));
+    dispatch(zendeskSelectedSubcategory(zendeskFCICategory));
   };
 
   const handleAskAssistance = (

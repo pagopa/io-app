@@ -22,6 +22,7 @@ import {
 } from "../../../utils/supportAssistance";
 import {
   zendeskSelectedCategory,
+  zendeskSelectedSubcategory,
   zendeskSupportStart
 } from "../../zendesk/store/actions";
 import { fciSignatureRequestIdSelector } from "../store/reducers/fciSignatureRequest";
@@ -71,6 +72,7 @@ const SignatureStatusComponent = ({
       })
     );
     dispatch(zendeskSelectedCategory(defaultZendeskBonusesCategory));
+    dispatch(zendeskSelectedSubcategory(zendeskFCICategory));
   };
 
   const handleAskAssistance = () => {
