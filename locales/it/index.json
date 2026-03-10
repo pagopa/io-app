@@ -5450,7 +5450,7 @@
           },
           "actions": {
             "removeFromWallet": "Rimuovi dal Portafoglio",
-            "updateDigitalDocument": "Aggiorna il documento digitale",
+            "updateDigitalCredential": "Aggiorna il documento digitale",
             "requestAssistance": "Qualcosa non torna?",
             "showClaimValues": "Mostra gli attributi del documento",
             "hideClaimValues": "Nascondi gli attributi del documento",
