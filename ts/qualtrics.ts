@@ -43,16 +43,18 @@ export const initialize = async () => {
   }
 
   return new Promise((resolve, reject) => {
-    Qualtrics.initializeProject(
+    Qualtrics.initializeProjectWithExtRefId(
       projectInfo!.brandID,
       projectInfo!.projectID,
+      "",
       initializationResults => {
         console.log("Qualtrics initialization results:", initializationResults);
         if (
           Object.values(initializationResults).some(result => !result.passed) ||
           Object.keys(initializationResults).length === 0
         ) {
-          reject(new Error("Qualtrics initialization failed"));
+          resolve(initializationResults);
+          // reject(new Error("Qualtrics initialization failed"));
           return;
         }
         isProjectInitialized = true;
