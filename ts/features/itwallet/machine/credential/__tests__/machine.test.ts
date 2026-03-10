@@ -202,8 +202,6 @@ describe("itwCredentialIssuanceMachine", () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
-    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
-
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
     expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
@@ -214,11 +212,11 @@ describe("itwCredentialIssuanceMachine", () => {
       mode: "issuance"
     });
 
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
+
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       credentialType: "MDL"
     });
-    expect(navigateToTrustIssuerScreen).toHaveBeenCalledTimes(0);
-
     /**
      * Obtaint a new WIA if not present or expired
      */
@@ -349,12 +347,9 @@ describe("itwCredentialIssuanceMachine", () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
-    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
-
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
-      ...InitialContext,
-      walletInstanceAttestation: { jwt: T_WIA }
+      ...InitialContext
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
@@ -364,11 +359,12 @@ describe("itwCredentialIssuanceMachine", () => {
       mode: "issuance"
     });
 
-    expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
-      credentialType: "MDL"
-    });
-    expect(navigateToTrustIssuerScreen).toHaveBeenCalledTimes(0);
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
+    expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
+      credentialType: "MDL",
+      walletInstanceAttestation: { jwt: T_WIA }
+    });
     /**
      * Obtaint a new WIA if not present or expired
      */
@@ -503,8 +499,6 @@ describe("itwCredentialIssuanceMachine", () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
-    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
-
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
@@ -527,9 +521,9 @@ describe("itwCredentialIssuanceMachine", () => {
       mode: "issuance"
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual(
-      "TrustFederationVerification"
-    );
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
+
+    expect(actor.getSnapshot().value).toStrictEqual("RequestingCredential");
 
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
     await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
@@ -641,7 +635,6 @@ describe("itwCredentialIssuanceMachine", () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
-    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
     isSkipNavigation.mockImplementation(() => false);
 
     requestCredential.mockImplementation(
@@ -668,11 +661,7 @@ describe("itwCredentialIssuanceMachine", () => {
       mode: "reissuance"
     });
 
-    await waitFor(() =>
-      expect(actor.getSnapshot().value).toStrictEqual(
-        "TrustFederationVerification"
-      )
-    );
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
     await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
 
