@@ -23,7 +23,7 @@ const clausesEnumValues = {
 };
 
 export const getClauseLabel = (clauseType: ClauseTypeEnum) =>
-  I18n.t(clausesEnumValues[clauseType] as any);
+  I18n.t(clausesEnumValues[clauseType]);
 
 export type LIST_DATA_TYPE = {
   title: string;
