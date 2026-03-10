@@ -16,7 +16,7 @@ import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
 import { servicePreferencePotByIdSelector } from "../../../services/details/store/selectors";
 import { isServicePreferenceResponseSuccess } from "../../../services/details/types/ServicePreferenceResponse";
-import { trackFciUxConversion } from "../../analytics";
+import { trackFciQtspTos, trackFciUxConversion } from "../../analytics";
 import LinkedText from "../../components/LinkedText";
 import LoadingComponent from "../../components/LoadingComponent";
 import QtspClauseListItem from "../../components/QtspClauseListItem";
@@ -37,6 +37,7 @@ import {
   fciQtspPrivacyUrlSelector
 } from "../../store/reducers/fciQtspClauses";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 const FciQtspClausesScreen = () => {
   const dispatch = useIODispatch();
@@ -63,6 +64,10 @@ const FciQtspClausesScreen = () => {
     servicePreferenceValue &&
     isServicePreferenceResponseSuccess(servicePreferenceValue) &&
     servicePreferenceValue.value.inbox;
+
+  useOnFirstRender(() => {
+    trackFciQtspTos();
+  });
 
   useEffect(() => {
     if (fciServiceId) {

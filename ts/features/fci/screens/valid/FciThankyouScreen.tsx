@@ -3,7 +3,10 @@ import I18n from "i18next";
 import { TypeEnum as ClauseTypeEnum } from "../../../../../definitions/fci/Clause";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { trackFciUxSuccess } from "../../analytics";
+import {
+  trackFciDocSignatureFailure,
+  trackFciUxSuccess
+} from "../../analytics";
 import LoadingComponent from "../../components/LoadingComponent";
 import SignatureStatusComponent from "../../components/SignatureStatusComponent";
 import {
@@ -15,6 +18,7 @@ import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
 import { fciSignatureSelector } from "../../store/reducers/fciSignature";
 import { getClausesCountByTypes } from "../../utils/signatureFields";
 import { fciSignatureRequestIdSelector } from "../../store/reducers/fciSignatureRequest";
+import { getNetworkErrorMessage, NetworkError } from "../../../../utils/errors";
 
 const FciThankyouScreen = () => {
   const fciCreateSignatureSelector = useIOSelector(fciSignatureSelector);
@@ -27,21 +31,33 @@ const FciThankyouScreen = () => {
     <LoadingComponent testID={"FciTypLoadingScreenTestID"} />
   );
 
-  const ErrorComponent = () => (
-    <SignatureStatusComponent
-      title={I18n.t("features.fci.errors.generic.signing.title")}
-      subTitle={I18n.t("features.fci.errors.generic.signing.subTitle")}
-      onPress={() => {
-        if (signatureRequestId) {
-          dispatch(fciSignatureRequestRetryFromId(signatureRequestId));
-        }
-      }}
-      pictogram={"umbrella"}
-      retry={true}
-      assistance={true}
-      testID="FciTypErrorScreenTestID"
-    />
-  );
+  const ErrorComponent = ({ error }: { error: NetworkError | Error }) => {
+    // eslint-disable-next-line functional/no-let
+    let errorMessage: string;
+    if ("kind" in error) {
+      errorMessage = getNetworkErrorMessage(error);
+    } else {
+      errorMessage = error.message;
+    }
+    // check with Alessia are tracked FCI_DOC_SIGNATURE_FAILURE and FCI_SIGNING_FAILURE
+    // check with Alessia FCI_DOC_SIGNATURE_FAILURE_ACTION
+    trackFciDocSignatureFailure(errorMessage);
+    return (
+      <SignatureStatusComponent
+        title={I18n.t("features.fci.errors.generic.signing.title")}
+        subTitle={I18n.t("features.fci.errors.generic.signing.subTitle")}
+        onPress={() => {
+          if (signatureRequestId) {
+            dispatch(fciSignatureRequestRetryFromId(signatureRequestId));
+          }
+        }}
+        pictogram={"umbrella"}
+        retry={true}
+        assistance={true}
+        testID="FciTypErrorScreenTestID"
+      />
+    );
+  };
 
   const SuccessComponent = () => (
     <OperationResultScreenContent
@@ -63,7 +79,7 @@ const FciThankyouScreen = () => {
     () => <LoadingView />,
     () => <LoadingView />,
     () => <LoadingView />,
-    _ => <ErrorComponent />,
+    error => <ErrorComponent error={error} />,
     _ => {
       trackFciUxSuccess(
         documentSignatures.length,
@@ -78,7 +94,7 @@ const FciThankyouScreen = () => {
     },
     () => <LoadingView />,
     () => <LoadingView />,
-    _ => <ErrorComponent />
+    (_, error) => <ErrorComponent error={error} />
   );
 };
 

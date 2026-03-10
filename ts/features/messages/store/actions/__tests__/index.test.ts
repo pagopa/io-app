@@ -87,6 +87,8 @@ describe("index", () => {
                       containsAttachments,
                       containsPayment,
                       createdAt,
+                      fci_message_type: "not_set",
+                      fci_result: "not_set",
                       firstTimeOpening,
                       hasFIMSCTA,
                       hasRemoteContent,

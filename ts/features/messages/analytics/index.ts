@@ -63,7 +63,9 @@ export const trackOpenMessage = (
   containsAttachments: boolean,
   fromPushNotification: boolean,
   hasFIMSCTA: boolean,
-  createdAt: Date
+  createdAt: Date,
+  fci_message_type: "request" | "result" | "not_set",
+  fci_result: "success" | "failure" | "not_set"
 ) => {
   const eventName = "OPEN_MESSAGE";
   const props = buildEventProperties("UX", "screen_view", {
@@ -78,7 +80,9 @@ export const trackOpenMessage = (
     first_time_opening: booleanToYesNo(firstTimeOpening),
     fromPushNotification: booleanToYesNo(fromPushNotification),
     has_fims_callback: booleanToYesNo(hasFIMSCTA),
-    date_sent: dateToUTCISOString(createdAt)
+    date_sent: dateToUTCISOString(createdAt),
+    fci_message_type,
+    fci_result
   });
   void mixpanelTrack(eventName, props);
 };

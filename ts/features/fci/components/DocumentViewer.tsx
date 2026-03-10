@@ -99,6 +99,7 @@ const renderFooter = (url: string, filePath: string) => {
 type Props = {
   documentUrl: string;
   onError: () => void;
+  onSuccess: () => void;
 };
 
 export const DocumentViewer = (props: Props): ReactElement => {
@@ -132,6 +133,7 @@ export const DocumentViewer = (props: Props): ReactElement => {
           <Pdf
             source={{ uri: fciDownloadPath, cache: true }}
             style={styles.pdf}
+            onLoadComplete={props.onSuccess}
             onError={_ => {
               setIsError(true);
             }}

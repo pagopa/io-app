@@ -15,6 +15,36 @@ import { getNetworkErrorMessage } from "../../../utils/errors";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { buildEventProperties } from "../../../utils/analytics";
 
+export const trackFciSignatureCancelled = () =>
+  mixpanelTrack(
+    "FCI_SIGNATURE_CANCELLED",
+    buildEventProperties("KO", "screen_view")
+  );
+
+export const trackFciSignatureExpired = () =>
+  mixpanelTrack(
+    "FCI_SIGNATURE_EXPIRED",
+    buildEventProperties("KO", "screen_view")
+  );
+
+export const trackFciDocSignatureInProgress = () =>
+  mixpanelTrack(
+    "FCI_DOC_SIGNATURE_IN_PROGRESS",
+    buildEventProperties("KO", "screen_view")
+  );
+
+export const trackFciSignatureRejected = () =>
+  mixpanelTrack(
+    "FCI_SIGNATURE_REJECTED",
+    buildEventProperties("KO", "screen_view")
+  );
+
+export const trackFciDocAlreadySigned = () =>
+  mixpanelTrack(
+    "FCI_DOC_ALREADY_SIGNED",
+    buildEventProperties("KO", "screen_view")
+  );
+
 export const trackFciDocOpening = (
   expire_date: SignatureRequestDetailView["expires_at"],
   total_doc_count: number,
@@ -27,6 +57,49 @@ export const trackFciDocOpening = (
       total_doc_count,
       environment
     })
+  );
+
+export const trackFciDocumentsView = () =>
+  mixpanelTrack("FCI_DOCUMENTS", buildEventProperties("UX", "screen_view"));
+
+export const trackFciSignatureFieldsView = () =>
+  mixpanelTrack(
+    "FCI_SIGNATURE_FIELDS",
+    buildEventProperties("UX", "screen_view")
+  );
+
+export const trackFciUserDataShare = () =>
+  mixpanelTrack(
+    "FCI_USER_DATA_SHARE",
+    buildEventProperties("UX", "screen_view")
+  );
+
+export const trackFciChangeEmail = () =>
+  mixpanelTrack("FCI_CHANGE_EMAIL", buildEventProperties("UX", "screen_view"));
+
+export const trackFciQtspTos = () =>
+  mixpanelTrack("FCI_QTSP_TOS", buildEventProperties("UX", "screen_view"));
+
+export const trackFciTosDocPreview = () =>
+  mixpanelTrack(
+    "FCI_TOS_DOC_PREVIEW",
+    buildEventProperties("UX", "screen_view")
+  );
+
+export const trackFciDocSignatureFailure = (reason: string) =>
+  mixpanelTrack(
+    "FCI_DOC_SIGNATURE_FAILURE",
+    buildEventProperties("KO", "screen_view", { reason })
+  );
+
+export const trackFciDocSignatureFailureAction = (
+  reason: string,
+  cta_category: "custom_1" | "custom_2",
+  cta_id: string
+) =>
+  mixpanelTrack(
+    "FCI_DOC_SIGNATURE_FAILURE_ACTION",
+    buildEventProperties("KO", "screen_view", { reason, cta_category, cta_id })
   );
 
 export const trackFciUserExit = (
@@ -105,6 +178,24 @@ export const trackFciStartSignature = (environment: string) =>
   mixpanelTrack(
     "FCI_START_SIGNATURE",
     buildEventProperties("UX", "action", { environment })
+  );
+
+export const trackFciBottomsheetMessagePermissionRequest = () =>
+  mixpanelTrack(
+    "FCI_MESSAGE_PERMISSION_REQUEST",
+    buildEventProperties("UX", "screen_view")
+  );
+
+export const trackFciBottomsheetMessagePermissionAccepted = () =>
+  mixpanelTrack(
+    "FCI_MESSAGE_PERMISSION_ACCEPTED",
+    buildEventProperties("UX", "action")
+  );
+
+export const trackFciBottomsheetMessagePermissionDeclined = () =>
+  mixpanelTrack(
+    "FCI_MESSAGE_PERMISSION_DECLINED",
+    buildEventProperties("UX", "action")
   );
 
 const trackFciAction =

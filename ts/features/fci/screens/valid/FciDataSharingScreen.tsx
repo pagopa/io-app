@@ -24,10 +24,16 @@ import {
   profileNameSelector,
   profileSelector
 } from "../../../settings/common/store/selectors";
-import { trackFciUserDataConfirmed, trackFciUserExit } from "../../analytics";
+import {
+  trackFciChangeEmail,
+  trackFciUserDataConfirmed,
+  trackFciUserDataShare,
+  trackFciUserExit
+} from "../../analytics";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 const FciDataSharingScreen = (): ReactElement => {
   const profile = useIOSelector(profileSelector);
@@ -48,6 +54,10 @@ const FciDataSharingScreen = (): ReactElement => {
 
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
+
+  useOnFirstRender(() => {
+    trackFciUserDataShare();
+  });
 
   const actions: ComponentProps<typeof IOScrollView>["actions"] = {
     testID: "FciDataSharingScreenFooterTestID",
@@ -126,6 +136,8 @@ const FciDataSharingScreen = (): ReactElement => {
             content={I18n.t("features.fci.shareDataScreen.alertText")}
             action={I18n.t("features.fci.shareDataScreen.alertLink")}
             onPress={() => {
+              // check with Alessia
+              trackFciChangeEmail();
               trackFciUserExit(route.name, fciEnvironment, "modifica_email");
               navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
                 screen: SETTINGS_ROUTES.INSERT_EMAIL_SCREEN,

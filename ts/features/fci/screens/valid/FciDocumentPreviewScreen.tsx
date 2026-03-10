@@ -10,6 +10,7 @@ import { FciParamsList } from "../../navigation/params";
 import { fciDownloadPreviewClear, fciEndRequest } from "../../store/actions";
 import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
 import SignatureStatusComponent from "../../components/SignatureStatusComponent";
+import { trackFciTosDocPreview } from "../../analytics";
 
 export type FciDocumentPreviewScreenNavigationParams = Readonly<{
   documentUrl: string;
@@ -31,6 +32,7 @@ export const FciDocumentPreviewScreen = (
   });
 
   if (isError) {
+    // check with Alessia
     return (
       <SignatureStatusComponent
         title={I18n.t("features.fci.errors.generic.default.title")}
@@ -48,6 +50,9 @@ export const FciDocumentPreviewScreen = (
         <DocumentViewer
           documentUrl={documentUrl}
           onError={() => setIsError(true)}
+          onSuccess={() => {
+            trackFciTosDocPreview();
+          }}
         />
       )}
     </>

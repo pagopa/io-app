@@ -40,7 +40,9 @@ describe("index", () => {
                     containsAttachments,
                     fromPushNotifications,
                     hasFIMSCTA,
-                    createdAt
+                    createdAt,
+                    "not_set",
+                    "not_set"
                   );
                   expect(spyOnMixpanelTrack.mock.calls.length).toBe(1);
                   expect(spyOnMixpanelTrack.mock.calls[0].length).toBe(2);
