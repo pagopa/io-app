@@ -21,10 +21,8 @@ import {
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
-import {
-  useItwFailureSupportModal,
-  ZendeskSubcategoryValue
-} from "../../common/hooks/useItwFailureSupportModal";
+import { useItwFailureSupportModal } from "../../common/hooks/useItwFailureSupportModal";
+import { ZendeskSubcategoryValue } from "../../common/hooks/useItwZendeskSupport";
 import { KoState } from "../../analytics/utils/types";
 import { trackItwKoStateAction } from "../../analytics";
 import { openWebUrl } from "../../../../utils/url";
