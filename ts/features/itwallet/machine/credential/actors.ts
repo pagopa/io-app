@@ -1,21 +1,31 @@
+import { Trust } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
-import { Trust } from "@pagopa/io-react-native-wallet";
 import { useIOStore } from "../../../../store/hooks";
-import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { assert } from "../../../../utils/assert";
+import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
+import { Env } from "../../common/utils/environment";
 import * as itwAttestationUtils from "../../common/utils/itwAttestationUtils";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
 import { getCredentialStatusAssertion } from "../../common/utils/itwCredentialStatusAssertionUtils";
+import {
+  enrichErrorWithMetadata,
+  isAssertionGenerationError
+} from "../../common/utils/itwFailureUtils";
 import {
   CredentialBundle,
   CredentialFormat
 } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
-import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
-import { Env } from "../../common/utils/environment";
-import { enrichErrorWithMetadata } from "../../common/utils/itwFailureUtils";
 import { CredentialsVault } from "../../credentials/utils/vault";
+import {
+  trackWalletInstanceRenewalFailure,
+  trackWalletInstanceRenewalSuccess
+} from "../../issuance/analytics";
+import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
+import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
+import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
+import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
 import { type Context } from "./context";
 
 export type GetWalletAttestationActorOutput = Awaited<
@@ -85,11 +95,55 @@ export const createCredentialIssuanceActorsImplementation = (
       assert(sessionToken, "sessionToken is undefined");
       assert(O.isSome(integrityKeyTag), "integriyKeyTag is not present");
 
-      return await itwAttestationUtils.getAttestation(
-        env,
-        integrityKeyTag.value,
-        sessionToken
-      );
+      try {
+        return await itwAttestationUtils.getAttestation(
+          env,
+          integrityKeyTag.value,
+          sessionToken
+        );
+      } catch (firstError) {
+        // On iOS, the stored DCAppAttest key can become invalid (DCErrorInvalidKey,
+        // com.apple.devicecheck.error 3), causing GENERATION_ASSERTION_FAILED during
+        // assertion generation. We recover by creating a new wallet instance with a
+        // fresh key and retrying the attestation once.
+        const isRenewalError = itwWalletInstanceRenewalErrorSelector(
+          store.getState()
+        );
+
+        // If the error is not related to assertion generation or if we've already attempted a renewal, we throw the error and prompt the user to retry.
+        if (!isAssertionGenerationError(firstError) || isRenewalError) {
+          throw firstError;
+        }
+
+        // Otherwise, we attempt to recover by creating a new wallet instance,
+        // which will generate a new hardware key tag,
+        // and retrying the attestation with the new key tag.
+        const newHardwareKeyTag =
+          await itwAttestationUtils.getIntegrityHardwareKeyTag();
+        store.dispatch(itwStoreIntegrityKeyTag(newHardwareKeyTag));
+        await itwAttestationUtils.registerWalletInstance(
+          env,
+          newHardwareKeyTag,
+          sessionToken,
+          { isRenewal: true }
+        );
+
+        return await itwAttestationUtils
+          .getAttestation(env, newHardwareKeyTag, sessionToken)
+          .then(attestation => {
+            // Track the successful renewal in Mixpanel
+            trackWalletInstanceRenewalSuccess();
+            return attestation;
+          })
+          .catch(error => {
+            // If the attestation retrieval fails again after renewing the wallet instance,
+            // we set a flag in the store to prevent further renewal attempts and prompt the user with an error.
+            store.dispatch(itwSetWalletInstanceRenewalError(true));
+            // Track the renewal failure in Mixpanel
+            trackWalletInstanceRenewalFailure(error);
+            throw error;
+          });
+      }
     }
   );
 
