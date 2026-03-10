@@ -35,7 +35,11 @@ const getFileDigest = (url: string) =>
       const status = response.info().status;
       return status >= 200 && status < 300
         ? TE.right(response)
-        : TE.left(new Error(`Failed to download document for signature: HTTP ${status}`));
+        : TE.left(
+            new Error(
+              `Failed to download document for signature: HTTP ${status}`
+            )
+          );
     }),
     TE.chain(response =>
       TE.tryCatch(
