@@ -1,6 +1,5 @@
 {
   "accessibility": {
-    "doubleTapToActivateHint": "Tocca due volte per attivare",
     "buttons": {
       "navigateBack": "Torna alla schermata precedente",
       "torch": {
@@ -10,11 +9,6 @@
     }
   },
   "date": {
-    "formats": {
-      "default": "%d/%m/%Y",
-      "short": "%d %B",
-      "long": "%d %B %Y"
-    },
     "day_names": [
       "domenica",
       "lunedì",
@@ -24,7 +18,15 @@
       "venerdì",
       "sabato"
     ],
-    "abbr_day_names": ["dom", "lun", "mar", "mer", "gio", "ven", "sab"],
+    "abbr_day_names": [
+      "dom",
+      "lun",
+      "mar",
+      "mer",
+      "gio",
+      "ven",
+      "sab"
+    ],
     "month_names": [
       " ",
       "gennaio",
@@ -55,7 +57,10 @@
       "nov",
       "dic"
     ],
-    "meridian": ["am", "pm"],
+    "meridian": [
+      "am",
+      "pm"
+    ],
     "time": {
       "minutes_zero": "0 minuti",
       "minutes_one": "1 minuto",
@@ -67,15 +72,11 @@
   },
   "global": {
     "why": "Perché?",
-    "you": "TU",
-    "id": "ID",
     "badges": {
-      "blocked": "Bloccato",
       "onGoing": "In corso",
       "failed": "Fallito",
       "cancelled": "Annullata",
-      "reversal": "Storno",
-      "new": "Novità"
+      "reversal": "Storno"
     },
     "modules": {
       "paymentNotice": {
@@ -91,8 +92,6 @@
     },
     "password": "Password",
     "username": "Username",
-    "disclaimer_beta": "Se riscontri problemi di accesso, segnalacelo!",
-    "unknown": "sconosciuto",
     "sectionStatus": {
       "moreInfo": "Vuoi saperne di più?"
     },
@@ -100,26 +99,11 @@
       "minusSymbol": "meno",
       "reload": "Ricarica",
       "search": "Cerca",
-      "switchLabel": "Seleziona per attivare",
-      "inputLabel": "{{header}}, Intestazione",
-      "textField": "{{inputLabel}}, campo di testo",
-      "description": "Descrizione",
-      "dateField": "Due cifre per il mese, due per l'anno",
-      "threeDigits": "3 cifre",
-      "fourDigits": "4 cifre",
       "dateFormat": "DD MMMM YYYY",
-      "expanded": "Paragrafo espanso",
-      "collapsed": "Paragrafo chiuso",
-      "active": "Stato attivo",
-      "inactive": "Stato non attivo",
-      "linkHint": "Attivando questo elemento verrai reindirizzato sul browser del dispositivo",
       "alert": "Avviso",
       "activityIndicator": {
         "label": "Caricamento in corso",
         "hint": "Attendi il caricamento del contenuto"
-      },
-      "header": {
-        "label": "Header dell'applicazione"
       },
       "contextualHelp": {
         "close": "Chiudi l'help contestuale",
@@ -134,65 +118,31 @@
       "progressTracker": "{{index}} di {{total}}"
     },
     "symbols": {
-      "question": "?",
-      "asterisk": "*"
-    },
-    "localization": {
-      "delimiterSeparator": ".",
-      "decimalSeparator": ","
+      "question": "?"
     },
     "date": {
-      "invalid": "data non valida",
-      "today": "oggi",
-      "tomorrow": "domani"
+      "invalid": "data non valida"
     },
     "dateFormats": {
-      "shortFormat": "%d/%m/%Y",
-      "shortFormatWithTime": "%d/%m/%Y, %H:%M",
-      "fullFormatShortMonthLiteral": "%d %b %Y",
-      "fullFormatShortMonthLiteralWithTime": "%d %b %Y, %H:%M",
-      "fullFormatShortMonthLiteralWithoutTime": "%d %b %Y",
-      "fullFormatFullMonthLiteral": "%d %B %Y",
-      "fullMonthLiteral": "%B",
-      "fullMonthLiteralWithYear": "%B %Y",
-      "timeFormat": "%H:%M",
-      "timeFormatWithTimezone": "%H:%M:%S (%z)",
-      "dayMonthWithTime": "%d %b, %H:%M",
-      "dayMonthWithoutTime": "%d %b",
-      "dayFullMonth": "%d %B",
-      "numericMonthYear": "%m/%Y",
-      "shortNumericMonthYear": "%m/%-y",
-      "monthYear": "MMMM YYYY",
-      "dayAndMonth": "dddd D MMMM",
-      "dayMonth": "DD/MM",
-      "dayMonthYear": "D MMMM YYYY",
-      "weekdayDayMonthYear": "dddd D MMMM YYYY",
-      "dateTimePicker": "gg/mm/yyyy"
+      "dayMonth": "DD/MM"
     },
     "genericError": "C'è un problema temporaneo, riprova.",
     "genericAlert": "Attenzione!",
     "genericWaiting": "Attendi qualche secondo...",
-    "genericThanks": "Grazie",
-    "genericShare": "Condividi",
-    "genericSave": "Salva",
     "genericRetry": "Riprova",
     "jserror": {
-      "title": "Si è verificato un errore imprevisto",
-      "message": "Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e ricominciare!"
+      "title": "Si è verificato un errore imprevisto"
     },
     "markdown": {
-      "reference": "[demo]I am a custom demo tag at the beginning of the markdown[/demo]\n\n# Titolo h1: Lorem ipsum dolor sit amet, consectetur adipisici elit\n\nTesto semplice\n\n## Titolo h2: sed eiusmod tempor incidunt ut labore et dolore magna aliqua\n\ntesto semplice\n\n### Titolo h3: Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.\n\ntesto semplice\n\nLorem **ipsum dolor** sit amet, *consectetur* adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Unam incolunt Belgae, aliam Aquitani, tertiam.\n\n\nLorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Magna pars studiorum, prodita quaerimus. Phasellus laoreet lorem vel dolor tempus vehicula. Fabio vel iudice vincam, sunt in culpa qui officia. Idque Caesaris facere voluntate liceret: sese habere. Tu quoque, Brute, fili mi, nihil timor populi, nihil!  \nNec dubitamus multa iter quae et nos invenerat. Cum sociis natoque penatibus et magnis dis parturient. Donec sed odio operae, eu vulputate felis rhoncus. Tityre, tu patulae recubans sub tegmine fagi dolor. At nos hinc posthac, sitientis piros Afros. Non equidem invideo, miror magis posuere velit aliquet.  \nHi omnes lingua, institutis, legibus inter se differunt. Quae vero auctorem tractata ab fiducia dicuntur. Plura mihi bona sunt, inclinet, amari petere vellent. Sed haec quis possit intrepidus aestimare tellus. Curabitur blandit tempus ardua ridiculus sed magna.\n\n[demo]I am a custom demo tag in the middle of the markdown[/demo]\n\nLorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Fabio vel iudice vincam, sunt in culpa qui officia.\n\n\n> Quote o indent\n\nLista:\n\n- uno\n- due\n- tre\n\nLista numerata:\n\n1. uno\n2. due\n3. tre\n\n\nLink\n\n[esempio di link](https://ioapp.it/)\n\n\nEsempio link interni\n\n[home preferenze](ioit://PREFERENCES_HOME),\n[elenco servizi](ioit://SERVICES_HOME),\n[profilo](ioit://PROFILE_MAIN),\n[portafoglio](ioit://WALLET_HOME),\n[privacy](ioit://PROFILE_PRIVACY_MAIN),\n[Termini e condizioni d'uso](ioit://PROFILE_TOS),\n[privacy policy](ioit://PROFILE_PRIVACY)\n[lista messaggi](ioit://MESSAGES_LIST)\n\n\nhttps://help.github.com/articles/basic-writing-and-formatting-syntax/\n",
       "decodeError": "Il messaggio non può essere decodificato"
     },
     "buttons": {
       "consent": "Consenti",
-      "deny": "Nega",
       "share": "Condividi",
       "delete": "Elimina",
       "cancel": "Annulla",
       "settings": "Impostazioni",
       "ok": "OK",
-      "ok2": "Ok",
       "continue": "Continua",
       "notNow": "Non ora",
       "retry": "Riprova",
@@ -200,24 +150,13 @@
       "confirm": "Conferma",
       "close": "Chiudi",
       "exit": "Esci",
-      "saveSelection": "Salva la selezione",
-      "search": "Ricerca",
-      "skip": "Salta",
-      "add": "Aggiungi",
       "edit": "Modifica",
       "info": "Info",
-      "activate": "Attiva",
       "activate2": "Attiva",
-      "deactivate": "Disattiva",
       "show": "Mostra",
-      "update": "Aggiorna",
       "updateIO": "Aggiorna IO",
       "findOutMore": "Scopri di più",
-      "details": "Dettagli",
       "choose": "Scegli",
-      "copy": "Copia",
-      "selectAll": "Seleziona tutto",
-      "deselectAll": "Deseleziona tutto",
       "whatCanYouDo": "Cosa puoi fare?",
       "visitWebsite": "Vai al sito"
     },
@@ -226,24 +165,15 @@
       "wallet": "Portafoglio",
       "scan": "Inquadra",
       "payments": "Pagamenti",
-      "documents": "Documenti",
-      "profile": "Profilo",
       "services": "Servizi"
     },
     "actions": {
-      "retry": "Si è verificato un errore, si prega di riprovare",
-      "search": "Testo da cercare"
+      "retry": "Si è verificato un errore, si prega di riprovare"
     },
     "remoteStates": {
       "loading": "In caricamento...",
       "wait": "Attendi qualche secondo...",
       "notAvailable": "Non disponibile"
-    },
-    "notImplemented": "NON IMPLEMENTATO",
-    "search": {
-      "invalidSearchBarText": "Inserisci almeno {{minCharacter}} caratteri",
-      "noResultsFound": "Non ci sono risultati per questa ricerca: prova qualcos'altro.",
-      "noResultsTitle": "Nessun risultato."
     },
     "offline": {
       "screen": {
@@ -293,13 +223,7 @@
       "title": "Sicurezza del dispositivo"
     },
     "bodyiOS": "Sul tuo dispositivo è stato effettuato un **jailbrack**. Questo succede quando il sistema operativo viene modificato o installato in modo anomalo. Questo potrebbe compromettere l’integrità del sistema e l'app IO potrebbe non funzionare correttamente.\n\n**Cosa fare?**\n\nTi invitiamo a usare l'app IO su un dispositivo diverso, con un sistema operativo integro e aggiornato.\n\nSe continui, accetti di proseguire a tuo rischio nell'interazione con i servizi offerti. La mancanza di integrità può portare al furto di dati o ad altre attività fraudolente. Accetti anche che lo sviluppatore dell’app non sia in alcun modo responsabile di eventuali danni, perdite o conseguenze causate dall'app IO in questo contesto di esecuzione.",
-    "bodyAndroid": "Sul tuo dispositivo sono attivi i **permessi di root**. Questo succede quando il sistema operativo viene modificato o installato in modo anomalo. Questo potrebbe compromettere l’integrità del sistema e l'app IO potrebbe non funzionare correttamente.\n\n**Cosa fare?**\n\nTi invitiamo a usare l'app IO su un dispositivo diverso, con un sistema operativo integro e aggiornato.\n\nSe continui, accetti di proseguire a tuo rischio nell'interazione con i servizi offerti. La mancanza di integrità può portare al furto di dati o ad altre attività fraudolente. Accetti anche che lo sviluppatore dell’app non sia in alcun modo responsabile di eventuali danni, perdite o conseguenze causate dall'app IO in questo contesto di esecuzione.",
-    "continueAlert": {
-      "title": "Continua"
-    },
-    "cancelAlert": {
-      "title": "Esci"
-    }
+    "bodyAndroid": "Sul tuo dispositivo sono attivi i **permessi di root**. Questo succede quando il sistema operativo viene modificato o installato in modo anomalo. Questo potrebbe compromettere l’integrità del sistema e l'app IO potrebbe non funzionare correttamente.\n\n**Cosa fare?**\n\nTi invitiamo a usare l'app IO su un dispositivo diverso, con un sistema operativo integro e aggiornato.\n\nSe continui, accetti di proseguire a tuo rischio nell'interazione con i servizi offerti. La mancanza di integrità può portare al furto di dati o ad altre attività fraudolente. Accetti anche che lo sviluppatore dell’app non sia in alcun modo responsabile di eventuali danni, perdite o conseguenze causate dall'app IO in questo contesto di esecuzione."
   },
   "locales": {
     "it": "Italiano",
@@ -310,48 +234,26 @@
   },
   "clipboard": {
     "copyIntoClipboard": "copia negli appunti",
-    "copyFeedback": "Copiato negli appunti",
-    "copyText": "copia",
-    "copyFeedbackButton": "copiato"
+    "copyFeedback": "Copiato negli appunti"
   },
   "errors": {
-    "loginError": "C'è stato un errore in fase di login, ripetere la procedura.",
     "profileUpdateError": "Si è verificato un errore durante l'aggiornamento del tuo profilo."
   },
   "permissionRationale": {
-    "storage": {
-      "title": "Consenti l’accesso alla galleria",
-      "message": "Potrai salvare bonus e certificati, caricare screenshot e avvisi di pagamento."
-    },
-    "camera": {
-      "title": "Consenti l’accesso alla fotocamera",
-      "message": "Potrai leggere codici QR e pagare gli avvisi pagoPA."
-    },
     "calendar": {
       "title": "Consenti l’accesso al calendario",
       "message": "Potrai aggiungere le scadenze al tuo calendario e impostare un promemoria."
-    },
-    "torch": {
-      "title": "Consenti l’accesso alla fotocamera",
-      "message": "Abbiamo bisogno dell'accesso alla fotocamera per utilizzare la torcia."
     }
   },
   "startup": {
     "title": "Stiamo preparando la tua esperienza su IO",
     "title2": "Ancora un po’ di pazienza...",
     "subtitle2": "Non chiudere l’app, ci vorranno al massimo 20 secondi.",
-    "authentication": "Utente autenticato",
-    "sessionInfo": "Attributi SPID caricati",
-    "profileInfo": "Profilo utente caricato",
-    "profileEnabled": "Profilo utente abilitato",
     "userDeletePendingAlert": {
       "title": "Eliminazione profilo in corso",
       "message": "Se hai cambiato idea, puoi annullare la richiesta dalla sezione Privacy all'interno delle Impostazioni.",
       "cta_1": "Vai alle Impostazioni",
       "cta_2": "Ignora"
-    },
-    "contextualHelp": {
-      "title": "Problemi di inizializzazione?"
     },
     "offline_access_banner": {
       "title": "Ti servono i documenti?",
@@ -374,38 +276,18 @@
   "login": {
     "help_banner_title": "Come si accede?",
     "help_banner_content": "Abbiamo preparato una guida per aiutarti passo passo.",
-    "help_banner_action": "Leggi come fare",
-    "biometric_info": "Per accedere, ti basterà poi inserire il codice di sblocco o, se abilitati, usare l'impronta o il volto."
-  },
-  "inbox": {
-    "enableButton": "Abilita Inbox",
-    "disableButton": "Disabilita Inbox",
-    "enableCallToActionDescription": "Abilita l'inbox per visualizzare i messaggi"
-  },
-  "settings": {
-    "informativeBanner": {
-      "content": "Cerchi il Profilo? Lo abbiamo spostato, ora è in alto a destra!",
-      "action": "Vai alle Impostazioni"
-    }
+    "help_banner_action": "Leggi come fare"
   },
   "profile": {
     "fiscalCode": {
       "accessibility": {
-        "fiscalCodeHint": "Immagine del codice a barre del tuo codice fiscale. Il tuo codice fiscale è: {{fiscalCode}}",
-        "unavailable": "Non disponibile"
+        "fiscalCodeHint": "Immagine del codice a barre del tuo codice fiscale. Il tuo codice fiscale è: {{fiscalCode}}"
       },
-      "title": "I tuoi documenti personali",
       "fiscalCode": "Codice fiscale",
       "description": "Usa il codice a barre per comunicare il tuo codice fiscale quando ti viene richiesto.",
-      "help": "Qui è visualizzato un fac-simile del tuo codice fiscale. \nIl fac-simile non sostituisce il documento fisico ma ne permette la lettura dei dati e del codice a barre sul retro. \nIn caso di omocodia, i dati generati nel fac-simile potrebbero non corrispondere ai dati anagrafici.\n",
-      "facSimile": "FAC-SIMILE",
       "copyCode": "Copia codice fiscale",
       "codeCopied": "Codice copiato!"
     },
-    "sections": {
-      "spid": "PROFILO SPID"
-    },
-    "unknown": "SCONOSCIUTO",
     "appFeedback": {
       "reviewLabel": "Valuta l'app",
       "feedbackLabel": "Hai un suggerimento?"
@@ -423,15 +305,10 @@
       "upsert": "Errore nella creazione o nell'aggiornamento del profilo"
     },
     "main": {
-      "title": "Profilo",
-      "logout": "Logout/Esci",
       "forgetCurrentSession": "Dimentica sessione corrente",
       "clearAsyncStorage": "Cancella contenuto di AsyncStorage",
       "dumpAsyncStorage": "Scarica contenuto di AsyncStorage",
       "sentryTestEvent": "Invia Exception a Sentry",
-      "storeReview": "Richiedi una recensione sullo store",
-      "contextualHelpTitle": "Cosa puoi fare nella sezione Impostazioni",
-      "contextualHelpContent": "**Nella sezione Impostazioni puoi gestire i tuoi dati e le preferenze.**\nIn particolare qui puoi gestire le tue preferenze, la tua privacy e il tuo account. In questa sezione puoi inoltre accedere a i tuoi documenti in versione digitale, selezionando le card che compaiono nella parte alta della schermata.",
       "developerModeOn": "Modalità sviluppatore attivata",
       "cache": {
         "alert": "Vuoi davvero eliminare la cache?",
@@ -529,7 +406,6 @@
             }
           },
           "alert": {
-            "requestTitle": "Vuoi davvero esportare tutti i tuoi dati?",
             "oldRequest": "Abbiamo già preso in carico una richiesta di esportazione dei dati.",
             "confirmSubtitle": "Al termine dell'elaborazione, riceverai una email con tutte le informazioni associate al tuo profilo."
           },
@@ -538,16 +414,10 @@
         "privacyPolicy": {
           "title": "Informativa Privacy e Termini e condizioni d'uso",
           "description": "Consulta l’Informativa Privacy e i Termini e condizioni d’uso di IO",
-          "header": "Informativa sul trattamento dei dati personali degli utenti dell'app IO",
           "updated": "Abbiamo aggiornato la nostra Informativa e i Termini e condizioni d’uso.",
-          "infobox": "È necessario prendere visione e accettare l'Informativa ed i Termini e condizioni d'uso",
-          "contextualHelpTitlePolicy": "Informativa sul trattamento dei dati personali e condizioni d'uso del servizio",
-          "contextualHelpContentPolicy": "### Cosa sono l'informativa e i termini d'uso?\n\nSecondo quanto stabilito dall'art. 13 del Regolamento UE n. 2016/679 (comunemente GDPR), nell'informativa puoi trovare la descrizione completa di come l'app IO gestisce i tuoi dati personali. I termini e condizioni d'uso invece stabiliscono i tuoi diritti e obblighi nell'utilizzo dell'app e dei suoi servizi. <br/> <br/> <br/> <br/> \n\n\n",
-          "contextualHelpTitle": "Le tue impostazioni di privacy",
-          "contextualHelpContent": "**Qui trovi le informazioni legate alla privacy del tuo profilo**, in particolare puoi consultare l'informativa sul trattamento dei dai personali, eliminare il tuo account ed esportare i dati personali associati al tuo profilo. \n"
+          "infobox": "È necessario prendere visione e accettare l'Informativa ed i Termini e condizioni d'uso"
         },
         "shareData": {
-          "title": "Privacy",
           "listItem": {
             "title": "Condividi i dati di utilizzo",
             "description": "Aiuta il team di IO a monitorare il funzionamento dell’app"
@@ -597,10 +467,6 @@
           "whyBottomSheet": {
             "title": "Perché raccogliamo i dati?",
             "body": "Non raccogliamo dati per finalità di marketing.  \n\nUsiamo strumenti che ci permettono di registrare dati relativi a come usi l’app, per **fornirti un servizio migliore** e **assisterti in caso di necessità.**"
-          },
-          "securityBottomSheet": {
-            "title": "Cos’è la pseudonimizzazione?",
-            "body": "È il trattamento dei dati personali in modo tale che i dati personali non possano più essere attribuiti a un interessato specifico senza l'utilizzo di informazioni aggiuntive, a condizione che tali informazioni aggiuntive siano conservate separatamente e soggette a misure tecniche e organizzative intese a garantire che tali dati personali non siano attribuiti a una persona fisica identificata o identificabile."
           }
         }
       },
@@ -624,9 +490,6 @@
         "alertConfirmMessage": "Se abiliti l'ambiente di test pagoPA non vedrai più lo storico delle tue transazioni e i tuoi metodi di pagamento salvati, e potrai usare solo metodi di pagamento espressamente creati per questo scopo. Se non ti è chiaro cosa questo significa non abilitare questa funzione.",
         "alertMessage": "È necessario il riavvio dell'applicazione affinché le modifiche abbiano effetto."
       },
-      "pnEnvironment": {
-        "pnEnv": "SEND (PN)"
-      },
       "idpay": {
         "idpayTest": "IDPay",
         "idpayTestAlert": "La modifica richiede il riavvio dell'app"
@@ -645,22 +508,11 @@
           }
         }
       },
-      "trial": {
-        "titleSection": "Partecipa alla sperimentazione"
-      },
       "experimentalEnvironment": "Interfaccia sperimentale",
-      "newScanSection": "Nuova funzione 'Inquadra'",
-      "sessionRefresh": "Attiva il refresh della sessione",
       "appVersion": "Versione",
-      "backendVersion": "Versione Backend",
       "debugMode": "Modalità debug",
       "designSystem": "Design System",
-      "addTestCard": {
-        "title": "Aggiungi carta di test"
-      },
       "banner": {
-        "title": "Vuoi visualizzare il tuo Codice Fiscale?",
-        "action": "Vai alla sezione “I tuoi dati”",
         "close": "Chiudi il banner e non mostrarlo più"
       },
       "appearanceBanner": {
@@ -673,7 +525,6 @@
       "subtitle": "Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO",
       "list": {
         "email": "Indirizzo email",
-        "need_validate": "Da validare",
         "nameSurname": "Nome e cognome",
         "fiscalCode": "Codice Fiscale"
       }
@@ -693,11 +544,8 @@
       "title": "Preferenze",
       "subtitle": "Queste impostazioni ti permettono di personalizzare la tua esperienza su IO.",
       "genericToastTitle": "Preferenze aggiornate!",
-      "contextualHelpTitle": "Le tue preferenze",
-      "contextualHelpContent": "**Nella sezione Preferenze puoi verificare e modificare le impostazioni** che vengono utilizzate da tutti i servizi presenti su IO. \nQui puoi consultare indirizzo email, numero di telefono e lingua associate all'account e attivare o disattivare il riconoscimento biometrico.\n",
       "list": {
         "wip": "In elaborazione",
-        "digitalDomicile": "Domicilio digitale",
         "service_contact": {
           "title": "Gestione servizi",
           "subtitle": "Scegli chi può contattarti"
@@ -722,7 +570,6 @@
           },
           "theme": {
             "title": "Tema",
-            "comingSoon": "In arrivo",
             "automatic": {
               "title": "Automatico",
               "description": "Cambia in base alle impostazioni di sistema"
@@ -747,7 +594,6 @@
             "app": "Applicazione"
           },
           "alert": {
-            "title": "Vuoi cambiare la lingua in",
             "subtitle": "Dovrai riavviare l'applicazione per applicare il cambiamento"
           },
           "toast": {
@@ -755,7 +601,6 @@
               "title": "Hai cambiato lingua"
             }
           },
-          "not_selected": "Non selezionato",
           "banner": {
             "button": "Scopri di più"
           }
@@ -765,33 +610,12 @@
           "subtitle": "Consenti anteprime e promemoria"
         }
       },
-      "unavailable": {
-        "title": "Questa preferenza è impostata nel tuo profilo SPID"
-      },
-      "language": {
-        "contextualHelpTitle": "Come gestire la lingua su IO",
-        "contextualHelpContent": "**Al momento IO eredita la lingua dal sistema operativo del tuo dispositivo:** \npuoi modificare la lingua dalle impostazioni del tuo telefono, e automaticamente la troverai aggiornata anche all'interno dell'app. \nLa lingua del contenuto dei messaggi è invece definita da ciascun ente comunicazione per comunicazione: a loro discrezione l'invio di un contenuto tradotto in diverse lingue.\n"
-      },
-      "email": {
-        "forward": {
-          "contextualHelpTitle": "Come gestire l'inoltro dei messaggi",
-          "contextualHelpContent": "**Qui puoi abilitare o disabilitare l'inoltro dei messaggi sulla mail.**\nÈ possibile abilitare o disabilitare l'inoltro di tutti i messaggi che ricevi tramite IO sulla tua casella di posta, oppure abilitarli e disabilitarli puntualmente nella rispettiva scheda di dettaglio del servizio. \n"
-        }
-      },
       "calendar": {
-        "contextualHelpTitle": "Cos'è il tuo calendario preferito",
-        "contextualHelpContent": "**Il tuo calendario preferito è di default quello associato alla tua mail,** se ti sei registrato con un account Google. Puoi in ogni momento modificare la mail associata al tuo calendario, in modo da ricevere i promemoria di IO sul calendario che usi di più.\n",
-        "local_calendar": "Calendario locale",
-        "birthday_calendar": "Compleanni"
+        "local_calendar": "Calendario locale"
       },
       "notifications": {
-        "contextualHelpTitle": "Notifiche push",
-        "contextualHelpContent": "**Notifiche push** Qui puoi personalizzare le notifiche push\n",
-        "header": "Notifiche push",
         "title": "Personalizza le notifiche",
         "subtitle": "Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.",
-        "titleExistingUser": "Personalizza le notifiche",
-        "subtitleExistingUser": "Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti, come in questo esempio.",
         "reminders": {
           "title": "Consenti promemoria",
           "description": "Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze"
@@ -802,35 +626,14 @@
           "link": "Scopri di più",
           "bottomSheet": {
             "title": "Mostra anteprime",
-            "content": "Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.\nQueste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando.",
-            "cta": "Ho capito!"
+            "content": "Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.\nQueste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando."
           }
         },
         "error": "Si è verificato un errore con la tua richiesta"
       }
     }
   },
-  "navigation": {
-    "messages": "Messaggi",
-    "profile": "Profilo",
-    "accessibility": "Sezione {{section}}, pannello, {{order}} di 4",
-    "accessibilityWithBadge": "Sezione {{section}}, {{unread}} nuovi elementi, pannello, {{order}} di 4",
-    "selected": "È selezionato"
-  },
-  "cie": {
-    "title": "Appoggia la carta",
-    "layCardMessageHeader": "Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.",
-    "layCardMessageFooter": "Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finché non senti un suono.",
-    "booking_url": "https://www.cartaidentita.interno.gov.it/cittadini/sistema-di-prenotazione-della-cie/"
-  },
   "spid": {
-    "login": "ACCEDI",
-    "loginButton": "ENTRA CON",
-    "selectIdp": "Per procedere all'accesso, seleziona il gestore della tua identità SPID",
-    "selectDemoIdp": "Se non possiedi ancora una tua identità SPID, naviga l'app in modalità demo",
-    "loginErrorAlert": {
-      "title": "Errore login"
-    },
     "pending_login": {
       "title": "Accesso in corso",
       "details": "Se hai aperto la sessione nel browser, continua da lì. Altrimenti torna indietro e avvia un nuovo login!",
@@ -1038,14 +841,6 @@
     "cie_id": {
       "error_screen": {
         "title": "Non riesci a entrare con CieID?",
-        "cie_pin_supported": {
-          "description": "Se hai la tua Carta di Identità Elettronica a portata di mano, usala per accedere a IO.\n\nInserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura dei dati.",
-          "primary_action_label": "Entra con CIE + PIN"
-        },
-        "cie_pin_not_supported": {
-          "description": "Se hai SPID, entra su IO inserendo le tue credenziali. Puoi usare anche il tuo volto o l’impronta o il codice impostato per l’app del tuo fornitore di SPID.",
-          "primary_action_label": "Entra con SPID"
-        },
         "secondary_action_label": "Chiudi"
       },
       "cie_not_installed": {
@@ -1056,15 +851,9 @@
       }
     },
     "cie": {
-      "genericTitle": "Entra con CIE",
-      "cie": "CIE",
-      "noDataTitle": "Per usare IO è necessario autorizzare l'invio dei dati",
-      "authToSendData": "IO tratta i tuoi dati personali nel rispetto della sicurezza e della tua privacy, seguendo le indicazioni del **Regolamento generale sulla protezione dei dati** emanato dall'Unione Europea ([GDPR, regolamento n. 2016/679](https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=CELEX%3A32016R0679)).\n\nSe vuoi puoi riprovare a fare login.\n",
       "nfc": {
         "apduNotSupported": "Il sistema operativo non supporta la lettura della Carta di Identità Elettronica. Prova ad usare SPID per entrare in app.",
         "retry": "Riprova",
-        "noNfcConnectionTitle": "Hai appoggiato la carta?",
-        "noNfcConnectionContent": "Pare che il tuo smartphone non abbia rilevato una carta valida.  \nAppoggiala al retro del dispositivo e riprova. Quando il telefono riconoscerà la carta, avrà bisogno ancora di qualche secondo per leggerne i dati.  \nSe non sai dove si trova l'antenna NFC sul tuo dispositivo, prova a muovere la carta sul retro finché l'app non ti dirà di tenerla ferma nella posizione in cui si trova.\n",
         "title": "Attiva l’NFC per continuare",
         "subtitle": "Per consentire a IO di leggere la tua CIE, attiva l’NFC dalle Impostazioni del tuo dispositivo.",
         "listItemTitle": "Come fare:",
@@ -1080,14 +869,11 @@
       },
       "pin": {
         "accessibility": {
-          "placeholderLabel": "PIN della Carta di identità elettronica",
           "label": "Campo di inserimento per pin della Carta di Identità elettronica",
           "hint": "Inserire in questo campo il pin a 8 cifre della propria Carta di Identità Elettronica",
           "deleteLabel": "Hai eliminato {{number}}"
         },
         "pinCardTitle": "Inserisci il PIN della CIE",
-        "pinCardHeader": "Entra con CIE",
-        "pinCardContent": "Il codice PIN è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre 4 cifre ti sono state spedite a casa, insieme alla carta. Mettile insieme, in quest'ordine, e inseriscile qui per favore.",
         "incorrectCiePinTitle1": "Il PIN non è corretto",
         "incorrectCiePinTitle2": "Hai inserito un PIN errato per 2 volte",
         "lockedCiePinTitle": "Hai inserito un PIN errato per troppe volte",
@@ -1096,16 +882,8 @@
         "incorrectCiePinSecondaryActionLabel2": "Hai dimenticato il PIN?",
         "lockedCiePinContent": "Il PIN della tua CIE è stato bloccato. Per sbloccarlo e impostarne un nuovo, dovrai inserire il codice PUK nell’app CieID.",
         "lockedSecondaryActionLabel": "Hai dimenticato il PUK?",
-        "alert": "Vuoi davvero tornare indietro?",
-        "subtitleHelp": "Il PIN è un codice di 8 cifre.",
         "subtitleCTA": "Dove lo trovo?",
-        "bottomSheetCTA": "Hai dimenticato il PIN?",
-        "contextualHelpTitle": "Dove trovo i codici PIN e PUK?",
-        "contextualHelpBody": "Il codice **PIN** è composto da 8 cifre:  \n• le prime 4 cifre ti sono state consegnate all'anagrafe;  \n• le ultime 4 cifre ti sono state spedite a casa, insieme alla carta d'identità elettronica.  \n  \nMettile insieme e inseriscile in quest'ordine.  \nIl codice PUK è necessario invece per sbloccare il **PIN** a seguito di tre tentativi errati. È composto da 8 cifre, e viene rilasciato insieme al **PIN**.",
-        "contextualHelpCTA": "Hai dimenticato il PIN/PUK?"
-      },
-      "pinTempLocked": {
-        "title": "Carta temporaneamente bloccata"
+        "bottomSheetCTA": "Hai dimenticato il PIN?"
       },
       "card": {
         "title": "Appoggia la CIE sul retro del dispositivo",
@@ -1115,7 +893,6 @@
         "layCardMessageFooter": "Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finché non senti una vibrazione.",
         "cieCardValid": "Lettura completata!",
         "readerCardTitle": "Tienila ferma per qualche secondo",
-        "readerCardHeader": "Stiamo leggendo i dati della tua carta d'identità e verificandone la sua validità.",
         "readerCardFooter": "Tieni ferma la carta in questa posizione ancora per qualche secondo",
         "iosAlert": {
           "readingInstructions": "Appoggia la tua carta d’identità elettronica nella parte alta del telefono.",
@@ -1134,28 +911,13 @@
           "onTagLost": "Appoggia di nuovo la carta sul retro del dispositivo.",
           "tryAgain": "Si è verificato un errore durante la verifica della tua carta. Probabilmente è un errore momentaneo, riprova per piacere!",
           "generic": "Si è verificato un errore durante la verifica della tua carta. Se non riesci a risolvere il problema, segnalacelo con l’icona '?' in alto a destra. Grazie!",
-          "unknownCardTitle": "Carta sconosciuta",
           "unknownCardContent": "La carta utilizzata non sembra essere una Carta di Identità Elettronica.",
-          "unknownCardHelpLink": "Che cos'è la Carta di Identità Elettronica?",
           "genericErrorTitle": "Non siamo riusciti a recuperare i dati dalla carta",
           "genericErrorSubtitle": "Se riscontri più volte il problema, attendi qualche minuto e riprova."
         }
       }
     },
-    "spid": "SPID",
-    "spid_information_request": {
-      "headerTitle": "Non hai SPID?",
-      "contentTitle": "Cos'è SPID?"
-    },
-    "spid_information": {
-      "spid": "**SPID**, il Sistema Pubblico di Identità Digitale, ti permette di accedere a tutti i servizi della Pubblica Amministrazione con un'unica Identità Digitale (username e password). [Per saperne di più](https://www.spid.gov.it)\n\n## SPID è sicuro\n\nSPID ti permette di fare online cose che prima potevi fare solo di persona: per registrarti a SPID dovrai quindi **certificare la tua identità** completando il riconoscimento presso un Identity Provider. Ecco cosa dovrai fare:\n",
-      "headerTitle": "Non hai SPID?",
-      "contentTitle": "Cos'è SPID?",
-      "subtitle": "SPID è sicuro"
-    },
     "opt_in": {
-      "contextualHelpTitle": "Autenticazione",
-      "contextualHelpContent": "Qui puoi trovare le informazioni sulle modalità di autenticazione su IO e alcuni consigli di sicurezza.",
       "title": "Ora è più facile accedere!",
       "identity_check": "Non dovrai più identificarti con SPID o CIE ogni 30 giorni, ma solo una volta all’anno o se esci dall’app",
       "security_suggests": "Alcuni consigli di sicurezza",
@@ -1171,22 +933,10 @@
       "access_new_device": "Se accedi a IO con un dispositivo di altri, ricordati di uscire dall’app quando hai finito",
       "navigate_to_the_site": "Vai al sito"
     },
-    "idp_selection": {
-      "headerTitle": "Home",
-      "contentTitle": "Scegli il tuo Identity Provider",
-      "contextualHelpTitle": "Chi è il tuo Identity Provider",
-      "contextualHelpContent": "**L'Identity Provider è il gestore della tua identità digitale**. Puoi iniziare il tuo flusso di autenticazione solo dopo aver selezionato l'Identity Provider che ha rilasciato la tua identità SPID.\n"
-    },
     "idp_login": {
       "headerTitle": "Accedi",
       "contextualHelpTitle": "Qual è la tua password",
       "contextualHelpContent": "La password è il codice alfanumerico che hai scelto al momento della creazione della tua Identità Digitale SPID.\nSe non la ricordi, puoi recuperarla o impostare una nuova password seguendo le indicazioni del tuo Identity Provider.  \nUna volta inseriti i dati richiesti, riceverai un codice OTP dal tuo Identity Provider. Conferma la richiesta di accesso e torna sull'app IO per completare l’accesso. Troverai a questo punto una schermata che autorizza l'Identity Provider a trasmettere a IO una serie di informazioni necessarie per abilitarti all'utilizzo dell'app e dei vari servizi offerti dagli enti pubblici tramite IO. Premi \"acconsento\" per dare il tuo consenso e procedere con l’autenticazione.\n",
-      "contextualHelpTitle2": "Hai bisogno di aiuto per il login SPID?",
-      "openTicket": "Apri una segnalazione",
-      "recoverDescription": "Se hai dimenticato la tua password, ti consigliamo di procedere cliccando sul bottone qui di seguito.",
-      "dualRecoverDescription": "Se hai dimenticato le tue credenziali, ti consigliamo di procedere cliccando sui bottoni qui di seguito.",
-      "recoverUsername": "Recupera il nome utente",
-      "recoverPassword": "Recupera la password",
       "poste_id": {
         "bottom_sheet": {
           "title": "Accedi senza password!",
@@ -1201,18 +951,9 @@
       "contentTitle": "Ciao {{name}}!"
     },
     "errors": {
-      "notoken": "La sessione non è pronta o non è valida",
-      "logout": "Errore nel logout",
       "network": {
-        "title": "Problema di accesso",
-        "body": "L'identity provider che hai scelto non è disponibile in questo momento, puoi riprovare più tardi. Se disponi di un altra identità SPID scegli un provider alternativo. Puoi segnalarci il problema con l’icona '?' in alto a destra."
-      },
-      "login": {
-        "title": "Errore nel login"
+        "title": "Problema di accesso"
       }
-    },
-    "expiredSessionBanner": {
-      "title": "Avviso di sicurezza"
     },
     "unlock": {
       "title": "Sblocca l’accesso",
@@ -1244,49 +985,21 @@
         "title": "È questa la tua email?",
         "subtitle": "Per continuare a usare l’app, devi confermare che la tua email è",
         "editButton": "No, modifica",
-        "validateButton": "Sì, conferma",
-        "header": {
-          "title": "Configura IO"
-        },
-        "help": {
-          "body": "Per continuare a utilizzare l’app è necessario validare il tuo indirizzo email."
-        }
+        "validateButton": "Sì, conferma"
       },
       "emailAlreadyTaken": {
         "title": "Modifica la tua email",
         "subtitleStart": "Il tuo indirizzo email",
         "subtitleEnd": "è già in uso su IO, devi inserirne uno diverso per continuare a usare l’app.",
-        "editButton": "Modifica email",
-        "header": {
-          "title": "Configura IO"
-        },
-        "help": {
-          "body": "Il tuo indirizzo email risulta già in uso su IO, è necessario inserirne uno diverso per continuare a utilizzare l’app."
-        }
+        "editButton": "Modifica email"
       }
     },
-    "read": {
-      "title": "Il tuo indirizzo email",
-      "info": "Questo è l'indirizzo email che hai associato all'account SPID. Puoi usare in IO un indirizzo email diverso, se preferisci. Per rendere operativo il nuovo indirizzo, dovrai validarlo cliccando sul link che riceverai nella tua casella di posta elettronica.",
-      "alert": "Attenzione: il tuo account pagoPA è associato alla tua email, quindi se la modifichi non troverai più elencati nell'applicazione le tue transazioni ed i tuoi metodi di pagamento.",
-      "help": "Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal tuo provider di servizi SPID."
-    },
     "insert": {
-      "header": "Attivazione",
-      "title": "Inserisci la tua email",
-      "subtitle": "Alcune funzioni di IO hanno bisogno della tua email",
-      "label": "Indirizzo email personale",
-      "alert": "Stai già usando questa email",
-      "help": {
-        "title": "Email",
-        "content": "Questa pagina viene utilizzata per inserire o modificare l'indirizzo **e-mail**. L'email inserita deve essere convalidata.\n"
-      },
       "alertTitle": "Questa email è già in uso",
       "alertDescription": "Può succedere se condividi lo stesso indirizzo con un familiare",
       "alertButton": "Usa un’altra email"
     },
     "newinsert": {
-      "header": "Configura IO",
       "title": "Qual è la tua email?",
       "subtitle": "Servirà a inviarti comunicazioni come ricevute di pagamento o messaggi di assistenza.",
       "label": "Indirizzo email personale",
@@ -1296,9 +1009,6 @@
         "description2": "Inserisci un indirizzo diverso da quello attuale",
         "description3": "Stai già usando questa email",
         "invalidemail": "Inserisci un indirizzo email valido",
-        "modaltitle": "Questa email è già in uso",
-        "modaldescription": "Può succedere se condividi lo stesso indirizzo con un familiare",
-        "modalbutton": "Usa un’altra email",
         "validemaila11y": "Hai inserito un indirizzo email valido",
         "invalidemaila11y": "Hai inserito un indirizzo email non valido."
       }
@@ -1306,70 +1016,30 @@
     "edit": {
       "title": "Modifica la tua email",
       "subtitle": "Ora stai usando",
-      "validated": "L'email che avevi inserito e validato in precedenza è",
-      "label": "Nuovo indirizzo email personale",
-      "cta": "Modifica email",
-      "upsert_ok": "La richiesta di modifica email è stata inviata correttamente",
       "upsert_ko": "Errore nella richiesta di modifica email, riprovare"
-    },
-    "validate": {
-      "title": "Ricorda di validare il tuo indirizzo email!",
-      "header": "Validazione email",
-      "content1": "Ti abbiamo inviato una mail a <b>{{email}}</b> con un link per validare la mail: clicca semplicemente su quel link.<br/>Finché non validerai il tuo indirizzo email alcune funzioni dell'app (pagamenti, inoltro dei messaggi via mail, ecc.) non potranno essere utilizzate, ma potrai usare comunque altre funzioni (es. servizi, messaggi, ecc.).",
-      "content2": "Per usare alcune funzioni di IO devi validare il tuo indirizzo email.<br/>Ti abbiamo inviato una email a <b>{{email}}</b>: apri il tuo client di posta e clicca semplicemente sul link.",
-      "cta": "Invia una nuova email di validazione",
-      "sent": "Email inviata",
-      "send_validation_ok": "Email di validazione inviata",
-      "send_validation_ko": "Errore nell'invio della email di validazione. Riprova.",
-      "help": "Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal tuo provider di servizi SPID.",
-      "validation_ok": "La mail è stata validata. Ora puoi accedere a tutte le funzionalità di IO.",
-      "validated": "Email validata!",
-      "validated_ok": "Grazie, ora puoi usare le funzionalità legate ai pagamenti, all’inoltro dei messaggi, etc."
     },
     "newvalidate": {
       "title": "Ti abbiamo inviato un’email",
-      "subtitle": "Per confermare il tuo indirizzo, segui le istruzioni che abbiamo inviato a",
       "link": "Modifica email",
       "countdowntext": "Richiedi una nuova email tra",
-      "buttonlabelsent": "Email inviata!",
       "buttonlabelsentagain": "Invia di nuovo l’email",
       "toast": "Fatto! Controlla la tua casella di posta."
-    },
-    "newvalidemail": {
-      "title": "Email confermata!",
-      "subtitle": "Riceverai le comunicazioni di IO all’indirizzo"
     }
   },
   "onboarding": {
-    "contextualHelpTitle": "Come funziona il riconoscimento biometrico",
-    "contextualHelpContent": "**Se vuoi accedere più velocemente all'app senza dover ogni volta inserire il codice di sblocco, puoi farlo** abilitando il riconoscimento biometrico tramite impronta digitale direttamente dalle impostazioni del tuo sistema operativo.  \nDalle impostazioni dell'app IO potrai in ogni momento decidere se mantenere o disabilitare il riconoscimento biometrico... provalo, e vedrai che non vorrai più farne a meno!\n",
     "tos": {
-      "headerTitle": "Configura IO",
       "accept": "Accetta e continua",
-      "error": "Non siamo riusciti a caricare l’Informativa privacy e i Termini e condizioni",
-      "alert": {
-        "title": "Attenzione",
-        "message": "Devi leggere tutto il contenuto dei Termini di servizio e Privacy policy per continuare."
-      }
-    },
-    "unlockCode": {
-      "reset": "Modifica il codice",
-      "contextualHelpTitle": "Qual è il tuo codice di sblocco",
-      "contextualHelpContent": "**Il codice di sblocco è il codice di sicurezza che mantiene nell'app IO i tuoi dati protetti, e viene impostato da te al primo accesso**.   \nSe è la prima volta che entri nell'app, imposta liberamente il tuo codice numerico e memorizzalo in modo da poterlo utilizzare durante tutti i successivi accessi.  \nSe l'hai già impostato e non lo ricordi, puoi selezionare \"Codice di sblocco dimenticato\" e impostare un nuovo codice.  \nIl codice di sblocco è legato al dispositivo su cui l'hai impostato: se cambi telefono, dovrai impostarlo nuovamente al primo accesso all'app IO.\n"
+      "error": "Non siamo riusciti a caricare l’Informativa privacy e i Termini e condizioni"
     },
     "pin": {
-      "headerTitle": "Configura IO",
       "title": "Crea un codice di sblocco",
       "subTitle": "È il codice a 6 cifre per accedere a IO e autorizzare alcune operazioni in app.",
-      "pinLabel": "Crea codice di sblocco",
-      "pinConfirmationLabel": "Ripeti codice di sblocco",
       "errors": {
         "invalid": {
           "title": "Troppo facile!",
           "description": "Scegli un codice difficile da indovinare, che non contenga un unico numero ripetuto (es. 000000)o un elenco di numeri ordinati (es. 123456 o 654321).",
           "cta": "Scegli un altro codice"
-        },
-        "match": "Il codice non coincide"
+        }
       },
       "policy": {
         "title": "Come scegliere il codice?",
@@ -1400,16 +1070,11 @@
       "description": "Dovrai entrare di nuovo con SPID o CIE per usare l’app."
     },
     "biometric": {
-      "headerTitle": "Configura IO",
       "available": {
         "title": "Attiva il riconoscimento biometrico",
         "settings": "Puoi modificare la tua scelta in ogni momento da Impostazioni > Sicurezza",
         "body": {
           "text": "Potrai usare il tuo volto o impronta digitale al posto del codice di sblocco. Ti permetterà di accedere all’app e autorizzare operazioni e pagamenti in modo più rapido e sicuro.",
-          "infoStart": "Potrai usare il riconoscimento biometrico al posto del codice di sblocco. Ti permetterà di accedere all’app e autorizzare operazioni e pagamenti, con il tuo",
-          "biometricType": "volto o impronta digitale,",
-          "infoEnd": "in modo più rapido e sicuro.",
-          "enrolledText": "Le informazioni biometriche vengono salvate nella memoria del tuo telefono, non verranno in nessun modo comunicate ai sistemi di IO o salvate da altre parti.",
           "notEnrolled": {
             "text": "Per farlo, devi prima configurarlo nelle impostazioni di sistema del tuo dispositivo.",
             "label": "Come fare",
@@ -1444,18 +1109,12 @@
         }
       }
     },
-    "shareData": {
-      "title": "Configura IO"
-    },
     "thankYouPage": {
       "title": "Il tuo profilo su IO è attivo!"
     },
     "notifications": {
-      "badge": "Novità",
-      "headerTitle": "Configura IO",
       "continue": "Continua",
       "preview": {
-        "accessibilityLabelPrefix": "Ecco un esempio:",
         "reminderOnPreviewOnTitle": "Hai un avviso in scadenza",
         "reminderOnPreviewOnMessage": "Entra nell’app e paga l’avviso emesso da ACI",
         "reminderOffPreviewOnTitle": "Comune di Ipazia",
@@ -1464,18 +1123,12 @@
         "reminderOnPreviewOffMessage": "Entra nell'app per pagarlo",
         "reminderOffPreviewOffTitle": "Hai un nuovo messaggio",
         "reminderOffPreviewOffMessage": "Apri l'app per leggere il contenuto"
-      },
-      "contextualHelpTitle": "Notifiche push",
-      "contextualHelpContent": "**Notifiche push** Qui puoi personalizzare le notifiche push\n"
+      }
     },
     "infoConsent": {
-      "headerTitle": "Configura IO",
       "title": "Attiva le notifiche push per non perdere messaggi importanti!",
       "subTitle": "Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.",
       "openSettings": "Apri Impostazioni",
-      "continue": "Non ora",
-      "contextualHelpTitle": "Notifiche push",
-      "contextualHelpContent": "**Notifiche push** Qui puoi personalizzare le notifiche push\n",
       "instructions": {
         "title": "Ecco come:",
         "label": "Step",
@@ -1495,74 +1148,11 @@
     }
   },
   "datetimes": {
-    "yesterday": "ieri",
-    "todayAt": "oggi, alle",
     "notValid": "Data non valida."
   },
   "payment": {
-    "alertNoPaymentMethods": {
-      "title": "Aggiungi un metodo per effettuare pagamenti in app",
-      "message": "Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.",
-      "buttons": {
-        "ok": "Continua",
-        "ko": "Annulla"
-      }
-    },
-    "alertNoActivePaymentMethods": {
-      "title": "Per usare questa funzionalità, abilita i pagamenti in app",
-      "message": "Abilita almeno un metodo presente nel tuo Portafoglio, o aggiungine uno nuovo.",
-      "buttons": {
-        "ok": "Vai al Portafoglio",
-        "ko": "Annulla"
-      }
-    },
-    "abortWebView": {
-      "title": "Vuoi interrompere il pagamento in corso?",
-      "confirm": "Annulla il pagamento",
-      "cancel": "Continua con il pagamento",
-      "success": "Il pagamento è stato annullato correttamente"
-    },
-    "errorDetails": "Dettagli",
-    "currentPsp": "Il pagamento sarà gestito da",
-    "noPsp": "Non hai ancora selezionato un PSP",
-    "changePsp": "Scegli gestore",
     "IUV": "IUV",
-    "IUV_extended": "Identificativo Univoco di Versamento",
-    "notice": "Avviso",
     "noticeCode": "Codice Avviso",
-    "recipientFiscalCode": "Codice fiscale beneficiario",
-    "paidConfirm": "Hai pagato {{amount}}",
-    "details": {
-      "state": {
-        "successful": "Concluso",
-        "incomplete": "Non terminato",
-        "failed": "Fallito"
-      },
-      "info": {
-        "buttons": {
-          "copy": "copia",
-          "help": "Contatta l'assistenza"
-        },
-        "title": "Dettaglio pagamento",
-        "enteCreditore": "Ente creditore",
-        "causaleVersamento": "Causale",
-        "dateAndTime": "Data e ora",
-        "outcomeCode": "Codice esito",
-        "onlyDate": "Data",
-        "paymentAmount": "Importo pagamento",
-        "transactionCosts": "Costi di transazione",
-        "transactionCode": "Codice identificativo della transazione",
-        "help": "Se hai riscontrato un problema con questo pagamento, scrivici per maggiori informazioni e dettagli"
-      },
-      "list": {
-        "empty": {
-          "title": "Nessun tentativo di pagamento",
-          "description": "IO non ha memorizzato tentativi di pagamento. Qui troverai i tentativi di pagamento più recenti"
-        },
-        "title": "Tentativi di pagamento",
-        "iuv": "Codice IUV {{iuv}}"
-      }
-    },
     "confirm": {
       "a11y": {
         "announce": "Riepilogo del tuo pagamento"
@@ -1578,12 +1168,10 @@
   },
   "wallet": {
     "methodDetails": {
-      "cobadgeTitle": "Carta di debito",
       "cardGeneric": "Carta",
       "a11y": {
         "credit": {
-          "hpan": "{{circuit}} che termina con {{spacedHpan}}",
-          "owner": "intestata a {{fullOwnerName}}"
+          "hpan": "{{circuit}} che termina con {{spacedHpan}}"
         },
         "paypal": {
           "owner": "account: {{email}}"
@@ -1591,103 +1179,21 @@
         "bpay": {
           "phone": "Numero cellulare: {{phoneNumber}}",
           "owner": "intestato a: {{fullOwnerName}}"
-        },
-        "bancomat": {
-          "bank": "Carta PagoBANCOMAT {{bankName}}",
-          "owner": "intestata a {{fullOwnerName}}"
-        },
-        "cobadge": {
-          "bank": "Carta di debito {{bankName}}",
-          "owner": "intestata a {{fullOwnerName}}"
         }
       },
       "expired": "Il metodo è scaduto e non puoi più usarlo per fare pagamenti in app.",
-      "isSupportedBanner": {
-        "title": "Vuoi pagare in app?",
-        "content": "Scopri quali sono i metodi che puoi aggiungere al tuo portafoglio.",
-        "cta": "Scopri di più"
-      },
       "error": {
         "title": "Questo metodo di pagamento non è disponibile",
         "subtitle": "Chiudi l’app e riaprila per aggiornare il portafoglio",
-        "primaryButton": "Indietro",
-        "secondaryButton": "Riprova"
+        "primaryButton": "Indietro"
       },
       "update": {
         "primaryButton": "Aggiorna i dati"
       }
     },
     "wallet": "Portafoglio",
-    "refreshWallet": "Aggiorna il Portafoglio",
-    "favourite": {
-      "setFavoriteTitle": "Usa come preferito",
-      "setFavoriteSubtitle": "Quando paghi in app, IO mostra in automatico questo metodo di pagamento"
-    },
-    "incoming": {
-      "title": "In arrivo",
-      "message": "Una prossima versione di IO renderà disponibile anche questo metodo di pagamento"
-    },
-    "featured": "In evidenza",
     "creditCard": {
-      "onboardingAttempts": {
-        "title": "Tentativi aggiunta metodo di pagamento",
-        "emptyTitle": "Nessun tentativo di aggiunta di un metodo di pagamento",
-        "emptyBody": "IO non ha memorizzato tentativi di aggiunta di un metodo di pagamento. Qui troverai i tentativi più recenti",
-        "lastAttemptsTitle": "Ultimi tentativi",
-        "success": "Aggiunto",
-        "failure": "Fallito",
-        "dateTime": "Data e ora",
-        "detailTitle": "Dettaglio",
-        "help": "Se hai riscontrato un problema durante l'inserimento di questo metodo di pagamento, scrivi per maggiori informazioni e dettagli"
-      },
       "validUntil": "Valida fino al {{expDate}}"
-    },
-    "searchAbi": {
-      "header": "Aggiungi {{methodName}}",
-      "bancomat": {
-        "title": "Ricerca delle tue carte PagoBANCOMAT",
-        "description": {
-          "text1": "Aggiungendo PagoBANCOMAT al tuo Portafoglio, potrai aderire alle iniziative disponibili su IO.\nProseguendo accetti l'",
-          "text2": "informativa sul trattamento dei dati personali.",
-          "text3": "Se preferisci, puoi scegliere la banca su cui hai una carta PagoBANCOMAT attiva, ",
-          "text4": "cercando fra quelle disponibili"
-        }
-      },
-      "bpay": {
-        "title": "Paga su IO con BANCOMAT Pay",
-        "description": {
-          "text1": "Abbina BANCOMAT Pay per pagare più facilmente gli avvisi pagoPA e aderire alle iniziative disponibili su IO.\nProseguendo accetti l'",
-          "text2": "informativa sul trattamento dei dati personali.",
-          "text3": "Premi su “Continua” per cercare gli account a te intestati. In alternativa, cerca la banca su cui hai un account BANCOMAT Pay attivo ",
-          "text4": "tra quelle disponibili."
-        }
-      },
-      "cobadge": {
-        "title": "Ricerca delle tue carte con circuito internazionale",
-        "description": {
-          "text1": "Aggiungendo al tuo Portafoglio tutte le carte Maestro, Mastercard, V-Pay e Visa a te associate, potrai aderire alle iniziative disponibili su IO.",
-          "text3": "Per maggiori informazioni consulta l'",
-          "text4": "informativa sul trattamento dei dati personali."
-        }
-      },
-      "bankName": "Denominazione della banca",
-      "noName": "Nome non disponibile",
-      "loading": "Carico la lista delle banche..."
-    },
-    "accessibility": {
-      "sectionCardLabel": "Aggiorna metodi di pagamento",
-      "sectionCardHint": "Aggiorna la lista dei metodi di pagamento",
-      "folded": {
-        "creditCard": "Carta {{brand}}, il numero della carta finisce con {{blurredNumber}}",
-        "bancomat": "BANCOMAT {{bankName}}",
-        "coBadge": "Carta {{brand}}, {{bankName}}",
-        "bancomatPay": "BANCOMATPay {{bankName}}",
-        "cta": "Visualizza i dettagli del metodo",
-        "bankNotAvailable": "nome banca non disponibile"
-      },
-      "addElement": "Aggiungi elemento al portafoglio",
-      "cardsPreview": "Anteprima dei metodi di pagamento. Attiva per accedere alla lista dei tuoi metodi",
-      "cardHolder": "Intestatario carta"
     },
     "onboarding": {
       "paymentMethodsList": {
@@ -1696,161 +1202,10 @@
           "subtitle": "Il metodo verrà memorizzato e potrà essere utilizzato per effettuare pagamenti in app o aderire a iniziative compatibili."
         }
       },
-      "bancomat": {
-        "headerTitle": "Aggiungi carta PagoBANCOMAT",
-        "koTimeout": {
-          "title": "Non siamo riusciti a recuperare le tue carte PagoBancomat",
-          "body": "Riprova per favore"
-        },
-        "koNotFound": {
-          "title": "Non abbiamo trovato nessuna carta",
-          "body": "Non risultano carte PagoBANCOMAT a te intestate: contatta la tua banca per maggiori informazioni."
-        },
-        "add": {
-          "title": "Aggiungi PagoBancomat",
-          "label": "Carta PagoBancomat {{current}} di {{length}}",
-          "screenTitle": "Vuoi aggiungere questa carta?",
-          "bodySingular": "Abbiamo trovato 1 carta a te intestata. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per annullare l'operazione.",
-          "bodyPlural": "Abbiamo trovato {{number}} carte a te intestate. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per passare alla carta successiva.",
-          "loading": "Stiamo aggiungendo la tua carta PagoBANCOMAT\n\nAttendi qualche secondo...",
-          "warning": "Se non trovi tutte le carte che possiedi, prova ad aggiungere quella mancante in un secondo momento, selezionando la Banca presso cui hai il tuo conto corrente.",
-          "blocked": "Questa carta risulta bloccata e pertanto non può essere attivata per aderire alle iniziative disponibili su IO. Contatta la tua banca."
-        }
-      },
-      "bPay": {
-        "headerTitle": "Aggiungi BANCOMAT Pay",
-        "loadingSearch": "Stiamo recuperando i tuoi dati BANCOMAT Pay\n\nAttendi qualche secondo",
-        "add": {
-          "label": "Account BANCOMAT Pay {{current}} di {{length}}",
-          "screenTitle": "Vuoi aggiungere questo account?"
-        },
-        "loadingAdd": "Stiamo aggiungendo il tuo account BANCOMAT Pay\n\nAttendi qualche secondo",
-        "koTimeout": {
-          "title": "Impossibile recuperare i tuoi dati",
-          "body": "Riprova per favore"
-        },
-        "koNotFound": {
-          "title": "Non abbiamo trovato nessun BANCOMAT Pay attivo",
-          "body": "Contatta la tua Banca per attivare BANCOMAT Pay!"
-        }
-      },
       "paypal": {
         "name": "PayPal",
-        "headerTitle": "Aggiungi PayPal",
-        "emailNotAvailable": "non disponibile",
-        "start": {
-          "title": "Paga su IO con PayPal",
-          "body": "Abbina il tuo conto PayPal e paga gli avvisi pagoPA più facilmente: puoi usare anche il tuo conto corrente!"
-        },
-        "updatePsp": {
-          "headerTitle": "Scegli gestore",
-          "title": "Con quale gestore vuoi pagare?",
-          "body": "Ogni gestore propone un costo di transazione.\nIn questa lista trovi tutti i gestori compatibili con il tuo metodo, anche se non sei loro cliente.",
-          "leftColumnTitle": "Gestore",
-          "rightColumnTitle": "Costo Transazione (€)"
-        },
-        "selectPsp": {
-          "title": "Con quale gestore vuoi usare il tuo conto PayPal?",
-          "body": "Quando usi pagoPA, sei tu a decidere quale gestore della transazione ti conviene di più.\nPotrai modificare tale scelta ad ogni pagamento in base alla commissione proposta.",
-          "link": "Cos’è il gestore della transazione?",
-          "leftColumnTitle": "Gestore",
-          "rightColumnTitle": "Info e costi",
-          "infoBottomSheet": {
-            "title": "Chi è {{pspName}}?",
-            "ctaTitle": "Ho capito",
-            "row1Description": "È un Prestatore di Servizi di Pagamento (PSP) che può gestire le tue transazioni tramite PayPal.",
-            "row2Description1": "Quando paghi un avviso, potrà applicare un costo massimo fino a ",
-            "row2Description2": ". Vedrai l'importo esatto prima della conferma.",
-            "row3Description1": "Si applicano i Termini e condizioni d’uso e l’Informativa Privacy di {{psp}}"
-          },
-          "whatIsPspBottomSheet": {
-            "title": "Cos’è il gestore della transazione?",
-            "body": "È il soggetto, conosciuto anche come PSP (Prestatore di Servizi di Pagamento), che incassa l’importo per conto dell’Ente Creditore e può applicare un costo per il servizio offerto.\nAd ogni pagamento, potrai scegliere il gestore che ti conviene di più, che tu sia cliente o no."
-          }
-        },
-        "paypalAlreadyAdded": {
-          "alert": {
-            "title": "Hai già un account PayPal nel tuo Portafoglio",
-            "message": "Se prosegui, il nuovo account sostituirà quello attuale."
-          }
-        },
-        "onBoardingCompleted": {
-          "title": "Fatto!",
-          "body": "Ora puoi dare uno sguardo alle impostazioni del tuo nuovo metodo.",
-          "primaryButton": "Continua"
-        },
-        "onBoardingCompletedWhilePayment": {
-          "title": "Fatto!",
-          "body": "Ora puoi continuare con il pagamento.",
-          "primaryButton": "Continua"
-        },
-        "paymentCheckout": {
-          "transactionCost": "Costo della transazione",
-          "pspHandler": "Gestita da {{pspName}}",
-          "privacyDisclaimer": "Proseguendo dichiari di aver letto e compreso i",
-          "privacyTerms": "Termini e condizioni d’uso e l’Informativa Privacy"
-        }
+        "emailNotAvailable": "non disponibile"
       },
-      "coBadge": {
-        "headerTitle": "Aggiungi circuito internazionale",
-        "start": {
-          "loading": "Stiamo caricando le impostazioni\n\nAttendi qualche secondo",
-          "koDisabled": {
-            "title": "La tua banca non offre ancora questa funzionalità",
-            "body": "Siamo al lavoro per permetterti presto di poter aggiungere la tua carta con circuito internazionale."
-          },
-          "koUnavailable": {
-            "title": "Non riusciamo a contattare la tua banca",
-            "body": "Siamo al lavoro per risolvere il problema."
-          }
-        },
-        "search": {
-          "loading": "Stiamo recuperando la lista delle tue carte\n\nAttendi qualche secondo",
-          "koTimeout": {
-            "title": "Non riusciamo a recuperare le tue carte",
-            "body": "Riprova per favore"
-          },
-          "koNotFound": {
-            "title": "Non abbiamo trovato nessuna carta tra le banche aderenti al servizio",
-            "body": "Non risultano carte con circuito internazionale intestate a te: contatta la tua Banca per ulteriori informazioni."
-          },
-          "koSingleBankNotFound": {
-            "title": "Non abbiamo trovato nessuna carta su questa banca",
-            "body": "Non risultano carte con circuito internazionale intestate a te. Se lo desideri, IO può effettuare una ricerca tra tutte le banche aderenti."
-          },
-          "koServiceError": {
-            "title": "Non riusciamo a recuperare le tue carte",
-            "body": "Riprova più tardi per favore"
-          }
-        },
-        "add": {
-          "screenTitle": "Vuoi aggiungere questa carta?",
-          "label": "Carta con circuito internazionale {{current}} di {{length}}",
-          "blocked": "Questa carta risulta bloccata e pertanto non può essere attivata per aderire alle iniziative disponibili su IO. Contatta la tua banca.",
-          "warning1": "In alcuni casi, i dati mostrati potrebbero essere diversi da quelli riportati sulla carta fisica: ",
-          "warning2": "se hai dubbi contatta la tua banca.",
-          "loading": "Stiamo aggiungendo la tua carta con circuito internazionale\n\nAttendi qualche secondo..."
-        },
-        "chooseType": {
-          "title": "La tua carta ti permette di acquistare online?",
-          "description": "Questa domanda ci permette di capire meglio com’è fatta la tua carta e aiutarti ad aggiungerla al tuo Portafoglio.",
-          "path": {
-            "enabled": {
-              "title": "Sì, è abilitata agli acquisti online",
-              "description": "Verificheremo i dati della carta con la tua banca, di solito via sms o notifica push"
-            },
-            "disabled": {
-              "title": "No, la uso solo nei negozi",
-              "description": "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio"
-            },
-            "unknown": {
-              "title": "Non lo so",
-              "description": "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio"
-            }
-          }
-        }
-      },
-      "generalError": "C'è stato un errore generico durante l'aggiunta del metodo di pagamento",
       "outcome": {
         "SUCCESS": {
           "title": "Il metodo è stato aggiunto",
@@ -1912,32 +1267,8 @@
       }
     },
     "alert": {
-      "supportedCardPageLinkError": "Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.",
-      "msgErrorUpdateApp": "Si è verificato un errore durante l'apertura dello store delle app",
-      "titlePagoPaUpdateApp": "Aggiornamento richiesto",
-      "messagePagoPaUpdateApp": "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare il portafoglio è necessario aggiornare l'applicazione all'ultima versione.",
-      "btnUpdateApp": "Aggiorna l'app IO",
-      "favorite": "Per modificare quest'opzione, seleziona un altro metodo dal tuo Portafoglio e impostalo come preferito.",
-      "amex": "I pagamenti con carte American Express, per importi superiori a €1000, non sono al momento possibili"
+      "favorite": "Per modificare quest'opzione, seleziona un altro metodo dal tuo Portafoglio e impostalo come preferito."
     },
-    "contextualHelpTitle": "Cosa puoi fare nel tuo Portafoglio",
-    "contextualHelpContent": "**Nella sezione Portafoglio sono elencati i tuoi metodi di pagamento, i tuoi Bonus e carte sconto e lo storico delle transazioni effettuate con pagoPA**, la piattaforma dei pagamenti per la Pubblica Amministrazione. \nQui potrai inoltre pagare tutti gli avvisi di pagamento cartaceo con il logo pagoPA: inquadra il QR code che trovi nell'avviso cartaceo e completa il pagamento direttamente dall'app. IO supporta al momento solo pagamenti con carta di credito/debito, ma presto saranno aggiunti altri metodi di pagamento.",
-    "creditcards": "Carte di Credito",
-    "paymentMethods": "Metodi di pagamento",
-    "paymentMethod": "Metodo di pagamento",
-    "paymentMethodDesc": "Carte di credito, debito, prepagate, PayPal, e altri",
-    "walletLoadMessage": "Carico i metodi di pagamento...",
-    "walletLoadFailure": "Non è stato possibile caricare i metodi di pagamento, riprova per piacere.",
-    "transactionsLoadMessage": "Carico lo storico delle transazioni...",
-    "transactionsLoadFailure": "Non è stato possibile caricare lo storico delle tue operazioni, riprova per piacere.",
-    "transactionHelpMessage": {
-      "text1": "Problemi con un pagamento o l’aggiunta di un nuovo metodo?",
-      "text2": "Consulta l’help in alto a destra su questa pagina."
-    },
-    "transactionsLoadMore": "Carica precedenti",
-    "transacionsLoadingMore": "Carico precedenti...",
-    "transactionsShow": "Mostra operazioni",
-    "add": "aggiungi",
     "delete": {
       "ios": {
         "confirm": "Rimuovi metodo"
@@ -1948,332 +1279,56 @@
       "successful": "Metodo rimosso!",
       "failed": "C’è stato un problema, riprova"
     },
-    "newPaymentMethod": {
-      "add": "aggiungi",
-      "show": "mostra",
-      "refresh": "aggiorna",
-      "addButton": "Aggiungi un metodo",
-      "addDescription": "Aggiungi un metodo di pagamento per pagare da IO in pochi secondi, oppure richiedi l’attivazione di un bonus o di una carta sconto.",
-      "walletAlert": "Nel tuo portafoglio sono registrati dei metodi di pagamento ma nessuno di questi è compatibile con IO",
-      "successful": "Carta aggiunta con successo",
-      "failed": "Impossibile aggiungere la carta",
-      "failedCardAlreadyExists": "La carta che stai inserendo è già presente",
-      "contextualHelpTitle": "Come aggiungere un metodo di pagamento",
-      "contextualHelpContent": "**Qui puoi aggiungere un nuovo metodo di pagamento**, che verrà poi visualizzato tra i tuoi metodi salvati nella sezione Portafoglio. \nPotrai sempre modificare o cancellare il metodo inserito in un secondo momento, entrando nella sezione Portafoglio, e selezionando il metodo di pagamento su cui desideri intervenire all'interno della lista.\n"
-    },
-    "textMsg": {
-      "title": "Codice di conferma",
-      "header": "Codice di Conferma SMS",
-      "info": "Inserici il codice che abbiamo inviato via SMS al tuo numero di telefono"
-    },
-    "transactionDetails": "Dettagli della transazione",
-    "transactionFullReason": "Causale completa",
-    "detailsTransaction": {
-      "contextualHelpContent": "**Qui puoi visualizzare il riepilogo della tua transazione**.  \nQuesta transazione fa riferimento a un pagamento effettuato tramite pagoPA, la piattaforma dei pagamenti verso la Pubblica Amministrazione. Se, già prima di aver attivato un account sull’app IO, hai completato dei pagamenti con pagoPA sui siti o dalle app degli enti creditori, qui troverai lo storico completo di tutte le transazioni eseguite con successo. Ovviamente, qui trovi anche il riepilogo di ogni transazione eseguita con successo dall’app IO.\n"
-    },
-    "saveCard": {
-      "contextualHelpTitle": "Salva una carta su IO",
-      "contextualHelpContent": "**Stai procedendo con il salvataggio di un nuovo metodo di pagamento, che verrà visualizzato tra i tuoi metodi salvati nella sezione Portafoglio.**  \nPotrai sempre modificare o cancellare il metodo inserito in un secondo momento, entrando nella sezione Portafoglio, e selezionando il metodo di pagamento su cui desideri intervenire all'interno della lista.\n\n",
-      "header": "Salva la carta",
-      "title": "È tutto corretto?",
-      "subtitle": "Aggiungendo la carta al tuo Portafoglio, potrai effettuare pagamenti in app e aderire alle iniziative disponibili su IO.",
-      "infoTitle": "Usa come metodo preferito",
-      "info": "Quando paghi in app, IO ti mostra in automatico questo metodo di pagamento",
-      "notice": "Per verificare la tua carta, tratteniamo temporaneamente € 0,02. Non preoccuparti: ti restituiremo l'importo al più presto.",
-      "temporaryError": "Si è verificato un errore nel salvataggio di questa carta",
-      "temporarySubError": "Non abbiamo ricevuto risposta dai sistemi di sicurezza. Ci scusiamo per il disagio.",
-      "loadWalletsErrorTitle": "I sistemi stanno impiegando più tempo del previsto",
-      "loadWalletsErrorBody": "Non abbiamo ricevuto risposta dai sistemi di sicurezza, ma la tua carta potrebbe essere stata aggiunta. Aggiorna il tuo portafoglio prima di riprovare.",
-      "loadingAlert": "Sto verificando le informazioni della tua carta..."
-    },
-    "challenge3ds": {
-      "header": "Autorizza il pagamento",
-      "description": "L’emittente della carta ha bisogno della tua conferma. Se riscontri problemi, contatta la tua banca."
-    },
-    "saveCardInPayment": {
-      "header": "Paga con questa carta",
-      "title": "Vuoi pagare con questa carta?",
-      "save": "Paga con questa carta"
-    },
-    "thanks": "✓ Grazie!",
-    "endPayment": "Il tuo pagamento è concluso",
-    "pickPsp": {
-      "headerTitle": "Seleziona un gestore",
-      "title": "Con quale gestore vuoi pagare?",
-      "info": "Ogni gestore propone un costo di transazione.",
-      "info2": "In questa lista trovi tutti i gestori",
-      "info2Bold": "compatibili con il tuo metodo, anche se non sei loro cliente.",
-      "provider": "Gestore",
-      "maxFee": "Costo di transazione",
-      "loadingPsps": "Caricamento gestori in corso...",
-      "onUpdateWalletPspFailure": "Operazione fallita, riprova",
-      "contextualHelpTitle": "Scelta del gestore",
-      "contextualHelpContent": "**Qui puoi scegliere con quale Prestatore di Servizi di Pagamento (PSP) effettuare il pagamento.**  \npagoPA ti mostra in automatico, quando possibile, il gestore che ha emesso la tua carta.\nIn alternativa, verrà selezionato il gestore con il costo di transazione più basso.\nSe lo desideri, seleziona il gestore che preferisci: sono tutti compatibili con la tua carta, anche se non sei loro cliente.\n"
-    },
     "ConfirmPayment": {
-      "header": "Riepilogo del pagamento",
-      "total": "Totale",
-      "paymentInformations": "Dati del pagamento",
-      "payWith": "Paga con",
-      "transactionCosts": "Costo della transazione",
-      "edit": "Modifica",
-      "providedBy": "Gestita da",
-      "pay": "Paga",
       "cancelPayment": "Annulla l'operazione",
-      "fee": "Costi di transazione",
-      "identificationMessage": "Conferma l'operazione inserendo il tuo codice di sblocco",
-      "transactionSuccess": "il pagamento è stato completato!",
-      "transactionFailure": "Si è verificato un errore durante il pagamento, riprova!",
-      "transactionTimeout": "Non è stato possibile recuperare l'esito del pagamento!",
-      "confirmCancelTitle": "Vuoi annullare il pagamento?",
-      "confirmCancelPayment": "Annulla il pagamento",
-      "confirmContinuePayment": "Continua con il pagamento",
-      "cancelPaymentSuccess": "Il pagamento di questo avviso è stato annullato, potrai pagarlo nuovamente tra qualche minuto",
-      "accessibility": {
-        "edit": "tocca per modificare",
-        "transactionCosts": "{{cost}}, transazione {{psp}}"
-      }
-    },
-    "payWith": {
-      "noWallets": {
-        "title": "Nessun metodo di pagamento salvato",
-        "text": "Aggiungi un metodo di pagamento per procedere con il pagamento"
-      },
-      "header": "Scelta metodo di pagamento",
-      "title": "Paga con",
-      "text": "Seleziona un metodo dal tuo Portafoglio, oppure aggiungine uno nuovo.",
-      "fetchPspFailure": "Errore temporaneo, riprova",
-      "noPspsAvailable": "Questo metodo di pagamento non può essere usato",
-      "contextualHelpTitle": "Scelta del metodo di pagamento",
-      "contextualHelpContent": "**Qui puoi scegliere il metodo con cui procedere al pagamento.** IO supporta al momento solo pagamenti con carta di credito/debito ma presto saranno aggiunti altri metodi di pagamento come PayPal e altri.\n",
-      "pickPaymentMethod": {
-        "title": "Con quale metodo vuoi pagare?",
-        "description": "{{firstElement}} · {{secondElement}}",
-        "disabled": {
-          "title": "Metodi disattivati"
-        },
-        "notAvailable": {
-          "title": "Metodi non compatibili",
-          "arriving": {
-            "bottomSheetTitle": "Stiamo lavorando per supportare questo metodo",
-            "bottomSheetDescription": "Nel frattempo, prova a pagare con un altro metodo. Puoi utilizzare pagoPA anche sulla tua app di pagamenti preferita o sul sito del tuo Ente Creditore."
-          },
-          "unaccepted": {
-            "bottomSheetTitle": "Perché non posso pagare con questa carta?",
-            "bottomSheetDescription": "Il circuito di questa carta consente di pagare nei punti vendita fisici, ma non online. Se la tua carta è abilitata ai pagamenti online, aggiungila al tuo Portafoglio come 'carta di debito o di credito'."
-          },
-          "payment_disabled": {
-            "bottomSheetTitle": "Perché non riesco a pagare con questo metodo?",
-            "bottomSheetDescription": "La funzionalità “Pagamenti in app” potrebbe essere disattivata.\nPrima di riprovare ad effettuare il pagamento, procedi come segue:\n\n1. vai nella sezione “Portafoglio”;\n2. seleziona il metodo di pagamento che vuoi utilizzare;\n3. abilita “Pagamenti in app”."
-          }
-        }
-      }
+      "identificationMessage": "Conferma l'operazione inserendo il tuo codice di sblocco"
     },
     "firstTransactionSummary": {
       "a11y": {
         "announce": "Riepilogo dati avviso"
       },
       "loading": "Recupero delle informazioni in corso",
-      "title": "Dati del pagamento",
       "amount": "Importo",
-      "total": "Totale pagato",
-      "expireDate": "Scadenza",
       "dueDate": "Entro il",
-      "tranche": "Rata",
-      "info": "Per informazioni:",
-      "tel": "Tel:",
-      "email": "Email:",
-      "PEC": "PEC:",
       "recipient": "Ente Creditore",
       "object": "Oggetto del pagamento",
-      "date": "Data e ora",
-      "iuv": "Codice IUV",
       "entityCode": "Codice Fiscale Ente",
-      "updatedAmount": "Importo aggiornato",
-      "fee": "Costi di transazione",
-      "idTransaction": "Codice identificativo della transazione",
       "amountInfo": {
         "title": "L’importo è diverso da quello riportato sull’avviso pagoPA?",
-        "message": "Quando l'importo cambia, significa che è stato aggiornato automaticamente.\n\nSe è più alto, potrebbero esserci interessi, sanzioni o costi di notifica.\n\nSe l’avviso pagoPA riguarda una comunicazione a valore legale, l’aumento dell’importo da pagare può dipendere da diversi fattori, per esempio:\n- se hai ricevuto la comunicazione tramite  raccomandata (i cui costi di stampa e invio possono essere a carico del destinatario); \n- il numero di tentativi di recapito. \nPer ulteriori dettagli contatta l'ente creditore.",
-        "cta": "Ok, va bene"
-      },
-      "contextualHelpTitle": "Riepilogo della transazione",
-      "contextualHelpContent": "**Qui puoi visualizzare il riepilogo della transazione che stai per effettuare.** Il riepilogo della transazione è aggiornato a questo istante, nel quale si sta procedendo con il pagamento: per questo motivo può risultare maggiorato da eventuali interessi di mora applicati dall'ente creditore. ",
-      "errorDetails": {
-        "title": "Dettagli errore",
-        "errorCode": "Codice errore",
-        "messageId": "ID messaggio",
-        "copyToClipboard": "Copia dati per l'assistenza"
+        "message": "Quando l'importo cambia, significa che è stato aggiornato automaticamente.\n\nSe è più alto, potrebbero esserci interessi, sanzioni o costi di notifica.\n\nSe l’avviso pagoPA riguarda una comunicazione a valore legale, l’aumento dell’importo da pagare può dipendere da diversi fattori, per esempio:\n- se hai ricevuto la comunicazione tramite  raccomandata (i cui costi di stampa e invio possono essere a carico del destinatario); \n- il numero di tentativi di recapito. \nPer ulteriori dettagli contatta l'ente creditore."
       }
     },
     "errorTransaction": {
       "submitBugText": "Se non riesci a risolvere il problema, segnalacelo con l’icona '?' in alto a destra. Grazie!"
     },
-    "insertManually": {
-      "header": "Inserisci dati avviso",
-      "title": "Cosa devi pagare?",
-      "info": "Inserisci i dati come riportato sull'avviso di pagamento.",
-      "link": "Dove trovo i dati?",
-      "noticeCode": "Codice Avviso",
-      "entityCode": "Codice Fiscale Ente Creditore",
-      "amount": "Importo (€)",
-      "proceed": "Procedi con il pagamento",
-      "contextualHelpTitle": "Inserimento dati manuali",
-      "contextualHelpContent": "**Qui puoi procedere al pagamento di un avviso, inserendo i dati che trovi nello stesso**: il Codice Avviso e il codice fiscale dell'ente creditore.\nAssicurati che l'avviso supporti il pagamento tramite pagoPA, la piattaforma dei pagamenti per la Pubblica Amministrazione."
-    },
-    "total": "Totale",
-    "amount": "Importo €",
-    "payAmount": "Importo dovuto",
-    "transactionFee": "Costo operazione",
-    "why": "Perché?",
-    "paymentReason": "Causale",
-    "recipient": "Ente Creditore",
-    "date": "Data",
-    "time": "Ora",
-    "psp": "Gestore della transazione",
-    "receipt": "Ricevuta dell'operazione",
-    "seeReceipt": "Vedi la ricevuta",
-    "transactions": "Operazioni",
-    "transaction": "Operazione",
-    "noTransactions": "Non ci sono operazioni.",
-    "noNewTransactions": "Non ci sono nuove operazioni.",
-    "noneTransactions": "Nessuna operazione",
-    "noTransactionsInWalletHome": "Non hai ancora fatto nessuna operazione.",
-    "noTransactionsInTransactionsScreen": "Non hai ancora utilizzato questo metodo di pagamento per pagare tramite IO o pagoPA. In questa lista vedrai solo le operazioni eseguite con questo metodo.",
-    "payNotice": "Paga un avviso",
-    "latestTransactions": "Le tue operazioni",
-    "creditDebitCards": "Carte di Credito/Debito",
-    "addPaymentMethodTitle": "Aggiungi un metodo",
     "continue": "Vai al pagamento",
-    "backToPayments": "Torna ai pagamenti",
     "methods": {
       "comingSoon": "in arrivo",
-      "newCome": "Novità",
       "card": {
-        "name": "Carta di credito, debito o prepagata",
-        "shortName": "Carta",
-        "description": "La carta che usi online e nei negozi",
         "pagoPaCapability": {
           "title": "Pagamenti in app",
           "description": "Paga gli avvisi che hanno il logo pagoPA",
-          "active": "Attivo",
-          "arriving": "In arrivo",
-          "incompatible": "Non compatibile",
-          "bottomSheetTitle": "Perché non posso pagare in app?",
-          "bottomSheetBody": "Questo metodo non è abilitato a effettuare pagamenti online.",
-          "bottomSheetCTA": "Scopri i metodi supportati",
           "operationCompleted": "Operazione completata!",
           "operationError": "Operazione non riuscita"
         }
-      },
-      "bonus": {
-        "name": "Sconti, bonus e altre iniziative",
-        "description": "Iniziative degli enti pubblici a supporto della spesa, o servizi relativi ai pagamenti"
-      },
-      "digital": {
-        "name": "App e strumenti di pagamento digitali",
-        "description": "I tuoi strumenti digitali preferiti su IO"
-      },
-      "pagobancomat": {
-        "name": "Carta PagoBANCOMAT",
-        "description": "Il circuito che usi per pagare nei negozi"
-      },
-      "bank": {
-        "name": "Bancomat Pay"
-      },
-      "bancomatPay": {
-        "name": "BANCOMAT Pay",
-        "description": "Paga con carta o conto corrente collegati"
-      },
-      "postepayApp": {
-        "name": "Postepay",
-        "description": "la tua app Postepay"
-      },
-      "postepay": {
-        "name": "Carta BancoPosta o Postepay",
-        "description": "Le carte emesse da Poste Italiane"
-      },
-      "paypal": {
-        "name": "PayPal",
-        "description": "Paga con carta o conto corrente collegati"
-      },
-      "bancomat": {
-        "name": "PagoBANCOMAT"
-      },
-      "cobadge": {
-        "name": "circuito internazionale"
-      },
-      "notImplemented": "Prossimamente"
+      }
     },
-    "addCardTitle": "Dati carta",
     "dummyCard": {
       "labels": {
         "holder": {
-          "label": "Intestatario carta",
-          "description": {
-            "base": "Segui l’ordine riportato sulla carta",
-            "error": "Non usare lettere accentate o simboli"
-          }
+          "label": "Intestatario carta"
         },
         "pan": "Numero carta",
-        "expirationDate": "Data di scadenza",
-        "securityCode": "Codice di sicurezza",
-        "securityCode4D": "CID (4 cifre)"
-      },
-      "values": {
-        "holder": "Mario Rossi",
-        "pan": "0000 0000 0000 0000",
-        "expirationDate": "mm/aa",
-        "securityCode": "•••",
-        "securityCode4D": "••••"
+        "expirationDate": "Data di scadenza"
       },
       "accessibility": {
-        "holder": {
-          "base": "Intestatario carta, segui l’ordine riportato sulla carta",
-          "error": "Intestatario carta, non usare lettere accentate o simboli"
-        },
-        "pan": {
-          "base": "Numero carta",
-          "error": "Numero carta. Per favore, inserisci almeno {{minLength}} cifre"
-        },
-        "expirationDate": {
-          "base": "Data di scadenza, due cifre per il mese, due per l’anno",
-          "error": "Data di scadenza, due cifre per il mese, due per l’anno. Per favore, inserisci una data valida"
-        },
-        "securityCode": {
-          "3D": {
-            "base": "Codice di sicurezza, 3 cifre",
-            "error": "Codice di sicurezza. Per favore, inserisci 3 cifre"
-          },
-          "4D": {
-            "base": "CID, 4 cifre",
-            "error": "Codice CID. Per favore, inserisci 4 cifre"
-          }
-        },
         "button": {
           "fieldError": "Per continuare per favore correggi il campo {{field}}",
           "missingFields": "Per continuare, compila tutti i campi"
         }
       }
     },
-    "acceptedCards": "Carte accettate",
-    "openAcceptedCardsPageCTA": "Scopri le carte accettate",
-    "missingDataText": {
-      "body": "Se non trovi il codice di sicurezza, la tua carta potrebbe non essere abilitata ai pagamenti online.",
-      "cta": "Cerca le tue carte"
-    },
-    "chooseMethod": "Scegli il metodo che preferisci",
     "QRtoPay": {
-      "chooser": "Carica immagine dalla galleria",
-      "wrongQrCode": "Codice QR non valido. Inserisci i dati manualmente.",
-      "byCameraTitle": "Inquadra il codice QR",
-      "cameraUsageInfo": "Inquadra il codice QR che trovi nell'avviso, oppure inserisci manualmente i dati (Codice Avviso e Codice Fiscale Ente Creditore).",
-      "setManually": "Inserisci manualmente",
-      "enroll_cta": "Per inquadrare il codice QR presente sull'avviso, devi prima consentire ad IO l'uso della fotocamera. Puoi farlo dal menu 'Impostazioni' del tuo dispositivo.",
-      "readStorageDisclosure": {
-        "title": "Consenti l'accesso alla galleria",
-        "message": "Potrai caricare screenshot e avvisi di pagamento"
-      },
       "settingsAlert": {
         "title": "Sembra che l'accesso alle foto sia stato negato",
         "message": "IO ha bisogno di accedere alla tua galleria per salvare bonus e certificati, o caricare screenshot e avvisi di pagamento",
@@ -2281,113 +1336,18 @@
           "settings": "Abilita permessi",
           "cancel": "Annulla"
         }
-      },
-      "contextualHelpTitle": "Come puoi pagare un avviso",
-      "contextualHelpContent": "**Qui puoi procedere al pagamento spontaneo di un avviso con pagoPA**, la piattaforma dei pagamenti per la Pubblica Amministrazione. Puoi pagare partendo da un avviso cartaceo, inquadrando il QR code che trovi nell'avviso e poi procedendo con il pagamento direttamente dall'app. Puoi anche caricare un QRcode dalla galleria del tuo telefono o procedere con la compilazione manuale dei dati di riconoscimento dell'avviso (Codice Avviso)."
-    },
-    "whyAFee": {
-      "title": "Perché i costi di transazione?",
-      "text": "Qualsiasi operazione di trasferimento di denaro (in contanti o in moneta elettronica) ha un costo, che serve a garantirti che quel pagamento sia sicuro e arrivi a buon fine. \nOgni gestore (o PSP, Prestatore di Servizi di Pagamento), propone un costo di transazione, a seconda delle proprie politiche commerciali e condizioni contrattuali.\nCon pagoPA, questi costi sono trasparenti e il cittadino può scegliere liberamente l’opzione più comoda e conveniente. Verifica l'importo applicato dal PSP che hai scelto, prima di procedere al pagamento."
+      }
     },
     "errors": {
       "GENERIC_ERROR": "Si è verificato un errore imprevisto",
       "GENERIC_ERROR_SUBTITLE": "Riprova o contattaci per ricevere assistenza."
     },
-    "walletCardTransaction": {
-      "contextualHelpTitle": "Transazioni effettuate con questo metodo",
-      "contextualHelpContent": "**Qui puoi visualizzare tutte le transizioni effettuate usando questo metodo di pagamento.**\nLe transazioni possono essere avvenute in questa app oppure tramite pagoPa, la piattaforma dei pagamenti per la Pubblica Amministrazione, in un altro sito web.\nSe hai completato dei pagamenti con pagoPA come utente autenticato, troverai infatti qui tutte le relative transizioni eseguite con successo.\n"
-    },
-    "bancomat": {
-      "details": {
-        "debit": {
-          "title": "La tua carta ha più di un logo?",
-          "body": "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerli cercando tutte le carte di debito (o credito) intestate a te.",
-          "addCta": "Aggiungi secondo circuito"
-        }
-      }
-    },
-    "cobadge": {
-      "details": {
-        "card": {
-          "validUntil": "Valida fino al {{expiryDate}}"
-        }
-      }
-    },
     "newRemove": {
       "title": "Rimuovere il metodo dal Portafoglio?",
-      "body": "Se presente, verrà anche rimosso dalle iniziative a cui è stato abilitato.",
-      "warningCapability": "Verranno disattivate anche le funzioni: "
+      "body": "Se presente, verrà anche rimosso dalle iniziative a cui è stato abilitato."
     },
     "capability": {
       "title": "Iniziative disponibili"
-    },
-    "outcomeMessage": {
-      "cta": {
-        "close": "Chiudi",
-        "learnMore": "Scopri di più",
-        "visualizeCard": "Visualizza carta"
-      },
-      "fallback": {
-        "title": "Si è verificato un errore imprevisto",
-        "description": "Se il problema persiste, contatta l’assistenza."
-      },
-      "code1": {
-        "title": "Si è verificato un errore imprevisto",
-        "description": "Se il problema persiste, contatta l’assistenza."
-      },
-      "code2": {
-        "title": "Autorizzazione negata",
-        "description": "La tua banca non ha autorizzato l’operazione. Controlla di aver inserito correttamente i vari codici richiesti dalla tua banca."
-      },
-      "code3": {
-        "title": "I dati della carta non sono corretti",
-        "description": "Elimina la carta dal tuo Portafoglio e prova ad aggiungerla di nuovo. Assicurati che i dati inseriti siano riportati esattamente come sulla carta."
-      },
-      "code4": {
-        "title": "Controlla la tua email",
-        "description": "Non è stato possibile verificare l’esito del pagamento. Se è andato a buon fine, riceverai a breve un’email con la ricevuta. Se non ricevi l’email, contatta l’Assistenza."
-      },
-      "code7": {
-        "title": "C’è un problema con la tua carta",
-        "description": "Non è stato addebitato alcun importo. Per maggiori informazioni, contatta la tua banca."
-      },
-      "code8": {
-        "title": "L’operazione è stata annullata"
-      },
-      "code10": {
-        "title": "Autorizzazione negata",
-        "description": "Probabilmente hai superato il massimale del tuo metodo. Verifica con la tua banca prima di riprovare."
-      },
-      "code15": {
-        "title": "Abilita il metodo per effettuare pagamenti in app",
-        "description": "Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”."
-      },
-      "code18": {
-        "title": "Si è verificato un errore imprevisto",
-        "description": "Se il problema persiste, contatta l’assistenza."
-      },
-      "code19": {
-        "title": "Autorizzazione negata",
-        "description": "Potresti avere rimosso pagoPA dai pagamenti automatici di PayPal. Elimina il conto PayPal dal tuo Portafoglio, aggiungilo di nuovo e riprova ad effettuare il pagamento."
-      },
-      "addCreditCard": {
-        "success": {
-          "title": "La tua carta è stata aggiunta con successo!"
-        }
-      },
-      "payment": {
-        "success": {
-          "title": "Grazie, l’operazione è stata eseguita con successo!",
-          "description1": "Abbiamo inviato una ricevuta a",
-          "description2": "Puoi trovarla anche nel tuo Portafoglio."
-        }
-      }
-    },
-    "abortWebView": {
-      "title": "Vuoi uscire dall'operazione in corso?",
-      "confirm": "Sì, esci",
-      "cancel": "No, continua",
-      "success": "Problemi con l'aggiunta? Contatta la tua banca."
     },
     "payment": {
       "barcodes": {
@@ -2516,12 +1476,7 @@
         "SUCCESS": {
           "title": "Hai pagato {{amount}}",
           "subtitle": "La ricevuta è nella sezione Pagamenti.",
-          "button": "Ok, chiudi",
-          "banner": {
-            "title": "Puoi dirci com’è andata?",
-            "content": "Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.",
-            "action": "Vai al sondaggio"
-          }
+          "button": "Ok, chiudi"
         },
         "GENERIC_ERROR": {
           "title": "Si è verificato un errore imprevisto",
@@ -2569,17 +1524,10 @@
           "title": "Abilita il metodo per effettuare pagamenti in app",
           "subtitle": "Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”."
         },
-        "PAYMENT_METHODS_EXPIRED": {
-          "title": "La tua carta è scaduta!",
-          "subtitle": "Rimuovi la carta e aggiungine una nuova.\nVerrà salvata nel Portafoglio, così la prossima volta potrai pagare più facilmente.",
-          "primaryAction": "Aggiungi carta",
-          "secondaryAction": "Usa altri metodi"
-        },
         "PAYMENT_REVERSED": {
           "title": "Il pagamento non è andato a buon fine",
           "subtitle": "L’importo autorizzato è stato rimborsato sul tuo metodo di pagamento. Il trasferimento di denaro potrebbe richiedere del tempo.",
-          "primaryAction": "Scopri di più",
-          "secondaryAction": "Chiudi"
+          "primaryAction": "Scopri di più"
         },
         "PAYPAL_REMOVED_ERROR": {
           "title": "Autorizzazione negata",
@@ -2627,26 +1575,7 @@
       }
     }
   },
-  "saveCard": {
-    "saveCard": "Salva la carta",
-    "header": "Vuoi salvare questa carta?",
-    "favoriteTitle": "Imposta la carta come metodo di pagamento preferito",
-    "favoriteText": "Al prossimo pagamento ti verrà automaticamente proposto questo metodo di pagamento"
-  },
   "cardComponent": {
-    "validUntil": "Valida fino al",
-    "expiresOn": "Scade il",
-    "expiredCard": "Carta scaduta il",
-    "actions": "Azioni",
-    "setFavorite": "Imposta come preferita",
-    "unsetFavorite": "Rimuovi dai preferiti",
-    "deleteTitle": "Vuoi eliminare questo metodo di pagamento?",
-    "deleteMsg": "Rimuoveremo il metodo dal Portafoglio. Le eventuali iniziative a cui è collegato si disattiveranno entro 24 ore.",
-    "deleteLoading": "Eliminazione metodo in corso",
-    "neverUsed": "Mai utilizzata",
-    "lastUsage": "Ultimo utilizzo",
-    "detailsAndTransactions": "Dettagli e transazioni",
-    "pick": "Paga con questo metodo",
     "removeCta": "Rimuovi dal Portafoglio"
   },
   "messages": {
@@ -2772,25 +1701,10 @@
   },
   "messageDetails": {
     "accessibilityAttachmentIcon": "Contiene allegati",
-    "contextualHelpTitle": "Dettagli del messaggio",
-    "contextualHelpContent": "Qui puoi visualizzare il dettaglio della comunicazione ricevuta da un ente integrato all'app IO.\nSe hai  dubbi o delle domande sul contenuto specifico del messaggio, puoi contattare l'ente utilizzando i recapiti che trovi in fondo a questo messaggio o nella sezione \"Servizi\".\n",
     "headerTitle": "Messaggio",
-    "emptyMessage": "Nessun contenuto",
     "loadingText": "Stiamo caricando il messaggio",
     "pleaseWait": "Attendi qualche secondo",
-    "errorText": "Non siamo riusciti a caricare i dettagli del tuo messaggio",
-    "retryText": "Probabilmente è un errore temporaneo... riprova per piacere!",
     "submitBugText": "Se il problema non si risolve segnalacelo con l'icona '?' in alto a destra, grazie!",
-    "addMemo": "Aggiungi un promemoria per il <b>{{date}}</b> [alle <b>{{hour}}</b>]",
-    "dateSending": "Data e ora invio:",
-    "sender": "Mittente:",
-    "service": "Servizio:",
-    "question": "Qualcosa non è chiaro?",
-    "answer": "Se non ti è chiaro il contenuto del messaggio, devi segnalare un errore o vuoi approfondire, puoi contattare direttamente i referenti del servizio indicando il seguente ID del messaggio.",
-    "call": "Chiama",
-    "sendEmail": "Manda email",
-    "write": "Scrivi",
-    "id": "ID:",
     "remoteContentError": {
       "title": "Non è stato possibile recuperare i dettagli del messaggio",
       "body": "Abbiamo riscontrato un errore nelle informazioni fornite dall'Ente. Riprova tra qualche minuto. Se il problema persiste, contatta l’assistenza."
@@ -2800,7 +1714,6 @@
       "badFormat": "Il formato dell'allegato non è supportato. Contatta l'ente mittente",
       "corruptedFile": "L'allegato è danneggato e non può essere aperto. Contatta l'ente mittente",
       "downloadFailed": "L'allegato non è al momento disponibile. Riprova o contatta l'ente mittente",
-      "showPreview": "Visualizza anteprima",
       "failing": {
         "aarTtlError": "È passato troppo tempo, inquadra di nuovo il codice QR",
         "details": "Non sono riuscito a scaricare l’allegato. Riprova o apri una segnalazione"
@@ -2814,7 +1727,6 @@
     },
     "bottomSheet": {
       "title": "Cos'è un messaggio dinamico?",
-      "body": "È un messaggio che l'ente può modificare dopo averlo inviato. In questo modo, le informazioni che contiene saranno sempre corrette.\n\nUn ente può modificare le informazioni di un messaggio dinamico solo in casi specifici, per esempio per cambiare un'informazione vecchia o aggiornare un allegato non più valido.\n\nSe deve comunicarti nuove informazioni o aggiornamenti importanti, ti invierà un nuovo messaggio.",
       "bodyPt1": "È un messaggio che l'ente può modificare ",
       "bodyPt2": "dopo averlo inviato",
       "bodyPt3": ". In questo modo, le informazioni che contiene saranno sempre corrette.\n\nUn ente può modificare le informazioni di un messaggio dinamico solo ",
@@ -2867,7 +1779,6 @@
         "body": "Per visualizzare il documento, scaricalo e aprilo con un’app di lettura PDF."
       },
       "sharing": "Si è verificato un errore condividendo il documento.",
-      "opening": "Si è verificato un errore aprendo il documento. Potresti non avere installata l'applicazione per i PDF.",
       "saving": "Si è verificato un errore salvando il documento."
     }
   },
@@ -2876,24 +1787,12 @@
       "title": "Attiva le notifiche push per sapere quando ricevi un messaggio su IO.",
       "cta": "Attiva notifiche push"
     },
-    "installation": {
-      "errorTitle": "Notifiche push",
-      "errorMessage": "La registrazione verso il servizio di notifiche push ha generato un errore"
-    },
     "modal": {
       "content": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
       "primaryButton": "Attiva notifiche push",
       "secondaryButton": "Non ora",
       "title": "Non perderti i messaggi importanti!"
     }
-  },
-  "biometric_recognition": {
-    "contextualHelpTitle": "Come funziona il riconoscimento biometrico",
-    "contextualHelpContent": "**Qui è possibile attivare o disattivare il riconoscimento biometrico.**  \nL'attivazione del riconoscimento biometrico risulta disabilitata se non supportata da questo dispositivo.  \nAttivare il riconoscimento biometrico ti permetterà di svolgere alcune operazioni con maggior velocità, senza utilizzare il codice di sblocco, come ad esempio confermare un pagamento o accedere direttamente all'applicazione a distanza di breve tempo dall'ultimo login con CIE o SPID.\n",
-    "switchLabel": "Attiva il riconoscimento biometrico",
-    "enroll_cta": "Il riconoscimento biometrico è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.",
-    "enroll_btnLabel": "Vai alle impostazioni",
-    "needed_to_disable": "Riconoscimento richiesto per disabilitare"
   },
   "send_email_messages": {
     "title": "Inoltro dei messaggi via email",
@@ -2908,18 +1807,12 @@
       "preferences": {
         "completed": {
           "title": "Preferenze salvate!",
-          "body": "Potrai sempre vedere la lista dei servizi disponibili visitando la sezione Servizi.",
-          "cta": "Vedi i servizi disponibili"
+          "body": "Potrai sempre vedere la lista dei servizi disponibili visitando la sezione Servizi."
         },
         "banner": "Puoi modificare la tua scelta in ogni momento da Impostazioni > Preferenze",
-        "oldUsersBadge": "Impostazione attuale",
-        "choiceLabel": "Hai scelto la",
-        "unavailable": "Non selezionato",
         "title": "Chi può scriverti?",
         "body": "IO è semplice perché non devi fare nulla: se un Ente o un servizio hanno qualcosa di importante da dirti, possono mandarti un messaggio.",
         "quickConfig": {
-          "value": "Configurazione rapida",
-          "label": "tutti i servizi che non hai disattivato possono contattarti.",
           "title": "Usa configurazione rapida",
           "successAlert": "Hai abilitato la configurazione rapida",
           "body": {
@@ -2928,8 +1821,6 @@
           }
         },
         "manualConfig": {
-          "value": "Configurazione manuale",
-          "label": "ti possono contattare solo i servizi che hai attivato.",
           "title": "Configura manualmente",
           "successAlert": "Hai abilitato la configurazione manuale",
           "body": {
@@ -2943,8 +1834,6 @@
       }
     },
     "title": "Servizi",
-    "contextualHelpTitle": "Cosa puoi fare nei tuoi Servizi",
-    "contextualHelpContent": "**Nella sezione Servizi puoi visualizzare la lista degli enti che offrono i propri servizi su IO, e l'elenco dei servizi associato ad ogni ente.** I servizi sono divisi tra locali, dove puoi selezionare gli enti d'interesse rispetto all'area geografica dove vivi, nazionali, ovvero le amministrazioni centrali che offrono servizi a tutti i cittadini italiani, e infine tutti, dove puoi trovare l'elenco completo di tutti i servizi disponibili su IO (sia locali che nazionali).   \nTi invitiamo ad utilizzare questa sezione per esplorare i servizi messi a disposizione da IO, impostare la tua lista di servizi locali e i dettagli dei singoli servizi. Ogni volta che arriverà su IO un nuovo servizio locale o nazionale, riceverai una notifica in modo da poter subito verificare di cosa si tratta e se ti risulta utile o meno.\n",
     "new": "Nuovo",
     "home": {
       "bottomSheet": {
@@ -3000,10 +1889,6 @@
         "subtitle": "Stiamo recuperando i servizi",
         "back": "Indietro",
         "retry": "Riprova"
-      },
-      "header": {
-        "subtitle_one": "{{count}} servizio disponibile",
-        "subtitle_other": "{{count}} servizi disponibili"
       }
     },
     "search": {
@@ -3103,78 +1988,46 @@
       "useUnlockCodeA11y": "inserisci il codice di sblocco"
     },
     "title": "Ciao {{name}}!",
-    "titleProfileName": "Ciao {{profileName}}!",
     "titleValidation": "Autorizza l'operazione",
     "titleOffline": "Ciao!",
-    "logout": "Esci",
-    "logoutProfileName": "Non sei {{profileName}}?",
-    "logoutDescription": "Puoi accedere con le tue credenziali SPID o CIE. Questa sessione verrà disconnessa.",
-    "logoutDescriptionProfileName": "Puoi accedere con le tue credenziali SPID o CIE. La sessione di {{profileName}} verrà disconnessa.",
     "biometric": {
-      "fingerprintType": "Impronta digitale",
       "title": "Identificazione Biometrica",
       "popup": {
-        "reason": "Identificazione tramite touch ID non riuscita",
         "title": "Identificazione richiesta",
         "sensorDescription": "Accedi velocemente"
       }
     },
     "fail": {
-      "remainingAttempts": "Hai a disposizione ancora {{attempts}} tentativi",
-      "remainingAttemptSingle": "Hai a disposizone ancora {{attempts}} tentativo",
       "tooManyAttempts": "Hai inserito troppe volte il codice sbagliato!",
       "waitMessage": "Riprova tra:"
     },
     "unlockCode": {
       "accessibility": {
-        "unlockHint": "Hai inserito {{number}} cifre di {{length}}",
         "fingerprint": "Autenticati con l'impronta digitale",
-        "faceId": "Autenticati con il riconoscimento facciale",
-        "delete": "Cancella l'ultima cifra inserita"
+        "faceId": "Autenticati con il riconoscimento facciale"
       },
       "reset": {
         "button": "Hai dimenticato il",
         "code": "codice di sblocco",
         "button_short": "Modifica il codice di sblocco",
         "subtitle": "Imposta un nuovo codice di 6 cifre."
-      },
-      "confirmValid": "Codice di sblocco corretto"
+      }
     },
     "forgetCode": {
-      "confirmTitle": "Hai dimenticato il codice di sblocco?",
-      "confirmMsg": "Per poter scegliere un nuovo codice di sblocco dovrai accedere nuovamente.",
-      "confirmMsgWithTask": "Per poter scegliere un nuovo codice di sblocco dovrai annullare l'operazione corrente e accedere nuovamente."
+      "confirmTitle": "Hai dimenticato il codice di sblocco?"
     }
   },
-  "calendarEvents": {
-    "calendarSelect": "In quale calendario vuoi aggiungere l'evento?"
-  },
-  "reminders": {
-    "emptyMonth": "Non ci sono scadenze in questo mese",
-    "loadMoreData": "scadenze precedenti",
-    "noOtherDeadlines": "Non ci sono altre scadenze"
-  },
   "openMaps": {
-    "genericError": "Si è verificato un errore durante l'apertura della mappa",
-    "openAddressOnMap": "Apri l'indirizzo sulla mappa"
+    "genericError": "Si è verificato un errore durante l'apertura della mappa"
   },
   "genericError": "Si è verificato un errore",
   "titleUpdateApp": "Aggiorna IO!",
   "msgErrorUpdateApp": "Si è verificato un errore durante l'apertura dello store delle app",
   "messageUpdateApp": "IO introduce spesso piccole migliorie e nuove funzioni: per continuare a usare l'app è necessario aggiornarla all'ultima versione.",
-  "titleUpdateAppAlert": "Per continuare, aggiorna IO",
-  "messageUpdateAppAlert": "È disponibile una nuova versione di IO su {{storeName}}, scaricala subito per utilizzare questa funzionalità.",
-  "openStore": "Apri {{storeName}}",
   "btnUpdateApp": "Aggiorna l'app",
   "systemsOff": {
     "title": "C'è un problema sui nostri sistemi",
     "closeApp": "Chiudi l'app e riprova tra qualche minuto."
-  },
-  "contextualHelp": {
-    "title": "IO ti aiuto",
-    "sendPersonalInfo": {
-      "title": "Nuova segnalazione"
-    }
   },
   "bottomSheets": {
     "ciePin": {
@@ -3505,10 +2358,6 @@
     }
   },
   "bonus": {
-    "accessibility": {
-      "sectionCardLabel": "Aggiorna bonus e sconti",
-      "sectionCardHint": "Aggiorna la lista dei bonus attivi"
-    },
     "state": {
       "completed": {
         "caption": "concluso",
@@ -3516,84 +2365,16 @@
       }
     },
     "bonusVacanze": {
-      "multipleBonus": "Risultano due o più bonus richiesti e attivati da te. Assicurati di usare quello relativo alla DSU corretta, per evitare che chi utilizza il bonus incorra in successive azioni di recupero.",
-      "usableAmount": "Spendibile presso la struttura ricettiva",
-      "taxBenefit": "Detraibile in dichiarazione dei redditi",
-      "request": "Richiedi il",
-      "code": "Codice",
-      "uniqueCode": "Codice univoco",
-      "requestedAt": "Richiesto il",
-      "consumedAt": "Utilizzato il",
-      "advice": "Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e compreso la ",
-      "status": "Stato",
-      "name": "Bonus Vacanze",
-      "validity": "Valido nel periodo",
-      "amount": "Importo massimo",
-      "applicant": "CF richiedente",
-      "bonusClaim": "Chi può riscuotere il bonus?",
-      "shareMessage": "Questo è il codice del tuo Bonus Vacanze:",
-      "saveScreenShotOk": "Bonus salvato nella tua galleria!",
-      "savedOn": "Salvato il ",
-      "eligibility": {
-        "loading": "Stiamo verificando l’ISEE del tuo nucleo familiare con INPS\nTi preghiamo di attendere.",
-        "activateBonus": {
-          "headerTitle": "Richiesta Bonus Vacanze",
-          "title": "Buone notizie!",
-          "description": "Il tuo nucleo familiare ha diritto al seguente Bonus Vacanze:",
-          "discrepancies": {
-            "attention": "Attenzione!",
-            "text": "INPS ha segnalato alcune omissioni o difformità nel tuo ISEE. Verifica che sia tutto corretto prima di continuare. Se decidi di proseguire, potresti essere chiamato a fornire la documentazione per provare la completezza e la veridicità dei dati indicati nella DSU Altrimenti, puoi presentare una nuova DSU e richiedere il Bonus in un secondo momento."
-          },
-          "activateCTA": "Attiva il Bonus"
-        }
-      },
-      "activation": {
-        "loading": "Abbiamo inoltrato la tua richiesta a Agenzia delle Entrate\nTi preghiamo di attendere.",
-        "timeout": {
-          "title": "Stiamo processando la tua richiesta."
-        }
-      }
+      "advice": "Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e compreso la "
     },
-    "bonusList": {
-      "title": "Aggiungi bonus o sconto",
-      "contentTitle": "Seleziona uno dei bonus disponibili",
-      "contextualHelp": {
-        "title": "Aggiungere un bonus o una carta sconto",
-        "body": "Qui puoi selezionare il bonus o la carta sconto che vuoi aggiungere. Una volta attivati, verranno poi visualizzati nella sezione Portafoglio. Potrai sempre visualizzare i dettagli del Bonus o dello sconto, entrando nella sezione Portafoglio, e selezionando l'elemento interessato all'interno della lista."
-      }
-    },
-    "bonusInformation": {
-      "contextualHelp": {
-        "title": "Il bonus vacanze",
-        "body": "Qui sono visualizzate tutte le informazioni relative al bonus vacanze, il provvedimento istituito dal Decreto Rilancio per incentivare  il turismo dopo il lockdown dovuto all'emergenza Coronavirus."
-      }
-    },
-    "request": "Richiedi un nuovo bonus",
-    "requestLabel": "Bonus e sconti",
-    "requestTitle": "Richiesta",
     "validity_interval": "dal {{from}} fino al {{to}}",
-    "active": "Attivo",
-    "failed": "Fallito",
-    "redeemed": "Utilizzato",
     "termsAndConditionFooter": "Premendo \"{{ctaText}}\" dichiari di essere in possesso dei requisiti e di aver letto e compreso la [Guida]({{regulationLink}}) e l'[Informativa Privacy]({{tosUrl}})",
     "tos": {
-      "title": "Informativa sul trattamento dei dati personali",
-      "content": "# Bonus Terms & Conditions\n\nAccettando questi termini e condizioni:\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Donec molestie metus hendrerit mauris maximus, cursus accumsan leo semper. Nullam sollicitudin neque suscipit nibh imperdiet maximus. Fusce eleifend, enim nec lobortis tristique, elit odio mollis dui, aliquam suscipit ante neque et justo. In tincidunt viverra elit eget faucibus. Donec nec sem non velit sodales maximus eget ornare urna. Aenean maximus enim consequat augue blandit rhoncus. Fusce congue arcu turpis, a rhoncus nulla commodo euismod. Aliquam erat volutpat. Ut pulvinar placerat semper. Aliquam fermentum pulvinar dui, pulvinar maximus arcu vestibulum in. Nullam magna dolor, posuere et quam a, mattis fringilla risus. In finibus in leo nec pellentesque.\n\nAenean maximus et sem sit amet vestibulum. Donec vestibulum neque eget erat fermentum imperdiet. Nullam pretium commodo libero, eget ullamcorper erat accumsan sit amet. Suspendisse at nunc suscipit, vestibulum nulla sodales, eleifend nunc. Quisque orci turpis, euismod eget euismod vitae, dictum ut quam. Etiam vitae velit id orci pretium lobortis at eget mauris. Maecenas vel bibendum purus. Donec in sapien accumsan, dictum sem at, molestie felis. Morbi efficitur malesuada finibus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\nDuis quis ligula vitae ipsum pharetra gravida. Aenean blandit, nunc ut pellentesque efficitur, mauris nibh accumsan ex, non convallis urna metus condimentum leo. Vivamus vitae magna consequat, placerat odio vel, efficitur quam. Sed condimentum consectetur turpis ac tincidunt. Donec in neque quis mauris auctor lacinia. Sed porttitor euismod orci, sed fringilla tortor fermentum sed. Vestibulum eget suscipit nunc.\n\nNam ullamcorper quam sed facilisis imperdiet. Vestibulum quis accumsan neque, non placerat lacus. Quisque gravida cursus eleifend. Nullam quis felis ante. Nulla id efficitur nisi. Nulla in ullamcorper turpis. Curabitur eros turpis, ornare eu massa at, sagittis commodo enim. Nunc eget cursus enim, nec elementum elit. Curabitur a interdum quam, in egestas mi. In eu imperdiet leo. Aenean dictum vulputate tortor, vel semper metus ultricies ut.\n\nMauris efficitur lacinia velit, non imperdiet lorem sodales et. Phasellus tortor ex, efficitur ut fermentum eget, tincidunt nec erat. Maecenas quis volutpat mauris. Cras posuere, lectus sed feugiat bibendum, dui magna pretium arcu, tristique iaculis risus ligula id elit. Sed libero felis, mattis et felis quis, convallis tempus lacus. Mauris aliquet dapibus elit, volutpat porta mi ultricies sit amet. Integer vel felis eu magna gravida auctor. In hac habitasse platea dictumst. Nam rhoncus ipsum a placerat consequat. Duis auctor tempor diam nec aliquet. Donec id sollicitudin odio. Curabitur consectetur auctor erat nec eleifend. Pellentesque et dui sapien. Vestibulum varius viverra leo.\n\nAenean sagittis accumsan arcu a rutrum. Mauris eu tristique arcu. In sit amet est eleifend, fermentum nisl et, pellentesque est. Curabitur arcu enim, mattis eu est sit amet, vestibulum tristique velit. Vestibulum quis neque fermentum diam faucibus volutpat a at lorem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ornare nisi risus, nec laoreet urna mollis sit amet. Donec luctus efficitur velit. Fusce cursus, eros et convallis tristique, nibh massa feugiat elit, eget fringilla enim nibh in mauris. Sed sit amet orci lacinia, malesuada sem eget, commodo augue. Vestibulum commodo quis quam et laoreet. Pellentesque laoreet quis mi quis tincidunt. Donec condimentum erat in feugiat gravida."
-    },
-    "bpd": {
-      "title": "Cashback",
-      "description": "Ottieni un rimborso quando paghi nei negozi con questo metodo",
-      "name": "Cashback",
-      "cta": {
-        "activeBonus": "Attiva il Cashback"
-      }
+      "title": "Informativa sul trattamento dei dati personali"
     },
     "cgn": {
       "generic": {
         "linkError": "In questo momento, il sito dell'operatore non è raggiungibile. Riprova più tardi."
-      },
-      "accessibility": {
-        "code": "Premendo l'elemento copierai il codice"
       },
       "name": "Carta Giovani Nazionale",
       "departmentName": "Dipartimento per le Politiche Giovanili e il Servizio Civile Universale",
@@ -3617,23 +2398,15 @@
       },
       "merchantsList": {
         "news": "novità",
-        "online": "Online",
-        "places": "Luoghi",
-        "navigationTitle": "Agevolazioni",
         "screenTitle": "Scopri le opportunità",
-        "merchantsAll": "Tutti i partner",
         "a11yTitle": "Categoria: {{categoryName}}",
         "tabs": {
           "perInitiative": "Per categoria",
           "perMerchant": "Per partner",
           "a11y": "Filtra {{label}}, {{index}} di {{total}}"
         },
-        "cta": {
-          "filter": "Filtra"
-        },
         "categoriesList": {
           "a11y": "{{name}}, {{count}} nuove opportunità trovate",
-          "title": "Seleziona una categoria e scopri agevolazioni e opportunità",
           "bottomSheet": {
             "cta": "Come vengono ordinate le categorie?",
             "title": "Come vengono ordinate le categorie?",
@@ -3641,25 +2414,7 @@
           }
         },
         "filter": {
-          "title": "Filtra esercenti",
-          "searchTitle": "Cerca per nome",
-          "inputPlaceholder": "Cerca negozio, teatro o altro",
-          "addressTitle": "Cerca per indirizzo",
-          "addressPlaceholder": "Cerca indirizzo",
-          "sliderLabel": "Distanza entro cui cercare",
-          "sliderUnit": "Km",
-          "orderTitle": "Visualizza",
-          "categories": "Categorie",
-          "cta": {
-            "cancel": "Rimuovi",
-            "confirm_zero": "Applica filtri",
-            "confirm_one": "Applica filtri ({{count}})",
-            "confirm_other": "Applica filtri ({{count}})"
-          },
-          "order": {
-            "byDistance": "Per vicinanza alla tua posizione",
-            "byName": "Ordine alfabetico"
-          }
+          "categories": "Categorie"
         },
         "discountOf": "Sconto del {{discount}}%"
       },
@@ -3671,19 +2426,6 @@
         },
         "cta": {
           "website": "Visita il sito del partner"
-        },
-        "categories": {
-          "counting": "e altre {{count}}",
-          "cultureAndEntertainment": "Cultura e tempo libero",
-          "health": "Salute e benessere",
-          "learning": "Istruzione e formazione",
-          "sport": "Sport",
-          "home": "Casa",
-          "telco": "Telefonia e internet",
-          "finance": "Servizi bancari e finanziari",
-          "travel": "Viaggi e trasporti",
-          "mobility": "Mobilità sostenibile",
-          "job": "Lavoro e tirocini"
         },
         "information": {
           "address": "Indirizzo",
@@ -3717,17 +2459,13 @@
         "cta": {
           "buyers": "Scopri le opportunità CGN",
           "discover": "Scopri le opportunità",
-          "otp": "Genera codice",
           "eyca": {
             "copy": "Copia numero carta EYCA",
-            "pending": "Scopri le opportunità EYCA",
             "bottomSheet": "Visita il sito di EYCA",
             "showEycaDiscounts": "Scopri le opportunità EYCA"
           }
         },
         "information": {
-          "active": "La carta è attiva e può essere usata fino al {{date}}",
-          "warning": "Attenzione! ",
           "revoked": "Attenzione! Questa carta è stata revocata per {{reason}}",
           "expired": "Attenzione! Questa carta è scaduta il {{date}}"
         },
@@ -3735,7 +2473,6 @@
         "status": {
           "title": "Carta Giovani Nazionale",
           "eyca": "Carta EYCA",
-          "eycaCircuit": "Circuito EYCA",
           "eycaNumber": "Numero carta",
           "eycaPending": "Stiamo associando la tua Carta Giovani Nazionale a un Numero EYCA.",
           "eycaError": "Abbiamo riscontrato problemi con i sistemi EYCA.",
@@ -3753,8 +2490,7 @@
             "revoked": "Revocata il"
           },
           "expiration": {
-            "cgn": "Scade il",
-            "eyca": "Scade il"
+            "cgn": "Scade il"
           },
           "a11y": {
             "cardStatus": "Stato della carta: {{status}}"
@@ -3789,10 +2525,6 @@
           "title": "Purtroppo non hai i requisiti per attivare la Carta Giovani Nazionale.",
           "body": "La Carta Giovani Nazionali è disponibile solo per i cittadini italiani ed europei residenti in Italia, dai 18 ai 35 anni di età."
         },
-        "timeout": {
-          "title": "Stiamo lavorando alla tua richiesta.",
-          "body": "Ti invieremo un messaggio in app quando la tua Carta Giovani sarà attiva."
-        },
         "alreadyActive": {
           "title": "La tua Carta Giovani Nazionale è già attiva!",
           "body": "Puoi trovare la tua Carta nella sezione Portafoglio."
@@ -3814,17 +2546,6 @@
           "expired": "Rimuovi dal Portafoglio"
         }
       },
-      "otp": {
-        "error": "Per un problema tecnico non siamo riusciti a generare un codice sconto. Ti chiediamo di riprovare.",
-        "code": {
-          "title": "Il tuo codice sconto",
-          "validUntil": "Valido ancora per",
-          "minutes_one": "1 minuto",
-          "minutes_other": "{{minutes}} minuti",
-          "seconds_one": "1 secondo",
-          "seconds_other": "{{seconds}} secondi"
-        }
-      },
       "playgrounds": {
         "link": {
           "placeholder": "Link alla landing"
@@ -3843,12 +2564,8 @@
           "validThrough": "Valida fino al {{endDate}}"
         }
       },
-      "serviceEntryPoint": {
-        "notAvailable": "Il servizio non è disponibile in questo momento. Riprova più tardi."
-      },
       "request": "Richiedi Carta della Cultura",
-      "goToService": "Vai al servizio",
-      "usage": "Usa Carta della Cultura"
+      "goToService": "Vai al servizio"
     }
   },
   "features": {
@@ -3868,10 +2585,6 @@
       },
       "attachmentDownloadFeedback": "Download in corso",
       "attachments": "Allegati",
-      "loading": {
-        "title": "Sto caricando i dettagli del messaggio",
-        "subtitle": "Attendi qualche secondo"
-      },
       "updateBottomSheet": {
         "title": "Aggiorna l'app IO",
         "subtitle": "Per usare questa funzionalità è richiesta la versione {{value}} di app IO. Aggiorna l’app per continuare."
@@ -4197,7 +2910,6 @@
         "badge": {
           "legalValue": "Valore legale"
         },
-        "title": "Dettaglio del messaggio",
         "noticeCode": "Codice avviso",
         "loadError": {
           "title": "Qualcosa è andato storto",
@@ -4205,9 +2917,7 @@
         },
         "cancelledMessage": {
           "body": "Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto.",
-          "unpaidPayments": "Per l'eventuale rimborso di pagamenti legati a questa notifica, contatta l'ente mittente.",
-          "unpaidPaymentsNew": "Per l'eventuale rimborso di pagamenti, rivolgiti all'ente.",
-          "payments": "Pagamenti"
+          "unpaidPaymentsNew": "Per l'eventuale rimborso di pagamenti, rivolgiti all'ente."
         },
         "paymentSection": {
           "title": "Avvisi pagoPA",
@@ -4235,7 +2945,6 @@
           }
         },
         "infoSection": {
-          "title": "Informazioni sulla notifica",
           "iun": "Codice IUN",
           "iunAccessibility": "Codice IUN, copia",
           "iunSectionTitle": "Notifica"
@@ -4244,7 +2953,6 @@
           "goToSend": "Accedi a SEND",
           "menuTitle": "Stato della notifica",
           "newInfo": "Accedi a SEND dal tuo browser per avere tutti i dettagli, le ricevute e le attestazioni opponibili a terzi.",
-          "title": "STATO DELLA NOTIFICA",
           "status": {
             "ACCEPTED": "Depositata",
             "CANCELLED": "Annullata",
@@ -4256,10 +2964,7 @@
             "PAID": "Pagata",
             "REFUSED": "REFUSED",
             "IN_VALIDATION": "IN VALIDATION"
-          },
-          "expand": "mostra gli stati precedenti",
-          "info": "Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio",
-          "cta": "Accedi alla versione web"
+          }
         },
         "help": {
           "needHelp": "Serve aiuto?",
@@ -4330,10 +3035,6 @@
           "close": "Chiudi",
           "assistance": "Invia una segnalazione"
         },
-        "expiredAfterSigned": {
-          "title": "I documenti non sono più disponibili",
-          "subTitle": "Se hai bisogno di una copia, contatta l'ente"
-        },
         "expired": {
           "title": "La richiesta di firma è scaduta",
           "subTitle": "Se hai bisogno di assistenza, contatta l'ente"
@@ -4345,10 +3046,6 @@
         "signed": {
           "title": "Hai già firmato questi documenti",
           "subTitle": "Puoi visualizzarli e scaricarli dal messaggio intitolato “Documenti firmati”."
-        },
-        "unsupportedDevice": {
-          "title": "C’è un problema",
-          "subTitle": "Il tuo device non supporta la funzionalità Firma con IO."
         },
         "generic": {
           "default": {
@@ -4404,9 +3101,7 @@
         "title": "Firma qui",
         "showOnDocument": "Vedi sul documento",
         "accessibility": {
-          "fieldDetailHint": "Visualizza sul documento dove metterai la firma",
-          "selected": "Campo selezionato",
-          "unselected": "Campo non selezionato"
+          "fieldDetailHint": "Visualizza sul documento dove metterai la firma"
         },
         "required": "Firme obbligatorie",
         "optional": "Firme facoltative",
@@ -4435,14 +3130,12 @@
       },
       "qtspTos": {
         "title": "Ci siamo quasi!",
-        "subTitle": "Per firmare, devi accettare i termini e condizioni del servizio e confermare di avere letto l’informativa privacy del fornitore della firma.",
-        "show": "Visualizza"
+        "subTitle": "Per firmare, devi accettare i termini e condizioni del servizio e confermare di avere letto l’informativa privacy del fornitore della firma."
       },
       "documents": {
         "footer": {
           "cancel": "Annulla",
           "continue": "Vai alla firma",
-          "confirm": "Firma e continua",
           "backToSignFieldsList": "Torna alle firme"
         }
       },
@@ -4471,11 +3164,6 @@
         },
         "toast": {
           "newMethod": "Metodo aggiunto!"
-        },
-        "paymentsBanner": {
-          "title": "Vuoi pagare un avviso?",
-          "action": "Vai alla sezione Pagamenti",
-          "close": "Chiudi"
         },
         "otherMethods": {
           "error": {
@@ -4517,7 +3205,6 @@
         },
         "options": {
           "cgn": "Carta Giovani Nazionale",
-          "welfare": "Iniziative welfare",
           "payments": "Metodi di pagamento"
         },
         "cta": {
@@ -4558,22 +3245,16 @@
         }
       },
       "transactions": {
-        "multiplePayment": "Pagamento multiplo",
         "title": "Ricevute pagoPA",
         "button": "Mostra tutte",
         "empty": {
           "title": "Qui vedrai le tue ricevute pagoPA",
           "content": "Paga un avviso in app o presso un qualsiasi canale abilitato a pagoPA."
         },
-        "status": {
-          "failure": "FALLITA",
-          "success": ""
-        },
         "receipt": {
           "a11y": {
             "preview": "Anteprima ricevuta in formato PDF"
           },
-          "loading": "Stiamo nascondendo la ricevuta...",
           "title": "Ricevuta pagoPA",
           "shareButton": "Salva o condividi",
           "download": "Ottieni ricevuta",
@@ -4583,10 +3264,6 @@
             "failed": "C’è stato un errore, riprova"
           },
           "hideBanner": {
-            "isCart": {
-              "title": "Vuoi nascondere queste ricevute dalla tua lista?",
-              "content": "Stai per nascondere definitivamente tutte le ricevute collegate a questa transazione. Non compariranno più nell’elenco."
-            },
             "title": "Vuoi nascondere questa ricevuta dalla tua lista?",
             "content": "L’operazione è irreversibile. La ricevuta non verrà più mostrata nell’elenco delle tue ricevute.",
             "accept": "Sì, nascondi"
@@ -4616,7 +3293,6 @@
         },
         "error": {
           "banner": {
-            "label": "Il caricamento delle ricevute è fallito.",
             "retryButton": "Prova di nuovo"
           }
         },
@@ -4654,9 +3330,6 @@
           "explainationContent": "Quando hai salvato questo metodo, hai autorizzato {{pspBusinessName}} a gestire le transazioni eseguite tramite “PayPal pagamento veloce”.\n\nSe vuoi usare un altro gestore, aggiungi nuovamente il metodo al tuo Portafoglio.\n\nPer revocare l’autorizzazione, rimuovi il metodo dal Portafoglio.\n\nUsa l’app PayPal per modificare la carta o conto bancario su cui addebitare le spese."
         }
       },
-      "errors": {
-        "transactionCreationError": "C’è un problema con i sistemi di pagamento."
-      },
       "checkout": {
         "bottomSheet": {
           "PAYMENT_REVERSED": {
@@ -4671,8 +3344,6 @@
     "itWallet": {
       "title": "IT-WALLET",
       "credentialName": {
-        "pid": "IT-Wallet ID",
-        "eid": "Identità Digitale",
         "mdl": "Patente di guida",
         "dc": "Carta Europea della Disabilità",
         "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
@@ -4680,20 +3351,10 @@
         "ee": "Iscrizioni accademiche",
         "res": "Attestato di residenza"
       },
-      "wallet": {
-        "active": "Attivo",
-        "inactive": "Non attivo",
-        "header": "Mostra identità"
-      },
-      "walletId": {
-        "title": "IT-Wallet ID",
-        "show": "Mostra"
-      },
       "card": {
         "status": {
           "expired": "Scaduta",
           "expiring": "In scadenza",
-          "pending": "In lavorazione",
           "invalid": "Non valida",
           "verificationExpiring": "Azione richiesta",
           "verificationExpired": "Azione richiesta",
@@ -4726,13 +3387,10 @@
           "cancel": "No, riprendi"
         },
         "dataSource": {
-          "multi": "Forniti da {{credentialSource}}",
           "single": "Fornito da {{credentialSource}}"
         },
         "placeholders": {
-          "claimNotAvailable": "Attributo non riconosciuto",
-          "claimLabelNotAvailable": "Etichetta attributo non presente",
-          "organizationName": "Nome ente non disponibile"
+          "claimNotAvailable": "Attributo non riconosciuto"
         },
         "walletNotAvailable": {
           "message": "Abbiamo avuto un problema nel recuperare i tuoi documenti.",
@@ -4778,12 +3436,10 @@
             "action": "Inizia"
           },
           "onboarding": {
-            "content": "Attiva Documenti su IO per aggiungere al Portafoglio la versione digitale dei tuoi documenti!",
             "action": "Inizia"
           },
           "onboardingActive": {
-            "content": "Riattiva Documenti su IO per aggiungere di nuovo i tuoi documenti al Portafoglio.",
-            "action": "Inizia"
+            "content": "Riattiva Documenti su IO per aggiungere di nuovo i tuoi documenti al Portafoglio."
           }
         },
         "screen": {
@@ -4791,9 +3447,6 @@
             "title": "La versione digitale dei tuoi documenti, su IO",
             "content": "Aggiungi la versione digitale dei tuoi documenti personali al Portafoglio dell'app! \n\n Hanno lo **stesso valore legale** di quelli fisici, in specifici contesti d'uso. \n\n ###### È facile e veloce \n Continua per attivare la nuova funzionalità in meno di 3 minuti: oltre **8 Milioni** di persone stanno già usando i **Documenti su IO**!",
             "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso]({{tos_url}}).",
-            "actions": {
-              "primary": "Continua"
-            },
             "dismissalDialog": {
               "title": "Vuoi rinunciare ai documenti digitali su IO?",
               "body": "Potrai attivarli in qualsiasi altro momento, se cambi idea.",
@@ -4861,11 +3514,6 @@
             }
           }
         },
-        "upcomingWalletBanner": {
-          "title": "Novità in arrivo: i tuoi Documenti su IO",
-          "content": "Presto potrai aggiungere anche tu le versioni digitali dei tuoi documenti personali, come Patente e Tessera Sanitaria, al tuo Portafoglio di IO!",
-          "action": "Scopri di più"
-        },
         "alreadyActive": {
           "title": "Documenti su IO è già attiva",
           "content": "Continua ad aggiungere le versioni digitali dei tuoi documenti al Portafoglio.",
@@ -4876,16 +3524,12 @@
           "subtitle": "Il tuo dispositivo non è dotato di tecnologia NFC, necessaria per il funzionamento dei portafogli digitali.",
           "actions": {
             "continue": "Continua senza IT-Wallet",
-            "cancel": "Non ora",
             "l3": {
-              "continue": "Scopri di più",
-              "cancel": "Chiudi"
+              "continue": "Scopri di più"
             }
           }
         },
         "ipzsPrivacy": {
-          "title": "I tuoi Documenti su IO sono al sicuro",
-          "titleL3": "IT-Wallet: Informativa Privacy e Termini e Condizioni d’uso",
           "warning": "Premendo **Continua** dichiari di aver letto e compreso l’**Informativa Privacy**.",
           "button": {
             "label": "Continua"
@@ -4913,19 +3557,6 @@
           "secondaryAction": "Continua"
         },
         "modeSelection": {
-          "section": {
-            "issuance": "Attiva {{ feature }}",
-            "reissuance": "Conferma periodica dell'identità"
-          },
-          "title": {
-            "issuance": "Conferma la tua identità",
-            "reissuance": "Scegli come continuare"
-          },
-          "description": {
-            "issuance": "È un passaggio di sicurezza necessario per associare i documenti digitali alla tua identità. ",
-            "reissuance": "È un passaggio necessario per continuare ad usare {{ feature }} senza limitazioni."
-          },
-          "noCieCta": "Non hai la Carta di Identità Elettronica?",
           "mode": {
             "ciePin": {
               "title": "Continua con CIE + PIN",
@@ -4969,10 +3600,6 @@
                 "warning": "Se scegli questo metodo dovrai ripetere il passaggio di sicurezza ogni 90 giorni."
               }
             }
-          },
-          "frequency": {
-            "every12Months": "Ogni 12 mesi",
-            "every90Days": "Ogni 90 giorni"
           }
         },
         "cie": {
@@ -4986,13 +3613,11 @@
             "nfc": {
               "title": "Posiziona la tua CIE su una superficie stabile per la lettura",
               "description": "Dovrai poggiare il retro del telefono sulla carta e tenerlo fermo per la lettura.",
-              "cta": "Inizia lettura CIE",
-              "buttonLink": "Cos’è la CIE?"
+              "cta": "Inizia lettura CIE"
             },
             "can": {
               "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
               "description": "Dovrai usarla e inserire il suo codice a 6 cifre (CAN) che trovi stampato sul fronte in basso a destra.",
-              "buttonLink": "Cos’è il PIN della CIE?",
               "cta": "Continua"
             },
             "card": {
@@ -5126,13 +3751,6 @@
             }
           }
         },
-        "cieId": {
-          "loading": {
-            "title": "Connessione con la tua app CieID in corso...",
-            "subtitle": "Autorizza l'accesso nell'app CieID per continuare oppure annulla la connessione",
-            "cancel": "Annulla connessione"
-          }
-        },
         "updateCredential": {
           "title": "I tuoi documenti saranno aggiornati",
           "description": "Continuando, otterrai una versione digitale aggiornata dei tuoi documenti presenti nel Portafoglio di IO",
@@ -5214,12 +3832,10 @@
         },
         "emptyWallet": {
           "readyBanner": {
-            "content": "È tutto pronto: aggiungi un documento al tuo Portafoglio di IO.",
             "action": "Aggiungi documento"
           },
           "readyBannerL2": {
-            "title": "È tutto pronto!",
-            "content": "Ora puoi aggiungere il primo documento al Portafoglio di IO."
+            "title": "È tutto pronto!"
           }
         },
         "credentialResult": {
@@ -5228,7 +3844,6 @@
         "notMatchingIdentityError": {
           "title": "Identità non riconosciuta",
           "body": "Attiva Documenti su IO con la stessa identità utilizzata per accedere all’app IO. Verifica le credenziali di accesso e riprova.",
-          "primaryAction": "Ripeti l'accesso",
           "secondaryAction": "Chiudi"
         },
         "genericError": {
@@ -5263,20 +3878,6 @@
           "primaryAction": "Conferma identità",
           "secondaryAction": "Non ora"
         },
-        "walletInstanceNotActive": {
-          "documentiSuIo": {
-            "title": "Attiva Documenti su IO per continuare",
-            "body": "Per aggiungere i tuoi documenti al Portafoglio è necessario attivare ",
-            "bodyBold": "Documenti su IO"
-          },
-          "itWallet": {
-            "title": "Ottieni IT-Wallet per continuare",
-            "body": "Per aggiungere nuovi documenti al tuo Portafoglio di IO ottieni IT-Wallet: ti basta avere con te la Carta di Identità Elettronica (CIE).",
-            "bodyBold": ""
-          },
-          "primaryAction": "Inizia",
-          "secondaryAction": "Non ora"
-        },
         "credentialNotFound": {
           "title": "Aggiungi il documento al Portafoglio",
           "subtitle": "Per usare i documenti su IO, prima aggiungili al Portafoglio. È facile e veloce."
@@ -5285,12 +3886,6 @@
           "title": "Documento in arrivo",
           "subtitle": "Stiamo lavorando per rendere disponibili nuovi documenti in app IO.\nRiprova quandro vedrai il documento contrassegnato come \"Novità\".",
           "primaryAction": "Ho capito"
-        },
-        "invalidWallet": {
-          "title": "Ottieni IT-Wallet per continuare",
-          "subtitle": "Per aggiungere nuovi documenti al tuo Portafoglio di IO ottieni IT-Wallet: ti bastano la Carta di Identità Elettronica (CIE) e il suo PIN.",
-          "primaryAction": "Inizia",
-          "secondaryAction": "Non ora"
         },
         "cieNotRegistered": {
           "title": "Registra la CIE in app CieID per continuare",
@@ -5319,8 +3914,6 @@
         }
       },
       "unsupportedDevice": {
-        "text": "Starting from 02.07.2024 your device may no longer be compatible with IO.",
-        "moreInfo": "More info",
         "error": {
           "title": "Il tuo dispositivo non supporta Documenti su IO",
           "body": "Per conoscere i requisiti di sicurezza necessari per questa funzionalità premi ",
@@ -5360,12 +3953,8 @@
           "ehc": {
             "content": "Puoi usare la tua Tessera Sanitaria - Tessera europea di assicurazione malattia su IO per accedere alle prestazioni fornite dal Servizio Sanitario Nazionale."
           },
-          "edc": {
-            "content": "Puoi usare la tua Carta Europea della Disabilità su IO per accedere ai servizi sul territorio italiano, negli stessi contesti d’uso del tuo documento fisico."
-          },
           "expired": {
-            "content": "Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio",
-            "action": "Aggiorna il documento"
+            "content": "Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio"
           },
           "expiring": {
             "content": "Mancano {{days}} giorni alla scadenza del documento."
@@ -5380,8 +3969,6 @@
         },
         "bottomSheets": {
           "eidInfo": {
-            "title": "Documenti su IO:\nidentità verificata",
-            "titleExpired": "Documenti su IO:\nverifica la tua identità",
             "contentTop": "Con **Documenti su IO** salvi nel Portafoglio di IO le versioni digitali dei tuoi documenti.",
             "contentBottom": "###### Come funziona?\n\nLa tua **identità è verificata** in fase di attivazione tramite SPID o CIE.",
             "triggerLabel": "Cos'è?",
@@ -5403,21 +3990,7 @@
           },
           "mDL": {
             "expiring": {
-              "title": "Patente su IO: documento in scadenza",
-              "content": "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nÈ necessaria una visita medica con un medico autorizzato e provvedere al pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).",
               "cta": "Scopri di più"
-            }
-          },
-          "EuropeanHealthInsuranceCard": {
-            "expiring": {
-              "title": "Tessera Sanitaria su IO: documento in scadenza",
-              "content": "La tua Tessera Sanitaria viene rinnovata in automatico e poi spedita al tuo indirizzo di residenza registrato presso l'Agenzia delle Entrate.\n\nSe l'hai già ricevuta, puoi eliminare questo documento dal Portafoglio e aggiungere la nuova versione digitale aggiornata."
-            }
-          },
-          "EuropeanDisabilityCard": {
-            "expiring": {
-              "title": "Carta europea della disabilità su IO: documento in scadenza",
-              "content": "Puoi richiedere il rinnovo della tua Carta europea della disabilità (CED) contattando l'ente che l'ha emessa.\n\nVerifica le modalità e i documenti richiesti sul sito ufficiale dell'INPS, oppure contattando la tua ASL locale, poiché il rinnovo può variare in base al tipo di disabilità e alle normative del tuo territorio."
             }
           }
         },
@@ -5430,9 +4003,7 @@
             "hideValues": "Nascondi dati",
             "showValues": "Mostra dati"
           },
-          "personalDataTitle": "Dati personali",
           "documentDataTitle": "Dati del documento",
-          "lastUpdated": "Dati aggiornati al {{lastUpdateTime}}",
           "boolClaim": {
             "true": "Sì",
             "false": "No"
@@ -5442,16 +4013,9 @@
             "label": "Il tuo Codice Fiscale",
             "action": "Premi per ingrandire e visualizzare il codice a barre a tutto schermo"
           },
-          "status": {
-            "valid": "Valida",
-            "invalid": "Non valida",
-            "expired": "Scaduta",
-            "expiring": "In scadenza"
-          },
           "actions": {
             "removeFromWallet": "Rimuovi dal Portafoglio",
             "requestAssistance": "Qualcosa non torna?",
-            "showClaimValues": "Mostra gli attributi del documento",
             "hideClaimValues": "Nascondi gli attributi del documento",
             "openIPatente": "Vai al saldo punti patente"
           },
@@ -5465,23 +4029,11 @@
           "toast": {
             "removed": "Fatto!"
           },
-          "verificationExpired": {
-            "title": "Verifica la versione digitale del documento",
-            "content": "È un passaggio di sicurezza necessario per continuare ad usare la tua {{credentialName}} su IO.",
-            "primaryAction": "Inizia"
-          },
           "mdl": {
             "walletUpgradeBanner": {
               "title": "Novità IT-Wallet",
               "content": "Ottieni IT-Wallet per usare la tua Patente anche come documento d'identità!",
               "action": "Ottieni IT-Wallet"
-            }
-          },
-          "newCredentialValidityAlert": {
-            "content": {
-              "education_degree": "I tuoi titoli accademici digitali hanno piena validità ufficiale.",
-              "education_enrollment": "Le tue iscrizioni accademiche digitali hanno piena validità ufficiale.",
-              "residency": "Il tuo attestato di residenza digitale ha piena validità ufficiale."
             }
           },
           "discoverItWallet": "Scopri IT-Wallet",
@@ -5491,7 +4043,6 @@
           "trustmark": "Mostra certificato di autenticità",
           "openPdf": "Mostra documento",
           "shareButton": "Salva o condividi",
-          "fiscalCode": "Il tuo Codice Fiscale",
           "showQRCode": "Mostra QR Code di verifica"
         },
         "eid": {
@@ -5513,9 +4064,7 @@
           "subtitle": "Saranno mostrati a **{{relyingParty}}** per accedere ai servizi richiesti.",
           "requiredClaims": "Dati necessari",
           "optionalClaims": "Dati facoltativi",
-          "claimUnavailable": "Non disponibile",
           "optionalClaimsAlert": "I dati facoltativi ti offrono servizi più completi.",
-          "missingClaimsAlert": "Alcuni dati facoltativi non sono disponibili nel tuo Portafoglio.",
           "disclaimer": {
             "0": "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
             "1": "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."
@@ -5530,75 +4079,14 @@
           "loadingScreen": {
             "request": "Stiamo facendo alcune verifiche di sicurezza",
             "response": "Stiamo comunicando i tuoi dati a {{relyingParty}}",
-            "timeout": "Ancora un attimo di pazienza...",
             "subtitle": "Attendi qualche secondo..."
-          },
-          "walletInactiveScreen": {
-            "title": "Ottieni IT-Wallet per \ncontinuare",
-            "subtitle": "Per accedere ai servizi online è necessario attivare IT-Wallet utilizzando la tua Carta di Identità Elettronica (CIE) e il PIN.",
-            "primaryAction": "Ottieni IT-Wallet",
-            "secondaryAction": "Non ora",
-            "alert": {
-              "body": "Non potrai completare l'accesso ai servizi online."
-            }
-          },
-          "missingCredentialsScreen": {
-            "title_one": "Manca un documento per continuare",
-            "title_other": "Mancano alcuni documenti per continuare",
-            "subtitle": "Aggiungi {{credentialNames}} al Portafoglio e poi riprova.",
-            "primaryAction_one": "Aggiungi documento al Portafoglio",
-            "primaryAction_other": "Aggiungi documenti al Portafoglio",
-            "secondaryAction": "Non ora"
-          },
-          "invalidCredentialsScreen": {
-            "title_one": "Non puoi continuare con la richiesta perché {{credentialName}} non è valida",
-            "title_other": "Non puoi continuare con la richiesta perché alcuni documenti non risultano validi",
-            "subtitle_one": "Assicurati di essere in possesso del documento richiesto valido e poi riprova.",
-            "subtitle_other": "Assicurati di essere in possesso dei documenti richiesti validi e poi riprova.",
-            "primaryAction": "Ho capito"
           },
           "deepLinkValidationErrorScreen": {
             "title": "Il link sembra non funzionare",
             "subtitle": "Ti suggeriamo di riprovare.\nSe il problema persiste, contatta l'assistenza.",
-            "primaryAction": "Mostra dettagli",
             "secondaryAction": "Chiudi"
           },
-          "eidExpiredScreen": {
-            "title": "Verifica la tua identità",
-            "subtitle": "È un passaggio di verifica necessario per continuare ad usare IT-Wallet e per autenticarti.",
-            "primaryAction": "Inizia",
-            "secondaryAction": "Annulla"
-          },
-          "unexpectedErrorScreen": {
-            "title": "Un problema non permette di continuare",
-            "subtitle": "Si è verificato un errore tecnico che ha impedito l'accesso ai servizi dell'ente, riprova. Se il problema persiste, contatta l'assistenza.",
-            "primaryAction": "Ho capito",
-            "secondaryAction": "Mostra dettagli"
-          },
-          "relyingParty": {
-            "genericError": {
-              "title": "Comunicazione interrotta",
-              "subtitle": "Si è verificato un problema che ha impedito la comunicazione con l’ente.\n\nGenera un nuovo QR Code e riprova.",
-              "primaryAction": "Riprova",
-              "secondaryAction": "Chiudi"
-            },
-            "invalidAuthResponse": {
-              "title": "Non è possibile continuare",
-              "subtitle": "Verifica di essere in possesso dei requisiti necessari per accedere ai servizi.",
-              "primaryAction": "Ho capito",
-              "secondaryAction": "Maggiori dettagli"
-            },
-            "invalidRequestObject": {
-              "title": "Non puoi continuare con la richiesta",
-              "subtitle": "L’ente che richiede la verifica non sta comunicando i dati necessari per continuare. Riprova più tardi.",
-              "primaryAction": "Ho capito"
-            }
-          },
           "untrustedRpScreen": {
-            "title": "Questo ente non è verificato",
-            "subtitle": "Per la tua sicurezza, IO permette di condividere le tue informazioni solo con enti verificati e certificati.",
-            "primaryAction": "Chiudi",
-            "secondaryAction": "Cosa significa?",
             "bottomSheet": {
               "title": "Sistema di verifica degli enti",
               "contentTop": "IO controlla sempre che un ente sia verificato prima di consentire la lettura dei tuoi dati.",
@@ -5693,20 +4181,6 @@
             "title": "In attesa di connessione per la verifica...",
             "subtitle": "Attendi qualche secondo..."
           },
-          "loadingStepScreen": {
-            "initial": {
-              "title": "Stiamo comunicando i tuoi dati per la verifica",
-              "subtitle": "Attendi qualche secondo..."
-            },
-            "reminder": {
-              "title": "Ancora un po' di pazienza...",
-              "subtitle": "Stiamo aspettando una risposta dai sistemi dell’ente che richiede i dati."
-            },
-            "final": {
-              "title": "Sembra che le cose vadano un po' a rilento",
-              "subtitle": "Ancora un po' di pazienza..."
-            }
-          },
           "selectiveDisclosure": {
             "title": "Dati richiesti",
             "subtitle": "Saranno mostrati a **{{relyingParty}}** per completare la verifica dei documenti richiesti.",
@@ -5721,28 +4195,6 @@
               "message": "Non potrai completare la verifica del documento."
             }
           },
-          "relyingParty": {
-            "genericError": {
-              "title": "Verifica interrotta",
-              "subtitle": "Un problema ha impedito la comunicazione con chi ha richiesto la verifica dei dati. Prova di nuovo.",
-              "primaryAction": "Chiudi"
-            },
-            "timeout": {
-              "title": "L’app di chi verifica non risponde",
-              "subtitle": "Un problema ha impedito la comunicazione con chi ha richiesto la verifica dei dati. Prova di nuovo.",
-              "primaryAction": "Chiudi"
-            },
-            "untrustedRp": {
-              "title": "Non è possibile verificare il documento",
-              "subtitle": "Per la tua sicurezza, IO può condividere le tue informazioni solo con sistemi riconosciuti e abilitati alla verifica.",
-              "primaryAction": "Chiudi",
-              "secondaryAction": "Cosa significa?",
-              "bottomSheet": {
-                "title": "Chi può leggere i tuoi dati?",
-                "content": "IO controlla sempre chi sta richiedendo la lettura dei tuoi dati e non ti permette di continuare se non riconosce il sistema utilizzato per la verifica.\n\nL'app può condividere i tuoi dati solo con enti e soggetti autorizzati."
-              }
-            }
-          },
           "success": {
             "title": "Fatto!",
             "subtitle": "La verifica è stata completata con successo."
@@ -5752,7 +4204,6 @@
           "description": "È il tuo pass digitale per dimostrare chi sei, accedere ai servizi online e ottenere nuovi documenti.",
           "listItemHeader": "Dati del mio IT-Wallet ID",
           "cta": {
-            "info": "Parte di IT-Wallet",
             "revoke": "Disattiva IT-Wallet"
           },
           "dialog": {
@@ -5798,14 +4249,6 @@
           "title": "Si è verificato un errore imprevisto",
           "subtitle": "Non è stato possibile disattivare il servizio. Riprova."
         }
-      },
-      "eidDetail": {
-        "title": "La mia identità",
-        "content": "Hai ottenuto IT-Wallet verificando i dati della tua identità con CIE. Ti consente di autenticarti ai servizi online.",
-        "header": {
-          "title": "I dati della mia identità"
-        },
-        "cta": "Disattiva IT-Wallet"
       },
       "feedback": {
         "reissuance": {
@@ -5927,12 +4370,6 @@
           "title": "Dimostra chi sei col tuo dispositivo",
           "description": "Usa la tua Patente digitale anche come documento di riconoscimento, in modo facile e sicuro!",
           "action": "Inizia"
-        },
-        "dismissAlert": {
-          "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?",
-          "description": "Potrai ottenere IT-Wallet in qualsiasi altro momento, andando in Impostazioni > IT-Wallet.",
-          "confirm": "Sì, rinuncia",
-          "cancel": "Indietro"
         }
       },
       "settings": {
@@ -6037,9 +4474,7 @@
         "title": "Non hai trovato la risposta che cercavi?",
         "messageProblem": "Se hai un problema con il contenuto di un messaggio o un servizio, **contatta direttamente l’ente responsabile**: trovi i riferimenti nel messaggio.",
         "appProblem": "Se hai un **problema con l’app o una sua funzionalità**, premi “Apri una richiesta”.",
-        "checkRequests": "Se vuoi **controllare le richieste già inviate**, premi su “Richieste in corso”.",
-        "subtitle": "Dai un’occhiata alle FAQ: se non trovi la risposta che cerchi, apri una richiesta. Se hai già aperto una richiesta e vuoi verificarne lo stato o aggiungere dettagli, seleziona “Richieste in corso”.",
-        "adviceMessage": "Se il tuo problema riguarda il contenuto di un messaggio o il servizio di un ente, contatta quest’ultimo: trovi i riferimenti nel messaggio o nella scheda del servizio."
+        "checkRequests": "Se vuoi **controllare le richieste già inviate**, premi su “Richieste in corso”."
       }
     },
     "panicMode": {
@@ -6105,7 +4540,6 @@
         "success": {
           "header": "Ecco il codice sconto!",
           "body": "Il codice ha durata limitata. Una volta scaduto, potrai generare un nuovo codice.",
-          "validUpTo": "Vale fino a ",
           "expiresIn": "Il codice è valido per ",
           "copyCodeCta": "Copia codice",
           "expired": {
@@ -6194,8 +4628,6 @@
         "initiativeCard": {
           "availableAmount": "Disponibile",
           "refundRequestedAmount": "Rimborso richiesto",
-          "validUntil": "Fino al {{expiryDate}}",
-          "expiresOn": "Scade il {{expiryDate}}",
           "toRefund": "Da rimborsare",
           "statusLabels": {
             "REFUNDABLE": "Attivo",
@@ -6241,14 +4673,11 @@
               "showMore": "Vedi tutte",
               "header": "Impostazioni",
               "associatedPaymentMethods": "Metodi di pagamento associati",
-              "methods_one": "1 metodo",
-              "methods_other": "{{count}} metodi",
               "selectedIBAN": "IBAN per l'accredito",
               "actionsRequired": "Azioni richieste"
             },
             "startConfigurationCTA": "Inizia",
             "operationsList": {
-              "header": "Tutte le operazioni",
               "title": "Lista operazioni",
               "lastUpdated": "Ultimo aggiornamento: ",
               "operationDescriptions": {
@@ -6304,8 +4733,7 @@
           "rulesButton": "Leggi il regolamento"
         },
         "infoModal": {
-          "title": "Regole dell'iniziativa",
-          "button": "Ok, ho capito"
+          "title": "Regole dell'iniziativa"
         },
         "spentUntilNow": "Speso",
         "summary": "Riepilogo",
@@ -6322,11 +4750,8 @@
         "spendValue": "Importo riconosciuto",
         "enrollmentDetails": "Dettagli dell'adesione",
         "enrollmentDate": "Bonus emesso il",
-        "protocolNumber": "Numero di protocollo",
-        "lastUpdate": "Saldo aggiornato al {{dateString}}",
         "buttons": {
           "privacy": "Preferenze e Privacy",
-          "unsubscribe": "Rimuovi {{initiativeName}}",
           "requestHelp": "Chiedi aiuto",
           "staticCode": "Genera codice statico"
         },
@@ -6350,7 +4775,6 @@
           },
           "details": {
             "alerts": {
-              "AUTHORIZED": "Questa transazione è in corso, ovvero è stata autorizzata ma non è ancora stata confermata dall’esercente.",
               "CANCELLED": "Questa transazione è stata annullata dall’esercente."
             },
             "labels": {
@@ -6369,7 +4793,6 @@
           "REJECTED_REFUND": "Dettaglio del rimborso"
         },
         "transaction": {
-          "instrument": "Metodo di pagamento",
           "maskedPan": "•••• {{lastDigits}}",
           "amountLabel": "Importo transazione",
           "accruedAmountLabel": "Importo rimborsabile",
@@ -6392,9 +4815,7 @@
             "text": "Se non l’hai già fatto, inserisci un nuovo IBAN per ricevere il rimborso.",
             "editIban": "Modifica IBAN"
           },
-          "period": "Periodo di riferimento",
-          "date": "Data rimborso",
-          "cro": "CRO"
+          "period": "Periodo di riferimento"
         },
         "errorBody": "Impossibile caricare il dettaglio"
       },
@@ -6409,7 +4830,6 @@
     },
     "onboarding": {
       "success": {
-        "pleaseWait": "Un attimo di pazienza...",
         "requestSent": {
           "title": "La tua richiesta è stata inviata!",
           "subtitleStart": "Riceverai un ",
@@ -6492,12 +4912,10 @@
         "header": "Verifica dei requisiti"
       },
       "PDNDPrerequisites": {
-        "fallbackInitiativeName": "l'iniziativa",
         "prerequisites": {
           "info": {
             "header": "Come avviene la verifica?",
-            "body": "Comunichiamo direttamente con l’ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**. In questo modo non devi produrre alcuna autocertificazione.",
-            "understoodCTA": "Ho capito"
+            "body": "Comunichiamo direttamente con l’ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**. In questo modo non devi produrre alcuna autocertificazione."
           }
         },
         "title": "Per continuare dobbiamo verificare questi dati",
@@ -6533,7 +4951,6 @@
         "emptyValueError": "Inserisci i dati per continuare"
       },
       "multiPrerequisites": {
-        "header": "Dichiari inoltre di:",
         "emptyValueError": "Scegli un’opzione per continuare"
       },
       "boolPrerequisites": {
@@ -6626,9 +5043,6 @@
             "actionItem": "Come funziona?"
           }
         },
-        "title": "Metodi di pagamento",
-        "header": "Scegli quali metodi di pagamento associare",
-        "body": "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}.",
         "footer": "Modifica queste scelte o aggiungi altri metodi in qualsiasi momento dalla sezione Portafoglio",
         "instrumentStatus": {
           "active": "Attivo",
@@ -6653,8 +5067,6 @@
       },
       "associationSuccess": {
         "title": "Grazie!",
-        "body": "Nella schermata successiva puoi verificare se i metodi da te abilitati sono già pronti per essere utilizzati.",
-        "noInstrumentsBody": "Per terminare la configurazione devi aggiungere almeno un metodo di pagamento al Portafoglio e abilitarlo all’iniziativa.",
         "buttons": {
           "continue": "Vai all'iniziativa",
           "skip": "Più tardi",
@@ -6662,7 +5074,6 @@
         }
       },
       "iban": {
-        "title": "IBAN associato",
         "landing": {
           "header": "Aggiungi un IBAN al tuo Profilo",
           "body": "Salva i dati del tuo conto e ottieni più facilmente i rimborsi a te previsti.",
@@ -6676,7 +5087,6 @@
         "onboarding": {
           "header": "Qual è il tuo IBAN?",
           "body": "Aggiungi un conto corrente a te intestato. L’autodichiarazione è resa ai sensi del",
-          "bodyLink": "Dpr 28 dicembre 2000 n. 445 art 46 e 47",
           "nameAssignInput": "Assegna un nome",
           "bottomLabel": "Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento dalle impostazioni dell'app",
           "error": {
@@ -6696,7 +5106,6 @@
       }
     },
     "unsubscription": {
-      "headerTitle": "Rimuovi l'iniziativa",
       "title": "Vuoi rimuovere {{initiativeName}}?",
       "subtitle": "Per proseguire, seleziona tutte le informazioni riportate di seguito.",
       "checks": {
@@ -6747,7 +5156,6 @@
         "businessName": "Richiesto da",
         "dateTime": "Data e ora",
         "initiativeName": "Iniziativa",
-        "availableAmount": "Credito disponibile",
         "error": "C’è stato un errore, riprova",
         "deny": "Annulla l'operazione"
       },
@@ -6812,10 +5220,6 @@
       "chat": "Chiedi aiuto in chat",
       "additionalDataTitle": "Dati aggiuntivi",
       "copyAll": "Copia tutti"
-    },
-    "slowdowns_results_screen": {
-      "title": "Sembra che le cose vadano un po' a rilento",
-      "subtitle": "Potreste essere in tanti in questo momento.\nPuoi riprovare tra qualche minuto, o puoi richiedere il bonus dal sito dedicato."
     }
   },
   "barcodeScan": {
@@ -6857,7 +5261,6 @@
     }
   },
   "unsupportedDevice": {
-    "warning": "A breve il tuo dispositivo potrebbe non essere più compatibile con l’app IO.",
     "title": "Questo dispositivo non è più compatibile con IO",
     "subtitle": "Assicurati che il sistema operativo sia aggiornato all’ultima versione. Se è già così, per continuare a usare IO devi accedere da un altro dispositivo.",
     "cta": {
@@ -6878,19 +5281,13 @@
         "continueNavigation": {
           "title": "La tua sessione è scaduta",
           "subtitle": "Accedi per continuare a usare l’app.",
-          "submitButtonTitle": "Accedi",
-          "cancelButtonTitle": "Annulla"
+          "submitButtonTitle": "Accedi"
         },
         "transientError": {
           "title": "Non siamo riusciti ad autenticarti",
-          "subtitle": "Chiudi l'app e riprova tra qualche minuto.",
-          "submitButtonTitle": "Vai alle FAQ"
+          "subtitle": "Chiudi l'app e riprova tra qualche minuto."
         }
       }
-    },
-    "whatsNew": {
-      "title": "Abbiamo migliorato l'accesso a IO!",
-      "subtitle": "Ora puoi accedere all'app utilizzando il tuo SPID o la tua CIE solo una volta all'anno. Ti basterà poi utilizzare il tuo codice di sblocco o il biometrico per entrare."
     }
   },
   "loginFeatures": {
@@ -6911,15 +5308,10 @@
       }
     }
   },
-  "whatsNew": {
-    "title": "Cosa cambia?"
-  },
   "bonusCard": {
     "validUntil": "Valida fino al {{endDate}}",
     "expiring": "Scade il {{endDate}}",
-    "expired": "Scaduta il {{endDate}}",
     "paused": "In pausa",
-    "removed": "Rimossa",
     "used": "Utilizzato"
   },
   "transaction": {
@@ -6944,17 +5336,12 @@
         "authCode": "Codice autorizzativo",
         "rrn": "RRN",
         "executedBy": "Eseguita da",
-        "headedTo": "Metodo intestato a",
-        "alert": {
-          "content": "Rivolgiti all’Ente Creditore se hai bisogno della ricevuta."
-        }
+        "headedTo": "Metodo intestato a"
       },
       "operation": {
         "amount": "Importo",
         "creditor": "Ente creditore",
         "debtor": "Debitore",
-        "iuv": "IUV",
-        "subject": "Oggetto del pagamento",
         "noticeCode": "Codice avviso/IUV",
         "noticeCodeAccessible": "Codice avviso/Identificativo Univoco Versamento",
         "taxCode": "Codice Fiscale Ente"
@@ -7034,7 +5421,6 @@
       "title": "Per accedere al servizio, consenti la condivisione dei seguenti dati",
       "subtitle": "IO condividerà con ",
       "subtitle2": " i dati necessari alla tua autenticazione su ",
-      "requiredData": "Dati richiesti",
       "privacy1": "Per maggiori informazioni, leggi ",
       "privacyCta": "l’Informativa sulla Privacy ",
       "bottomSheet": {
