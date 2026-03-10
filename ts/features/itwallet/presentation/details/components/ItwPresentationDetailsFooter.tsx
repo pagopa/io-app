@@ -23,8 +23,9 @@ type IPatenteListItemActionProps = {
 const ItwPresentationDetailsFooter = ({
   credential
 }: ItwPresentationDetailFooterProps) => {
-  const startAndTrackSupportRequest =
-    useItwStartCredentialSupportRequest(credential);
+  const startAndTrackSupportRequest = useOfflineToastGuard(
+    useItwStartCredentialSupportRequest(credential)
+  );
   const { confirmAndRemoveCredential } =
     useItwRemoveCredentialWithConfirm(credential);
   const credentialActions = useMemo(

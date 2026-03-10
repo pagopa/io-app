@@ -1,33 +1,46 @@
 import { useCallback } from "react";
-import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
-import { useStartSupportRequest } from "../../../../../hooks/useStartSupportRequest.ts";
-import { useIOSelector } from "../../../../../store/hooks";
-import { FAQsCategoriesType } from "../../../../../utils/faq.ts";
+import { useIOSelector } from "../../../../../store/hooks.ts";
 import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
+import {
+  useItwZendeskSupport,
+  ZendeskSubcategoryValue
+} from "../../../common/hooks/useItwZendeskSupport";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { trackWalletCredentialSupport } from "../analytics";
+
 /**
  *
  * @param {CredentialMetadata} credential A valid wallet credential
- * @param {Array<FAQsCategoriesType>} faqCategories An array of FAQ categories (defaults to [])
- * @returns A utility function which tracks and starts the support request
+ * @returns A utility function which tracks and starts the IT Wallet support request with the
+ *          correct Zendesk metadata (category, subcategory, error code when available).
  */
 export const useItwStartCredentialSupportRequest = (
-  credential: CredentialMetadata,
-  faqCategories: Array<FAQsCategoriesType> = []
+  credential: CredentialMetadata
 ) => {
-  const startSupportRequest = useOfflineToastGuard(
-    useStartSupportRequest({
-      faqCategories
-    })
-  );
+  const { startItwZendeskSupport } = useItwZendeskSupport();
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   return useCallback(() => {
     trackWalletCredentialSupport(
       getMixPanelCredential(credential.credentialType, isItwL3)
     );
-    startSupportRequest();
-  }, [credential.credentialType, startSupportRequest, isItwL3]);
+
+    const statusAssertion = credential.storedStatusAssertion;
+    const errorCode =
+      statusAssertion?.credentialStatus !== "valid"
+        ? statusAssertion?.errorCode
+        : undefined;
+
+    startItwZendeskSupport({
+      subcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
+      errorCode,
+      logData: errorCode
+    });
+  }, [
+    credential.credentialType,
+    credential.storedStatusAssertion,
+    isItwL3,
+    startItwZendeskSupport
+  ]);
 };
