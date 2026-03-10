@@ -99,7 +99,6 @@ export const useIDPayStaticCodeModal = (
             radius={4}
           />
         </View>
-        <VSpacer size={32} />
       </View>
     </View>
   );
@@ -133,6 +132,8 @@ export const useIDPayStaticCodeModal = (
         </View>
         <VSpacer size={32} />
       </View>
+      <VSpacer size={32} />
+      <VSpacer size={32} />
     </>
   );
 
