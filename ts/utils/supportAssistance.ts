@@ -117,6 +117,7 @@ export const zendeskVersionsHistoryId = "4419641151505";
 export const zendeskFciId = "14874226407825";
 export const zendeskItWalletFailureCode = "31775197295633";
 export const zendeskBonusAndInitiativeCategoryId = "8086481365265";
+export const zendeskItWalletSubcategoryId = "29326690756369";
 
 export const defaultZendeskPaymentCategory: ZendeskCategory = {
   value: "io_pagamenti_pagopa",
