@@ -11,7 +11,9 @@ import { assistanceToolConfigSelector } from "../../../../store/reducers/backend
 import {
   addTicketCustomField,
   assistanceToolRemoteConfig,
+  defaultZendeskBonusesCategory,
   resetCustomFields,
+  zendeskBonusAndInitiativeCategoryId,
   zendeskCategoryId,
   zendeskFCICategory,
   zendeskFciId
@@ -35,7 +37,14 @@ const FciSignatureRequestsScreen = () => {
     signatureRequestId: SignatureRequestListView["id"]
   ) => {
     resetCustomFields();
-    addTicketCustomField(zendeskCategoryId, zendeskFCICategory.value);
+    addTicketCustomField(
+      zendeskCategoryId,
+      defaultZendeskBonusesCategory.value
+    );
+    addTicketCustomField(
+      zendeskBonusAndInitiativeCategoryId,
+      zendeskFCICategory.value
+    );
     addTicketCustomField(zendeskFciId, signatureRequestId ?? "");
     dispatch(
       zendeskSupportStart({
@@ -45,7 +54,7 @@ const FciSignatureRequestsScreen = () => {
         }
       })
     );
-    dispatch(zendeskSelectedCategory(zendeskFCICategory));
+    dispatch(zendeskSelectedCategory(defaultZendeskBonusesCategory));
   };
 
   const handleAskAssistance = (
