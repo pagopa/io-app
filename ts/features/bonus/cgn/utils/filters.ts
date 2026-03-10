@@ -10,7 +10,7 @@ import {
   ProductCategoryEnum
 } from "../../../../../definitions/cgn/merchants/ProductCategory";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
-import { TranslationKeys } from "../../../../../locales/locales";
+import { TranslationKeys } from "../../../../i18n";
 
 type Category = {
   type: ProductCategory;
