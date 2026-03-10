@@ -1,0 +1,4 @@
+
+📊 Report per: index.json
+✅ Chiavi totali: 2860
+❌ Chiavi inutilizzate: 0
