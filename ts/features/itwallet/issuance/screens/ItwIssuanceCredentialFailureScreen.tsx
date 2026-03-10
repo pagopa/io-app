@@ -13,10 +13,8 @@ import { useIOSelector } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { trackItwKoStateAction } from "../../analytics";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
-import {
-  useItwFailureSupportModal,
-  ZendeskSubcategoryValue
-} from "../../common/hooks/useItwFailureSupportModal";
+import { useItwFailureSupportModal } from "../../common/hooks/useItwFailureSupportModal";
+import { ZendeskSubcategoryValue } from "../../common/hooks/useItwZendeskSupport";
 import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
 import { StatusAssertionError } from "../../common/utils/itwCredentialStatusAssertionUtils.ts";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
