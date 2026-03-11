@@ -251,11 +251,8 @@ const CiePinMethodModule = () => {
   });
 
   const badgeProps: Badge | undefined = useMemo(() => {
-    // Should not display the recommended badge for L2 issuance or L3 reissuance
-    if (
-      (level === "l2" && mode === "issuance") ||
-      (level === "l3" && mode === "reissuance")
-    ) {
+    // Show the recommended badge only during the L3 activation flow.
+    if (level !== "l3" || mode === "reissuance") {
       return undefined;
     }
 
