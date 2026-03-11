@@ -147,7 +147,6 @@ const ItwPreIndicator = () => {
         }
       ]}
     >
-      { }
       <IOText
         color={"error-850"}
         font="TitilliumSansPro"
@@ -157,7 +156,6 @@ const ItwPreIndicator = () => {
       >
         ITW PRE
       </IOText>
-      { }
     </View>
   );
 };
