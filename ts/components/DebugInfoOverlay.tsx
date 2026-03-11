@@ -147,6 +147,7 @@ const ItwPreIndicator = () => {
         }
       ]}
     >
+      {/* eslint-disable i18next/no-literal-string */}
       <IOText
         color={"error-850"}
         font="TitilliumSansPro"
@@ -156,6 +157,7 @@ const ItwPreIndicator = () => {
       >
         ITW PRE
       </IOText>
+      {/* eslint-enable i18next/no-literal-string */}
     </View>
   );
 };

@@ -125,8 +125,18 @@ module.exports = {
     "react-native/no-single-element-style-arrays": "warn",
     /* Too much verbose. It also requires a lot of effort in the main repo */
     "react-native-a11y/has-accessibility-hint": "off",
+    /* Prevents hardcoded strings in JSX. All user-facing text must use i18n (e.g. I18n.t("key")).
+     * - mode "jsx-text-only": only checks text inside JSX elements, not strings in logic/utils
+     * - jsx-attributes.include: also enforces i18n on user-facing attributes (a11y labels, placeholders, etc.)
+     * - jsx-components.exclude: skips <Trans> since it already handles translations via react-i18next
+     * - words.exclude: ignores non-translatable patterns:
+     *     "\\s+"                          → whitespace-only strings
+     *     "[0-9!-/:-@\\[-`{-~]+"         → numbers, punctuation, and special characters
+     *     "[•·]+"                         → masking dots used for card numbers (e.g. "•••• 1234")
+     *     "."                             → single-character strings like unit suffixes (e.g. "s" in "{count}s")
+     * Excluded areas (see overrides): design-system, playgrounds, devMode, __mocks__, test files */
     "i18next/no-literal-string": [
-      "warn",
+      "error",
       {
         mode: "jsx-text-only",
         "jsx-attributes": {
@@ -140,7 +150,9 @@ module.exports = {
         words: {
           exclude: [
             "\\s+",
-            "[0-9!-/:-@\\[-`{-~]+"
+            "[0-9!-/:-@\\[-`{-~]+",
+            "[•·]+",
+            "."
           ]
         }
       }
@@ -172,6 +184,19 @@ module.exports = {
       files: ["**/*.test.*"],
       rules: {
         "@typescript-eslint/no-non-null-assertion": "off",
+        "i18next/no-literal-string": "off"
+      }
+    },
+    /* Hardcoded strings are allowed in these areas since they contain
+     * showcase/demo screens, dev-only tools, and test fixtures — not user-facing content */
+    {
+      files: [
+        "**/design-system/**",
+        "**/playgrounds/**",
+        "**/devMode/**",
+        "**/__mocks__/**"
+      ],
+      rules: {
         "i18next/no-literal-string": "off"
       }
     },
