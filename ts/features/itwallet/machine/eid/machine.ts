@@ -852,10 +852,6 @@ export const itwEidIssuanceMachine = setup({
                     "#itwEidIssuanceMachine.UserIdentification.Identification",
                   actions: assign({ level: "l2-fallback" })
                 },
-                "go-to-tos": {
-                  target: "#itwEidIssuanceMachine.TosAcceptance",
-                  actions: assign({ level: "l2-fallback" })
-                },
                 close: {
                   actions: "closeIssuance"
                 }
