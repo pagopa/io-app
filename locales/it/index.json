@@ -199,6 +199,8 @@
       "back": "Indietro",
       "confirm": "Conferma",
       "close": "Chiudi",
+      "next": "Avanti",
+      "previous": "Indietro",
       "exit": "Esci",
       "saveSelection": "Salva la selezione",
       "search": "Ricerca",
@@ -3102,6 +3104,7 @@
       "useUnlockCode": "inserisci il **codice di sblocco**",
       "useUnlockCodeA11y": "inserisci il codice di sblocco"
     },
+    "insertDevPin": "Inserisci il PIN predefinito per sviluppatori",
     "title": "Ciao {{name}}!",
     "titleProfileName": "Ciao {{profileName}}!",
     "titleValidation": "Autorizza l'operazione",

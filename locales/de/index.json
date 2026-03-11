@@ -185,6 +185,8 @@
       "back": "Zurück",
       "confirm": "Bestätigen",
       "close": "Schließen",
+      "next": "Weiter",
+      "previous": "Zurück",
       "exit": "Beenden",
       "saveSelection": "Speichern Sie die Auswahl",
       "search": "Suche",
@@ -1506,7 +1508,6 @@
         }
       },
       "paypal": {
-        "name": "PayPal",
         "headerTitle": "PayPal hinzufügen",
         "emailNotAvailable": "nicht verfügbar",
         "start": {
@@ -1939,15 +1940,10 @@
         "name": "PagoBANCOMAT-Karte",
         "description": "Das Zahlungsnetzwerk, mit dem du in Geschäften bezahlst"
       },
-      "bank": {
-        "name": "BANCOMAT Pay"
-      },
       "bancomatPay": {
-        "name": "BANCOMAT Pay",
         "description": "Bezahlen mit Karte oder verbundenem Kontokorrent"
       },
       "postepayApp": {
-        "name": "Postepay",
         "description": "Deine Postepay-App"
       },
       "postepay": {
@@ -1955,11 +1951,7 @@
         "description": "Die Karten von Poste Italiane"
       },
       "paypal": {
-        "name": "PayPal",
         "description": "Bezahlen mit Karte oder verbundenem Kontokorrent"
-      },
-      "bancomat": {
-        "name": "PagoBANCOMAT"
       },
       "cobadge": {
         "name": "Internationales Zahlungsnetzwerk"
@@ -2763,6 +2755,7 @@
       "useUnlockCode": "benutze deinen **Entsperrcode**",
       "useUnlockCodeA11y": "benutze deinen Entsperrcode"
     },
+    "insertDevPin": "Standard-Entwickler-PIN eingeben",
     "title": "Hallo {{name}}!",
     "titleProfileName": "Hallo {{profileName}}!",
     "titleValidation": "Vorgang genehmigen",
