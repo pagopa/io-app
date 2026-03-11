@@ -36,13 +36,7 @@ jest.mock("../../../../../utils/clipboard", () => ({
   clipboardSetStringWithFeedback: jest.fn()
 }));
 
-type Params = {
-  initiativeId: string;
-  initiativeName: string;
-  onDismiss: () => void;
-};
-
-const defaultParams: Params = {
+const defaultParams = {
   initiativeId: "initiativeId",
   initiativeName: "initiativeName",
   onDismiss: jest.fn()

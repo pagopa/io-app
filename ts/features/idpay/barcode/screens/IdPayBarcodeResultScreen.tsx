@@ -267,7 +267,7 @@ const BarcodeExpiredContent = ({
 const LoadingScreen = () => (
   /* TODO: We should use a `LoadingScreenContent` component, to avoid
     duplicates of the loading screen throughout the app */
-  <SafeAreaView style={styles.loadingWrapper}>
+  <SafeAreaView style={styles.loadingWrapper} testID="idpay-bar-code-loading">
     <LoadingIndicator />
     <VSpacer size={24} />
     <H3>{I18n.t("idpay.barCode.resultScreen.loading.body")}</H3>
