@@ -66,7 +66,7 @@ export const useIDPayStaticCodeModal = (
   );
 
   const StaticCodeSkeleton = () => (
-    <View>
+    <View testID="idpay-static-code-skeleton">
       <IOSkeleton
         shape="rectangle"
         width="80%"
