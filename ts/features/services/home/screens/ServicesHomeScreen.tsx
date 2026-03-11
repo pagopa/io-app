@@ -62,6 +62,7 @@ export const ServicesHomeScreen = () => {
       icon: "starEmpty",
       accessibilityLabel: I18n.t("services.home.favourites"),
       onPress: () => {
+        analytics.trackServicesFavouritesShow();
         navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
           screen: SERVICES_ROUTES.FAVOURITE_SERVICES
         });

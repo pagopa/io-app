@@ -45,7 +45,7 @@ export const testAarCreateMandate = createAsyncAction(
   "TEST_AAR_CREATE_MANDATE_REQUEST",
   "TEST_AAR_CREATE_MANDATE_SUCCESS",
   "TEST_AAR_CREATE_MANDATE_FAILURE"
-)<void, MandateCreationResponse, string>();
+)<string, MandateCreationResponse, string>();
 export const testAarAcceptMandate = createAsyncAction(
   "TEST_AAR_ACCEPT_MANDATE_REQUEST",
   "TEST_AAR_ACCEPT_MANDATE_SUCCESS",

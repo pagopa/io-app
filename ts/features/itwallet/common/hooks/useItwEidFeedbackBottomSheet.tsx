@@ -7,10 +7,10 @@ import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
 import { openWebUrl } from "../../../../utils/url.ts";
 import { IT_WALLET_SURVEY_EID_REISSUANCE_FAILURE } from "../utils/constants.ts";
 import {
-  TrackQualtricsSurvey,
   trackItwSurveyRequestAccepted,
   trackItwSurveyRequestDeclined
 } from "../../analytics";
+import { TrackQualtricsSurvey } from "../../analytics/utils/types.ts";
 
 type ItwEidFeedbackBottomSheetProps = {
   onPrimaryAction?: () => void;

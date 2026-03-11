@@ -61,6 +61,10 @@ export const paymentStartWebViewFlow = createStandardAction(
   "PAYMENTS_START_WEB_VIEW_FLOW"
 )<PaymentStartWebViewPayload>();
 
+export const paymentClearWebViewFlow = createStandardAction(
+  "PAYMENTS_CLEAR_WEB_VIEW_FLOW"
+)<void>();
+
 export type PaymentsCheckoutOrchestrationActions =
   | ActionType<typeof walletPaymentSetCurrentStep>
   | ActionType<typeof initPaymentStateAction>
@@ -68,4 +72,5 @@ export type PaymentsCheckoutOrchestrationActions =
   | ActionType<typeof selectPaymentPspAction>
   | ActionType<typeof paymentCompletedSuccess>
   | ActionType<typeof paymentMethodPspBannerClose>
-  | ActionType<typeof paymentStartWebViewFlow>;
+  | ActionType<typeof paymentStartWebViewFlow>
+  | ActionType<typeof paymentClearWebViewFlow>;

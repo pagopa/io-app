@@ -1,14 +1,10 @@
 import * as O from "fp-ts/lib/Option";
 import { call, put, select } from "typed-redux-saga/macro";
+import { Errors } from "@pagopa/io-react-native-wallet";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { assert } from "../../../../utils/assert";
 import { getNetworkError } from "../../../../utils/errors";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import {
-  trackItwStatusWalletAttestationFailure,
-  trackItwWalletBadState,
-  trackItwWalletInstanceRevocation
-} from "../../analytics";
 import { selectItwEnv } from "../../common/store/selectors/environment";
 import { getEnv } from "../../common/utils/environment";
 import { getWalletInstanceStatus } from "../../common/utils/itwAttestationUtils";
@@ -16,6 +12,11 @@ import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwUpdateWalletInstanceStatus } from "../../walletInstance/store/actions";
 import { itwLifecycleIsOperationalOrValid } from "../store/selectors";
+import {
+  trackItwStatusWalletAttestationFailure,
+  trackItwWalletBadState,
+  trackItwWalletInstanceRevocation
+} from "../analytics";
 import { checkIntegrityServiceReadySaga } from "./checkIntegrityServiceReadySaga";
 import { handleWalletInstanceResetSaga } from "./handleWalletInstanceResetSaga";
 
@@ -42,7 +43,16 @@ export function* getStatusOrResetWalletInstance(integrityKeyTag: string) {
     yield* put(itwUpdateWalletInstanceStatus.success(walletInstanceStatus));
   } catch (e) {
     trackItwStatusWalletAttestationFailure();
-    yield* put(itwUpdateWalletInstanceStatus.failure(getNetworkError(e)));
+    // There may be cases of users who left the wallet activation flow right after creating a Wallet Instance, without getting a PID.
+    // If another user then logs in, the previous integrity key tag is still stored and sent to the Wallet Provider: when this happens
+    // the WI status endpoint returns 404 and the wallet is reset to avoid any inconsistency.
+    if (Errors.isWalletProviderResponseError(e) && e.statusCode === 404) {
+      yield* call(handleWalletInstanceResetSaga);
+      yield* put(itwUpdateWalletInstanceStatus.cancel());
+      yield* call(trackItwWalletBadState);
+    } else {
+      yield* put(itwUpdateWalletInstanceStatus.failure(getNetworkError(e)));
+    }
   }
 }
 

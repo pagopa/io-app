@@ -18,12 +18,12 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import {
-  getMixPanelCredential,
   trackCredentialPreview,
   trackIssuanceCredentialScrollToBottom,
   trackItwExit,
   trackSaveCredentialToWallet
-} from "../../analytics";
+} from "../analytics";
+import { getMixPanelCredential } from "../../analytics/utils";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";

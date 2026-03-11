@@ -1,3 +1,4 @@
+import MockDate from "mockdate";
 import { createMigrate } from "redux-persist";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import itWalletReducer, { migrations } from "../index";
@@ -128,5 +129,36 @@ describe("itWalletReducer migrations", () => {
       _persist: { version: 7, rehydrated: false },
       preferences: {}
     });
+  });
+
+  it("should migrate the store to version 10 and add banners state", async () => {
+    const mockDate = "2025-01-14T20:43:21.361Z";
+    MockDate.set(mockDate);
+
+    const previousState = {
+      _persist: { version: 9, rehydrated: false },
+      preferences: {
+        hideDiscoveryBannerUntilDate: "2025-01-11T20:43:21.361Z",
+        walletUpgradeMDLDetailsBannerHidden: true
+      }
+    };
+
+    const newState = await migrate(previousState, 10);
+
+    expect(newState).toEqual({
+      _persist: { version: 9, rehydrated: false },
+      preferences: {},
+      banners: {
+        discovery: {
+          dismissedOn: "2024-07-11T20:43:21.361Z",
+          dismissCount: 1
+        },
+        upgradeMDLDetails: {
+          dismissedOn: "2025-01-14T20:43:21.361Z",
+          dismissCount: 1
+        }
+      }
+    });
+    MockDate.reset();
   });
 });

@@ -1,7 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { Locales } from "../../../locales/locales";
-import { setLocale } from "../../i18n";
+import { setLocale, Locales } from "../../i18n";
 import {
   idpContextualHelpDataFromIdSelector,
   screenContextualHelpDataSelector,

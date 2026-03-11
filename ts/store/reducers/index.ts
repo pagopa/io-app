@@ -202,6 +202,12 @@ export function createRootReducer(
 
               _persist: state.authentication._persist
             },
+            installation: {
+              ...state.installation
+            },
+            versionInfo: {
+              ...state.versionInfo
+            },
             // cie status must be kept
             cie: {
               ...state.cie

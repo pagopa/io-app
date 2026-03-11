@@ -6,7 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { useIOSelector } from "../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import { trackItWalletCieCardReading } from "../../../analytics";
+import { trackItWalletCieCardReading } from "../../analytics";
 import { selectItwEnv } from "../../../common/store/selectors/environment";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {

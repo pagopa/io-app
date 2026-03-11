@@ -30,7 +30,7 @@ export const ReceiptCartList = ({ carts, loading, onPress }: Props) => {
     <>
       {carts.map((cartItem, index) => (
         <ListItemTransaction
-          key={cartItem.refNumberValue ?? index.toString()}
+          key={`${cartItem.refNumberValue}${index}`}
           title={cartItem.subject ?? ""}
           subtitle={cartItem.payee?.name ?? ""}
           transaction={{

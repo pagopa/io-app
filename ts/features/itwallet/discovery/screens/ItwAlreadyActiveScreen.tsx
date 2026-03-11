@@ -8,7 +8,8 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useIOSelector } from "../../../../store/hooks";
 import { itwAuthLevelSelector } from "../../common/store/selectors/preferences";
-import { ItwFlow, trackItwAlreadyActivated } from "../../analytics";
+import { trackItwAlreadyActivated } from "../analytics";
+import { ItwFlow } from "../../analytics/utils/types";
 
 export const ItwAlreadyActiveScreen = () => {
   useItwDisableGestureNavigation();

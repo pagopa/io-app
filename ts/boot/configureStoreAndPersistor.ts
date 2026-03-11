@@ -57,7 +57,7 @@ import { isDevEnv, isTestEnv } from "../utils/environment";
 import { PersistedPreferencesState } from "../store/reducers/persistedPreferences";
 import { SpidIdps } from "../../definitions/content/SpidIdps";
 import { fromGeneratedToLocalSpidIdp } from "../utils/idps";
-import { configureReactotron } from "./configureRectotron";
+import { configureReactotron } from "./configureReactotron";
 
 /**
  * Redux persist will migrate the store to the current version

@@ -1,6 +1,8 @@
+import { useNavigation } from "@react-navigation/native";
 import { useCallback } from "react";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { PnParamsList } from "../../navigation/params";
 import { trackSendAARToSAccepted } from "../analytics";
 import { setAarFlowState, terminateAarFlow } from "../store/actions";
 import { currentAARFlowData } from "../store/selectors";
@@ -21,7 +23,7 @@ export type SendAarFlowHandlerType = {
 };
 
 export const useSendAarFlowManager = (): SendAarFlowManager => {
-  const navigation = useIONavigation();
+  const navigation = useNavigation<IOStackNavigationProp<PnParamsList>>();
   const dispatch = useIODispatch();
   const currentFlowData = useIOSelector(currentAARFlowData);
 

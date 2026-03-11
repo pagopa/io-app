@@ -10,7 +10,8 @@ import { useCallback, useEffect, useState } from "react";
 import HapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
-import { useScreenReaderEnabled } from "../../../../../utils/accessibility";
+import { useIOSelector } from "../../../../../store/hooks";
+import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
 import {
   WAIT_TIMEOUT_NAVIGATION,
   WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
@@ -66,7 +67,7 @@ export const useCieManager: UseCieManager = ({
   onInternalAuthAndMRTDWithPaceSuccess,
   useUat
 }) => {
-  const isScreenReaderEnabled = useScreenReaderEnabled();
+  const isScreenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
   const [state, setState] = useState<CieManagerState>({ state: "idle" });
 
   /**

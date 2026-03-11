@@ -36,6 +36,7 @@ import {
   fciQtspPrivacyTextSelector,
   fciQtspPrivacyUrlSelector
 } from "../../store/reducers/fciQtspClauses";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 const FciQtspClausesScreen = () => {
   const dispatch = useIODispatch();
@@ -84,6 +85,13 @@ const FciQtspClausesScreen = () => {
     });
   };
 
+  useHeaderSecondLevel({
+    title: "",
+    supportRequest: true,
+    contextualHelp: emptyContextualHelp,
+    headerShown: isPollFilledDocumentReady && !fciPollFilledDocumentError
+  });
+
   if (fciPollFilledDocumentError && !isPollFilledDocumentReady) {
     return (
       <SignatureStatusComponent
@@ -111,11 +119,9 @@ const FciQtspClausesScreen = () => {
       renderItem={({ item }) => (
         <QtspClauseListItem
           clause={item}
-          onChange={value =>
-            value
-              ? setClausesChecked(clausesChecked + 1)
-              : setClausesChecked(clausesChecked - 1)
-          }
+          onChange={value => {
+            setClausesChecked(prev => (value ? prev + 1 : prev - 1));
+          }}
           onLinkPress={openUrl}
         />
       )}

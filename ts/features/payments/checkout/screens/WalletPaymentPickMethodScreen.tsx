@@ -59,6 +59,7 @@ import {
 } from "../../onboarding/hooks/useWalletOnboardingWebView";
 import { WalletOnboardingOutcomeEnum } from "../../onboarding/types/OnboardingOutcomeEnum";
 import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
+import { paymentClearWebViewFlow } from "../store/actions/orchestration.ts";
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
@@ -127,6 +128,7 @@ const WalletPaymentPickMethodScreen = () => {
     orderId,
     transactionId
   }: WalletOnboardingOutcomeParams) => {
+    dispatch(paymentClearWebViewFlow());
     if (outcome === WalletOnboardingOutcomeEnum.SUCCESS) {
       if (walletId && transactionId) {
         dispatch(

@@ -20,10 +20,12 @@ import {
   pnMessagingServiceIdSelector,
   pnPrivacyUrlsSelector,
   sendAARDelegateUrlSelector,
+  sendAarInAppDelegationUrlSelector,
   sendCustomServiceCenterUrlSelector,
   sendEstimateTimelinesUrlSelector,
   sendShowAbstractSelector,
-  sendVisitTheWebsiteUrlSelector
+  sendVisitTheWebsiteUrlSelector,
+  isSendLollipopPlaygroundEnabledSelector
 } from "../remoteConfig";
 
 describe("remoteConfig", () => {
@@ -960,6 +962,58 @@ describe("sendAARDelegateUrlSelector", () => {
     });
   }
 });
+describe("sendAarInAppDelegationUrlSelector", () => {
+  const fallbackUrl =
+    "https://assistenza.notifichedigitali.it/hc/it/articles/32453819931537-Delegare-qualcuno-a-visualizzare-le-tue-notifiche";
+  const cdnUrl = "https://custom.url/toCheck";
+  it.each([
+    {
+      title: "remoteConfig is none",
+      state: { remoteConfig: O.none },
+      expected: fallbackUrl
+    },
+    {
+      title: "remoteConfig is an empty object",
+      state: {
+        remoteConfig: O.some({
+          pn: {}
+        })
+      },
+      expected: fallbackUrl
+    },
+    {
+      title: "in_app_delegation is an empty object",
+      state: {
+        remoteConfig: O.some({
+          pn: {
+            aar: {
+              in_app_delegation: {}
+            }
+          }
+        })
+      },
+      expected: fallbackUrl
+    },
+    {
+      title: "helpCenter_url is defined",
+      state: {
+        remoteConfig: O.some({
+          pn: {
+            aar: {
+              in_app_delegation: {
+                helpCenter_url: cdnUrl
+              }
+            }
+          }
+        })
+      },
+      expected: cdnUrl
+    }
+  ])(`should return the correct url when $title`, ({ state, expected }) => {
+    const output = sendAarInAppDelegationUrlSelector(state as GlobalState);
+    expect(output).toBe(expected);
+  });
+});
 
 describe("sendShowAbstractSelector", () => {
   it("should return false if remoteConfig is not set", () => {
@@ -1216,5 +1270,49 @@ describe("sendVisitTheWebsiteUrlSelector", () => {
     } as GlobalState;
     const output = sendVisitTheWebsiteUrlSelector(state);
     expect(output).toBe(expectedOutput);
+  });
+});
+
+describe("isSendLollipopPlaygroundEnabledSelector", () => {
+  it("should return false if remoteConfig is not set", () => {
+    const state = {
+      remoteConfig: O.none
+    } as GlobalState;
+    const output = isSendLollipopPlaygroundEnabledSelector(state);
+    expect(output).toBe(false);
+  });
+
+  it("should return false if lollipopPlaygroundEnabled property is not set", () => {
+    const state = {
+      remoteConfig: O.some({
+        pn: {}
+      })
+    } as GlobalState;
+    const output = isSendLollipopPlaygroundEnabledSelector(state);
+    expect(output).toBe(false);
+  });
+
+  it("should return false if lollipopPlaygroundEnabled is false", () => {
+    const state = {
+      remoteConfig: O.some({
+        pn: {
+          lollipopPlaygroundEnabled: false
+        }
+      })
+    } as GlobalState;
+    const output = isSendLollipopPlaygroundEnabledSelector(state);
+    expect(output).toBe(false);
+  });
+
+  it("should return true if lollipopPlaygroundEnabled is true", () => {
+    const state = {
+      remoteConfig: O.some({
+        pn: {
+          lollipopPlaygroundEnabled: true
+        }
+      })
+    } as GlobalState;
+    const output = isSendLollipopPlaygroundEnabledSelector(state);
+    expect(output).toBe(true);
   });
 });

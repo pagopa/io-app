@@ -76,7 +76,6 @@ export const IdPayInitiativeWaitingList = () => {
   const handleOpenWaitingListBottomSheet = (item: UserOnboardingStatusDTO) => {
     setSelectedInitiative(item);
     trackIDPayOnWaitingListInfoButtonTap({
-      initiativeName: item.initiativeName,
       initiativeId: item.initiativeId
     });
     present();

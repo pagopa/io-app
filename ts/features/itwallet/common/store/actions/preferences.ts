@@ -1,9 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
-
-export const itwCloseDiscoveryBanner = createStandardAction(
-  "ITW_CLOSE_DISCOVERY_BANNER"
-)();
+import { ItwAuthLevel, StoredCredential } from "../../utils/itwTypesUtils.ts";
 
 export const itwSetReviewPending = createStandardAction(
   "ITW_SET_REVIEW_PENDING"
@@ -25,10 +21,6 @@ export const itwSetFiscalCodeWhitelisted = createStandardAction(
   "ITW_SET_FISCAL_CODE_WHITELISTED"
 )<boolean>();
 
-export const itwSetWalletUpgradeMDLDetailsBannerHidden = createStandardAction(
-  "ITW_SET_WALLET_UPGRADE_MDL_DETAILS_BANNER_HIDDEN"
-)<boolean>();
-
 export const itwFreezeSimplifiedActivationRequirements = createStandardAction(
   "ITW_FREEZE_SIMPLIFIED_ACTIVATION_REQUIREMENTS"
 )<void>();
@@ -41,14 +33,27 @@ export const itwSetPidReissuingSurveyHidden = createStandardAction(
   "ITW_SET_PID_REISSUING_SURVEY_HIDDEN"
 )<boolean>();
 
+export const itwSetCredentialUpgradeFailed = createStandardAction(
+  "ITW_SET_CREDENTIAL_UPGRADE_FAILED"
+)<ReadonlyArray<StoredCredential["credentialType"]>>();
+
+export const itwClearCredentialUpgradeFailed = createStandardAction(
+  "ITW_CLEAR_CREDENTIAL_UPGRADE_FAILED"
+)<StoredCredential["credentialType"]>();
+
+export const itwDisableItwActivation = createStandardAction(
+  "ITW_DISABLE_ITW_ACTIVATION"
+)();
+
 export type ItwPreferencesActions =
-  | ActionType<typeof itwCloseDiscoveryBanner>
   | ActionType<typeof itwSetReviewPending>
   | ActionType<typeof itwSetAuthLevel>
   | ActionType<typeof itwSetClaimValuesHidden>
   | ActionType<typeof itwSetWalletInstanceRemotelyActive>
   | ActionType<typeof itwSetFiscalCodeWhitelisted>
-  | ActionType<typeof itwSetWalletUpgradeMDLDetailsBannerHidden>
   | ActionType<typeof itwFreezeSimplifiedActivationRequirements>
   | ActionType<typeof itwClearSimplifiedActivationRequirements>
-  | ActionType<typeof itwSetPidReissuingSurveyHidden>;
+  | ActionType<typeof itwSetPidReissuingSurveyHidden>
+  | ActionType<typeof itwSetCredentialUpgradeFailed>
+  | ActionType<typeof itwClearCredentialUpgradeFailed>
+  | ActionType<typeof itwDisableItwActivation>;

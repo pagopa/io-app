@@ -8,6 +8,7 @@ import {
 } from "../store/actions";
 import { favouriteServicesCountSelector } from "../store/selectors";
 import { favouriteServicesLimitSelector } from "../../common/store/selectors/remoteConfig";
+import * as analytics from "../../common/analytics";
 
 export function* handleAddFavouriteService(
   action: ActionType<typeof addFavouriteServiceRequest>
@@ -16,6 +17,10 @@ export function* handleAddFavouriteService(
   const favouriteServicesLimit = yield* select(favouriteServicesLimitSelector);
 
   if (favouriteServicesCount >= favouriteServicesLimit) {
+    yield* call(
+      analytics.trackServicesFavouritesLimitReached,
+      action.payload.id
+    );
     yield* call(
       IOToast.error,
       I18n.t("services.favouriteServices.toasts.limitReached")

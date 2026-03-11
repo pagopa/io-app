@@ -28,10 +28,10 @@ export const useServicesFetcher = (institutionId: string) => {
   useOnFirstRender(() => fetchPage(0));
 
   useEffect(() => {
-    if (isRefreshing && !isUpdating) {
+    if (isRefreshing && !isLoading) {
       setIsRefreshing(false);
     }
-  }, [isRefreshing, isUpdating]);
+  }, [isRefreshing, isLoading]);
 
   const fetchPage = useCallback(
     (page: number) => {

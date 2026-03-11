@@ -1,6 +1,5 @@
 import { WalletInstance } from "@pagopa/io-react-native-wallet";
 import * as Sentry from "@sentry/react-native";
-import { SessionToken } from "../../../../types/SessionToken";
 import { createItWalletFetch } from "../../api/client";
 import { Env } from "./environment";
 
@@ -12,7 +11,7 @@ import { Env } from "./environment";
  */
 export const revokeCurrentWalletInstance = async (
   { WALLET_PROVIDER_BASE_URL }: Env,
-  sessionToken: SessionToken,
+  sessionToken: string,
   integrityKeyTag: string
 ): Promise<void> => {
   const appFetch = createItWalletFetch(

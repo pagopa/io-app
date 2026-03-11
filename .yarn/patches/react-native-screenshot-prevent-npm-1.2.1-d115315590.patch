@@ -1,5 +1,5 @@
 diff --git a/RNScreenshotPrevent.podspec b/RNScreenshotPrevent.podspec
-index 5b8912dcd663e30b8dbd13b37f1ca7656b0b550d..9914568a6ec63c12ef6572a409a436f31d81d105 100644
+index 5b8912dcd663e30b8dbd13b37f1ca7656b0b550d..30e50e1e1fcc7273959acdbb978cf3523ef8110e 100644
 --- a/RNScreenshotPrevent.podspec
 +++ b/RNScreenshotPrevent.podspec
 @@ -10,16 +10,29 @@ Pod::Spec.new do |s|
@@ -39,7 +39,7 @@ index 5b8912dcd663e30b8dbd13b37f1ca7656b0b550d..9914568a6ec63c12ef6572a409a436f3
    
 \ No newline at end of file
 diff --git a/android/build.gradle b/android/build.gradle
-index 6ee6db648848012a47a1d95356c38d716ad29a15..a69b395bcc129179162e37c6c197dbfa727e1a71 100644
+index 6ee6db648848012a47a1d95356c38d716ad29a15..30e7f5251365432ecf5d7a7007cb4e1712e749cc 100644
 --- a/android/build.gradle
 +++ b/android/build.gradle
 @@ -1,24 +1,22 @@
@@ -307,7 +307,7 @@ index d381e388ec81d0a456ea496891fc635fe48a863e..00000000000000000000000000000000
 -}
 \ No newline at end of file
 diff --git a/android/src/main/java/com/killserver/screenshotprev/RNScreenshotPreventPackage.java b/android/src/main/java/com/killserver/screenshotprev/RNScreenshotPreventPackage.java
-index f853d05249d33d7ca405a2dcb4b528199be40f71..38a1077c8c4cef27e17b753082527475846ba012 100644
+index f853d05249d33d7ca405a2dcb4b528199be40f71..b26e7f7cddc6401a857cff9e44e9a0a142034ad9 100644
 --- a/android/src/main/java/com/killserver/screenshotprev/RNScreenshotPreventPackage.java
 +++ b/android/src/main/java/com/killserver/screenshotprev/RNScreenshotPreventPackage.java
 @@ -1,29 +1,46 @@
@@ -546,7 +546,7 @@ index 0000000000000000000000000000000000000000..214a214fdb2762802174694ef2cd2056
 +}
 diff --git a/android/src/newArch/java/com/killserver/screenshotprev/RNScreenshotPreventModule.java b/android/src/newArch/java/com/killserver/screenshotprev/RNScreenshotPreventModule.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..b41431214ad3846ad23b51a3f3eb4565e7dd75dc
+index 0000000000000000000000000000000000000000..b25f4aeb681219ad0a875cac89208998b45a09cf
 --- /dev/null
 +++ b/android/src/newArch/java/com/killserver/screenshotprev/RNScreenshotPreventModule.java
 @@ -0,0 +1,63 @@
@@ -610,7 +610,7 @@ index 0000000000000000000000000000000000000000..b41431214ad3846ad23b51a3f3eb4565
 +    @Override
 +    public void removeListeners(double count) {
 +        // Remove any upstream listeners or background tasks
-+        // (Lifecycle listeners are anonymous and cannot be individually removed here.)       
++        // (Lifecycle listeners are anonymous and cannot be individually removed here.)
 +    }
 +}
 \ No newline at end of file
@@ -674,7 +674,7 @@ index 0000000000000000000000000000000000000000..e78f7265f2b1e0799dde3e63e6e36c20
 +}
 \ No newline at end of file
 diff --git a/ios/RNScreenshotPrevent.h b/ios/RNScreenshotPrevent.h
-index 8c05c1aee3407d69f39b118556b33da5c53854b1..72481337597b0ec7113f14e57d95f6b7d25997e7 100644
+index 8c05c1aee3407d69f39b118556b33da5c53854b1..e4ccd701f55cb5b6bd7a19459a2d9dabcff2fe3a 100644
 --- a/ios/RNScreenshotPrevent.h
 +++ b/ios/RNScreenshotPrevent.h
 @@ -9,7 +9,15 @@
@@ -1129,7 +1129,7 @@ index 0000000000000000000000000000000000000000..7acdf8b8f970653d7e9387535d89f01a
 +
 +@end
 diff --git a/ios/UIImage+ImageEffects.h b/ios/UIImage+ImageEffects.h
-index 3e83ea833329b8093919b8d222adeccc5c329f23..e026fbe6a59388226aab9cd6c4510452b9594e33 100644
+index 3e83ea833329b8093919b8d222adeccc5c329f23..9cd9be3ffffac3eaafc053bd15ad8c7b69c8c5f9 100644
 --- a/ios/UIImage+ImageEffects.h
 +++ b/ios/UIImage+ImageEffects.h
 @@ -2,14 +2,14 @@
@@ -1259,10 +1259,10 @@ index d2a63bfab9856cc1eb68ec0c532699c4685f3131..272420a2104715362cfa090aa2099b25
 +{"version":3,"names":[],"sources":["index.d.ts"],"sourcesContent":["declare module 'react-native-screenshot-prevent' {\n\texport function enabled(value: boolean): void;\n\texport function enableSecureView(imagePath?: string): void;\n\texport function disableSecureView(): void;\n\texport function usePreventScreenshot(): void;\n\texport function useDisableSecureView(): void;\n\texport function addListener(fn: Function): void;\n}\n"],"mappings":"","ignoreList":[]}
 \ No newline at end of file
 diff --git a/lib/module/index.js b/lib/module/index.js
-index 7302ec7dcd769b9ad4d87b4bdc6130d3c547d51f..d3c97468d0b14a79846e2216377ddaeb222039e4 100644
+index 7302ec7dcd769b9ad4d87b4bdc6130d3c547d51f..70d4e669868a996d6d6cf7c41e23a827d51f2190 100644
 --- a/lib/module/index.js
 +++ b/lib/module/index.js
-@@ -1,44 +1,51 @@
+@@ -1,44 +1,56 @@
  import { NativeModules, NativeEventEmitter, Platform } from 'react-native';
  import { useEffect } from 'react';
 -let addListen, RNScreenshotPrevent;
@@ -1289,11 +1289,6 @@ index 7302ec7dcd769b9ad4d87b4bdc6130d3c547d51f..d3c97468d0b14a79846e2216377ddaeb
 -      return {
 -        remove: () => {
 -          console.error("RNScreenshotPrevent: remove not work because addListener requires valid callback function");
--        }
--      };
--    }
--    return eventEmitter.addListener("userDidTakeScreenshot", fn);
--  };
 +import NativeScreenshotPrevent from './NativeRNScreenshotPrevent';
 +let addListen;
 +let RNScreenshotPrevent = null;
@@ -1301,12 +1296,21 @@ index 7302ec7dcd769b9ad4d87b4bdc6130d3c547d51f..d3c97468d0b14a79846e2216377ddaeb
 +  // Try to use TurboModule first, fallback to legacy bridge
 +  const nativeModule = NativeScreenshotPrevent !== null && NativeScreenshotPrevent !== void 0 ? NativeScreenshotPrevent : NativeModules.RNScreenshotPrevent;
 +  if (nativeModule) {
-+    RNScreenshotPrevent = {
-+      ...nativeModule,
-+      enableSecureView: (imagePath = '') => {
-+        nativeModule.enableSecureView(imagePath);
++    RNScreenshotPrevent = new Proxy(nativeModule, {
++      get(target, prop) {
++        if (prop === 'enableSecureView') {
++          return (imagePath = '') => {
++            target.enableSecureView(imagePath);
++          };
+         }
+-      };
+-    }
+-    return eventEmitter.addListener("userDidTakeScreenshot", fn);
+-  };
++        const value = target[prop];
++        return typeof value === 'function' ? value.bind(target) : value;
 +      }
-+    };
++    });
 +    const eventEmitter = new NativeEventEmitter(nativeModule);
 +    addListen = fn => {
 +      if (typeof fn !== 'function') {
@@ -1347,7 +1351,7 @@ index 7302ec7dcd769b9ad4d87b4bdc6130d3c547d51f..d3c97468d0b14a79846e2216377ddaeb
      }
    };
    addListen = fn => {
-@@ -46,37 +53,51 @@ if (Platform.OS !== "web") {
+@@ -46,37 +58,51 @@ if (Platform.OS !== "web") {
        console.error('RNScreenshotPrevent: addListener requires valid callback function');
        return {
          remove: () => {
@@ -1412,13 +1416,13 @@ index 7302ec7dcd769b9ad4d87b4bdc6130d3c547d51f..d3c97468d0b14a79846e2216377ddaeb
  //# sourceMappingURL=index.js.map
 \ No newline at end of file
 diff --git a/lib/module/index.js.map b/lib/module/index.js.map
-index d1900bcec3995691c2462b6395f167b89897c158..dde450b6cdadc0f3f218b39b112decde2d2a0509 100644
+index d1900bcec3995691c2462b6395f167b89897c158..b818f6c7dcd53312c22a20891d95378dfb32cd86 100644
 --- a/lib/module/index.js.map
 +++ b/lib/module/index.js.map
 @@ -1 +1 @@
 -{"version":3,"names":["NativeModules","NativeEventEmitter","Platform","useEffect","addListen","RNScreenshotPrevent","OS","RNScreenshotPreventNative","enableSecureView","imagePath","eventEmitter","fn","console","error","remove","addListener","enabled","warn","disableSecureView","usePreventScreenshot","useDisableSecureView"],"sources":["index.ts"],"sourcesContent":["import { NativeModules, NativeEventEmitter, Platform } from 'react-native';\r\nimport { useEffect } from 'react';\r\n\r\ntype FN = (resp: any) => void\r\ntype Return = {\r\n    readonly remove: () => void\r\n}\r\nlet addListen: any, RNScreenshotPrevent: any;\r\nif (Platform.OS !== \"web\") {\r\n    const { RNScreenshotPrevent: RNScreenshotPreventNative } = NativeModules;\r\n    RNScreenshotPrevent = {\r\n        ...RNScreenshotPreventNative,\r\n        enableSecureView: function enableSecureView(imagePath: string = \"\") {\r\n            RNScreenshotPreventNative.enableSecureView(imagePath)\r\n        }\r\n    }\r\n    const eventEmitter = new NativeEventEmitter(RNScreenshotPrevent);\r\n\r\n    /**\r\n     * subscribes to userDidTakeScreenshot event\r\n     * @param {function} callback handler\r\n     * @returns {function} unsubscribe fn\r\n     */\r\n    addListen = (fn: FN): Return => {\r\n        if (typeof (fn) !== 'function') {\r\n            console.error('RNScreenshotPrevent: addListener requires valid callback function');\r\n            return {\r\n                remove: (): void => {\r\n                    console.error(\"RNScreenshotPrevent: remove not work because addListener requires valid callback function\");\r\n                }\r\n            };\r\n        }\r\n\r\n        return eventEmitter.addListener(\"userDidTakeScreenshot\", fn);\r\n    }\r\n} else {\r\n    RNScreenshotPrevent = {\r\n        enabled: (enabled: boolean): void => {\r\n            console.warn(\"RNScreenshotPrevent: enabled not work in web. value: \" + enabled);\r\n        },\r\n        enableSecureView: (imagePath: string = \"\"): void => {\r\n            console.warn(\"RNScreenshotPrevent: enableSecureView not work in web.\"+(!!imagePath ? \" send: \"+imagePath : \"\"));\r\n        },\r\n        disableSecureView: (): void => {\r\n            console.warn(\"RNScreenshotPrevent: disableSecureView not work in web\");\r\n        }\r\n    }\r\n    addListen = (fn: FN): Return => {\r\n        if (typeof (fn) !== 'function') {\r\n            console.error('RNScreenshotPrevent: addListener requires valid callback function');\r\n            return {\r\n                remove: (): void => {\r\n                    console.error(\"RNScreenshotPrevent: remove not work because addListener requires valid callback function\");\r\n                }\r\n            };\r\n        }\r\n        console.warn(\"RNScreenshotPrevent: addListener not work in web\");\r\n        return {\r\n            remove: (): void => {\r\n                console.warn(\"RNScreenshotPrevent: remove addListener not work in web\");\r\n            }\r\n        }\r\n    }\r\n}\r\n\r\nexport const usePreventScreenshot = () => {\r\n    useEffect(() => {\r\n        RNScreenshotPrevent.enabled(true);\r\n        return () => {\r\n            RNScreenshotPrevent.enabled(false);\r\n        };\r\n    }, []);\r\n}\r\n\r\nexport const useDisableSecureView = (imagePath: string = \"\") => {\r\n    useEffect(() => {\r\n        RNScreenshotPrevent.enableSecureView(imagePath);\r\n        return () => {\r\n            RNScreenshotPrevent.disableSecureView();\r\n        };\r\n    }, []);\r\n}\r\n\r\nexport const enabled: (enabled: boolean) => void = RNScreenshotPrevent.enabled\r\nexport const enableSecureView: (imagePath?: string) => void = RNScreenshotPrevent.enableSecureView\r\nexport const disableSecureView: () => void = RNScreenshotPrevent.disableSecureView\r\nexport const addListener: (fn: FN) => void = addListen\r\nexport default RNScreenshotPrevent;\r\n"],"mappings":"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","ignoreList":[]}
 \ No newline at end of file
-+{"version":3,"names":["NativeModules","NativeEventEmitter","Platform","useEffect","NativeScreenshotPrevent","addListen","RNScreenshotPrevent","OS","nativeModule","enableSecureView","imagePath","eventEmitter","fn","console","error","remove","addListener","warn","enabled","disableSecureView","usePreventScreenshot","_RNScreenshotPrevent","_RNScreenshotPrevent2","useDisableSecureView","_RNScreenshotPrevent3","_RNScreenshotPrevent4","enable","_RNScreenshotPrevent5","_RNScreenshotPrevent6","_RNScreenshotPrevent7"],"sources":["index.ts"],"sourcesContent":["import { NativeModules, NativeEventEmitter, Platform } from 'react-native';\nimport { useEffect } from 'react';\nimport NativeScreenshotPrevent from './NativeRNScreenshotPrevent';\n\ntype FN = (resp: any) => void;\ntype Return = {\n\treadonly remove: () => void;\n};\n\nlet addListen: any;\nlet RNScreenshotPrevent: any = null;\n\nif (Platform.OS !== 'web') {\n\t// Try to use TurboModule first, fallback to legacy bridge\n\tconst nativeModule =\n\t\tNativeScreenshotPrevent ?? NativeModules.RNScreenshotPrevent;\n\n\tif (nativeModule) {\n\t\tRNScreenshotPrevent = {\n\t\t\t...nativeModule,\n\t\t\tenableSecureView: (imagePath: string = '') => {\n\t\t\t\tnativeModule.enableSecureView(imagePath);\n\t\t\t},\n\t\t};\n\t\tconst eventEmitter = new NativeEventEmitter(nativeModule);\n\n\t\taddListen = (fn: FN): Return => {\n\t\t\tif (typeof fn !== 'function') {\n\t\t\t\tconsole.error(\n\t\t\t\t\t'RNScreenshotPrevent: addListener requires valid callback function'\n\t\t\t\t);\n\t\t\t\treturn {\n\t\t\t\t\tremove: (): void => {\n\t\t\t\t\t\tconsole.error(\n\t\t\t\t\t\t\t'RNScreenshotPrevent: remove not work because addListener requires valid callback function'\n\t\t\t\t\t\t);\n\t\t\t\t\t},\n\t\t\t\t};\n\t\t\t}\n\n\t\t\treturn eventEmitter.addListener('userDidTakeScreenshot', fn);\n\t\t};\n\t} else {\n\t\tconsole.warn('RNScreenshotPrevent: Native module not found');\n\t\tRNScreenshotPrevent = {\n\t\t\tenabled: () => {},\n\t\t\tenableSecureView: () => {},\n\t\t\tdisableSecureView: () => {},\n\t\t};\n\t\taddListen = () => ({ remove: () => {} });\n\t}\n} else {\n\tRNScreenshotPrevent = {\n\t\tenabled: (enabled: boolean): void => {\n\t\t\tconsole.warn(\n\t\t\t\t'RNScreenshotPrevent: enabled not work in web. value: ',\n\t\t\t\tenabled\n\t\t\t);\n\t\t},\n\t\tenableSecureView: (imagePath: string = ''): void => {\n\t\t\tconsole.warn(\n\t\t\t\t'RNScreenshotPrevent: enableSecureView not work in web.',\n\t\t\t\t!!imagePath ? `send: ${imagePath}` : ''\n\t\t\t);\n\t\t},\n\t\tdisableSecureView: (): void => {\n\t\t\tconsole.warn(\n\t\t\t\t'RNScreenshotPrevent: disableSecureView not work in web'\n\t\t\t);\n\t\t},\n\t};\n\taddListen = (fn: FN): Return => {\n\t\tif (typeof fn !== 'function') {\n\t\t\tconsole.error(\n\t\t\t\t'RNScreenshotPrevent: addListener requires valid callback function'\n\t\t\t);\n\t\t\treturn {\n\t\t\t\tremove: (): void => {\n\t\t\t\t\tconsole.error(\n\t\t\t\t\t\t'RNScreenshotPrevent: remove not work because addListener requires valid callback function'\n\t\t\t\t\t);\n\t\t\t\t},\n\t\t\t};\n\t\t}\n\t\tconsole.warn('RNScreenshotPrevent: addListener not work in web');\n\t\treturn {\n\t\t\tremove: (): void => {\n\t\t\t\tconsole.warn(\n\t\t\t\t\t'RNScreenshotPrevent: remove addListener not work in web'\n\t\t\t\t);\n\t\t\t},\n\t\t};\n\t};\n}\n\nexport const usePreventScreenshot = () => {\n\tuseEffect(() => {\n\t\tRNScreenshotPrevent?.enabled(true);\n\t\treturn () => {\n\t\t\tRNScreenshotPrevent?.enabled(false);\n\t\t};\n\t}, []);\n};\n\nexport const useDisableSecureView = (imagePath: string = '') => {\n\tuseEffect(() => {\n\t\tRNScreenshotPrevent?.enableSecureView(imagePath);\n\t\treturn () => {\n\t\t\tRNScreenshotPrevent?.disableSecureView();\n\t\t};\n\t\t// eslint-disable-next-line react-hooks/exhaustive-deps\n\t}, []);\n};\n\nexport const enabled: (enabled: boolean) => void = (enable) =>\n\tRNScreenshotPrevent?.enabled(enable);\n\nexport const enableSecureView: (imagePath?: string) => void = (imagePath) =>\n\tRNScreenshotPrevent?.enableSecureView(imagePath ?? '');\n\nexport const disableSecureView: () => void = () =>\n\tRNScreenshotPrevent?.disableSecureView();\n\nexport const addListener: (fn: FN) => Return = addListen;\n\nexport default RNScreenshotPrevent;\n"],"mappings":"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","ignoreList":[]}
++{"version":3,"names":["NativeModules","NativeEventEmitter","Platform","useEffect","NativeScreenshotPrevent","addListen","RNScreenshotPrevent","OS","nativeModule","Proxy","get","target","prop","imagePath","enableSecureView","value","bind","eventEmitter","fn","console","error","remove","addListener","warn","enabled","disableSecureView","usePreventScreenshot","_RNScreenshotPrevent","_RNScreenshotPrevent2","useDisableSecureView","_RNScreenshotPrevent3","_RNScreenshotPrevent4","enable","_RNScreenshotPrevent5","_RNScreenshotPrevent6","_RNScreenshotPrevent7"],"sources":["index.ts"],"sourcesContent":["import { NativeModules, NativeEventEmitter, Platform } from 'react-native';\nimport { useEffect } from 'react';\nimport NativeScreenshotPrevent from './NativeRNScreenshotPrevent';\n\ntype FN = (resp: any) => void;\ntype Return = {\n\treadonly remove: () => void;\n};\n\nlet addListen: any;\nlet RNScreenshotPrevent: any = null;\n\nif (Platform.OS !== 'web') {\n\t// Try to use TurboModule first, fallback to legacy bridge\n\tconst nativeModule =\n\t\tNativeScreenshotPrevent ?? NativeModules.RNScreenshotPrevent;\n\n\tif (nativeModule) {\n\t\tRNScreenshotPrevent = new Proxy(nativeModule, {\n\t\t\tget(target, prop) {\n\t\t\t\tif (prop === 'enableSecureView') {\n\t\t\t\t\treturn (imagePath: string = ''): void => {\n\t\t\t\t\t\ttarget.enableSecureView(imagePath);\n\t\t\t\t\t};\n\t\t\t\t}\n\t\t\t\tconst value = target[prop];\n\t\t\t\treturn typeof value === 'function' ? value.bind(target) : value;\n\t\t\t},\n\t\t});\n\n\t\tconst eventEmitter = new NativeEventEmitter(nativeModule);\n\n\t\taddListen = (fn: FN): Return => {\n\t\t\tif (typeof fn !== 'function') {\n\t\t\t\tconsole.error(\n\t\t\t\t\t'RNScreenshotPrevent: addListener requires valid callback function'\n\t\t\t\t);\n\t\t\t\treturn {\n\t\t\t\t\tremove: (): void => {\n\t\t\t\t\t\tconsole.error(\n\t\t\t\t\t\t\t'RNScreenshotPrevent: remove not work because addListener requires valid callback function'\n\t\t\t\t\t\t);\n\t\t\t\t\t},\n\t\t\t\t};\n\t\t\t}\n\n\t\t\treturn eventEmitter.addListener('userDidTakeScreenshot', fn);\n\t\t};\n\t} else {\n\t\tconsole.warn('RNScreenshotPrevent: Native module not found');\n\t\tRNScreenshotPrevent = {\n\t\t\tenabled: () => {},\n\t\t\tenableSecureView: () => {},\n\t\t\tdisableSecureView: () => {},\n\t\t};\n\t\taddListen = () => ({ remove: () => {} });\n\t}\n} else {\n\tRNScreenshotPrevent = {\n\t\tenabled: (enabled: boolean): void => {\n\t\t\tconsole.warn(\n\t\t\t\t'RNScreenshotPrevent: enabled not work in web. value: ',\n\t\t\t\tenabled\n\t\t\t);\n\t\t},\n\t\tenableSecureView: (imagePath: string = ''): void => {\n\t\t\tconsole.warn(\n\t\t\t\t'RNScreenshotPrevent: enableSecureView not work in web.',\n\t\t\t\t!!imagePath ? `send: ${imagePath}` : ''\n\t\t\t);\n\t\t},\n\t\tdisableSecureView: (): void => {\n\t\t\tconsole.warn(\n\t\t\t\t'RNScreenshotPrevent: disableSecureView not work in web'\n\t\t\t);\n\t\t},\n\t};\n\taddListen = (fn: FN): Return => {\n\t\tif (typeof fn !== 'function') {\n\t\t\tconsole.error(\n\t\t\t\t'RNScreenshotPrevent: addListener requires valid callback function'\n\t\t\t);\n\t\t\treturn {\n\t\t\t\tremove: (): void => {\n\t\t\t\t\tconsole.error(\n\t\t\t\t\t\t'RNScreenshotPrevent: remove not work because addListener requires valid callback function'\n\t\t\t\t\t);\n\t\t\t\t},\n\t\t\t};\n\t\t}\n\t\tconsole.warn('RNScreenshotPrevent: addListener not work in web');\n\t\treturn {\n\t\t\tremove: (): void => {\n\t\t\t\tconsole.warn(\n\t\t\t\t\t'RNScreenshotPrevent: remove addListener not work in web'\n\t\t\t\t);\n\t\t\t},\n\t\t};\n\t};\n}\n\nexport const usePreventScreenshot = () => {\n\tuseEffect(() => {\n\t\tRNScreenshotPrevent?.enabled(true);\n\t\treturn () => {\n\t\t\tRNScreenshotPrevent?.enabled(false);\n\t\t};\n\t}, []);\n};\n\nexport const useDisableSecureView = (imagePath: string = '') => {\n\tuseEffect(() => {\n\t\tRNScreenshotPrevent?.enableSecureView(imagePath);\n\t\treturn () => {\n\t\t\tRNScreenshotPrevent?.disableSecureView();\n\t\t};\n\t\t// eslint-disable-next-line react-hooks/exhaustive-deps\n\t}, []);\n};\n\nexport const enabled: (enabled: boolean) => void = (enable) =>\n\tRNScreenshotPrevent?.enabled(enable);\n\nexport const enableSecureView: (imagePath?: string) => void = (imagePath) =>\n\tRNScreenshotPrevent?.enableSecureView(imagePath ?? '');\n\nexport const disableSecureView: () => void = () =>\n\tRNScreenshotPrevent?.disableSecureView();\n\nexport const addListener: (fn: FN) => Return = addListen;\n\nexport default RNScreenshotPrevent;\n"],"mappings":"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","ignoreList":[]}
 \ No newline at end of file
 diff --git a/lib/typescript/NativeRNScreenshotPrevent.d.ts b/lib/typescript/NativeRNScreenshotPrevent.d.ts
 new file mode 100644
@@ -1455,22 +1459,10 @@ index bfbde95cd58cfd922419b3af59d5a152b69dbde8..f353e85e82ba7480352036ef35dfde86
 +export declare const addListener: (fn: FN) => Return;
  export default RNScreenshotPrevent;
 diff --git a/package.json b/package.json
-index 42c26ead07c8d2c70443aa312fe0502c4dffd4be..408c14f729932d85e42b801030e757b42f81f3fe 100644
+index 42c26ead07c8d2c70443aa312fe0502c4dffd4be..961ef91f5d1599c3fd8f1fde44429abf8f2fdc54 100644
 --- a/package.json
 +++ b/package.json
-@@ -5,7 +5,10 @@
-   "main": "lib/module/index",
-   "module": "lib/module/index",
-   "types": "./src/index.d.ts",
--  "react-native": "lib/module/index",
-+  "react-native": {
-+    "lib/module/index": "lib/module/index",
-+    "path": "path-browserify"
-+  },
-   "source": "./src/index",
-   "files": [
-     "src",
-@@ -127,6 +130,16 @@
+@@ -127,6 +127,12 @@
    "codegenConfig": {
      "name": "RNScreenshotPreventSpec",
      "type": "modules",
@@ -1479,13 +1471,9 @@ index 42c26ead07c8d2c70443aa312fe0502c4dffd4be..408c14f729932d85e42b801030e757b4
 +    "android": {
 +      "javaPackageName": "com.killserver.screenshotprev"
 +    },
-+    "ios": {
++    "ios": {  
 +      "libraryName": "RNScreenshotPrevent"
 +    }
-+  },
-+  "browser": {
-+    "lib/module/index": "lib/module/index",
-+    "path": "path-browserify"
    }
  }
 diff --git a/src/NativeRNScreenshotPrevent.ts b/src/NativeRNScreenshotPrevent.ts
@@ -1508,11 +1496,30 @@ index 0000000000000000000000000000000000000000..e0c2ae2ed44e86e68e750e701baf9df8
 +}
 +
 +export default TurboModuleRegistry.get<Spec>('RNScreenshotPrevent');
+diff --git a/src/index.d.ts b/src/index.d.ts
+index 4ae53861dca03cbda558f7cd2779824f0f8e6097..1d1d3c259702e0c7da618dff7020e2fb558a9af5 100644
+--- a/src/index.d.ts
++++ b/src/index.d.ts
+@@ -1,8 +1,8 @@
+ declare module 'react-native-screenshot-prevent' {
+-  export function enabled(value: boolean): void
+-  export function enableSecureView(imagePath?: string): void;
+-  export function disableSecureView(): void;
+-  export function usePreventScreenshot(): void;
+-  export function useDisableSecureView(): void;
+-  export function addListener(fn: Function): void;
++	export function enabled(value: boolean): void;
++	export function enableSecureView(imagePath?: string): void;
++	export function disableSecureView(): void;
++	export function usePreventScreenshot(): void;
++	export function useDisableSecureView(): void;
++	export function addListener(fn: Function): void;
+ }
 diff --git a/src/index.ts b/src/index.ts
-index aa8f952601bb8d0c8c0d8b0f08ab4710f7e05fce..b275cea5d0904437717190d1e2f1ba313f4289e1 100644
+index aa8f952601bb8d0c8c0d8b0f08ab4710f7e05fce..c2d11627c75da1fce5730e4734e2398148a3ce7d 100644
 --- a/src/index.ts
 +++ b/src/index.ts
-@@ -1,88 +1,127 @@
+@@ -1,88 +1,132 @@
  import { NativeModules, NativeEventEmitter, Platform } from 'react-native';
  import { useEffect } from 'react';
 +import NativeScreenshotPrevent from './NativeRNScreenshotPrevent';
@@ -1558,17 +1565,22 @@ index aa8f952601bb8d0c8c0d8b0f08ab4710f7e05fce..b275cea5d0904437717190d1e2f1ba31
 -            };
 -        }
 +	if (nativeModule) {
-+		RNScreenshotPrevent = {
-+			...nativeModule,
-+			enableSecureView: (imagePath: string = '') => {
-+				nativeModule.enableSecureView(imagePath);
++		RNScreenshotPrevent = new Proxy(nativeModule, {
++			get(target, prop) {
++				if (prop === 'enableSecureView') {
++					return (imagePath: string = ''): void => {
++						target.enableSecureView(imagePath);
++					};
++				}
++				const value = target[prop];
++				return typeof value === 'function' ? value.bind(target) : value;
 +			},
-+		};
++		});
++		
++		const eventEmitter = new NativeEventEmitter(nativeModule);
  
 -        return eventEmitter.addListener("userDidTakeScreenshot", fn);
 -    }
-+		const eventEmitter = new NativeEventEmitter(nativeModule);
-+
 +		addListen = (fn: FN): Return => {
 +			if (typeof fn !== 'function') {
 +				console.error(

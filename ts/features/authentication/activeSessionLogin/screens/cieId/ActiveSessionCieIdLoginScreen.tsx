@@ -13,7 +13,6 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLoginSource";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { onLoginUriChanged } from "../../../common/utils/login";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 
@@ -117,9 +116,7 @@ const ActiveSessionCieIdLoginWebView = ({
         dispatch(activeSessionLoginFailure());
       }
       trackLoginFailure({
-        reason: new Error(
-          `login failure with code ${code || message || "n/a"}`
-        ),
+        reason: `login failure with code ${code || message || "n/a"}`,
         idp: "cieid",
         flow: "reauth"
       });
@@ -179,7 +176,7 @@ const ActiveSessionCieIdLoginWebView = ({
   }, [handleLoginFailure, checkIfUrlIsWhitelisted]);
 
   const handleLoginSuccess = useCallback(
-    (token: SessionToken) => {
+    (token: string) => {
       dispatch(activeSessionLoginSuccess(token));
     },
     [dispatch]

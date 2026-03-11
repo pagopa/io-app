@@ -13,7 +13,10 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useLayoutEffect, useRef } from "react";
 import { View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets
+} from "react-native-safe-area-context";
 import I18n from "i18next";
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -177,7 +180,7 @@ export const ActiveSessionLandingScreen = () => {
   }, [navigation, handleClosePress]);
 
   return (
-    <View style={{ flex: 1 }} testID="LandingScreen">
+    <SafeAreaView style={{ flex: 1 }} testID="LandingScreen">
       <LandingSessionExpiredComponent
         ref={accessibilityFirstFocuseViewRef}
         pictogramName={"identityCheck"}
@@ -217,6 +220,6 @@ export const ActiveSessionLandingScreen = () => {
         {insets.bottom !== 0 && <VSpacer size={SPACE_AROUND_BUTTON_LINK} />}
         {bottomSheet}
       </ContentWrapper>
-    </View>
+    </SafeAreaView>
   );
 };

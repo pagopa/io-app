@@ -1,3 +1,4 @@
+import { isString as lodashIsString } from "lodash";
 import { MessagesFailurePayload } from "../features/messages/store/actions";
 
 export type TimeoutError = { readonly kind: "timeout" };
@@ -10,8 +11,8 @@ export type NetworkError = TimeoutError | GenericError;
 export const getError = (error: unknown): Error => {
   if (error instanceof Error) {
     return error;
-  } else if (error instanceof String) {
-    return Error(error as string);
+  } else if (lodashIsString(error)) {
+    return Error(error);
   }
   return Error("unknown");
 };
@@ -71,3 +72,26 @@ export const convertUnknownToMessagesFailure = (
     filter: {}
   };
 };
+
+/**
+ * Serializes an Error object into a plain object that can be safely
+ * converted to JSON using `JSON.stringify()`.
+ *
+ * This is needed because `JSON.stringify(error)` returns `"{}"` for Error objects.
+ * The reason is that the standard Error properties (`name`, `message`, `stack`)
+ * are **non-enumerable** by default, and `JSON.stringify()` only serializes
+ * enumerable own properties.
+ *
+ * @param error - The Error object to serialize
+ * @returns A plain object containing `name`, `message`, and `stack` properties
+ *
+ * @example
+ * const error = new Error("Something went wrong");
+ * JSON.stringify(error); // "{}" - properties are non-enumerable!
+ * JSON.stringify(serializeError(error)); // {"name":"Error","message":"Something went wrong","stack":"..."}
+ */
+export const serializeError = (error: Error) => ({
+  name: error.name,
+  message: error.message,
+  stack: error.stack
+});

@@ -6,10 +6,10 @@ import I18n from "i18next";
 import { openWebUrl } from "../../../../utils/url";
 import { IT_WALLET_SURVEY_EID_REISSUANCE_SUCCESS } from "../utils/constants.ts";
 import {
-  TrackQualtricsSurvey,
   trackItwSurveyRequest,
   trackItwSurveyRequestAccepted
 } from "../../analytics";
+import { TrackQualtricsSurvey } from "../../analytics/utils/types.ts";
 
 const ItwReissuanceFeedbackBanner = () => {
   const { name: routeName } = useRoute();

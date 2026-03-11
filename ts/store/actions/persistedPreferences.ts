@@ -3,10 +3,13 @@
  */
 import { Calendar } from "react-native-calendar-events";
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { Locales } from "../../../locales/locales";
 import { ColorModeChoice } from "../../hooks/useAppThemeConfiguration";
+import { Locales } from "../../i18n";
 
 export type TypefaceChoice = "comfortable" | "standard";
+
+// These different locales only apply to the app labels
+export type AppLocale = "it" | "en" | "de" | "fr" | "sl";
 
 export const preferenceFingerprintIsEnabledSaveSuccess = createStandardAction(
   "PREFERENCES_FINGERPRINT_SAVE_SUCCESS"

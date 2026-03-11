@@ -5,8 +5,6 @@ import { Linking } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import {
-  CieCardReadingFailureReason,
-  ItwFlow,
   trackItWalletCardReadingClose,
   trackItWalletCieCardReadingFailure,
   trackItWalletCieCardReadingUnexpectedFailure,
@@ -17,7 +15,9 @@ import {
   trackItWalletErrorPin,
   trackItWalletLastErrorPin,
   trackItWalletSecondErrorPin
-} from "../../../analytics";
+} from "../../analytics";
+import { CieCardReadingFailureReason } from "../../analytics/types";
+import { ItwFlow } from "../../../analytics/utils/types.ts";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { type IdentificationContext } from "../../../machine/eid/context.ts";

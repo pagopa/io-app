@@ -31,6 +31,7 @@ export type PaymentAnalyticsProps = {
   psp_selected: string;
   editing: PaymentAnalyticsEditingType;
   browser_type: PaymentAnalyticsBrowserType;
+  is_onboarded: boolean;
 };
 
 const MYBANK_PSP_BANNER_ID = "mybank_psp_selection";

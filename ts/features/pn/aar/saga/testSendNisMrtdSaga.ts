@@ -1,7 +1,6 @@
 import * as E from "fp-ts/lib/Either";
 import { call, put, select } from "typed-redux-saga/macro";
 import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
-import { SessionToken } from "../../../../types/SessionToken";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { SendAARClient } from "../api/client";
 import { SagaCallReturnType } from "../../../../types/utils";
@@ -15,14 +14,14 @@ import { sendMandateIdSelector } from "../store/reducers/tempAarMandate";
 
 export function* testAarCreateMandateSaga(
   sendAARClient: SendAARClient,
-  sessionToken: SessionToken
+  sessionToken: string,
+  action: ReturnType<typeof testAarCreateMandate.request>
 ) {
   try {
     const createAARMandateRequest = sendAARClient.createAARMandate({
       Bearer: `Bearer ${sessionToken}`,
       body: {
-        aarQrCodeValue:
-          "https://cittadini.uat.notifichedigitali.it/io/?aar=UldKRy1XSkFNLVdaTEgtMjAyNTEyLVYtMV9QRi0wZmNlMzc0Yy0wM2ViLTQwNmUtODM0NS01OGI4ZGYzMjk5MTdfNmFlNTZjZjAtMjhmYS00M2U1LTgyMWEtMjEwMjUxOTkzNTdh"
+        aarQrCodeValue: action.payload
       },
       isTest: true
     });
@@ -61,7 +60,7 @@ export function* testAarCreateMandateSaga(
 
 export function* testAarAcceptMandateSaga(
   sendAARClient: SendAARClient,
-  sessionToken: SessionToken,
+  sessionToken: string,
   action: ReturnType<typeof testAarAcceptMandate.request>
 ) {
   const mandateId = yield* select(sendMandateIdSelector);

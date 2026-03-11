@@ -18,11 +18,9 @@ import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import { tosConfigSelector } from "../../../tos/store/selectors/index.ts";
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum.ts";
-import {
-  trackItWalletActivationStart,
-  trackItwIntroBack,
-  trackOpenItwTos
-} from "../../analytics/index.ts";
+import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
+import { trackItWalletActivationStart, trackItwIntroBack } from "../analytics";
+import { trackOpenItwTos } from "../../analytics";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog.tsx";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
 import { generateItwIOMarkdownRules } from "../../common/utils/markdown.tsx";
@@ -38,6 +36,9 @@ export const ItwDiscoveryInfoFallbackComponent = () => {
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
   const { tos_url } = useIOSelector(tosConfigSelector);
+  const mixPanelCredentialDetails = useIOSelector(
+    itwMixPanelCredentialDetailsSelector
+  );
 
   useOnFirstRender(
     useCallback(() => {
@@ -81,9 +82,9 @@ export const ItwDiscoveryInfoFallbackComponent = () => {
   });
 
   const handleContinuePress = useCallback(() => {
-    trackItWalletActivationStart("L2");
+    trackItWalletActivationStart("L2", mixPanelCredentialDetails);
     machineRef.send({ type: "accept-tos" });
-  }, [machineRef]);
+  }, [machineRef, mixPanelCredentialDetails]);
 
   return (
     <IOScrollView
