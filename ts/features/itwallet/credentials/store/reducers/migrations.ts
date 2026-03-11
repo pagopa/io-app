@@ -195,23 +195,22 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
         openid_credential_issuer,
         federation_entity
       } = config;
-      const isV1_0 = openid_credential_issuer.credential_issuer.includes("1-0");
       return {
         federation_entity,
         authorization_endpoint:
           oauth_authorization_server.authorization_endpoint,
         credential_endpoint: openid_credential_issuer.credential_endpoint,
         credential_issuer: openid_credential_issuer.credential_issuer,
-        credential_configurations_supported: isV1_0
-          ? openid_credential_issuer.credential_configurations_supported
-          : Object.fromEntries(
-              Object.entries<AnyRecord>(
-                openid_credential_issuer.credential_configurations_supported
-              ).map(([credId, credConfig]) => [
-                credId,
-                { ...credConfig, claims: mapClaims(credConfig.claims) }
-              ])
-            ),
+        credential_configurations_supported: Object.fromEntries(
+          Object.entries<AnyRecord>(
+            openid_credential_issuer.credential_configurations_supported
+          ).map(([credId, credConfig]) => [
+            credId,
+            Array.isArray(credConfig.claims)
+              ? credConfig
+              : { ...credConfig, claims: mapClaims(credConfig.claims) }
+          ])
+        ),
         keys: openid_credential_issuer.jwks.keys,
         pushed_authorization_request_endpoint:
           oauth_authorization_server.pushed_authorization_request_endpoint,
