@@ -5,6 +5,11 @@ import * as S from "fp-ts/lib/string";
 import { assign, type ActionArgs, type DoneActorEvent } from "xstate";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import ROUTES from "../../../../../navigation/routes.ts";
+import { trackItwRemoteDataShare } from "../analytics";
+import {
+  getRemoteCredentialCombination,
+  groupCredentialsByPurpose
+} from "../utils/itwRemotePresentationUtils";
 import { useIOStore } from "../../../../../store/hooks.ts";
 import { checkCurrentSession } from "../../../../authentication/common/store/actions/index.ts";
 import type { WalletInstanceAttestations } from "../../../common/utils/itwTypesUtils.ts";
@@ -71,6 +76,9 @@ export const createRemoteActionsImplementation = (
       const { required, optional } = groupCredentialsByPurpose(
         context.presentationDetails
       );
+      const credential_type = getRemoteCredentialCombination(
+        context.presentationDetails
+      );
       const requestedCredentials = [...required, ...optional];
 
       const data_type = optional.length > 0 ? "optional" : "required";
@@ -97,7 +105,8 @@ export const createRemoteActionsImplementation = (
 
       trackItwRemoteDataShare({
         data_type,
-        request_type
+        request_type,
+        credential_type
       });
     }
   },
