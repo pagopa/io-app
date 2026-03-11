@@ -12,17 +12,15 @@ import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBa
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { itwDisableItwActivation } from "../../common/store/actions/preferences";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
 
 type Props = {
   credentialType?: string;
 };
-export const ItwRestrictedModeFallbackComponent = ({
-  credentialType
-}: Props) => {
+export const ItwL2FallbackComponent = ({ credentialType }: Props) => {
   const navigation = useIONavigation();
-  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isWalletActive = useIOSelector(itwLifecycleIsValidSelector);
 
   const dispatch = useIODispatch();
@@ -37,12 +35,11 @@ export const ItwRestrictedModeFallbackComponent = ({
   );
 
   const handleDocIOIssuing = () => {
-    if (isWalletActive) {
+    if (isWalletActive && credentialType) {
       machineRef.send({
-        type: "start",
-        mode: "issuance",
-        level: "l2-fallback",
-        credentialType
+        type: "select-credential",
+        credentialType,
+        mode: "issuance"
       });
       return;
     }

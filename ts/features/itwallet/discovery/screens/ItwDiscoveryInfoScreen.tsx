@@ -9,7 +9,7 @@ import { ItwDiscoveryInfoComponent } from "../components/ItwDiscoveryInfoCompone
 import { ItwDiscoveryInfoFallbackComponent } from "../components/ItwDiscoveryInfoFallbackComponent.tsx";
 import { ItwDiscoveryInfoLegacyComponent } from "../components/ItwDiscoveryInfoLegacyComponent.tsx";
 import { ItwNfcNotSupportedComponent } from "../components/ItwNfcNotSupportedComponent.tsx";
-import { ItwRestrictedModeFallbackComponent } from "../components/ItwRestrictedModeFallbackComponent.tsx";
+import { ItwL2FallbackComponent } from "../components/ItwL2FallbackComponent.tsx";
 
 export type ItwDiscoveryInfoScreenNavigationParams = {
   level?: EidIssuanceLevel;
@@ -40,9 +40,7 @@ export const ItwDiscoveryInfoScreen = ({
   if (level === "l3") {
     if (isItWalletActivationDisabled || !hasNfcFeature) {
       if (canContinueWithDocIO) {
-        return (
-          <ItwRestrictedModeFallbackComponent credentialType={credentialType} />
-        );
+        return <ItwL2FallbackComponent credentialType={credentialType} />;
       }
       // // L3 requires NFC, show not supported screen
       return <ItwNfcNotSupportedComponent />;

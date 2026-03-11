@@ -201,12 +201,22 @@ export const itwShouldRenderUpgradeBannerSelector = (state: GlobalState) =>
   !itwIsWalletDiscoveryBannerHiddenSelector(state) &&
   !itwIsActivationDisabledSelector(state);
 
-export const itwShouldRenderRestrictedModeBannerSelector = (
+/**
+ * Returns whether the l2 restricted mode banner should be rendered.
+ * - The wallet is not offline
+ * - IT Wallet instance is not active
+ * - The wallet is not active (because the device does not have the nfc)
+ */
+export const itwShouldRenderL2EngagementBannerSelectorWithNoActiveWallet = (
   state: GlobalState
 ) =>
-  !itwLifecycleIsValidSelector(state) && itwIsActivationDisabledSelector(state);
+  !offlineAccessReasonSelector(state) &&
+  !itwLifecycleIsITWalletValidSelector(state) &&
+  !itwLifecycleIsValidSelector(state) &&
+  itwIsActivationDisabledSelector(state);
 
 export const itwShouldRenderL2EngagementBannerSelector = (state: GlobalState) =>
   !offlineAccessReasonSelector(state) &&
+  !itwLifecycleIsITWalletValidSelector(state) &&
   itwLifecycleIsValidSelector(state) &&
   itwIsActivationDisabledSelector(state);
