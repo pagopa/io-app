@@ -5,6 +5,7 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   trackFciDocSignatureFailure,
+  trackFciDocSignatureFailureAction,
   trackFciUxSuccess
 } from "../../analytics";
 import LoadingComponent from "../../components/LoadingComponent";
@@ -47,6 +48,11 @@ const FciThankyouScreen = () => {
         title={I18n.t("features.fci.errors.generic.signing.title")}
         subTitle={I18n.t("features.fci.errors.generic.signing.subTitle")}
         onPress={() => {
+          trackFciDocSignatureFailureAction(
+            errorMessage,
+            "custom_1",
+            I18n.t("features.fci.errors.buttons.retry")
+          );
           if (signatureRequestId) {
             dispatch(fciSignatureRequestRetryFromId(signatureRequestId));
           }
@@ -55,6 +61,13 @@ const FciThankyouScreen = () => {
         retry={true}
         assistance={true}
         testID="FciTypErrorScreenTestID"
+        onPressAssistance={() => {
+          trackFciDocSignatureFailureAction(
+            errorMessage,
+            "custom_2",
+            I18n.t("features.fci.errors.buttons.assistance")
+          );
+        }}
       />
     );
   };

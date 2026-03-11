@@ -51,6 +51,12 @@ export const FciDocumentPreviewScreen = (
           );
           dispatch(fciEndRequest());
         }}
+        onPressAssistance={() =>
+          trackFciTosDocPreviewFailureAction(
+            "custom_2",
+            I18n.t("features.fci.errors.buttons.assistance")
+          )
+        }
       />
     );
   }

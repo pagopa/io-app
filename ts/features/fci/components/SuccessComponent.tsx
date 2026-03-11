@@ -102,7 +102,12 @@ const SuccessComponent = (props: {
         />
       );
     default:
-      // check with Alessia
+      /* This case should not occur because all cases mapped
+      by openapi are handled. If the status we receive
+      from the BE is not mapped in the specifications,
+      we receive an error handled by the error branch in
+      the ts/features/fci/screens/FciRouterScreen.tsx file,
+      so this default is never triggered. */
       return (
         <SignatureStatusComponent
           title={I18n.t("features.fci.errors.generic.default.title")}

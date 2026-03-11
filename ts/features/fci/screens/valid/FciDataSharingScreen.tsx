@@ -136,7 +136,7 @@ const FciDataSharingScreen = (): ReactElement => {
             content={I18n.t("features.fci.shareDataScreen.alertText")}
             action={I18n.t("features.fci.shareDataScreen.alertLink")}
             onPress={() => {
-              // check with Alessia
+              // check with Alessia. The email change is already tracked
               trackFciChangeEmail();
               trackFciUserExit(route.name, fciEnvironment, "modifica_email");
               navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {

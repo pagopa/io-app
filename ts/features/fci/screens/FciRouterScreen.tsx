@@ -65,7 +65,8 @@ const FciSignatureScreen = (
   );
 
   const GenericError = (problemJson?: ProblemJson) => {
-    // check with Alessia
+    const errorReason = problemJson ? problemJson.toString() : "unknown_error";
+    // check with Alessia if we want to track all the different errors reason or just a generic one
     // if the status is 404, the user is not the owner of the signature request
     if (problemJson?.status === 404) {
       return (
@@ -85,7 +86,7 @@ const FciSignatureScreen = (
         subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
         onPress={() => {
           trackFciSignatureDetailFailureAction(
-            problemJson ? problemJson.toString() : "unknown_error",
+            errorReason,
             "custom_1",
             I18n.t("features.fci.errors.buttons.close")
           );
@@ -93,6 +94,13 @@ const FciSignatureScreen = (
         }}
         pictogram={"umbrella"}
         testID="GenericErrorComponentTestID"
+        onPressAssistance={() => {
+          trackFciSignatureDetailFailureAction(
+            errorReason,
+            "custom_2",
+            I18n.t("features.fci.errors.buttons.assistance")
+          );
+        }}
       />
     );
   };

@@ -211,7 +211,7 @@ const FciDocumentsScreen = () => {
         uri: `${downloadPath}`
       }}
       onLoadComplete={(numberOfPages, _) => {
-        trackFciDocumentsView(); // check with Alessia
+        trackFciDocumentsView(); // check with Alessia if is correct to track where the document is loaded
         if (!isFocused) {
           return;
         }
