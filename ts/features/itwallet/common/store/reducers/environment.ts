@@ -3,7 +3,7 @@ import { type ItwVersion } from "@pagopa/io-react-native-wallet";
 import { Action } from "../../../../../store/actions/types";
 import { EnvType } from "../../utils/environment.ts";
 import {
-  itwChangeSpecsVersion,
+  itwSetSpecsVersion,
   itwResetEnv,
   itwSetEnv
 } from "../actions/environment.ts";
@@ -39,7 +39,7 @@ const reducer = (
       };
     }
 
-    case getType(itwChangeSpecsVersion):
+    case getType(itwSetSpecsVersion):
       return {
         ...state,
         itWalletSpecsVersion: action.payload
