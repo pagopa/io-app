@@ -45,6 +45,16 @@ export const trackFciDocAlreadySigned = () =>
     buildEventProperties("KO", "screen_view")
   );
 
+export const trackFciSignatureDetailFailureAction = (
+  reason: string,
+  cta_category: "custom_1" | "custom_2",
+  cta_id: string
+) =>
+  mixpanelTrack(
+    "FCI_SIGNATURE_DETAIL_FAILURE_ACTION",
+    buildEventProperties("UX", "action", { reason, cta_category, cta_id })
+  );
+
 export const trackFciDocOpening = (
   expire_date: SignatureRequestDetailView["expires_at"],
   total_doc_count: number,
@@ -84,6 +94,21 @@ export const trackFciTosDocPreview = () =>
   mixpanelTrack(
     "FCI_TOS_DOC_PREVIEW",
     buildEventProperties("UX", "screen_view")
+  );
+
+export const trackFciTosDocPreviewFailure = () =>
+  mixpanelTrack(
+    "FCI_TOS_DOC_PREVIEW_FAILURE",
+    buildEventProperties("UX", "screen_view")
+  );
+
+export const trackFciTosDocPreviewFailureAction = (
+  cta_category: "custom_1" | "custom_2",
+  cta_id: string
+) =>
+  mixpanelTrack(
+    "FCI_TOS_DOC_PREVIEW_FAILURE_ACTION",
+    buildEventProperties("KO", "screen_view", { cta_category, cta_id })
   );
 
 export const trackFciDocSignatureFailure = (reason: string) =>
@@ -196,6 +221,21 @@ export const trackFciBottomsheetMessagePermissionDeclined = () =>
   mixpanelTrack(
     "FCI_MESSAGE_PERMISSION_DECLINED",
     buildEventProperties("UX", "action")
+  );
+
+export const trackFciPollingFailureScreenView = () =>
+  mixpanelTrack(
+    "FCI_POLLING_FAILURE",
+    buildEventProperties("KO", "screen_view")
+  );
+
+export const trackFciPollingFailureAction = (
+  cta_category: "custom_1" | "custom_2",
+  cta_id: string
+) =>
+  mixpanelTrack(
+    "FCI_POLLING_FAILURE_ACTION",
+    buildEventProperties("UX", "action", { cta_category, cta_id })
   );
 
 const trackFciAction =

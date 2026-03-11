@@ -16,7 +16,12 @@ import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
 import { servicePreferencePotByIdSelector } from "../../../services/details/store/selectors";
 import { isServicePreferenceResponseSuccess } from "../../../services/details/types/ServicePreferenceResponse";
-import { trackFciQtspTos, trackFciUxConversion } from "../../analytics";
+import {
+  trackFciPollingFailureAction,
+  trackFciPollingFailureScreenView,
+  trackFciQtspTos,
+  trackFciUxConversion
+} from "../../analytics";
 import LinkedText from "../../components/LinkedText";
 import LoadingComponent from "../../components/LoadingComponent";
 import QtspClauseListItem from "../../components/QtspClauseListItem";
@@ -98,14 +103,28 @@ const FciQtspClausesScreen = () => {
   });
 
   if (fciPollFilledDocumentError && !isPollFilledDocumentReady) {
+    trackFciPollingFailureScreenView();
+    // check with Alessia
     return (
       <SignatureStatusComponent
         title={I18n.t("features.fci.errors.generic.default.title")}
         subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
-        onPress={() => dispatch(fciEndRequest())}
+        onPress={() => {
+          trackFciPollingFailureAction(
+            "custom_1",
+            I18n.t("features.fci.errors.buttons.close")
+          );
+          dispatch(fciEndRequest());
+        }}
         pictogram={"umbrella"}
         assistance={true}
         testID="PollingErrorComponentTestID"
+        onPressAssistance={() =>
+          trackFciPollingFailureAction(
+            "custom_2",
+            I18n.t("features.fci.errors.buttons.assistance")
+          )
+        }
       />
     );
   } else if (!isPollFilledDocumentReady) {

@@ -10,7 +10,11 @@ import { FciParamsList } from "../../navigation/params";
 import { fciDownloadPreviewClear, fciEndRequest } from "../../store/actions";
 import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
 import SignatureStatusComponent from "../../components/SignatureStatusComponent";
-import { trackFciTosDocPreview } from "../../analytics";
+import {
+  trackFciTosDocPreview,
+  trackFciTosDocPreviewFailure,
+  trackFciTosDocPreviewFailureAction
+} from "../../analytics";
 
 export type FciDocumentPreviewScreenNavigationParams = Readonly<{
   documentUrl: string;
@@ -32,14 +36,21 @@ export const FciDocumentPreviewScreen = (
   });
 
   if (isError) {
-    // check with Alessia
+    trackFciTosDocPreviewFailure();
     return (
       <SignatureStatusComponent
         title={I18n.t("features.fci.errors.generic.default.title")}
         subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
         pictogram={"umbrella"}
         retry={false}
-        onPress={() => dispatch(fciEndRequest())}
+        onPress={() => {
+          // check with Alessia
+          trackFciTosDocPreviewFailureAction(
+            "custom_1",
+            I18n.t("features.fci.errors.buttons.close")
+          );
+          dispatch(fciEndRequest());
+        }}
       />
     );
   }

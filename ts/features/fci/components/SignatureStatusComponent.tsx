@@ -32,6 +32,7 @@ export type Props = WithTestID<{
   retry?: boolean;
   assistance?: boolean;
   onPress: () => void;
+  onPressAssistance?: () => void;
 }>;
 
 const SignatureStatusComponent = ({
@@ -42,7 +43,8 @@ const SignatureStatusComponent = ({
   retry,
   assistance,
   onPress,
-  testID
+  testID,
+  onPressAssistance
 }: Props) => {
   const dispatch = useIODispatch();
   const signatureRequestId = useIOSelector(fciSignatureRequestIdSelector);
@@ -65,6 +67,9 @@ const SignatureStatusComponent = ({
   };
 
   const handleAskAssistance = () => {
+    if (onPressAssistance) {
+      onPressAssistance();
+    }
     switch (choosenTool) {
       case ToolEnum.zendesk:
         zendeskAssistanceLogAndStart();
