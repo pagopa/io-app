@@ -15,15 +15,16 @@ import { SignatureFieldToBeCreatedAttrs } from "../../../../definitions/fci/Sign
 import { SignatureFieldAttrType } from "../components/DocumentWithSignature";
 import { ExistingSignatureFieldAttrs } from "../../../../definitions/fci/ExistingSignatureFieldAttrs";
 import { savePath } from "../saga/networking/handleDownloadDocument";
+import { TranslationKeys } from "../../../i18n";
 
-const clausesEnumValues = {
+const clausesEnumValues: Record<ClauseTypeEnum, TranslationKeys> = {
   [ClauseTypeEnum.REQUIRED]: "features.fci.signatureFields.required",
   [ClauseTypeEnum.UNFAIR]: "features.fci.signatureFields.unfair",
   [ClauseTypeEnum.OPTIONAL]: "features.fci.signatureFields.optional"
 };
 
 export const getClauseLabel = (clauseType: ClauseTypeEnum) =>
-  I18n.t(clausesEnumValues[clauseType] as any);
+  I18n.t(clausesEnumValues[clauseType]);
 
 export type LIST_DATA_TYPE = {
   title: string;
