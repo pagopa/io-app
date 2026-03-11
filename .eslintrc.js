@@ -28,7 +28,8 @@ module.exports = {
     "functional",
     "sonarjs",
     "@jambit/typed-redux-saga",
-    "@stylistic/eslint-plugin-js"
+    "@stylistic/eslint-plugin-js",
+    "i18next"
   ],
   rules: {
     //Rules from react 17 https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html#eslint
@@ -124,6 +125,26 @@ module.exports = {
     "react-native/no-single-element-style-arrays": "warn",
     /* Too much verbose. It also requires a lot of effort in the main repo */
     "react-native-a11y/has-accessibility-hint": "off",
+    "i18next/no-literal-string": [
+      "warn",
+      {
+        mode: "jsx-text-only",
+        "jsx-attributes": {
+          include: ["accessibilityLabel", "accessibilityHint", "placeholder", "title", "alt"],
+          exclude: []
+        },
+        "jsx-components": {
+          include: [],
+          exclude: ["Trans"]
+        },
+        words: {
+          exclude: [
+            "\\s+",
+            "[0-9!-/:-@\\[-`{-~]+"
+          ]
+        }
+      }
+    ],
     "no-restricted-imports": [
       "error",
       {
@@ -150,7 +171,8 @@ module.exports = {
     {
       files: ["**/*.test.*"],
       rules: {
-        "@typescript-eslint/no-non-null-assertion": "off"
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "i18next/no-literal-string": "off"
       }
     },
     {
