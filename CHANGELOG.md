@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.26.0-rc.1](https://github.com/pagopa/io-app/compare/3.26.0-rc.0...3.26.0-rc.1) (2026-03-11)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4013](https://pagopa.atlassian.net/browse/SIW-4013)] Add check to display frequency header exclusively for the L3 reissuance flow ([#7931](https://github.com/pagopa/io-app/issues/7931)) ([b464817](https://github.com/pagopa/io-app/commit/b464817cbac59337f2da3aa542ef6e776f57688c))
+
+
+### Chores
+
+* [[IOPLT-1688](https://pagopa.atlassian.net/browse/IOPLT-1688)] Add `eslint-plugin-i18next` to avoid not-localized hardcoded strings ([#7932](https://github.com/pagopa/io-app/issues/7932)) ([fb8d36a](https://github.com/pagopa/io-app/commit/fb8d36aaa8b088d681953ab1d48945d4ce62e773))
+
 ## [3.26.0-rc.0](https://github.com/pagopa/io-app/compare/3.25.0-rc.5...3.26.0-rc.0) (2026-03-11)
 
 
