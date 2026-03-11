@@ -105,7 +105,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-android:
-    name: Release Android app on Play Store
+    name: Publish Android build to Play Store for 
     needs: bump-app-version
     environment: prod
     runs-on: ubuntu-24.04
@@ -198,7 +198,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-ios:
-    name: Release iOS app on App Store
+    name: Publish iOS build to App Store for internal testers
     needs: bump-app-version
     environment: prod
     runs-on: macos-26-xlarge
