@@ -24,7 +24,15 @@
       "Friday",
       "Saturday"
     ],
-    "abbr_day_names": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "abbr_day_names": [
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat"
+    ],
     "month_names": [
       " ",
       "January",
@@ -55,7 +63,10 @@
       "Nov",
       "Dec"
     ],
-    "meridian": ["am", "pm"],
+    "meridian": [
+      "am",
+      "pm"
+    ],
     "time": {
       "minutes_zero": "0 minutes",
       "minutes_one": "1 minute",
@@ -1657,7 +1668,6 @@
         }
       },
       "paypal": {
-        "name": "PayPal",
         "headerTitle": "Add PayPal",
         "emailNotAvailable": "not available",
         "start": {
@@ -2047,15 +2057,10 @@
         "name": "PagoBANCOMAT card",
         "description": "The card used to pay in stores"
       },
-      "bank": {
-        "name": "Bancomat Pay"
-      },
       "bancomatPay": {
-        "name": "BANCOMAT Pay",
         "description": "Pay with your linked card or bank account"
       },
       "postepayApp": {
-        "name": "Postepay",
         "description": "your Postepay app"
       },
       "postepay": {
@@ -2063,11 +2068,7 @@
         "description": "Cards issued by Poste Italiane"
       },
       "paypal": {
-        "name": "PayPal",
         "description": "Pay with your linked card or bank account"
-      },
-      "bancomat": {
-        "name": "PagoBANCOMAT"
       },
       "cobadge": {
         "name": "international circuit"
@@ -4064,10 +4065,6 @@
           "labels": {
             "AUTHORIZED": "Authorized"
           }
-        },
-        "refund": {
-          "iban": "IBAN",
-          "cro": "CRO"
         }
       },
       "cie": {

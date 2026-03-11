@@ -23,7 +23,15 @@
       "Freitag",
       "Samstag"
     ],
-    "abbr_day_names": ["So.", "Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."],
+    "abbr_day_names": [
+      "So.",
+      "Mo.",
+      "Di.",
+      "Mi.",
+      "Do.",
+      "Fr.",
+      "Sa."
+    ],
     "month_names": [
       " ",
       "Januar",
@@ -54,7 +62,10 @@
       "Nov.",
       "Dez."
     ],
-    "meridian": ["am", "pm"]
+    "meridian": [
+      "am",
+      "pm"
+    ]
   },
   "global": {
     "why": "Warum?",
@@ -1508,7 +1519,6 @@
         }
       },
       "paypal": {
-        "name": "PayPal",
         "headerTitle": "PayPal hinzufügen",
         "emailNotAvailable": "nicht verfügbar",
         "start": {
@@ -1941,15 +1951,10 @@
         "name": "PagoBANCOMAT-Karte",
         "description": "Das Zahlungsnetzwerk, mit dem du in Geschäften bezahlst"
       },
-      "bank": {
-        "name": "BANCOMAT Pay"
-      },
       "bancomatPay": {
-        "name": "BANCOMAT Pay",
         "description": "Bezahlen mit Karte oder verbundenem Kontokorrent"
       },
       "postepayApp": {
-        "name": "Postepay",
         "description": "Deine Postepay-App"
       },
       "postepay": {
@@ -1957,11 +1962,7 @@
         "description": "Die Karten von Poste Italiane"
       },
       "paypal": {
-        "name": "PayPal",
         "description": "Bezahlen mit Karte oder verbundenem Kontokorrent"
-      },
-      "bancomat": {
-        "name": "PagoBANCOMAT"
       },
       "cobadge": {
         "name": "Internationales Zahlungsnetzwerk"
