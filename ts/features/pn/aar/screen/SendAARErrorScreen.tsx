@@ -10,7 +10,7 @@ import { SendAarGenericErrorComponent } from "../components/errors/SendAARErrorC
 import { SendAarNfcNotSupportedComponent } from "../components/errors/SendAarNfcNotSupportedComponent";
 import { SendAarNotAddresseeKoComponent } from "../components/errors/SendAarNotAddresseeKoComponent";
 import { currentAARFlowData } from "../store/selectors";
-import { getSendAarErrorComponent } from "../utils/aarErrorMappings";
+import { getAarErrorBehaviour } from "../utils/aarErrorMappings";
 import { sendAARFlowStates } from "../utils/stateUtils";
 
 export const SendAARErrorScreen = () => {
@@ -20,13 +20,13 @@ export const SendAARErrorScreen = () => {
   const { type } = flowData;
 
   useEffect(() => {
-    // handle navigation for retryable errors
     if (type === sendAARFlowStates.notAddresseeFinal) {
       trackSendAARAccessDeniedScreenView();
     }
   }, [type]);
 
   useEffect(() => {
+    // handle navigation for retryable errors
     if (type === sendAARFlowStates.cieCanAdvisory) {
       navigation.replace(PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL);
     }
@@ -40,7 +40,9 @@ export const SendAARErrorScreen = () => {
       return <SendAarNfcNotSupportedComponent />;
     }
     case sendAARFlowStates.ko: {
-      const ErrorComponent = getSendAarErrorComponent(flowData.error?.errors);
+      const { Component: ErrorComponent } = getAarErrorBehaviour(
+        flowData.error
+      );
       return <ErrorComponent />;
     }
     case sendAARFlowStates.cieCanAdvisory: {
