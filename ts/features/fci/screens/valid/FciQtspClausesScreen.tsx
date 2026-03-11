@@ -104,7 +104,6 @@ const FciQtspClausesScreen = () => {
 
   if (fciPollFilledDocumentError && !isPollFilledDocumentReady) {
     trackFciPollingFailureScreenView();
-    // check with Alessia
     return (
       <SignatureStatusComponent
         title={I18n.t("features.fci.errors.generic.default.title")}

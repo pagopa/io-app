@@ -52,6 +52,7 @@ import {
   getRequiredSignatureFields,
   getSignatureFieldsLength
 } from "../../utils/signatureFields";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -86,6 +87,10 @@ const FciDocumentsScreen = () => {
     footerActionsInlineMeasurements,
     handleFooterActionsInlineMeasurements
   } = useFooterActionsInlineMeasurements();
+
+  useOnFirstRender(() => {
+    trackFciDocumentsView();
+  });
 
   // Initialize document signatures once when documents are loaded
   useEffect(() => {
@@ -211,7 +216,6 @@ const FciDocumentsScreen = () => {
         uri: `${downloadPath}`
       }}
       onLoadComplete={(numberOfPages, _) => {
-        trackFciDocumentsView(); // check with Alessia if is correct to track where the document is loaded
         if (!isFocused) {
           return;
         }

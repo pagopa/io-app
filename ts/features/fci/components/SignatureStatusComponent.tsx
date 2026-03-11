@@ -34,7 +34,6 @@ export type Props = WithTestID<{
   onPress: () => void;
   onPressAssistance?: () => void;
 }>;
-
 const SignatureStatusComponent = ({
   title,
   subTitle,
@@ -77,6 +76,9 @@ const SignatureStatusComponent = ({
     }
   };
 
+  // If the button text changes in the future, you will need to update
+  // the properties tracked in Analytics where the same texts are used
+  // (e.g., FCI_SIGNATURE_DETAIL_FAILURE_ACTION).
   const retryButtonProps = {
     testID: "FciRetryButtonTestID",
     onPress,

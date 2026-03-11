@@ -44,7 +44,6 @@ export const FciDocumentPreviewScreen = (
         pictogram={"umbrella"}
         retry={false}
         onPress={() => {
-          // check with Alessia
           trackFciTosDocPreviewFailureAction(
             "custom_1",
             I18n.t("features.fci.errors.buttons.close")

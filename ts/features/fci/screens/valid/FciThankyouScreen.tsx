@@ -40,8 +40,6 @@ const FciThankyouScreen = () => {
     } else {
       errorMessage = error.message;
     }
-    // check with Alessia are tracked FCI_DOC_SIGNATURE_FAILURE and FCI_SIGNING_FAILURE
-    // check with Alessia FCI_DOC_SIGNATURE_FAILURE_ACTION
     trackFciDocSignatureFailure(errorMessage);
     return (
       <SignatureStatusComponent

@@ -66,8 +66,6 @@ const FciSignatureScreen = (
 
   const GenericError = (problemJson?: ProblemJson) => {
     const errorReason = problemJson ? problemJson.toString() : "unknown_error";
-    // check with Alessia if we want to track all the different errors reason or just a generic one
-    // if the status is 404, the user is not the owner of the signature request
     if (problemJson?.status === 404) {
       return (
         <ErrorComponent
@@ -79,7 +77,6 @@ const FciSignatureScreen = (
         />
       );
     }
-    // check with Alessia
     return (
       <SignatureStatusComponent
         title={I18n.t("features.fci.errors.generic.default.title")}
