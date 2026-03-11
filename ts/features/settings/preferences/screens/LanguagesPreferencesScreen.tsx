@@ -22,12 +22,11 @@ import {
   useState
 } from "react";
 import { Alert, View } from "react-native";
-import { Locales } from "../../../../../locales/locales";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { AlertModal } from "../../../../components/ui/AlertModal";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { LightModalContext } from "../../../../components/ui/LightModal";
-import { availableTranslations } from "../../../../i18n";
+import { availableTranslations, Locales } from "../../../../i18n";
 import {
   AppLocale,
   preferredLanguageSaveSuccess
