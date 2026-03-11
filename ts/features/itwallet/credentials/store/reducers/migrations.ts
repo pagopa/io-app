@@ -202,7 +202,7 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
         credential_endpoint: openid_credential_issuer.credential_endpoint,
         credential_issuer: openid_credential_issuer.credential_issuer,
         credential_configurations_supported: Object.fromEntries(
-          Object.entries<AnyRecord>(
+          Object.entries<any>(
             openid_credential_issuer.credential_configurations_supported
           ).map(([credId, credConfig]) => [
             credId,

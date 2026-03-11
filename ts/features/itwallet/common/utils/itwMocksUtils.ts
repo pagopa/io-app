@@ -52,7 +52,6 @@ export const ItwCredentialFromCatalogueMocks: DigitalCredentialMetadata = {
   name: "Tessera Sanitaria Digitale",
   description:
     "Versione Digitale della Tessera Sanitaria - Tessera europea di assicurazione malattia",
-  // claims: [],
   purposes: [],
   version: "1.0",
   credential_type: "EuropeanHealthInsuranceCard",
