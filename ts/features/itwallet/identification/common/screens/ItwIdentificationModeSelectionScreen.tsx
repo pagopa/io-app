@@ -179,7 +179,7 @@ export const ItwIdentificationModeSelectionScreen = ({
       <ContentWrapper>
         <VSpacer size={8} />
         <VStack space={16}>
-          {isReissuanceMode ? (
+          {isReissuanceMode && isL3 ? (
             <>
               {(!isCiePinDisabled || !isCieIdDisabled) && (
                 <VStack space={8}>
@@ -251,8 +251,8 @@ const CiePinMethodModule = () => {
   });
 
   const badgeProps: Badge | undefined = useMemo(() => {
-    if (mode === "reissuance" || (level === "l2" && mode === "issuance")) {
-      // Should not display the recommended badge for reissuance or L2 issuance
+    // Show the recommended badge only during the L3 activation flow.
+    if (level !== "l3" || mode === "reissuance") {
       return undefined;
     }
 
@@ -268,7 +268,9 @@ const CiePinMethodModule = () => {
     <>
       <ModuleNavigationAlt
         title={I18n.t(`${i18nNs}.mode.ciePin.title`)}
-        subtitle={I18n.t(`${i18nNs}.mode.ciePin.subtitle`)}
+        subtitle={I18n.t(
+          `${i18nNs}.mode.ciePin.subtitle.${isL3 ? "l3" : "default"}`
+        )}
         testID="CiePinMethodModuleTestID"
         icon="cieCard"
         onPress={() => {
