@@ -196,6 +196,8 @@
       "back": "Back",
       "confirm": "Confirm",
       "close": "Close",
+      "next": "Next",
+      "previous": "Previous",
       "exit": "Exit",
       "saveSelection": "Save the selection",
       "search": "Search",
@@ -2794,6 +2796,7 @@
       "useUnlockCode": " use your **unlock code**",
       "useUnlockCodeA11y": "use your unlock code"
     },
+    "insertDevPin": "Insert the default developer PIN",
     "title": "Hi {{name}}!",
     "titleProfileName": "Hi {{profileName}}!",
     "titleValidation": "Authorise the operation.",

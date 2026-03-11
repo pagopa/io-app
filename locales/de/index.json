@@ -185,6 +185,8 @@
       "back": "Zurück",
       "confirm": "Bestätigen",
       "close": "Schließen",
+      "next": "Weiter",
+      "previous": "Zurück",
       "exit": "Beenden",
       "saveSelection": "Speichern Sie die Auswahl",
       "search": "Suche",
@@ -2763,6 +2765,7 @@
       "useUnlockCode": "benutze deinen **Entsperrcode**",
       "useUnlockCodeA11y": "benutze deinen Entsperrcode"
     },
+    "insertDevPin": "Standard-Entwickler-PIN eingeben",
     "title": "Hallo {{name}}!",
     "titleProfileName": "Hallo {{profileName}}!",
     "titleValidation": "Vorgang genehmigen",

@@ -127,6 +127,7 @@ module.exports = {
     "react-native-a11y/has-accessibility-hint": "off",
     /* Prevents hardcoded strings in JSX. All user-facing text must use i18n (e.g. I18n.t("key")).
      * - mode "jsx-only": checks text inside JSX elements and string literals in JSX expressions
+     *   (e.g. <Body>Hello</Body> and <Body>{condition ? "Hello" : "World"}</Body>)
      * - jsx-attributes.include: also enforces i18n on user-facing attributes (a11y labels, placeholders, etc.)
      * - jsx-components.exclude: skips <Trans> since it already handles translations via react-i18next
      * - words.exclude: ignores non-translatable patterns:
@@ -134,7 +135,8 @@ module.exports = {
      *     "[0-9!-/:-@\\[-`{-~]+"         → numbers, punctuation, and special characters
      *     "[•·]+"                         → masking dots used for card numbers (e.g. "•••• 1234")
      *     "."                             → single-character strings like unit suffixes (e.g. "s" in "{count}s")
-     * Excluded areas (see overrides): design-system, playgrounds, devMode, __mocks__, test files */
+     * - object-properties.exclude: testID values are test identifiers, not user-facing text
+     * Excluded areas (see overrides): design-system, playgrounds, devMode, debug, __mocks__, test files */
     "i18next/no-literal-string": [
       "error",
       {
@@ -154,6 +156,10 @@ module.exports = {
             "[•·]+",
             "."
           ]
+        },
+        "object-properties": {
+          include: [],
+          exclude: ["testID"]
         }
       }
     ],
@@ -194,6 +200,7 @@ module.exports = {
         "**/design-system/**",
         "**/playgrounds/**",
         "**/devMode/**",
+        "**/debug/**",
         "**/__mocks__/**"
       ],
       rules: {

@@ -10,17 +10,17 @@ import { FunctionComponent, useState } from "react";
 import { Platform, Pressable, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { connect } from "react-redux";
-import { selectItwEnv } from "../features/itwallet/common/store/selectors/environment";
-import { ReduxProps } from "../store/actions/types";
-import { useIOSelector } from "../store/hooks";
-import { currentRouteSelector } from "../store/reducers/navigation";
-import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
-import { GlobalState } from "../store/reducers/types";
-import { getAppVersion } from "../utils/appVersion";
-import { clipboardSetStringWithFeedback } from "../utils/clipboard";
-import PagoPATestIndicator from "./PagoPATestIndicator";
-import { DebugDataIndicator } from "./debug/DebugDataIndicator";
-import { DebugDataOverlay } from "./debug/DebugDataOverlay";
+import { selectItwEnv } from "../../features/itwallet/common/store/selectors/environment";
+import { ReduxProps } from "../../store/actions/types";
+import { useIOSelector } from "../../store/hooks";
+import { currentRouteSelector } from "../../store/reducers/navigation";
+import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { GlobalState } from "../../store/reducers/types";
+import { getAppVersion } from "../../utils/appVersion";
+import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
+import PagoPATestIndicator from "../PagoPATestIndicator";
+import { DebugDataIndicator } from "./DebugDataIndicator";
+import { DebugDataOverlay } from "./DebugDataOverlay";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
@@ -147,7 +147,7 @@ const ItwPreIndicator = () => {
         }
       ]}
     >
-      {/* eslint-disable i18next/no-literal-string */}
+      { }
       <IOText
         color={"error-850"}
         font="TitilliumSansPro"
@@ -157,7 +157,7 @@ const ItwPreIndicator = () => {
       >
         ITW PRE
       </IOText>
-      {/* eslint-enable i18next/no-literal-string */}
+      { }
     </View>
   );
 };
