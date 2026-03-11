@@ -11,7 +11,7 @@ import * as t from "io-ts";
 import { truncate } from "lodash";
 import I18n from "i18next";
 import { addPadding } from "@pagopa/io-react-native-jwt";
-import { Locales } from "../../../../../locales/locales";
+import { Locales } from "../../../../i18n";
 import { JsonFromString } from "./ItwCodecUtils";
 import { ParsedCredential, CredentialMetadata } from "./itwTypesUtils";
 
