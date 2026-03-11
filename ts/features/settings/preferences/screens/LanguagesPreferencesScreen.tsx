@@ -14,9 +14,8 @@ import I18n from "i18next";
 import _ from "lodash";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Alert, View } from "react-native";
-import { Locales } from "../../../../../locales/locales";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { availableTranslations, setLocale } from "../../../../i18n";
+import { availableTranslations, Locales, setLocale } from "../../../../i18n";
 import { preferredLanguageSaveSuccess } from "../../../../store/actions/persistedPreferences";
 
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
