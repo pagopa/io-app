@@ -65,7 +65,7 @@ describe("ItwIdentificationModeSelectionScreen", () => {
     expect(component.queryByTestId("noCieButtonTestID")).not.toBeNull();
   });
 
-  it("[reissuance, l2] should show the legacy authentication methods list without frequency headers", () => {
+  it("[reissuance, l2] should show CiePin (w/badge), CieId and SPID authentication methods", () => {
     const component = renderComponent("reissuance", "l2");
 
     expect(component.queryByText("Ogni 12 mesi")).toBeNull();
