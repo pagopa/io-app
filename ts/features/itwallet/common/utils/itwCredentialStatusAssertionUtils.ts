@@ -23,7 +23,7 @@ export const getCredentialStatusAssertion = async (
   env: Env
 ) => {
   // Legacy credentials carry the legacy Issuer configuration, which is incompatible with the new API.
-  // In this scenario the new configuration is fetched and used instead of `credential.issuerConf`.
+  // In this scenario the new configuration is fetched and used instead of `metadata.issuerConf`.
   const issuerConf =
     metadata.format === CredentialFormat.LEGACY_SD_JWT
       ? await fetchIssuerConfShared(env)
