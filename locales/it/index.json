@@ -8,7 +8,7 @@
       }
     }
   },
-  "date":{
+  "date": {
     "time": {
       "minutes_zero": "0 minuti",
       "minutes_one": "1 minuto",
@@ -16,7 +16,8 @@
       "seconds_zero": "0 secondi",
       "seconds_one": "1 secondo",
       "seconds_other": "{{count}} secondi"
-    }},
+    }
+  },
   "global": {
     "why": "Perché?",
     "badges": {
