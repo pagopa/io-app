@@ -6,10 +6,10 @@ import Animated, { LinearTransition } from "react-native-reanimated";
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
 import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
+import { ItwL2EngagementBanner } from "../../itwallet/common/components/ItwL2EngagementBanner";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
 import {
-  itwShouldRenderL2EngagementBannerSelector,
   itwShouldRenderL2EngagementBannerSelectorWithNoActiveWallet,
   itwShouldRenderWalletDiscoveryBannerSelector
 } from "../../itwallet/common/store/selectors";
@@ -23,7 +23,6 @@ import {
   shouldRenderWalletLoadingStateSelector
 } from "../store/selectors";
 import { withWalletCategoryFilter } from "../utils";
-import { ItwL2EngagementBanner } from "../../itwallet/common/components/ItwL2EngagementBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
