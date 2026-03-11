@@ -268,7 +268,9 @@ const CiePinMethodModule = () => {
     <>
       <ModuleNavigationAlt
         title={I18n.t(`${i18nNs}.mode.ciePin.title`)}
-        subtitle={I18n.t(`${i18nNs}.mode.ciePin.subtitle`)}
+        subtitle={I18n.t(
+          `${i18nNs}.mode.ciePin.subtitle.${isL3 ? "l3" : "default"}`
+        )}
         testID="CiePinMethodModuleTestID"
         icon="cieCard"
         onPress={() => {

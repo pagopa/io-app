@@ -39,6 +39,11 @@ describe("ItwIdentificationModeSelectionScreen", () => {
     expect(component.queryByTestId("CiePinMethodModuleTestID")).not.toBeNull();
     expect(component.queryByTestId("SpidMethodModuleTestID")).not.toBeNull();
     expect(component.queryByTestId("CieIDMethodModuleTestID")).not.toBeNull();
+    expect(
+      component.queryByText(
+        "Dovrai usare la Carta di Identità Elettronica (CIE) e inserire il suo PIN di 8 cifre."
+      )
+    ).not.toBeNull();
     expect(component.queryByTestId("CiePinRecommendedBadgeTestID")).toBeNull();
     expect(component.queryByTestId("noCieButtonTestID")).toBeNull();
   });
