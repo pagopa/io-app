@@ -11,6 +11,7 @@ import {
   IOColors,
   IOSkeleton,
   IOText,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -103,39 +104,44 @@ export const useIDPayStaticCodeModal = (
     </View>
   );
 
-  const SuccessContent = (barcode: TransactionBarCodeResponse) => (
-    <>
-      <H2 weight="Semibold">
-        {I18n.t(
-          "idpay.initiative.beneficiaryDetails.staticCodeModal.content.title"
-        )}
-      </H2>
-      <VSpacer size={16} />
-      <Body>
-        {I18n.t(
-          "idpay.initiative.beneficiaryDetails.staticCodeModal.content.subtitle"
-        )}
-      </Body>
-      <VSpacer size={24} />
-      <View style={styles.barcodeContainer}>
-        <IconPlaceholder />
-        <Barcode format="CODE128" value={barcode.trxCode} />
-        <View style={{ alignItems: "center" }}>
-          <IOText
-            font="FiraCode"
-            size={h3FontSize}
-            lineHeight={h3LineHeight}
-            weight="Medium"
-          >
-            {barcode.trxCode}
-          </IOText>
+  const SuccessContent = (barcode: TransactionBarCodeResponse) => {
+    const theme = useIOTheme();
+
+    return (
+      <>
+        <H2 weight="Semibold">
+          {I18n.t(
+            "idpay.initiative.beneficiaryDetails.staticCodeModal.content.title"
+          )}
+        </H2>
+        <VSpacer size={16} />
+        <Body>
+          {I18n.t(
+            "idpay.initiative.beneficiaryDetails.staticCodeModal.content.subtitle"
+          )}
+        </Body>
+        <VSpacer size={24} />
+        <View style={styles.barcodeContainer}>
+          <IconPlaceholder />
+          <Barcode format="CODE128" value={barcode.trxCode} />
+          <View style={{ alignItems: "center" }}>
+            <IOText
+              color={theme["textBody-default"]}
+              font="FiraCode"
+              size={h3FontSize}
+              lineHeight={h3LineHeight}
+              weight="Medium"
+            >
+              {barcode.trxCode}
+            </IOText>
+          </View>
+          <VSpacer size={32} />
         </View>
         <VSpacer size={32} />
-      </View>
-      <VSpacer size={32} />
-      <VSpacer size={32} />
-    </>
-  );
+        <VSpacer size={32} />
+      </>
+    );
+  };
 
   const StaticCodeBottomSheetContent = () => {
     if (isLoading) {
