@@ -1,3 +1,8 @@
+export type ItwRemoteCredentialCombination =
+  | "PID"
+  | "PID_and_credentials"
+  | "other_credentials";
+
 export type ItwRemoteFailure = {
   reason: unknown;
   type: string;
@@ -16,6 +21,7 @@ export type ItwRemoteInvalidCredential = {
 export type ItwRemoteDataShare = {
   data_type: "required" | "optional";
   request_type: "unique_purpose" | "multiple_purpose" | "no_purpose";
+  credential_type: ItwRemoteCredentialCombination;
 };
 
 /**

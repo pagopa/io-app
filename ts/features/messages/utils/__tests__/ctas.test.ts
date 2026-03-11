@@ -7,8 +7,7 @@ import { FiscalCode } from "../../../../../definitions/backend/communication/Fis
 import { MessageBodyMarkdown } from "../../../../../definitions/backend/communication/MessageBodyMarkdown";
 import { NewMessageContent } from "../../../../../definitions/backend/communication/NewMessageContent";
 import { TimeToLiveSeconds } from "../../../../../definitions/backend/communication/TimeToLiveSeconds";
-import { Locales } from "../../../../../locales/locales";
-import { setLocale } from "../../../../i18n";
+import { setLocale, Locales } from "../../../../i18n";
 import { CTA, CTAS, LocalizedCTAs } from "../../../../types/LocalizedCTAs";
 import {
   ctasFromLocalizedCTAs,

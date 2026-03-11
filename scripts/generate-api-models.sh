@@ -71,5 +71,3 @@ done
 wait
 
 cp google-services-dev.json ./android/app/google-services.json
-
-yarn generate:locales

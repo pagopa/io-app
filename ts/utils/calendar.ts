@@ -7,9 +7,9 @@ import { Platform } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import I18n from "i18next";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/communication/CreatedMessageWithContentAndAttachments";
-import { TranslationKeys } from "../../locales/locales";
 import { AddCalendarEventPayload } from "../store/actions/calendarEvents";
 import { CalendarEvent } from "../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
+import { TranslationKeys } from "../i18n";
 import { formatDateAsReminder } from "./dates";
 
 /**
@@ -87,7 +87,7 @@ export function convertLocalCalendarName(calendarTitle: string) {
     O.fromNullable,
     O.fold(
       () => calendarTitle,
-      s => I18n.t(s as any)
+      s => I18n.t(s)
     )
   );
 }
