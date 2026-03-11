@@ -1,4 +1,4 @@
-name: Release canary
+name: Publish app canary
 on:
   workflow_dispatch:
 jobs:

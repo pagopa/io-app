@@ -1,4 +1,4 @@
-name: Release new cycle
+name: Publish app version
 on:
   workflow_dispatch:
     inputs:

@@ -1,4 +1,4 @@
-name: PR title Jira
+name: Validate Jira issue in PR title
 
 on:
   pull_request:
@@ -10,7 +10,6 @@ on:
       
 jobs:
   lint:
-    name: Check for Jira issue in PR title
     runs-on: ubuntu-22.04
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -76,7 +75,7 @@ jobs:
               -X POST -F body="$COMMENT_BODY"
           fi
 
-      - name: Failure message
+      - name: Send fail message if validation failed
         if: env.VALIDATION_RESULT != 'success'
         run: |
           echo "Pull request title (${{ github.event.pull_request.title }}) is not properly formatted or it is not related to any Jira issue"

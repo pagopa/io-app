@@ -1,4 +1,4 @@
-name: Release nightly
+name: Publish app build (nightly)
 on:
   schedule:
     - cron: '59 21 * * *'

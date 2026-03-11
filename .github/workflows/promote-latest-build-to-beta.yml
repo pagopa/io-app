@@ -1,4 +1,4 @@
-name: Distribute beta
+name: Promote latest build to beta
 on: workflow_dispatch
 jobs:
   distribute-android:
@@ -41,7 +41,7 @@ jobs:
           APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
           ENCODED_IO_APP_SENTRY_PROPERTIES: ${{secrets.ENCODED_IO_APP_SENTRY_PROPERTIES}}
       - id: distribute-app-testflight
-        name: Distribute beta to specific groupd
+        name: Distribute beta to specific groups
         run: |
           cd ios
           bundle exec fastlane distribute_beta_testflight
