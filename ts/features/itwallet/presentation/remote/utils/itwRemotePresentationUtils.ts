@@ -17,15 +17,10 @@ import {
   PresentationDetails
 } from "./itwRemoteTypeUtils";
 
-type PresentationDetailSdJwt = Extract<
-  PresentationDetails[number],
-  { format: "dc+sd-jwt" }
->;
-
 // TODO: [SIW-3998] Remove when MDOC remote presentation will be supported
-const isPresentationDetailSdJwt = (
-  input: PresentationDetails[number]
-): input is PresentationDetailSdJwt => input.format === "dc+sd-jwt";
+const isPresentationDetailSdJwt = <T extends PresentationDetails[number]>(
+  input: T
+): input is Extract<T, { format: "dc+sd-jwt" }> => input.format === "dc+sd-jwt";
 
 /**
  * Maps a vct name to the corresponding credential type, used in UI contexts
@@ -182,7 +177,9 @@ export const getInvalidCredentials = (
 export const getRemoteCredentialCombination = (
   presentationDetails: EnrichedPresentationDetails
 ): ItwRemoteCredentialCombination => {
-  const requestedVcts = presentationDetails.map(d => d.vct);
+  const requestedVcts = presentationDetails
+    .filter(isPresentationDetailSdJwt) // TODO: [SIW-3998] Support MDOC remote presentation
+    .map(d => d.vct);
   const credentialTypes = requestedVcts
     .map(getCredentialTypeByVct)
     .filter(isDefined);
