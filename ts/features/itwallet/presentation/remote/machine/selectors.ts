@@ -3,6 +3,7 @@ import * as O from "fp-ts/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import { decode as decodeJwt } from "@pagopa/io-react-native-jwt";
 import { RequestObject } from "../../../common/utils/itwTypesUtils";
+import { getRemoteCredentialCombination } from "../utils/itwRemotePresentationUtils";
 import { ItwRemoteMachine } from "./machine";
 import { ItwPresentationTags } from "./tags";
 
@@ -43,3 +44,13 @@ export const selectUnverifiedRequestObject = (snapshot: MachineSnapshot) =>
   );
 export const selectRedirectUri = (snapshot: MachineSnapshot) =>
   snapshot.context.redirectUri;
+
+/**
+ * Selector to get the combination of credential types involved in the presentation, used for analytics purposes.
+ */
+export const selectRemoteCredentialCombination = (snapshot: MachineSnapshot) =>
+  pipe(
+    O.fromNullable(snapshot.context.presentationDetails),
+    O.map(getRemoteCredentialCombination),
+    O.toNullable
+  );

@@ -9,7 +9,6 @@ import { initReactI18next } from "react-i18next";
 
 // import { captureException } from "@sentry/react-native";
 import { BackendStatusMessage } from "../definitions/content/BackendStatusMessage";
-import { Locales } from "../locales/locales";
 
 import it from "../locales/it/index.json";
 import en from "../locales/en/index.json";
@@ -28,6 +27,22 @@ const resources = {
     index: de
   }
 };
+
+// Utility type to extract all possible keys from resources as dot-separated paths
+// This provides the same TranslationKeys that i18next uses internally
+type ExtractKeys<Obj, Prefix extends string = ""> = {
+  [K in keyof Obj]: K extends string | number
+    ? Obj[K] extends Record<string, any>
+      ? ExtractKeys<Obj[K], Prefix extends "" ? `${K}` : `${Prefix}.${K}`>
+      : Prefix extends ""
+      ? `${K}`
+      : `${Prefix}.${K}`
+    : never;
+}[keyof Obj];
+
+export type TranslationKeys = ExtractKeys<typeof it>;
+
+export type Locales = keyof typeof resources;
 
 export type LocalizedMessageKeys = keyof BackendStatusMessage;
 type FallBackLocale = {
