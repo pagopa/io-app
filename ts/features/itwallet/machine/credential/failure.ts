@@ -1,5 +1,9 @@
+import { type IntegrityError } from "@pagopa/io-react-native-integrity";
 import { Errors, Trust } from "@pagopa/io-react-native-wallet";
-import { isFederationError } from "../../common/utils/itwFailureUtils.ts";
+import {
+  isAssertionGenerationError,
+  isFederationError
+} from "../../common/utils/itwFailureUtils.ts";
 import { WithCredentialMetadata } from "../../common/utils/ItwFailureTypes.ts";
 import { CredentialIssuanceEvents } from "./events";
 
@@ -14,7 +18,8 @@ export enum CredentialIssuanceFailureType {
   INVALID_STATUS = "INVALID_STATUS",
   ISSUER_GENERIC = "ISSUER_GENERIC",
   UNTRUSTED_ISS = "UNTRUSTED_ISS",
-  WALLET_PROVIDER_GENERIC = "WALLET_PROVIDER_GENERIC"
+  WALLET_PROVIDER_GENERIC = "WALLET_PROVIDER_GENERIC",
+  HARDWARE_KEY_INVALID = "HARDWARE_KEY_INVALID"
 }
 
 /**
@@ -25,6 +30,7 @@ export type ReasonTypeByFailure = {
   [CredentialIssuanceFailureType.INVALID_STATUS]: WithCredentialMetadata<Errors.IssuerResponseError>;
   [CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC]: Errors.WalletProviderResponseError;
   [CredentialIssuanceFailureType.UNTRUSTED_ISS]: Trust.Errors.FederationError;
+  [CredentialIssuanceFailureType.HARDWARE_KEY_INVALID]: IntegrityError;
   [CredentialIssuanceFailureType.UNEXPECTED]: unknown;
 };
 
@@ -59,6 +65,13 @@ export const mapEventToFailure = (
   }
 
   const { error } = event;
+
+  if (isAssertionGenerationError(error)) {
+    return {
+      type: CredentialIssuanceFailureType.HARDWARE_KEY_INVALID,
+      reason: error
+    };
+  }
 
   if (isIssuerResponseError(error, Codes.CredentialInvalidStatus)) {
     return {
