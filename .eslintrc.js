@@ -132,7 +132,7 @@ module.exports = {
      * - jsx-components.exclude: skips <Trans> since it already handles translations via react-i18next
      * - words.exclude: ignores non-translatable patterns:
      *     "\\s+"                          → whitespace-only strings
-     *     "[0-9!-/:-@\\[-`{-~]+"         → numbers, punctuation, and special characters
+     *     "[0-9!-/:-@\\[-`{-~]+"          → numbers, punctuation, and special characters
      *     "[•·]+"                         → masking dots used for card numbers (e.g. "•••• 1234")
      *     "."                             → single-character strings like unit suffixes (e.g. "s" in "{count}s")
      * - object-properties.exclude: testID values are test identifiers, not user-facing text
