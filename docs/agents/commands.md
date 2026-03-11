@@ -25,7 +25,6 @@ yarn lollipop_checks:uncomment  # Re-enable before committing (required)
 
 ```bash
 yarn generate           # Regenerate API models + locales from OpenAPI specs
-yarn generate:locales   # Regenerate only locale files from YAML
 ```
 
 ## Quality Checks
