@@ -1220,6 +1220,9 @@
         "name": "PayPal",
         "emailNotAvailable": "non disponibile"
       },
+      "bancomatPay": {
+        "name": "BANCOMAT Pay"
+      },
       "outcome": {
         "SUCCESS": {
           "title": "Il metodo è stato aggiunto",

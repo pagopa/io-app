@@ -23,7 +23,7 @@ export const LogoPaymentExtended = (props: LogoPaymentExtendedProps) => {
         return (
           <PaypalLogo
             accessible={true}
-            accessibilityLabel={I18n.t("wallet.methods.paypal.name")}
+            accessibilityLabel={I18n.t("wallet.onboarding.paypal.name")}
             height={height}
             width={width}
           />
@@ -32,7 +32,7 @@ export const LogoPaymentExtended = (props: LogoPaymentExtendedProps) => {
         return (
           <BpayLogo
             accessible={true}
-            accessibilityLabel={I18n.t("wallet.methods.bancomatPay.name")}
+            accessibilityLabel={I18n.t("wallet.onboarding.bancomatPay.name")}
             height={height}
             width={width}
           />
