@@ -32,7 +32,10 @@ describe("itwCredentialUpgradeMachine actions", () => {
           output: {
             credentialType: "MDL",
             credentials: [
-              { credential: "", metadata: ItwStoredCredentialsMocks.L3.mdl }
+              {
+                credential: "raw-jwt",
+                metadata: ItwStoredCredentialsMocks.L3.mdl
+              }
             ]
           }
         }

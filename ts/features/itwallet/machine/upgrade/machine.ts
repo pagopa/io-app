@@ -89,6 +89,8 @@ export const itwCredentialUpgradeMachine = setup({
       ]
     },
     UpgradeCredential: {
+      description:
+        "This state upgrades the credential and stores it in the secure vault, then dispatches metadata to the Redux store",
       invoke: {
         src: "upgradeCredential",
         input: ({ context }) => ({

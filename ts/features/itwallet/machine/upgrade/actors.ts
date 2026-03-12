@@ -60,7 +60,8 @@ export const createCredentialUpgradeActorsImplementation = (
   }),
 
   /**
-   * Handles both upgrading and reissuing credentials depending on issuanceMode.
+   * Handles both upgrading and reissuing credentials depending on issuanceMode,
+   * then stores the obtained credentials in the secure vault.
    * - upgrade → performs credential upgrade (skipMdocIssuance = false)
    * - reissuance → performs credential reissuing (skipMdocIssuance = true)
    */
@@ -93,6 +94,13 @@ export const createCredentialUpgradeActorsImplementation = (
       codeVerifier,
       pid
     });
+
+    // Store credentials in the secure vault before returning
+    await Promise.all(
+      result.map(({ metadata, credential: raw }) =>
+        CredentialsVault.store(metadata.credentialId, raw)
+      )
+    );
 
     return {
       credentialType: credential.credentialType,
