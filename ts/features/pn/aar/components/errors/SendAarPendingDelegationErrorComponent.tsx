@@ -8,8 +8,8 @@ export const SendAarPendingDelegationErrorComponent = () => {
     <OperationResultScreenContent
       pictogram="pending"
       testID="PendingDelegationErrorComponent"
-      title={i18n.t("features.pn.aar.flow.ko.PendingDelegation.title")}
-      subtitle={i18n.t("features.pn.aar.flow.ko.PendingDelegation.body")}
+      title={i18n.t("features.pn.aar.flow.ko.pendingDelegation.title")}
+      subtitle={i18n.t("features.pn.aar.flow.ko.pendingDelegation.body")}
       action={{
         testID: "PendingDelegationCloseButton",
         label: i18n.t("global.buttons.close"),

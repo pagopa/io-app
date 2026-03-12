@@ -1,4 +1,3 @@
-import { constVoid } from "fp-ts/lib/function";
 import _ from "lodash";
 import { ComponentType } from "react";
 import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
@@ -78,6 +77,18 @@ const specificBehavioursByStatus: {
     [errorCode in SendAarErrorCodes]?: AarErrorBehaviour;
   };
 } = {
+  [404]: {
+    [sendAarProblemJsonErrorCodes.PN_MANDATE_NOTFOUND]: {
+      track: () => null,
+      Component: CieValidationExpiredTtlComponent
+    }
+  },
+  [409]: {
+    [sendAarProblemJsonErrorCodes.PN_MANDATE_ALREADYEXISTS]: {
+      track: () => null,
+      Component: SendAarPendingDelegationErrorComponent
+    }
+  },
   [422]: {
     [sendAarProblemJsonErrorCodes.CIE_EXPIRED_ERROR]: {
       track: trackSendAarMandateCieExpiredError,
@@ -86,18 +97,6 @@ const specificBehavioursByStatus: {
     [sendAarProblemJsonErrorCodes.CIE_NOT_RELATED_TO_DELEGATOR_ERROR]: {
       track: trackSendAarMandateCieNotRelatedToDelegatorError,
       Component: UnrelatedCieComponent
-    }
-  },
-  [404]: {
-    [sendAarProblemJsonErrorCodes.PN_MANDATE_NOTFOUND]: {
-      track: constVoid,
-      Component: CieValidationExpiredTtlComponent
-    }
-  },
-  [409]: {
-    [sendAarProblemJsonErrorCodes.PN_MANDATE_ALREADYEXISTS]: {
-      track: constVoid,
-      Component: SendAarPendingDelegationErrorComponent
     }
   }
 };

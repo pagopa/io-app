@@ -11,10 +11,6 @@ import {
   testable
 } from "../aarErrorMappings";
 jest.mock("../../analytics");
-jest.mock("fp-ts/lib/function", () => ({
-  ...jest.requireActual("fp-ts/lib/function"),
-  constVoid: jest.fn()
-}));
 
 const { cieErrors, sendAarProblemJsonErrorCodes, specificBehavioursByStatus } =
   testable!;
@@ -48,10 +44,17 @@ describe("AarErrorMappings", () => {
               makeProblemJson(errCode, responseStatus)
             );
             expect(Component).toBe(expectedComponent);
+            expect(track).toBe(expectedTrack);
 
-            expect(expectedTrack).not.toHaveBeenCalled();
-            track("reason");
-            expect(expectedTrack).toHaveBeenCalledTimes(1);
+            if (jest.isMockFunction(expectedTrack)) {
+              expect(expectedTrack).not.toHaveBeenCalled();
+              track("reason");
+              expect(expectedTrack).toHaveBeenCalledTimes(1);
+            } else {
+              // falls here in case the expected track is
+              // a placeholder void function (in this case ()=>null)
+              expect(track("reason")).toBeNull();
+            }
           });
         } else if (errCode in cieErrors) {
           it(`should return GenericCieValidationErrorComponent and track the correct event for ${responseStatus} status and CIE errorCode ${errCode}`, () => {

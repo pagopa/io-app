@@ -2418,7 +2418,7 @@
               "primaryAction": "Come attivare una delega",
               "secondaryAction": "Chiudi"
             },
-            "PendingDelegation": {
+            "pendingDelegation": {
               "title": "Hai già inviato una richiesta per questa notifica",
               "body": "Attendi 5 minuti prima di riprovare."
             },
