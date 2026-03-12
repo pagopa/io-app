@@ -1,5 +1,5 @@
 import * as S from "fp-ts/lib/string";
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import I18n from "i18next";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
@@ -35,8 +35,15 @@ export const FciDocumentPreviewScreen = (
     goBack: () => dispatch(fciDownloadPreviewClear({ path: fciDownloadPath }))
   });
 
+  useEffect(() => {
+    if (isError) {
+      trackFciTosDocPreviewFailure();
+    } else {
+      trackFciTosDocPreview();
+    }
+  }, [isError]);
+
   if (isError) {
-    trackFciTosDocPreviewFailure();
     return (
       <SignatureStatusComponent
         title={I18n.t("features.fci.errors.generic.default.title")}
@@ -60,11 +67,6 @@ export const FciDocumentPreviewScreen = (
     );
   }
 
-  trackFciTosDocPreview();
-  // check with Alessia: should we track this event only when the
-  // document is loaded successfully? if yes, we need to move this
-  // call inside DocumentViewer onLoadComplete callback and rename
-  // it accordingly (e.g. trackFciTosDocPreviewSuccess)
   return (
     <>
       {S.isEmpty(documentUrl) === false && (

@@ -95,6 +95,12 @@ const FciQtspClausesScreen = () => {
     });
   };
 
+  useEffect(() => {
+    if (fciPollFilledDocumentError && !isPollFilledDocumentReady) {
+      trackFciPollingFailureScreenView();
+    }
+  }, [fciPollFilledDocumentError, isPollFilledDocumentReady]);
+
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
@@ -103,7 +109,6 @@ const FciQtspClausesScreen = () => {
   });
 
   if (fciPollFilledDocumentError && !isPollFilledDocumentReady) {
-    trackFciPollingFailureScreenView();
     return (
       <SignatureStatusComponent
         title={I18n.t("features.fci.errors.generic.default.title")}
@@ -111,7 +116,7 @@ const FciQtspClausesScreen = () => {
         onPress={() => {
           trackFciPollingFailureAction(
             "custom_1",
-            I18n.t("features.fci.errors.buttons.close")
+            I18n.t("features.fci.errors.buttons.back")
           );
           dispatch(fciEndRequest());
         }}

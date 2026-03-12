@@ -85,7 +85,7 @@ export const trackFciUserDataShare = () =>
   );
 
 export const trackFciChangeEmail = () =>
-  mixpanelTrack("FCI_CHANGE_EMAIL", buildEventProperties("UX", "screen_view"));
+  mixpanelTrack("FCI_CHANGE_EMAIL", buildEventProperties("UX", "action"));
 
 export const trackFciQtspTos = () =>
   mixpanelTrack("FCI_QTSP_TOS", buildEventProperties("UX", "screen_view"));
@@ -99,7 +99,7 @@ export const trackFciTosDocPreview = () =>
 export const trackFciTosDocPreviewFailure = () =>
   mixpanelTrack(
     "FCI_TOS_DOC_PREVIEW_FAILURE",
-    buildEventProperties("UX", "screen_view")
+    buildEventProperties("KO", "screen_view")
   );
 
 export const trackFciTosDocPreviewFailureAction = (
@@ -108,7 +108,7 @@ export const trackFciTosDocPreviewFailureAction = (
 ) =>
   mixpanelTrack(
     "FCI_TOS_DOC_PREVIEW_FAILURE_ACTION",
-    buildEventProperties("KO", "screen_view", { cta_category, cta_id })
+    buildEventProperties("UX", "action", { cta_category, cta_id })
   );
 
 export const trackFciDocSignatureFailure = (reason: string) =>
@@ -124,7 +124,7 @@ export const trackFciDocSignatureFailureAction = (
 ) =>
   mixpanelTrack(
     "FCI_DOC_SIGNATURE_FAILURE_ACTION",
-    buildEventProperties("KO", "screen_view", { reason, cta_category, cta_id })
+    buildEventProperties("UX", "action", { reason, cta_category, cta_id })
   );
 
 export const trackFciUserExit = (
