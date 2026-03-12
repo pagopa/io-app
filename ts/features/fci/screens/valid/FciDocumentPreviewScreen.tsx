@@ -60,15 +60,17 @@ export const FciDocumentPreviewScreen = (
     );
   }
 
+  trackFciTosDocPreview();
+  // check with Alessia: should we track this event only when the
+  // document is loaded successfully? if yes, we need to move this
+  // call inside DocumentViewer onLoadComplete callback and rename
+  // it accordingly (e.g. trackFciTosDocPreviewSuccess)
   return (
     <>
       {S.isEmpty(documentUrl) === false && (
         <DocumentViewer
           documentUrl={documentUrl}
           onError={() => setIsError(true)}
-          onSuccess={() => {
-            trackFciTosDocPreview();
-          }}
         />
       )}
     </>
