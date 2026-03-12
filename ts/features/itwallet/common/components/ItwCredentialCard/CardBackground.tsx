@@ -116,7 +116,18 @@ const credentialCardBackgrounds: {
 export const credentialGradientColors: {
   [type: string]: Array<string>;
 } = {
+  [CredentialType.PID]: ["#EAF6FF", "#F6FBFF"],
   [CredentialType.EDUCATION_DEGREE]: ["#F2F1CE", "#ECECEC"],
   [CredentialType.EDUCATION_ENROLLMENT]: ["#E0F2CE", "#ECECEC"],
   [CredentialType.RESIDENCY]: ["#F2E4CE", "#ECECEC"]
+};
+
+export const credentialBorderColors: { [type: string]: string } = {
+  [CredentialType.PID]: "#4F99E2",
+  [CredentialType.DRIVING_LICENSE]: "#D674A9",
+  [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: "#6B9BB6",
+  [CredentialType.EUROPEAN_DISABILITY_CARD]: "white",
+  [CredentialType.EDUCATION_DEGREE]: "#939769",
+  [CredentialType.EDUCATION_ENROLLMENT]: "white",
+  [CredentialType.RESIDENCY]: "#999082"
 };
