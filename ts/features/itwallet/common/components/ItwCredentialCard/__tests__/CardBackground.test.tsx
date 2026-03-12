@@ -4,8 +4,14 @@ import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { CredentialType } from "../../../utils/itwMocksUtils";
 import { CardColorScheme } from "../types";
-import { CardBackground } from "../CardBackground.tsx";
+import {
+  CardBackground,
+  credentialBackgroundColors,
+  credentialBorderColors,
+  credentialTitleColors
+} from "../CardBackground.tsx";
 
 describe("CardBackground", () => {
   it.each([
@@ -53,4 +59,19 @@ describe("CardBackground", () => {
       expect(component).toMatchSnapshot();
     }
   );
+});
+
+describe("derived card colors", () => {
+  it("should derive hue-preserving border and title colors for mDL", () => {
+    expect(credentialBackgroundColors[CredentialType.DRIVING_LICENSE]).toBe(
+      "#F0CFDF"
+    );
+    expect(credentialBorderColors.mDL).toBe("#ba7898");
+    expect(credentialTitleColors.mDL).toBe("#472636");
+  });
+
+  it("should expose the card palette used by the detail header for pid", () => {
+    expect(credentialBackgroundColors[CredentialType.PID]).toBe("#EAF6FF");
+    expect(credentialTitleColors[CredentialType.PID]).toBe("#115486");
+  });
 });

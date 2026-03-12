@@ -1,6 +1,13 @@
-import { Body, H2, Tag } from "@pagopa/io-app-design-system";
-import { memo } from "react";
-import { View } from "react-native";
+import {
+  Body,
+  ContentWrapper,
+  H2,
+  Tag,
+  makeFontStyleObject,
+  useIOExperimentalDesign
+} from "@pagopa/io-app-design-system";
+import { memo, useMemo } from "react";
+import { StyleSheet, Text, View } from "react-native";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar.tsx";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import ItwAvatar from "../../../../../../img/features/itWallet/brand/itw_avatar.svg";
@@ -10,22 +17,31 @@ import {
   getCredentialNameFromType,
   tagPropsByStatus
 } from "../../../common/utils/itwCredentialUtils.ts";
+import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialsCatalogueByTypesSelector } from "../../../credentialsCatalogue/store/selectors";
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialStatus";
+import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard.tsx";
 
 type ItwPresentationDetailsHeaderProps = {
   credential: StoredCredential;
 };
 
+const credentialsWithSkeumorphicCard: ReadonlyArray<string> = [
+  CredentialType.DRIVING_LICENSE,
+  CredentialType.EUROPEAN_DISABILITY_CARD
+];
+
 const ItwPresentationDetailsHeader = ({
   credential
 }: ItwPresentationDetailsHeaderProps) => {
-  const { statusBarStyle, backgroundColor } = useThemeColorByCredentialType(
-    credential.credentialType
-  );
+  const { isExperimental } = useIOExperimentalDesign();
+  const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const { statusBarStyle, backgroundColor, textColor } =
+    useThemeColorByCredentialType(credential.credentialType);
   const { status: rawStatus = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
@@ -38,19 +54,43 @@ const ItwPresentationDetailsHeader = ({
     ? getItwAuthSource(credentialsCatalogue[credential.credentialType])
     : undefined;
 
-  return (
-    <>
-      <FocusAwareStatusBar
-        backgroundColor={backgroundColor}
-        barStyle={statusBarStyle}
-      />
+  const headerContent = useMemo(() => {
+    if (!withL3Design) {
+      if (credentialsWithSkeumorphicCard.includes(credential.credentialType)) {
+        return <ItwPresentationCredentialCard credential={credential} />;
+      }
+
+      return (
+        <View style={[styles.legacyHeader, { backgroundColor }]}>
+          <ContentWrapper>
+            <Text
+              style={[
+                isExperimental
+                  ? styles.legacyHeaderLabelExperimental
+                  : styles.legacyHeaderLabel,
+                { color: textColor }
+              ]}
+              accessibilityRole="header"
+            >
+              {getCredentialNameFromType(credential.credentialType)}
+            </Text>
+          </ContentWrapper>
+        </View>
+      );
+    }
+
+    return (
       <ItwCredentialDetailCard
         credentialType={credential.credentialType}
         credentialStatus={displayStatus}
       >
         <ItwAvatar width={48} height={48} />
-        <H2 style={{ paddingTop: 16, textAlign: "center" }}>
-          {getCredentialNameFromType(credential.credentialType)}
+        <H2 style={{ paddingTop: 16, textAlign: "center", color: textColor }}>
+          {getCredentialNameFromType(
+            credential.credentialType,
+            "",
+            withL3Design
+          )}
         </H2>
         {authSource && (
           <Body
@@ -65,9 +105,43 @@ const ItwPresentationDetailsHeader = ({
           </View>
         )}
       </ItwCredentialDetailCard>
+    );
+  }, [
+    authSource,
+    backgroundColor,
+    credential,
+    displayStatus,
+    isExperimental,
+    statusTagProps,
+    textColor,
+    withL3Design
+  ]);
+
+  return (
+    <>
+      <FocusAwareStatusBar
+        backgroundColor={backgroundColor}
+        barStyle={statusBarStyle}
+      />
+      {headerContent}
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  legacyHeader: {
+    marginTop: -300,
+    paddingTop: 300,
+    justifyContent: "flex-end",
+    paddingBottom: 24
+  },
+  legacyHeaderLabel: {
+    ...makeFontStyleObject(26, "TitilliumSansPro", 30, "Semibold")
+  },
+  legacyHeaderLabelExperimental: {
+    ...makeFontStyleObject(26, "Titillio", 30, "Semibold")
+  }
+});
 
 const MemoizedItwPresentationDetailsHeader = memo(ItwPresentationDetailsHeader);
 

@@ -201,7 +201,8 @@ export const ItwPresentationCredentialDetail = ({
   const hasSkeumorphicCard = credentialsWithSkeumorphicCard.includes(
     credential.credentialType
   );
-  const showInlineCta = hasSkeumorphicCard || !!contentClaim;
+  const showInlineCta =
+    isL3Credential && (hasSkeumorphicCard || !!contentClaim);
   const isCheckingPermissions =
     ItwProximityMachineContext.useSelector(selectIsLoading);
 
@@ -293,8 +294,24 @@ export const ItwPresentationCredentialDetail = ({
       };
     }
 
+    if (!isL3Credential && contentClaim) {
+      return {
+        label: I18n.t("features.itWallet.presentation.ctas.openPdf"),
+        icon: "docPaymentTitle",
+        onPress: () => {
+          if (mixPanelCredential === "ITW_TS_V2") {
+            trackWalletCredentialShowFAC_SIMILE();
+          }
+          navigation.navigate(ITW_ROUTES.MAIN, {
+            screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT,
+            params: { attachmentClaim: contentClaim }
+          });
+        }
+      };
+    }
+
     return undefined;
-  }, [credential.credentialType, shouldShowMdlUpdateCta, itwFeaturesEnabled, navigation, isCheckingPermissions, itwProximityMachineRef]);
+  }, [credential.credentialType, shouldShowMdlUpdateCta, itwFeaturesEnabled, isL3Credential, contentClaim, navigation, isCheckingPermissions, itwProximityMachineRef, mixPanelCredential]);
 
   if (status === "unknown") {
     return <ItwPresentationCredentialUnknownStatus credential={credential} />;
@@ -321,7 +338,7 @@ export const ItwPresentationCredentialDetail = ({
     <ItwPresentationDetailsScreenBase
       credential={credential}
       ctaProps={ctaProps}
-      headerTransparent
+      headerTransparent={isL3Credential}
     >
       <ItwPresentationDetailsHeader credential={credential} />
       <View style={{ paddingVertical: 16 }}>

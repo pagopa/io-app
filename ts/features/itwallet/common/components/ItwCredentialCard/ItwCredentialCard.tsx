@@ -12,6 +12,7 @@ import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { useIOSelector } from "../../../../../store/hooks";
 import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { useItwDisplayCredentialStatus } from "../../../presentation/details/hooks/useItwDisplayCredentialStatus";
 import {
   getCredentialNameFromType,
@@ -24,7 +25,11 @@ import { itwShouldUpgradeCredentialSelector } from "../../store/selectors";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { CredentialType } from "../../utils/itwMocksUtils";
 import { ItWalletIdLogo } from "../ItWalletIdLogo";
-import { CardBackground, credentialBorderColors } from "./CardBackground";
+import {
+  CardBackground,
+  credentialBorderColors,
+  credentialTitleColors
+} from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
 
@@ -72,6 +77,7 @@ export const ItwCredentialCard = ({
   const ioTheme = useIOTheme();
   const status = useItwDisplayCredentialStatus(credentialStatus);
   const theme = useThemeColorByCredentialType(credentialType);
+  const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const borderColorMap = useBorderColorByStatus();
 
   const statusTagProps = useMemo<Tag | undefined>(() => {
@@ -89,10 +95,13 @@ export const ItwCredentialCard = ({
     // Include "jwtExpired" as a valid status because credentials with this state
     // should not appear faded. Only the "expired" status should be displayed with reduced opacity.
     const isValid = [...validCredentialStatuses, "jwtExpired"].includes(status);
+    const baseColor = withL3Design
+      ? credentialTitleColors[credentialType] ?? theme.textColor
+      : theme.textColor;
 
     if (needsItwUpgrade) {
       return {
-        titleColor: theme.textColor,
+        titleColor: baseColor,
         titleOpacity: 0.5,
         colorScheme: "faded"
       };
@@ -100,7 +109,7 @@ export const ItwCredentialCard = ({
 
     if (status === "unknown") {
       return {
-        titleColor: Color(theme.textColor).grayscale().hex(),
+        titleColor: Color(baseColor).grayscale().hex(),
         titleOpacity: 0.5,
         colorScheme: "greyscale"
       };
@@ -108,21 +117,23 @@ export const ItwCredentialCard = ({
 
     if (isValid) {
       return {
-        titleColor: theme.textColor,
+        titleColor: baseColor,
         titleOpacity: 1,
         colorScheme: "default"
       };
     }
 
     return {
-      titleColor: theme.textColor,
+      titleColor: baseColor,
       titleOpacity: 0.5,
       colorScheme: "faded"
     };
-  }, [theme, status, needsItwUpgrade]);
+  }, [withL3Design, theme, credentialType, status, needsItwUpgrade]);
 
   const hasCredentialBorderColor =
-    status === "valid" && !!credentialBorderColors[credentialType];
+    withL3Design &&
+    status === "valid" &&
+    !!credentialBorderColors[credentialType];
 
   const appBackgroundColor = IOColors[ioTheme["appBackground-primary"]];
 
@@ -142,7 +153,7 @@ export const ItwCredentialCard = ({
         />
         <View style={styles.header}>
           <HStack space={16}>
-            {credentialType === CredentialType.PID ? (
+            {credentialType === CredentialType.PID && withL3Design ? (
               <View style={{ flex: 1 }}>
                 <ItWalletIdLogo width={103} height={24} />
               </View>
@@ -183,7 +194,7 @@ export const ItwCredentialCard = ({
             styles.border,
             {
               borderColor:
-                status === "valid"
+                withL3Design && status === "valid"
                   ? credentialBorderColors[credentialType] ??
                     borderColorMap[status]
                   : borderColorMap[status]
