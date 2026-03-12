@@ -57,7 +57,10 @@ export const ItwPresentationPidDetailScreen = () => {
 
   const getContent = (credential: StoredCredential) => (
     <ItwPresentationDetailsScreenBase credential={credential} headerTransparent>
-      <ItwCredentialDetailCard credentialType={CredentialType.PID}>
+      <ItwCredentialDetailCard
+        credentialType={CredentialType.PID}
+        credentialStatus={displayStatus}
+      >
         <ItwAvatar width={48} height={48} />
         <H2 style={{ paddingTop: 16 }}>
           {getCredentialNameFromType(CredentialType.PID, "", true)}

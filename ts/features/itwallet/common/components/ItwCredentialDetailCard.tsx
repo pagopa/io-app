@@ -3,15 +3,19 @@ import { Canvas } from "@shopify/react-native-skia";
 import { PropsWithChildren, useState } from "react";
 import { LayoutChangeEvent, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { borderVariantByStatus } from "../utils/itwCredentialUtils";
+import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { useThemeColorByCredentialType } from "../utils/itwStyleUtils";
 import { ItwBrandedSkiaBorder } from "./ItwBrandedSkiaBorder";
 
 type ItwCredentialDetailCardProps = PropsWithChildren<{
   credentialType: string;
+  credentialStatus?: ItwCredentialStatus;
 }>;
 
 export const ItwCredentialDetailCard = ({
   credentialType,
+  credentialStatus = "valid",
   children
 }: ItwCredentialDetailCardProps) => {
   const safeAreaInsets = useSafeAreaInsets();
@@ -41,6 +45,7 @@ export const ItwCredentialDetailCard = ({
           height={size.height}
           borderRadius={24}
           themeType={themeType}
+          variant={borderVariantByStatus[credentialStatus]}
         />
       </Canvas>
 

@@ -4,6 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { SdJwt, Mdoc } from "@pagopa/io-react-native-wallet";
 import I18n from "i18next";
 import { isBefore } from "date-fns";
+import { ItwIridescentBorderVariant } from "../components/ItwBrandedSkiaBorder";
 import { CredentialType } from "./itwMocksUtils";
 import {
   CredentialFormat,
@@ -101,6 +102,18 @@ export const useBorderColorByStatus: () => {
     jwtExpiring: IOColors["warning-700"],
     unknown: IOColors["grey-300"]
   };
+};
+
+export const borderVariantByStatus: {
+  [key in ItwCredentialStatus]: ItwIridescentBorderVariant;
+} = {
+  valid: "default",
+  expiring: "warning",
+  jwtExpiring: "warning",
+  expired: "error",
+  jwtExpired: "error",
+  invalid: "error",
+  unknown: "default"
 };
 
 export const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {
