@@ -23,7 +23,19 @@ import {
 } from "../analytics";
 import { createSendAARClientWithLollipop } from "../api/client";
 import { isAarAttachmentTtlError } from "../utils/aarErrorMappings";
+import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
+import { SendAARFailurePhase } from "../utils/stateUtils";
+class SendServerError extends Error {
+  public readonly aarProblemJson: AARProblemJson;
+  constructor(message: string, aarProblemJson: AARProblemJson) {
+    super(message);
 
+    this.name = "SendServerError";
+    this.aarProblemJson = aarProblemJson;
+  }
+}
+
+const sendAarFailurePhase: SendAARFailurePhase = "Download Attachment";
 const fastLoginType = "FAST_LOGIN_EXPIRED";
 const fastLoginError = Error(fastLoginType);
 const isFastLoginError = (e: unknown) =>
@@ -68,11 +80,19 @@ export function* downloadAARAttachmentSaga(
     if (isFastLoginError(e)) {
       yield* call(
         trackSendAARFailure,
-        "Download Attachment",
-        "Fast login expired"
+        sendAarFailurePhase,
+        "Fast login expired",
+        undefined
       );
     } else {
-      yield* call(trackSendAARFailure, "Download Attachment", reason);
+      const problemJson =
+        e instanceof SendServerError ? e.aarProblemJson : undefined;
+      yield* call(
+        trackSendAARFailure,
+        sendAarFailurePhase,
+        reason,
+        problemJson
+      );
     }
 
     yield* put(
@@ -159,12 +179,12 @@ function* getAttachmentMetadata(
   if (status === 500) {
     const errorCode = value.errors?.[0]?.code;
     if (isAarAttachmentTtlError(errorCode)) {
-      throw Error(errorCode);
+      throw new SendServerError(errorCode, value);
     }
   }
   if (status !== 200) {
     const reason = aarProblemJsonAnalyticsReport(status, value);
-    throw Error(`HTTP request failed (${reason})`);
+    throw new SendServerError(reason, value);
   }
 
   const { retryAfter, url } = value;
@@ -221,6 +241,7 @@ export const testable = isTestEnv
       downloadAttachmentFromPrevalidatedUrl,
       encodeAttachmentUrl,
       getAttachmentMetadata,
-      getAttachmentPrevalidatedUrl
+      getAttachmentPrevalidatedUrl,
+      SendServerError
     }
   : undefined;
