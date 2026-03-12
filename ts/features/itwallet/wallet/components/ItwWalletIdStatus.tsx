@@ -100,9 +100,11 @@ export const ItwWalletIdStatus = ({
               {I18n.t(
                 "features.itWallet.presentation.itWalletId.status.expiringPrefix"
               )}
+              {/* eslint-disable i18next/no-literal-string */}
               <Body weight="Semibold">
                 {format(pidExpiration || "", "DD/MM/YYYY")}
               </Body>
+              {/* eslint-enable i18next/no-literal-string */}
             </Body>
           )}
           {pidStatus === "jwtExpired" && (

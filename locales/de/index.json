@@ -83,6 +83,8 @@
       "back": "Zurück",
       "confirm": "Bestätigen",
       "close": "Schließen",
+      "next": "Weiter",
+      "previous": "Zurück",
       "exit": "Beenden",
       "edit": "Ändern",
       "info": "Info",
@@ -999,7 +1001,6 @@
         }
       },
       "paypal": {
-        "name": "PayPal",
         "emailNotAvailable": "nicht verfügbar"
       },
       "outcome": {
@@ -1696,6 +1697,7 @@
       "useUnlockCode": "benutze deinen **Entsperrcode**",
       "useUnlockCodeA11y": "benutze deinen Entsperrcode"
     },
+    "insertDevPin": "Standard-Entwickler-PIN eingeben",
     "title": "Hallo {{name}}!",
     "titleValidation": "Vorgang genehmigen",
     "biometric": {

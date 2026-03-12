@@ -95,6 +95,8 @@
       "back": "Back",
       "confirm": "Confirm",
       "close": "Close",
+      "next": "Next",
+      "previous": "Previous",
       "exit": "Exit",
       "edit": "Edit",
       "info": "Info",
@@ -1133,7 +1135,6 @@
         }
       },
       "paypal": {
-        "name": "PayPal",
         "emailNotAvailable": "not available"
       },
       "outcome": {
@@ -1692,6 +1693,7 @@
       "useUnlockCode": " use your **unlock code**",
       "useUnlockCodeA11y": "use your unlock code"
     },
+    "insertDevPin": "Insert the default developer PIN",
     "title": "Hi {{name}}!",
     "titleValidation": "Authorise the operation.",
     "titleOffline": "Hi!",
@@ -2497,9 +2499,6 @@
           "labels": {
             "AUTHORIZED": "Authorized"
           }
-        },
-        "refund": {
-          "iban": "IBAN"
         }
       },
       "cie": {
