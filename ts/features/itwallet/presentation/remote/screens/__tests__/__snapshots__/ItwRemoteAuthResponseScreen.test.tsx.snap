@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri is available 1`] = `
+exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri is available in same-device flow 1`] = `
 <View
   style={
     {
@@ -354,6 +354,7 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri i
                             "flexGrow": 1,
                           }
                         }
+                        testID="itw-remote-auth-response-success"
                       >
                         <RCTScrollView
                           alwaysBounceVertical={false}
@@ -1258,6 +1259,7 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when no redirect_uri 
                             "flexGrow": 1,
                           }
                         }
+                        testID="itw-remote-auth-response-success"
                       >
                         <RCTScrollView
                           alwaysBounceVertical={false}
