@@ -121,7 +121,7 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
   const renderBankLogo = () => {
     if (props.holderEmail) {
       return (
-        <View accessibilityLabel={I18n.t("wallet.methods.paypal.name")}>
+        <View accessibilityLabel={I18n.t("wallet.onboarding.paypal.name")}>
           <PayPalLogo
             testID="paymentCardPayPalLogoTestId"
             height={48}
@@ -136,7 +136,7 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
         <BPayLogo
           testID="paymentCardBPayLogoTestId"
           accessible={true}
-          accessibilityLabel={I18n.t("wallet.methods.bancomatPay.name")}
+          accessibilityLabel={I18n.t("wallet.onboarding.bancomatPay.name")}
           height={48}
           width={136}
         />
