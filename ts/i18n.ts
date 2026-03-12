@@ -1,20 +1,20 @@
-import i18next, {
-  BackendModule,
-  InitOptions,
-  ReadCallback,
-  Services
-} from "i18next";
+import i18next from "i18next";
+// import i18next, {
+//   BackendModule,
+//   InitOptions,
+//   ReadCallback,
+//   Services
+// } from "i18next";
 import { initReactI18next } from "react-i18next";
 
-import { captureException } from "@sentry/react-native";
+// import { captureException } from "@sentry/react-native";
 import { BackendStatusMessage } from "../definitions/content/BackendStatusMessage";
-import { Locales } from "../locales/locales";
 
 import it from "../locales/it/index.json";
 import en from "../locales/en/index.json";
 import de from "../locales/de/index.json";
 import { PreferredLanguageEnum } from "../definitions/session_manager/PreferredLanguage";
-import { newContentRepoUrl } from "./config";
+// import { newContentRepoUrl } from "./config";
 
 const resources = {
   it: {
@@ -27,6 +27,22 @@ const resources = {
     index: de
   }
 };
+
+// Utility type to extract all possible keys from resources as dot-separated paths
+// This provides the same TranslationKeys that i18next uses internally
+type ExtractKeys<Obj, Prefix extends string = ""> = {
+  [K in keyof Obj]: K extends string | number
+    ? Obj[K] extends Record<string, any>
+      ? ExtractKeys<Obj[K], Prefix extends "" ? `${K}` : `${Prefix}.${K}`>
+      : Prefix extends ""
+      ? `${K}`
+      : `${Prefix}.${K}`
+    : never;
+}[keyof Obj];
+
+export type TranslationKeys = ExtractKeys<typeof it>;
+
+export type Locales = keyof typeof resources;
 
 export type LocalizedMessageKeys = keyof BackendStatusMessage;
 type FallBackLocale = {
@@ -67,68 +83,69 @@ export interface SmartBackendOptions {
   localResources: typeof resources;
 }
 
-const DEFAULT_SMART_BACKEND_OPTIONS: SmartBackendOptions = {
-  localResources: resources
-};
+// TODO: Enable this backend plugin once the internal process to update translations on a remote source will be in place.
+// const DEFAULT_SMART_BACKEND_OPTIONS: SmartBackendOptions = {
+//   localResources: resources
+// };
 
 // Custom backend plugin for i18next that first loads translations from local resources and then tries to fetch updated translations from a remote repository.
 // If the remote fetch fails, it falls back to the local resources without affecting the user experience.
-class SmartI18nextBackend implements BackendModule<SmartBackendOptions> {
-  static type = "backend";
-  type = "backend" as const;
+// class SmartI18nextBackend implements BackendModule<SmartBackendOptions> {
+//   static type = "backend";
+//   type = "backend" as const;
 
-  services: Services | null = null;
-  options: SmartBackendOptions | null = null;
+//   services: Services | null = null;
+//   options: SmartBackendOptions | null = null;
 
-  constructor(
-    services: Services,
-    options: SmartBackendOptions = DEFAULT_SMART_BACKEND_OPTIONS
-  ) {
-    this.init(services, options, {});
-  }
+//   constructor(
+//     services: Services,
+//     options: SmartBackendOptions = DEFAULT_SMART_BACKEND_OPTIONS
+//   ) {
+//     this.init(services, options, {});
+//   }
 
-  init(services: Services, options: SmartBackendOptions, _: InitOptions) {
-    // eslint-disable-next-line functional/immutable-data
-    this.services = services;
-    // eslint-disable-next-line functional/immutable-data
-    this.options = options;
-  }
+//   init(services: Services, options: SmartBackendOptions, _: InitOptions) {
+//     // eslint-disable-next-line functional/immutable-data
+//     this.services = services;
+//     // eslint-disable-next-line functional/immutable-data
+//     this.options = options;
+//   }
 
-  read(language: Locales, namespace: "index", callback: ReadCallback) {
-    if (this.options?.localResources[language] === undefined) {
-      callback(null, resources.it[namespace]);
-    } else {
-      const localData = this.options.localResources[language][namespace] || {};
-      callback(null, localData);
-    }
-    void this.loadRemote(language, namespace);
-  }
+//   read(language: Locales, namespace: "index", callback: ReadCallback) {
+//     if (this.options?.localResources[language] === undefined) {
+//       callback(null, resources.it[namespace]);
+//     } else {
+//       const localData = this.options.localResources[language][namespace] || {};
+//       callback(null, localData);
+//     }
+//     void this.loadRemote(language, namespace);
+//   }
 
-  async loadRemote(language: Locales, namespace: string) {
-    try {
-      const url = `${newContentRepoUrl}/locales/${language}/${namespace}.json`;
-      const response = await fetch(url);
-      if (!response.ok) {
-        captureException(
-          new Error(
-            `Failed to load remote translations: ${response.status} ${response.statusText} for ${url}`
-          )
-        );
-        return;
-      }
-      const remoteData = await response.json();
+//   async loadRemote(language: Locales, namespace: string) {
+//     try {
+//       const url = `${newContentRepoUrl}/locales/${language}/${namespace}.json`;
+//       const response = await fetch(url);
+//       if (!response.ok) {
+//         captureException(
+//           new Error(
+//             `Failed to load remote translations: ${response.status} ${response.statusText} for ${url}`
+//           )
+//         );
+//         return;
+//       }
+//       const remoteData = await response.json();
 
-      i18next.addResourceBundle(language, namespace, remoteData, true, true);
-    } catch (error) {
-      captureException(error);
-    }
-  }
-}
+//       i18next.addResourceBundle(language, namespace, remoteData, true, true);
+//     } catch (error) {
+//       captureException(error);
+//     }
+//   }
+// }
 
 export const initI18n = async () =>
   await i18next
     .use(initReactI18next)
-    .use(SmartI18nextBackend)
+    // .use(SmartI18nextBackend)
     .init({
       lng: "it",
       fallbackLng: "it",
@@ -139,9 +156,10 @@ export const initI18n = async () =>
       react: {
         useSuspense: true
       },
-      backend: {
-        localResources: resources
-      },
+      resources,
+      // backend: {
+      //   localResources: resources
+      // },
       interpolation: { escapeValue: false }
     });
 

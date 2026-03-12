@@ -2,8 +2,10 @@ import { ListItemHeader, ListItemNav } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { Alert, View } from "react-native";
+import { IntegrityError } from "@pagopa/io-react-native-integrity";
 import { EidIssuanceLevel } from "../../machine/eid/context";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
+import { IssuanceFailureType } from "../../machine/eid/failure";
 
 export const ItwPidIssuanceSection = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -42,6 +44,23 @@ export const ItwPidIssuanceSection = () => {
     },
     [machineRef]
   );
+
+  const simulateHardwareKeyInvalidError = useCallback(() => {
+    const fakeError = Object.assign(new Error("GENERATION_ASSERTION_FAILED"), {
+      userInfo: {
+        error:
+          "Impossibile completare l'operazione. (Errore com.apple.devicecheck.error 3)."
+      }
+    }) as unknown as IntegrityError;
+
+    machineRef.send({
+      type: "simulate-failure",
+      failure: {
+        type: IssuanceFailureType.HARDWARE_KEY_INVALID,
+        reason: fakeError
+      }
+    });
+  }, [machineRef]);
 
   return (
     <View>
@@ -85,6 +104,12 @@ export const ItwPidIssuanceSection = () => {
         value="Start L3 reissuance"
         description="Start L3 PID (IT Wallet) reissuance"
         onPress={startReissuance("l3")}
+      />
+      <ListItemHeader label="Failure simulation" />
+      <ListItemNav
+        value="Simulate hardware key invalid error"
+        description="Simulate GENERATION_ASSERTION_FAILED"
+        onPress={simulateHardwareKeyInvalidError}
       />
     </View>
   );

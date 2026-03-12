@@ -3392,12 +3392,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-app-design-system@npm:6.0.4":
-  version: 6.0.4
-  resolution: "@pagopa/io-app-design-system@npm:6.0.4"
+"@pagopa/io-app-design-system@npm:6.0.7":
+  version: 6.0.7
+  resolution: "@pagopa/io-app-design-system@npm:6.0.7"
   dependencies:
     auto-changelog: ^2.4.0
-    lodash: ^4.17.21
     react-native-easing-gradient: ^1.1.1
     react-native-gesture-handler: ^2.25.0
     react-native-haptic-feedback: ^2.3.3
@@ -3417,7 +3416,7 @@ __metadata:
     react-native-safe-area-context: "*"
     react-native-svg: "*"
     react-native-worklets: "*"
-  checksum: 3e175ed6ba9983fd7eb3dfd0b6521c42d7889218b9394f2fc113a5107a88831512c78f612181c5bd578454cc1f0ffbf5523e830af9fa91c5270b476021a253ce
+  checksum: 3d6f497f6107f253000640dff1be12415e962ba237c1887787b435c534475b3eb41f65c7e2f0a7afa6f0726c2d121f5b44c4824504242b4825e1ffe808e32495
   languageName: node
   linkType: hard
 
@@ -3432,15 +3431,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-cie@npm:1.3.5-rc.1":
-  version: 1.3.5-rc.1
-  resolution: "@pagopa/io-react-native-cie@npm:1.3.5-rc.1"
+"@pagopa/io-react-native-cie@npm:1.3.5-rc.2":
+  version: 1.3.5-rc.2
+  resolution: "@pagopa/io-react-native-cie@npm:1.3.5-rc.2"
   dependencies:
     zod: ^3.24.4
   peerDependencies:
     react: ">=19.1"
     react-native: ">=0.81"
-  checksum: 041a0e6c0c5068a68d39b3245a2c451864769001027bfe793e068e45807ae66bafc47f7f11d749f87c15a36505170e66a0e5d3b16f7846b4ab18f32d1f4206eb
+  checksum: 2a5b3d6e7f1077ce7c73559f33bfc1361900a804524ed1c09be3842269db0ee0d5b3946d863ccf84218f1e3132909783ef0ff314d426747b89a2c220f8fb2a77
   languageName: node
   linkType: hard
 
@@ -3553,9 +3552,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-wallet@npm:2.5.0":
-  version: 2.5.0
-  resolution: "@pagopa/io-react-native-wallet@npm:2.5.0"
+"@pagopa/io-react-native-wallet@npm:2.5.1":
+  version: 2.5.1
+  resolution: "@pagopa/io-react-native-wallet@npm:2.5.1"
   dependencies:
     "@sd-jwt/core": ^0.18.0
     "@sd-jwt/crypto-nodejs": ^0.18.0
@@ -3577,7 +3576,7 @@ __metadata:
     react: "*"
     react-native: "*"
     react-native-quick-crypto: "*"
-  checksum: 14e0a32bb91422f447065c2d497284a13c1aa01e97e1e0cc7c84a378e29dd4475ef628f8fe8a21259ccd3fccf238d423db9e362e74633b7528d24082e7e6556a
+  checksum: 3e4a69356459581bc431e944a374cf089fa22a765e08dec2d86f5687ec4d9e97aeec090c883d7ddefecb1a4a17094144633d0c6e383a193511811c3840321381
   languageName: node
   linkType: hard
 
@@ -9676,6 +9675,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-i18next@npm:^6.1.3":
+  version: 6.1.3
+  resolution: "eslint-plugin-i18next@npm:6.1.3"
+  dependencies:
+    lodash: ^4.17.21
+    requireindex: ~1.1.0
+  checksum: 5bd02d3f59bd646f0a21036d00c1701775f82857aaec3834cd9974e2e2b5f9efb974e959eebb17b9b8f428e3623ceebda34a68836109990607339489c6a25749
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-import@npm:^2.25.4":
   version: 2.25.4
   resolution: "eslint-plugin-import@npm:2.25.4"
@@ -11657,9 +11666,9 @@ __metadata:
     "@craftzdog/react-native-buffer": ^6.1.1
     "@gorhom/bottom-sheet": ^5.1.8
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
-    "@pagopa/io-app-design-system": 6.0.4
+    "@pagopa/io-app-design-system": 6.0.7
     "@pagopa/io-pagopa-commons": ^3.1.0
-    "@pagopa/io-react-native-cie": 1.3.5-rc.1
+    "@pagopa/io-react-native-cie": 1.3.5-rc.2
     "@pagopa/io-react-native-cieid": 0.4.0
     "@pagopa/io-react-native-crypto": ^1.2.3
     "@pagopa/io-react-native-http-client": 1.0.5
@@ -11668,7 +11677,7 @@ __metadata:
     "@pagopa/io-react-native-jwt": ^2.1.0
     "@pagopa/io-react-native-login-utils": 1.2.0
     "@pagopa/io-react-native-secure-storage": ^0.2.1
-    "@pagopa/io-react-native-wallet": 2.5.0
+    "@pagopa/io-react-native-wallet": 2.5.1
     "@pagopa/io-react-native-wallet-legacy": "npm:@pagopa/io-react-native-wallet@0.30.0"
     "@pagopa/io-react-native-zendesk": ^0.3.30
     "@pagopa/openapi-codegen-ts": ^14.2.0
@@ -11739,6 +11748,7 @@ __metadata:
     eslint-config-prettier: ^8.3.0
     eslint-plugin-ft-flow: latest
     eslint-plugin-functional: ^4.1.1
+    eslint-plugin-i18next: ^6.1.3
     eslint-plugin-import: ^2.25.4
     eslint-plugin-jest: ^28.11.0
     eslint-plugin-react: ^7.28.0
@@ -17914,6 +17924,13 @@ __metadata:
   version: 2.0.0
   resolution: "require-main-filename@npm:2.0.0"
   checksum: e9e294695fea08b076457e9ddff854e81bffbe248ed34c1eec348b7abbd22a0d02e8d75506559e2265e96978f3c4720bd77a6dad84755de8162b357eb6c778c7
+  languageName: node
+  linkType: hard
+
+"requireindex@npm:~1.1.0":
+  version: 1.1.0
+  resolution: "requireindex@npm:1.1.0"
+  checksum: 397057d97d7f753a3851abf0d6db94c295bd8254536f71f622b896ba08ea8c0d3e3771c8b009a557e6ce602f4245c0588836cdf59c4ce588fff721a7b855d323
   languageName: node
   linkType: hard
 

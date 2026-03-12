@@ -19,15 +19,16 @@ import {
   trackOpenWalletScreen,
   trackWalletAdd
 } from "../../itwallet/analytics";
+import { itwMixPanelCredentialDetailsSelector } from "../../itwallet/analytics/store/selectors/index.ts";
 import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
 import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences.ts";
+import { itwIsL3EnabledSelector } from "../../itwallet/common/store/selectors/preferences.ts";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { walletUpdate } from "../store/actions";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
 import { isWalletScreenRefreshingSelector } from "../store/selectors";
-import { itwMixPanelCredentialDetailsSelector } from "../../itwallet/analytics/store/selectors/index.ts";
 
 export type WalletHomeNavigationParams = Readonly<{
   // Triggers the "New element added" toast display once the user returns to this screen
@@ -48,6 +49,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   const mixPanelCredentialDetails = useIOSelector(
     itwMixPanelCredentialDetailsSelector
   );
+  const isItWalletEnabled = useIOSelector(itwIsL3EnabledSelector);
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
   const isRequiredEidFeedback = useRef(
@@ -75,9 +77,11 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   const handleAddToWalletButtonPress = useCallback(() => {
     trackWalletAdd();
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ONBOARDING
+      screen: isItWalletEnabled
+        ? ITW_ROUTES.L3_ONBOARDING
+        : ITW_ROUTES.ONBOARDING
     });
-  }, [navigation]);
+  }, [navigation, isItWalletEnabled]);
 
   useHeaderFirstLevel({
     currentRoute: ROUTES.WALLET_HOME,

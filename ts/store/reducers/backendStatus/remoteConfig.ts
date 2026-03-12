@@ -30,6 +30,7 @@ import {
 } from "../featureFlagWithMinAppVersionStatus";
 import { isIdPayLocallyEnabledSelector } from "../persistedPreferences";
 import { GlobalState } from "../types";
+import { OSPerPlatform } from "../../../../definitions/content/OSPerPlatform";
 
 export type RemoteConfigState = O.Option<BackendStatus["config"]>;
 
@@ -645,6 +646,16 @@ export const appFeedbackConfigSelector = createSelector(
       O.map(config => config.app_feedback),
       O.toUndefined
     )
+);
+
+export const minOsSupportedSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): OSPerPlatform | undefined => {
+    if (O.isSome(remoteConfig)) {
+      return remoteConfig.value.min_supported_os;
+    }
+    return undefined;
+  }
 );
 
 export const appFeedbackUriConfigSelector = (topic: TopicKeys = "general") =>
