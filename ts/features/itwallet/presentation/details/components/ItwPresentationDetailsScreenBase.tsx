@@ -12,9 +12,10 @@ import {
 import { ButtonBlockProps } from "../../../../../components/ui/utils/buttons.ts";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIOSelector } from "../../../../../store/hooks.ts";
+import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
 import { useHeaderPropsByCredentialType } from "../../../common/utils/itwStyleUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors/index.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 
 export type CredentialCtaProps = ButtonBlockProps;
 
@@ -22,6 +23,7 @@ export type ItwPresentationDetailsScreenBaseProps = {
   credential: StoredCredential;
   children?: ReactNode;
   ctaProps?: CredentialCtaProps;
+  headerTransparent?: boolean;
 };
 
 const scrollTriggerOffsetValue: number = 88;
@@ -29,9 +31,11 @@ const scrollTriggerOffsetValue: number = 88;
 const ItwPresentationDetailsScreenBase = ({
   credential,
   children,
-  ctaProps
+  ctaProps,
+  headerTransparent = false
 }: ItwPresentationDetailsScreenBaseProps) => {
   const itwFeaturesEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const screenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const toast = useIOToast();
   const scrollTranslationY = useSharedValue(0);
@@ -57,6 +61,8 @@ const ItwPresentationDetailsScreenBase = ({
     onStartSupportRequest,
     enableDiscreteTransition: true,
     animatedRef: animatedScrollViewRef,
+    transparent: headerTransparent && !screenReaderEnabled,
+    ignoreAccessibilityCheck: headerTransparent,
     ...headerProps
   });
 

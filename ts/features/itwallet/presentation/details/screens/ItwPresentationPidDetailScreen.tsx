@@ -1,22 +1,30 @@
-import { ContentWrapper, VStack } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  ContentWrapper,
+  H2,
+  Tag,
+  VStack
+} from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { Canvas } from "@shopify/react-native-skia";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useCallback } from "react";
-import { useWindowDimensions, View } from "react-native";
+import { View } from "react-native";
 import { useIOSelector } from "../../../../../store/hooks";
 import { trackCredentialDetail } from "../analytics";
 import { mapPIDStatusToMixpanel } from "../../../analytics/utils";
-import {
-  ItwBrandedSkiaGradient,
-  ItwSkiaBrandedGradientVariant
-} from "../../../common/components/ItwBrandedSkiaGradient";
+import { ItwCredentialDetailCard } from "../../../common/components/ItwCredentialDetailCard";
 import { PoweredByItWalletText } from "../../../common/components/PoweredByItWalletText";
 import {
-  ItwJwtCredentialStatus,
-  StoredCredential
-} from "../../../common/utils/itwTypesUtils";
+  getCredentialNameFromType,
+  tagPropsByStatus
+} from "../../../common/utils/itwCredentialUtils";
+import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialStatus";
+import { getItwAuthSource } from "../../../common/utils/itwMetadataUtils";
+import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import ItwAvatar from "../../../../../../img/features/itWallet/brand/itw_avatar.svg";
+import { itwCredentialsCatalogueByTypesSelector } from "../../../credentialsCatalogue/store/selectors";
 import {
   itwCredentialsEidSelector,
   itwCredentialsEidStatusSelector
@@ -24,11 +32,17 @@ import {
 import { ItwPresentationDetailsScreenBase } from "../components/ItwPresentationDetailsScreenBase";
 import { ItwPresentationPidDetail } from "../components/ItwPresentationPidDetail";
 import { ItwPresentationPidDetailFooter } from "../components/ItwPresentationPidDetailFooter";
-import { ItwPresentationPidDetailHeader } from "../components/ItwPresentationPidDetailHeader";
 
 export const ItwPresentationPidDetailScreen = () => {
   const pidOption = useIOSelector(itwCredentialsEidSelector);
   const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+  const credentialsCatalogue = useIOSelector(
+    itwCredentialsCatalogueByTypesSelector
+  );
+  const displayStatus = useItwDisplayCredentialStatus(
+    maybeEidStatus ?? "valid"
+  );
+  const statusTagProps = tagPropsByStatus[displayStatus];
 
   useFocusEffect(
     useCallback(() => {
@@ -42,14 +56,26 @@ export const ItwPresentationPidDetailScreen = () => {
   );
 
   const getContent = (credential: StoredCredential) => (
-    <ItwPresentationDetailsScreenBase credential={credential}>
-      {/* Header with logo and description */}
-      <ItwPresentationPidDetailHeader />
+    <ItwPresentationDetailsScreenBase credential={credential} headerTransparent>
+      <ItwCredentialDetailCard credentialType={CredentialType.PID}>
+        <ItwAvatar width={48} height={48} />
+        <H2 style={{ paddingTop: 16 }}>
+          {getCredentialNameFromType(CredentialType.PID, "", true)}
+        </H2>
+        <Body
+          style={{ textAlign: "center", marginHorizontal: 32, paddingTop: 4 }}
+        >
+          {credentialsCatalogue?.[CredentialType.PID]
+            ? getItwAuthSource(credentialsCatalogue[CredentialType.PID])
+            : ""}
+        </Body>
+        {statusTagProps && (
+          <View style={{ marginTop: 16 }}>
+            <Tag forceLightMode {...statusTagProps} />
+          </View>
+        )}
+      </ItwCredentialDetailCard>
 
-      {/* Brand gradient below header */}
-      <PidStatusGradient />
-
-      {/* Page content */}
       <ContentWrapper>
         <VStack style={{ paddingVertical: 16 }} space={16}>
           <ItwPresentationPidDetail credential={credential} />
@@ -63,28 +89,4 @@ export const ItwPresentationPidDetailScreen = () => {
   );
 
   return pipe(pidOption, O.fold(constNull, getContent));
-};
-
-const PidStatusGradient = () => {
-  const { width } = useWindowDimensions();
-  const pidStatus = useIOSelector(itwCredentialsEidStatusSelector);
-
-  const borderVariantByPidStatus: Record<
-    ItwJwtCredentialStatus,
-    ItwSkiaBrandedGradientVariant
-  > = {
-    valid: "default",
-    jwtExpiring: "warning",
-    jwtExpired: "error"
-  };
-
-  return (
-    <Canvas style={{ width, height: 3 }}>
-      <ItwBrandedSkiaGradient
-        width={width}
-        height={3}
-        variant={borderVariantByPidStatus[pidStatus || "valid"]}
-      />
-    </Canvas>
-  );
 };
