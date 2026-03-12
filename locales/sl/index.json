@@ -49,7 +49,6 @@
   },
   "global": {
     "you": "TI",
-    "id": "ID",
     "badges": {
       "blocked": "Blokiran",
       "onGoing": "V teku"
@@ -92,14 +91,6 @@
         }
       }
     },
-    "symbols": {
-      "question": "?",
-      "asterisk": "*"
-    },
-    "localization": {
-      "delimiterSeparator": ".",
-      "decimalSeparator": ","
-    },
     "date": {
       "invalid": "neveljaven datum",
       "today": "danes",
@@ -112,16 +103,11 @@
       "fullFormatShortMonthLiteralWithTime": "%d. %b %Y, %H:%M",
       "fullFormatShortMonthLiteralWithoutTime": "%d. %b %Y",
       "fullFormatFullMonthLiteral": "%d. %B %Y",
-      "fullMonthLiteral": "%B",
-      "fullMonthLiteralWithYear": "%B %Y",
-      "timeFormat": "%H:%M",
-      "timeFormatWithTimezone": "%H:%M:%S (%z)",
       "dayMonthWithTime": "%d. %b, %H:%M",
       "dayMonthWithoutTime": "%d. %b",
       "dayFullMonth": "%d. %B",
       "numericMonthYear": "%m. %Y",
       "shortNumericMonthYear": "%m.%-y",
-      "monthYear": "MMMM YYYY",
       "dayAndMonth": "dddd, D. MMMM",
       "dayMonth": "DD.MM.",
       "dayMonthYear": "D. MMMM YYYY",
@@ -516,8 +502,7 @@
   "cie": {
     "title": "Položi kartico",
     "layCardMessageHeader": "Svojo elektronsko osebno izkaznico (CIE) za nekaj sekund položi na hrbtno stran telefona.",
-    "layCardMessageFooter": "Če ne veš točno, kje je antena NFC, premakni kartico na druga mesta in počakaj nekaj sekund, da zaslišiš zvok.",
-    "booking_url": "https://www.cartaidentita.interno.gov.it/cittadini/sistema-di-prenotazione-della-cie/"
+    "layCardMessageFooter": "Če ne veš točno, kje je antena NFC, premakni kartico na druga mesta in počakaj nekaj sekund, da zaslišiš zvok."
   },
   "spid": {
     "login": "PRIJAVA",
@@ -569,7 +554,6 @@
     },
     "cie": {
       "genericTitle": "Prijavi se s CIE",
-      "cie": "CIE",
       "noDataTitle": "Za uporabo IO je potrebno dovoliti pošiljanje podatkov",
       "authToSendData": "IO obdeluje tvoje osebne podatke v skladu z varnostjo in tvojo zasebnostjo v skladu z navodili **Splošne uredbe o varstvu podatkov**, ki jo je izdala Evropska unija ([GDPR, uredba št. 2016/679](https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=CELEX%3A32016R0679)).\n\nČe želiš, se lahko poskusiš ponovno prijaviti.\n",
       "nfc": {
@@ -587,7 +571,6 @@
         "pinCardTitle": "Vnesi PIN tvoje osebne izkaznice",
         "pinCardHeader": "Prijavi se s CIE",
         "pinCardContent": "Koda PIN je sestavljena iz 8 števk. Štiri števke, ki so ti jih dostavili na matičnem uradu in še 4 števke soti skupaj s kartico poslali na dom. Sestavi jih skupaj v tem vrstnem redu in jih prosim vnesi sem.",
-
         "incorrectCiePinContent1": "Zaradi tvoje varnosti lahko PIN kartice poskusiš vnesti največ trikrat. Nato boš moral/a kartico odkleniti z vnosom PUK-a.",
         "incorrectCiePinContent2": "Ne pozabi, da je koda PIN vaše elektronske osebne izkaznice (CIE) sestavljena iz 8 števk. Štiri številke, ki so ti jih dali v matičnem uradu, in druge štiri številke, ki so ti jih skupaj s kartico poslali na dom.",
         "alert": "Ali se res želiš vrniti nazaj?",
@@ -633,7 +616,6 @@
         }
       }
     },
-    "spid": "SPID",
     "spid_information_request": {
       "headerTitle": "Nimaš SPID-a?",
       "contentTitle": "Kaj je SPID?"
@@ -788,7 +770,6 @@
     "currentPsp": "Plačilo bo opravil",
     "noPsp": "Nisi še izbral PSP-ja",
     "changePsp": "Izberi upravitelja",
-    "IUV": "IUV",
     "IUV_extended": "Edinstvena identifikacija plačila (Identificativo Univoco di Versamento)",
     "notice": "Obvestilo",
     "noticeCode": "Koda obvestila",
@@ -888,9 +869,7 @@
       "sectionCardHint": "Posodobi seznam načinov plačila",
       "folded": {
         "creditCard": "Kartica {{brand}}, številka kartice se konča z {{blurredNumber}}",
-        "bancomat": "BANCOMAT {{bankName}}",
         "coBadge": "Kartica {{brand}}, {{bankName}}",
-        "bancomatPay": "BANCOMATPay {{bankName}}",
         "cta": "Oglej si podrobnosti metode",
         "bankNotAvailable": "ime banke ni na voljo"
       },
@@ -938,7 +917,6 @@
         }
       },
       "paypal": {
-        "name": "PayPal",
         "headerTitle": "Dodaj PayPal",
         "emailNotAvailable": "ni na razpolago",
         "start": {
@@ -1185,7 +1163,6 @@
       "contextualHelpContent": "**Tukaj lahko izbereš način plačila.** IO trenutno podpira samo plačila s kreditno/debetno kartico, kmalu pa bodo dodani tudi drugi načini plačila, kot so PayPal, Satispay in drugi.\r\n",
       "pickPaymentMethod": {
         "title": "S katerim načinom želiš plačati?",
-        "description": "{{firstElement}} · {{secondElement}}",
         "disabled": {
           "title": "Onemogočeni načini"
         },
@@ -1213,7 +1190,6 @@
       "expireDate": "Rok",
       "tranche": "Obrok",
       "info": "Za informacije:",
-      "tel": "Tel:",
       "email": "E-naslov:",
       "PEC": "CEP (PEC):",
       "recipient": "Ustanova upnica",
@@ -1308,15 +1284,10 @@
         "name": "Kartica PagoBANCOMAT",
         "description": "Kartica, ki jo uporabljaš za plačevanje v trgovinah"
       },
-      "bank": {
-        "name": "Bancomat Pay"
-      },
       "bancomatPay": {
-        "name": "BANCOMAT Pay",
         "description": "Plačaj s povezano kartico ali bančnim računom"
       },
       "postepayApp": {
-        "name": "Postepay",
         "description": "Tvoja aplikacija Postepay"
       },
       "postepay": {
@@ -1324,11 +1295,7 @@
         "description": "Kartice, ki jih izdaja Poste Italiane"
       },
       "paypal": {
-        "name": "PayPal",
         "description": "Plačaj s povezano kartico ali bančnim računom"
-      },
-      "bancomat": {
-        "name": "PagoBANCOMAT"
       },
       "cobadge": {
         "name": "mednarodno sprejeto"
@@ -1351,11 +1318,7 @@
         "securityCode4D": "CID (4 števke)"
       },
       "values": {
-        "holder": "Mario Rossi",
-        "pan": "0000 0000 0000 0000",
-        "expirationDate": "mm/ll",
-        "securityCode": "•••",
-        "securityCode4D": "••••"
+        "expirationDate": "mm/ll"
       },
       "accessibility": {
         "holder": {
@@ -1688,8 +1651,7 @@
     "answer": "Če ti vsebina sporočila ni jasna, moraš prijaviti napako, ali želiš izvedeti več, se lahko obrneš neposredno na predstavnike servisa, tako da navedeš naslednji ID sporočila.",
     "call": "Pokliči",
     "sendEmail": "Pošlji sporočilo",
-    "write": "Napiši",
-    "id": "ID:"
+    "write": "Napiši"
   },
   "notifications": {
     "installation": {
@@ -2238,9 +2200,7 @@
       "content": "# Bonus Terms & Conditions\n\nS sprejetjem teh pogojev:\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Donec molestie metus hendrerit mauris maximus, cursus accumsan leo semper. Nullam sollicitudin neque suscipit nibh imperdiet maximus. Fusce eleifend, enim nec lobortis tristique, elit odio mollis dui, aliquam suscipit ante neque et justo. In tincidunt viverra elit eget faucibus. Donec nec sem non velit sodales maximus eget ornare urna. Aenean maximus enim consequat augue blandit rhoncus. Fusce congue arcu turpis, a rhoncus nulla commodo euismod. Aliquam erat volutpat. Ut pulvinar placerat semper. Aliquam fermentum pulvinar dui, pulvinar maximus arcu vestibulum in. Nullam magna dolor, posuere et quam a, mattis fringilla risus. In finibus in leo nec pellentesque.\n\nAenean maximus et sem sit amet vestibulum. Donec vestibulum neque eget erat fermentum imperdiet. Nullam pretium commodo libero, eget ullamcorper erat accumsan sit amet. Suspendisse at nunc suscipit, vestibulum nulla sodales, eleifend nunc. Quisque orci turpis, euismod eget euismod vitae, dictum ut quam. Etiam vitae velit id orci pretium lobortis at eget mauris. Maecenas vel bibendum purus. Donec in sapien accumsan, dictum sem at, molestie felis. Morbi efficitur malesuada finibus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\nDuis quis ligula vitae ipsum pharetra gravida. Aenean blandit, nunc ut pellentesque efficitur, mauris nibh accumsan ex, non convallis urna metus condimentum leo. Vivamus vitae magna consequat, placerat odio vel, efficitur quam. Sed condimentum consectetur turpis ac tincidunt. Donec in neque quis mauris auctor lacinia. Sed porttitor euismod orci, sed fringilla tortor fermentum sed. Vestibulum eget suscipit nunc.\n\nNam ullamcorper quam sed facilisis imperdiet. Vestibulum quis accumsan neque, non placerat lacus. Quisque gravida cursus eleifend. Nullam quis felis ante. Nulla id efficitur nisi. Nulla in ullamcorper turpis. Curabitur eros turpis, ornare eu massa at, sagittis commodo enim. Nunc eget cursus enim, nec elementum elit. Curabitur a interdum quam, in egestas mi. In eu imperdiet leo. Aenean dictum vulputate tortor, vel semper metus ultricies ut.\n\nMauris efficitur lacinia velit, non imperdiet lorem sodales et. Phasellus tortor ex, efficitur ut fermentum eget, tincidunt nec erat. Maecenas quis volutpat mauris. Cras posuere, lectus sed feugiat bibendum, dui magna pretium arcu, tristique iaculis risus ligula id elit. Sed libero felis, mattis et felis quis, convallis tempus lacus. Mauris aliquet dapibus elit, volutpat porta mi ultricies sit amet. Integer vel felis eu magna gravida auctor. In hac habitasse platea dictumst. Nam rhoncus ipsum a placerat consequat. Duis auctor tempor diam nec aliquet. Donec id sollicitudin odio. Curabitur consectetur auctor erat nec eleifend. Pellentesque et dui sapien. Vestibulum varius viverra leo.\n\nAenean sagittis accumsan arcu a rutrum. Mauris eu tristique arcu. In sit amet est eleifend, fermentum nisl et, pellentesque est. Curabitur arcu enim, mattis eu est sit amet, vestibulum tristique velit. Vestibulum quis neque fermentum diam faucibus volutpat a at lorem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ornare nisi risus, nec laoreet urna mollis sit amet. Donec luctus efficitur velit. Fusce cursus, eros et convallis tristique, nibh massa feugiat elit, eget fringilla enim nibh in mauris. Sed sit amet orci lacinia, malesuada sem eget, commodo augue. Vestibulum commodo quis quam et laoreet. Pellentesque laoreet quis mi quis tincidunt. Donec condimentum erat in feugiat gravida."
     },
     "bpd": {
-      "title": "Cashback",
       "description": "Prejmi povračilo, ko v trgovinah plačuješ s to metodo",
-      "name": "Cashback",
       "cta": {
         "activeBonus": "Aktiviraj Cashback"
       }
@@ -2273,7 +2233,6 @@
           "addressTitle": "Iskanje po naslovu",
           "addressPlaceholder": "Iskanje naslova",
           "sliderLabel": "Razdalja, znotraj katere izvesti iskanje",
-          "sliderUnit": "Km",
           "orderTitle": "Pokaži",
           "categories": "Kategorije",
           "cta": {
@@ -2406,7 +2365,7 @@
         "code": {
           "title": "Tvoja koda za popust",
           "validUntil": "Velja še",
-          "minutes_one": "1 minuto",
+          "minutes_one": "1 minuta",
           "minutes_other": "{{minutes}} minut",
           "seconds_one": "1 sekundo",
           "seconds_other": "{{seconds}} sekund"
