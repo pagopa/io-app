@@ -5,11 +5,6 @@ import * as S from "fp-ts/lib/string";
 import { assign, type ActionArgs, type DoneActorEvent } from "xstate";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import ROUTES from "../../../../../navigation/routes.ts";
-import { trackItwRemoteDataShare } from "../analytics";
-import {
-  getRemoteCredentialCombination,
-  groupCredentialsByPurpose
-} from "../utils/itwRemotePresentationUtils";
 import { useIOStore } from "../../../../../store/hooks.ts";
 import { checkCurrentSession } from "../../../../authentication/common/store/actions/index.ts";
 import type { WalletInstanceAttestations } from "../../../common/utils/itwTypesUtils.ts";
@@ -19,7 +14,10 @@ import { itwWalletInstanceAttestationStore } from "../../../walletInstance/store
 import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors/index.ts";
 import { trackItwRemoteDataShare } from "../analytics";
 import { ITW_REMOTE_ROUTES } from "../navigation/routes.ts";
-import { groupCredentialsByPurpose } from "../utils/itwRemotePresentationUtils";
+import {
+  getRemoteCredentialCombination,
+  groupCredentialsByPurpose
+} from "../utils/itwRemotePresentationUtils";
 import { Context } from "./context.ts";
 import { RemoteEvents } from "./events.ts";
 
