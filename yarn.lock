@@ -9695,6 +9695,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-i18next@npm:^6.1.3":
+  version: 6.1.3
+  resolution: "eslint-plugin-i18next@npm:6.1.3"
+  dependencies:
+    lodash: ^4.17.21
+    requireindex: ~1.1.0
+  checksum: 5bd02d3f59bd646f0a21036d00c1701775f82857aaec3834cd9974e2e2b5f9efb974e959eebb17b9b8f428e3623ceebda34a68836109990607339489c6a25749
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-import@npm:^2.25.4":
   version: 2.25.4
   resolution: "eslint-plugin-import@npm:2.25.4"
@@ -11758,6 +11768,7 @@ __metadata:
     eslint-config-prettier: ^8.3.0
     eslint-plugin-ft-flow: latest
     eslint-plugin-functional: ^4.1.1
+    eslint-plugin-i18next: ^6.1.3
     eslint-plugin-import: ^2.25.4
     eslint-plugin-jest: ^28.11.0
     eslint-plugin-react: ^7.28.0
@@ -17923,6 +17934,13 @@ __metadata:
   version: 2.0.0
   resolution: "require-main-filename@npm:2.0.0"
   checksum: e9e294695fea08b076457e9ddff854e81bffbe248ed34c1eec348b7abbd22a0d02e8d75506559e2265e96978f3c4720bd77a6dad84755de8162b357eb6c778c7
+  languageName: node
+  linkType: hard
+
+"requireindex@npm:~1.1.0":
+  version: 1.1.0
+  resolution: "requireindex@npm:1.1.0"
+  checksum: 397057d97d7f753a3851abf0d6db94c295bd8254536f71f622b896ba08ea8c0d3e3771c8b009a557e6ce602f4245c0588836cdf59c4ce588fff721a7b855d323
   languageName: node
   linkType: hard
 

@@ -699,7 +699,7 @@ Inizia"
                                 Dimostra chi sei col tuo dispositivo
                               </Text>
                               <View
-                                accessibilityLabel="close"
+                                accessibilityLabel="Chiudi"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -1862,7 +1862,7 @@ Aggiungi un documento"
                                 Porta su IO i tuoi documenti digitali
                               </Text>
                               <View
-                                accessibilityLabel="close"
+                                accessibilityLabel="Chiudi"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -3025,7 +3025,7 @@ Inizia"
                                 IO dà il benvenuto a IT-Wallet
                               </Text>
                               <View
-                                accessibilityLabel="close"
+                                accessibilityLabel="Chiudi"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
