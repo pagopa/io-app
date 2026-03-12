@@ -114,7 +114,8 @@ describe("itwRemoteMachine", () => {
 
     actor.send({
       type: "start",
-      payload: qrCodePayload
+      payload: qrCodePayload,
+      flowType: "cross-device"
     });
 
     const snapshot = actor.getSnapshot();
@@ -194,7 +195,8 @@ describe("itwRemoteMachine", () => {
 
     actor.send({
       type: "start",
-      payload: qrCodePayload
+      payload: qrCodePayload,
+      flowType: "cross-device"
     });
 
     const snapshot = actor.getSnapshot();
@@ -214,7 +216,8 @@ describe("itwRemoteMachine", () => {
 
     actor.send({
       type: "start",
-      payload: qrCodePayload
+      payload: qrCodePayload,
+      flowType: "cross-device"
     });
 
     expect(actor.getSnapshot().value).toStrictEqual(
@@ -264,7 +267,11 @@ describe("itwRemoteMachine", () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
-    actor.send({ type: "start", payload: qrCodePayload });
+    actor.send({
+      type: "start",
+      payload: qrCodePayload,
+      flowType: "cross-device"
+    });
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
       payload: qrCodePayload
@@ -389,7 +396,8 @@ describe("itwRemoteMachine", () => {
         request_uri: T_REQUEST_URI,
         state: T_STATE,
         request_uri_method: "get"
-      }
+      },
+      flowType: "cross-device"
     });
 
     await waitFor(actor, snapshot =>
@@ -438,7 +446,8 @@ describe("itwRemoteMachine", () => {
         client_id: T_CLIENT_ID,
         request_uri: T_REQUEST_URI,
         state: T_STATE
-      } as ItwRemoteRequestPayload
+      } as ItwRemoteRequestPayload,
+      flowType: "cross-device"
     });
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
@@ -478,7 +487,11 @@ describe("itwRemoteMachine", () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
-    actor.send({ type: "start", payload: qrCodePayload });
+    actor.send({
+      type: "start",
+      payload: qrCodePayload,
+      flowType: "cross-device"
+    });
 
     await waitFor(actor, snapshot =>
       snapshot.matches("ObtainingWalletInstanceAttestation")

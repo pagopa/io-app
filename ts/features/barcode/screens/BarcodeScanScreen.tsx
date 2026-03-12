@@ -169,7 +169,10 @@ const BarcodeScanScreen = () => {
       case "ITW_REMOTE":
         navigation.navigate(ITW_REMOTE_ROUTES.MAIN, {
           screen: ITW_REMOTE_ROUTES.REQUEST_VALIDATION,
-          params: barcode.itwRemoteRequestPayload
+          params: {
+            ...barcode.itwRemoteRequestPayload,
+            flowType: "cross-device"
+          }
         });
         break;
       case "SEND":

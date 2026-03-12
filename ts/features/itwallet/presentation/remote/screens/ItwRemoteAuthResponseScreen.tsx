@@ -6,6 +6,7 @@ import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisa
 import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen";
 import { ItwRemoteMachineContext } from "../machine/provider";
 import {
+  selectFlowType,
   selectIsLoading,
   selectIsSuccess,
   selectRedirectUri,
@@ -26,6 +27,7 @@ export const ItwRemoteAuthResponseScreen = () => {
   const credential_type = ItwRemoteMachineContext.useSelector(
     selectRemoteCredentialCombination
   );
+  const flowType = ItwRemoteMachineContext.useSelector(selectFlowType);
 
   useOnFirstRender(() => {
     if (credential_type) {
@@ -51,31 +53,31 @@ export const ItwRemoteAuthResponseScreen = () => {
 
   const closeMachine = () => machineRef.send({ type: "close" });
 
+  const action =
+    flowType === "same-device" && redirectUri
+      ? {
+          icon: "externalLinkSmall" as const,
+          label: I18n.t("features.itWallet.presentation.remote.success.cta"),
+          onPress: () => {
+            Linking.openURL(redirectUri)
+              .catch(() => IOToast.error("global.genericError"))
+              .finally(closeMachine);
+          }
+        }
+      : {
+          label: I18n.t("global.buttons.close"),
+          onPress: closeMachine
+        };
+
   return (
     <OperationResultScreenContent
       pictogram="success"
+      testID="itw-remote-auth-response-success"
       title={I18n.t("features.itWallet.presentation.remote.success.title")}
       subtitle={I18n.t(
         "features.itWallet.presentation.remote.success.subtitle"
       )}
-      action={
-        redirectUri
-          ? {
-              icon: "externalLinkSmall",
-              label: I18n.t(
-                "features.itWallet.presentation.remote.success.cta"
-              ),
-              onPress: () => {
-                Linking.openURL(redirectUri)
-                  .catch(() => IOToast.error("global.genericError"))
-                  .finally(closeMachine);
-              }
-            }
-          : {
-              label: I18n.t("global.buttons.close"),
-              onPress: closeMachine
-            }
-      }
+      action={action}
     />
   );
 };

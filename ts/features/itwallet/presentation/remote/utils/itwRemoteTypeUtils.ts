@@ -47,3 +47,8 @@ export type DcqlQuery =
 export type AuthErrorResponseBody = Parameters<
   typeof Credential.Presentation.sendAuthorizationErrorResponse
 >[1];
+
+/**
+ * Type that defines the possible flows for the remote presentation, which can be either "same-device" or "cross-device".
+ */
+export type ItwRemoteFlowType = "same-device" | "cross-device";
