@@ -11,6 +11,7 @@ import { renderWalletCardFn } from "../utils";
 
 export type WalletCardsCategoryContainerProps = WithTestID<{
   cards: ReadonlyArray<WalletCard>;
+  headerCard?: React.ReactElement;
   header?: React.ReactElement;
   topElement?: React.ReactElement;
   bottomElement?: React.ReactElement;
@@ -29,19 +30,39 @@ const itemLayoutAnimation =
  */
 export const WalletCardsCategoryContainer = ({
   cards,
+  headerCard,
   header,
   topElement,
   bottomElement,
   testID
 }: WalletCardsCategoryContainerProps) => {
+  const headerCardComponent = useMemo(() => {
+    if (!headerCard) {
+      return null;
+    }
+    const isStacked = cards.length > 0;
+    return (
+      <Animated.View
+        style={[
+          styles.headerCardContainer,
+          isStacked && styles.headerCardContainerStacked
+        ]}
+        layout={LinearTransition.duration(200)}
+      >
+        {headerCard}
+      </Animated.View>
+    );
+  }, [headerCard, cards.length]);
+
   const headerComponent = useMemo(
     () => (
       <>
+        {headerCardComponent}
         {header}
         {topElement}
       </>
     ),
-    [header, topElement]
+    [headerCardComponent, header, topElement]
   );
 
   return (
@@ -79,5 +100,12 @@ const styles = StyleSheet.create({
   },
   cardList: {
     marginHorizontal: -8
+  },
+  headerCardContainer: {
+    aspectRatio: 16 / 10,
+    marginHorizontal: -8
+  },
+  headerCardContainerStacked: {
+    aspectRatio: 16 / 3
   }
 });

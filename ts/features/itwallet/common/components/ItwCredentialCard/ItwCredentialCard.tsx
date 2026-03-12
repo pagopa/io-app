@@ -1,4 +1,11 @@
-import { HStack, Icon, IOText, Tag } from "@pagopa/io-app-design-system";
+import {
+  HStack,
+  Icon,
+  IOColors,
+  IOText,
+  Tag,
+  useIOTheme
+} from "@pagopa/io-app-design-system";
 import Color from "color";
 import I18n from "i18next";
 import { useMemo } from "react";
@@ -15,7 +22,9 @@ import {
 import { useThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import { itwShouldUpgradeCredentialSelector } from "../../store/selectors";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
-import { CardBackground } from "./CardBackground";
+import { CredentialType } from "../../utils/itwMocksUtils";
+import { ItWalletIdLogo } from "../ItWalletIdLogo";
+import { CardBackground, credentialBorderColors } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
 
@@ -60,6 +69,7 @@ export const ItwCredentialCard = ({
   const needsItwUpgrade = useIOSelector(
     itwShouldUpgradeCredentialSelector(credentialType, issuedAt)
   );
+  const ioTheme = useIOTheme();
   const status = useItwDisplayCredentialStatus(credentialStatus);
   const theme = useThemeColorByCredentialType(credentialType);
   const borderColorMap = useBorderColorByStatus();
@@ -111,52 +121,85 @@ export const ItwCredentialCard = ({
     };
   }, [theme, status, needsItwUpgrade]);
 
+  const hasCredentialBorderColor =
+    status === "valid" && !!credentialBorderColors[credentialType];
+
+  const appBackgroundColor = IOColors[ioTheme["appBackground-primary"]];
+
   return (
-    <View style={styles.cardContainer}>
-      <CardBackground
-        credentialType={credentialType}
-        colorScheme={colorScheme}
-      />
-      <View style={styles.header}>
-        <HStack space={16}>
-          <IOText
-            size={16}
-            lineHeight={20}
-            font={
-              typefacePreference === "comfortable"
-                ? "Titillio"
-                : "TitilliumSansPro"
+    <View
+      style={[
+        styles.cardWrapper,
+        hasCredentialBorderColor && {
+          boxShadow: `0 0 0 2px ${appBackgroundColor}`
+        }
+      ]}
+    >
+      <View style={styles.cardContainer}>
+        <CardBackground
+          credentialType={credentialType}
+          colorScheme={colorScheme}
+        />
+        <View style={styles.header}>
+          <HStack space={16}>
+            {credentialType === CredentialType.PID ? (
+              <ItWalletIdLogo width={103} height={24} />
+            ) : (
+              <IOText
+                size={16}
+                lineHeight={20}
+                font={
+                  typefacePreference === "comfortable"
+                    ? "Titillio"
+                    : "TitilliumSansPro"
+                }
+                weight="Semibold"
+                maxFontSizeMultiplier={1.25}
+                style={{
+                  letterSpacing: 0.25,
+                  color: titleColor,
+                  opacity: titleOpacity,
+                  flex: 1,
+                  flexShrink: 1
+                }}
+              >
+                {getCredentialNameFromType(credentialType, "").toUpperCase()}
+              </IOText>
+            )}
+            {statusTagProps && <Tag forceLightMode {...statusTagProps} />}
+            {isMultiCredential && (
+              <Icon name="multiCard" color="grey-850" size={24} />
+            )}
+          </HStack>
+        </View>
+        <DigitalVersionBadge
+          credentialType={credentialType}
+          colorScheme={colorScheme}
+        />
+        <View
+          style={[
+            styles.border,
+            {
+              borderColor:
+                status === "valid"
+                  ? credentialBorderColors[credentialType] ??
+                    borderColorMap[status]
+                  : borderColorMap[status]
             }
-            weight="Semibold"
-            maxFontSizeMultiplier={1.25}
-            style={{
-              letterSpacing: 0.25,
-              color: titleColor,
-              opacity: titleOpacity,
-              flex: 1,
-              flexShrink: 1
-            }}
-          >
-            {getCredentialNameFromType(credentialType, "").toUpperCase()}
-          </IOText>
-          {statusTagProps && <Tag forceLightMode {...statusTagProps} />}
-          {isMultiCredential && (
-            <Icon name="multiCard" color="grey-850" size={24} />
-          )}
-        </HStack>
+          ]}
+        />
       </View>
-      <DigitalVersionBadge
-        credentialType={credentialType}
-        colorScheme={colorScheme}
-      />
-      <View style={[styles.border, { borderColor: borderColorMap[status] }]} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  cardContainer: {
+  cardWrapper: {
     aspectRatio: 16 / 10,
+    borderRadius: 8
+  },
+  cardContainer: {
+    flex: 1,
     borderRadius: 8,
     overflow: "hidden"
   },
@@ -168,7 +211,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     borderRadius: 8,
     borderCurve: "continuous",
-    borderWidth: 2,
+    borderWidth: 1,
     zIndex: 11
   },
   header: {
