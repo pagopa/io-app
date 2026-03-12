@@ -68,7 +68,9 @@ describe("index", () => {
                     first_time_opening: firstTimeOpening ? "yes" : "no",
                     fromPushNotification: fromPushNotifications ? "yes" : "no",
                     has_fims_callback: hasFIMSCTA ? "yes" : "no",
-                    date_sent: "2025-01-01T10:30:45.000Z"
+                    date_sent: "2025-01-01T10:30:45.000Z",
+                    fci_message_type: "not_set",
+                    fci_result: "not_set"
                   });
                 })
               )
