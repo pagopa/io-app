@@ -10,11 +10,6 @@
     }
   },
   "date": {
-    "formats": {
-      "default": "%d/%m/%Y",
-      "short": "%d %B",
-      "long": "%d %B %Y"
-    },
     "day_names": [
       "Sunday",
       "Monday",
@@ -24,7 +19,15 @@
       "Friday",
       "Saturday"
     ],
-    "abbr_day_names": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "abbr_day_names": [
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat"
+    ],
     "month_names": [
       " ",
       "January",
@@ -55,7 +58,10 @@
       "Nov",
       "Dec"
     ],
-    "meridian": ["am", "pm"],
+    "meridian": [
+      "am",
+      "pm"
+    ],
     "time": {
       "minutes_zero": "0 minutes",
       "minutes_one": "1 minute",
@@ -67,7 +73,6 @@
   },
   "global": {
     "you": "YOU",
-    "id": "ID",
     "badges": {
       "blocked": "Blocked",
       "onGoing": "Ongoing",
@@ -88,8 +93,6 @@
         }
       }
     },
-    "password": "Password",
-    "username": "Username",
     "unknown": "unknown",
     "disclaimer_beta": "If you're having trouble signing in, please let us know!",
     "sectionStatus": {
@@ -132,10 +135,6 @@
       },
       "progressTracker": "{{index}} of {{total}}"
     },
-    "symbols": {
-      "question": "?",
-      "asterisk": "*"
-    },
     "localization": {
       "delimiterSeparator": ",",
       "decimalSeparator": "."
@@ -146,27 +145,7 @@
       "tomorrow": "tomorrow"
     },
     "dateFormats": {
-      "shortFormat": "%d/%m/%Y",
-      "shortFormatWithTime": "%d/%m/%Y, %H:%M",
-      "fullFormatShortMonthLiteral": "%d %b %Y",
-      "fullFormatShortMonthLiteralWithTime": "%d %b %Y, %H:%M",
-      "fullFormatShortMonthLiteralWithoutTime": "%d %b %Y",
-      "fullFormatFullMonthLiteral": "%d %B %Y",
-      "fullMonthLiteral": "%B",
-      "fullMonthLiteralWithYear": "%B %Y",
-      "numericMonthYear": "%m/%Y",
-      "shortNumericMonthYear": "%m/%-y",
-      "timeFormat": "%H:%M",
-      "timeFormatWithTimezone": "%H:%M:%S (%z)",
-      "dayMonthWithTime": "%d %b, %H:%M",
-      "dayMonthWithoutTime": "%d %b",
-      "dayFullMonth": "%d %B",
-      "monthYear": "MMMM YYYY",
-      "dayAndMonth": "dddd D MMMM",
-      "dayMonth": "MM/DD",
-      "dayMonthYear": "D MMMM YYYY",
-      "weekdayDayMonthYear": "dddd D MMMM YYYY",
-      "dateTimePicker": "gg/mm/yyyy"
+      "dayMonth": "MM/DD"
     },
     "genericError": "There is a temporary problem, please try again.",
     "genericAlert": "Warning!",
@@ -188,8 +167,6 @@
       "delete": "Delete",
       "cancel": "Cancel",
       "settings": "Settings",
-      "ok": "OK",
-      "ok2": "Ok",
       "continue": "Continue",
       "notNow": "Maybe later",
       "retry": "Retry",
@@ -204,7 +181,6 @@
       "skip": "Skip",
       "add": "Add",
       "edit": "Edit",
-      "info": "Info",
       "activate": "Enable",
       "activate2": "Enable",
       "deactivate": "Disable",
@@ -504,7 +480,6 @@
           "contextualHelpContent": "**Here you can find all the information related to your privacy profile:** details on the treatment of personal data, possibility to delete your account and to export all the personal data associated with your profile.\n"
         },
         "shareData": {
-          "title": "Privacy",
           "listItem": {
             "title": "Share usage data",
             "description": "Help the IO team to monitor the functioning of the app"
@@ -574,7 +549,6 @@
       "developersSectionHeader": "Developers",
       "testEnvironmentSectionHeader": "Test Environment",
       "pagoPaEnvironment": {
-        "pagoPaEnv": "pagoPA",
         "pagoPAEnvAlert": "This change requires app reboot",
         "pagoPAEnvAlertLocal": "The pagoPA test environment cannot be enabled with the local app build",
         "alertConfirmTitle": "Do you want to use the pagoPA test environment?",
@@ -661,7 +635,6 @@
               "description": "Designed for better text readability"
             },
             "standard": {
-              "title": "Standard",
               "description": "The usual style with narrow, geometric shapes"
             }
           },
@@ -765,8 +738,7 @@
   "cie": {
     "title": "Touch the card",
     "layCardMessageHeader": "Touch your Electronic ID Card on the back of your phone for a few seconds.",
-    "layCardMessageFooter": "If you don't know exactly where is the NFC sensor, move the card to different points and wait a few seconds until you hear a sound.",
-    "booking_url": "https://www.cartaidentita.interno.gov.it/cittadini/sistema-di-prenotazione-della-cie/"
+    "layCardMessageFooter": "If you don't know exactly where is the NFC sensor, move the card to different points and wait a few seconds until you hear a sound."
   },
   "spid": {
     "login": "LOGIN",
@@ -997,7 +969,6 @@
     },
     "cie": {
       "genericTitle": "Login with CIE",
-      "cie": "CIE",
       "noDataTitle": "To use IO you must authorize the sending of data",
       "authToSendData": "IO treats your personal data in respect of security and your privacy, following the indications of the **General Data Protection Regulation** issued by the European Union ([GDPR, Regulation No. 2016/679](https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=CELEX%3A32016R0679)).\n\nIf you want you can try to log in again.\n",
       "nfc": {
@@ -1009,11 +980,8 @@
         "subtitle": "To enable IO to read your CIE, activate NFC from your device's settings.",
         "listItemTitle": "How to do it::",
         "action": "Open Settings",
-        "listItemLabel1": "Step 1",
         "listItemValue1": "Open 'Settings'",
-        "listItemLabel2": "Step 2",
         "listItemValue2": "Search for ‘NFC’ functionality",
-        "listItemLabel3": "Step 3",
         "listItemValue3": "Turn it on",
         "activeNfcAlert": "Activate NFC to enable IO to read your CIE!",
         "activeNFCAlertButton": "Enable NFC"
@@ -1082,7 +1050,6 @@
         }
       }
     },
-    "spid": "SPID",
     "spid_information_request": {
       "headerTitle": "Insert email address",
       "contentTitle": "Don't have SPID?"
@@ -1112,7 +1079,6 @@
       "navigate_to_the_site": "Go to website"
     },
     "idp_selection": {
-      "headerTitle": "Home",
       "contentTitle": "Select your Identity Provider",
       "contextualHelpTitle": "Who is your Identity Provider",
       "contextualHelpContent": "**The Identity Provider is the manager of your digital identity.** In order to register in the IO app, you need to first select the Identity Provider that released your SPID identity.\n"
@@ -1217,7 +1183,6 @@
       "label": "Personal email address",
       "alert": "You are already using this email",
       "help": {
-        "title": "Email",
         "content": "This page is used to insert or edit your **email** address. The entered email must be validated.\n"
       },
       "alertTitle": "This email address is already in use",
@@ -1353,15 +1318,12 @@
             "text": "You need to configure this in your device settings.",
             "label": "How to",
             "step1": {
-              "label": "Step 1",
               "value": "Go to your device settings"
             },
             "step2": {
-              "label": "Step 2",
               "value": "Set up face or fingerprint"
             },
             "step3": {
-              "label": "Step 3",
               "value": "Enable it in IO under Settings > Security"
             }
           }
@@ -1373,11 +1335,9 @@
         "body": {
           "label": "How to",
           "step1": {
-            "label": "Step 1",
             "value": "Go to your device settings"
           },
           "step2": {
-            "label": "Step 2",
             "value": "Set a code or sign to unlock the device"
           }
         }
@@ -1416,7 +1376,6 @@
       "contextualHelpContent": "**Push notifications** Here you can customize push notifications\n",
       "instructions": {
         "title": "Here's how:",
-        "label": "Step",
         "ios": {
           "step1": "Go to \"Settings\"",
           "step2": "Select \"Notifications\"",
@@ -1464,7 +1423,6 @@
     "currentPsp": "Payment will be handled by",
     "noPsp": "You have yet to select a PSP",
     "changePsp": "Edit",
-    "IUV": "IUV",
     "notice": "Notice",
     "noticeCode": "Notice code",
     "recipientFiscalCode": "Recipient fiscal code",
@@ -1515,9 +1473,6 @@
         "credit": {
           "hpan": "{{circuit}} ending {{spacedHpan}}",
           "owner": "owned by {{fullOwnerName}}"
-        },
-        "paypal": {
-          "owner": "account: {{email}}"
         },
         "bpay": {
           "phone": "Mobile number: {{phoneNumber}}",
@@ -1775,17 +1730,10 @@
       "outcome": {
         "SUCCESS": {
           "title": "Payment method added successfully!",
-          "subtitle": "",
           "secondaryAction": "Continue"
         },
         "AUTH_ERROR": {
           "secondaryAction": "What can you do?"
-        },
-        "CANCELED_BY_USER": {
-          "subtitle": ""
-        },
-        "ALREADY_ONBOARDED": {
-          "subtitle": ""
         }
       }
     },
@@ -1921,7 +1869,6 @@
       "contextualHelpContent": "**You can choose the method of payment.**\nIO currently only supports credit/debit card payments but other payment methods such as PayPal and others will be added soon.\n",
       "pickPaymentMethod": {
         "title": "What method do you want to pay with?",
-        "description": "{{firstElement}} · {{secondElement}}",
         "disabled": {
           "title": "Disabled methods"
         },
@@ -1950,9 +1897,6 @@
       "dueDate": "Due date",
       "tranche": "Tranche",
       "info": "More info at:",
-      "tel": "Tel:",
-      "email": "Email:",
-      "PEC": "PEC:",
       "recipient": "Payee",
       "object": "Payment details",
       "date": "Date and Time",
@@ -2081,10 +2025,7 @@
       },
       "values": {
         "holder": "John Doe",
-        "pan": "0000 0000 0000 0000",
-        "expirationDate": "mm/yy",
-        "securityCode": "•••",
-        "securityCode4D": "••••"
+        "expirationDate": "mm/yy"
       },
       "accessibility": {
         "holder": {
@@ -2384,7 +2325,6 @@
       "paid": "Paid",
       "seeNotice": "See Notice",
       "reminder": "Reminder",
-      "reminderShort": "Memo",
       "reminderCalendarSelect": "In which calendar you want to add the reminder?",
       "reminderTitle": "Reminder for: {{title}}",
       "reminderAlertTitle": "An event already exists",
@@ -2476,7 +2416,6 @@
     "call": "Call",
     "sendEmail": "Send email",
     "write": "Write",
-    "id": "ID:",
     "remoteContentError": {
       "title": "The message details could not be retrieved",
       "body": "We detected an error in the information provided by the sender. Try again in a few minutes. If the issue persists, contact Support."
@@ -3261,8 +3200,6 @@
       "content": "# Bonus Terms & Conditions\n\nAccepting this terms and conditions:\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Donec molestie metus hendrerit mauris maximus, cursus accumsan leo semper. Nullam sollicitudin neque suscipit nibh imperdiet maximus. Fusce eleifend, enim nec lobortis tristique, elit odio mollis dui, aliquam suscipit ante neque et justo. In tincidunt viverra elit eget faucibus. Donec nec sem non velit sodales maximus eget ornare urna. Aenean maximus enim consequat augue blandit rhoncus. Fusce congue arcu turpis, a rhoncus nulla commodo euismod. Aliquam erat volutpat. Ut pulvinar placerat semper. Aliquam fermentum pulvinar dui, pulvinar maximus arcu vestibulum in. Nullam magna dolor, posuere et quam a, mattis fringilla risus. In finibus in leo nec pellentesque.\n\nAenean maximus et sem sit amet vestibulum. Donec vestibulum neque eget erat fermentum imperdiet. Nullam pretium commodo libero, eget ullamcorper erat accumsan sit amet. Suspendisse at nunc suscipit, vestibulum nulla sodales, eleifend nunc. Quisque orci turpis, euismod eget euismod vitae, dictum ut quam. Etiam vitae velit id orci pretium lobortis at eget mauris. Maecenas vel bibendum purus. Donec in sapien accumsan, dictum sem at, molestie felis. Morbi efficitur malesuada finibus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\nDuis quis ligula vitae ipsum pharetra gravida. Aenean blandit, nunc ut pellentesque efficitur, mauris nibh accumsan ex, non convallis urna metus condimentum leo. Vivamus vitae magna consequat, placerat odio vel, efficitur quam. Sed condimentum consectetur turpis ac tincidunt. Donec in neque quis mauris auctor lacinia. Sed porttitor euismod orci, sed fringilla tortor fermentum sed. Vestibulum eget suscipit nunc.\n\nNam ullamcorper quam sed facilisis imperdiet. Vestibulum quis accumsan neque, non placerat lacus. Quisque gravida cursus eleifend. Nullam quis felis ante. Nulla id efficitur nisi. Nulla in ullamcorper turpis. Curabitur eros turpis, ornare eu massa at, sagittis commodo enim. Nunc eget cursus enim, nec elementum elit. Curabitur a interdum quam, in egestas mi. In eu imperdiet leo. Aenean dictum vulputate tortor, vel semper metus ultricies ut.\n\nMauris efficitur lacinia velit, non imperdiet lorem sodales et. Phasellus tortor ex, efficitur ut fermentum eget, tincidunt nec erat. Maecenas quis volutpat mauris. Cras posuere, lectus sed feugiat bibendum, dui magna pretium arcu, tristique iaculis risus ligula id elit. Sed libero felis, mattis et felis quis, convallis tempus lacus. Mauris aliquet dapibus elit, volutpat porta mi ultricies sit amet. Integer vel felis eu magna gravida auctor. In hac habitasse platea dictumst. Nam rhoncus ipsum a placerat consequat. Duis auctor tempor diam nec aliquet. Donec id sollicitudin odio. Curabitur consectetur auctor erat nec eleifend. Pellentesque et dui sapien. Vestibulum varius viverra leo.\n\nAenean sagittis accumsan arcu a rutrum. Mauris eu tristique arcu. In sit amet est eleifend, fermentum nisl et, pellentesque est. Curabitur arcu enim, mattis eu est sit amet, vestibulum tristique velit. Vestibulum quis neque fermentum diam faucibus volutpat a at lorem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ornare nisi risus, nec laoreet urna mollis sit amet. Donec luctus efficitur velit. Fusce cursus, eros et convallis tristique, nibh massa feugiat elit, eget fringilla enim nibh in mauris. Sed sit amet orci lacinia, malesuada sem eget, commodo augue. Vestibulum commodo quis quam et laoreet. Pellentesque laoreet quis mi quis tincidunt. Donec condimentum erat in feugiat gravida."
     },
     "bpd": {
-      "title": "Cashback",
-      "name": "Cashback",
       "description": "Get a refund on in-store purchases when paying with this method",
       "cta": {
         "activeBonus": "Request cashback"
@@ -3295,7 +3232,6 @@
       },
       "merchantsList": {
         "news": "new",
-        "online": "Online",
         "places": "Places",
         "navigationTitle": "Benefits",
         "screenTitle": "Discover opportunities",
@@ -3324,7 +3260,6 @@
           "addressTitle": "Find by address",
           "addressPlaceholder": "Find address",
           "sliderLabel": "Distance to be searched",
-          "sliderUnit": "Km",
           "orderTitle": "View",
           "categories": "Categories",
           "cta": {
@@ -3355,7 +3290,6 @@
           "cultureAndEntertainment": "Culture and entertainment",
           "health": "Health and wellness",
           "learning": "Education and learning",
-          "sport": "Sport",
           "home": "Home",
           "telco": "Telephony and internet",
           "finance": "Banking and financial services",
@@ -3390,7 +3324,6 @@
         },
         "ownership": "Who can use this Card?",
         "status": {
-          "title": "Carta Giovani Nazionale",
           "eyca": "EYCA card",
           "eycaCircuit": "EYCA circuit",
           "eycaPending": "We're linking your Carta Giovani Nazionale to a EYCA Number.",
@@ -3529,20 +3462,6 @@
       }
     },
     "pn": {
-      "aar": {
-        "serviceActivation": {
-          "footer": {
-            "part7": "."
-          }
-        },
-        "flow": {
-          "aarTos": {
-            "body": {
-              "lineEnding": "."
-            }
-          }
-        }
-      },
       "details": {
         "badge": {
           "legalValue": "Legal value"
@@ -3552,13 +3471,9 @@
         "environmentTitle": "Environment",
         "uatLabel": "Use UAT",
         "uatDescription": "Sends Service Activation and AAR requests to the UAT environment",
-        "playgroundTitle": "Lollipop Playground",
         "postBodyLabel": "Post Body",
-        "postBodyPlaceholder": "{\n  p1: \"a string\",\n  p2: {\n    p3: true\n  }\n}",
         "responseStatusCode": "Response Status Code",
-        "responseBody": "Response Body",
-        "requestGet": "GET",
-        "requestPost": "POST"
+        "responseBody": "Response Body"
       }
     },
     "fci": {
@@ -3687,7 +3602,6 @@
       "requests": {
         "header": "Signature status",
         "title": "The status of your signatures",
-        "itemSubtitle": "{{date}} · {{time}} · ID {{id}}",
         "signed": "Signed",
         "notAvailable": "Not available",
         "signingInProgress": "Signature in progress"
@@ -3730,9 +3644,6 @@
       },
       "transactions": {
         "button": "Show all",
-        "status": {
-          "success": ""
-        },
         "receipt": {
           "a11y": {
             "preview": "Receipt preview in PDF format"
@@ -3800,9 +3711,6 @@
           "personalDataTitle": "Personal data",
           "documentDataTitle": "Document data",
           "lastUpdated": "Last updated on {{lastUpdateTime}}",
-          "boolClaim": {
-            "false": "No"
-          },
           "hiddenClaim": "Hidden",
           "fiscalCode": {
             "label": "Your Fiscal Code",
@@ -3866,15 +3774,6 @@
             "content": "If you had IT-Wallet enabled, the wallet will be reset and all documents removed."
           }
         }
-      }
-    },
-    "pushNotifications": {
-      "engagementScreen": {
-        "badge": "Consigliato",
-        "title": "Non perderti i messaggi importanti",
-        "body": "Attiva le notifiche push: se leggi subito le comunicazioni a valore legale, potresti risparmiare sui costi di raccomandata.",
-        "cta": "Attiva notifiche push",
-        "toast": "Hai attivato le notifiche push"
       }
     },
     "tour": {
@@ -4069,7 +3968,6 @@
       },
       "PDNDPrerequisites": {
         "code": {
-          "ISEE": "ISEE",
           "FAMILY_UNIT": "Family Unit"
         },
         "familyUnitCode": {
@@ -4242,12 +4140,6 @@
     "details": {
       "error": {
         "title": "We couldn't retrieve the receipt"
-      },
-      "info": {
-        "rrn": "RRN"
-      },
-      "operation": {
-        "iuv": "IUV"
       }
     }
   },

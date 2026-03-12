@@ -10,9 +10,7 @@
   },
   "date": {
     "formats": {
-      "default": "%d.%m.%Y",
-      "short": "%d %B",
-      "long": "%d %B %Y"
+      "default": "%d.%m.%Y"
     },
     "day_names": [
       "Sonntag",
@@ -23,7 +21,15 @@
       "Freitag",
       "Samstag"
     ],
-    "abbr_day_names": ["So.", "Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."],
+    "abbr_day_names": [
+      "So.",
+      "Mo.",
+      "Di.",
+      "Mi.",
+      "Do.",
+      "Fr.",
+      "Sa."
+    ],
     "month_names": [
       " ",
       "Januar",
@@ -54,12 +60,14 @@
       "Nov.",
       "Dez."
     ],
-    "meridian": ["am", "pm"]
+    "meridian": [
+      "am",
+      "pm"
+    ]
   },
   "global": {
     "why": "Warum?",
     "you": "DU",
-    "id": "ID",
     "badges": {
       "blocked": "Blockiert",
       "onGoing": "In Bearbeitung",
@@ -97,7 +105,6 @@
       "dateField": "Zwei Ziffern für den Monat, zwei für das Jahr",
       "threeDigits": "3 Ziffern",
       "fourDigits": "4 Ziffern",
-      "dateFormat": "DD MMMM YYYY",
       "expanded": "Erweiterter Absatz",
       "collapsed": "Eingeklappter Absatz",
       "active": "Aktiver Zustand",
@@ -120,14 +127,6 @@
       },
       "progressTracker": "{{index}} von {{total}}"
     },
-    "symbols": {
-      "question": "?",
-      "asterisk": "*"
-    },
-    "localization": {
-      "delimiterSeparator": ".",
-      "decimalSeparator": ","
-    },
     "date": {
       "invalid": "Ungültiges Datum",
       "today": "heute",
@@ -136,24 +135,7 @@
     "dateFormats": {
       "shortFormat": "%d.%m.%Y",
       "shortFormatWithTime": "%d.%m.%Y, %H:%M",
-      "fullFormatShortMonthLiteral": "%d %b %Y",
-      "fullFormatShortMonthLiteralWithTime": "%d %b %Y, %H:%M",
-      "fullFormatShortMonthLiteralWithoutTime": "%d %b %Y",
-      "fullFormatFullMonthLiteral": "%d %B %Y",
-      "fullMonthLiteral": "%B",
-      "fullMonthLiteralWithYear": "%B %Y",
-      "timeFormat": "%H:%M",
-      "timeFormatWithTimezone": "%H:%M:%S (%z)",
-      "dayMonthWithTime": "%d %b, %H:%M",
-      "dayMonthWithoutTime": "%d %b",
-      "dayFullMonth": "%d %B",
-      "numericMonthYear": "%m/%Y",
-      "shortNumericMonthYear": "%m/%-y",
-      "monthYear": "MMMM YYYY",
-      "dayAndMonth": "dddd D MMMM",
       "dayMonth": "DD.MM.",
-      "dayMonthYear": "D MMMM YYYY",
-      "weekdayDayMonthYear": "dddd D MMMM YYYY",
       "dateTimePicker": "gg.mm.yyyy"
     },
     "genericError": "Es liegt ein vorübergehendes Problem vor, bitte versuche es erneut.",
@@ -177,8 +159,6 @@
       "delete": "Löschen",
       "cancel": "Abbrechen",
       "settings": "Einstellungen",
-      "ok": "OK",
-      "ok2": "Ok",
       "continue": "Weiter",
       "notNow": "Jetzt nicht",
       "retry": "Wiederholen",
@@ -193,7 +173,6 @@
       "skip": "Überspringen",
       "add": "Hinzufügen",
       "edit": "Ändern",
-      "info": "Info",
       "activate": "Aktivieren",
       "activate2": "Aktivieren",
       "deactivate": "Deaktivieren",
@@ -543,7 +522,6 @@
       "appVersion": "Version",
       "backendVersion": "Backend-Version",
       "debugMode": "Debug-Modus",
-      "designSystem": "Design System",
       "banner": {
         "title": "Möchtest du deine Steuernummer anzeigen?",
         "action": "Geh zum Abschnitt 'Deine Daten'.",
@@ -861,7 +839,6 @@
     },
     "cie": {
       "genericTitle": "Anmeldung mit CIE",
-      "cie": "CIE",
       "noDataTitle": "Um IO zu verwenden, musst du das Senden von Daten zulassen",
       "nfc": {
         "apduNotSupported": "Das Betriebssystem unterstützt das Lesen der elektronischen Identitätskarte nicht. Versuche, SPID zu verwenden, um dich in der App anzumelden.",
@@ -943,7 +920,6 @@
         }
       }
     },
-    "spid": "SPID",
     "spid_information_request": {
       "headerTitle": "Du hast keinen SPID?",
       "contentTitle": "Was ist SPID?"
@@ -972,7 +948,6 @@
       "navigate_to_the_site": "Website besuchen"
     },
     "idp_selection": {
-      "headerTitle": "Home",
       "contentTitle": "Wähle deinen Identitätsanbieter",
       "contextualHelpTitle": "Wer ist dein Identitätsanbieter?"
     },
@@ -1308,7 +1283,6 @@
     "currentPsp": "Die Zahlung wird durgeführt von",
     "noPsp": "Du hast noch keinen Zahlungsdienstleister ausgewählt",
     "changePsp": "Wähle den Anbieter",
-    "IUV": "IUV",
     "IUV_extended": "Einheitlicher Zahlungskodex (IUV)",
     "notice": "Zahlungsmitteilung",
     "noticeCode": "Zahlungsmitteilungskodex",
@@ -1452,7 +1426,6 @@
       "sectionCardHint": "Aktualisiere die Liste der Zahlungmethoden",
       "folded": {
         "creditCard": "{{brand}}-Karte, die Kartennummer endet mit {{blurredNumber}}",
-        "bancomat": "BANCOMAT {{bankName}}",
         "coBadge": "{{brand}}-Karte, {{bankName}}",
         "bancomatPay": "BANCOMAT Pay {{bankName}}",
         "cta": "Details zur Zahlungsmethode anzeigen",
@@ -1626,7 +1599,6 @@
       "outcome": {
         "SUCCESS": {
           "title": "Die Karte wurde hinzugefügt!",
-          "subtitle": "",
           "primaryAction": "Details anzeigen",
           "secondaryAction": "Weiter"
         },
@@ -1652,7 +1624,6 @@
         },
         "CANCELED_BY_USER": {
           "title": "Der Vorgang wurde abgebrochen",
-          "subtitle": "",
           "primaryAction": "Schließen"
         },
         "INVALID_SESSION": {
@@ -1662,7 +1633,6 @@
         },
         "ALREADY_ONBOARDED": {
           "title": "Du hast diese Zahlungsmethode bereits hinzugefügt",
-          "subtitle": "",
           "primaryAction": "Schließen"
         },
         "BPAY_NOT_FOUND": {
@@ -1812,7 +1782,6 @@
       "contextualHelpTitle": "Auswahl der Zahlungsmethode",
       "pickPaymentMethod": {
         "title": "Mit welcher Zahlungsmethode möchtest du bezahlen?",
-        "description": "{{firstElement}} · {{secondElement}}",
         "disabled": {
           "title": "Deaktivierte Zahlungsmethoden"
         },
@@ -1842,9 +1811,7 @@
       "dueDate": "Zahlbar innerhalb",
       "tranche": "Rate",
       "info": "Mehr Infos unter:",
-      "tel": "Tel:",
       "email": "E-Mail:",
-      "PEC": "PEC:",
       "recipient": "Zahlungsempfänger",
       "object": "Zahlungsgrund",
       "date": "Datum und Uhrzeit",
@@ -1864,9 +1831,6 @@
         "errorCode": "Fehlercode",
         "messageId": "ID der Nachricht",
         "copyToClipboard": "Daten für die Assistenz kopieren"
-      },
-      "a11y": {
-        "announce": "Riepilogo dati avviso"
       }
     },
     "errorTransaction": {
@@ -1975,10 +1939,7 @@
       },
       "values": {
         "holder": "Max Mustermann",
-        "pan": "0000 0000 0000 0000",
-        "expirationDate": "mm/yy",
-        "securityCode": "•••",
-        "securityCode4D": "••••"
+        "expirationDate": "mm/yy"
       },
       "accessibility": {
         "holder": {
@@ -2378,9 +2339,7 @@
   "messages": {
     "accessibility": {
       "message": {
-        "archive": "archiviare",
         "description": "{{newMessage}}, erhalten von {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{instructions}}",
-        "deselectInstructions": "Tieni premuto per deselezionare",
         "read": "Mitteilung",
         "received_at": "erhalten um",
         "received_on": "erhalten am",
@@ -2420,7 +2379,6 @@
       "paid": "Bezahlt",
       "seeNotice": "Ansehen",
       "reminder": "Erinnerung",
-      "reminderShort": "Memo",
       "reminderCalendarSelect": "In welchem Kalender möchtest du die Erinnerung hinzufügen?",
       "reminderTitle": "Erinnerung für: {{title}}",
       "reminderAlertTitle": "Ein Ereignis ist bereits vorhanden",
@@ -2508,7 +2466,6 @@
     "call": "Anrufen",
     "sendEmail": "Sende eine E-Mail",
     "write": "Schreib uns",
-    "id": "ID:",
     "remoteContentError": {
       "title": "Die Details der Mitteilung konnten nicht abgerufen werden",
       "body": "Wir haben einen Fehler in den von der Körperschaft bereitgestellten Informationen gefunden. Bitte versuche es in ein paar Minuten erneut. Wenn das Problem weiterhin besteht, wende dich bitte an den Support."
@@ -2861,7 +2818,6 @@
     "active": "Aktiv",
     "failed": "Fehlgeschlagen",
     "redeemed": "Eingelöst",
-    "termsAndConditionFooter": "Premendo \"{{ctaText}}\" dichiari di essere in possesso dei requisiti e di aver letto e compreso la [Guida]({{regulationLink}}) e l'[Informativa Privacy]({{tosUrl}})",
     "tos": {
       "title": "Datenschutzbestimmungen"
     },
@@ -2894,7 +2850,6 @@
       },
       "merchantsList": {
         "news": "Neu",
-        "online": "Online",
         "places": "Orte",
         "navigationTitle": "Rabatte und Ermäßigungen",
         "screenTitle": "Alle Vorteile entdecken",
@@ -2922,7 +2877,6 @@
           "addressTitle": "Suche nach Adresse",
           "addressPlaceholder": "Adresse suchen",
           "sliderLabel": "Entfernung, in der gesucht werden soll",
-          "sliderUnit": "Km",
           "orderTitle": "Anzeigen",
           "categories": "Kategorien",
           "cta": {
@@ -2952,7 +2906,6 @@
           "cultureAndEntertainment": "Kultur und Freizeit",
           "health": "Gesundheit und Wohlbefinden",
           "learning": "Aus- und Weiterbildung",
-          "sport": "Sport",
           "home": "Haushalt",
           "telco": "Telefonie und Internet",
           "finance": "Bank- und Finanzdienstleistungen",
@@ -3095,9 +3048,6 @@
           "seconds_other": "{{seconds}} Sekunden"
         }
       }
-    },
-    "cdc": {
-      "request": "Richiedi Carta della Cultura"
     }
   },
   "features": {
@@ -3306,8 +3256,7 @@
           "content": "Bezahle eine Zahlungsmitteilung in der App oder mittels jedem pagoPA-fähigen Kanal."
         },
         "status": {
-          "failure": "FEHLGESCHLAGEN",
-          "success": ""
+          "failure": "FEHLGESCHLAGEN"
         },
         "receipt": {
           "loading": "Die Quittung wird geladen...",
@@ -3534,14 +3483,6 @@
             "secondary": "Abbrechen"
           }
         },
-        "eidResult": {
-          "success": {
-            "title": "È tutto pronto!",
-            "subtitle": "Ora puoi aggiungere il primo documento al Portafoglio di IO.",
-            "primaryAction": "Aggiungi primo documento",
-            "secondaryAction": "Continua più tardi"
-          }
-        },
         "credentialResult": {
           "toast": "Erledigt!"
         },
@@ -3571,11 +3512,6 @@
             "title": "Aktiviere Dokumente in IO, um fortzufahren",
             "body": "Um deine Dokumente zum Konto hinzuzufügen, musst du Folgendes aktivieren: ",
             "bodyBold": "Dokumente in IO"
-          },
-          "itWallet": {
-            "title": "Ottieni IT-Wallet per continuare",
-            "body": "Per aggiungere nuovi documenti al tuo Portafoglio di IO ottieni IT-Wallet: ti basta avere con te la Carta di Identità Elettronica (CIE).",
-            "bodyBold": ""
           },
           "primaryAction": "Start",
           "secondaryAction": "Jetzt nicht"
@@ -3921,8 +3857,7 @@
     "expiring": "Verfällt am {{endDate}}",
     "expired": "Abgelaufen am {{endDate}}",
     "paused": "In Pause",
-    "removed": "Entfernt",
-    "used": "Utilizzato"
+    "removed": "Entfernt"
   },
   "transaction": {
     "details": {
@@ -3944,7 +3879,6 @@
         "transactionId": "Transaktions-ID",
         "paymentMethod": "Zahlungsmethode",
         "authCode": "Autorisierungscode",
-        "rrn": "RRN",
         "executedBy": "Ausgeführt von",
         "headedTo": "Zahlungsmethode, ausgestellt auf",
         "alert": {
@@ -3955,10 +3889,8 @@
         "amount": "Betrag",
         "creditor": "Gläubiger",
         "debtor": "Schuldner",
-        "iuv": "IUV",
         "subject": "Zahlungsgrund",
         "noticeCode": "Kodex der Zahlungsmitteilung/IUV",
-        "noticeCodeAccessible": "Codice avviso/Identificativo Univoco Versamento",
         "taxCode": "Steuernummer Körperschaft"
       }
     }
@@ -4067,34 +3999,17 @@
     "onboarding": {
       "enableMessages": {
         "cancelAction": "Stornieren",
-        "subtitle": "Questo passaggio è necessario per procedere con la richiesta. Ti permetterà di ricevere gli aggiornamenti sul {{initiativeName}}.",
         "title": "Aktivieren Sie die Möglichkeit, Sie in der App zu kontaktieren",
         "confirmAction": "OK, aktiv"
       },
       "enableNotification": {
-        "title": "Non perderti l’esito delle tue richieste",
-        "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
-        "action": "Attiva notifiche push",
-        "deny": "Non attivare",
-        "success": "Sie aktivierten Push -Benachrichtigungen",
-        "advice": "Consigliato"
-      },
-      "failToRetry": {
-        "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo..."
-      },
-      "loading": {
-        "subtitle": "Attendi qualche secondo",
-        "title": "Stiamo elaborando la tua richiesta"
+        "success": "Sie aktivierten Push -Benachrichtigungen"
       }
     },
     "support": {
       "errorCode": "Fehlercode",
       "serviceId": "Service ID",
-      "initiativeId": "ID Initiative",
-      "supportTitle": "Contatta l'assistenza",
-      "chat": "Chiedi aiuto in chat",
-      "additionalDataTitle": "Dati aggiuntivi",
-      "copyAll": "Copia tutti"
+      "initiativeId": "ID Initiative"
     }
   }
 }
