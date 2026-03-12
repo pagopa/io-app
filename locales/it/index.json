@@ -199,6 +199,8 @@
       "back": "Indietro",
       "confirm": "Conferma",
       "close": "Chiudi",
+      "next": "Avanti",
+      "previous": "Indietro",
       "exit": "Esci",
       "saveSelection": "Salva la selezione",
       "search": "Ricerca",
@@ -3102,6 +3104,7 @@
       "useUnlockCode": "inserisci il **codice di sblocco**",
       "useUnlockCodeA11y": "inserisci il codice di sblocco"
     },
+    "insertDevPin": "Inserisci il PIN predefinito per sviluppatori",
     "title": "Ciao {{name}}!",
     "titleProfileName": "Ciao {{profileName}}!",
     "titleValidation": "Autorizza l'operazione",
@@ -4929,7 +4932,10 @@
           "mode": {
             "ciePin": {
               "title": "Continua con CIE + PIN",
-              "subtitle": "Ha una durata di 12 mesi",
+              "subtitle": {
+                "default": "Dovrai usare la Carta di Identità Elettronica (CIE) e inserire il suo PIN di 8 cifre.",
+                "l3": "Ha una durata di 12 mesi"
+              },
               "reissuanceBadge": "Consigliato",
               "badge": "consigliato",
               "bottomSheet": {

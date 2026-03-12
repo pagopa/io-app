@@ -19,7 +19,8 @@ import { ItwRemotePresentationDetails } from "../components/ItwRemotePresentatio
 import { ItwRemoteMachineContext } from "../machine/provider.tsx";
 import {
   selectIsLoading,
-  selectRelyingPartyData
+  selectRelyingPartyData,
+  selectRemoteCredentialCombination
 } from "../machine/selectors.ts";
 import { trackItwRemoteContinuePresentation } from "../analytics";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
@@ -57,6 +58,9 @@ const ContentView = () => {
   const machineRef = ItwRemoteMachineContext.useActorRef();
   const rpData = ItwRemoteMachineContext.useSelector(selectRelyingPartyData);
   const dispatch = useIODispatch();
+  const credential_type = ItwRemoteMachineContext.useSelector(
+    selectRemoteCredentialCombination
+  );
 
   const closePresentation = () => machineRef.send({ type: "close" });
 
@@ -99,7 +103,9 @@ const ContentView = () => {
           primary: {
             label: I18n.t("global.buttons.continue"),
             onPress: () => {
-              trackItwRemoteContinuePresentation();
+              if (credential_type) {
+                trackItwRemoteContinuePresentation(credential_type);
+              }
               confirmVerifiablePresentation();
             }
           },

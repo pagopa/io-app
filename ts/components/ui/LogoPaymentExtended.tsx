@@ -1,5 +1,6 @@
-import PaypalLogo from "../../../img/wallet/payment-methods/paypal/paypal_logo_ext.svg";
+import I18n from "i18next";
 import BpayLogo from "../../../img/wallet/payment-methods/bpay_logo_full.svg";
+import PaypalLogo from "../../../img/wallet/payment-methods/paypal/paypal_logo_ext.svg";
 import { BankLogoOrSkeleton } from "../../features/payments/common/components/utils/BankLogoOrLoadingSkeleton";
 export type LogoPaymentExtendedProps = {
   dimensions: { height: number; width: number };
@@ -22,7 +23,7 @@ export const LogoPaymentExtended = (props: LogoPaymentExtendedProps) => {
         return (
           <PaypalLogo
             accessible={true}
-            accessibilityLabel="PayPal"
+            accessibilityLabel={I18n.t("wallet.methods.paypal.name")}
             height={height}
             width={width}
           />
@@ -31,7 +32,7 @@ export const LogoPaymentExtended = (props: LogoPaymentExtendedProps) => {
         return (
           <BpayLogo
             accessible={true}
-            accessibilityLabel="BANCOMAT Pay"
+            accessibilityLabel={I18n.t("wallet.methods.bancomatPay.name")}
             height={height}
             width={width}
           />

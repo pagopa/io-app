@@ -205,7 +205,7 @@ platform :ios do
       distribute_external: true,
       notify_external_testers: true,
       app_platform: "ios",
-      groups: ["Amici&Familiari", "PagoPa"],
+      groups: ["pagopa_beta_ios", "send_beta_ios"],
       # max wait for App Store Connect processing (30 min)
       wait_processing_timeout_duration: 1800
     )
