@@ -23,6 +23,15 @@ export const ItwL3ScreensSection = () => {
     <View>
       <ListItemHeader label="IT Wallet (L3) screens" />
       <ListItemNav
+        value="IT-Wallet ID (PID)"
+        description="Navigate to the PID detail screen"
+        onPress={() =>
+          navigation.navigate(ITW_ROUTES.MAIN, {
+            screen: ITW_ROUTES.PRESENTATION.PID_DETAIL
+          })
+        }
+      />
+      <ListItemNav
         value="Driving License L3"
         description="Navigate to the Driving License detail screen"
         onPress={() => handleCredentialPress("mdl")}

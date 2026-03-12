@@ -33,7 +33,7 @@ import {
   trackItwCredentialBottomSheetAction
 } from "../analytics";
 import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
-import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
+import { getMixPanelCredential } from "../../../analytics/utils";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";

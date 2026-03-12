@@ -12,7 +12,7 @@ import { IOStackNavigationRouteProps } from "../../../../../navigation/params/Ap
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
-import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
+import { getMixPanelCredential } from "../../../analytics/utils";
 import {
   ItwSkeumorphicCard,
   SKEUMORPHIC_CARD_ASPECT_RATIO

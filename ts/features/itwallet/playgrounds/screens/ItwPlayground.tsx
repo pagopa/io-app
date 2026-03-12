@@ -11,6 +11,7 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ItwComponentsSection } from "../components/ItwComponentsSection";
+import { ItwCredentialStatusOverrideSection } from "../components/ItwCredentialStatusOverrideSection";
 import { ItwEnvironmentSection } from "../components/ItwEnvironmentSection";
 import { ItwIdentificationScreensSection } from "../components/ItwIdentificationScreensSection";
 import { ItwL3ScreensSection } from "../components/ItwL3ScreensSection";
@@ -58,6 +59,7 @@ const ItwPlayground = () => {
             <>
               <ItwEnvironmentSection />
               <ItwLifecycleSection />
+              <ItwCredentialStatusOverrideSection />
             </>
           )}
           {page === 1 && <ItwPidIssuanceSection />}
