@@ -97,7 +97,7 @@ const ContentView = ({ payload, flowType }: ContentViewProps) => {
       return () => {
         clearTimeout(timer);
       };
-    }, [payload, machineRef])
+    }, [payload, machineRef, flowType])
   );
 
   return (
