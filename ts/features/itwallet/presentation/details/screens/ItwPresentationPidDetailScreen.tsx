@@ -62,7 +62,7 @@ export const ItwPresentationPidDetailScreen = () => {
         credentialStatus={displayStatus}
       >
         <ItwAvatar width={48} height={48} />
-        <H2 style={{ paddingTop: 16 }}>
+        <H2 style={{ paddingTop: 16, textAlign: "center" }}>
           {getCredentialNameFromType(CredentialType.PID, "", true)}
         </H2>
         <Body
