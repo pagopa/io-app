@@ -40,6 +40,7 @@ import {
 import { generateItwIOMarkdownRules } from "../../common/utils/markdown";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import type { CredentialIssuanceMode } from "../../machine/credential/context";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
   selectCredentialTypeOption,
@@ -59,6 +60,7 @@ export type ItwIssuanceCredentialTrustIssuerNavigationParams = {
   animationEnabled?: boolean;
   credentialType?: string;
   isUpgrade?: boolean;
+  mode?: CredentialIssuanceMode;
 };
 
 type ScreenProps =
@@ -71,7 +73,7 @@ type ScreenProps =
   | ItwIssuanceCredentialTrustIssuerNavigationParams;
 
 const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
-  const { credentialType, isUpgrade } =
+  const { credentialType, isUpgrade, mode } =
     ("route" in props ? props.route.params : props) ?? {};
 
   const eidOption = useIOSelector(itwCredentialsEidSelector);
@@ -98,10 +100,10 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
         machineRef.send({
           type: "select-credential",
           credentialType,
-          mode: isUpgrade ? "upgrade" : "issuance"
+          mode: mode ?? (isUpgrade ? "upgrade" : "issuance")
         });
       }
-    }, [credentialType, machineRef, isUpgrade])
+    }, [credentialType, machineRef, isUpgrade, mode])
   );
 
   if (isLoading) {
