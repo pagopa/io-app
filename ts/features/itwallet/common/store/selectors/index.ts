@@ -21,7 +21,8 @@ import {
 } from "./banners";
 import {
   itwCredentialUpgradeFailedSelector,
-  itwIsL3EnabledSelector
+  itwIsL3EnabledSelector,
+  itwIsWalletInstanceRemotelyActiveSelector
 } from "./preferences";
 import { isItwEnabledSelector } from "./remoteConfig";
 
@@ -171,7 +172,8 @@ export const itwShouldRenderInboxDiscoveryBannerSelector = (
   state: GlobalState
 ) =>
   itwShouldRenderDiscoveryBannerSelector(state) &&
-  !itwIsBannerHiddenSelector("discovery_messages_inbox")(state);
+  !itwIsBannerHiddenSelector("discovery_messages_inbox")(state) &&
+  !itwIsWalletInstanceRemotelyActiveSelector(state);
 
 /**
  * Returns whether the new IT-Wallet activation banner in the messages inbox screen should be rendered
