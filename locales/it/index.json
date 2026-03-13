@@ -2418,6 +2418,10 @@
               "primaryAction": "Come attivare una delega",
               "secondaryAction": "Chiudi"
             },
+            "pendingDelegation": {
+              "title": "Hai già inviato una richiesta per questa notifica",
+              "body": "Attendi 5 minuti prima di riprovare."
+            },
             "GENERIC": {
               "title": "Non riusciamo a recuperare i dati della notifica SEND",
               "body": "Riprova più tardi.",
@@ -2432,6 +2436,10 @@
               }
             },
             "cieValidation": {
+              "expiredTtl": {
+                "title": "È passato troppo tempo!",
+                "body": "Per motivi di sicurezza, hai 5 minuti di tempo per la lettura della CIE. Tienila a portata di mano prima di iniziare."
+              },
               "expired": {
                 "title": "La CIE risulta scaduta",
                 "body": "Consulta le altre modalità per accedere a questa notifica SEND.",
