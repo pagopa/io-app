@@ -150,7 +150,9 @@
   "locales": {
     "it": "Italian",
     "en": "English",
-    "de": "German"
+    "de": "German",
+    "fr": "French",
+    "sl": "Slovenian"
   },
   "clipboard": {
     "copyIntoClipboard": "copy to clipboard",
@@ -492,7 +494,7 @@
         },
         "language": {
           "title": "Language",
-          "subtitle": "Choose language"
+          "subtitle": "Choose the language for the app and for messages"
         },
         "preferred_calendar": {
           "title": "Favourite calendar",
@@ -500,18 +502,29 @@
         },
         "preferred_language": {
           "title": "Favourite language",
-          "subtitle": "In which language do you want to use the application?",
-          "headers": {
-            "services": "Services",
-            "app": "Application"
+          "subtitle": "These settings allow you to choose the app language and the language of the messages you receive from institutions.",
+          "sections": {
+            "messages": {
+              "title": "In messages",
+              "description": "Some institutions use this setting to send you messages in the chosen language."
+            },
+            "app": {
+              "title": "In the app",
+              "description": "Choose the language you want to use in IO. Some content may only be available in Italian."
+            }
           },
           "alert": {
-            "title": "Do you want to change the language to",
+            "title": "Do you want to change the language to {{lang}}?",
             "subtitle": "You'll need to restart the application to make this happen"
           },
-          "toast": {
+          "toastApp": {
             "success": {
-              "title": "You've switched the app language"
+              "title": "Done! Restart the app to apply the changes"
+            }
+          },
+          "toastMessages": {
+            "success": {
+              "title": "Done!"
             }
           },
           "banner": {
@@ -2265,6 +2278,7 @@
           },
           "actions": {
             "removeFromWallet": "Remove from Wallet",
+            "updateDigitalCredential": "Update digital document",
             "requestAssistance": "Something wrong?",
             "hideClaimValues": "Hide claim values"
           }
