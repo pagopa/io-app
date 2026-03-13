@@ -34,8 +34,8 @@ import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { ISSUER_MOCK_NAME } from "../../common/utils/itwMocksUtils";
 import {
-  RequestObject,
-  StoredCredential
+  CredentialMetadata,
+  RequestObject
 } from "../../common/utils/itwTypesUtils";
 import { generateItwIOMarkdownRules } from "../../common/utils/markdown";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
@@ -126,7 +126,7 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
 type ContentViewProps = {
   credentialType: string;
   requestedCredential: RequestObject;
-  eid: StoredCredential;
+  eid: CredentialMetadata;
 };
 
 /**

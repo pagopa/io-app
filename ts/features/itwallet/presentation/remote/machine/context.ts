@@ -1,4 +1,8 @@
-import { RequestObject } from "../../../common/utils/itwTypesUtils";
+import {
+  CredentialMetadata,
+  RequestObject,
+  WalletInstanceAttestations
+} from "../../../common/utils/itwTypesUtils";
 import {
   EnrichedPresentationDetails,
   ItwRemoteRequestPayload,
@@ -7,6 +11,14 @@ import {
 import { RemoteFailure } from "./failure";
 
 export type Context = {
+  /**
+   * The wallet instance attestation of the wallet. If expired, it will be requested a new one.
+   */
+  walletInstanceAttestation: WalletInstanceAttestations | undefined;
+  /**
+   * The credentials available in the wallet, to be potentially shared with the Relying Party.
+   */
+  credentials: Record<string, CredentialMetadata> | undefined;
   /**
    * The remote request payload for the remote presentation
    */
@@ -48,6 +60,8 @@ export type Context = {
 };
 
 export const InitialContext: Context = {
+  walletInstanceAttestation: undefined,
+  credentials: undefined,
   payload: undefined,
   failure: undefined,
   rpSubject: undefined,

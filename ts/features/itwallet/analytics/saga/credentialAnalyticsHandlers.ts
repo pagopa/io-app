@@ -12,8 +12,8 @@ import {
 } from "../properties/propertyUpdaters";
 import { getMixPanelCredential } from "../utils";
 import { MixPanelCredential } from "../utils/types";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { GlobalState } from "../../../../store/reducers/types";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 
 const MIXPANEL_EID_CREDENTIALS: ReadonlySet<MixPanelCredential> = new Set([
   "ITW_PID",
@@ -71,7 +71,7 @@ export function* handleCredentialRemovedAnalytics(
 }
 
 function getAnalyticsCredentialFromStored(
-  credentials: ReadonlyArray<StoredCredential>,
+  credentials: ReadonlyArray<CredentialMetadata>,
   isItwL3: boolean
 ): MixPanelCredential | undefined {
   if (credentials.length === 0) {

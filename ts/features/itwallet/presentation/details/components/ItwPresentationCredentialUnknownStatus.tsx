@@ -3,10 +3,10 @@ import { OperationResultScreenContent } from "../../../../../components/screens/
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 
 type Props = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
 };
 
 /**

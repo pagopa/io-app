@@ -7,13 +7,13 @@ import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
 import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailableToastGuard.ts";
 import { itwIPatenteCtaConfigSelector } from "../../../common/store/selectors/remoteConfig.ts";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import { getCredentialDocumentNumber } from "../../../trustmark/utils";
 import { useItwRemoveCredentialWithConfirm } from "../hooks/useItwRemoveCredentialWithConfirm";
 import { useItwStartCredentialSupportRequest } from "../hooks/useItwStartCredentialSupportRequest.tsx";
 
 type ItwPresentationDetailFooterProps = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
 };
 
 type IPatenteListItemActionProps = {
@@ -67,7 +67,7 @@ const ItwPresentationDetailsFooter = ({
 /**
  * Returns custom CTAs for a credential
  */
-const getCredentialActions = (credential: StoredCredential): ReactNode => {
+const getCredentialActions = (credential: CredentialMetadata): ReactNode => {
   const { credentialType, parsedCredential } = credential;
   const docNumber = getCredentialDocumentNumber(parsedCredential);
 
