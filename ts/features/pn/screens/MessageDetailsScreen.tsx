@@ -194,7 +194,8 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
     } else if (isAarMessage) {
       trackSendAARFailure(
         "Show Notification",
-        "Screen rendering with undefined SEND message"
+        "Screen rendering with undefined SEND message",
+        undefined
       );
     }
   });
