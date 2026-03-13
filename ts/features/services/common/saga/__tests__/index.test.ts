@@ -16,12 +16,11 @@ describe("index", () => {
   describe("watchServicesSaga", () => {
     it("should follow expected flow", () => {
       const backendClient = {} as IdentityClient;
-      const bearerToken =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.fakePayload.XYZ123abcDEF456ghi789JKL";
       const servicesClient = {} as ServicesClient;
-      testSaga(watchServicesSaga, backendClient, bearerToken)
+      
+      testSaga(watchServicesSaga, backendClient)
         .next()
-        .call(createServicesClient, apiUrlPrefix, bearerToken)
+        .call(createServicesClient, apiUrlPrefix)
         .next(servicesClient)
         .fork(watchServicesDetailsSaga, backendClient, servicesClient)
         .next()

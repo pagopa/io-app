@@ -13,13 +13,11 @@ import { isFavouriteServicesEnabledSelector } from "../store/selectors/remoteCon
 import { specialServicePreferencesSaga } from "./specialServicePreferencesSaga";
 
 export function* watchServicesSaga(
-  identityClient: IdentityClient,
-  bearerToken: string
+  identityClient: IdentityClient
 ): SagaIterator {
   const servicesClient = yield* call(
     createServicesClient,
-    apiUrlPrefix,
-    bearerToken
+    apiUrlPrefix
   );
 
   yield* fork(watchServicesDetailsSaga, identityClient, servicesClient);
