@@ -1,11 +1,10 @@
 import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import _ from "lodash";
 import { RefObject, useCallback, useEffect, useMemo, useRef } from "react";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
-import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
+import { useHardwareBackButtonWhenFocused } from "../../../hooks/useHardwareBackButton";
 import { useOfflineToastGuard } from "../../../hooks/useOfflineToastGuard";
 import { useStartSupportRequest } from "../../../hooks/useStartSupportRequest";
 import {
@@ -151,7 +150,7 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
     return false;
   }, [isAarMessage, sendUserType]);
 
-  useHardwareBackButton(androidBackButtonCallback);
+  useHardwareBackButtonWhenFocused(androidBackButtonCallback);
   useCorrectHeader(isAarMessage, aarBottomSheetRef, sendUserType);
 
   // useEffect for payment tracking and resource dealloaction
@@ -195,7 +194,8 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
     } else if (isAarMessage) {
       trackSendAARFailure(
         "Show Notification",
-        "Screen rendering with undefined SEND message"
+        "Screen rendering with undefined SEND message",
+        undefined
       );
     }
   });

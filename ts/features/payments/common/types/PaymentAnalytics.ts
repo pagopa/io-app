@@ -26,6 +26,7 @@ export type PaymentAnalyticsData = {
   receiptOrganizationName?: string;
   receiptOrganizationFiscalCode?: string;
   receiptPayerFiscalCode?: string;
+  receiptEventId?: string;
   browserType?: PaymentAnalyticsBrowserType;
   is_onboarded?: boolean;
 };

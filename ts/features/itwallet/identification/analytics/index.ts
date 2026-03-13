@@ -10,7 +10,8 @@ import {
   TrackCieScreenProperties,
   TrackCieCanProperties,
   TrackItWalletErrorCardReading,
-  TrackItWalletCardReadingClose
+  TrackItWalletCardReadingClose,
+  TrackIdMethodBottomsheetProperties
 } from "./types";
 import {
   ITW_IDENTIFICATION_ACTIONS_EVENTS,
@@ -123,6 +124,15 @@ export const trackItwUserWithoutL3Bottomsheet = () => {
   );
 };
 
+export const trackItwIdMethodBottomsheet = (
+  properties: TrackIdMethodBottomsheetProperties
+) => {
+  void mixpanelTrack(
+    ITW_IDENTIFICATION_SCREENVIEW_EVENTS.ITW_ID_METHOD_BOTTOMSHEET,
+    buildEventProperties("UX", "screen_view", properties)
+  );
+};
+
 // Actions events
 
 export const trackItWalletSpidIDPSelected = (
@@ -131,13 +141,6 @@ export const trackItWalletSpidIDPSelected = (
   void mixpanelTrack(
     ITW_IDENTIFICATION_ACTIONS_EVENTS.ITW_SPID_IDP_SELECTED,
     buildEventProperties("UX", "action", properties)
-  );
-};
-
-export const trackItWalletCiePinInfo = (itw_flow: ItwFlow) => {
-  void mixpanelTrack(
-    ITW_IDENTIFICATION_ACTIONS_EVENTS.ITW_CIE_PIN_INFO,
-    buildEventProperties("UX", "action", { itw_flow })
   );
 };
 
@@ -159,6 +162,24 @@ export const trackItWalletCieNfcGoToSettings = (itw_flow: ItwFlow) => {
   void mixpanelTrack(
     ITW_IDENTIFICATION_ACTIONS_EVENTS.ITW_CIE_NFC_GO_TO_SETTINGS,
     buildEventProperties("UX", "action", { itw_flow })
+  );
+};
+
+export const trackItwIdMethodBottomsheetClose = (
+  properties: TrackIdMethodBottomsheetProperties
+) => {
+  void mixpanelTrack(
+    ITW_IDENTIFICATION_ACTIONS_EVENTS.ITW_ID_METHOD_BOTTOMSHEET_CLOSE,
+    buildEventProperties("UX", "action", properties)
+  );
+};
+
+export const trackItwIdMethodBottomsheetContinue = (
+  properties: TrackIdMethodBottomsheetProperties
+) => {
+  void mixpanelTrack(
+    ITW_IDENTIFICATION_ACTIONS_EVENTS.ITW_ID_METHOD_BOTTOMSHEET_CONTINUE,
+    buildEventProperties("UX", "action", properties)
   );
 };
 

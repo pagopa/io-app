@@ -7,9 +7,9 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import { useIODispatch } from "../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
-  trackItWalletBannerClosure,
-  trackItWalletBannerTap,
-  trackITWalletBannerVisualized
+  trackItwBannerVisualized,
+  trackItwBannerClosure,
+  trackItwBannerTap
 } from "../../../analytics";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { useItwDiscoveryBannerType } from "../../hooks/useItwDiscoveryBannerType";
@@ -38,8 +38,9 @@ export type ItwDiscoveryBannerProps = {
 /**
  * Discovery banner used in flows where we want to handle the banner's visibility logic externally
  *  (see MultiBanner feature for the landing screen)
+ * @deprecated this banners is for the legacy Documenti su IO flow.
  */
-export const ItwDiscoveryBanner = ({
+export const ItwDiscoveryBannerLegacy = ({
   withTitle = true,
   ignoreMargins = false,
   closable,
@@ -63,18 +64,18 @@ export const ItwDiscoveryBanner = ({
     [bannerType, route.name]
   );
   const handleOnPress = () => {
-    trackItWalletBannerTap(trackBannerProperties);
+    trackItwBannerTap(trackBannerProperties);
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
       params: {}
     });
   };
   useOnFirstRender(() => {
-    trackITWalletBannerVisualized(trackBannerProperties);
+    trackItwBannerVisualized(trackBannerProperties);
   });
 
   const handleClose = () => {
-    trackItWalletBannerClosure(trackBannerProperties);
+    trackItwBannerClosure(trackBannerProperties);
     handleOnClose?.();
     dispatch(itwCloseBanner("discovery"));
   };

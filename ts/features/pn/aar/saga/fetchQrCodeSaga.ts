@@ -3,7 +3,6 @@ import * as E from "fp-ts/lib/Either";
 import { call, put, select } from "typed-redux-saga/macro";
 import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { SessionToken } from "../../../../types/SessionToken";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { unknownToReason } from "../../../messages/utils";
@@ -24,7 +23,7 @@ const sendAARFailurePhase: SendAARFailurePhase = "Fetch QRCode";
 
 export function* fetchAARQrCodeSaga(
   fetchQRCode: SendAARClient["aarQRCodeCheck"],
-  sessionToken: SessionToken,
+  sessionToken: string,
   action: ReturnType<typeof setAarFlowState>
 ) {
   const currentState = yield* select(currentAARFlowData);
@@ -32,7 +31,8 @@ export function* fetchAARQrCodeSaga(
     yield* call(
       trackSendAARFailure,
       sendAARFailurePhase,
-      `Called in wrong state (${currentState.type})`
+      `Called in wrong state (${currentState.type})`,
+      undefined
     );
     return;
   }
@@ -77,7 +77,8 @@ export function* fetchAARQrCodeSaga(
         yield* call(
           trackSendAARFailure,
           sendAARFailurePhase,
-          "Fast login expiration"
+          "Fast login expiration",
+          undefined
         );
         return;
 
@@ -102,7 +103,7 @@ export function* fetchAARQrCodeSaga(
           status,
           value
         )})`;
-        yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
+        yield* call(trackSendAARFailure, sendAARFailurePhase, reason, value);
         const errorState: AARFlowState = {
           type: sendAARFlowStates.ko,
           previousState: { ...currentState },
@@ -117,7 +118,7 @@ export function* fetchAARQrCodeSaga(
     }
   } catch (e) {
     const reason = `An error was thrown (${unknownToReason(e)})`;
-    yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
+    yield* call(trackSendAARFailure, sendAARFailurePhase, reason, undefined);
     yield* put(
       setAarFlowState({
         type: sendAARFlowStates.ko,

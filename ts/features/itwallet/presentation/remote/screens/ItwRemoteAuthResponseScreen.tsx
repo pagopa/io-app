@@ -9,7 +9,8 @@ import {
   selectIsLoading,
   selectIsSuccess,
   selectRedirectUri,
-  selectRelyingPartyData
+  selectRelyingPartyData,
+  selectRemoteCredentialCombination
 } from "../machine/selectors";
 import { trackItwRemotePresentationCompleted } from "../analytics";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
@@ -22,9 +23,14 @@ export const ItwRemoteAuthResponseScreen = () => {
   const isSuccess = ItwRemoteMachineContext.useSelector(selectIsSuccess);
   const rpData = ItwRemoteMachineContext.useSelector(selectRelyingPartyData);
   const redirectUri = ItwRemoteMachineContext.useSelector(selectRedirectUri);
+  const credential_type = ItwRemoteMachineContext.useSelector(
+    selectRemoteCredentialCombination
+  );
 
   useOnFirstRender(() => {
-    trackItwRemotePresentationCompleted(!!redirectUri);
+    if (credential_type) {
+      trackItwRemotePresentationCompleted(!!redirectUri, credential_type);
+    }
   });
 
   /**

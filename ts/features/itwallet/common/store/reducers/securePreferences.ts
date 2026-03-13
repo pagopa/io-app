@@ -7,7 +7,7 @@ import {
   itwUnverifiedCredentialsCounterUp,
   itwUnverifiedCredentialsCounterReset
 } from "../actions/securePreferences";
-import itwCreateSecureStorage from "../storages/itwSecureStorage";
+import createSecureStorage from "../../../../../store/storages/secureStorage";
 
 export type ItwSecurePreferencesState = {
   /**
@@ -68,7 +68,7 @@ const CURRENT_REDUX_ITW_SECURE_PREFERENCES_STORE_VERSION = -1;
 
 const itwCredentialsPersistConfig: PersistConfig = {
   key: "itWalletSecurePreferences",
-  storage: itwCreateSecureStorage(),
+  storage: createSecureStorage(),
   version: CURRENT_REDUX_ITW_SECURE_PREFERENCES_STORE_VERSION
 };
 

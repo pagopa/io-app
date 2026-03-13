@@ -1,5 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { call, put, select } from "typed-redux-saga/macro";
+import { Errors } from "@pagopa/io-react-native-wallet";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { assert } from "../../../../utils/assert";
 import { getNetworkError } from "../../../../utils/errors";
@@ -42,7 +43,16 @@ export function* getStatusOrResetWalletInstance(integrityKeyTag: string) {
     yield* put(itwUpdateWalletInstanceStatus.success(walletInstanceStatus));
   } catch (e) {
     trackItwStatusWalletAttestationFailure();
-    yield* put(itwUpdateWalletInstanceStatus.failure(getNetworkError(e)));
+    // There may be cases of users who left the wallet activation flow right after creating a Wallet Instance, without getting a PID.
+    // If another user then logs in, the previous integrity key tag is still stored and sent to the Wallet Provider: when this happens
+    // the WI status endpoint returns 404 and the wallet is reset to avoid any inconsistency.
+    if (Errors.isWalletProviderResponseError(e) && e.statusCode === 404) {
+      yield* call(handleWalletInstanceResetSaga);
+      yield* put(itwUpdateWalletInstanceStatus.cancel());
+      yield* call(trackItwWalletBadState);
+    } else {
+      yield* put(itwUpdateWalletInstanceStatus.failure(getNetworkError(e)));
+    }
   }
 }
 

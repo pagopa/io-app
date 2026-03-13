@@ -15,7 +15,7 @@ import {
 } from "../../utils/testUtils";
 import { createAarMandateSaga } from "../createAarMandateSaga";
 
-const sessionToken = "token" as any;
+const sessionToken = "mock-session-token";
 const createAarMandateMock = jest.fn();
 const currentState = sendAarMockStateFactory.creatingMandate();
 const mockAction = setAarFlowState(currentState);
@@ -35,7 +35,8 @@ describe("createAarMandateSaga", () => {
           .call(
             trackSendAARFailure,
             "Create Mandate",
-            `Called in wrong state (${state.type})`
+            `Called in wrong state (${state.type})`,
+            undefined
           )
           .next()
           .isDone();
@@ -56,7 +57,7 @@ describe("createAarMandateSaga", () => {
       .next(false)
       .call(withRefreshApiCall, createAarMandateMock(), mockAction)
       .next(failureDecodingResponse)
-      .call(trackSendAARFailure, "Create Mandate", failureReason)
+      .call(trackSendAARFailure, "Create Mandate", failureReason, undefined)
       .next()
       .put(
         setAarFlowState({
@@ -127,7 +128,7 @@ describe("createAarMandateSaga", () => {
       .next(true)
       .call(withRefreshApiCall, createAarMandateMock(), mockAction)
       .next(mandateResponse)
-      .call(trackSendAARFailure, "Create Mandate", errorReason)
+      .call(trackSendAARFailure, "Create Mandate", errorReason, undefined)
       .next()
       .put(
         setAarFlowState({
@@ -159,7 +160,12 @@ describe("createAarMandateSaga", () => {
       .next(true)
       .call(withRefreshApiCall, createAarMandateMock(), mockAction)
       .next(mandateResponse)
-      .call(trackSendAARFailure, "Create Mandate", "Fast login expiration")
+      .call(
+        trackSendAARFailure,
+        "Create Mandate",
+        "Fast login expiration",
+        undefined
+      )
       .next()
       .isDone();
   });
@@ -176,10 +182,7 @@ describe("createAarMandateSaga", () => {
 
       const errorReason = `HTTP request failed (${aarProblemJsonAnalyticsReport(
         status,
-        {
-          status: status as 599,
-          detail: "detail"
-        }
+        responseValue
       )})`;
 
       testSaga(
@@ -193,7 +196,7 @@ describe("createAarMandateSaga", () => {
         .next(true)
         .call(withRefreshApiCall, createAarMandateMock(), mockAction)
         .next(mandateResponse)
-        .call(trackSendAARFailure, "Create Mandate", errorReason)
+        .call(trackSendAARFailure, "Create Mandate", errorReason, responseValue)
         .next()
         .put(
           setAarFlowState({

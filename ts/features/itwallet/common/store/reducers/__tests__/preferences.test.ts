@@ -1,13 +1,16 @@
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import {
   itwSetAuthLevel,
-  itwSetClaimValuesHidden
+  itwSetClaimValuesHidden,
+  itwSetCredentialUpgradeFailed,
+  itwClearCredentialUpgradeFailed
 } from "../../actions/preferences";
 import reducer, {
   itwPreferencesInitialState,
   ItwPreferencesState
 } from "../preferences";
 import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
+import { ItwStoredCredentialsMocks } from "../../../utils/itwMocksUtils";
 
 describe("IT Wallet preferences reducer", () => {
   const INITIAL_STATE: ItwPreferencesState = {};
@@ -60,6 +63,39 @@ describe("IT Wallet preferences reducer", () => {
     });
   });
 
+  it("should override credential upgrade failures", () => {
+    const initialFailures = [ItwStoredCredentialsMocks.L3.mdl.credentialType];
+    const updatedFailures = [ItwStoredCredentialsMocks.L3.ts.credentialType];
+
+    const stateAfterInitial = reducer(
+      INITIAL_STATE,
+      itwSetCredentialUpgradeFailed(initialFailures)
+    );
+    const stateAfterUpdate = reducer(
+      stateAfterInitial,
+      itwSetCredentialUpgradeFailed(updatedFailures)
+    );
+
+    expect(stateAfterUpdate).toEqual({
+      ...stateAfterInitial,
+      credentialUpgradeFailed: updatedFailures
+    });
+  });
+
+  it("should remove a credential type from upgrade failures", () => {
+    const mdl = ItwStoredCredentialsMocks.L3.mdl.credentialType;
+    const ts = ItwStoredCredentialsMocks.L3.ts.credentialType;
+
+    const state = reducer(
+      INITIAL_STATE,
+      itwSetCredentialUpgradeFailed([mdl, ts])
+    );
+
+    const updatedState = reducer(state, itwClearCredentialUpgradeFailed(mdl));
+
+    expect(updatedState.credentialUpgradeFailed).toEqual([ts]);
+  });
+
   it("should persist preferences when the wallet is being reset", () => {
     const action = itwLifecycleStoresReset();
     const newState = reducer(
@@ -67,7 +103,8 @@ describe("IT Wallet preferences reducer", () => {
         isPendingReview: true,
         authLevel: "L2",
         claimValuesHidden: true,
-        isWalletInstanceRemotelyActive: true
+        isWalletInstanceRemotelyActive: true,
+        isItwActivationDisabled: true
       },
       action
     );
@@ -75,7 +112,8 @@ describe("IT Wallet preferences reducer", () => {
     expect(newState).toEqual({
       ...itwPreferencesInitialState,
       claimValuesHidden: true,
-      isWalletInstanceRemotelyActive: true
+      isWalletInstanceRemotelyActive: true,
+      isItwActivationDisabled: true
     });
   });
 });

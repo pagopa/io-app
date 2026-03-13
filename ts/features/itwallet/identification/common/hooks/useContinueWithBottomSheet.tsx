@@ -10,9 +10,16 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import { renderActionButtons } from "../../../../../components/ui/IOScrollView";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import {
+  trackItwIdMethodBottomsheet,
+  trackItwIdMethodBottomsheetClose,
+  trackItwIdMethodBottomsheetContinue
+} from "../../analytics";
+import { TrackIdMethodBottomsheetProperties } from "../../analytics/types";
 
 type ModeType = "ciePin" | "cieId" | "spid";
 
@@ -30,6 +37,7 @@ const secondIconMap: Record<ModeType, IOIcons> = {
 
 type Props = {
   type: "ciePin" | "cieId" | "spid";
+  isL3: boolean;
   onPrimaryAction: () => void;
 };
 
@@ -41,8 +49,16 @@ type Props = {
  */
 export const useContinueWithBottomSheet = ({
   type,
+  isL3,
   onPrimaryAction
 }: Props) => {
+  // Skip the close event when the bottom sheet is closed after the primary action
+  const skipCloseEvent = useRef(false);
+  const trackingProps: TrackIdMethodBottomsheetProperties = {
+    ITW_ID_method: type,
+    itw_flow: isL3 ? "L3" : "L2"
+  };
+
   const bottomSheet = useIOBottomSheetModal({
     title: I18n.t(
       `features.itWallet.identification.modeSelection.mode.${type}.bottomSheet.title`
@@ -83,6 +99,9 @@ export const useContinueWithBottomSheet = ({
                   `features.itWallet.identification.modeSelection.mode.${type}.bottomSheet.title`
                 ),
                 onPress: () => {
+                  // eslint-disable-next-line functional/immutable-data
+                  skipCloseEvent.current = true;
+                  trackItwIdMethodBottomsheetContinue(trackingProps);
                   onPrimaryAction();
                   bottomSheet.dismiss();
                 }
@@ -92,17 +111,20 @@ export const useContinueWithBottomSheet = ({
           )}
         </View>
       </VStack>
-    )
+    ),
+    onDismiss: () => {
+      if (!skipCloseEvent.current) {
+        trackItwIdMethodBottomsheetClose(trackingProps);
+      }
+      // eslint-disable-next-line functional/immutable-data
+      skipCloseEvent.current = false;
+    }
   });
 
   return {
     ...bottomSheet,
-    // When opening the bottom sheet, track the view event by default.
-    // Pass { skipTracking: true } to skip sending the analytics event.
-    present: (options?: { skipTracking: boolean }) => {
-      if (!options?.skipTracking) {
-        // TODO: [SIW-3546] add tracking
-      }
+    present: () => {
+      trackItwIdMethodBottomsheet(trackingProps);
       bottomSheet.present();
     }
   };
@@ -112,12 +134,7 @@ const ListItem = (props: { content: string; icon: IOIcons }) => {
   const theme = useIOTheme();
 
   return (
-    <HStack
-      space={16}
-      style={{
-        ...styles.listItem
-      }}
-    >
+    <HStack space={16} style={styles.listItem}>
       <Icon
         allowFontScaling
         name={props.icon}

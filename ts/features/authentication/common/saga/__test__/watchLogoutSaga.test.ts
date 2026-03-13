@@ -14,11 +14,10 @@ import { StartupStatusEnum } from "../../../../../store/reducers/startup";
 import { startApplicationInitialization } from "../../../../../store/actions/application";
 import * as error from "../../../../../utils/errors";
 import { bareSessionTokenSelector } from "../../store/selectors";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { KeyInfo } from "../../../../lollipop/utils/crypto";
 import { getKeyInfo } from "../../../../lollipop/saga";
 
-const sessionToken: SessionToken = "FAKE_SESSION_TOKEN" as SessionToken;
+const sessionToken = "mock-session-token";
 const defaultKeyInfo: KeyInfo = {
   keyTag: "FAKE_KEY_TAG",
   publicKey: {

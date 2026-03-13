@@ -2,6 +2,7 @@ import {
   Badge,
   ContentWrapper,
   IOButton,
+  ListItemHeader,
   ModuleNavigationAlt,
   VSpacer,
   VStack
@@ -14,13 +15,10 @@ import LoadingScreenContent from "../../../../../components/screens/LoadingScree
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
-import {
-  trackItWalletIDMethod,
-  trackItwUserWithoutL3Bottomsheet,
-  trackItwUserWithoutL3Requirements
-} from "../../analytics";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { itwDisabledIdentificationMethodsSelector } from "../../../common/store/selectors/remoteConfig";
+import { trackItWalletIDMethodSelected } from "../../../analytics";
+import { EidIssuanceLevel } from "../../../machine/eid/context";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
@@ -29,10 +27,16 @@ import {
   selectIssuanceMode
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import {
+  trackItWalletIDMethod,
+  trackItwUserWithoutL3Requirements
+} from "../../analytics";
 import { useContinueWithBottomSheet } from "../hooks/useContinueWithBottomSheet";
 
 export type ItwIdentificationNavigationParams = {
   eidReissuing?: boolean;
+  level?: EidIssuanceLevel;
+  credentialType?: string;
   animationEnabled?: boolean;
 };
 
@@ -48,16 +52,18 @@ export const ItwIdentificationModeSelectionScreen = ({
   route
 }: ItwIdentificationModeSelectionScreenProps) => {
   const { name: routeName, params } = route;
-  const { eidReissuing } = params;
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+
+  const issuanceMode =
+    ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
   const mode = ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
-
+  const isReissuanceMode = mode === "reissuance";
   const disabledIdentificationMethods = useIOSelector(
     itwDisabledIdentificationMethodsSelector
   );
@@ -106,10 +112,15 @@ export const ItwIdentificationModeSelectionScreen = ({
 
   useFocusEffect(
     useCallback(() => {
-      if (eidReissuing) {
-        machineRef.send({ type: "start", mode: "reissuance", level: "l2" });
+      if (params.eidReissuing && issuanceMode !== "reissuance") {
+        machineRef.send({
+          type: "start",
+          mode: "reissuance",
+          level: params.level || "l2",
+          credentialType: params.credentialType
+        });
       }
-    }, [eidReissuing, machineRef])
+    }, [machineRef, params, issuanceMode])
   );
 
   useFocusEffect(
@@ -128,7 +139,11 @@ export const ItwIdentificationModeSelectionScreen = ({
       // If the user is in the L3 upgrade flow, he cannot proceed without a CIE card
       machineRef.send({ type: "go-to-cie-warning", warning: "card" });
     } else {
-      trackItwUserWithoutL3Bottomsheet();
+      trackItwUserWithoutL3Requirements({
+        screen_name: routeName,
+        reason: "user_without_cie",
+        position: "screen"
+      });
       machineRef.send({
         type: "restart",
         mode: "issuance",
@@ -138,6 +153,7 @@ export const ItwIdentificationModeSelectionScreen = ({
   }, [mode, machineRef, routeName]);
 
   const dismissalDialog = useItwDismissalDialog({
+    enabled: params.eidReissuing,
     customLabels: {
       body: ""
     },
@@ -158,15 +174,50 @@ export const ItwIdentificationModeSelectionScreen = ({
       }}
       description={description}
       headerActionsProp={{ showHelp: true }}
-      goBack={eidReissuing ? dismissalDialog.show : undefined}
+      goBack={params.eidReissuing ? dismissalDialog.show : undefined}
     >
       <ContentWrapper>
         <VSpacer size={8} />
         <VStack space={16}>
-          {!isCiePinDisabled && <CiePinMethodModule />}
-          {!isSpidDisabled && <SpidMethodModule />}
-          {!isCieIdDisabled && <CieIdMethodModule />}
-          {isL3 && !eidReissuing && (
+          {isReissuanceMode && isL3 ? (
+            <>
+              {(!isCiePinDisabled || !isCieIdDisabled) && (
+                <VStack space={8}>
+                  <ListItemHeader
+                    label={I18n.t(`${i18nNs}.frequency.every12Months`)}
+                    endElement={{
+                      type: "badge",
+                      componentProps: {
+                        text: I18n.t(`${i18nNs}.mode.ciePin.reissuanceBadge`),
+                        variant: "highlight",
+                        outline: false,
+                        testID: "CiePinReissuanceBadgeTestID"
+                      }
+                    }}
+                  />
+                  <VStack space={16}>
+                    {!isCiePinDisabled && <CiePinMethodModule />}
+                    {!isCieIdDisabled && <CieIdMethodModule />}
+                  </VStack>
+                </VStack>
+              )}
+              {!isSpidDisabled && (
+                <VStack space={8}>
+                  <ListItemHeader
+                    label={I18n.t(`${i18nNs}.frequency.every90Days`)}
+                  />
+                  <SpidMethodModule />
+                </VStack>
+              )}
+            </>
+          ) : (
+            <>
+              {!isCiePinDisabled && <CiePinMethodModule />}
+              {!isCieIdDisabled && <CieIdMethodModule />}
+              {!isSpidDisabled && <SpidMethodModule />}
+            </>
+          )}
+          {isL3 && !params.eidReissuing && (
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <IOButton
                 variant="link"
@@ -187,6 +238,7 @@ const CiePinMethodModule = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
   const mode = ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
+  const isL3 = level === "l3";
 
   const handleOnPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "ciePin" });
@@ -194,12 +246,13 @@ const CiePinMethodModule = () => {
 
   const ciePinBottomSheet = useContinueWithBottomSheet({
     type: "ciePin",
-    onPrimaryAction: handleOnPress
+    onPrimaryAction: handleOnPress,
+    isL3
   });
 
   const badgeProps: Badge | undefined = useMemo(() => {
-    if (level === "l2" && mode === "issuance") {
-      // Should not display the recommended badge for L2 issuance
+    // Show the recommended badge only during the L3 activation flow.
+    if (level !== "l3" || mode === "reissuance") {
       return undefined;
     }
 
@@ -215,21 +268,25 @@ const CiePinMethodModule = () => {
     <>
       <ModuleNavigationAlt
         title={I18n.t(`${i18nNs}.mode.ciePin.title`)}
-        subtitle={I18n.t(`${i18nNs}.mode.ciePin.subtitle`)}
+        subtitle={I18n.t(
+          `${i18nNs}.mode.ciePin.subtitle.${isL3 ? "l3" : "default"}`
+        )}
         testID="CiePinMethodModuleTestID"
         icon="cieCard"
         onPress={() => {
-          if (level === "l3") {
-            ciePinBottomSheet.present({
-              skipTracking: false
+          if (isL3) {
+            trackItWalletIDMethodSelected({
+              ITW_ID_method: "ciePin",
+              itw_flow: "L3"
             });
+            ciePinBottomSheet.present();
           } else {
             handleOnPress();
           }
         }}
         badge={badgeProps}
       />
-      {level === "l3" && ciePinBottomSheet.bottomSheet}
+      {isL3 && ciePinBottomSheet.bottomSheet}
     </>
   );
 };
@@ -237,6 +294,7 @@ const CiePinMethodModule = () => {
 const SpidMethodModule = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
+  const isL3 = level === "l3";
 
   const handleOnPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "spid" });
@@ -244,11 +302,12 @@ const SpidMethodModule = () => {
 
   const spidBottomSheet = useContinueWithBottomSheet({
     type: "spid",
-    onPrimaryAction: handleOnPress
+    onPrimaryAction: handleOnPress,
+    isL3
   });
 
   const { title, subtitle } = useMemo(() => {
-    if (level === "l3") {
+    if (isL3) {
       return {
         title: I18n.t(`${i18nNs}.mode.spid.title.l3`),
         subtitle: I18n.t(`${i18nNs}.mode.spid.subtitle.l3`)
@@ -259,7 +318,7 @@ const SpidMethodModule = () => {
       title: I18n.t(`${i18nNs}.mode.spid.title.default`),
       subtitle: I18n.t(`${i18nNs}.mode.spid.subtitle.default`)
     };
-  }, [level]);
+  }, [isL3]);
 
   return (
     <>
@@ -269,16 +328,18 @@ const SpidMethodModule = () => {
         testID="SpidMethodModuleTestID"
         icon="spid"
         onPress={() => {
-          if (level === "l3") {
-            spidBottomSheet.present({
-              skipTracking: false
+          if (isL3) {
+            trackItWalletIDMethodSelected({
+              ITW_ID_method: "spid",
+              itw_flow: "L3"
             });
+            spidBottomSheet.present();
           } else {
             handleOnPress();
           }
         }}
       />
-      {level === "l3" && spidBottomSheet.bottomSheet}
+      {isL3 && spidBottomSheet.bottomSheet}
     </>
   );
 };
@@ -286,6 +347,7 @@ const SpidMethodModule = () => {
 const CieIdMethodModule = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
+  const isL3 = level === "l3";
 
   const handleOnPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "cieId" });
@@ -293,11 +355,12 @@ const CieIdMethodModule = () => {
 
   const cieIdBottomSheet = useContinueWithBottomSheet({
     type: "cieId",
-    onPrimaryAction: handleOnPress
+    onPrimaryAction: handleOnPress,
+    isL3
   });
 
   const { title, subtitle } = useMemo(() => {
-    if (level === "l3") {
+    if (isL3) {
       return {
         title: I18n.t(`${i18nNs}.mode.cieId.title`),
         subtitle: I18n.t(`${i18nNs}.mode.cieId.subtitle.l3`)
@@ -308,7 +371,7 @@ const CieIdMethodModule = () => {
       title: I18n.t(`${i18nNs}.mode.cieId.title`),
       subtitle: I18n.t(`${i18nNs}.mode.cieId.subtitle.default`)
     };
-  }, [level]);
+  }, [isL3]);
 
   return (
     <>
@@ -318,16 +381,18 @@ const CieIdMethodModule = () => {
         icon={"cie"}
         testID="CieIDMethodModuleTestID"
         onPress={() => {
-          if (level === "l3") {
-            cieIdBottomSheet.present({
-              skipTracking: false
+          if (isL3) {
+            trackItWalletIDMethodSelected({
+              ITW_ID_method: "cieId",
+              itw_flow: "L3"
             });
+            cieIdBottomSheet.present();
           } else {
             handleOnPress();
           }
         }}
       />
-      {level === "l3" && cieIdBottomSheet.bottomSheet}
+      {isL3 && cieIdBottomSheet.bottomSheet}
     </>
   );
 };

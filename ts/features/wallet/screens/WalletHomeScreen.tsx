@@ -19,8 +19,10 @@ import {
   trackOpenWalletScreen,
   trackWalletAdd
 } from "../../itwallet/analytics";
+import { itwMixPanelCredentialDetailsSelector } from "../../itwallet/analytics/store/selectors/index.ts";
 import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
 import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences.ts";
+import { itwIsL3EnabledSelector } from "../../itwallet/common/store/selectors/preferences.ts";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
@@ -44,6 +46,10 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const isRefreshingContent = useIOSelector(isWalletScreenRefreshingSelector);
+  const mixPanelCredentialDetails = useIOSelector(
+    itwMixPanelCredentialDetailsSelector
+  );
+  const isItWalletEnabled = useIOSelector(itwIsL3EnabledSelector);
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
   const isRequiredEidFeedback = useRef(
@@ -71,9 +77,11 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   const handleAddToWalletButtonPress = useCallback(() => {
     trackWalletAdd();
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ONBOARDING
+      screen: isItWalletEnabled
+        ? ITW_ROUTES.L3_ONBOARDING
+        : ITW_ROUTES.ONBOARDING
     });
-  }, [navigation]);
+  }, [navigation, isItWalletEnabled]);
 
   useHeaderFirstLevel({
     currentRoute: ROUTES.WALLET_HOME,
@@ -111,12 +119,17 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     dispatch(walletUpdate());
   });
 
+  useFocusEffect(
+    useCallback(() => {
+      trackOpenWalletScreen(mixPanelCredentialDetails);
+    }, [mixPanelCredentialDetails])
+  );
+
   /**
    * Handles the "New element added" toast display once the user returns to this screen
    */
   useFocusEffect(
     useCallback(() => {
-      trackOpenWalletScreen();
       if (isNewElementAdded.current) {
         IOToast.success(I18n.t("features.wallet.home.toast.newMethod"));
         // eslint-disable-next-line functional/immutable-data

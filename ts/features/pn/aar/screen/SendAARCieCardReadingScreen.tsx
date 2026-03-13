@@ -1,18 +1,17 @@
 import i18n from "i18next";
 import { useEffect } from "react";
-import { useIOSelector } from "../../../../store/hooks";
-import { currentAARFlowData } from "../store/selectors";
-import { sendAARFlowStates } from "../utils/stateUtils";
-import type { PnParamsList } from "../../navigation/params";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
 import type { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../store/hooks";
+import type { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
 import {
   SendAARCieCardReadingComponent,
   type SendAARCieCardReadingComponentProps
 } from "../components/SendAARCieCardReadingComponent";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
+import { currentAARFlowData } from "../store/selectors";
+import { sendAARFlowStates } from "../utils/stateUtils";
 
 export type SendAARCieCardReadingScreenRouteParams =
   Readonly<SendAARCieCardReadingComponentProps>;
@@ -30,29 +29,30 @@ export const SendAARCieCardReadingScreen = ({
 
   useEffect(() => {
     switch (currentFlow.type) {
+      case sendAARFlowStates.cieCanAdvisory: {
+        navigation.replace(PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL, {
+          animationTypeForReplace: "pop"
+        });
+        break;
+      }
+      case sendAARFlowStates.cieScanningAdvisory: {
+        navigation.replace(PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL, {
+          animationTypeForReplace: "pop"
+        });
+        break;
+      }
       case sendAARFlowStates.displayingNotificationData: {
-        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-          screen: PN_ROUTES.MAIN,
-          params: {
-            screen: PN_ROUTES.MESSAGE_DETAILS,
-            params: {
-              messageId: currentFlow.iun,
-              firstTimeOpening: undefined,
-              serviceId: currentFlow.pnServiceId,
-              sendOpeningSource: "aar",
-              sendUserType: "mandatory"
-            }
-          }
+        navigation.replace(PN_ROUTES.MESSAGE_DETAILS, {
+          messageId: currentFlow.iun,
+          firstTimeOpening: undefined,
+          serviceId: currentFlow.pnServiceId,
+          sendOpeningSource: "aar",
+          sendUserType: "mandatory"
         });
         break;
       }
       case sendAARFlowStates.ko: {
-        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-          screen: PN_ROUTES.MAIN,
-          params: {
-            screen: PN_ROUTES.SEND_AAR_ERROR
-          }
-        });
+        navigation.replace(PN_ROUTES.SEND_AAR_ERROR);
         break;
       }
     }

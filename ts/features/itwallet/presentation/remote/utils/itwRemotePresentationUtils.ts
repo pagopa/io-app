@@ -9,6 +9,7 @@ import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUt
 import { validCredentialStatuses } from "../../../common/utils/itwCredentialUtils";
 import { isDefined } from "../../../../../utils/guards";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import { ItwRemoteCredentialCombination } from "../analytics/utils/types";
 import {
   EnrichedPresentationDetails,
   ItwRemoteQrRawPayload,
@@ -24,7 +25,10 @@ const credentialTypesByVct: { [vct: string]: CredentialType } = {
   personidentificationdata: CredentialType.PID,
   mdl: CredentialType.DRIVING_LICENSE,
   europeandisabilitycard: CredentialType.EUROPEAN_DISABILITY_CARD,
-  europeanhealthinsurancecard: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+  europeanhealthinsurancecard: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+  education_degree: CredentialType.EDUCATION_DEGREE,
+  education_enrollment: CredentialType.EDUCATION_ENROLLMENT,
+  residency: CredentialType.RESIDENCY
 };
 
 /**
@@ -154,3 +158,29 @@ export const getInvalidCredentials = (
     .filter(c => !validCredentialStatuses.includes(getCredentialStatus(c)))
     // Gets the invalid credential's type
     .map(c => c.credentialType);
+
+/**
+ * Derives the credential combination type from the presentation details.
+ * Used for analytics tracking to monitor success rates by request type.
+ */
+export const getRemoteCredentialCombination = (
+  presentationDetails: EnrichedPresentationDetails
+): ItwRemoteCredentialCombination => {
+  const requestedVcts = presentationDetails.map(d => d.vct);
+  const credentialTypes = requestedVcts
+    .map(getCredentialTypeByVct)
+    .filter(isDefined);
+
+  const hasPid = credentialTypes.includes(CredentialType.PID);
+  const hasOtherCredentials = credentialTypes.some(
+    t => t !== CredentialType.PID
+  );
+
+  if (hasPid && hasOtherCredentials) {
+    return "PID_and_credentials";
+  }
+  if (hasPid) {
+    return "PID";
+  }
+  return "other_credentials";
+};

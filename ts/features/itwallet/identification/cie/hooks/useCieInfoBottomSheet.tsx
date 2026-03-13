@@ -13,6 +13,7 @@ import {
   trackItwPinInfoBottomSheet,
   trackItwUserWithoutL3Requirements
 } from "../../analytics";
+import { trackItwKoStateAction } from "../../../analytics";
 import { ItwFlow } from "../../../analytics/utils/types";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
@@ -80,6 +81,13 @@ export const useCieInfoBottomSheet = ({
             "features.itWallet.identification.cie.bottomSheet.pin.dialog.cieIdAction"
           ),
           onPress: () => {
+            trackItwKoStateAction({
+              cta_id: I18n.t(
+                "features.itWallet.identification.cie.bottomSheet.pin.dialog.cieIdAction"
+              ),
+              cta_category: "custom_2",
+              reason
+            });
             machineRef.send({
               type: "select-identification-mode",
               mode: "cieId"
@@ -92,6 +100,13 @@ export const useCieInfoBottomSheet = ({
             "features.itWallet.identification.cie.bottomSheet.pin.dialog.spidCieAction"
           ),
           onPress: () => {
+            trackItwKoStateAction({
+              cta_id: I18n.t(
+                "features.itWallet.identification.cie.bottomSheet.pin.dialog.spidCieAction"
+              ),
+              cta_category: "custom_1",
+              reason
+            });
             machineRef.send({
               type: "select-identification-mode",
               mode: "spid"

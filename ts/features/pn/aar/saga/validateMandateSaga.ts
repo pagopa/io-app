@@ -2,7 +2,6 @@ import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { call, put, select } from "typed-redux-saga/macro";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { SessionToken } from "../../../../types/SessionToken";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { unknownToReason } from "../../../messages/utils";
@@ -12,6 +11,7 @@ import {
 } from "../analytics";
 import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
+import { getAarErrorBehaviour } from "../utils/aarErrorMappings";
 import {
   AARFlowState,
   SendAARFailurePhase,
@@ -20,16 +20,22 @@ import {
 
 const sendAARFailurePhase: SendAARFailurePhase = "Validate Mandate";
 
+export type AcceptMandateSuccessfulResponse = Extract<
+  Awaited<ReturnType<SendAARClient["acceptAARMandate"]>>,
+  { _tag: "Right" }
+>;
+
 export function* validateMandateSaga(
   acceptMandate: SendAARClient["acceptAARMandate"],
-  sessionToken: SessionToken,
+  sessionToken: string,
   action: ReturnType<typeof setAarFlowState>
 ) {
   if (action.payload.type !== sendAARFlowStates.validatingMandate) {
     yield* call(
       trackSendAARFailure,
       sendAARFailurePhase,
-      `Called in wrong state (${action.payload.type})`
+      `Called in wrong state (${action.payload.type})`,
+      undefined
     );
     return;
   }
@@ -87,16 +93,18 @@ export function* validateMandateSaga(
         yield* call(
           trackSendAARFailure,
           sendAARFailurePhase,
-          "Fast login expiration"
+          "Fast login expiration",
+          undefined
         );
         return;
-      // TODO: [IOCOM-2844] Map 400 and 422 errors
       default:
         const reason = `HTTP request failed (${aarProblemJsonAnalyticsReport(
           status,
           value
         )})`;
-        yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
+        const { track } = getAarErrorBehaviour(value);
+        track(reason);
+        yield* call(trackSendAARFailure, sendAARFailurePhase, reason, value);
         const errorState: AARFlowState = {
           type: sendAARFlowStates.ko,
           previousState: { ...action.payload },
@@ -111,7 +119,7 @@ export function* validateMandateSaga(
     }
   } catch (e) {
     const reason = `An error was thrown (${unknownToReason(e)})`;
-    yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
+    yield* call(trackSendAARFailure, sendAARFailurePhase, reason, undefined);
     yield* put(
       setAarFlowState({
         type: sendAARFlowStates.ko,

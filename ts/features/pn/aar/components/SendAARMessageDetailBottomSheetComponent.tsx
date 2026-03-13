@@ -1,12 +1,13 @@
+import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { RefObject } from "react";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIOStore } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import { MessagesParamsList } from "../../../messages/navigation/params";
+import { SendUserType } from "../../../pushNotifications/analytics";
 import PN_ROUTES from "../../navigation/routes";
 import { isPnServiceEnabled } from "../../reminderBanner/reducer/bannerDismiss";
-import { SendUserType } from "../../../pushNotifications/analytics";
 import {
   trackSendAarNotificationClosureBack,
   trackSendAarNotificationClosureConfirm
@@ -22,7 +23,10 @@ export const SendAARMessageDetailBottomSheetComponent = ({
   aarBottomSheetRef,
   sendUserType
 }: SendAARMessageDetailBottomSheetComponentProps) => {
-  const navigation = useIONavigation();
+  const navigation =
+    useNavigation<
+      IOStackNavigationProp<MessagesParamsList, "MESSAGE_DETAIL">
+    >();
   const store = useIOStore();
 
   const onSecondaryActionPress = () => {
@@ -46,14 +50,11 @@ export const SendAARMessageDetailBottomSheetComponent = ({
       return;
     }
 
-    navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-      screen: PN_ROUTES.MAIN,
+    navigation.replace(PN_ROUTES.MAIN, {
+      screen: PN_ROUTES.ENGAGEMENT_SCREEN,
       params: {
-        screen: PN_ROUTES.ENGAGEMENT_SCREEN,
-        params: {
-          sendOpeningSource: "aar",
-          sendUserType
-        }
+        sendOpeningSource: "aar",
+        sendUserType
       }
     });
   };

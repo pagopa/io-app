@@ -401,14 +401,46 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
                               >
                                 <View
                                   collapsable={false}
-                                  style={
+                                  jestAnimatedProps={
                                     {
-                                      "transform": [
-                                        {
-                                          "rotateZ": "0deg",
-                                        },
-                                      ],
+                                      "value": {},
                                     }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    {
+                                      "animationDuration": 850,
+                                      "animationIterationCount": "infinite",
+                                      "animationName": {
+                                        "from": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "0deg",
+                                            },
+                                          ],
+                                        },
+                                        "to": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "360deg",
+                                            },
+                                          ],
+                                        },
+                                      },
+                                      "animationTimingFunction": "linear",
+                                      "transformOrigin": "center",
+                                    }
+                                  }
+                                  style={
+                                    [
+                                      {
+                                        "transformOrigin": "center",
+                                      },
+                                    ]
                                   }
                                   testID="LoadingSpinnerAnimatedTestID"
                                 >
@@ -459,7 +491,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
                                           }
                                           gradientTransform={null}
                                           gradientUnits={0}
-                                          name="spinner-secondHalf"
+                                          name="«r2»-secondHalf"
                                           x1="0%"
                                           x2="100%"
                                           y1="0%"
@@ -476,7 +508,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
                                           }
                                           gradientTransform={null}
                                           gradientUnits={0}
-                                          name="spinner-firstHalf"
+                                          name="«r2»-firstHalf"
                                           x1="0%"
                                           x2="100%"
                                           y1="0%"
@@ -512,7 +544,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
                                           }
                                           stroke={
                                             {
-                                              "brushRef": "spinner-secondHalf",
+                                              "brushRef": "«r2»-secondHalf",
                                               "type": 1,
                                             }
                                           }
@@ -532,7 +564,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
                                           }
                                           stroke={
                                             {
-                                              "brushRef": "spinner-firstHalf",
+                                              "brushRef": "«r2»-firstHalf",
                                               "type": 1,
                                             }
                                           }
@@ -1040,14 +1072,46 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
                               >
                                 <View
                                   collapsable={false}
-                                  style={
+                                  jestAnimatedProps={
                                     {
-                                      "transform": [
-                                        {
-                                          "rotateZ": "0deg",
-                                        },
-                                      ],
+                                      "value": {},
                                     }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    {
+                                      "animationDuration": 850,
+                                      "animationIterationCount": "infinite",
+                                      "animationName": {
+                                        "from": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "0deg",
+                                            },
+                                          ],
+                                        },
+                                        "to": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "360deg",
+                                            },
+                                          ],
+                                        },
+                                      },
+                                      "animationTimingFunction": "linear",
+                                      "transformOrigin": "center",
+                                    }
+                                  }
+                                  style={
+                                    [
+                                      {
+                                        "transformOrigin": "center",
+                                      },
+                                    ]
                                   }
                                   testID="LoadingSpinnerAnimatedTestID"
                                 >
@@ -1098,7 +1162,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
                                           }
                                           gradientTransform={null}
                                           gradientUnits={0}
-                                          name="spinner-secondHalf"
+                                          name="«r3»-secondHalf"
                                           x1="0%"
                                           x2="100%"
                                           y1="0%"
@@ -1115,7 +1179,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
                                           }
                                           gradientTransform={null}
                                           gradientUnits={0}
-                                          name="spinner-firstHalf"
+                                          name="«r3»-firstHalf"
                                           x1="0%"
                                           x2="100%"
                                           y1="0%"
@@ -1151,7 +1215,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
                                           }
                                           stroke={
                                             {
-                                              "brushRef": "spinner-secondHalf",
+                                              "brushRef": "«r3»-secondHalf",
                                               "type": 1,
                                             }
                                           }
@@ -1171,7 +1235,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
                                           }
                                           stroke={
                                             {
-                                              "brushRef": "spinner-firstHalf",
+                                              "brushRef": "«r3»-firstHalf",
                                               "type": 1,
                                             }
                                           }
@@ -1679,14 +1743,46 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                               >
                                 <View
                                   collapsable={false}
-                                  style={
+                                  jestAnimatedProps={
                                     {
-                                      "transform": [
-                                        {
-                                          "rotateZ": "0deg",
-                                        },
-                                      ],
+                                      "value": {},
                                     }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    {
+                                      "animationDuration": 850,
+                                      "animationIterationCount": "infinite",
+                                      "animationName": {
+                                        "from": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "0deg",
+                                            },
+                                          ],
+                                        },
+                                        "to": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "360deg",
+                                            },
+                                          ],
+                                        },
+                                      },
+                                      "animationTimingFunction": "linear",
+                                      "transformOrigin": "center",
+                                    }
+                                  }
+                                  style={
+                                    [
+                                      {
+                                        "transformOrigin": "center",
+                                      },
+                                    ]
                                   }
                                   testID="LoadingSpinnerAnimatedTestID"
                                 >
@@ -1737,7 +1833,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                           }
                                           gradientTransform={null}
                                           gradientUnits={0}
-                                          name="spinner-secondHalf"
+                                          name="«r0»-secondHalf"
                                           x1="0%"
                                           x2="100%"
                                           y1="0%"
@@ -1754,7 +1850,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                           }
                                           gradientTransform={null}
                                           gradientUnits={0}
-                                          name="spinner-firstHalf"
+                                          name="«r0»-firstHalf"
                                           x1="0%"
                                           x2="100%"
                                           y1="0%"
@@ -1790,7 +1886,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                           }
                                           stroke={
                                             {
-                                              "brushRef": "spinner-secondHalf",
+                                              "brushRef": "«r0»-secondHalf",
                                               "type": 1,
                                             }
                                           }
@@ -1810,7 +1906,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                           }
                                           stroke={
                                             {
-                                              "brushRef": "spinner-firstHalf",
+                                              "brushRef": "«r0»-firstHalf",
                                               "type": 1,
                                             }
                                           }
@@ -2295,14 +2391,46 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                               >
                                 <View
                                   collapsable={false}
-                                  style={
+                                  jestAnimatedProps={
                                     {
-                                      "transform": [
-                                        {
-                                          "rotateZ": "0deg",
-                                        },
-                                      ],
+                                      "value": {},
                                     }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    {
+                                      "animationDuration": 850,
+                                      "animationIterationCount": "infinite",
+                                      "animationName": {
+                                        "from": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "0deg",
+                                            },
+                                          ],
+                                        },
+                                        "to": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "360deg",
+                                            },
+                                          ],
+                                        },
+                                      },
+                                      "animationTimingFunction": "linear",
+                                      "transformOrigin": "center",
+                                    }
+                                  }
+                                  style={
+                                    [
+                                      {
+                                        "transformOrigin": "center",
+                                      },
+                                    ]
                                   }
                                   testID="LoadingSpinnerAnimatedTestID"
                                 >
@@ -2353,7 +2481,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                           }
                                           gradientTransform={null}
                                           gradientUnits={0}
-                                          name="spinner-secondHalf"
+                                          name="«r1»-secondHalf"
                                           x1="0%"
                                           x2="100%"
                                           y1="0%"
@@ -2370,7 +2498,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                           }
                                           gradientTransform={null}
                                           gradientUnits={0}
-                                          name="spinner-firstHalf"
+                                          name="«r1»-firstHalf"
                                           x1="0%"
                                           x2="100%"
                                           y1="0%"
@@ -2406,7 +2534,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                           }
                                           stroke={
                                             {
-                                              "brushRef": "spinner-secondHalf",
+                                              "brushRef": "«r1»-secondHalf",
                                               "type": 1,
                                             }
                                           }
@@ -2426,7 +2554,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                           }
                                           stroke={
                                             {
-                                              "brushRef": "spinner-firstHalf",
+                                              "brushRef": "«r1»-firstHalf",
                                               "type": 1,
                                             }
                                           }

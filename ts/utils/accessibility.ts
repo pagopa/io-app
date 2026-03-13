@@ -3,7 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
-import { Component, RefObject, useEffect, useState } from "react";
+import { Component, RefObject } from "react";
 import { AccessibilityInfo, findNodeHandle } from "react-native";
 import I18n from "i18next";
 import { format } from "./dates";
@@ -52,18 +52,6 @@ export const isScreenReaderEnabled = async (): Promise<boolean> =>
     ),
     TE.getOrElse(() => T.of(false))
   )();
-
-// return the state of the screen reader when the caller component is mounted
-export const useScreenReaderEnabled = () => {
-  const [screenReaderEnabled, setIscreenReaderEnabled] = useState(false);
-
-  useEffect(() => {
-    isScreenReaderEnabled()
-      .then(setIscreenReaderEnabled)
-      .catch(_ => setIscreenReaderEnabled(false));
-  }, []);
-  return screenReaderEnabled;
-};
 
 // return a string representing the date in a readable format
 export const dateToAccessibilityReadableFormat = (

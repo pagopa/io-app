@@ -10,7 +10,6 @@ import NavigationService from "../../../navigation/NavigationService";
 import { FCI_ROUTES } from "../navigation/routes";
 import ROUTES from "../../../navigation/routes";
 import { apiUrlPrefix } from "../../../config";
-import { SessionToken } from "../../../types/SessionToken";
 import {
   identificationPinReset,
   identificationRequest,
@@ -24,6 +23,7 @@ import { fciQtspFilledDocumentUrlSelector } from "../store/reducers/fciQtspFille
 import { CreateSignatureBody } from "../../../../definitions/fci/CreateSignatureBody";
 import {
   fciSignatureRequestFromId,
+  fciSignatureRequestRetryFromId,
   fciClearStateRequest,
   fciStartRequest,
   fciLoadQtspClauses,
@@ -63,7 +63,7 @@ import { handleDrawSignatureBox } from "./handleDrawSignatureBox";
  * @param bearerToken
  */
 export function* watchFciSaga(
-  bearerToken: SessionToken,
+  bearerToken: string,
   keyInfo: KeyInfo
 ): SagaIterator {
   const fciGeneratedClient = createFciClient(apiUrlPrefix);
@@ -93,6 +93,12 @@ export function* watchFciSaga(
   );
 
   yield* takeLatest(fciStartRequest, watchFciStartSaga);
+
+  // handle the request of retrying a signature, getting FCI signatureRequestDetails and restarting the signing flow
+  yield* takeLatest(
+    fciSignatureRequestRetryFromId,
+    watchFciSignatureRequestRetrySaga
+  );
 
   yield* takeLatest(fciLoadQtspClauses.success, watchFciQtspClausesSaga);
 
@@ -191,6 +197,37 @@ function* watchFciStartSaga(): SagaIterator {
   // start a request to get the metadata
   // this is needed to get the service_id
   yield* put(fciMetadataRequest.request());
+}
+
+/**
+ * Handle the FCI signature request retry saga
+ */
+function* watchFciSignatureRequestRetrySaga(
+  action: ActionType<typeof fciSignatureRequestRetryFromId>
+): SagaIterator {
+  // get new SignatureRequestDetails
+  yield* put(fciSignatureRequestFromId.request(action.payload));
+
+  while (true) {
+    const result = yield* take([
+      fciSignatureRequestFromId.success,
+      fciSignatureRequestFromId.failure
+    ]);
+
+    if (isActionOf(fciSignatureRequestFromId.success, result)) {
+      if (result.payload.id === action.payload) {
+        // start a new signing flow
+        yield* put(fciStartRequest());
+        return;
+      }
+
+      continue;
+    }
+
+    if (isActionOf(fciSignatureRequestFromId.failure, result)) {
+      return;
+    }
+  }
 }
 
 /**

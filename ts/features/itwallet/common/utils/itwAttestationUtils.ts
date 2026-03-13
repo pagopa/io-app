@@ -4,7 +4,6 @@ import {
   createCryptoContextFor
 } from "@pagopa/io-react-native-wallet";
 import * as Sentry from "@sentry/react-native";
-import { SessionToken } from "../../../../types/SessionToken";
 import { createItWalletFetch } from "../../api/client";
 import { regenerateCryptoKey, WIA_KEYTAG } from "./itwCryptoContextUtils";
 import {
@@ -26,11 +25,13 @@ export const getIntegrityHardwareKeyTag = async (): Promise<string> =>
  * @param env - The environment to use for the wallet provider base URL
  * @param hardwareKeyTag - the hardware key tag of the integrity Context
  * @param sessionToken - the session token to use for the API calls
+ * @param options - options to specify if the registration is for a renewal or not
  */
 export const registerWalletInstance = async (
   { WALLET_PROVIDER_BASE_URL }: Env,
   hardwareKeyTag: string,
-  sessionToken: SessionToken
+  sessionToken: string,
+  options?: { isRenewal?: boolean }
 ) => {
   const integrityContext = getIntegrityContext(hardwareKeyTag);
   // This must be used only for API calls mediated through our backend which are related to the wallet instance only
@@ -42,6 +43,7 @@ export const registerWalletInstance = async (
   await WalletInstance.createWalletInstance({
     integrityContext,
     walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
+    isRenewal: options?.isRenewal,
     appFetch
   });
 };
@@ -56,7 +58,7 @@ export const registerWalletInstance = async (
 export const getAttestation = async (
   { WALLET_PROVIDER_BASE_URL }: Env,
   hardwareKeyTag: string,
-  sessionToken: SessionToken
+  sessionToken: string
 ): Promise<WalletInstanceAttestations> => {
   const integrityContext = getIntegrityContext(hardwareKeyTag);
 
@@ -116,7 +118,7 @@ export const isWalletInstanceAttestationValid = (
 export const getWalletInstanceStatus = (
   { WALLET_PROVIDER_BASE_URL }: Env,
   hardwareKeyTag: string,
-  sessionToken: SessionToken
+  sessionToken: string
 ) =>
   WalletInstance.getWalletInstanceStatus({
     id: hardwareKeyTag,
@@ -136,7 +138,7 @@ export const getWalletInstanceStatus = (
  */
 export const getCurrentWalletInstanceStatus = (
   { WALLET_PROVIDER_BASE_URL }: Env,
-  sessionToken: SessionToken
+  sessionToken: string
 ) => {
   try {
     return WalletInstance.getCurrentWalletInstanceStatus({

@@ -21,10 +21,8 @@ import {
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
-import {
-  useItwFailureSupportModal,
-  ZendeskSubcategoryValue
-} from "../../common/hooks/useItwFailureSupportModal";
+import { useItwFailureSupportModal } from "../../common/hooks/useItwFailureSupportModal";
+import { ZendeskSubcategoryValue } from "../../common/hooks/useItwZendeskSupport";
 import { KoState } from "../../analytics/utils/types";
 import { trackItwKoStateAction } from "../../analytics";
 import { openWebUrl } from "../../../../utils/url";
@@ -38,8 +36,12 @@ import { DOCUMENTS_ON_IO_FAQ_12_URL_BODY } from "../../../../urls";
 const zendeskAssistanceErrors = [
   IssuanceFailureType.UNEXPECTED,
   IssuanceFailureType.WALLET_PROVIDER_GENERIC,
-  IssuanceFailureType.UNSUPPORTED_DEVICE
+  IssuanceFailureType.UNSUPPORTED_DEVICE,
+  IssuanceFailureType.HARDWARE_KEY_INVALID
 ];
+
+const ASSERTION_FAILED_FAQ_URL =
+  "https://assistenza.ioapp.it/hc/it/articles/43824826487953-Provo-ad-aggiungere-un-documento-al-Portafoglio-ma-ricevo-un-errore-dal-mio-dispositivo-Apple";
 
 export const ItwIssuanceEidFailureScreen = () => {
   const failureOption =
@@ -134,6 +136,19 @@ const ContentView = ({ failure }: ContentViewProps) => {
                     "features.itWallet.issuance.genericError.primaryAction"
                   )
                 }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
+            },
+            secondaryAction: supportModalAction
+          };
+        case IssuanceFailureType.HARDWARE_KEY_INVALID:
+          return {
+            title: I18n.t("features.itWallet.hardwareKeyInvalid.error.title"),
+            subtitle: I18n.t("features.itWallet.hardwareKeyInvalid.error.body"),
+            pictogram: "fatalError",
+            action: {
+              label: I18n.t(
+                "features.itWallet.hardwareKeyInvalid.error.primaryAction"
+              ),
+              onPress: () => Linking.openURL(ASSERTION_FAILED_FAQ_URL)
             },
             secondaryAction: supportModalAction
           };
@@ -248,13 +263,29 @@ const ContentView = ({ failure }: ContentViewProps) => {
               label: I18n.t(
                 `features.itWallet.issuance.issuerNotTrustedCommonError.primaryAction`
               ),
-              onPress: () => machineRef.send({ type: "close" })
+              onPress: () => {
+                trackItwKoStateAction({
+                  reason: failure.reason.message,
+                  cta_category: "custom_1",
+                  cta_id: I18n.t(
+                    "features.itWallet.issuance.issuerNotTrustedCommonError.primaryAction"
+                  )
+                });
+                machineRef.send({ type: "close" });
+              }
             },
             secondaryAction: {
               label: I18n.t(
                 `features.itWallet.issuance.issuerNotTrustedCommonError.secondaryAction`
               ),
               onPress: () => {
+                trackItwKoStateAction({
+                  reason: failure.reason.message,
+                  cta_category: "custom_2",
+                  cta_id: I18n.t(
+                    "features.itWallet.issuance.issuerNotTrustedCommonError.secondaryAction"
+                  )
+                });
                 supportModal.present();
               }
             }

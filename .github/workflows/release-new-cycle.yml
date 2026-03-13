@@ -102,11 +102,6 @@ jobs:
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
       - id: install-packages
         run: yarn install --frozen-lockfile
-      - id: download-locales
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
-        with:
-          name: locales
-          path: locales/
       - id: download-api-client
         uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
@@ -168,10 +163,10 @@ jobs:
   release-ios:
     needs: bump-app-version
     environment: prod
-    runs-on: macos-15-xlarge
+    runs-on: macos-26-xlarge
     steps:
       - id: set-xcode-version
-        run: sudo xcode-select -s '/Applications/Xcode_16.4.0.app/Contents/Developer'
+        run: sudo xcode-select -s '/Applications/Xcode_26.2.0.app/Contents/Developer'
         shell: bash
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
@@ -192,11 +187,6 @@ jobs:
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
       - id: install-packages
         run: yarn install --frozen-lockfile
-      - id: download-locales
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
-        with:
-          name: locales
-          path: locales/
       - id: download-api-client
         uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:

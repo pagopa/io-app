@@ -26,10 +26,7 @@ export const CdcCard = (props: CdcCardProps) => {
   const { themeType } = useIOThemeContext();
 
   const isDarkMode = themeType === "dark";
-
-  const textColor = isDarkMode
-    ? ("blueIO-50" as const)
-    : ("blueIO-850" as const);
+  const textColor = isDarkMode ? "blueIO-50" : "blueIO-850";
 
   return (
     <View style={styles.container}>
