@@ -1,11 +1,12 @@
 import I18n from "i18next";
+import { useMemo } from "react";
 import { Linking } from "react-native";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../../store/hooks";
 import { trackItwKoStateAction } from "../../../analytics";
-import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
+import { isL2Credential } from "../../../common/utils/itwCredentialUtils";
+import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
@@ -29,14 +30,22 @@ const cieFaqUrls: Record<CieWarningType, string> = {
 export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
   const { type } = params.route.params;
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const isWalletAlreadyActive = useIOSelector(itwLifecycleIsValidSelector);
+  const credentialMachineRef =
+    ItwCredentialIssuanceMachineContext.useActorRef();
   const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
+  const credentialType = ItwEidIssuanceMachineContext.useSelector(
+    state => state.context.credentialType
+  );
   const reason = type === "card" ? "user_without_cie" : "user_without_pin";
 
-  const sectionKey =
-    isWalletAlreadyActive || !isL3FeaturesEnabled ? "upgrade" : "issuance";
+  const shouldDisplayKO = useMemo(
+    () => isL3FeaturesEnabled && !isL2Credential(credentialType ?? ""),
+    [isL3FeaturesEnabled, credentialType]
+  );
+
+  const sectionKey = shouldDisplayKO ? "ko-no-cie" : "l2-fallback";
 
   const handlePrimaryActionPress = () => {
     trackItwKoStateAction({
@@ -46,10 +55,14 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
         `features.itWallet.identification.cie.warning.${type}.${sectionKey}.primaryAction`
       )
     });
-    if (isWalletAlreadyActive) {
+    if (shouldDisplayKO) {
       void Linking.openURL(cieFaqUrls[type]);
-    } else {
-      machineRef.send({ type: "go-to-l2-identification" });
+    } else if (credentialType) {
+      credentialMachineRef.send({
+        type: "select-credential",
+        credentialType,
+        mode: "issuance"
+      });
     }
   };
 
@@ -62,7 +75,7 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
       )
     });
     machineRef.send({
-      type: isWalletAlreadyActive || !isL3FeaturesEnabled ? "close" : "back"
+      type: "close"
     });
   };
 
@@ -78,7 +91,7 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
       subtitle={I18n.t(
         `features.itWallet.identification.cie.warning.${type}.${sectionKey}.subtitle`
       )}
-      pictogram={"attention"}
+      pictogram={shouldDisplayKO ? "attention" : "cardAdd"}
       action={{
         label: I18n.t(
           `features.itWallet.identification.cie.warning.${type}.${sectionKey}.primaryAction`
