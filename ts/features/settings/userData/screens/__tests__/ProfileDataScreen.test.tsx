@@ -13,9 +13,9 @@ import {
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import ProfileDataScreen from "../ProfileDataScreen";
-import { EmailAddress } from "../../../../../../definitions/backend/EmailAddress";
+import { EmailAddress } from "../../../../../../definitions/backend/identity/EmailAddress";
 import { profileLoadSuccess } from "../../../common/store/actions";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/ServicesPreferencesMode";
+import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/identity/ServicesPreferencesMode";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 
 const profileWithoutEmail = {

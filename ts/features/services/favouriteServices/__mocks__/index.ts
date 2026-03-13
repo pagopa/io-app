@@ -1,11 +1,13 @@
 import { merge } from "lodash";
-import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
+import {
+  NonEmptyString,
+  OrganizationFiscalCode
+} from "@pagopa/ts-commons/lib/strings";
 import { ServiceType } from "../types";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 import { StandardServiceCategoryEnum } from "../../../../../definitions/services/StandardServiceCategory";
 import { ScopeTypeEnum } from "../../../../../definitions/services/ScopeType";
-import { OrganizationName } from "../../../../../definitions/backend/OrganizationName";
 
 const SERVICE_ID = "serviceId" as ServiceId;
 const FISCAL_CODE = "12345678901" as OrganizationFiscalCode;
@@ -41,7 +43,7 @@ export const createMockServiceDetails = (
       name: "ServiceName",
       organization: {
         fiscal_code: FISCAL_CODE,
-        name: "InstitutionName" as OrganizationName
+        name: "InstitutionName" as NonEmptyString
       }
     },
     props

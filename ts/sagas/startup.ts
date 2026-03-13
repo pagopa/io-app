@@ -15,9 +15,8 @@ import {
   takeLatest
 } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
-import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
-import { BackendClient } from "../api/backend";
+import { UserDataProcessingChoiceEnum } from "../../definitions/backend/identity/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "../../definitions/backend/identity/UserDataProcessingStatus";
 import { apiUrlPrefix, zendeskEnabled } from "../config";
 import { watchActiveSessionLoginSaga } from "../features/authentication/activeSessionLogin/saga";
 import { authenticationSaga } from "../features/authentication/common/saga/authenticationSaga";
@@ -126,7 +125,9 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { getPin } from "../utils/keychain";
-import { backendClientManager } from "../api/BackendClientManager";
+import { communicationClientManager } from "../api/CommunicationClientManager";
+import { identityClientManager } from "../api/IdentityClientManager";
+import { sessionManagerClientManager } from "../api/SessionManagerClientManager";
 import {
   waitForMainNavigator,
   waitForNavigatorServiceInitialization
@@ -320,21 +321,29 @@ export function* initializeApplicationSaga(
   yield* fork(watchForceLogoutSaga);
   yield* fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel);
 
-  // Instantiate a backend client from the session token
-  const backendClient: ReturnType<typeof BackendClient> =
-    backendClientManager.getBackendClient(apiUrlPrefix, sessionToken, keyInfo);
+  // Instantiate backend clients from the session token
+  const comClient = communicationClientManager.getClient(
+    apiUrlPrefix,
+    sessionToken,
+    keyInfo
+  );
+  const idClient = identityClientManager.getClient(apiUrlPrefix, sessionToken);
+  const smClient = sessionManagerClientManager.getClient(
+    apiUrlPrefix,
+    sessionToken
+  );
 
-  // The following functions all rely on backendClient
+  // The following functions all rely on the backend clients
 
   if (zendeskEnabled) {
-    yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
+    yield* fork(watchZendeskGetSessionSaga, smClient.getSessionState);
   }
 
   // check if the current session is still valid
   const checkSessionResponse: SagaCallReturnType<typeof checkSession> =
     yield* call(
       checkSession,
-      backendClient.getSession,
+      smClient.getSessionState,
       formatRequestedTokenString()
     );
 
@@ -364,16 +373,16 @@ export function* initializeApplicationSaga(
 
   yield* fork(
     watchUserDataProcessingSaga,
-    backendClient.getUserDataProcessingRequest,
-    backendClient.postUserDataProcessingRequest,
-    backendClient.deleteUserDataProcessingRequest
+    idClient.getUserDataProcessing,
+    idClient.upsertUserDataProcessing,
+    idClient.abortUserDataProcessing
   );
 
   // The logic below relies on the current active session
   // and is maintained by separate teams
 
   // Start watching for Services actions
-  yield* fork(watchServicesSaga, backendClient, sessionToken);
+  yield* fork(watchServicesSaga, idClient);
 
   // Start watching for Messages actions
   yield* fork(watchMessagesSaga);
@@ -415,7 +424,7 @@ export function* initializeApplicationSaga(
 
     maybeSessionInformation = yield* call(
       loadSessionInformationSaga,
-      backendClient.getSession
+      smClient.getSessionState
     );
 
     if (
@@ -454,13 +463,10 @@ export function* initializeApplicationSaga(
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.
-  yield* fork(
-    watchProfileUpsertRequestsSaga,
-    backendClient.createOrUpdateProfile
-  );
+  yield* fork(watchProfileUpsertRequestsSaga, idClient.updateProfile);
 
   // Start watching when profile is successfully loaded
-  yield* fork(watchProfile, backendClient.startEmailValidationProcess);
+  yield* fork(watchProfile, idClient.startEmailValidationProcess);
 
   // If we are here the user is logged in and the session info is
   // loaded and valid
@@ -468,7 +474,7 @@ export function* initializeApplicationSaga(
   // Load the profile info
   const maybeUserProfile: SagaCallReturnType<typeof loadProfile> = yield* call(
     loadProfile,
-    backendClient.getProfile
+    idClient.getUserProfile
   );
 
   if (O.isNone(maybeUserProfile)) {
@@ -489,17 +495,17 @@ export function* initializeApplicationSaga(
   const maybeStoredPin: SagaCallReturnType<typeof getPin> = yield* call(getPin);
 
   // Start watching for requests of refresh the profile
-  yield* fork(watchProfileRefreshRequestsSaga, backendClient.getProfile);
+  yield* fork(watchProfileRefreshRequestsSaga, idClient.getUserProfile);
 
   // Start watching for requests about session and support token
   yield* fork(
     watchCheckSessionSaga,
-    backendClient.getSession,
+    smClient.getSessionState,
     formatRequestedTokenString()
   );
   // Start watching for requests of abort the onboarding
 
-  yield* fork(watchGetZendeskTokenSaga, backendClient.getSession);
+  yield* fork(watchGetZendeskTokenSaga, smClient.getSessionState);
 
   const watchAbortOnboardingSagaTask = yield* fork(watchAbortOnboardingSaga);
 
@@ -606,7 +612,7 @@ export function* initializeApplicationSaga(
   // a blocking call, since the saga will just hang, waiting for the token
   yield* fork(
     pushNotificationTokenUpload,
-    backendClient.createOrUpdateInstallation
+    comClient.createOrUpdateInstallation
   );
 
   // This saga is called before the startup status is set to authenticated to avoid flashing

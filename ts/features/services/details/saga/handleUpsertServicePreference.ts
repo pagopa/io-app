@@ -4,9 +4,9 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { PathTraversalSafePathParam } from "../../../../../definitions/backend/PathTraversalSafePathParam";
-import { ServicePreference } from "../../../../../definitions/backend/ServicePreference";
-import { BackendClient } from "../../../../api/backend";
+import { ServiceId } from "../../../../../definitions/backend/communication/ServiceId";
+import { ServicePreference } from "../../../../../definitions/backend/identity/ServicePreference";
+import { IdentityClient } from "../../../../api/IdentityClientManager";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
@@ -91,7 +91,7 @@ export function* trackPNPushNotificationSettings(
  * @param action
  */
 export function* handleUpsertServicePreference(
-  upsertServicePreferences: BackendClient["upsertServicePreference"],
+  upsertServicePreferences: IdentityClient["upsertServicePreferences"],
   action: ActionType<typeof upsertServicePreference.request>
 ) {
   yield* call(trackPNPushNotificationSettings, action);
@@ -106,14 +106,12 @@ export function* handleUpsertServicePreference(
   );
 
   try {
-    if (!PathTraversalSafePathParam.is(action.payload.id)) {
+    if (!ServiceId.is(action.payload.id)) {
       yield* put(
         upsertServicePreference.failure({
           id: action.payload.id,
           ...getGenericError(
-            new Error(
-              "Unable to decode ServiceId to PathTraversalSafePathParam"
-            )
+            new Error("Unable to decode ServiceId to ServiceId")
           )
         })
       );

@@ -1,6 +1,6 @@
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/communication/CreatedMessageWithContentAndAttachments";
 import { loadMessageDetails } from "../store/actions";
 import { SagaCallReturnType } from "../../../types/utils";
 import { getError } from "../../../utils/errors";
@@ -13,9 +13,10 @@ import {
   UndefinedBearerTokenPhase
 } from "../analytics";
 import { handleResponse } from "../utils/responseHandling";
-import { backendClientManager } from "../../../api/BackendClientManager";
+import { communicationClientManager } from "../../../api/CommunicationClientManager";
 import { apiUrlPrefix } from "../../../config";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { getKeyInfo } from "../../lollipop/saga";
 
 export function* handleLoadMessageDetails(
   action: ActionType<typeof loadMessageDetails.request>
@@ -29,9 +30,12 @@ export function* handleLoadMessageDetails(
     return;
   }
 
-  const { getMessage } = backendClientManager.getBackendClient(
+  const keyInfo = yield* call(getKeyInfo);
+
+  const { getUserMessage: getMessage } = communicationClientManager.getClient(
     apiUrlPrefix,
-    sessionToken
+    sessionToken,
+    keyInfo
   );
 
   try {

@@ -9,7 +9,7 @@ import I18n from "i18next";
 import { isEqual } from "lodash";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { AccessibilityInfo, View } from "react-native";
-import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
+import { InitializedProfile } from "../../../../definitions/backend/identity/InitializedProfile";
 import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";

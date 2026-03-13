@@ -1,5 +1,5 @@
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { PaymentFaultV2Enum } from "../../../../../definitions/backend/communication/PaymentFaultV2";
+import { ServiceId } from "../../../../../definitions/backend/communication/ServiceId";
 import {
   updatePaymentForMessage,
   UpdatePaymentForMessageFailure
@@ -23,14 +23,14 @@ describe("payments", () => {
     };
     const payload: UpdatePaymentForMessageFailure = {
       reason: toSpecificMessagePaymentError(
-        Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+        PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO
       ),
       messageId: "5a15aba4-7cd6-490b-b3fe-cf766f731a2f",
       paymentId: "01234567890012345678912345630",
       serviceId: "75c046cf-77a7-4d33-9c3f-578e00379b55" as ServiceId
     };
 
-    Object.values(Detail_v2Enum)
+    Object.values(PaymentFaultV2Enum)
       .filter(detailV2Enum => !isPaidPaymentFromDetailV2Enum(detailV2Enum))
       .forEach(detailV2Enum => {
         it(`should return the input state if the failure details are '${detailV2Enum}'`, () => {
@@ -51,7 +51,7 @@ describe("payments", () => {
           ...payload,
           paymentId: rptId1,
           reason: toSpecificMessagePaymentError(
-            Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+            PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO
           )
         })
       );
@@ -64,7 +64,7 @@ describe("payments", () => {
           ...payload,
           paymentId: rptId1,
           reason: toSpecificMessagePaymentError(
-            Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+            PaymentFaultV2Enum.PPT_PAGAMENTO_DUPLICATO
           )
         })
       );
@@ -76,7 +76,7 @@ describe("payments", () => {
         updatePaymentForMessage.failure({
           ...payload,
           reason: toSpecificMessagePaymentError(
-            Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+            PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO
           )
         })
       );
@@ -91,7 +91,7 @@ describe("payments", () => {
         updatePaymentForMessage.failure({
           ...payload,
           reason: toSpecificMessagePaymentError(
-            Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+            PaymentFaultV2Enum.PPT_PAGAMENTO_DUPLICATO
           )
         })
       );

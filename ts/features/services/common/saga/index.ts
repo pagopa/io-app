@@ -7,22 +7,20 @@ import { watchSearchSaga } from "../../search/saga";
 import { createServicesClient } from "../api/servicesClient";
 import { watchServicesDetailsSaga } from "../../details/saga";
 import { watchFavouriteServicesSaga } from "../../favouriteServices/saga";
-import { BackendClient } from "../../../../api/backend";
+import { IdentityClient } from "../../../../api/IdentityClientManager";
 import { loadServicePreference } from "../../details/store/actions/preference";
 import { isFavouriteServicesEnabledSelector } from "../store/selectors/remoteConfig";
 import { specialServicePreferencesSaga } from "./specialServicePreferencesSaga";
 
 export function* watchServicesSaga(
-  backendClient: BackendClient,
-  bearerToken: string
+  identityClient: IdentityClient
 ): SagaIterator {
   const servicesClient = yield* call(
     createServicesClient,
-    apiUrlPrefix,
-    bearerToken
+    apiUrlPrefix
   );
 
-  yield* fork(watchServicesDetailsSaga, backendClient, servicesClient);
+  yield* fork(watchServicesDetailsSaga, identityClient, servicesClient);
   yield* fork(watchHomeSaga, servicesClient);
   yield* fork(watchInstitutionSaga, servicesClient);
   yield* fork(watchSearchSaga, servicesClient);

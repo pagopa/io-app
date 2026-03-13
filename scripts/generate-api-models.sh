@@ -9,10 +9,13 @@ IO_SESSION_MANAGER_VERSION=1.8.0
 IO_WALLET_USER_FUNC_VERSION=4.1.11
 # Send function version
 SEND_FUNC_VERSION=1.5.5
+# IO Services CMS version
+IO_SERVICES_CMS_VERSION=1.31.5
 
 declare -a apis=(
   # Backend APIs
-  "./definitions/backend https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_backend.yaml"
+  "./definitions/backend/communication https://raw.githubusercontent.com/pagopa/io-backend/c880dd0fa6f6e17287f63f1543c8bc0b7e9f5b38/openapi/generated/api_communication.yaml"
+  "./definitions/backend/identity      https://raw.githubusercontent.com/pagopa/io-backend/c880dd0fa6f6e17287f63f1543c8bc0b7e9f5b38/openapi/generated/api_identity.yaml"
   # pagoPA APIs
   "./definitions/pagopa assets/paymentManager/spec.json"
   "./definitions/pagopa/walletv2 https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/bonus/specs/bpd/pm/walletv2.json"
@@ -25,7 +28,7 @@ declare -a apis=(
   # IDPay APIs
   "./definitions/idpay https://raw.githubusercontent.com/pagopa/cstar-securehub-infra-api-spec/refs/tags/v3.10.2/src/idpay/apim/api/idpay_appio_full/openapi.appio.full.yml"
   # Services APIs
-  "./definitions/services https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_services_app_backend.yaml"
+  "./definitions/services https://raw.githubusercontent.com/pagopa/io-services-cms/io-services-cms-backoffice@$IO_SERVICES_CMS_VERSION/apps/app-backend/api/external.yaml"
   # Lollipop APIs
   "./definitions/lollipop https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_lollipop_first_consumer.yaml"
   # Fims APIs

@@ -4,10 +4,10 @@ import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MessagePaymentItem } from "../MessagePaymentItem";
 import { NotificationPaymentInfo } from "../../../../../../definitions/pn/NotificationPaymentInfo";
-import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
+import { PaymentFaultV2Enum } from "../../../../../../definitions/backend/communication/PaymentFaultV2";
 import { updatePaymentForMessage } from "../../../store/actions";
-import { PaymentInfoResponse } from "../../../../../../definitions/backend/PaymentInfoResponse";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { PaymentInfoResponse } from "../../../../../../definitions/backend/communication/PaymentInfoResponse";
+import { ServiceId } from "../../../../../../definitions/backend/communication/ServiceId";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { toSpecificMessagePaymentError } from "../../../types/paymentErrors";
 
@@ -110,7 +110,7 @@ const appStateByPaymentStatus = {
         messageId,
         paymentId: rptId,
         reason: toSpecificMessagePaymentError(
-          Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+          PaymentFaultV2Enum.PAA_PAGAMENTO_ANNULLATO
         ),
         serviceId: "01J5X5NP84QE3T3P604MWP9TKC" as ServiceId
       })
