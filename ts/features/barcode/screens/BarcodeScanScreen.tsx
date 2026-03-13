@@ -167,7 +167,12 @@ const BarcodeScanScreen = () => {
         });
         break;
       case "ITW_REMOTE":
-        navigation.navigate(ITW_REMOTE_ROUTES.MAIN, {
+        /**
+         * Use replace so BARCODE_SCAN is removed from the parent stack.
+         * This lets the remote flow close with goBack and return directly
+         * to the screen shown before the scanner.
+         */
+        navigation.replace(ITW_REMOTE_ROUTES.MAIN, {
           screen: ITW_REMOTE_ROUTES.REQUEST_VALIDATION,
           params: {
             ...barcode.itwRemoteRequestPayload,
