@@ -1,5 +1,5 @@
 import * as S from "fp-ts/lib/string";
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import I18n from "i18next";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
@@ -10,6 +10,11 @@ import { FciParamsList } from "../../navigation/params";
 import { fciDownloadPreviewClear, fciEndRequest } from "../../store/actions";
 import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
 import SignatureStatusComponent from "../../components/SignatureStatusComponent";
+import {
+  trackFciTosDocPreview,
+  trackFciTosDocPreviewFailure,
+  trackFciTosDocPreviewFailureAction
+} from "../../analytics";
 
 export type FciDocumentPreviewScreenNavigationParams = Readonly<{
   documentUrl: string;
@@ -30,6 +35,14 @@ export const FciDocumentPreviewScreen = (
     goBack: () => dispatch(fciDownloadPreviewClear({ path: fciDownloadPath }))
   });
 
+  useEffect(() => {
+    if (isError) {
+      trackFciTosDocPreviewFailure();
+    } else {
+      trackFciTosDocPreview();
+    }
+  }, [isError]);
+
   if (isError) {
     return (
       <SignatureStatusComponent
@@ -37,7 +50,19 @@ export const FciDocumentPreviewScreen = (
         subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
         pictogram={"umbrella"}
         retry={false}
-        onPress={() => dispatch(fciEndRequest())}
+        onPress={() => {
+          trackFciTosDocPreviewFailureAction(
+            "custom_1",
+            I18n.t("features.fci.errors.buttons.close")
+          );
+          dispatch(fciEndRequest());
+        }}
+        onPressAssistance={() =>
+          trackFciTosDocPreviewFailureAction(
+            "custom_2",
+            I18n.t("features.fci.errors.buttons.assistance")
+          )
+        }
       />
     );
   }

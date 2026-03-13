@@ -307,11 +307,29 @@ function* dispatchSuccessAction(
     thirdPartyMessage
   );
 
+  const isFCIMessage = paginatedMessage.serviceName === "Firma con IO";
+  const hasFCICTA = isFCIMessage
+    ? computeHasFCICTA(messageDetails, serviceId, thirdPartyMessage)
+    : false;
+  const fci_message_type: "request" | "result" | "not_set" = isFCIMessage
+    ? hasFCICTA
+      ? "request"
+      : "result"
+    : "not_set";
+  const fci_result: "success" | "failure" | "not_set" =
+    isFCIMessage && !hasFCICTA
+      ? attachmentCount > 0
+        ? "success"
+        : "failure"
+      : "not_set";
+
   yield* put(
     getMessageDataAction.success({
       containsAttachments: attachmentCount > 0,
       containsPayment,
       createdAt: paginatedMessage.createdAt,
+      fci_message_type,
+      fci_result,
       firstTimeOpening: !paginatedMessage.isRead,
       hasFIMSCTA,
       hasRemoteContent: !!thirdPartyMessage,
@@ -394,6 +412,37 @@ const computeHasFIMSCTA = (
     return true;
   }
   if (ctas?.cta_2 != null && isFIMSLink(ctas.cta_2.action)) {
+    return true;
+  }
+  return false;
+};
+
+const computeHasFCICTA = (
+  messageDetails: UIMessageDetails,
+  serviceId: ServiceId,
+  thirdPartyMessage: ThirdPartyMessageWithContent | undefined
+) => {
+  const markdownWithCTAs = extractContentFromMessageSources(
+    (messageContent: RemoteContentDetails | UIMessageDetails) =>
+      messageContent.markdown,
+    messageDetails,
+    thirdPartyMessage
+  );
+  const localizedCTAs = localizedCTAsFromFrontMatter(
+    markdownWithCTAs,
+    serviceId
+  );
+  const ctas = ctasFromLocalizedCTAs(localizedCTAs, serviceId);
+
+  const isFCILink = (href: string): boolean => {
+    const upperHref = href.toUpperCase();
+    return upperHref.includes("FCI_MAIN") || upperHref.includes("/FCI/");
+  };
+
+  if (ctas != null && isFCILink(ctas.cta_1.action)) {
+    return true;
+  }
+  if (ctas?.cta_2 != null && isFCILink(ctas.cta_2.action)) {
     return true;
   }
   return false;

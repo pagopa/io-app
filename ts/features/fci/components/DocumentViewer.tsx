@@ -112,12 +112,14 @@ export const DocumentViewer = (props: Props): ReactElement => {
     dispatch(fciDownloadPreview.request({ url: documentUrl }));
   }, [documentUrl, dispatch]);
 
+  useEffect(() => {
+    if (pot.isError(fciDownloadSelector) || isError) {
+      props.onError();
+    }
+  }, [fciDownloadSelector, isError, props]);
+
   if (pot.isLoading(fciDownloadSelector)) {
     return <LoadingComponent testID={"FciRouterLoadingScreenTestID"} />;
-  }
-
-  if (pot.isError(fciDownloadSelector) || isError) {
-    props.onError();
   }
 
   return (
