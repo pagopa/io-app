@@ -26,6 +26,7 @@ import {
 } from "../handlePaymentUpdateRequests";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { Action } from "../../../../store/actions/types";
+import { getKeyInfo } from "../../../lollipop/saga";
 
 jest.mock("../../../../api/CommunicationClientManager");
 
@@ -182,6 +183,8 @@ describe("handlePaymentUpdateRequests", () => {
           .next()
           .select(sessionTokenSelector)
           .next(sessionToken)
+          .call(getKeyInfo)
+          .next()
           .call(
             withRefreshApiCall,
             mockGetPaymentInfoV2({ rptId: paymentId, test: true }),
@@ -203,6 +206,8 @@ describe("handlePaymentUpdateRequests", () => {
             .next()
             .select(sessionTokenSelector)
             .next(sessionToken)
+            .call(getKeyInfo)
+            .next()
             .call(
               withRefreshApiCall,
               mockGetPaymentInfoV2({
@@ -236,6 +241,8 @@ describe("handlePaymentUpdateRequests", () => {
           .next()
           .select(sessionTokenSelector)
           .next(sessionToken)
+          .call(getKeyInfo)
+          .next()
           .call(
             withRefreshApiCall,
             mockGetPaymentInfoV2({
@@ -272,6 +279,8 @@ describe("handlePaymentUpdateRequests", () => {
           .next()
           .select(sessionTokenSelector)
           .next(sessionToken)
+          .call(getKeyInfo)
+          .next()
           .call(
             withRefreshApiCall,
             mockGetPaymentInfoV2({
@@ -299,6 +308,8 @@ describe("handlePaymentUpdateRequests", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .call(getKeyInfo)
+        .next()
         .call(
           withRefreshApiCall,
           mockGetPaymentInfoV2({

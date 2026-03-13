@@ -13,6 +13,7 @@ import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils
 import { handleReloadAllMessages } from "../handleReloadAllMessages";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { communicationClientManager } from "../../../../api/CommunicationClientManager";
+import { getKeyInfo } from "../../../lollipop/saga";
 
 jest.mock("../../../../api/CommunicationClientManager");
 
@@ -44,6 +45,8 @@ describe("handleReloadAllMessages", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .call(getKeyInfo)
+        .next()
         .call(
           withRefreshApiCall,
           mockGetMessages(getMessagesPayload),
@@ -62,6 +65,8 @@ describe("handleReloadAllMessages", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .call(getKeyInfo)
+        .next()
         .call(
           withRefreshApiCall,
           mockGetMessages(getMessagesPayload),
@@ -85,6 +90,8 @@ describe("handleReloadAllMessages", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .call(getKeyInfo)
+        .next()
         .throw(new Error(defaultRequestError.error.message))
         .put(
           action.failure({

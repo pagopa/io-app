@@ -12,6 +12,7 @@ import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils
 import { handleLoadNextPageMessages } from "../handleLoadNextPageMessages";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { communicationClientManager } from "../../../../api/CommunicationClientManager";
+import { getKeyInfo } from "../../../lollipop/saga";
 
 // Mock the communicationClientManager
 jest.mock("../../../../api/CommunicationClientManager");
@@ -47,6 +48,8 @@ describe("handleLoadNextPageMessages", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .call(getKeyInfo)
+        .next()
         .call(
           withRefreshApiCall,
           mockGetMessages(getMessagesPayload),
@@ -68,6 +71,8 @@ describe("handleLoadNextPageMessages", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .call(getKeyInfo)
+        .next()
         .call(
           withRefreshApiCall,
           mockGetMessages(getMessagesPayload),
@@ -94,6 +99,8 @@ describe("handleLoadNextPageMessages", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .call(getKeyInfo)
+        .next()
         .throw(new Error("I made a boo-boo, sir!"))
         .put(
           action.failure({
