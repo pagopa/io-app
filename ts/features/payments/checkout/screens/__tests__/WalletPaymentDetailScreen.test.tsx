@@ -21,7 +21,8 @@ jest.mock("../../../../../utils/hooks/bottomSheet");
 
 const mockNavigation = {
   navigate: jest.fn(),
-  setOptions: jest.fn()
+  setOptions: jest.fn(),
+  addListener: jest.fn(() => jest.fn())
 };
 
 jest.mock("@react-navigation/native", () => ({

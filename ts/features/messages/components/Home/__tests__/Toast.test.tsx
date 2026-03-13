@@ -10,6 +10,15 @@ import * as archivingReducer from "../../../store/reducers/archiving";
 import * as preferencesReducer from "../../../../../store/reducers/preferences";
 import * as allPaginatedReducer from "../../../store/reducers/allPaginated";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 const mockToastSuccess = jest.fn();
 const mockToastError = jest.fn();
 jest.mock("@pagopa/io-app-design-system", () => ({

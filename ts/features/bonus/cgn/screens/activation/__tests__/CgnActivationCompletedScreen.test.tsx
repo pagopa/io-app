@@ -9,6 +9,15 @@ import CGN_ROUTES from "../../../navigation/routes";
 import { cgnActivationComplete } from "../../../store/actions/activation"; // import actual actions
 import CgnActivationCompletedScreen from "../CgnActivationCompletedScreen";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 jest.mock("../../../../../../store/hooks", () => ({
   useIODispatch: jest.fn(),
   useIOStore: jest.fn(),

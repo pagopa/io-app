@@ -19,6 +19,15 @@ import {
 import * as bottomSheet from "../../../../../utils/hooks/bottomSheet";
 import { PreconditionsFooterProps } from "../PreconditionsFooter";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 jest.mock("../PreconditionsContent");
 
 const mockDispatch = jest.fn();
@@ -33,7 +42,8 @@ jest.mock("@react-navigation/native", () => ({
     "@react-navigation/native"
   ),
   useNavigation: () => ({
-    navigate: mockNavigate
+    navigate: mockNavigate,
+    addListener: jest.fn(() => jest.fn())
   })
 }));
 
