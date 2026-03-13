@@ -2748,7 +2748,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gorhom/bottom-sheet@npm:^5.1.8":
+"@gorhom/bottom-sheet@npm:5.2.8":
   version: 5.2.8
   resolution: "@gorhom/bottom-sheet@npm:5.2.8"
   dependencies:
@@ -2767,6 +2767,28 @@ __metadata:
     "@types/react-native":
       optional: true
   checksum: 987c07e013c423d71afc21f5a38ad02dacfc153c8eb613ac3be0fa1331a559976f0f0d02144bf80654b2fe737582c21249ff8988694cdb6d94981037a1b54001
+  languageName: node
+  linkType: hard
+
+"@gorhom/bottom-sheet@patch:@gorhom/bottom-sheet@npm%3A5.2.8#./.yarn/patches/@gorhom-bottom-sheet-npm-5.2.8-1ad4b8f529.patch::locator=io%40workspace%3A.":
+  version: 5.2.8
+  resolution: "@gorhom/bottom-sheet@patch:@gorhom/bottom-sheet@npm%3A5.2.8#./.yarn/patches/@gorhom-bottom-sheet-npm-5.2.8-1ad4b8f529.patch::version=5.2.8&hash=a3b610&locator=io%40workspace%3A."
+  dependencies:
+    "@gorhom/portal": 1.0.14
+    invariant: ^2.2.4
+  peerDependencies:
+    "@types/react": "*"
+    "@types/react-native": "*"
+    react: "*"
+    react-native: "*"
+    react-native-gesture-handler: ">=2.16.1"
+    react-native-reanimated: "*"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    "@types/react-native":
+      optional: true
+  checksum: 368af75a86d07a6b1188a5613c0df72051e2a771326b5ec4acb96a8c18e4b767481391a83a087c4a9631c93d18f2f5083309fb6a05e3f8c736d3af70ca469235
   languageName: node
   linkType: hard
 
@@ -11664,7 +11686,7 @@ __metadata:
     "@babel/preset-env": ^7.25.3
     "@babel/runtime": ^7.25.0
     "@craftzdog/react-native-buffer": ^6.1.1
-    "@gorhom/bottom-sheet": ^5.1.8
+    "@gorhom/bottom-sheet": ^5.2.8
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
     "@pagopa/io-app-design-system": 6.0.7
     "@pagopa/io-pagopa-commons": ^3.1.0
