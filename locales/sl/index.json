@@ -157,11 +157,11 @@
       "choose": "Izberi"
     },
     "navigator": {
-      "messages": "sporočila",
-      "wallet": "denarnica",
-      "documents": "dokumenti",
-      "profile": "profil",
-      "services": "storitve"
+      "messages": "Sporočila",
+      "wallet": "Denarnica",
+      "scan": "Skeniraj",
+      "payments": "Plačila",
+      "services": "Storitve"
     },
     "actions": {
       "retry": "Prišlo je do napake, poskusi znova",
@@ -458,17 +458,43 @@
       "list": {
         "wip": "V obdelavi",
         "digitalDomicile": "Digitalni domicil",
+        "language": {
+          "title": "Jezik",
+          "subtitle": "Izberi jezik za aplikacijo in za sporočila"
+        },
         "preferred_calendar": {
           "title": "Priljubljeni koledar"
         },
         "preferred_language": {
           "title": "Priljubljeni jezik",
-          "subtitle": "V katerem jeziku želiš uporabljati aplikacijo?",
-          "alert": {
-            "title": "Ali želiš spremeniti jezik v",
-            "subtitle": "Za uveljavitev spremembe boš moral/a znova zagnati aplikacijo"
+          "subtitle": "Te nastavitve ti omogočajo izbiro jezika aplikacije in jezika sporočil, ki jih prejemaš od ustanov.",
+          "sections": {
+            "messages": {
+              "title": "V sporočilih",
+              "description": "Nekatere ustanove uporabljajo to nastavitev, da ti pošiljajo sporočila v izbranem jeziku."
+            },
+            "app": {
+              "title": "V aplikaciji",
+              "description": "Izberi jezik za uporabo v IO. Nekatere vsebine so morda na voljo samo v italijanščini."
+            }
           },
-          "not_selected": "Ni izbrano"
+          "alert": {
+            "title": "Ali želiš spremeniti jezik aplikacije v {{lang}}?",
+            "subtitle": "Za uveljavitev sprememb znova zaženi aplikacijo"
+          },
+          "toastApp": {
+            "success": {
+              "title": "Opravljeno! Za uveljavitev sprememb znova zaženi aplikacijo"
+            }
+          },
+          "toastMessages": {
+            "success": {
+              "title": "Opravljeno!"
+            }
+          },
+          "banner": {
+            "button": "Več o tem"
+          }
         }
       },
       "unavailable": {
