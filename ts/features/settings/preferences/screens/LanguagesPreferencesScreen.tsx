@@ -119,7 +119,7 @@ const LanguagesPreferencesScreen = () => {
         value: I18n.t(`localesTranslated.${locale}`, {
           defaultValue: locale
         }),
-        id: `app-locale-${locale}` as AppLocaleId
+        id: `app-locale-${locale}`
       })),
     []
   );
@@ -130,15 +130,15 @@ const LanguagesPreferencesScreen = () => {
   );
 
   const [selectedAppLocale, setSelectedAppLocale] = useState<AppLocaleId>(
-    `app-locale-${initialAppSelectedItem as Locales}` as AppLocaleId
+    `app-locale-${initialAppSelectedItem as Locales}`
   );
 
   const handleAppLocaleChange = useCallback(
     (localeId: AppLocaleId) => {
       const locale = localeId.replace("app-locale-", "") as Locales;
 
-      setLocale(locale as Locales);
-      preferredLanguageSaveSuccessDispatch(locale as Locales);
+      setLocale(locale);
+      preferredLanguageSaveSuccessDispatch(locale);
       setSelectedAppLocale(localeId);
       toast.success(
         I18n.t(
@@ -195,7 +195,7 @@ const LanguagesPreferencesScreen = () => {
         const locale = language.replace("app-locale-", "") as Locales;
         Alert.alert(
           I18n.t("profile.preferences.list.preferred_language.alert.title", {
-            lang: I18n.t(`locales.${locale as Locales}`)
+            lang: I18n.t(`locales.${locale}`)
           }),
           I18n.t("profile.preferences.list.preferred_language.alert.subtitle"),
           [
