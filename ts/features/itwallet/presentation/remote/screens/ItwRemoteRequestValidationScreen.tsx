@@ -15,10 +15,15 @@ import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen.tsx
 import { ItwRemoteMachineContext } from "../machine/provider.tsx";
 import { ItwRemoteParamsList } from "../navigation/ItwRemoteParamsList.ts";
 import { validateItwPresentationQrCodeParams } from "../utils/itwRemotePresentationUtils.ts";
-import { ItwRemoteRequestPayload } from "../utils/itwRemoteTypeUtils.ts";
+import {
+  ItwRemoteFlowType,
+  ItwRemoteRequestPayload
+} from "../utils/itwRemoteTypeUtils.ts";
 
 export type ItwRemoteRequestValidationScreenNavigationParams =
-  Partial<ItwRemoteRequestPayload>;
+  Partial<ItwRemoteRequestPayload> & {
+    flowType: ItwRemoteFlowType;
+  };
 
 type ScreenProps = IOStackNavigationRouteProps<
   ItwRemoteParamsList,
@@ -62,10 +67,18 @@ const ItwRemoteRequestValidationScreen = ({ route }: ScreenProps) => {
     );
   }
 
-  return <ContentView payload={payload.right} />;
+  const flowType =
+    route.params?.flowType === "cross-device" ? "cross-device" : "same-device";
+
+  return <ContentView payload={payload.right} flowType={flowType} />;
 };
 
-const ContentView = ({ payload }: { payload: ItwRemoteRequestPayload }) => {
+type ContentViewProps = {
+  payload: ItwRemoteRequestPayload;
+  flowType: ItwRemoteFlowType;
+};
+
+const ContentView = ({ payload, flowType }: ContentViewProps) => {
   const machineRef = ItwRemoteMachineContext.useActorRef();
   const [timeoutReached, setTimeoutReached] = useState(false);
 
@@ -73,7 +86,7 @@ const ContentView = ({ payload }: { payload: ItwRemoteRequestPayload }) => {
     useCallback(() => {
       // Reset the machine in case there is a pending presentation
       machineRef.send({ type: "reset" });
-      machineRef.send({ type: "start", payload });
+      machineRef.send({ type: "start", payload, flowType });
 
       // Timeout to change copy after 5s
       setTimeoutReached(false);
@@ -84,7 +97,7 @@ const ContentView = ({ payload }: { payload: ItwRemoteRequestPayload }) => {
       return () => {
         clearTimeout(timer);
       };
-    }, [payload, machineRef])
+    }, [payload, machineRef, flowType])
   );
 
   return (
