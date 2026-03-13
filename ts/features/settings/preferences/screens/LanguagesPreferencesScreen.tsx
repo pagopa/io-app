@@ -105,9 +105,17 @@ const LanguagesPreferencesScreen = () => {
 
   const [selectedItem, setSelectedItem] = useState(initialSelectedItem);
 
+  /* IT, EN pinned first, then all available translations
+     sorted alphabetically */
   const appLocaleOptions: Array<RadioItem<AppLocaleId>> = useMemo(
     () =>
-      availableTranslations.map(locale => ({
+      [
+        ...new Set<Locales>([
+          "it",
+          "en",
+          ...[...availableTranslations].sort((a, b) => a.localeCompare(b))
+        ])
+      ].map(locale => ({
         value: I18n.t(`localesTranslated.${locale}`, {
           defaultValue: locale
         }),
