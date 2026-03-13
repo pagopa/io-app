@@ -93,7 +93,8 @@ describe("validateMandateSaga", () => {
         .call(
           trackSendAARFailure,
           "Validate Mandate",
-          `Called in wrong state (${payload.type})`
+          `Called in wrong state (${payload.type})`,
+          undefined
         )
         .next()
         .isDone();
@@ -223,7 +224,7 @@ describe("validateMandateSaga", () => {
           mockValidatingMandateAction
         )
         .next(res)
-        .call(trackSendAARFailure, "Validate Mandate", reason)
+        .call(trackSendAARFailure, "Validate Mandate", reason, error)
         .next()
         .put(
           setAarFlowState(
@@ -257,7 +258,12 @@ describe("validateMandateSaga", () => {
           value: {}
         })
       )
-      .call(trackSendAARFailure, "Validate Mandate", "Fast login expiration")
+      .call(
+        trackSendAARFailure,
+        "Validate Mandate",
+        "Fast login expiration",
+        undefined
+      )
       .next()
       .isDone();
   });
@@ -278,7 +284,12 @@ describe("validateMandateSaga", () => {
         mockValidatingMandateAction
       )
       .throw(new Error())
-      .call(trackSendAARFailure, "Validate Mandate", "An error was thrown ()")
+      .call(
+        trackSendAARFailure,
+        "Validate Mandate",
+        "An error was thrown ()",
+        undefined
+      )
       .next()
       .put(
         setAarFlowState(
@@ -310,7 +321,7 @@ describe("validateMandateSaga", () => {
         mockValidatingMandateAction
       )
       .next(E.left([]))
-      .call(trackSendAARFailure, "Validate Mandate", failureReason)
+      .call(trackSendAARFailure, "Validate Mandate", failureReason, undefined)
       .next()
       .put(
         setAarFlowState(
