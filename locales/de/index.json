@@ -416,7 +416,17 @@
         },
         "preferred_language": {
           "title": "Bevorzugte Sprache",
-          "subtitle": "In welcher Sprache möchtest du die App nutzen?",
+          "subtitle": "Mit diesen Einstellungen kannst du die Sprache der App und die Sprache der Nachrichten, die du von den Behörden erhältst, auswählen.",
+          "sections": {
+            "messages": {
+              "title": "In den Nachrichten",
+              "description": "Einige Behörden verwenden diese Einstellung, um dir Nachrichten in der gewählten Sprache zu senden."
+            },
+            "app": {
+              "title": "In der App",
+              "description": "Wähle die Sprache, die du in IO verwenden möchtest. Einige Inhalte sind möglicherweise nur auf Italienisch verfügbar."
+            }
+          },
           "alert": {
             "title": "Möchtest du die Sprache ändern in {{lang}}?",
             "subtitle": "Du musst die App neu starten, um die Änderung zu übernehmen"

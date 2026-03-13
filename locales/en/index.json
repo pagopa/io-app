@@ -500,12 +500,15 @@
         },
         "preferred_language": {
           "title": "Favourite language",
+          "subtitle": "These settings allow you to choose the app language and the language of the messages you receive from institutions.",
           "sections": {
             "messages": {
-              "title": "Messages"
+              "title": "In messages",
+              "description": "Some institutions use this setting to send you messages in the chosen language."
             },
             "app": {
-              "title": "Application"
+              "title": "In the app",
+              "description": "Choose the language you want to use in IO. Some content may only be available in Italian."
             }
           },
           "alert": {
