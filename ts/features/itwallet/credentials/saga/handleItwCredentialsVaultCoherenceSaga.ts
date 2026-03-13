@@ -42,7 +42,7 @@ export function* handleItwCredentialsVaultCoherenceSaga() {
   );
 
   if (orphanedInVault.length > 0) {
-    yield* call(() => CredentialsVault.removeAll(orphanedInVault));
+    yield* call(CredentialsVault.removeAll, orphanedInVault);
     Sentry.captureMessage("Vault-Redux coherence: removed vault orphans", {
       extra: { orphanedInVault }
     });
