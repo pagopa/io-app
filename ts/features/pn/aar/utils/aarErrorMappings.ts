@@ -5,7 +5,9 @@ import { isTestEnv } from "../../../../utils/environment";
 import {
   trackSendAarMandateCieDataError,
   trackSendAarMandateCieExpiredError,
-  trackSendAarMandateCieNotRelatedToDelegatorError
+  trackSendAarMandateCieNotRelatedToDelegatorError,
+  trackSendAarMandateRetryError,
+  trackSendAarMandateTtlExpiredError
 } from "../analytics";
 import {
   CieExpiredComponent,
@@ -79,13 +81,13 @@ const specificBehavioursByStatus: {
 } = {
   [404]: {
     [sendAarProblemJsonErrorCodes.PN_MANDATE_NOTFOUND]: {
-      track: () => null,
+      track: trackSendAarMandateTtlExpiredError,
       Component: CieValidationExpiredTtlComponent
     }
   },
   [409]: {
     [sendAarProblemJsonErrorCodes.PN_MANDATE_ALREADYEXISTS]: {
-      track: () => null,
+      track: trackSendAarMandateRetryError,
       Component: SendAarPendingDelegationErrorComponent
     }
   },

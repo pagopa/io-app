@@ -48,6 +48,9 @@ import {
   trackSendAarMandateCieCardReadingFailure,
   trackSendAarMandateCieExpiredError,
   trackSendAarMandateCieNotRelatedToDelegatorError,
+  trackSendAarMandateRetryError,
+  trackSendAarMandateTtlExpiredError,
+  trackSendAarNotificationDetailTtlError,
   trackSendAarMandateCieDataError,
   trackSendAarMandateCieErrorCac,
   trackSendAarMandateCieErrorClosure,
@@ -329,6 +332,24 @@ const simpleTrackingTests: ReadonlyArray<TrackingTestBase> = [
     name: "trackSendAarMandateCieNotRelatedToDelegatorError",
     fn: trackSendAarMandateCieNotRelatedToDelegatorError,
     eventName: "SEND_MANDATE_CIE_NOT_RELATED_TO_DELEGATOR_ERROR",
+    eventProps: { event_category: "KO", event_type: undefined }
+  },
+  {
+    name: "trackSendAarMandateRetryError",
+    fn: trackSendAarMandateRetryError,
+    eventName: "SEND_MANDATE_RETRY_ERROR",
+    eventProps: { event_category: "KO", event_type: undefined }
+  },
+  {
+    name: "trackSendAarMandateTtlExpiredError",
+    fn: trackSendAarMandateTtlExpiredError,
+    eventName: "SEND_MANDATE_TTL_EXPIRED_ERROR",
+    eventProps: { event_category: "KO", event_type: undefined }
+  },
+  {
+    name: "trackSendAarNotificationDetailTtlError",
+    fn: trackSendAarNotificationDetailTtlError,
+    eventName: "SEND_NOTIFICATION_DETAIL_TIME_EXPIRED_ERROR",
     eventProps: { event_category: "KO", event_type: undefined }
   },
   {

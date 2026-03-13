@@ -19,7 +19,8 @@ import {
 } from "../../../messages/utils/attachments";
 import {
   aarProblemJsonAnalyticsReport,
-  trackSendAARFailure
+  trackSendAARFailure,
+  trackSendAarNotificationDetailTtlError
 } from "../analytics";
 import { createSendAARClientWithLollipop } from "../api/client";
 import { isAarAttachmentTtlError } from "../utils/aarErrorMappings";
@@ -159,6 +160,7 @@ function* getAttachmentMetadata(
   if (status === 500) {
     const errorCode = value.errors?.[0]?.code;
     if (isAarAttachmentTtlError(errorCode)) {
+      yield* call(trackSendAarNotificationDetailTtlError);
       throw Error(errorCode);
     }
   }

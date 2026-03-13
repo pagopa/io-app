@@ -487,7 +487,9 @@ describe("getAttachmentMetadata", () => {
               mockedGetNotificationAttachment,
               downloadRequestAction
             )
-            .next(response);
+            .next(response)
+            .call(analytics.trackSendAarNotificationDetailTtlError)
+            .next();
         } catch (e: unknown) {
           exceptionThrown = true;
           expect(e).toEqual(Error("PN_DELIVERY_MANDATENOTFOUND"));
