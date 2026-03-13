@@ -81,7 +81,7 @@ export function* downloadAARAttachmentSaga(
       yield* call(
         trackSendAARFailure,
         sendAarFailurePhase,
-        "Fast login expired",
+        "Fast login expiration",
         undefined
       );
     } else {

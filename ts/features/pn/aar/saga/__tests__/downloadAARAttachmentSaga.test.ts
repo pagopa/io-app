@@ -224,7 +224,7 @@ describe("downloadAARAttachmentSaga", () => {
           .call(
             analytics.trackSendAARFailure,
             "Download Attachment",
-            "Fast login expired",
+            "Fast login expiration",
             undefined
           )
           .next()
@@ -743,7 +743,7 @@ describe("getAttachmentMetadata", () => {
             .call(
               analytics.trackSendAARFailure,
               "Download Attachment",
-              "Fast login expired"
+              "Fast login expiration"
             );
         } catch (e: unknown) {
           expectionThrown = true;
