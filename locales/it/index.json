@@ -3911,6 +3911,7 @@
           },
           "actions": {
             "removeFromWallet": "Rimuovi dal Portafoglio",
+            "updateDigitalCredential": "Aggiorna il documento digitale",
             "requestAssistance": "Qualcosa non torna?",
             "hideClaimValues": "Nascondi gli attributi del documento",
             "openIPatente": "Vai al saldo punti patente"

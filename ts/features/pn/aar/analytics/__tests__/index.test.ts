@@ -462,7 +462,7 @@ describe("index", () => {
     ).forEach(phase =>
       it(`should call 'mixpanelTrack' with proper event name and properties (phase : ${phase})`, () => {
         const reason = "The reason";
-        trackSendAARFailure(phase, reason);
+        trackSendAARFailure(phase, reason, undefined);
 
         expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
         expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
@@ -477,6 +477,29 @@ describe("index", () => {
         });
       })
     );
+    it("should include aarProblemJson in event properties when provided", () => {
+      const reason = "HTTP request failed";
+      const aarProblemJson = {
+        status: 500,
+        detail: "Internal server error",
+        title: "Server Error",
+        traceId: "abc-123",
+        errors: [{ code: "PN_DELIVERY_ERROR", detail: "Something went wrong" }]
+      } as unknown as AARProblemJson;
+      trackSendAARFailure("Fetch Notification", reason, aarProblemJson);
+
+      expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+        "SEND_AAR_ERROR"
+      );
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "KO",
+        event_type: undefined,
+        phase: "Fetch Notification",
+        reason,
+        aarProblemJson
+      });
+    });
   });
 
   describe("aarProblemJsonAnalyticsReport", () => {

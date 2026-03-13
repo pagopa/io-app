@@ -26,12 +26,14 @@ export const trackSendQRCodeScanRedirectDismissed = () => {
 
 export const trackSendAARFailure = (
   phase: SendAARFailurePhase,
-  reason: string
+  reason: string,
+  aarProblemJson: AARProblemJson | undefined
 ) => {
   const eventName = "SEND_AAR_ERROR";
   const props = buildEventProperties("KO", undefined, {
     phase,
-    reason
+    reason,
+    aarProblemJson
   });
   void mixpanelTrack(eventName, props);
 };
