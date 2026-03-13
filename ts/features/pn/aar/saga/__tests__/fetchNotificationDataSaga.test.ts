@@ -91,7 +91,8 @@ describe("fetchAarDataSaga", () => {
         .call(
           trackSendAARFailure,
           "Fetch Notification",
-          "Called in wrong state (none)"
+          "Called in wrong state (none)",
+          undefined
         )
         .next()
         .isDone();
@@ -120,7 +121,12 @@ describe("fetchAarDataSaga", () => {
           fetchingNotificationDataRequestAction
         )
         .next(mockFailure)
-        .call(trackSendAARFailure, "Fetch Notification", failureReason)
+        .call(
+          trackSendAARFailure,
+          "Fetch Notification",
+          failureReason,
+          undefined
+        )
         .next()
         .put(
           setAarFlowState({
@@ -173,7 +179,8 @@ describe("fetchAarDataSaga", () => {
         .call(
           trackSendAARFailure,
           "Fetch Notification",
-          "HTTP request failed (400 400 A detail)"
+          "HTTP request failed (400 400 A detail)",
+          mockResolved.value
         )
         .next()
         .put(
@@ -217,7 +224,8 @@ describe("fetchAarDataSaga", () => {
         .call(
           trackSendAARFailure,
           "Fetch Notification",
-          "An error was thrown (fail)"
+          "An error was thrown (fail)",
+          undefined
         )
         .next()
         .put(
@@ -272,7 +280,8 @@ describe("fetchAarDataSaga", () => {
         .call(
           trackSendAARFailure,
           "Fetch Notification",
-          "Fast login expiration"
+          "Fast login expiration",
+          undefined
         )
         .next()
         .isDone();
@@ -316,7 +325,8 @@ describe("fetchAarDataSaga", () => {
         .call(
           trackSendAARFailure,
           "Fetch Notification",
-          "An error was thrown (Unable to retrieve user fiscal code)"
+          "An error was thrown (Unable to retrieve user fiscal code)",
+          undefined
         )
         .next()
         .put(

@@ -49,11 +49,13 @@ export function* testAarCreateMandateSaga(
           status,
           value
         )})`;
-        throw Error(reason);
+        yield* call(trackSendAARFailure, "Playground", reason, value);
+        yield* put(testAarCreateMandate.failure(reason));
+        return;
     }
   } catch (e) {
     const reason = unknownToReason(e);
-    yield* call(trackSendAARFailure, "Playground", reason);
+    yield* call(trackSendAARFailure, "Playground", reason, undefined);
     yield* put(testAarCreateMandate.failure(reason));
   }
 }
@@ -110,11 +112,13 @@ export function* testAarAcceptMandateSaga(
           status,
           value
         )})`;
-        throw Error(reason);
+        yield* call(trackSendAARFailure, "Playground", reason, value);
+        yield* put(testAarAcceptMandate.failure(reason));
+        return;
     }
   } catch (e) {
     const reason = unknownToReason(e);
-    yield* call(trackSendAARFailure, "Playground", reason);
+    yield* call(trackSendAARFailure, "Playground", reason, undefined);
     yield* put(testAarAcceptMandate.failure(reason));
   }
 }
