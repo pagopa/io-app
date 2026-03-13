@@ -150,7 +150,9 @@
   "locales": {
     "it": "Italian",
     "en": "English",
-    "de": "German"
+    "de": "German",
+    "fr": "French",
+    "sl": "Slovenian"
   },
   "clipboard": {
     "copyIntoClipboard": "copy to clipboard",
@@ -2276,6 +2278,7 @@
           },
           "actions": {
             "removeFromWallet": "Remove from Wallet",
+            "updateDigitalCredential": "Update digital document",
             "requestAssistance": "Something wrong?",
             "hideClaimValues": "Hide claim values"
           }

@@ -130,7 +130,9 @@
   "locales": {
     "it": "Italienisch",
     "en": "Englisch",
-    "de": "Deutsch"
+    "de": "Deutsch",
+    "fr": "Französisch",
+    "sl": "Slowenisch"
   },
   "clipboard": {
     "copyIntoClipboard": "in die Zwischenablage kopieren",
