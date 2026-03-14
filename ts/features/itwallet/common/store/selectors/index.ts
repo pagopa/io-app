@@ -21,6 +21,7 @@ import {
 } from "./banners";
 import {
   itwCredentialUpgradeFailedSelector,
+  itwIsActivationDisabledSelector,
   itwIsL3EnabledSelector
 } from "./preferences";
 import { isItwEnabledSelector } from "./remoteConfig";
@@ -162,7 +163,8 @@ export const itwShouldRenderDiscoveryBannerSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
   !offlineAccessReasonSelector(state) &&
   itwIsL3EnabledSelector(state) &&
-  !itwLifecycleIsValidSelector(state);
+  !itwLifecycleIsValidSelector(state) &&
+  !itwIsActivationDisabledSelector(state);
 
 /**
  * Returns whether the new IT-Wallet activation banner in the messages inbox screen should be rendered
@@ -189,10 +191,32 @@ export const itwShouldRenderWalletDiscoveryBannerSelector = (
  * - The L3 feature flag is enabled
  * - The wallet is active but not an IT Wallet instance
  * - The banner was not dismissed by the user
+ * - The activation is not disabled
  */
 export const itwShouldRenderUpgradeBannerSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
   !offlineAccessReasonSelector(state) &&
   itwIsL3EnabledSelector(state) &&
   !itwLifecycleIsITWalletValidSelector(state) &&
-  !itwIsWalletDiscoveryBannerHiddenSelector(state);
+  !itwIsWalletDiscoveryBannerHiddenSelector(state) &&
+  !itwIsActivationDisabledSelector(state);
+
+/**
+ * Returns whether the l2 restricted mode banner should be rendered.
+ * - The wallet is not offline
+ * - IT Wallet instance is not active
+ * - The wallet is not active (because the device does not have the nfc)
+ */
+export const itwShouldRenderL2EngagementBannerSelectorWithNoActiveWallet = (
+  state: GlobalState
+) =>
+  !offlineAccessReasonSelector(state) &&
+  !itwLifecycleIsITWalletValidSelector(state) &&
+  !itwLifecycleIsValidSelector(state) &&
+  itwIsActivationDisabledSelector(state);
+
+export const itwShouldRenderL2EngagementBannerSelector = (state: GlobalState) =>
+  !offlineAccessReasonSelector(state) &&
+  !itwLifecycleIsITWalletValidSelector(state) &&
+  itwLifecycleIsValidSelector(state) &&
+  itwIsActivationDisabledSelector(state);

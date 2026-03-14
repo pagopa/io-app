@@ -31,7 +31,7 @@ describe("ItwDiscoveryInfoScreen", () => {
       .spyOn(identificationSelectors, "itwHasNfcFeatureSelector")
       .mockReturnValue(false);
     const { getByTestId } = renderComponent("l3");
-    expect(getByTestId("itwNfcNotSupportedComponentTestID")).toBeTruthy();
+    expect(getByTestId("itwNotSupportedNfcComponentTestID")).toBeTruthy();
   });
 
   it("should render ItwDiscoveryInfoFallbackComponent for level l2-fallback", () => {

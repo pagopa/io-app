@@ -6,9 +6,13 @@ import Animated, { LinearTransition } from "react-native-reanimated";
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
 import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
+import { ItwL2EngagementBanner } from "../../itwallet/common/components/ItwL2EngagementBanner";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
-import { itwShouldRenderWalletDiscoveryBannerSelector } from "../../itwallet/common/store/selectors";
+import {
+  itwShouldRenderL2EngagementBannerSelectorWithNoActiveWallet,
+  itwShouldRenderWalletDiscoveryBannerSelector
+} from "../../itwallet/common/store/selectors";
 import { ItwDiscoveryBanner } from "../../itwallet/discovery/components/ItwDiscoveryBanner";
 import { ItwWalletCardsContainer } from "../../itwallet/wallet/components/ItwWalletCardsContainer";
 import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
@@ -42,6 +46,9 @@ const WalletCardsContainer = () => {
   const shouldRenderItwDiscoveryBanner = useIOSelector(
     itwShouldRenderWalletDiscoveryBannerSelector
   );
+  const shouldRenderL2EngagementBanner = useIOSelector(
+    itwShouldRenderL2EngagementBannerSelectorWithNoActiveWallet
+  );
 
   useItwWalletInstanceRevocationAlert();
 
@@ -55,6 +62,7 @@ const WalletCardsContainer = () => {
     }
     return (
       <>
+        {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
         {shouldRenderItwDiscoveryBanner && <ItwDiscoveryBanner />}
         <View testID="walletCardsContainerTestID" style={styles.content}>
           {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
@@ -66,7 +74,8 @@ const WalletCardsContainer = () => {
     shouldRenderLoadingState,
     shouldRenderEmptyState,
     shouldRenderItwCardsContainer,
-    shouldRenderItwDiscoveryBanner
+    shouldRenderItwDiscoveryBanner,
+    shouldRenderL2EngagementBanner
   ]);
 
   return (
