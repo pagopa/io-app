@@ -1,9 +1,11 @@
+name: Static checks
 on:
   - pull_request
   - merge_group
   - workflow_call
 jobs:
   static-checks:
+    name: Typescript lint and prettier
     runs-on: ubuntu-latest
     concurrency:
       group: ${{ github.workflow }}-pr-staticcheck-${{ github.head_ref || github.run_id }}
@@ -20,6 +22,7 @@ jobs:
       - id: run-prettier
         run: yarn prettier:check
   unit-test:
+    name: Unit tests
     runs-on: ubuntu-latest
     environment: dev
     needs: static-checks
