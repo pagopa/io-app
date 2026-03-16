@@ -1,6 +1,10 @@
 import { createActor } from "xstate";
 import { createStore } from "redux";
-import { Credential, Errors, Trust } from "@pagopa/io-react-native-wallet";
+import {
+  RemotePresentation,
+  Errors,
+  Trust
+} from "@pagopa/io-react-native-wallet";
 import { constTrue } from "fp-ts/lib/function";
 import { RemoteFailure, RemoteFailureType } from "../../machine/failure";
 import { itwRemoteMachine } from "../../machine/machine";
@@ -43,8 +47,7 @@ describe("ItwRemoteFailureScreen", () => {
     },
     {
       type: RemoteFailureType.INVALID_REQUEST_OBJECT,
-      reason:
-        new Error() as Credential.Presentation.Errors.InvalidRequestObjectError
+      reason: new Error() as RemotePresentation.Errors.InvalidRequestObjectError
     },
     {
       type: RemoteFailureType.UNTRUSTED_RP,

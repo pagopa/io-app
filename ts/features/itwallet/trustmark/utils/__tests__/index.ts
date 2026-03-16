@@ -1,15 +1,14 @@
-import { Credential } from "@pagopa/io-react-native-wallet";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { getCredentialDocumentNumber, getCredentialTrustmark } from "..";
 import { Env } from "../../../common/utils/environment";
+import { getIoWallet } from "../../../common/utils/itwIoWallet";
 
-jest.mock("@pagopa/io-react-native-wallet", () => ({
-  ...jest.requireActual("@pagopa/io-react-native-wallet"),
-  Credential: {
+jest.mock("../../../common/utils/itwIoWallet", () => ({
+  getIoWallet: jest.fn().mockReturnValue({
     Trustmark: {
       getCredentialTrustmark: jest.fn()
     }
-  }
+  })
 }));
 
 describe("ITW trustmark utils", () => {
@@ -29,8 +28,10 @@ describe("ITW trustmark utils", () => {
 
   describe("getCredentialTrustmark", () => {
     it("should return the trustmark", async () => {
+      const ioWallet = getIoWallet("1.0.0");
+
       jest
-        .spyOn(Credential.Trustmark, "getCredentialTrustmark")
+        .spyOn(ioWallet.Trustmark, "getCredentialTrustmark")
         .mockReturnValueOnce(
           Promise.resolve({
             jwt: "testJwt",
@@ -40,11 +41,12 @@ describe("ITW trustmark utils", () => {
 
       const trustmark = await getCredentialTrustmark(
         { VERIFIER_BASE_URL: "https://verifier.url" } as Env,
+        "1.0.0",
         "walletInstanceAttestation",
         ItwStoredCredentialsMocks.mdl
       );
 
-      expect(Credential.Trustmark.getCredentialTrustmark).toHaveBeenCalledWith({
+      expect(ioWallet.Trustmark.getCredentialTrustmark).toHaveBeenCalledWith({
         walletInstanceAttestation: "walletInstanceAttestation",
         wiaCryptoContext: expect.any(Object),
         credentialType: "MDL",
