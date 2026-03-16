@@ -149,7 +149,7 @@ export const initI18n = async () =>
     .init({
       lng: "it",
       fallbackLng: "it",
-      supportedLngs: Object.keys(resources),
+      supportedLngs: availableTranslations,
       initAsync: false,
       ns: ["index"],
       defaultNS: "index",
