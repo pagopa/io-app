@@ -1,5 +1,5 @@
 import { createClient } from "../../../../../../definitions/session_manager/client";
-import { LollipopMethodEnum } from "../../../../../../definitions/lollipop/LollipopMethod";
+import { LollipopMethodEnum } from "../../../../../../definitions/backend/identity/LollipopMethod";
 import { defaultRetryingFetch } from "../../../../../utils/fetch";
 import { LollipopConfig } from "../../../../lollipop";
 import { KeyInfo } from "../../../../lollipop/utils/crypto";

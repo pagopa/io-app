@@ -327,7 +327,7 @@ export function* initializeApplicationSaga(
     sessionToken,
     keyInfo
   );
-  const idClient = identityClientManager.getClient(apiUrlPrefix, sessionToken);
+  const idClient = identityClientManager.getClient(apiUrlPrefix, sessionToken, keyInfo);
   const smClient = sessionManagerClientManager.getClient(
     apiUrlPrefix,
     sessionToken

@@ -1,22 +1,25 @@
 import { ContentWrapper } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
-import * as TE from "fp-ts/lib/TaskEither";
-import { pipe } from "fp-ts/lib/function";
 import { useCallback, useState } from "react";
 import { ScrollView } from "react-native";
-import { ProblemJson } from "../../../../definitions/lollipop/ProblemJson";
-import { SignMessageResponse } from "../../../../definitions/lollipop/SignMessageResponse";
+import { ProblemJson } from "../../../../definitions/backend/identity/ProblemJson";
+import { SignMessageResponse } from "../../../../definitions/backend/identity/SignMessageResponse";
 import { apiUrlPrefix } from "../../../config";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../store/hooks";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
-import { createLollipopClient, signMessage } from "../api/backend";
 import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector
 } from "../store/reducers/lollipop";
 import { toThumbprint } from "../utils/crypto";
+import { identityClientManager } from "../../../api/IdentityClientManager";
+import { LollipopOriginalURL } from "../../../../definitions/backend/identity/LollipopOriginalURL";
+import { LollipopContentDigest } from "../../../../definitions/backend/identity/LollipopContentDigest";
+import { LollipopSignatureInput } from "../../../../definitions/backend/identity/LollipopSignatureInput";
+import { LollipopSignature } from "../../../../definitions/backend/identity/LollipopSignature";
+import { LollipopMethodEnum } from "../../../../definitions/backend/identity/LollipopMethod";
 import LollipopPlaygroundContent from "./LollipopPlaygroundContent";
 
 export type LollipopPlaygroundState = {
@@ -35,102 +38,80 @@ const LollipopPlayground = () => {
 
   const keyTag = useIOSelector(lollipopKeyTagSelector);
   const maybePublicKey = useIOSelector(lollipopPublicKeySelector);
-  const maybeSessionToken = O.fromNullable(useIOSelector(sessionTokenSelector));
+  const maybeSessionToken = useIOSelector(sessionTokenSelector);
 
   useHeaderSecondLevel({
     title: "Lollipop Playground"
   });
 
-  const lollipopClient = useCallback(
-    (signBody: boolean) =>
-      pipe(
-        keyTag,
-        O.chain(keyTag =>
-          pipe(
-            maybePublicKey,
-            O.chainNullableK(publicKey =>
-              createLollipopClient(
-                apiUrlPrefix,
-                {
-                  keyTag,
-                  publicKey,
-                  publicKeyThumbprint: toThumbprint(maybePublicKey)
-                },
-                { nonce: "aNonce", signBody }
-              )
-            )
-          )
-        )
-      ),
-    [keyTag, maybePublicKey]
-  );
-
   const onSignButtonPress = useCallback(
-    async (body: string, signBody: boolean) => {
+    async (body: string) => {
       const bodyMessage = {
         message: body
       };
-      pipe(
-        maybeSessionToken,
-        O.chain(sessionToken =>
-          pipe(
-            lollipopClient(signBody),
-            O.chainNullableK(lollipopClient =>
-              pipe(
-                TE.tryCatch(
-                  () => signMessage(lollipopClient, bodyMessage, sessionToken),
-                  e =>
-                    setState(s => ({
-                      ...s,
-                      isVerificationSuccess: false,
-                      verificationResult: `${e}`
-                    }))
-                ),
-                TE.map(_ =>
-                  pipe(
-                    _,
-                    E.mapLeft(error =>
-                      setState(s => ({
-                        ...s,
-                        isVerificationSuccess: false,
-                        verificationResult: JSON.stringify(error)
-                      }))
-                    ),
-                    E.map(signResponse => {
-                      const status = signResponse.status;
-                      if (status !== 200) {
-                        const response = signResponse.value as ProblemJson;
-                        setState(s => ({
-                          ...s,
-                          isVerificationSuccess: false,
-                          verificationResult: `${status} - ${response.title}\n${response.detail}`
-                        }));
-                      } else {
-                        const response =
-                          signResponse.value as SignMessageResponse;
-                        setState(s => ({
-                          ...s,
-                          isVerificationSuccess: true,
-                          verificationResult: response.response
-                        }));
-                      }
-                    })
-                  )
-                )
-              )()
-            )
-          )
-        )
-      );
+      if (maybeSessionToken && O.isSome(maybePublicKey) && O.isSome(keyTag)) {
+        const { signMessage } = identityClientManager.getClient(
+          apiUrlPrefix,
+          maybeSessionToken,
+          {
+            keyTag: keyTag.value,
+            publicKey: maybePublicKey.value,
+            publicKeyThumbprint: toThumbprint(maybePublicKey)
+          },
+          state.doSignBody
+        );
+
+        signMessage({
+          body: bodyMessage,
+          "x-pagopa-lollipop-original-method": LollipopMethodEnum.POST,
+          "x-pagopa-lollipop-original-url": "" as LollipopOriginalURL,
+          "content-digest": "" as LollipopContentDigest,
+          "signature-input": "" as LollipopSignatureInput,
+          signature: "" as LollipopSignature
+        })
+          .then(signResponse => {
+            if (E.isRight(signResponse)) {
+              const res = signResponse.right;
+              const status = res.status;
+              if (status !== 200) {
+                const response = res.value as ProblemJson;
+                setState(s => ({
+                  ...s,
+                  isVerificationSuccess: false,
+                  verificationResult: `${status} - ${response.title}\n${response.detail}`
+                }));
+              } else {
+                const response =
+                  res.value as SignMessageResponse;
+                setState(s => ({
+                  ...s,
+                  isVerificationSuccess: true,
+                  verificationResult: response.response
+                }));
+              }
+            } else {
+              setState(s => ({
+                ...s,
+                isVerificationSuccess: false,
+                verificationResult: JSON.stringify(signResponse.left)
+              }));
+            }
+          }).catch(e =>
+            setState(s => ({
+              ...s,
+              isVerificationSuccess: false,
+              verificationResult: `${e}`
+            })));
+      }
     },
-    [lollipopClient, maybeSessionToken]
+    [maybeSessionToken, maybePublicKey, keyTag, state.doSignBody]
   );
 
   return (
     <ScrollView>
       <ContentWrapper>
         <LollipopPlaygroundContent
-          onSignButtonPress={body => onSignButtonPress(body, state.doSignBody)}
+          onSignButtonPress={onSignButtonPress}
           onCheckBoxPress={v => {
             setState({
               ...state,
