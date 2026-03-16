@@ -55,23 +55,31 @@ type FallBackLocale = {
   localeEnum: PreferredLanguageEnum;
 };
 
-export const localeToLocalizedMessageKey = new Map<
-  Exclude<Locales, "sl">,
+const backendSupportedLocales = {
+  it: PreferredLanguageEnum.it_IT,
+  en: PreferredLanguageEnum.en_GB,
+  de: PreferredLanguageEnum.de_DE
+} as const satisfies Partial<Record<Locales, PreferredLanguageEnum>>;
+
+export type BackendSupportedLocale = keyof typeof backendSupportedLocales;
+
+export const localeToLocalizedMessageKey: ReadonlyMap<
+  Locales,
   LocalizedMessageKeys
->([
+> = new Map<BackendSupportedLocale, LocalizedMessageKeys>([
   ["it", "it-IT"],
   ["en", "en-EN"],
   ["de", "de-DE"]
 ]);
 
-export const localeToPreferredLanguageMapping = new Map<
+export const localeToPreferredLanguageMapping: ReadonlyMap<
   Locales,
   PreferredLanguageEnum
->([
-  ["it", PreferredLanguageEnum.it_IT],
-  ["en", PreferredLanguageEnum.en_GB],
-  ["de", PreferredLanguageEnum.de_DE]
-]);
+> = new Map<BackendSupportedLocale, PreferredLanguageEnum>(
+  Object.entries(backendSupportedLocales) as Array<
+    [BackendSupportedLocale, PreferredLanguageEnum]
+  >
+);
 
 // define the locale fallback used in the whole app code
 export const localeFallback: FallBackLocale = {
