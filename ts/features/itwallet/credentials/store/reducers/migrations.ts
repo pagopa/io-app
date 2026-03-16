@@ -9,7 +9,7 @@ type MigrationState = PersistedState & Record<string, any>;
 
 type AnyRecord = Record<string, any>;
 
-export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 8;
+export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 9;
 
 export const itwCredentialsStateMigrations: MigrationManifest = {
   // Version 0
