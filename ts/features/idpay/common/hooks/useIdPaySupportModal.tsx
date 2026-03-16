@@ -6,7 +6,7 @@ import {
   assistanceToolRemoteConfig,
   defaultIdPayExpenseCategory,
   resetCustomFields,
-  zendeskIdPayCategoryId
+  zendeskBonusAndInitiativeCategoryId
 } from "../../../../utils/supportAssistance";
 import {
   zendeskSelectedCategory,
@@ -27,7 +27,7 @@ const useIdPaySupportModal = (): PaymentFailureSupportModal => {
     resetCustomFields();
     // attach the main zendesk category to the ticket
     addTicketCustomField(
-      zendeskIdPayCategoryId,
+      zendeskBonusAndInitiativeCategoryId,
       defaultIdPayExpenseCategory.value
     );
 

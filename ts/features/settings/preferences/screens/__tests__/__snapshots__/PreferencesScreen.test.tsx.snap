@@ -350,7 +350,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                   "value": "Inoltro dei messaggi via email",
                                 },
                                 {
-                                  "description": "Scegli la lingua",
+                                  "description": "Scegli la lingua per l’app e per i messaggi",
                                   "onPress": [Function],
                                   "value": "Lingua",
                                 },
@@ -1565,7 +1565,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                 style={null}
                               >
                                 <View
-                                  accessibilityLabel="Lingua Scegli la lingua"
+                                  accessibilityLabel="Lingua Scegli la lingua per l’app e per i messaggi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -1724,7 +1724,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          Scegli la lingua
+                                          Scegli la lingua per l’app e per i messaggi
                                         </Text>
                                       </View>
                                       <RNSVGSvgView
@@ -2085,7 +2085,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",

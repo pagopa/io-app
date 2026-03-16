@@ -767,7 +767,7 @@ exports[`CgnDiscountCodeScreen should render correctly 1`] = `
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -1006,7 +1006,7 @@ exports[`CgnDiscountCodeScreen should render correctly 1`] = `
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
