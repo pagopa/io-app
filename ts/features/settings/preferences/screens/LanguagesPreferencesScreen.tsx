@@ -132,12 +132,15 @@ const LanguagesPreferencesScreen = () => {
   );
 
   const initialAppSelectedItem = useMemo(
-    () => renderedItem.find(item => item.id === preferredLanguage)?.id,
-    [preferredLanguage, renderedItem]
+    () =>
+      appLocaleOptions.find(
+        item => item.id === `app-locale-${preferredLanguage}`
+      )?.id,
+    [preferredLanguage, appLocaleOptions]
   );
 
   const [selectedAppLocale, setSelectedAppLocale] = useState<AppLocaleId>(
-    `app-locale-${initialAppSelectedItem as Locales}`
+    initialAppSelectedItem ?? `app-locale-${preferredLanguage}`
   );
 
   const handleAppLocaleChange = useCallback(
