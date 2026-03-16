@@ -29,8 +29,9 @@ export function* handleItwCredentialsRemoveSaga(
 
     if (sameTypeCredentials.length > 0) {
       // Remove from vault first; only proceed with Redux/key cleanup on success
-      yield* call(() =>
-        CredentialsVault.removeAll(sameTypeCredentials.map(c => c.credentialId))
+      yield* call(
+        CredentialsVault.removeAll,
+        sameTypeCredentials.map(c => c.credentialId)
       );
       yield* put(itwCredentialsRemove(sameTypeCredentials));
       yield* put(walletRemoveCards([`ITW_${credentialType}`]));
