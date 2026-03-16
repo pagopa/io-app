@@ -1,7 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
-import { CredentialOffer, IoWallet } from "@pagopa/io-react-native-wallet";
-import { ItwVersion } from "@pagopa/io-react-native-wallet";
+import { CredentialOffer, IoWallet, ItwVersion } from "@pagopa/io-react-native-wallet";
 import { useIOStore } from "../../../../store/hooks";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { assert } from "../../../../utils/assert";
