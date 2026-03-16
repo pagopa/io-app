@@ -1,7 +1,7 @@
 import { generate } from "@pagopa/io-react-native-crypto";
 import {
   createCryptoContextFor,
-  Credential
+  type ItwVersion
 } from "@pagopa/io-react-native-wallet";
 import { v4 as uuidv4 } from "uuid";
 import { type CryptoContext } from "@pagopa/io-react-native-jwt";
@@ -17,10 +17,18 @@ import {
   IssuerConfiguration,
   RequestObject
 } from "./itwTypesUtils";
-import { WALLET_SPEC_VERSION } from "./constants";
 import { extractVerification } from "./itwCredentialUtils";
 import { Env } from "./environment";
 import { enrichErrorWithMetadata } from "./itwFailureUtils";
+import { getIoWallet } from "./itwIoWallet";
+
+export type RequestCredentialParams = {
+  env: Env;
+  itwVersion: ItwVersion;
+  credentialType: string;
+  walletInstanceAttestation: string;
+  skipMdocIssuance: boolean;
+};
 
 /**
  * List of credentials that cannot be issued in parallel, only sequentially.
@@ -30,6 +38,7 @@ const SEQUENTIAL_ISSUANCE_CREDENTIALS = ["mDL"];
 
 export type RequestCredential = (args: {
   env: Env;
+  itwVersion: ItwVersion;
   credentialType: string;
   walletInstanceAttestation: string;
   skipMdocIssuance: boolean;
@@ -43,22 +52,26 @@ export type RequestCredential = (args: {
 /**
  * Requests a credential from the issuer.
  * @param env - The environment to use for the wallet provider base URL
+ * @param itwVersion - IT-Wallet technical specs version
  * @param credentialType - The type of credential to request
  * @param walletInstanceAttestation - The wallet instance attestation
  * @returns The credential request object
  */
 export const requestCredential: RequestCredential = async ({
   env,
+  itwVersion,
   credentialType,
   walletInstanceAttestation,
   skipMdocIssuance
 }) => {
+  const ioWallet = getIoWallet(itwVersion);
+
   // Get WIA crypto context
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
   // Evaluate issuer trust
-  const { issuerConf } = await Credential.Issuance.evaluateIssuerTrust(
-    env.WALLET_EAA_PROVIDER_BASE_URL
+  const { issuerConf } = await ioWallet.CredentialIssuance.evaluateIssuerTrust(
+    env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion)
   );
 
   const credentialIds = getCredentialConfigurationIds(
@@ -69,7 +82,7 @@ export const requestCredential: RequestCredential = async ({
 
   // Start user authorization
   const { issuerRequestUri, clientId, codeVerifier } =
-    await Credential.Issuance.startUserAuthorization(
+    await ioWallet.CredentialIssuance.startUserAuthorization(
       issuerConf,
       credentialIds,
       { proofType: "none" },
@@ -81,7 +94,7 @@ export const requestCredential: RequestCredential = async ({
     );
 
   const requestObject =
-    await Credential.Issuance.getRequestedCredentialToBePresented(
+    await ioWallet.CredentialIssuance.getRequestedCredentialToBePresented(
       issuerRequestUri,
       clientId,
       issuerConf
@@ -97,6 +110,7 @@ export const requestCredential: RequestCredential = async ({
 
 export type ObtainCredential = (args: {
   env: Env;
+  itwVersion: ItwVersion;
   credentialType: string;
   walletInstanceAttestation: string;
   requestedCredential: RequestObject;
@@ -109,6 +123,7 @@ export type ObtainCredential = (args: {
 /**
  * Obtains a credential from the issuer.
  * @param env - The environment to use for the wallet provider base URL
+ * @param itwVersion - IT-Wallet technical specs version
  * @param credentialType - The type of credential to request
  * @param requestedCredential - The requested credential as a RequestObject
  * @param pidKeyTag - The key tag of the PID credential
@@ -121,6 +136,7 @@ export type ObtainCredential = (args: {
  */
 export const obtainCredential: ObtainCredential = async ({
   env,
+  itwVersion,
   credentialType,
   requestedCredential: requestObject,
   pid,
@@ -129,6 +145,8 @@ export const obtainCredential: ObtainCredential = async ({
   codeVerifier,
   issuerConf
 }) => {
+  const ioWallet = getIoWallet(itwVersion);
+
   // Get WIA crypto context
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
@@ -138,19 +156,19 @@ export const obtainCredential: ObtainCredential = async ({
 
   // Complete the user authorization via form_post.jwt mode
   const { code } =
-    await Credential.Issuance.completeUserAuthorizationWithFormPostJwtMode(
+    await ioWallet.CredentialIssuance.completeUserAuthorizationWithFormPostJwtMode(
       requestObject,
+      issuerConf,
       pid.credential,
       {
         wiaCryptoContext,
-        pidCryptoContext: createCryptoContextFor(pid.metadata.keyTag)
+        pidKeyTag: pid.metadata.keyTag
       }
     );
 
-  const { accessToken } = await Credential.Issuance.authorizeAccess(
+  const { accessToken } = await ioWallet.CredentialIssuance.authorizeAccess(
     issuerConf,
     code,
-    clientId,
     env.ISSUANCE_REDIRECT_URI,
     codeVerifier,
     {
@@ -166,7 +184,8 @@ export const obtainCredential: ObtainCredential = async ({
     credentialType,
     env,
     dPopCryptoContext,
-    issuerConf
+    issuerConf,
+    itwVersion
   };
 
   if (SEQUENTIAL_ISSUANCE_CREDENTIALS.includes(credentialType)) {
@@ -198,8 +217,7 @@ const getCredentialConfigurationIds = (
   credentialType: string,
   skipMdocIssuance: boolean
 ) => {
-  const { credential_configurations_supported } =
-    issuerConfig.openid_credential_issuer;
+  const { credential_configurations_supported } = issuerConfig;
 
   const supportedConfigurationsByScope = Object.entries(
     credential_configurations_supported
@@ -226,6 +244,7 @@ type RequestAndParseCredential = (args: {
   authDetails: CredentialAccessToken["authorization_details"][number];
   clientId: string;
   env: Env;
+  itwVersion: ItwVersion;
   dPopCryptoContext: CryptoContext;
 }) => Promise<CredentialBundle>;
 
@@ -236,36 +255,39 @@ const requestAndParseCredential: RequestAndParseCredential = async ({
   authDetails,
   clientId,
   dPopCryptoContext,
-  env
+  env,
+  itwVersion
 }) => {
+  const ioWallet = getIoWallet(itwVersion);
   const { credential_configuration_id, credential_identifiers } = authDetails;
   const credentialKeyTag = uuidv4().toString();
   await generate(credentialKeyTag);
   const credentialCryptoContext = createCryptoContextFor(credentialKeyTag);
 
   // Obtain the credential
-  const { credential, format } = await Credential.Issuance.obtainCredential(
-    issuerConf,
-    accessToken,
-    clientId,
-    {
-      credential_configuration_id,
-      credential_identifier: credential_identifiers[0]
-    },
-    {
-      dPopCryptoContext,
-      credentialCryptoContext
-    }
-  ).catch(
-    enrichErrorWithMetadata({
-      credentialId: credential_configuration_id
-    })
-  );
+  const { credential, format } =
+    await ioWallet.CredentialIssuance.obtainCredential(
+      issuerConf,
+      accessToken,
+      clientId,
+      {
+        credential_configuration_id,
+        credential_identifier: credential_identifiers[0]
+      },
+      {
+        dPopCryptoContext,
+        credentialCryptoContext
+      }
+    ).catch(
+      enrichErrorWithMetadata({
+        credentialId: credential_configuration_id
+      })
+    );
   // Parse and verify the credential. The ignoreMissingAttributes flag must be set to false or omitted in production.
   // The ignoreMissingAttributes must be set to false for mDoc credentials since
   // there are some attributes that should not be presented during Proximity presentation.
   const { parsedCredential, issuedAt, expiration } =
-    await Credential.Issuance.verifyAndParseCredential(
+    await ioWallet.CredentialIssuance.verifyAndParseCredential(
       issuerConf,
       credential,
       credential_configuration_id,
@@ -277,6 +299,7 @@ const requestAndParseCredential: RequestAndParseCredential = async ({
     );
 
   return {
+    credential,
     metadata: {
       parsedCredential,
       credentialType,
@@ -288,13 +311,14 @@ const requestAndParseCredential: RequestAndParseCredential = async ({
         expiration: expiration.toISOString(),
         issuedAt: issuedAt?.toISOString()
       },
-      spec_version: WALLET_SPEC_VERSION,
+      spec_version: itwVersion,
       verification: extractVerification({
         format,
         credential,
         parsedCredential
       })
     },
-    credential
+    spec_version: ioWallet.version,
+    verification: extractVerification({ format, credential, parsedCredential })
   };
 };

@@ -16,13 +16,10 @@ export const getItwAuthSource = (credential: DigitalCredentialMetadata) =>
  * This is only valid for legacy credentials (Documenti su IO)
  * @param credential - The credential to get the authentication source for.
  */
-export const getAuthSource = ({
-  credentialId,
-  issuerConf
-}: CredentialMetadata) =>
+export const getAuthSource = (credential: CredentialMetadata) =>
   pipe(
-    issuerConf.openid_credential_issuer.credential_configurations_supported?.[
-      credentialId
+    credential.issuerConf.credential_configurations_supported?.[
+      credential.credentialId
     ],
     O.fromNullable,
     O.map(config => config.authentic_source),

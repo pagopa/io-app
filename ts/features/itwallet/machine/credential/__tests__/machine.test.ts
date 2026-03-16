@@ -42,54 +42,24 @@ const T_CLIENT_ID = "clientId";
 const T_CODE_VERIFIER = "codeVerifier";
 const T_ISSUER_CONFIG: IssuerConfiguration = {
   federation_entity: {},
-  oauth_authorization_server: {
-    jwks: {
-      keys: []
-    },
-    acr_values_supported: [],
-    authorization_endpoint: "",
-    pushed_authorization_request_endpoint: "",
-    token_endpoint: "",
-    client_registration_types_supported: [],
-    code_challenge_methods_supported: [],
-    grant_types_supported: [],
-    issuer: "",
-    scopes_supported: [],
-    response_modes_supported: [],
-    token_endpoint_auth_methods_supported: [],
-    token_endpoint_auth_signing_alg_values_supported: [],
-    request_object_signing_alg_values_supported: []
-  },
-  openid_credential_issuer: {
-    credential_configurations_supported: {},
-    credential_endpoint: "",
-    credential_issuer: "",
-    status_attestation_endpoint: "",
-    trust_frameworks_supported: [],
-    evidence_supported: [],
-    nonce_endpoint: "",
-    revocation_endpoint: "",
-    display: [],
-    jwks: {
-      keys: []
-    }
-  },
-  wallet_relying_party: {
-    jwks: {
-      keys: []
-    }
-  }
+  keys: [],
+  authorization_endpoint: "",
+  pushed_authorization_request_endpoint: "",
+  token_endpoint: "",
+  credential_issuer: "",
+  response_modes_supported: [],
+  credential_configurations_supported: {},
+  credential_endpoint: "",
+  nonce_endpoint: ""
 };
 const T_REQUESTED_CREDENTIAL: RequestObject = {
+  dcql_query: {},
   client_id: T_CLIENT_ID,
-  exp: 0,
-  iat: 0,
   iss: "",
   nonce: "",
   response_mode: "direct_post.jwt",
   response_type: "vp_token",
   response_uri: "",
-  scope: "",
   state: ""
 };
 const T_STORED_STATUS_ASSERTION: CredentialMetadata["storedStatusAssertion"] = {

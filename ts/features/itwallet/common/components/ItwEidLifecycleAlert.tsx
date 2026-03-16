@@ -66,7 +66,8 @@ export const ItwEidLifecycleAlert = ({
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
       params: {
-        eidReissuing: true
+        eidReissuing: true,
+        level: isItw ? "l3" : "l2"
       }
     });
   };

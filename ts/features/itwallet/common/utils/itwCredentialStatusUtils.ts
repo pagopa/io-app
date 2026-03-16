@@ -3,11 +3,7 @@ import { differenceInCalendarDays } from "date-fns";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { getCredentialExpireDate } from "./itwClaimsUtils";
-import {
-  CredentialMetadata,
-  IssuerConfiguration,
-  ItwCredentialStatus
-} from "./itwTypesUtils";
+import { ItwCredentialStatus, CredentialMetadata } from "./itwTypesUtils";
 
 const DEFAULT_EXPIRING_DAYS = 30;
 
@@ -106,7 +102,7 @@ export const getCredentialStatusObject = (credential: CredentialMetadata) => {
     O.chain(code =>
       O.tryCatch(() =>
         Errors.extractErrorMessageFromIssuerConf(code, {
-          issuerConf: issuerConf as IssuerConfiguration,
+          issuerConf,
           credentialType: credentialId
         })
       )

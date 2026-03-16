@@ -31,12 +31,9 @@ export const itwCredentialsByDocTypeSelector = createSelector(
       (acc, credential) => {
         const { credentialId, issuerConf } = credential;
 
-        const doctype = (
-          issuerConf.openid_credential_issuer
-            .credential_configurations_supported[
-            credentialId
-          ] as MdocSupportedCredentialConfiguration
-        ).doctype;
+        const { doctype } = issuerConf.credential_configurations_supported[
+          credentialId
+        ] as MdocSupportedCredentialConfiguration;
 
         return {
           ...acc,

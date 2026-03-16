@@ -189,6 +189,9 @@ export const ItwPresentationCredentialDetail = ({
     () => getMixPanelCredential(credential.credentialType, isL3Credential),
     [credential.credentialType, isL3Credential]
   );
+  const shouldShowMdlUpdateCta =
+    credential.credentialType === CredentialType.DRIVING_LICENSE &&
+    (status === "expired" || status === "invalid");
 
   useDebugInfo(credential);
   usePreventScreenCapture();
@@ -237,6 +240,22 @@ export const ItwPresentationCredentialDetail = ({
     const credentialType = credential.credentialType;
     const contentClaim = parsedCredential[WellKnownClaim.content];
 
+    if (shouldShowMdlUpdateCta) {
+      return {
+        label: I18n.t(
+          "features.itWallet.presentation.credentialDetails.actions.updateDigitalCredential"
+        ),
+        onPress: () =>
+          navigation.navigate(ITW_ROUTES.MAIN, {
+            screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
+            params: {
+              credentialType,
+              mode: "reissuance"
+            }
+          })
+      };
+    }
+
     if (
       credentialType === CredentialType.DRIVING_LICENSE &&
       itwFeaturesEnabled
@@ -283,7 +302,8 @@ export const ItwPresentationCredentialDetail = ({
     navigation,
     isCheckingPermissions,
     itwProximityMachineRef,
-    mixPanelCredential
+    mixPanelCredential,
+    shouldShowMdlUpdateCta
   ]);
 
   if (status === "unknown") {

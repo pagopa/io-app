@@ -1,5 +1,4 @@
 import { assign, fromPromise, not, setup } from "xstate";
-import { assert } from "../../../../../utils/assert";
 import { type WalletInstanceAttestations } from "../../../common/utils/itwTypesUtils";
 import {
   EvaluateRelyingPartyTrustInput,
@@ -205,29 +204,13 @@ export const itwRemoteMachine = setup({
         "Get the details of the presentation requested by the Relying Party (i.e. credentials)",
       invoke: {
         src: "getPresentationDetails",
-        input: ({ context }) => {
-          assert(
-            context.walletInstanceAttestation,
-            "Missing required context walletInstanceAttestation"
-          );
-          assert(context.credentials, "Missing required context credentials");
-          assert(context.payload, "Missing required context payload");
-          assert(context.rpSubject, "Missing required context rpSubject");
-          assert(
-            context.requestObjectEncodedJwt,
-            "Missing required context requestObjectEncodedJwt"
-          );
-          assert(context.rpConf, "Missing required context rpConf");
-
-          return {
-            walletInstanceAttestation: context.walletInstanceAttestation,
-            credentials: context.credentials,
-            qrCodePayload: context.payload,
-            rpSubject: context.rpSubject,
-            requestObjectEncodedJwt: context.requestObjectEncodedJwt,
-            rpConf: context.rpConf
-          };
-        },
+        input: ({ context }) => ({
+          walletInstanceAttestation: context.walletInstanceAttestation,
+          credentials: context.credentials,
+          qrCodePayload: context.payload,
+          requestObjectEncodedJwt: context.requestObjectEncodedJwt,
+          rpConf: context.rpConf
+        }),
         onDone: {
           actions: assign(({ event }) => event.output),
           target: "ClaimsDisclosure"

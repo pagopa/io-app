@@ -1,3 +1,4 @@
+import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/Option";
 import { fromPromise } from "xstate";
 import { useIOStore } from "../../../../store/hooks";
@@ -10,9 +11,9 @@ import {
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
+import { CredentialsVault } from "../../credentials/utils/vault";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { EidIssuanceMode } from "../eid/context";
-import { CredentialsVault } from "../../credentials/utils/vault";
 
 export type UpgradeCredentialParams = {
   pid: CredentialBundle | undefined;
@@ -33,7 +34,8 @@ export type LoadContextOutput = {
 
 export const createCredentialUpgradeActorsImplementation = (
   env: Env,
-  store: ReturnType<typeof useIOStore>
+  store: ReturnType<typeof useIOStore>,
+  itwVersion: ItwVersion
 ) => ({
   loadContext: fromPromise<LoadContextOutput>(async () => {
     const walletInstanceAttestation = itwWalletInstanceAttestationSelector(
@@ -78,6 +80,7 @@ export const createCredentialUpgradeActorsImplementation = (
     const { requestedCredential, issuerConf, clientId, codeVerifier } =
       await credentialIssuanceUtils.requestCredential({
         env,
+        itwVersion,
         credentialType: credential.credentialType,
         walletInstanceAttestation,
         // TODO [SIW-3091]: Update when the L3 PID reissuance flow is ready
@@ -86,6 +89,7 @@ export const createCredentialUpgradeActorsImplementation = (
 
     const result = await credentialIssuanceUtils.obtainCredential({
       env,
+      itwVersion,
       credentialType: credential.credentialType,
       walletInstanceAttestation,
       requestedCredential,
