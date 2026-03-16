@@ -837,7 +837,7 @@ describe("ITW credentials reducer migrations", () => {
       }
     };
 
-    const basePersistedStateAt7 = {
+    const basePersistedStateAt8 = {
       credentials: inputCredentials,
       _persist: {
         version: 7,
@@ -845,7 +845,7 @@ describe("ITW credentials reducer migrations", () => {
       }
     };
 
-    const persistedStateAt8 = {
+    const persistedStateAt9 = {
       credentials: {
         dc_sd_jwt_PersonIdentificationData: {
           ...inputCredentials.dc_sd_jwt_PersonIdentificationData,
@@ -856,17 +856,17 @@ describe("ITW credentials reducer migrations", () => {
           credential: undefined
         }
       },
-      legacyCredentials: basePersistedStateAt7.credentials,
+      legacyCredentials: basePersistedStateAt8.credentials,
       _persist: {
         version: 7,
         rehydrated: false
       }
     };
 
-    const from7To8Migration = itwCredentialsStateMigrations[8];
+    const from7To8Migration = itwCredentialsStateMigrations[9];
     expect(from7To8Migration).toBeDefined();
-    const nextState = from7To8Migration(basePersistedStateAt7);
+    const nextState = from7To8Migration(basePersistedStateAt8);
 
-    expect(nextState).toStrictEqual(persistedStateAt8);
+    expect(nextState).toStrictEqual(persistedStateAt9);
   });
 });
