@@ -1,5 +1,5 @@
-import * as Sentry from "@sentry/react-native";
-import { call, put, select } from "typed-redux-saga/macro";
+import { deleteKey } from "@pagopa/io-react-native-crypto";
+import { all, call, put, select } from "typed-redux-saga/macro";
 import { GlobalState } from "../../../../store/reducers/types";
 import { CredentialsVault } from "../utils/vault";
 import { itwCredentialsRemove } from "../store/actions";
@@ -30,10 +30,7 @@ export function* handleItwCredentialsVaultCoherenceSaga() {
       .map(id => reduxCredentials[id])
       .filter(Boolean);
     yield* put(itwCredentialsRemove(toRemove));
-    Sentry.captureMessage(
-      "Vault-Redux coherence: removed credentials missing from vault",
-      { extra: { missingInVault } }
-    );
+    yield* all(toRemove.map(c => call(deleteKey, c.keyTag)));
   }
 
   // 2. Credentials in vault but missing from Redux → remove orphans from vault
@@ -43,8 +40,5 @@ export function* handleItwCredentialsVaultCoherenceSaga() {
 
   if (orphanedInVault.length > 0) {
     yield* call(CredentialsVault.removeAll, orphanedInVault);
-    Sentry.captureMessage("Vault-Redux coherence: removed vault orphans", {
-      extra: { orphanedInVault }
-    });
   }
 }
