@@ -73,9 +73,11 @@ export const serializeFailureReason = (
   origin?: string
 ) => {
   const reason = !failure.reason
-    ? "Reason not provided"
+    ? createReasonObject("Reason not provided", origin)
     : failure.reason instanceof Error
     ? createReasonObject(failure.reason.message, origin)
+    : typeof failure.reason === "object"
+    ? { ...failure.reason, origin }
     : failure.reason;
 
   return {
