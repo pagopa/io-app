@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
-import DebugInfoOverlay from "./components/DebugInfoOverlay";
+import DebugInfoOverlay from "./components/debug/DebugInfoOverlay";
 import PagoPATestIndicatorOverlay from "./components/PagoPATestIndicatorOverlay";
 import { LightModalRoot } from "./components/ui/LightModal";
 import { configurePushNotifications } from "./features/pushNotifications/utils/configurePushNotification";
