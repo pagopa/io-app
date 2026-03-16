@@ -269,14 +269,22 @@ describe("itwShouldRenderInboxDiscoveryBannerSelector", () => {
   });
 
   it.each`
-    itwEnabled | isL3Enabled | lifecycleValid | isBannerHidden | expected
-    ${true}    | ${true}     | ${false}       | ${false}       | ${true}
-    ${true}    | ${true}     | ${false}       | ${true}        | ${false}
-    ${true}    | ${true}     | ${true}        | ${false}       | ${false}
-    ${false}   | ${true}     | ${false}       | ${false}       | ${false}
+    itwEnabled | isL3Enabled | lifecycleValid | isBannerHidden | expected | isWalletInstanceRemotelyActive
+    ${true}    | ${true}     | ${false}       | ${false}       | ${true}  | ${false}
+    ${true}    | ${true}     | ${false}       | ${true}        | ${false} | ${false}
+    ${true}    | ${true}     | ${true}        | ${false}       | ${false} | ${false}
+    ${false}   | ${true}     | ${false}       | ${false}       | ${false} | ${false}
+    ${true}    | ${true}     | ${false}       | ${false}       | ${false} | ${true}
   `(
-    "should return $expected when itwEnabled=$itwEnabled, isL3Enabled=$isL3Enabled, lifecycleValid=$lifecycleValid, isBannerHidden=$isBannerHidden",
-    ({ itwEnabled, isL3Enabled, lifecycleValid, isBannerHidden, expected }) => {
+    "should return $expected when itwEnabled=$itwEnabled, isL3Enabled=$isL3Enabled, lifecycleValid=$lifecycleValid, isBannerHidden=$isBannerHidden, isWalletInstanceRemotelyActive=$isWalletInstanceRemotelyActive",
+    ({
+      itwEnabled,
+      isL3Enabled,
+      lifecycleValid,
+      isBannerHidden,
+      isWalletInstanceRemotelyActive,
+      expected
+    }) => {
       jest
         .spyOn(remoteConfigSelectors, "isItwEnabledSelector")
         .mockReturnValue(itwEnabled);
@@ -290,6 +298,12 @@ describe("itwShouldRenderInboxDiscoveryBannerSelector", () => {
         .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
         .mockReturnValue(lifecycleValid);
       mockItwIsBannerHiddenSelector(isBannerHidden);
+      jest
+        .spyOn(
+          preferencesSelectors,
+          "itwIsWalletInstanceRemotelyActiveSelector"
+        )
+        .mockReturnValue(isWalletInstanceRemotelyActive);
 
       expect(
         itwShouldRenderInboxDiscoveryBannerSelector(
