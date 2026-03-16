@@ -1,4 +1,4 @@
-import { Credential } from "@pagopa/io-react-native-wallet";
+import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import * as E from "fp-ts/lib/Either";
 import {
   WellKnownClaim,
@@ -9,12 +9,18 @@ import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUt
 import { validCredentialStatuses } from "../../../common/utils/itwCredentialUtils";
 import { isDefined } from "../../../../../utils/guards";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import { getIoWallet } from "../../../common/utils/itwIoWallet";
 import { ItwRemoteCredentialCombination } from "../analytics/utils/types";
 import {
   EnrichedPresentationDetails,
   ItwRemoteQrRawPayload,
   PresentationDetails
 } from "./itwRemoteTypeUtils";
+
+// TODO: [SIW-3998] Remove when MDOC remote presentation will be supported
+const isPresentationDetailSdJwt = <T extends PresentationDetails[number]>(
+  input: T
+): input is Extract<T, { format: "dc+sd-jwt" }> => input.format === "dc+sd-jwt";
 
 /**
  * Maps a vct name to the corresponding credential type, used in UI contexts
@@ -54,10 +60,11 @@ export const getCredentialTypeByVct = (vct: string): string | undefined => {
  * @returns An Either type with the validated parameters or the error.
  */
 export const validateItwPresentationQrCodeParams = (
+  itwVersion: ItwVersion,
   params: ItwRemoteQrRawPayload
 ) =>
   E.tryCatch(
-    () => Credential.Presentation.startFlowFromQR(params),
+    () => getIoWallet(itwVersion).RemotePresentation.startFlowFromQR(params),
     e =>
       e instanceof Error
         ? e
@@ -75,34 +82,36 @@ export const enrichPresentationDetails = (
   presentationDetails: PresentationDetails,
   credentialsByType: Record<string, StoredCredential | undefined>
 ): EnrichedPresentationDetails =>
-  presentationDetails.map(details => {
-    const credentialType = getCredentialTypeByVct(details.vct);
-    const credential = credentialType && credentialsByType[credentialType];
+  presentationDetails
+    .filter(isPresentationDetailSdJwt) // TODO: [SIW-3998] Support MDOC remote presentation
+    .map(details => {
+      const credentialType = getCredentialTypeByVct(details.vct);
+      const credential = credentialType && credentialsByType[credentialType];
 
-    // When the credential is not found, it is not available as a `StoredCredential`, so we hide it from the user.
-    // The raw credential is still used for the presentation. Currently this only happens for the Wallet Attestation.
-    if (!credential) {
+      // When the credential is not found, it is not available as a `StoredCredential`, so we hide it from the user.
+      // The raw credential is still used for the presentation. Currently this only happens for the Wallet Attestation.
+      if (!credential) {
+        return {
+          ...details,
+          claimsToDisplay: [] // Hide from user
+        };
+      }
+
+      const parsedClaims = parseClaims(credential.parsedCredential, {
+        exclude: [WellKnownClaim.unique_id]
+      });
+
       return {
         ...details,
-        claimsToDisplay: [] // Hide from user
+        // Only include claims that are part of the parsed credential
+        // This ensures that technical claims like `iat` are not displayed to the user
+        claimsToDisplay: details.requiredDisclosures
+          .map(disclosure =>
+            parsedClaims.find(({ id }) => id === disclosure.name)
+          )
+          .filter(isDefined)
       };
-    }
-
-    const parsedClaims = parseClaims(credential.parsedCredential, {
-      exclude: [WellKnownClaim.unique_id]
     });
-
-    return {
-      ...details,
-      // Only include claims that are part of the parsed credential
-      // This ensures that technical claims like `iat` are not displayed to the user
-      claimsToDisplay: details.requiredDisclosures
-        .map(([, claimName]) => parsedClaims.find(({ id }) => id === claimName))
-        .filter(isDefined)
-    };
-  });
-
-type PresentationDetail = EnrichedPresentationDetails[number];
 
 /**
  * Given the details of a presentation, group credentials by purpose for the UI.
@@ -113,8 +122,9 @@ type PresentationDetail = EnrichedPresentationDetails[number];
 export const groupCredentialsByPurpose = (
   presentationDetails: EnrichedPresentationDetails
 ) => {
-  const required = {} as Record<string, Array<PresentationDetail>>;
-  const optional = {} as Record<string, Array<PresentationDetail>>;
+  type Group = Record<string, EnrichedPresentationDetails>;
+  const required: Group = {};
+  const optional: Group = {};
 
   for (const item of presentationDetails) {
     for (const purpose of item.purposes) {
@@ -146,6 +156,7 @@ export const getInvalidCredentials = (
   credentialsByType: Record<string, StoredCredential | undefined>
 ) =>
   presentationDetails
+    .filter(isPresentationDetailSdJwt) // TODO: [SIW-3998] Support MDOC remote presentation
     // Retries the type from the VCT map
     .map(({ vct }) => getCredentialTypeByVct(vct))
     // Removes undefined
@@ -166,7 +177,9 @@ export const getInvalidCredentials = (
 export const getRemoteCredentialCombination = (
   presentationDetails: EnrichedPresentationDetails
 ): ItwRemoteCredentialCombination => {
-  const requestedVcts = presentationDetails.map(d => d.vct);
+  const requestedVcts = presentationDetails
+    .filter(isPresentationDetailSdJwt) // TODO: [SIW-3998] Support MDOC remote presentation
+    .map(d => d.vct);
   const credentialTypes = requestedVcts
     .map(getCredentialTypeByVct)
     .filter(isDefined);

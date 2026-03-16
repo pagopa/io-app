@@ -37,7 +37,6 @@
         }
       }
     },
-    "password": "Password",
     "username": "Username",
     "sectionStatus": {
       "moreInfo": "Want to know more?"
@@ -64,14 +63,8 @@
       },
       "progressTracker": "{{index}} of {{total}}"
     },
-    "symbols": {
-      "question": "?"
-    },
     "date": {
       "invalid": "invalid date"
-    },
-    "dateFormats": {
-      "dayMonth": "MM/DD"
     },
     "genericError": "There is a temporary problem, please try again.",
     "genericAlert": "Warning!",
@@ -88,7 +81,6 @@
       "delete": "Delete",
       "cancel": "Cancel",
       "settings": "Settings",
-      "ok": "OK",
       "continue": "Continue",
       "notNow": "Maybe later",
       "retry": "Retry",
@@ -99,7 +91,6 @@
       "previous": "Previous",
       "exit": "Exit",
       "edit": "Edit",
-      "info": "Info",
       "activate": "Enable",
       "activate2": "Enable",
       "show": "Show",
@@ -404,7 +395,6 @@
       "developersSectionHeader": "Developers",
       "testEnvironmentSectionHeader": "Test Environment",
       "pagoPaEnvironment": {
-        "pagoPaEnv": "pagoPA",
         "pagoPAEnvAlert": "This change requires app reboot",
         "pagoPAEnvAlertLocal": "The pagoPA test environment cannot be enabled with the local app build",
         "alertConfirmTitle": "Do you want to use the pagoPA test environment?",
@@ -478,7 +468,6 @@
               "description": "Designed for better text readability"
             },
             "standard": {
-              "title": "Standard",
               "description": "The usual style with narrow, geometric shapes"
             }
           },
@@ -783,11 +772,8 @@
         "subtitle": "To enable IO to read your CIE, activate NFC from your device's settings.",
         "listItemTitle": "How to do it::",
         "action": "Open Settings",
-        "listItemLabel1": "Step 1",
         "listItemValue1": "Open 'Settings'",
-        "listItemLabel2": "Step 2",
         "listItemValue2": "Search for ‘NFC’ functionality",
-        "listItemLabel3": "Step 3",
         "listItemValue3": "Turn it on",
         "activeNfcAlert": "Activate NFC to enable IO to read your CIE!",
         "activeNFCAlertButton": "Enable NFC"
@@ -935,7 +921,6 @@
     "insert": {
       "alert": "You are already using this email",
       "help": {
-        "title": "Email",
         "content": "This page is used to insert or edit your **email** address. The entered email must be validated.\n"
       },
       "alertTitle": "This email address is already in use",
@@ -1034,15 +1019,12 @@
             "text": "You need to configure this in your device settings.",
             "label": "How to",
             "step1": {
-              "label": "Step 1",
               "value": "Go to your device settings"
             },
             "step2": {
-              "label": "Step 2",
               "value": "Set up face or fingerprint"
             },
             "step3": {
-              "label": "Step 3",
               "value": "Enable it in IO under Settings > Security"
             }
           }
@@ -1054,11 +1036,9 @@
         "body": {
           "label": "How to",
           "step1": {
-            "label": "Step 1",
             "value": "Go to your device settings"
           },
           "step2": {
-            "label": "Step 2",
             "value": "Set a code or sign to unlock the device"
           }
         }
@@ -1085,7 +1065,6 @@
       "openSettings": "Go to Settings",
       "instructions": {
         "title": "Here's how:",
-        "label": "Step",
         "ios": {
           "step1": "Go to \"Settings\"",
           "step2": "Select \"Notifications\"",
@@ -1105,7 +1084,6 @@
     "notValid": "Invalid date."
   },
   "payment": {
-    "IUV": "IUV",
     "notice": "Notice",
     "noticeCode": "Notice code",
     "confirm": {
@@ -1121,9 +1099,6 @@
       "a11y": {
         "credit": {
           "hpan": "{{circuit}} ending {{spacedHpan}}"
-        },
-        "paypal": {
-          "owner": "account: {{email}}"
         },
         "bpay": {
           "phone": "Mobile number: {{phoneNumber}}",
@@ -1153,17 +1128,10 @@
       "outcome": {
         "SUCCESS": {
           "title": "Payment method added successfully!",
-          "subtitle": "",
           "secondaryAction": "Continue"
         },
         "AUTH_ERROR": {
           "secondaryAction": "What can you do?"
-        },
-        "CANCELED_BY_USER": {
-          "subtitle": ""
-        },
-        "ALREADY_ONBOARDED": {
-          "subtitle": ""
         }
       }
     },
@@ -1866,7 +1834,6 @@
           "cultureAndEntertainment": "Culture and entertainment",
           "health": "Health and wellness",
           "learning": "Education and learning",
-          "sport": "Sport",
           "home": "Home",
           "telco": "Telephony and internet",
           "finance": "Banking and financial services",
@@ -1897,7 +1864,6 @@
         },
         "ownership": "Who can use this Card?",
         "status": {
-          "title": "Carta Giovani Nazionale",
           "eyca": "EYCA card",
           "eycaPending": "We're linking your Carta Giovani Nazionale to a EYCA Number.",
           "eycaError": "We had some issues with EYCA's systems.",
@@ -2011,20 +1977,6 @@
       }
     },
     "pn": {
-      "aar": {
-        "serviceActivation": {
-          "footer": {
-            "part7": "."
-          }
-        },
-        "flow": {
-          "aarTos": {
-            "body": {
-              "lineEnding": "."
-            }
-          }
-        }
-      },
       "details": {
         "badge": {
           "legalValue": "Legal value"
@@ -2034,13 +1986,9 @@
         "environmentTitle": "Environment",
         "uatLabel": "Use UAT",
         "uatDescription": "Sends Service Activation and AAR requests to the UAT environment",
-        "playgroundTitle": "Lollipop Playground",
         "postBodyLabel": "Post Body",
-        "postBodyPlaceholder": "{\n  p1: \"a string\",\n  p2: {\n    p3: true\n  }\n}",
         "responseStatusCode": "Response Status Code",
-        "responseBody": "Response Body",
-        "requestGet": "GET",
-        "requestPost": "POST"
+        "responseBody": "Response Body"
       }
     },
     "fci": {
@@ -2157,7 +2105,6 @@
       "requests": {
         "header": "Signature status",
         "title": "The status of your signatures",
-        "itemSubtitle": "{{date}} · {{time}} · ID {{id}}",
         "signed": "Signed",
         "notAvailable": "Not available",
         "signingInProgress": "Signature in progress"
@@ -2327,15 +2274,6 @@
             "content": "If you had IT-Wallet enabled, the wallet will be reset and all documents removed."
           }
         }
-      }
-    },
-    "pushNotifications": {
-      "engagementScreen": {
-        "badge": "Consigliato",
-        "title": "Non perderti i messaggi importanti",
-        "body": "Attiva le notifiche push: se leggi subito le comunicazioni a valore legale, potresti risparmiare sui costi di raccomandata.",
-        "cta": "Attiva notifiche push",
-        "toast": "Hai attivato le notifiche push"
       }
     },
     "tour": {
@@ -2528,7 +2466,6 @@
       },
       "PDNDPrerequisites": {
         "code": {
-          "ISEE": "ISEE",
           "FAMILY_UNIT": "Family Unit"
         },
         "familyUnitCode": {
@@ -2690,9 +2627,6 @@
     "details": {
       "error": {
         "title": "We couldn't retrieve the receipt"
-      },
-      "info": {
-        "rrn": "RRN"
       }
     }
   },

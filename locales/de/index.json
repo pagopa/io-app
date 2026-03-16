@@ -36,7 +36,6 @@
       "minusSymbol": "minus",
       "reload": "Neu laden",
       "search": "Suchen",
-      "dateFormat": "DD MMMM YYYY",
       "alert": "Hinweis",
       "activityIndicator": {
         "label": "Wird geladen",
@@ -51,14 +50,8 @@
       },
       "progressTracker": "{{index}} von {{total}}"
     },
-    "symbols": {
-      "question": "?"
-    },
     "date": {
       "invalid": "Ungültiges Datum"
-    },
-    "dateFormats": {
-      "dayMonth": "DD.MM."
     },
     "genericError": "Es liegt ein vorübergehendes Problem vor, bitte versuche es erneut.",
     "genericAlert": "Achtung!",
@@ -76,7 +69,6 @@
       "delete": "Löschen",
       "cancel": "Abbrechen",
       "settings": "Einstellungen",
-      "ok": "OK",
       "continue": "Weiter",
       "notNow": "Jetzt nicht",
       "retry": "Wiederholen",
@@ -87,7 +79,6 @@
       "previous": "Zurück",
       "exit": "Beenden",
       "edit": "Ändern",
-      "info": "Info",
       "activate": "Aktivieren",
       "activate2": "Aktivieren",
       "show": "Anzeigen",
@@ -368,7 +359,6 @@
       "testEnvironmentSectionHeader": "Testumgebung",
       "appVersion": "Version",
       "debugMode": "Debug-Modus",
-      "designSystem": "Design System",
       "banner": {
         "close": "Schließe das Banner und zeige es nicht mehr an."
       }
@@ -967,7 +957,6 @@
     "notValid": "Ungültiges Datum"
   },
   "payment": {
-    "IUV": "IUV",
     "IUV_extended": "Einheitlicher Zahlungskodex (IUV)",
     "notice": "Zahlungsmitteilung",
     "noticeCode": "Zahlungsmitteilungskodex",
@@ -1023,7 +1012,6 @@
       "outcome": {
         "SUCCESS": {
           "title": "Die Karte wurde hinzugefügt!",
-          "subtitle": "",
           "primaryAction": "Details anzeigen",
           "secondaryAction": "Weiter"
         },
@@ -1049,7 +1037,6 @@
         },
         "CANCELED_BY_USER": {
           "title": "Der Vorgang wurde abgebrochen",
-          "subtitle": "",
           "primaryAction": "Schließen"
         },
         "INVALID_SESSION": {
@@ -1059,7 +1046,6 @@
         },
         "ALREADY_ONBOARDED": {
           "title": "Du hast diese Zahlungsmethode bereits hinzugefügt",
-          "subtitle": "",
           "primaryAction": "Schließen"
         },
         "BPAY_NOT_FOUND": {
@@ -1115,9 +1101,6 @@
         "errorCode": "Fehlercode",
         "messageId": "ID der Nachricht",
         "copyToClipboard": "Daten für die Assistenz kopieren"
-      },
-      "a11y": {
-        "announce": "Riepilogo dati avviso"
       }
     },
     "errorTransaction": {
@@ -1394,9 +1377,7 @@
   "messages": {
     "accessibility": {
       "message": {
-        "archive": "archiviare",
         "description": "{{newMessage}}, erhalten von {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{instructions}}",
-        "deselectInstructions": "Tieni premuto per deselezionare",
         "read": "Mitteilung",
         "received_at": "erhalten um",
         "received_on": "erhalten am",
@@ -1778,7 +1759,6 @@
       }
     },
     "validity_interval": "vom {{from}} bis {{to}}",
-    "termsAndConditionFooter": "Premendo \"{{ctaText}}\" dichiari di essere in possesso dei requisiti e di aver letto e compreso la [Guida]({{regulationLink}}) e l'[Informativa Privacy]({{tosUrl}})",
     "tos": {
       "title": "Datenschutzbestimmungen"
     },
@@ -1840,7 +1820,6 @@
           "cultureAndEntertainment": "Kultur und Freizeit",
           "health": "Gesundheit und Wohlbefinden",
           "learning": "Aus- und Weiterbildung",
-          "sport": "Sport",
           "home": "Haushalt",
           "telco": "Telefonie und Internet",
           "finance": "Bank- und Finanzdienstleistungen",
@@ -1962,9 +1941,6 @@
           "expired": "Vom Konto entfernen"
         }
       }
-    },
-    "cdc": {
-      "request": "Richiedi Carta della Cultura"
     }
   },
   "features": {
@@ -2393,14 +2369,6 @@
             "secondary": "Abbrechen"
           }
         },
-        "eidResult": {
-          "success": {
-            "title": "È tutto pronto!",
-            "subtitle": "Ora puoi aggiungere il primo documento al Portafoglio di IO.",
-            "primaryAction": "Aggiungi primo documento",
-            "secondaryAction": "Continua più tardi"
-          }
-        },
         "credentialResult": {
           "toast": "Erledigt!"
         },
@@ -2430,11 +2398,6 @@
             "title": "Aktiviere Dokumente in IO, um fortzufahren",
             "body": "Um deine Dokumente zum Konto hinzuzufügen, musst du Folgendes aktivieren: ",
             "bodyBold": "Dokumente in IO"
-          },
-          "itWallet": {
-            "title": "Ottieni IT-Wallet per continuare",
-            "body": "Per aggiungere nuovi documenti al tuo Portafoglio di IO ottieni IT-Wallet: ti basta avere con te la Carta di Identità Elettronica (CIE).",
-            "bodyBold": ""
           },
           "primaryAction": "Start",
           "secondaryAction": "Jetzt nicht"
@@ -2764,8 +2727,7 @@
     "expiring": "Verfällt am {{endDate}}",
     "expired": "Abgelaufen am {{endDate}}",
     "paused": "In Pause",
-    "removed": "Entfernt",
-    "used": "Utilizzato"
+    "removed": "Entfernt"
   },
   "transaction": {
     "details": {
@@ -2787,7 +2749,6 @@
         "transactionId": "Transaktions-ID",
         "paymentMethod": "Zahlungsmethode",
         "authCode": "Autorisierungscode",
-        "rrn": "RRN",
         "executedBy": "Ausgeführt von",
         "headedTo": "Zahlungsmethode, ausgestellt auf",
         "alert": {
@@ -2800,7 +2761,6 @@
         "debtor": "Schuldner",
         "subject": "Zahlungsgrund",
         "noticeCode": "Kodex der Zahlungsmitteilung/IUV",
-        "noticeCodeAccessible": "Codice avviso/Identificativo Univoco Versamento",
         "taxCode": "Steuernummer Körperschaft"
       }
     }
@@ -2909,34 +2869,17 @@
     "onboarding": {
       "enableMessages": {
         "cancelAction": "Stornieren",
-        "subtitle": "Questo passaggio è necessario per procedere con la richiesta. Ti permetterà di ricevere gli aggiornamenti sul {{initiativeName}}.",
         "title": "Aktivieren Sie die Möglichkeit, Sie in der App zu kontaktieren",
         "confirmAction": "OK, aktiv"
       },
       "enableNotification": {
-        "title": "Non perderti l’esito delle tue richieste",
-        "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
-        "action": "Attiva notifiche push",
-        "deny": "Non attivare",
-        "success": "Sie aktivierten Push -Benachrichtigungen",
-        "advice": "Consigliato"
-      },
-      "failToRetry": {
-        "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo..."
-      },
-      "loading": {
-        "subtitle": "Attendi qualche secondo",
-        "title": "Stiamo elaborando la tua richiesta"
+        "success": "Sie aktivierten Push -Benachrichtigungen"
       }
     },
     "support": {
       "errorCode": "Fehlercode",
       "serviceId": "Service ID",
-      "initiativeId": "ID Initiative",
-      "supportTitle": "Contatta l'assistenza",
-      "chat": "Chiedi aiuto in chat",
-      "additionalDataTitle": "Dati aggiuntivi",
-      "copyAll": "Copia tutti"
+      "initiativeId": "ID Initiative"
     }
   }
 }
