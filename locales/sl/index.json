@@ -105,6 +105,25 @@
   },
   "startup": {
     "title": "Inicializacija",
+    "title2": "Še malo potrpljenja …",
+    "subtitle2": "Ne zapri aplikacije, trajalo bo največ 20 sekund.",
+    "connection_lost": {
+      "title": "Nimaš aktivne internetne povezave",
+      "description": "Preveri svojo povezavo in znova zaženi aplikacijo."
+    },
+    "slowdowns_results_screen": {
+      "title": "Zdi se, da stvari potekajo nekoliko počasneje",
+      "subtitle": "To je lahko posledica naših sistemov ali povezave tvoje naprave. Poskusi znova čez nekaj minut."
+    },
+    "cdn_unreachable_results_screen": {
+      "title": "Nekaj ni delovalo",
+      "subtitle": "Zapri aplikacijo in poskusi znova čez nekaj minut."
+    },
+    "offline_access_banner": {
+      "title": "Potrebuješ dokumente?",
+      "content": "Ne čakaj, vedno so na voljo, tudi brez povezave!",
+      "action": "Pojdi na dokumente"
+    },
     "userDeletePendingAlert": {
       "title": "Brisanje profila je v teku",
       "message": "Če si si premislil/a, lahko zahtevo prekličeš v razdelku Zasebnost v tvojem profilu.",
@@ -308,6 +327,24 @@
       "contextualHelpContent": "**V Nastavitvah lahko preveriš in spremeniš nastavitve**, ki jih uporabljajo vse storitve na IO.\nTu si lahko ogledaš e-poštni naslov, telefonsko številko in jezik, povezan z računom, ter omogočiš ali onemogočiš biometrično prepoznavanje.\n",
       "list": {
         "wip": "V obdelavi",
+        "service_contact": {
+          "title": "Upravljanje storitev",
+          "subtitle": "Izberi, kdo te lahko kontaktira"
+        },
+        "send_email_messages": {
+          "title": "Posredovanje sporočil po e-pošti",
+          "subtitle": "Prejmi predogled sporočil"
+        },
+        "appearance": {
+          "title": "Videz aplikacije",
+          "subtitle": "Prilagodi aplikacijo svojim potrebam",
+          "typefaceStyle": {
+            "title": "Slog pisave"
+          },
+          "theme": {
+            "title": "Tema"
+          }
+        },
         "language": {
           "title": "Jezik",
           "subtitle": "Izberi jezik za aplikacijo in za sporočila"
@@ -451,6 +488,9 @@
       "contextualHelpTitle": "Katero je tvoje geslo",
       "contextualHelpContent": "Za prijavo moraš v ustrezna polja vnesti svojo davčno številko in geslo.\n**Geslo je alfanumerična koda, ki si jo nastavil/a pri ustvarjanju svoje digitalne identitete SPID.** Če se ga ne spomniš, lahko izbereš obnovitev gesla in začneš ustrezen postopek, ki ga upravlja neposredno ponudnik identitete.\nKo boš vnesel/la davčno št. in geslo, boš prejel/a OTP od svojega ponudnika identitete: potrdi zahtevo za dostop in se vrni v aplikacijo IO za nadaljevanje prijave. Na tej točki boš našel/la zaslon, ki pooblašča ponudnika identitete, da IO posreduje vrsto informacij, ki so potrebne za uporabo aplikacije, in različne storitve, ki jih ponujajo javni organi prek IO: pritisniti moraš »Odobri«, da privoliš in nadaljuješ s postopkom avtentikacije.\n"
     },
+    "idp_login_success": {
+      "contentTitle": "Živjo, {{name}}!"
+    },
     "errors": {
       "network": {
         "title": "Težava s prijavo"
@@ -589,6 +629,14 @@
       "title": "Razpoložljive pobude"
     },
     "payment": {
+      "methodSelection": {
+        "latestMethod": "Nedavno uporabljeno",
+        "yourMethods": "Shranjeni",
+        "otherMethods": "Vsi načini"
+      },
+      "psp": {
+        "pspTitle": "Upravljavec"
+      },
       "failure": {
         "PAYMENT_UNAVAILABLE": {
           "title": "S tem obvestilom je tehnična težava"
@@ -629,6 +677,16 @@
     "removeCta": "Izbriši to metodo"
   },
   "messages": {
+    "search": {
+      "emptyState": {
+        "title": "Vnesi vsaj tri znake"
+      },
+      "input": {
+        "placeholderShort": "Vnesi besedilo",
+        "cancel": "Prekliči",
+        "clear": "Počisti"
+      }
+    },
     "accessibility": {
       "message": {
         "read": "Sporočilo",
@@ -710,6 +768,42 @@
     "subtitle": "Želiš, da IO posreduje vsebino sporočil tudi za"
   },
   "services": {
+    "home": {
+      "favourites": "Priljubljene storitve",
+      "featured": {
+        "institutions": {
+          "title": "Izpostavljene ustanove"
+        },
+        "services": {
+          "title": "V ospredju"
+        }
+      },
+      "institutions": {
+        "title": "Državne"
+      }
+    },
+    "search": {
+      "input": {
+        "placeholder": "Poišči državno ali lokalno ustanovo",
+        "placeholderShort": "Poišči ustanovo",
+        "cancel": "Prekliči",
+        "clear": "Počisti"
+      },
+      "emptyState": {
+        "invalidQuery": {
+          "title": "Vnesi ime ustanove,\ndržavne ali lokalne"
+        },
+        "noResults": {
+          "title": "Ni bilo najdenih rezultatov",
+          "subtitle": "Vnesi ime obstoječe državne ali lokalne ustanove."
+        }
+      },
+      "list": {
+        "header": {
+          "title": "Rezultati"
+        }
+      }
+    },
     "optIn": {
       "preferences": {
         "completed": {
@@ -742,6 +836,9 @@
         "title": "Pogoji in zasebnost",
         "privacyLink": "Politika zasebnosti"
       },
+      "metadata": {
+        "title": "Kontakti in informacije"
+      },
       "preferences": {
         "messageReadStatus": "Prejemanje potrdil o branju",
         "pushNotifications": "Pošiljanje potisnih obvestil"
@@ -752,7 +849,16 @@
     "contextualHelpContent": "**Na strani Storitve si lahko ogledaš seznam ustanov, ki ponujajo storitve na IO, in seznam storitev, povezanih s posamezno ustanovo.** Storitve so razdeljene med lokalne, kjer lahko izbereš ustanove, ki te zanimajo, glede na geografsko območje, kjer živiš, državno, tj. centralne uprave, ki ponujajo storitve vsem italijanskim državljanom, in končno vse, kjer lahko najdeš celoten seznam vseh storitev, ki so na voljo na IO (tako lokalnih kot državnih).\nVabimo te, da uporabiš to stran za ogled storitev, ki jih ponuja IO, nastavitev seznama lokalnih storitev in podrobnosti o posameznih storitvah. Kadar koli nova lokalna ali državna storitev dospe na IO, boš prejel/a obvestilo, tako da lahko takoj preveriš, za kaj gre in ali je zate uporabna.\n"
   },
   "identification": {
-    "title": "Pozdravljen/a!",
+    "instructions": {
+      "useFingerPrintOrUnlockCode": "uporabi **prstni odtis** ali vnesi **kodo za odklepanje**",
+      "useFingerPrintOrUnlockCodeA11y": "uporabi prstni odtis ali vnesi kodo za odklepanje",
+      "useFaceIdOrUnlockCode": "uporabi **obraz** ali vnesi **kodo za odklepanje**",
+      "useFaceIdOrUnlockCodeA11y": "uporabi obraz ali vnesi kodo za odklepanje",
+      "useUnlockCode": "vnesi **kodo za odklepanje**",
+      "useUnlockCodeA11y": "vnesi kodo za odklepanje"
+    },
+    "title": "Živjo, {{name}}!",
+    "titleOffline": "Živjo!",
     "titleValidation": "Potrdi operacijo",
     "biometric": {
       "title": "Biometrična identifikacija",
@@ -976,6 +1082,46 @@
     }
   },
   "features": {
+    "payments": {
+      "title": "Plačila",
+      "methods": {
+        "title": "Načini plačila"
+      },
+      "transactions": {
+        "title": "Potrdila pagoPA"
+      }
+    },
+    "wallet": {
+      "cards": {
+        "categories": {
+          "other": "Bonusi in drugo"
+        }
+      },
+      "home": {
+        "screen": {
+          "legacy": {
+            "cta": "Dodaj v Denarnico"
+          },
+          "cta": "Dodaj dokument",
+          "emptyMessage": "Tu se bodo prikazali tvoje vozniško dovoljenje, tvoja zdravstvena kartica in drugi digitalni dokumenti!"
+        },
+        "toast": {
+          "newMethod": "Metoda dodana!"
+        },
+        "paymentsBanner": {
+          "title": "Želiš plačati obvestilo?",
+          "action": "Pojdi na razdelek Plačila"
+        }
+      },
+      "onboarding": {
+        "title": "Kaj želiš dodati v Denarnico?"
+      }
+    },
+    "messages": {
+      "payments": {
+        "title": "Obvestila pagoPA"
+      }
+    },
     "pn": {
       "service": {
         "activate": "Aktiviraj storitev",
