@@ -1,5 +1,5 @@
 import {
-  Banner,
+  BodySmall,
   ListItemHeader,
   RadioGroup,
   RadioItem,
@@ -12,39 +12,22 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import _ from "lodash";
-import {
-  createRef,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Alert, View } from "react-native";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { AlertModal } from "../../../../components/ui/AlertModal";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { LightModalContext } from "../../../../components/ui/LightModal";
-import { availableTranslations, Locales } from "../../../../i18n";
-import {
-  AppLocale,
-  preferredLanguageSaveSuccess
-} from "../../../../store/actions/persistedPreferences";
+import { availableTranslations, Locales, setLocale } from "../../../../i18n";
+import { preferredLanguageSaveSuccess } from "../../../../store/actions/persistedPreferences";
 
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { sectionStatusByKeySelector } from "../../../../store/reducers/backendStatus/sectionStatus";
 import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
 import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 import { usePrevious } from "../../../../utils/hooks/usePrevious";
 import {
   fromLocaleToPreferredLanguage,
-  getFullLocale
+  fromPreferredLanguageToLocale
 } from "../../../../utils/locale";
-import { openWebUrl } from "../../../../utils/url";
 import { profileUpsert } from "../../common/store/actions";
 import { profileSelector } from "../../common/store/selectors";
-import { isAppLocaleSelectionEnabled } from "../../../../config";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.language.contextualHelpTitle",
@@ -55,21 +38,14 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * Allows the user to select one of the available Languages as preferred
  */
 
-type AppLocaleId = `app-locale-${AppLocale}`;
+type AppLocaleId = `app-locale-${Locales}`;
 
 const LanguagesPreferencesScreen = () => {
-  const viewRef = createRef<View>();
   const dispatch = useIODispatch();
   const toast = useIOToast();
-  const selectedLanguage = useRef<string | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState(false);
-  const { showModal } = useContext(LightModalContext);
+  const previousSelectedItem = useRef<string | undefined>(undefined);
   const profile = useIOSelector(profileSelector, _.isEqual);
   const prevProfile = usePrevious(profile);
-  const bannerInfoSelector = useIOSelector(
-    sectionStatusByKeySelector("favourite_language")
-  );
-  const isBannerVisible = bannerInfoSelector && bannerInfoSelector.is_visible;
   const preferredLanguageSelect = useIOSelector(
     preferredLanguageSelector,
     _.isEqual
@@ -106,7 +82,7 @@ const LanguagesPreferencesScreen = () => {
   const renderedItem: Array<RadioItem<string>> = useMemo(
     () =>
       availableTranslations.map(item => ({
-        value: I18n.t(`locales.${item}`, {
+        value: I18n.t(`localesTranslated.${item}`, {
           defaultValue: item
         }),
         id: item,
@@ -116,40 +92,64 @@ const LanguagesPreferencesScreen = () => {
   );
 
   const initialSelectedItem = useMemo(
-    () => renderedItem.find(item => item.id === preferredLanguage)?.id,
-    [preferredLanguage, renderedItem]
+    () =>
+      renderedItem.find(
+        item =>
+          pot.isSome(profile) &&
+          profile.value.preferred_languages &&
+          item.id ===
+            fromPreferredLanguageToLocale(profile.value?.preferred_languages[0])
+      )?.id,
+    [profile, renderedItem]
   );
 
   const [selectedItem, setSelectedItem] = useState(initialSelectedItem);
 
+  /* IT, EN pinned first, then all available translations
+     sorted alphabetically */
   const appLocaleOptions: Array<RadioItem<AppLocaleId>> = useMemo(
     () =>
-      (["it", "en", "de", "fr", "sl"] as const).map(locale => ({
-        value: I18n.t(`locales.${locale}`, {
+      [
+        ...new Set<Locales>([
+          "it",
+          "en",
+          ...[...availableTranslations].sort((a, b) => a.localeCompare(b))
+        ])
+      ].map(locale => ({
+        value: I18n.t(`localesTranslated.${locale}`, {
           defaultValue: locale
         }),
-        id: `app-locale-${locale}` as AppLocaleId
+        id: `app-locale-${locale}`
       })),
     []
   );
 
-  const [selectedAppLocale, setSelectedAppLocale] = useState<AppLocaleId>(
-    `app-locale-${I18n.language as AppLocale}` as AppLocaleId
+  const initialAppSelectedItem = useMemo(
+    () => renderedItem.find(item => item.id === preferredLanguage)?.id,
+    [preferredLanguage, renderedItem]
   );
 
-  const handleAppLocaleChange = useCallback((localeId: AppLocaleId) => {
-    const locale = localeId.replace("app-locale-", "") as AppLocale;
-    setSelectedAppLocale(localeId);
-    Alert.alert("Language selected", locale);
-  }, []);
+  const [selectedAppLocale, setSelectedAppLocale] = useState<AppLocaleId>(
+    `app-locale-${initialAppSelectedItem as Locales}`
+  );
+
+  const handleAppLocaleChange = useCallback(
+    (localeId: AppLocaleId) => {
+      const locale = localeId.replace("app-locale-", "") as Locales;
+
+      setLocale(locale);
+      preferredLanguageSaveSuccessDispatch(locale);
+      setSelectedAppLocale(localeId);
+      toast.success(
+        I18n.t(
+          "profile.preferences.list.preferred_language.toastApp.success.title"
+        )
+      );
+    },
+    [preferredLanguageSaveSuccessDispatch, toast]
+  );
 
   useEffect(() => {
-    // start updating
-    if (pot.isUpdating(profile)) {
-      setIsLoading(true);
-      return;
-    }
-
     // update completed
     if (
       prevProfile &&
@@ -157,50 +157,46 @@ const LanguagesPreferencesScreen = () => {
       pot.isSome(profile) &&
       !pot.isError(profile)
     ) {
-      setIsLoading(false);
-      preferredLanguageSaveSuccessDispatch(selectedLanguage.current as Locales);
-      setSelectedItem(selectedLanguage.current);
-      showModal(
-        <AlertModal
-          message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
-        />
-      );
       toast.success(
         I18n.t(
-          "profile.preferences.list.preferred_language.toast.success.title"
+          "profile.preferences.list.preferred_language.toastMessages.success.title"
         )
       );
       return;
     }
 
-    // update error
+    // update error: revert to previous selection
     if (
       prevProfile &&
       pot.isSome(prevProfile) &&
       !pot.isError(prevProfile) &&
       pot.isError(profile)
     ) {
-      setIsLoading(false);
-      toast.error(I18n.t("errors.profileUpdateError"));
+      setSelectedItem(previousSelectedItem.current);
+      toast.error(I18n.t("global.genericError"));
     }
-  }, [
-    selectedLanguage,
-    preferredLanguageSaveSuccessDispatch,
-    prevProfile,
-    profile,
-    selectedItem,
-    showModal,
-    toast
-  ]);
+  }, [prevProfile, profile, toast]);
 
   const onLanguageSelected = useCallback(
     (language: string) => {
       if (selectedItem !== language) {
+        // eslint-disable-next-line functional/immutable-data
+        previousSelectedItem.current = selectedItem;
+        setSelectedItem(language);
+        upsertProfile(language as Locales);
+      }
+    },
+    [selectedItem, upsertProfile]
+  );
+
+  const onAppLanguageSelected = useCallback(
+    (language: string) => {
+      if (selectedAppLocale !== language) {
+        const locale = language.replace("app-locale-", "") as Locales;
         Alert.alert(
-          `${I18n.t(
-            "profile.preferences.list.preferred_language.alert.title"
-            // eslint-disable-next-line sonarjs/no-nested-template-literals
-          )} ${I18n.t(`locales.${language as Locales}`)}?`,
+          I18n.t("profile.preferences.list.preferred_language.alert.title", {
+            lang: I18n.t(`locales.${locale}`)
+          }),
           I18n.t("profile.preferences.list.preferred_language.alert.subtitle"),
           [
             {
@@ -210,89 +206,77 @@ const LanguagesPreferencesScreen = () => {
             {
               text: I18n.t("global.buttons.confirm"),
               style: "default",
-              onPress: () => {
-                // eslint-disable-next-line functional/immutable-data
-                selectedLanguage.current = language;
-                upsertProfile(language as Locales);
-              }
+              onPress: () => handleAppLocaleChange(language as AppLocaleId)
             }
           ],
           { cancelable: false }
         );
       }
     },
-    [selectedItem, upsertProfile]
+    [handleAppLocaleChange, selectedAppLocale]
   );
 
   return (
-    <LoadingSpinnerOverlay isLoading={isLoading}>
-      <IOScrollViewWithLargeHeader
-        includeContentMargins
-        title={{
-          label: I18n.t("profile.preferences.list.preferred_language.title")
-        }}
-        description={I18n.t(
-          "profile.preferences.list.preferred_language.subtitle"
-        )}
-        canGoback={true}
-        headerActionsProp={{ showHelp: true }}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-      >
-        <VStack space={24}>
-          <View>
-            {isAppLocaleSelectionEnabled && (
-              <ListItemHeader
-                iconName="institution"
-                label={I18n.t(
-                  "profile.preferences.list.preferred_language.headers.services"
-                )}
-              />
+    <IOScrollViewWithLargeHeader
+      includeContentMargins
+      title={{
+        label: I18n.t("profile.preferences.list.preferred_language.title")
+      }}
+      description={I18n.t(
+        "profile.preferences.list.preferred_language.subtitle"
+      )}
+      canGoback={true}
+      headerActionsProp={{ showHelp: true }}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+    >
+      <VStack space={24}>
+        <View>
+          <ListItemHeader
+            iconName="device"
+            label={I18n.t(
+              "profile.preferences.list.preferred_language.sections.app.title"
             )}
-            <RadioGroup<string>
-              type="radioListItem"
-              items={renderedItem}
-              selectedItem={selectedItem}
-              onPress={onLanguageSelected}
-            />
-            {isBannerVisible && (
-              <>
-                <VSpacer />
-                <Banner
-                  ref={viewRef}
-                  color="neutral"
-                  content={bannerInfoSelector.message[getFullLocale()]}
-                  pictogramName="charity"
-                  action={I18n.t(
-                    "profile.preferences.list.preferred_language.banner.button"
-                  )}
-                  onPress={() =>
-                    openWebUrl(
-                      bannerInfoSelector.web_url?.[getFullLocale()] || ""
-                    )
-                  }
-                />
-              </>
+          />
+          <BodySmall>
+            {I18n.t(
+              "profile.preferences.list.preferred_language.sections.app.description"
             )}
-          </View>
-          {isAppLocaleSelectionEnabled && (
-            <View>
-              <ListItemHeader
-                iconName="device"
-                label={I18n.t(
-                  "profile.preferences.list.preferred_language.headers.app"
-                )}
-              />
-              <RadioGroup<AppLocaleId>
-                type="radioListItem"
-                items={appLocaleOptions}
-                selectedItem={selectedAppLocale}
-                onPress={handleAppLocaleChange}
-              />
-            </View>
-          )}
-        </VStack>
-      </IOScrollViewWithLargeHeader>
-    </LoadingSpinnerOverlay>
+          </BodySmall>
+
+          <VSpacer size={8} />
+
+          <RadioGroup<AppLocaleId>
+            type="radioListItem"
+            items={appLocaleOptions}
+            selectedItem={selectedAppLocale}
+            onPress={onAppLanguageSelected}
+          />
+        </View>
+
+        <View>
+          <ListItemHeader
+            iconName="email"
+            label={I18n.t(
+              "profile.preferences.list.preferred_language.sections.messages.title"
+            )}
+          />
+          <BodySmall>
+            {I18n.t(
+              "profile.preferences.list.preferred_language.sections.messages.description"
+            )}
+          </BodySmall>
+
+          <VSpacer size={8} />
+
+          <RadioGroup<string>
+            type="radioListItem"
+            items={renderedItem}
+            selectedItem={selectedItem}
+            onPress={onLanguageSelected}
+          />
+        </View>
+      </VStack>
+    </IOScrollViewWithLargeHeader>
   );
 };
 
