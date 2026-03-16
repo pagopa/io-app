@@ -14,30 +14,17 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import {
-  assistanceToolRemoteConfig,
-  resetCustomFields,
-  addTicketCustomField,
-  zendeskItWalletFailureCode,
-  zendeskItWalletCategory,
-  zendeskCategoryId,
-  appendLog,
-  resetLog
-} from "../../../../utils/supportAssistance";
-import {
-  zendeskSelectedCategory,
-  zendeskSupportStart
-} from "../../../zendesk/store/actions";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { IssuanceFailure } from "../../machine/eid/failure";
 import { CredentialIssuanceFailure } from "../../machine/credential/failure";
 import { ItwFailure } from "../utils/ItwFailureTypes.ts";
 import { RemoteFailure } from "../../presentation/remote/machine/failure.ts";
 import { isDefined } from "../../../../utils/guards.ts";
+import {
+  useItwZendeskSupport,
+  ZendeskSubcategoryValue
+} from "./useItwZendeskSupport";
 
 const { isWalletProviderResponseError, isIssuerResponseError } = Errors;
 
@@ -48,14 +35,7 @@ type SupportContactMethods = Partial<{
   website: string;
 }>;
 
-export enum ZendeskSubcategoryValue {
-  IT_WALLET_PRESENTAZIONE_REMOTA = "it_wallet_presentazione_remota",
-  IT_WALLET_AGGIUNTA_DOCUMENTI = "it_wallet_aggiunta_documenti"
-}
-
 // The subcategory is fixed for now. In the future it can be made dynamic depending on the error type.
-const ZENDESK_SUBCATEGORY_ID = "29326690756369";
-
 const contactMethodsByCredentialType: Record<
   string,
   SupportContactMethods | undefined
@@ -110,38 +90,15 @@ export const useItwFailureSupportModal = ({
   supportChatEnabled,
   zendeskSubcategory
 }: Props) => {
-  const dispatch = useIODispatch();
-
-  const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
-  const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
+  const { startItwZendeskSupport } = useItwZendeskSupport();
   const code = extractErrorCode(failure);
 
-  const zendeskAssistanceLogAndStart = () => {
-    resetCustomFields();
-    resetLog();
-
-    addTicketCustomField(zendeskCategoryId, zendeskItWalletCategory.value);
-    addTicketCustomField(ZENDESK_SUBCATEGORY_ID, zendeskSubcategory);
-    addTicketCustomField(zendeskItWalletFailureCode, code);
-    appendLog(JSON.stringify(failure));
-
-    dispatch(
-      zendeskSupportStart({
-        startingRoute: "n/a",
-        assistanceType: {
-          itWallet: true
-        }
-      })
-    );
-    dispatch(zendeskSelectedCategory(zendeskItWalletCategory));
-  };
-
   const handleAskAssistance = () => {
-    switch (choosenTool) {
-      case ToolEnum.zendesk:
-        zendeskAssistanceLogAndStart();
-        break;
-    }
+    startItwZendeskSupport({
+      subcategory: zendeskSubcategory,
+      errorCode: code,
+      logData: JSON.stringify(failure)
+    });
   };
 
   const getContactMethods = (): Array<JSX.Element> => {

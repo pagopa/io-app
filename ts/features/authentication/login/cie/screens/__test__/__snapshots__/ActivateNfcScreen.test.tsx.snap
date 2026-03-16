@@ -461,7 +461,6 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     maxFontSizeMultiplier={1.5}
-                                    role="heading"
                                     style={
                                       [
                                         {},
@@ -516,7 +515,8 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                   }
                                 >
                                   <View
-                                    accessible={true}
+                                    accessible={false}
+                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       {
                                         "flexDirection": "column",
@@ -611,7 +611,8 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                   }
                                 >
                                   <View
-                                    accessible={true}
+                                    accessible={false}
+                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       {
                                         "flexDirection": "column",
@@ -706,7 +707,8 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                   }
                                 >
                                   <View
-                                    accessible={true}
+                                    accessible={false}
+                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       {
                                         "flexDirection": "column",
@@ -1128,7 +1130,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -1364,7 +1366,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",

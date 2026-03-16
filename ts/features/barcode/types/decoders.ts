@@ -14,6 +14,7 @@ import { SignatureRequestDetailView } from "../../../../definitions/fci/Signatur
 import { decodePosteDataMatrix } from "../../../utils/payment";
 import { ItwRemoteRequestPayload } from "../../itwallet/presentation/remote/utils/itwRemoteTypeUtils";
 import { validateItwPresentationQrCodeParams } from "../../itwallet/presentation/remote/utils/itwRemotePresentationUtils";
+import { selectItwSpecsVersion } from "../../itwallet/common/store/selectors/environment";
 import { pnAARQRCodeRegexSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { isCredentialOfferUri } from "../../itwallet/issuance/offer/itwCredentialOfferUtils";
 import { IOBarcodeType } from "./IOBarcode";
@@ -55,18 +56,19 @@ type StaticDecodedIOBarcode =
       signatureRequestId: SignatureRequestDetailView["id"];
     }
   | {
-      type: "ITW_REMOTE";
-      itwRemoteRequestPayload: ItwRemoteRequestPayload;
-    }
-  | {
       type: "ITW_CREDENTIAL_OFFER";
       itwCredentialOfferUri: string;
     };
+type RuntimeDecodedIOBarcode =
+  | {
+      type: "SEND";
+      qrCodeContent: string;
+    }
+  | {
+      type: "ITW_REMOTE";
+      itwRemoteRequestPayload: ItwRemoteRequestPayload;
+    };
 
-type RuntimeDecodedIOBarcode = {
-  type: "SEND";
-  qrCodeContent: string;
-};
 export type DecodedIOBarcode = StaticDecodedIOBarcode | RuntimeDecodedIOBarcode;
 
 // Barcode decoder function which is used to determine the type and content of a barcode
@@ -135,21 +137,22 @@ const decodeFciBarcode: IOBarcodeStaticDecoderFn = (data: string) =>
     }))
   );
 
-const decodeItwRemoteBarcode: IOBarcodeStaticDecoderFn = (data: string) =>
+const decodeItwRemoteBarcode: IOBarcodeRuntimeDecoderFn = (
+  state: GlobalState,
+  data: string
+) =>
   pipe(
     O.fromNullable(
       data.match(/^https:\/\/continua\.io\.pagopa\.it\/itw\/auth\?(.*)$/)
     ),
     O.map(match => new URLSearchParams(match[1])),
     O.chainEitherK(params =>
-      validateItwPresentationQrCodeParams({
+      validateItwPresentationQrCodeParams(selectItwSpecsVersion(state), {
         client_id: params.get("client_id"),
         request_uri: params.get("request_uri"),
         state: params.get("state"),
-        request_uri_method: params.get(
-          "request_uri_method"
-        ) as ItwRemoteRequestPayload["request_uri_method"]
-      })
+        request_uri_method: params.get("request_uri_method")
+      } as ItwRemoteRequestPayload)
     ),
     O.map(itwRemoteRequestPayload => ({
       type: "ITW_REMOTE",
@@ -199,12 +202,12 @@ const StaticIOBarcodeDecoders: IOBarcodeStaticDecodersType = {
   IDPAY: decodeIdPayBarcode,
   PAGOPA: decodePagoPABarcode,
   FCI: decodeFciBarcode,
-  ITW_REMOTE: decodeItwRemoteBarcode,
   ITW_CREDENTIAL_OFFER: decodeItwCredentialOfferBarcode
 };
 
 const RuntimeIOBarcodeDecoders: IOBarcodeRuntimeDecodersType = {
-  SEND: decodeSENDAARBarcode
+  SEND: decodeSENDAARBarcode,
+  ITW_REMOTE: decodeItwRemoteBarcode
 };
 
 export const IOBarcodeDecoders = {

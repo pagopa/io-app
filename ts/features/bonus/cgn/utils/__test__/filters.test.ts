@@ -2,8 +2,7 @@ import {
   ProductCategory,
   ProductCategoryEnum
 } from "../../../../../../definitions/cgn/merchants/ProductCategory";
-import { Locales } from "../../../../../../locales/locales";
-import { setLocale } from "../../../../../i18n";
+import { setLocale, Locales } from "../../../../../i18n";
 import { orderCategoriesByNameKey } from "../filters";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 

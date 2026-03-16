@@ -67,6 +67,8 @@ import { ItwSettingsScreen } from "../settings/screens/ItwSettingsScreen.tsx";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
 import { ItwIssuanceCredentialOfferValidationScreen } from "../issuance/offer/screens/ItwIssuanceCredentialOfferValidation";
+import { ItwCardOnboardingL3Screen } from "../onboarding/screens/ItwCardOnboardingL3Screen.tsx";
+import { ItwCardOnboardingL2Screen } from "../onboarding/screens/ItwCardOnboardingL2Screen.tsx";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -108,6 +110,14 @@ const InnerNavigator = memo(() => {
       <Stack.Screen
         name={ITW_ROUTES.ONBOARDING}
         component={WalletCardOnboardingScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.L3_ONBOARDING}
+        component={ItwCardOnboardingL3Screen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.L2_ONBOARDING}
+        component={ItwCardOnboardingL2Screen}
       />
       <Stack.Screen
         name={ITW_ROUTES.OFFLINE.WALLET}

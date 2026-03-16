@@ -2,6 +2,116 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.26.0-rc.2](https://github.com/pagopa/io-app/compare/3.26.0-rc.1...3.26.0-rc.2) (2026-03-12)
+
+
+### Chores
+
+* [[IOPLT-1458](https://pagopa.atlassian.net/browse/IOPLT-1458)] Disables connectivity check on background app state ([#7675](https://github.com/pagopa/io-app/issues/7675)) ([23fb2f6](https://github.com/pagopa/io-app/commit/23fb2f6ce614e59db83afd38b1cfd9b328d334cc))
+* [[IOPLT-1684](https://pagopa.atlassian.net/browse/IOPLT-1684)] Removes unused locales from translation files ([#7929](https://github.com/pagopa/io-app/issues/7929)) ([6a21301](https://github.com/pagopa/io-app/commit/6a213011410ce453c969ccc273cd77639f6b4299))
+
+## [3.26.0-rc.1](https://github.com/pagopa/io-app/compare/3.26.0-rc.0...3.26.0-rc.1) (2026-03-11)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4013](https://pagopa.atlassian.net/browse/SIW-4013)] Add check to display frequency header exclusively for the L3 reissuance flow ([#7931](https://github.com/pagopa/io-app/issues/7931)) ([b464817](https://github.com/pagopa/io-app/commit/b464817cbac59337f2da3aa542ef6e776f57688c))
+
+
+### Chores
+
+* [[IOPLT-1688](https://pagopa.atlassian.net/browse/IOPLT-1688)] Add `eslint-plugin-i18next` to avoid not-localized hardcoded strings ([#7932](https://github.com/pagopa/io-app/issues/7932)) ([fb8d36a](https://github.com/pagopa/io-app/commit/fb8d36aaa8b088d681953ab1d48945d4ce62e773))
+
+## [3.26.0-rc.0](https://github.com/pagopa/io-app/compare/3.25.0-rc.5...3.26.0-rc.0) (2026-03-11)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-3965](https://pagopa.atlassian.net/browse/SIW-3965)] Add `credential_type` property to remote presentation tracking  ([#7923](https://github.com/pagopa/io-app/issues/7923)) ([00374ca](https://github.com/pagopa/io-app/commit/00374ca7c702f61bde7a0b51a01cc0f3ecc77eff))
+* [[IOPLT-0000](https://pagopa.atlassian.net/browse/IOPLT-0000)] DS search component bar ([#7920](https://github.com/pagopa/io-app/issues/7920)) ([a253e88](https://github.com/pagopa/io-app/commit/a253e889c269f5bf139bfd8ef18de463d79a6586))
+* **IT Wallet:** [[SIW-3947](https://pagopa.atlassian.net/browse/SIW-3947)] new L3 onboarding screen ([#7885](https://github.com/pagopa/io-app/issues/7885)) ([02f5ff8](https://github.com/pagopa/io-app/commit/02f5ff80be712c613e60f0c589df26269583ad18))
+* **IT-Wallet:** [[SIW-3919](https://pagopa.atlassian.net/browse/SIW-3919)] add hardware key invalid error handling ([#7908](https://github.com/pagopa/io-app/issues/7908)) ([2fbe474](https://github.com/pagopa/io-app/commit/2fbe4745d21b217ca987af5457f820b753d1825b))
+* [[IOPLT-1607](https://pagopa.atlassian.net/browse/IOPLT-1607)] Adds new OS banner dismission on available messages home banner ([#7896](https://github.com/pagopa/io-app/issues/7896)) ([4687421](https://github.com/pagopa/io-app/commit/4687421c673e6796b3cdbcfd8ab69b11a63e8d03)), closes [pagopa/io-services-metadata#1152](https://github.com/pagopa/io-services-metadata/issues/1152)
+
+
+### Bug Fixes
+
+* [[IEL-132](https://pagopa.atlassian.net/browse/IEL-132)] fci support category ([#7912](https://github.com/pagopa/io-app/issues/7912)) ([cb27add](https://github.com/pagopa/io-app/commit/cb27addcacf7595c6506b96d092e76759b471d47))
+* [[IEL-170](https://pagopa.atlassian.net/browse/IEL-170)] Check valid document response for sign_challenge ([#7915](https://github.com/pagopa/io-app/issues/7915)) ([a2e3d9f](https://github.com/pagopa/io-app/commit/a2e3d9f8efa6ff3bf8da05c29d396cb43a6bb8f4))
+* **IT-Wallet:** [[SIW-3848](https://pagopa.atlassian.net/browse/SIW-3848)] Separate tracking select identification mode methods for L3 issuance ([#7873](https://github.com/pagopa/io-app/issues/7873)) ([dec158e](https://github.com/pagopa/io-app/commit/dec158e829c7b9cf581c012fd0c5fc4fa20ce49c))
+* **IT-Wallet:** [[SIW-3959](https://pagopa.atlassian.net/browse/SIW-3959)] Reset wallet on wallet instance status not found ([#7898](https://github.com/pagopa/io-app/issues/7898)) ([0f305fb](https://github.com/pagopa/io-app/commit/0f305fb34150a73029bf4f8fc63183f0ed1fa9ad))
+* **IT-Wallet:** [[SIW-3997](https://pagopa.atlassian.net/browse/SIW-3997)] Recover from invalid DCAppAttest key during wallet instance attestation ([#7917](https://github.com/pagopa/io-app/issues/7917)) ([e524f15](https://github.com/pagopa/io-app/commit/e524f15b15a339f3f45e0a29fa3ae0912b41d407))
+* **IT-Wallet:** [[SIW-4008](https://pagopa.atlassian.net/browse/SIW-4008)] Adjust views spacing in L3 Onboarding screen ([#7921](https://github.com/pagopa/io-app/issues/7921)) ([0fddced](https://github.com/pagopa/io-app/commit/0fddcedd6c8a73d8c656e8914d15a1ebbdfb6639))
+* **IT-Wallet:** [[SIW-4012](https://pagopa.atlassian.net/browse/SIW-4012)] fix MDOC credential issuance on IT-Wallet activation ([#7925](https://github.com/pagopa/io-app/issues/7925)) ([b795e1d](https://github.com/pagopa/io-app/commit/b795e1d08228ffb3ac9d8483732dbf71ca7077e5))
+* **itw:** [[SIW-3989](https://pagopa.atlassian.net/browse/SIW-3989)] fix missing ITW Zendesk metadata and extract shared primitive ([#7918](https://github.com/pagopa/io-app/issues/7918)) ([97e0871](https://github.com/pagopa/io-app/commit/97e087137af49935105abfc204d5f453e397dfaa))
+* [[IOCOM-2990](https://pagopa.atlassian.net/browse/IOCOM-2990)] SEND AAR CIE error/tracking misalignment ([#7880](https://github.com/pagopa/io-app/issues/7880)) ([9e779c8](https://github.com/pagopa/io-app/commit/9e779c81fa5645cff51f60f41a2b96ce96f4a6e9))
+* [[IOPLT-1656](https://pagopa.atlassian.net/browse/IOPLT-1656)] Fixes bold texts not showing on IOMarkdown rendering on Android ([#7913](https://github.com/pagopa/io-app/issues/7913)) ([8ffb67b](https://github.com/pagopa/io-app/commit/8ffb67bfd8de5ec5362ee12c9909a2a4efddc53c))
+
+
+### Chores
+
+* [[IOPLT-1658](https://pagopa.atlassian.net/browse/IOPLT-1658)] Refactors TranslationKeys and Locales typedef ([#7928](https://github.com/pagopa/io-app/issues/7928)) ([1102875](https://github.com/pagopa/io-app/commit/1102875543ef0985b0b2e9bf31710f360df526f6))
+* **release:** 3.25.0-rc.7 ([#7924](https://github.com/pagopa/io-app/issues/7924)) ([17e6e09](https://github.com/pagopa/io-app/commit/17e6e096fca00542bcc100b2e0049c9611e78412))
+* [[IOPID-000](https://pagopa.atlassian.net/browse/IOPID-000)] Update label for `CameraPermissionView` component ([#7922](https://github.com/pagopa/io-app/issues/7922)) ([c42d0f4](https://github.com/pagopa/io-app/commit/c42d0f4e0a5d97bb98db90fceb5cbe9df93aa11f))
+* [[IOPID-3782](https://pagopa.atlassian.net/browse/IOPID-3782)] Update default ToS version to 5.4 ([#7904](https://github.com/pagopa/io-app/issues/7904)) ([774eab1](https://github.com/pagopa/io-app/commit/774eab10e22f4688987f7b3b8d5d966d051d05a7))
+* [[IOPLT-1657](https://pagopa.atlassian.net/browse/IOPLT-1657)] Temporary disables OTA updates on app locales ([#7907](https://github.com/pagopa/io-app/issues/7907)) ([aca19d0](https://github.com/pagopa/io-app/commit/aca19d08f9277e7ba4b85ba857baaec5e2d9a0b9))
+* [[IOPLT-1667](https://pagopa.atlassian.net/browse/IOPLT-1667)] Update `io-app-design-system` to `6.0.5` ([#7910](https://github.com/pagopa/io-app/issues/7910)) ([a942d02](https://github.com/pagopa/io-app/commit/a942d020bbe27af440b4f73a06159647bdc1f0a5))
+
+## [3.25.0-rc.7](https://github.com/pagopa/io-app/compare/3.25.0-rc.6...3.25.0-rc.7) (2026-03-09)
+
+
+### Chores
+
+* [[IOPLT-1657](https://pagopa.atlassian.net/browse/IOPLT-1657)] Temporary disables OTA updates on app locales ([#7907](https://github.com/pagopa/io-app/issues/7907)) ([223f5b5](https://github.com/pagopa/io-app/commit/223f5b5adf9c4f468551832a0e0f5c9c469c9315))
+
+## [3.25.0-rc.6](https://github.com/pagopa/io-app/compare/3.25.0-rc.3...3.25.0-rc.6) (2026-03-09)
+
+
+### Chores
+
+* **release:** 3.25.0-rc.5 ([fead9e3](https://github.com/pagopa/io-app/commit/fead9e305a84fa2f9b4380f919eaa58a353277d2))
+* [[IOPID-000](https://pagopa.atlassian.net/browse/IOPID-000)] Update label for `CameraPermissionView` component ([#7922](https://github.com/pagopa/io-app/issues/7922)) ([177f799](https://github.com/pagopa/io-app/commit/177f7999fb5cc8488335df362506f8305f3b699a))
+
+## [3.25.0-rc.5](https://github.com/pagopa/io-app/compare/3.25.0-rc.4...3.25.0-rc.5) (2026-03-02)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-3936](https://pagopa.atlassian.net/browse/SIW-3936)] Update tracking for users without CIE card in L3 upgrade flow ([#7901](https://github.com/pagopa/io-app/issues/7901)) ([623f895](https://github.com/pagopa/io-app/commit/623f8950d2123e2b64ecd19b6097db635f6932be))
+
+
+### Chores
+
+* [[IOPLT-1636](https://pagopa.atlassian.net/browse/IOPLT-1636)] Adds tracking information for ingress_timeout when versionInfo is not loaded ([#7906](https://github.com/pagopa/io-app/issues/7906)) ([f0fad8f](https://github.com/pagopa/io-app/commit/f0fad8f38bc25804be3502a34cb7c85df088f282))
+* [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Bump io-react-native-cie to v1.3.5-rc.2 ([#7905](https://github.com/pagopa/io-app/issues/7905)) ([93cfeab](https://github.com/pagopa/io-app/commit/93cfeab65fa5d7601a41a94c7a0bba1c83ee5c01))
+* **IT-Wallet:** [[SIW-3938](https://pagopa.atlassian.net/browse/SIW-3938)] Update ITW_ID_method assignment during PID issuance for analytics tracking ([#7889](https://github.com/pagopa/io-app/issues/7889)) ([7fefc54](https://github.com/pagopa/io-app/commit/7fefc54d6f1893275305bd89b803d0a2515c0b36))
+
+## [3.25.0-rc.4](https://github.com/pagopa/io-app/compare/3.25.0-rc.3...3.25.0-rc.4) (2026-03-02)
+
+
+### Chores
+
+* [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Bump io-react-native-cie to v1.3.5-rc.1 ([#7903](https://github.com/pagopa/io-app/issues/7903)) ([6bc3dc5](https://github.com/pagopa/io-app/commit/6bc3dc5ff0b88ca96e722277f2d4299c93466791))
+
+## [3.25.0-rc.3](https://github.com/pagopa/io-app/compare/3.25.0-rc.2...3.25.0-rc.3) (2026-02-26)
+
+
+### Features
+
+* [[IOPLT-1609](https://pagopa.atlassian.net/browse/IOPLT-1609)] Add the new `GuidedTour` to create a multi-step tour ([#7866](https://github.com/pagopa/io-app/issues/7866)) ([491c55b](https://github.com/pagopa/io-app/commit/491c55b8ad15479c3aa72ff98abe365f8dc922c0))
+
+
+### Bug Fixes
+
+* [[IOPID-3776](https://pagopa.atlassian.net/browse/IOPID-3776)] Resolve login issue after logout caused by versionInfo check ([#7899](https://github.com/pagopa/io-app/issues/7899)) ([f0b0f8c](https://github.com/pagopa/io-app/commit/f0b0f8c063737c1ecefe7e9893f241ae7ba5c8bf))
+* **IT-Wallet:** [[SIW-3935](https://pagopa.atlassian.net/browse/SIW-3935)] Fix pixelation, centering and flip flicker on skeuomorphic card ([#7891](https://github.com/pagopa/io-app/issues/7891)) ([786d464](https://github.com/pagopa/io-app/commit/786d464d0467143a48bce1aa23eb38c373860b36))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-3961](https://pagopa.atlassian.net/browse/SIW-3961)] Skip status assertion for expired JWTs ([#7887](https://github.com/pagopa/io-app/issues/7887)) ([ba4dcdf](https://github.com/pagopa/io-app/commit/ba4dcdfccc3668df5ccef9e77adfbaf67da408e6)), closes [/#diff-2c4d7ce41c7ab3a00e1babf88236acc32c065e2f2d2d77f2705cd661b436d257R21-R33](https://github.com/pagopa///issues/diff-2c4d7ce41c7ab3a00e1babf88236acc32c065e2f2d2d77f2705cd661b436d257R21-R33) [/#diff-2c4d7ce41c7ab3a00e1babf88236acc32c065e2f2d2d77f2705cd661b436d257L36-L37](https://github.com/pagopa///issues/diff-2c4d7ce41c7ab3a00e1babf88236acc32c065e2f2d2d77f2705cd661b436d257L36-L37) [/#diff-2c4d7ce41c7ab3a00e1babf88236acc32c065e2f2d2d77f2705cd661b436d257L53-L54](https://github.com/pagopa///issues/diff-2c4d7ce41c7ab3a00e1babf88236acc32c065e2f2d2d77f2705cd661b436d257L53-L54) [/#diff-2c4d7ce41c7ab3a00e1babf88236acc32c065e2f2d2d77f2705cd661b436d257L70-L71](https://github.com/pagopa///issues/diff-2c4d7ce41c7ab3a00e1babf88236acc32c065e2f2d2d77f2705cd661b436d257L70-L71)
+* [[IOPLT-1644](https://pagopa.atlassian.net/browse/IOPLT-1644)] Adopt new `reanimated` declarative APIs for `AnimatedCameraMarker` animation ([#7893](https://github.com/pagopa/io-app/issues/7893)) ([647e615](https://github.com/pagopa/io-app/commit/647e615a382e97d4c2faead82b97c628f48b239f))
+
 ## [3.25.0-rc.2](https://github.com/pagopa/io-app/compare/3.25.0-rc.1...3.25.0-rc.2) (2026-02-24)
 
 

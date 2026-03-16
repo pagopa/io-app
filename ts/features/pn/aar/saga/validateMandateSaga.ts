@@ -7,18 +7,16 @@ import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils
 import { unknownToReason } from "../../../messages/utils";
 import {
   aarProblemJsonAnalyticsReport,
-  trackSendAARFailure,
-  trackSendAarMandateCieDataError
+  trackSendAARFailure
 } from "../analytics";
 import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
+import { getAarErrorBehaviour } from "../utils/aarErrorMappings";
 import {
   AARFlowState,
   SendAARFailurePhase,
   sendAARFlowStates
 } from "../utils/stateUtils";
-import { isDevEnv } from "../../../../utils/environment";
-import { aarProblemJsonErrorTrackingMap } from "../utils/aarErrorMappings";
 
 const sendAARFailurePhase: SendAARFailurePhase = "Validate Mandate";
 
@@ -36,7 +34,8 @@ export function* validateMandateSaga(
     yield* call(
       trackSendAARFailure,
       sendAARFailurePhase,
-      `Called in wrong state (${action.payload.type})`
+      `Called in wrong state (${action.payload.type})`,
+      undefined
     );
     return;
   }
@@ -94,7 +93,8 @@ export function* validateMandateSaga(
         yield* call(
           trackSendAARFailure,
           sendAARFailurePhase,
-          "Fast login expiration"
+          "Fast login expiration",
+          undefined
         );
         return;
       default:
@@ -102,13 +102,9 @@ export function* validateMandateSaga(
           status,
           value
         )})`;
-        yield* call(
-          handleMixPanelCustomTrackingIfNeeded,
-          status,
-          value,
-          reason
-        );
-        yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
+        const { track } = getAarErrorBehaviour(value);
+        track(reason);
+        yield* call(trackSendAARFailure, sendAARFailurePhase, reason, value);
         const errorState: AARFlowState = {
           type: sendAARFlowStates.ko,
           previousState: { ...action.payload },
@@ -123,7 +119,7 @@ export function* validateMandateSaga(
     }
   } catch (e) {
     const reason = `An error was thrown (${unknownToReason(e)})`;
-    yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
+    yield* call(trackSendAARFailure, sendAARFailurePhase, reason, undefined);
     yield* put(
       setAarFlowState({
         type: sendAARFlowStates.ko,
@@ -136,37 +132,3 @@ export function* validateMandateSaga(
     );
   }
 }
-
-function handleMixPanelCustomTrackingIfNeeded<
-  S extends Exclude<
-    AcceptMandateSuccessfulResponse["right"]["status"],
-    204 | 401
-  >
->(
-  status: S,
-  value: Extract<
-    AcceptMandateSuccessfulResponse["right"],
-    { status: S }
-  >["value"],
-  reason: string
-) {
-  if (status === 422) {
-    const maybeErrorKey = value.errors
-      ?.map(({ code }) => code.toUpperCase())
-      .find(
-        (code): code is keyof typeof aarProblemJsonErrorTrackingMap =>
-          code in aarProblemJsonErrorTrackingMap
-      );
-
-    if (maybeErrorKey) {
-      aarProblemJsonErrorTrackingMap[maybeErrorKey]();
-      return;
-    }
-  }
-
-  trackSendAarMandateCieDataError(reason);
-}
-
-export const testable = isDevEnv
-  ? { handleMixPanelCustomTrackingIfNeeded }
-  : undefined;

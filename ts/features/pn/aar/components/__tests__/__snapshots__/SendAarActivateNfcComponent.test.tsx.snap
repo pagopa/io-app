@@ -123,7 +123,6 @@ exports[`SendAarActivateNfcComponent should match the snapshot 1`] = `
                 allowFontScaling={true}
                 dynamicTypeRamp="headline"
                 maxFontSizeMultiplier={1.5}
-                role="heading"
                 style={
                   [
                     {},
@@ -178,7 +177,8 @@ exports[`SendAarActivateNfcComponent should match the snapshot 1`] = `
               }
             >
               <View
-                accessible={true}
+                accessible={false}
+                importantForAccessibility="no-hide-descendants"
                 style={
                   {
                     "flexDirection": "column",
@@ -273,7 +273,8 @@ exports[`SendAarActivateNfcComponent should match the snapshot 1`] = `
               }
             >
               <View
-                accessible={true}
+                accessible={false}
+                importantForAccessibility="no-hide-descendants"
                 style={
                   {
                     "flexDirection": "column",
@@ -368,7 +369,8 @@ exports[`SendAarActivateNfcComponent should match the snapshot 1`] = `
               }
             >
               <View
-                accessible={true}
+                accessible={false}
+                importantForAccessibility="no-hide-descendants"
                 style={
                   {
                     "flexDirection": "column",
@@ -791,7 +793,7 @@ exports[`SendAarActivateNfcComponent should match the snapshot 1`] = `
                 [
                   {},
                   {
-                    "color": "#0E0F13",
+                    "color": undefined,
                     "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
@@ -1028,7 +1030,7 @@ exports[`SendAarActivateNfcComponent should match the snapshot 1`] = `
                   [
                     {},
                     {
-                      "color": "#0E0F13",
+                      "color": undefined,
                       "fontFamily": "Titillio",
                       "fontSize": 16,
                       "fontStyle": "normal",
