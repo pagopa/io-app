@@ -1,4 +1,3 @@
-import * as Sentry from "@sentry/react-native";
 import { call, put, select } from "typed-redux-saga/macro";
 import { GlobalState } from "../../../../store/reducers/types";
 import { CredentialsVault } from "../utils/vault";
@@ -27,26 +26,20 @@ export function* handleItwCredentialsVaultMigrationSaga() {
     return;
   }
 
-  // CredentialsVault.store swallows errors and returns false, so we can't rely
-  // on a rejection to detect failure — we have to inspect the results.
   const results = yield* call(() =>
     Promise.all(
-      entries.map(async c => ({
-        credentialId: c.credentialId,
-        success: await CredentialsVault.store(c.credentialId, c.credential)
-      }))
+      entries.map(async c => {
+        try {
+          await CredentialsVault.store(c.credentialId, c.credential);
+          return { credentialId: c.credentialId, success: true as const };
+        } catch {
+          return { credentialId: c.credentialId, success: false as const };
+        }
+      })
     )
   );
 
   const succeeded = results.filter(r => r.success).map(r => r.credentialId);
-
-  if (results.some(r => !r.success)) {
-    // Failed ones stay in legacyCredentials and will retry on the next boot.
-    Sentry.captureException(
-      new Error("One or more credential vault migrations failed"),
-      { tags: { isRequired: true }, extra: { operation: "vaultMigration" } }
-    );
-  }
 
   if (succeeded.length > 0) {
     yield* put(itwCredentialsVaultMigrationComplete(succeeded));

@@ -1,5 +1,4 @@
 import * as SecureStorage from "@pagopa/io-react-native-secure-storage";
-import * as Sentry from "@sentry/react-native";
 
 const PREFIX = "itw:credential:";
 
@@ -39,103 +38,73 @@ const isValueNotFoundError = (e: unknown): e is Error =>
   e instanceof Error && e.message === "VALUE_NOT_FOUND";
 
 /**
- * Lists all the credential IDs stored in the Secure Storage
+ * Lists all the credential IDs stored in the Secure Storage.
  * @returns A promise that resolves to an array of credential IDs
+ * @throws If the Secure Storage operation fails
  */
 const list = async (): Promise<ReadonlyArray<string>> => {
-  try {
-    const storageKeys = await SecureStorage.keys();
-    return storageKeys
-      .filter(key => key.startsWith(PREFIX))
-      .map(getCredentialIdFromStorageKey);
-  } catch (e) {
-    Sentry.captureException(e, {
-      tags: { isRequired: true },
-      extra: { operation: "list" }
-    });
-    return [];
-  }
+  const storageKeys = await SecureStorage.keys();
+  return storageKeys
+    .filter(key => key.startsWith(PREFIX))
+    .map(getCredentialIdFromStorageKey);
 };
 
 /**
- * Stores a credential's SD-JWT/MDOC in the Secure Storage
+ * Stores a credential's SD-JWT/MDOC in the Secure Storage.
  * @param credentialId The credential ID (e.g., "dc_sd_jwt_PersonalIdentificationData")
  * @param credential The credential's SD-JWT/MDOC as a string
- * @returns A promise that resolves to true if the storage was successful, false otherwise
+ * @throws If the Secure Storage operation fails
  */
 const store = async (
   credentialId: string,
   credential: string
-): Promise<boolean> => {
+): Promise<void> => {
   const key = getStorageKeyFromCredentialId(credentialId);
-
-  try {
-    await SecureStorage.put(key, credential);
-    return true;
-  } catch (e) {
-    Sentry.captureException(e, {
-      tags: { isRequired: true },
-      extra: { operation: "put", key }
-    });
-    return false;
-  }
+  await SecureStorage.put(key, credential);
 };
 
 /**
- * Retrieves a credential's SD-JWT/MDOC from the Secure Storage using its type
+ * Retrieves a credential's SD-JWT/MDOC from the Secure Storage using its type.
  * @param credentialId The credential ID (e.g., "dc_sd_jwt_PersonalIdentificationData")
  * @returns A promise that resolves to the credential's SD-JWT/MDOC as a string, or undefined if not found
+ * @throws If the Secure Storage operation fails for reasons other than a missing value
  */
 const get = async (credentialId: string): Promise<string | undefined> => {
   const key = getStorageKeyFromCredentialId(credentialId);
-
   try {
     return await SecureStorage.get(key);
   } catch (e) {
-    if (!isValueNotFoundError(e)) {
+    if (isValueNotFoundError(e)) {
       // VALUE_NOT_FOUND it's a normal case when we try to get a value that is not set
-      // We should send to Sentry only unwanted exceptions
-      Sentry.captureException(e, {
-        tags: { isRequired: true },
-        extra: { operation: "get", key }
-      });
+      return undefined;
     }
-    return undefined;
+    // In case of other errors, we rethrow them to be handled by the caller
+    throw e;
   }
 };
 
 /**
- * Removes a credential's SD-JWT/MDOC from the Secure Storage using its type
+ * Removes a credential's SD-JWT/MDOC from the Secure Storage using its type.
  * @param credentialId The credential ID (e.g., "dc_sd_jwt_PersonalIdentificationData")
- * @returns A promise that resolves to true if the removal was successful, false otherwise
+ * @throws If the Secure Storage operation fails
  */
-const remove = async (credentialId: string): Promise<boolean> => {
+const remove = async (credentialId: string): Promise<void> => {
   const key = getStorageKeyFromCredentialId(credentialId);
-
-  try {
-    await SecureStorage.remove(key);
-    return true;
-  } catch (e) {
-    Sentry.captureException(e, {
-      tags: { isRequired: true },
-      extra: { operation: "remove", key }
-    });
-    return false;
-  }
+  await SecureStorage.remove(key);
 };
 
 /**
- * Removes all credentials' SD-JWT/MDOCs from the Secure Storage with the given IDs
+ * Removes all credentials' SD-JWT/MDOCs from the Secure Storage with the given IDs.
  * @param credentialIds An array of credential IDs
- * @returns A promise that resolves when all removals are complete
+ * @throws If any Secure Storage operation fails
  */
 const removeAll = async (credentialIds: ReadonlyArray<string>) => {
   await Promise.all(credentialIds.map(remove));
 };
 
 /**
- * Clears all credentials' SD-JWT/MDOCs from the Secure Storage
- * @returns A promise that resolves when the clearing is complete
+ * Clears all credentials' SD-JWT/MDOCs from the Secure Storage.
+ * @throws If the Secure Storage operation fails
  */
 const clear = async () => {
   const credentialIds = await list();
