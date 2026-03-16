@@ -1,35 +1,41 @@
 import {
   createCryptoContextFor,
-  Credential
+  CredentialIssuance,
+  ItwVersion
 } from "@pagopa/io-react-native-wallet";
 import { WIA_KEYTAG } from "./itwCryptoContextUtils";
 import { IssuerConfiguration } from "./itwTypesUtils";
+import { getIoWallet } from "./itwIoWallet";
 
 export type InitMrtdPoPChallengeParams = {
+  itwVersion: ItwVersion;
   issuerConf: IssuerConfiguration;
   walletInstanceAttestation: string;
   authRedirectUrl: string;
 };
 
 export type ValidateMrtdPoPChallengeParams = {
+  itwVersion: ItwVersion;
   issuerConf: IssuerConfiguration;
   walletInstanceAttestation: string;
   validationUrl: string;
   mrtd_auth_session: string;
   mrtd_pop_nonce: string;
-  mrtd: Credential.Issuance.MRTDPoP.MrtdPayload;
-  ias: Credential.Issuance.MRTDPoP.IasPayload;
+  mrtd: CredentialIssuance.MRTDPoP.MrtdPayload;
+  ias: CredentialIssuance.MRTDPoP.IasPayload;
 };
 
 export const initMrtdPoPChallenge = async ({
+  itwVersion,
   authRedirectUrl,
   issuerConf,
   walletInstanceAttestation
 }: InitMrtdPoPChallengeParams) => {
+  const ioWallet = getIoWallet(itwVersion);
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
   const { challenge_info } =
-    await Credential.Issuance.continueUserAuthorizationWithMRTDPoPChallenge(
+    await ioWallet.CredentialIssuance.continueUserAuthorizationWithMRTDPoPChallenge(
       authRedirectUrl
     );
 
@@ -37,36 +43,34 @@ export const initMrtdPoPChallenge = async ({
     htu: initUrl,
     mrtd_auth_session,
     mrtd_pop_jwt_nonce
-  } = await Credential.Issuance.MRTDPoP.verifyAndParseChallengeInfo(
+  } = await ioWallet.CredentialIssuance.MRTDPoP.verifyAndParseChallengeInfo(
     issuerConf,
     challenge_info,
     { wiaCryptoContext }
   );
 
-  const {
-    htu: validationUrl,
-    challenge,
-    mrtd_pop_nonce
-  } = await Credential.Issuance.MRTDPoP.initChallenge(
-    issuerConf,
-    initUrl,
-    mrtd_auth_session,
-    mrtd_pop_jwt_nonce,
-    {
-      walletInstanceAttestation,
-      wiaCryptoContext
-    }
-  );
+  const { pop_verify_endpoint, challenge, mrtd_pop_nonce } =
+    await ioWallet.CredentialIssuance.MRTDPoP.initChallenge(
+      issuerConf,
+      initUrl,
+      mrtd_auth_session,
+      mrtd_pop_jwt_nonce,
+      {
+        walletInstanceAttestation,
+        wiaCryptoContext
+      }
+    );
 
   return {
     challenge,
     mrtd_auth_session,
     mrtd_pop_nonce,
-    validationUrl
+    validationUrl: pop_verify_endpoint
   };
 };
 
 export const validateMrtdPoPChallenge = async ({
+  itwVersion,
   validationUrl,
   mrtd_auth_session,
   mrtd_pop_nonce,
@@ -75,10 +79,11 @@ export const validateMrtdPoPChallenge = async ({
   ias,
   mrtd
 }: ValidateMrtdPoPChallengeParams) => {
+  const ioWallet = getIoWallet(itwVersion);
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
   const { mrtd_val_pop_nonce, redirect_uri } =
-    await Credential.Issuance.MRTDPoP.validateChallenge(
+    await ioWallet.CredentialIssuance.MRTDPoP.validateChallenge(
       issuerConf,
       validationUrl,
       mrtd_auth_session,
@@ -92,7 +97,7 @@ export const validateMrtdPoPChallenge = async ({
     );
 
   const { callbackUrl } =
-    await Credential.Issuance.MRTDPoP.buildChallengeCallbackUrl(
+    await ioWallet.CredentialIssuance.MRTDPoP.buildChallengeCallbackUrl(
       redirect_uri,
       mrtd_val_pop_nonce,
       mrtd_auth_session
