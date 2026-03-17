@@ -8,7 +8,10 @@ import { trackItwKoStateAction } from "../../../analytics";
 import { isL2Credential } from "../../../common/utils/itwCredentialUtils";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
+import {
+  isL3FeaturesEnabledSelector,
+  selectCredentialType
+} from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { CieWarningType } from "../utils/types";
 
@@ -35,17 +38,16 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
   const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
-  const credentialType = ItwEidIssuanceMachineContext.useSelector(
-    state => state.context.credentialType
-  );
+  const credentialType =
+    ItwEidIssuanceMachineContext.useSelector(selectCredentialType);
   const reason = type === "card" ? "user_without_cie" : "user_without_pin";
 
-  const shouldDisplayKO = useMemo(
-    () => isL3FeaturesEnabled && !isL2Credential(credentialType ?? ""),
+  const isCieRequired = useMemo(
+    () => isL3FeaturesEnabled && !isL2Credential(credentialType),
     [isL3FeaturesEnabled, credentialType]
   );
 
-  const sectionKey = shouldDisplayKO ? "ko-no-cie" : "l2-fallback";
+  const sectionKey = isCieRequired ? "ko-no-cie" : "l2-fallback";
 
   const handlePrimaryActionPress = () => {
     trackItwKoStateAction({
@@ -55,7 +57,7 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
         `features.itWallet.identification.cie.warning.${type}.${sectionKey}.primaryAction`
       )
     });
-    if (shouldDisplayKO) {
+    if (isCieRequired) {
       void Linking.openURL(cieFaqUrls[type]);
     } else if (credentialType) {
       credentialMachineRef.send({
@@ -91,7 +93,7 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
       subtitle={I18n.t(
         `features.itWallet.identification.cie.warning.${type}.${sectionKey}.subtitle`
       )}
-      pictogram={shouldDisplayKO ? "attention" : "cardAdd"}
+      pictogram={isCieRequired ? "attention" : "cardAdd"}
       action={{
         label: I18n.t(
           `features.itWallet.identification.cie.warning.${type}.${sectionKey}.primaryAction`

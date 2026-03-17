@@ -46,8 +46,9 @@ export const isUpcomingCredential = (type: string): boolean =>
 export const isNewCredential = (type: string): type is NewCredential =>
   newCredentials.includes(type as NewCredential);
 
-export const isL2Credential = (type: string): type is L2Credential =>
-  l2Credentials.includes(type as L2Credential);
+export const isL2Credential = (
+  type: string | undefined
+): type is L2Credential => l2Credentials.includes(type as L2Credential);
 
 export const itwGetCredentialNameByCredentialType = (
   isItwCredential: boolean

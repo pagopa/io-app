@@ -142,7 +142,7 @@ export const ItwIdentificationModeSelectionScreen = ({
       position: "screen"
     });
 
-    if (!isL2Active && isL2Credential(credentialType ?? "")) {
+    if (!isL2Active && isL2Credential(credentialType)) {
       machineRef.send({
         type: "restart",
         mode: "issuance",
