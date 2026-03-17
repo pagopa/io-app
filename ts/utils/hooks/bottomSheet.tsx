@@ -199,12 +199,14 @@ export const useIOBottomSheetModal = ({
       >
         {screenReaderEnabled && Platform.OS === "android" ? (
           <Modal>
-            <View style={{ flex: 1 }} accessible={true}>
+            <View style={{ flex: 1, backgroundColor }} accessible={true}>
               {header}
               {bottomSheetContent}
             </View>
             {footer && (
-              <View style={{ paddingBottom: insets.bottom }}>{footer}</View>
+              <View style={{ paddingBottom: insets.bottom, backgroundColor }}>
+                {footer}
+              </View>
             )}
           </Modal>
         ) : (

@@ -28,7 +28,8 @@ export function* createAarMandateSaga(
     yield* call(
       trackSendAARFailure,
       sendAarFailurePhase,
-      `Called in wrong state (${currentState.type})`
+      `Called in wrong state (${currentState.type})`,
+      undefined
     );
     return;
   }
@@ -75,7 +76,8 @@ export function* createAarMandateSaga(
         yield* call(
           trackSendAARFailure,
           sendAarFailurePhase,
-          "Fast login expiration"
+          "Fast login expiration",
+          undefined
         );
         break;
       default:
@@ -83,7 +85,7 @@ export function* createAarMandateSaga(
           status,
           value
         )})`;
-        yield* call(trackSendAARFailure, sendAarFailurePhase, reason);
+        yield* call(trackSendAARFailure, sendAarFailurePhase, reason, value);
         const errorState: AARFlowState = {
           type: sendAARFlowStates.ko,
           previousState: currentState,
@@ -98,7 +100,7 @@ export function* createAarMandateSaga(
     }
   } catch (e: unknown) {
     const reason = `An error was thrown (${unknownToReason(e)})`;
-    yield* call(trackSendAARFailure, sendAarFailurePhase, reason);
+    yield* call(trackSendAARFailure, sendAarFailurePhase, reason, undefined);
     yield* put(
       setAarFlowState({
         type: sendAARFlowStates.ko,
