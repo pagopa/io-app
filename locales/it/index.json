@@ -4871,7 +4871,7 @@
           "content": "Continua ad aggiungere le versioni digitali dei tuoi documenti al Portafoglio.",
           "action": "Vai al Portafoglio"
         },
-        "notSupportedNfc": {
+        "nfcNotSupported": {
           "title": "Il tuo dispositivo non ha NFC",
           "subtitle": "Il portafoglio IT-Wallet richiede la tecnologia NFC. Senza NFC puoi aggiungere solo alcuni documenti digitali, con funzionalità ridotte.",
           "actions": {

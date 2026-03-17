@@ -141,12 +141,9 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         header={sectionHeader}
         topElement={
           <VStack space={16}>
-            {shouldRenderL2EngagementBanner ? (
-              <ItwL2EngagementBanner />
-            ) : (
-              <ItwDiscoveryBanner flow="wallet" />
-            )}
-            {shouldRenderUpgradeBanner && <ItwWalletReadyBanner />}
+            {shouldRenderUpgradeBanner && <ItwDiscoveryBanner flow="wallet" />}
+            {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
+            <ItwWalletReadyBanner />
             {!shouldHideEidAlert && (
               <ItwEidLifecycleAlert
                 lifecycleStatus={LIFECYCLE_STATUS}

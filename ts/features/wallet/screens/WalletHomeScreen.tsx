@@ -1,7 +1,7 @@
 import { IOToast } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { IOScrollView } from "../../../components/ui/IOScrollView";
 import { useHeaderFirstLevel } from "../../../hooks/useHeaderFirstLevel";
@@ -73,6 +73,18 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   // For example, the payments section
   const [isRefreshing, setIsRefreshing] = useState(false);
 
+  const onboardingScreen = useMemo(() => {
+    if (!isItWalletEnabled) {
+      return ITW_ROUTES.ONBOARDING;
+    }
+
+    if (isItWalletActivationDisabled) {
+      return ITW_ROUTES.L2_ONBOARDING;
+    }
+
+    return ITW_ROUTES.L3_ONBOARDING;
+  }, [isItWalletEnabled, isItWalletActivationDisabled]);
+
   useEffect(() => {
     // Mutate the local state only when the refresh ends
     if (!isRefreshingContent) {
@@ -82,14 +94,11 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
 
   const handleAddToWalletButtonPress = useCallback(() => {
     trackWalletAdd();
+
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: isItWalletEnabled
-        ? isItWalletActivationDisabled
-          ? ITW_ROUTES.L2_ONBOARDING
-          : ITW_ROUTES.L3_ONBOARDING
-        : ITW_ROUTES.ONBOARDING
+      screen: onboardingScreen
     });
-  }, [navigation, isItWalletEnabled, isItWalletActivationDisabled]);
+  }, [navigation, onboardingScreen]);
 
   useHeaderFirstLevel({
     currentRoute: ROUTES.WALLET_HOME,

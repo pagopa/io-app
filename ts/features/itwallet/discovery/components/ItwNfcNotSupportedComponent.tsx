@@ -39,16 +39,23 @@ export const ItwNfcNotSupportedComponent = () => {
 
   const navigateToWalletHomeScreen = useCallback(
     () =>
-      navigation.replace(ROUTES.MAIN, {
-        screen: ROUTES.WALLET_HOME,
-        params: {}
+      navigation.reset({
+        index: 1,
+        routes: [
+          {
+            name: ROUTES.MAIN,
+            params: {
+              screen: ROUTES.WALLET_HOME
+            }
+          }
+        ]
       }),
     [navigation]
   );
 
   const action: OperationResultScreenContentProps["action"] = {
     label: I18n.t(
-      "features.itWallet.discovery.notSupportedNfc.actions.continue"
+      "features.itWallet.discovery.nfcNotSupported.actions.continue"
     ),
     onPress: handleOpenFaq
   };
@@ -56,16 +63,16 @@ export const ItwNfcNotSupportedComponent = () => {
   const secondaryAction: OperationResultScreenContentProps["secondaryAction"] =
     {
       label: I18n.t(
-        "features.itWallet.discovery.notSupportedNfc.actions.cancel"
+        "features.itWallet.discovery.nfcNotSupported.actions.cancel"
       ),
       onPress: navigateToWalletHomeScreen
     };
 
   return (
     <OperationResultScreenContent
-      testID="itwNotSupportedNfcComponentTestID"
-      title={I18n.t("features.itWallet.discovery.notSupportedNfc.title")}
-      subtitle={I18n.t("features.itWallet.discovery.notSupportedNfc.subtitle")}
+      testID="itwnfcNotSupportedComponentTestID"
+      title={I18n.t("features.itWallet.discovery.nfcNotSupported.title")}
+      subtitle={I18n.t("features.itWallet.discovery.nfcNotSupported.subtitle")}
       pictogram="attention"
       action={action}
       secondaryAction={secondaryAction}

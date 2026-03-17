@@ -53,9 +53,16 @@ export const ItwL2FallbackComponent = ({ credentialType }: Props) => {
 
   const navigateToWalletHomeScreen = useCallback(
     () =>
-      navigation.replace(ROUTES.MAIN, {
-        screen: ROUTES.WALLET_HOME,
-        params: {}
+      navigation.reset({
+        index: 1,
+        routes: [
+          {
+            name: ROUTES.MAIN,
+            params: {
+              screen: ROUTES.WALLET_HOME
+            }
+          }
+        ]
       }),
     [navigation]
   );

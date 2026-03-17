@@ -37,12 +37,14 @@ export const ItwDiscoveryInfoScreen = ({
     ? isL2Credential(credentialType)
     : false;
 
+  const isNfcUnavailable = isItWalletActivationDisabled || !hasNfcFeature;
+
   if (level === "l3") {
-    if (isItWalletActivationDisabled || !hasNfcFeature) {
-      if (canContinueWithDocIO) {
-        return <ItwL2FallbackComponent credentialType={credentialType} />;
-      }
-      // // L3 requires NFC, show not supported screen
+    if (isNfcUnavailable && canContinueWithDocIO) {
+      return <ItwL2FallbackComponent credentialType={credentialType} />;
+    }
+
+    if (isNfcUnavailable) {
       return <ItwNfcNotSupportedComponent />;
     }
 

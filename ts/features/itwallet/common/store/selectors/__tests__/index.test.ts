@@ -4,7 +4,7 @@ import {
   itwShouldRenderDiscoveryBannerSelector,
   itwShouldRenderInboxDiscoveryBannerSelector,
   itwShouldRenderL2EngagementBannerSelector,
-  itwShouldRenderL2EngagementBannerSelectorWithNoActiveWallet,
+  itwShouldRenderL2EngagementBannerForInactiveWalletSelector,
   itwShouldRenderL3UpgradeBannerSelector,
   itwShouldRenderWalletDiscoveryBannerSelector,
   itwShouldRenderWalletReadyBannerSelector,
@@ -362,7 +362,7 @@ describe("itwShouldRenderWalletDiscoveryBannerSelector", () => {
   );
 });
 
-describe("itwShouldRenderL2EngagementBannerSelectorWithNoActiveWallet", () => {
+describe("itwShouldRenderL2EngagementBannerForInactiveWalletSelector", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
@@ -409,7 +409,7 @@ describe("itwShouldRenderL2EngagementBannerSelectorWithNoActiveWallet", () => {
         .mockReturnValue(isActivationDisabled);
 
       expect(
-        itwShouldRenderL2EngagementBannerSelectorWithNoActiveWallet(state)
+        itwShouldRenderL2EngagementBannerForInactiveWalletSelector(state)
       ).toBe(expected);
     }
   );

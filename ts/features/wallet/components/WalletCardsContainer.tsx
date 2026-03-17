@@ -10,7 +10,7 @@ import { ItwL2EngagementBanner } from "../../itwallet/common/components/ItwL2Eng
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
 import {
-  itwShouldRenderL2EngagementBannerSelectorWithNoActiveWallet,
+  itwShouldRenderL2EngagementBannerForInactiveWalletSelector,
   itwShouldRenderWalletDiscoveryBannerSelector
 } from "../../itwallet/common/store/selectors";
 import { ItwDiscoveryBanner } from "../../itwallet/discovery/components/ItwDiscoveryBanner";
@@ -47,7 +47,7 @@ const WalletCardsContainer = () => {
     itwShouldRenderWalletDiscoveryBannerSelector
   );
   const shouldRenderL2EngagementBanner = useIOSelector(
-    itwShouldRenderL2EngagementBannerSelectorWithNoActiveWallet
+    itwShouldRenderL2EngagementBannerForInactiveWalletSelector
   );
 
   useItwWalletInstanceRevocationAlert();
