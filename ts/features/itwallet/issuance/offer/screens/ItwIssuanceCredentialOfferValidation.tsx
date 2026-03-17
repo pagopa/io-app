@@ -9,11 +9,13 @@ import {
   isStartupLoaded
 } from "../../../../../store/reducers/startup";
 import { ItwRemoteLoadingScreen } from "../../../presentation/remote/components/ItwRemoteLoadingScreen";
-import { useIOSelector } from "../../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { selectResolvedCredentialOfferOption } from "../../../machine/credential/selectors";
 import { ItwGenericErrorContent } from "../../../common/components/ItwGenericErrorContent";
+import { itwSetSpecsVersion } from "../../../common/store/actions/environment";
+import { selectItwSpecsVersion } from "../../../common/store/selectors/environment";
 
 export type ItwIssuanceCredentialOfferValidationScreenNavigationParams = {
   /**
@@ -74,7 +76,9 @@ const ContentView = ({
 }: {
   itwCredentialOfferUri: string;
 }) => {
+  const dispatch = useIODispatch();
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
+  const itwSpecsVersion = useIOSelector(selectItwSpecsVersion);
 
   const resolvedCredentialOfferOption =
     ItwCredentialIssuanceMachineContext.useSelector(
@@ -83,13 +87,25 @@ const ContentView = ({
 
   useFocusEffect(
     useCallback(() => {
+      // Credential Offer flow is supported only with IT-Wallet specs v1.3.3.
+      if (itwSpecsVersion !== "1.3.3") {
+        dispatch(itwSetSpecsVersion("1.3.3"));
+        return;
+      }
+
       if (O.isNone(resolvedCredentialOfferOption)) {
         machineRef.send({
           type: "start-credential-offer",
           itwCredentialOfferUri
         });
       }
-    }, [machineRef, itwCredentialOfferUri, resolvedCredentialOfferOption])
+    }, [
+      dispatch,
+      itwSpecsVersion,
+      machineRef,
+      itwCredentialOfferUri,
+      resolvedCredentialOfferOption
+    ])
   );
 
   return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;

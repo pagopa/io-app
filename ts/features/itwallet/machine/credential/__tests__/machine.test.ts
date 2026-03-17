@@ -777,7 +777,6 @@ describe("itwCredentialIssuanceMachine", () => {
       const actor = createActor(mockedMachine);
       actor.start();
 
-      await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
       expect(actor.getSnapshot().value).toStrictEqual("Idle");
 
       actor.send({

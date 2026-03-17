@@ -1,6 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
-import { CredentialOffer, IoWallet, ItwVersion } from "@pagopa/io-react-native-wallet";
+import { CredentialOffer, ItwVersion } from "@pagopa/io-react-native-wallet";
 import { useIOStore } from "../../../../store/hooks";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { assert } from "../../../../utils/assert";
@@ -263,15 +263,13 @@ export const createCredentialIssuanceActorsImplementation = (
     ProcessCredentialOfferActorInput
   >(async ({ input }) => {
     assert(input.credentialOfferUri, "credentialOfferUri is undefined");
+    const ioWallet = getIoWallet(itwVersion);
 
-    // TODO in SIW-3986 - handle different versions. Hardcoded for a first implementation
-    const wallet = new IoWallet({ version: "1.3.3" });
-
-    const offer = await wallet.CredentialsOffer.resolveCredentialOffer(
+    const offer = await ioWallet.CredentialsOffer.resolveCredentialOffer(
       input.credentialOfferUri
     );
 
-    const grantDetails = wallet.CredentialsOffer.extractGrantDetails(offer);
+    const grantDetails = ioWallet.CredentialsOffer.extractGrantDetails(offer);
 
     const trustIssuerBaseUrl =
       grantDetails.authorizationCodeGrant.authorizationServer ??
