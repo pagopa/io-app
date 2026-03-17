@@ -109,6 +109,28 @@ export const UnrelatedCieComponent = () => {
     />
   );
 };
+export const CieValidationExpiredTtlComponent = () => {
+  const { terminateFlow } = useSendAarFlowManager();
+  const assistanceErrorCode =
+    useIOSelector(currentAARFlowStateAssistanceErrorCode) ?? "";
+
+  return (
+    <OperationResultScreenContent
+      pictogram="ended"
+      testID="CieValidationExpiredTtlErrorComponent"
+      title={i18n.t("features.pn.aar.flow.ko.cieValidation.expiredTtl.title")}
+      subtitle={i18n.t("features.pn.aar.flow.ko.cieValidation.expiredTtl.body")}
+      action={{
+        testID: "CieValidationExpiredTtlCloseButton",
+        label: i18n.t("global.buttons.close"),
+        onPress: () => {
+          trackSendAarMandateCieErrorClosure(assistanceErrorCode);
+          terminateFlow();
+        }
+      }}
+    />
+  );
+};
 export const GenericCieValidationErrorComponent = () => {
   const { terminateFlow } = useSendAarFlowManager();
   const debugInfo = useIOSelector(currentAARFlowStateErrorDebugInfoSelector);
