@@ -46,11 +46,10 @@ export function* handleThirdPartyMessage(
 
   const keyInfo = yield* call(getKeyInfo);
 
-  const { getThirdPartyMessage } = communicationClientManager.getClient(
-    apiUrlPrefix,
-    sessionToken,
+  const { getThirdPartyMessage } = communicationClientManager.getClient(apiUrlPrefix, {
+    token: sessionToken,
     keyInfo
-  );
+  });
 
   // This method is called by `handleLoadMessageData` saga, which makes
   // sure that the service details are properly retrieved and loaded

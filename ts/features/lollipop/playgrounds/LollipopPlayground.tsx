@@ -50,16 +50,15 @@ const LollipopPlayground = () => {
         message: body
       };
       if (maybeSessionToken && O.isSome(maybePublicKey) && O.isSome(keyTag)) {
-        const { signMessage } = identityClientManager.getClient(
-          apiUrlPrefix,
-          maybeSessionToken,
-          {
+        const { signMessage } = identityClientManager.getClient(apiUrlPrefix, {
+          token: maybeSessionToken,
+          keyInfo: {
             keyTag: keyTag.value,
             publicKey: maybePublicKey.value,
             publicKeyThumbprint: toThumbprint(maybePublicKey)
           },
-          state.doSignBody
-        );
+          signBody: state.doSignBody
+        });
 
         signMessage({
           body: bodyMessage,

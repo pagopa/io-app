@@ -120,7 +120,7 @@ function* updatePaymentInfo(
   const keyInfo = yield* call(getKeyInfo);
 
   const { getPaymentInfoV2: getPaymentDataRequestFactory } =
-    communicationClientManager.getClient(apiUrlPrefix, sessionToken, keyInfo);
+    communicationClientManager.getClient(apiUrlPrefix, { token: sessionToken, keyInfo });
 
   const getPaymentDataRequest = getPaymentDataRequestFactory({
     rptId: paymentId,

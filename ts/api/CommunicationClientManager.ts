@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { v4 as uuid } from "uuid";
 import {
   createClient,
@@ -7,19 +6,20 @@ import {
 import { KeyInfo } from "../features/lollipop/utils/crypto";
 import { lollipopFetch } from "../features/lollipop/utils/fetch";
 import { isDevEnv } from "../utils/environment";
-import { ApiClientManager } from "./ApiClientManager";
+import { ApiClientManager, BaseClientOptions } from "./ApiClientManager";
 
 export type CommunicationClient = Client<"Bearer">;
+export type CommunicationClientOptions = BaseClientOptions & {
+  keyInfo: KeyInfo;
+};
 
-class CommunicationClientManager extends ApiClientManager<CommunicationClient> {
-  protected isCacheValid(token: string, keyInfo: KeyInfo): boolean {
-    return super.isCacheValid(token) && _.isEqual(this.keyInfo, keyInfo);
-  }
-
+class CommunicationClientManager extends ApiClientManager<
+  CommunicationClient,
+  CommunicationClientOptions
+> {
   protected createClient(
     baseUrl: string,
-    token: string,
-    keyInfo: KeyInfo
+    { token, keyInfo }: CommunicationClientOptions
   ): CommunicationClient {
     return createClient({
       baseUrl,
@@ -27,13 +27,6 @@ class CommunicationClientManager extends ApiClientManager<CommunicationClient> {
       withDefaults: op => params =>
         op({ Bearer: `Bearer ${token}`, ...params })
     });
-  }
-
-  // Override to make `keyInfo` required: unlike the base class, which accepts
-  // it as optional (defaulting to `{}`), this client always needs a valid
-  // KeyInfo to sign requests via Lollipop.
-  override getClient(baseUrl: string, token: string, keyInfo: KeyInfo) {
-    return super.getClient(baseUrl, token, keyInfo);
   }
 }
 

@@ -1,16 +1,19 @@
 import { createClient, Client } from "../../definitions/session_manager/client";
-import { KeyInfo } from "../features/lollipop/utils/crypto";
 import { defaultRetryingFetch } from "../utils/fetch";
 import { isDevEnv } from "../utils/environment";
-import { ApiClientManager } from "./ApiClientManager";
+import { ApiClientManager, BaseClientOptions } from "./ApiClientManager";
 
 export type SessionManagerClient = Client<"Bearer">;
 
-class SessionManagerClientManager extends ApiClientManager<SessionManagerClient> {
+export type SessionManagerClientOptions = BaseClientOptions;
+
+class SessionManagerClientManager extends ApiClientManager<
+  SessionManagerClient,
+  SessionManagerClientOptions
+> {
   protected createClient(
     baseUrl: string,
-    token: string,
-    _keyInfo: KeyInfo
+    { token }: SessionManagerClientOptions
   ): SessionManagerClient {
     return createClient({
       baseUrl,

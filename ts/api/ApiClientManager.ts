@@ -1,28 +1,27 @@
 /* eslint-disable functional/immutable-data */
+import _ from "lodash";
 import { Nullable } from "@pagopa/io-app-design-system";
-import { KeyInfo } from "../features/lollipop/utils/crypto";
 
-export abstract class ApiClientManager<T> {
-  private client: Nullable<T> = null;
-  protected token: Nullable<string> = null;
-  protected keyInfo: KeyInfo = {};
+export type BaseClientOptions = { readonly token: string };
+
+export abstract class ApiClientManager<TClient, TOptions> {
+  private client: Nullable<TClient> = null;
+  protected clientOptions: Nullable<TOptions> = null;
 
   protected abstract createClient(
     baseUrl: string,
-    token: string,
-    keyInfo: KeyInfo
-  ): T;
+    clientOptions: TOptions
+  ): TClient;
 
-  protected isCacheValid(token: string, _keyInfo?: KeyInfo): boolean {
-    return this.token === token;
+  protected isCacheValid(clientOptions: TOptions): boolean {
+    return _.isEqual(this.clientOptions, clientOptions);
   }
 
-  getClient(baseUrl: string, token: string, keyInfo: KeyInfo = {}): T {
-    if (this.client !== null && this.isCacheValid(token, keyInfo)) {
+  getClient(baseUrl: string, clientOptions: TOptions): TClient {
+    if (this.client !== null && this.isCacheValid(clientOptions)) {
       return this.client;
     }
-    this.token = token;
-    this.keyInfo = keyInfo;
-    return (this.client = this.createClient(baseUrl, token, keyInfo));
+    this.clientOptions = clientOptions;
+    return (this.client = this.createClient(baseUrl, clientOptions));
   }
 }

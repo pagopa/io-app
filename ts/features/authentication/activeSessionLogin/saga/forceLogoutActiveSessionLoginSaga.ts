@@ -37,10 +37,9 @@ export function* logoutUserAfterActiveSessionLoginSaga(
     return;
   }
 
-  const { logout } = sessionManagerClientManager.getClient(
-    apiUrlPrefix,
-    sessionToken
-  );
+  const { logout } = sessionManagerClientManager.getClient(apiUrlPrefix, {
+    token: sessionToken
+  });
 
   try {
     const response: SagaCallReturnType<typeof logout> = yield* call(logout, {});

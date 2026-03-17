@@ -36,11 +36,10 @@ export function* handleLoadNextPageMessages(
   }
   const keyInfo = yield* call(getKeyInfo);
 
-  const { getUserMessages: getMessages } = communicationClientManager.getClient(
-    apiUrlPrefix,
-    sessionToken,
+  const { getUserMessages: getMessages } = communicationClientManager.getClient(apiUrlPrefix, {
+    token: sessionToken,
     keyInfo
-  );
+  });
 
   try {
     const response = (yield* call(

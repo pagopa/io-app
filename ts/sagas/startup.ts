@@ -322,16 +322,17 @@ export function* initializeApplicationSaga(
   yield* fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel);
 
   // Instantiate backend clients from the session token
-  const comClient = communicationClientManager.getClient(
-    apiUrlPrefix,
-    sessionToken,
+  const comClient = communicationClientManager.getClient(apiUrlPrefix, {
+    token: sessionToken,
     keyInfo
-  );
-  const idClient = identityClientManager.getClient(apiUrlPrefix, sessionToken, keyInfo);
-  const smClient = sessionManagerClientManager.getClient(
-    apiUrlPrefix,
-    sessionToken
-  );
+  });
+  const idClient = identityClientManager.getClient(apiUrlPrefix, {
+    token: sessionToken,
+    keyInfo
+  });
+  const smClient = sessionManagerClientManager.getClient(apiUrlPrefix, {
+    token: sessionToken
+  });
 
   // The following functions all rely on the backend clients
 

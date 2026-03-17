@@ -28,32 +28,56 @@ describe("CommunicationClientManager", () => {
   it("should return the same client when token and keyInfo are unchanged", () => {
     const manager =
       new TestCommunicationClientManager.CommunicationClientManager!();
-    const client1 = manager.getClient(BASE_URL, TOKEN_A, KEY_INFO_A);
-    const client2 = manager.getClient(BASE_URL, TOKEN_A, KEY_INFO_A);
+    const client1 = manager.getClient(BASE_URL, {
+      token: TOKEN_A,
+      keyInfo: KEY_INFO_A
+    });
+    const client2 = manager.getClient(BASE_URL, {
+      token: TOKEN_A,
+      keyInfo: KEY_INFO_A
+    });
     expect(client1).toBe(client2);
   });
 
   it("should return a new client when the token changes", () => {
     const manager =
       new TestCommunicationClientManager.CommunicationClientManager!();
-    const client1 = manager.getClient(BASE_URL, TOKEN_A, KEY_INFO_A);
-    const client2 = manager.getClient(BASE_URL, TOKEN_B, KEY_INFO_A);
+    const client1 = manager.getClient(BASE_URL, {
+      token: TOKEN_A,
+      keyInfo: KEY_INFO_A
+    });
+    const client2 = manager.getClient(BASE_URL, {
+      token: TOKEN_B,
+      keyInfo: KEY_INFO_A
+    });
     expect(client1).not.toBe(client2);
   });
 
   it("should return a new client when keyInfo changes", () => {
     const manager =
       new TestCommunicationClientManager.CommunicationClientManager!();
-    const client1 = manager.getClient(BASE_URL, TOKEN_A, KEY_INFO_A);
-    const client2 = manager.getClient(BASE_URL, TOKEN_A, KEY_INFO_B);
+    const client1 = manager.getClient(BASE_URL, {
+      token: TOKEN_A,
+      keyInfo: KEY_INFO_A
+    });
+    const client2 = manager.getClient(BASE_URL, {
+      token: TOKEN_A,
+      keyInfo: KEY_INFO_B
+    });
     expect(client1).not.toBe(client2);
   });
 
   it("should return a new client when both token and keyInfo change", () => {
     const manager =
       new TestCommunicationClientManager.CommunicationClientManager!();
-    const client1 = manager.getClient(BASE_URL, TOKEN_A, KEY_INFO_A);
-    const client2 = manager.getClient(BASE_URL, TOKEN_B, KEY_INFO_B);
+    const client1 = manager.getClient(BASE_URL, {
+      token: TOKEN_A,
+      keyInfo: KEY_INFO_A
+    });
+    const client2 = manager.getClient(BASE_URL, {
+      token: TOKEN_B,
+      keyInfo: KEY_INFO_B
+    });
     expect(client1).not.toBe(client2);
   });
 });

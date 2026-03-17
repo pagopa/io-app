@@ -30,10 +30,9 @@ export function* logoutSaga({ payload }: ActionType<typeof logoutRequest>) {
     return;
   }
 
-  const { logout } = sessionManagerClientManager.getClient(
-    apiUrlPrefix,
-    sessionToken
-  );
+  const { logout } = sessionManagerClientManager.getClient(apiUrlPrefix, {
+    token: sessionToken
+  });
 
   // Issue a logout request to the backend, asking to delete the session
   // FIXME: if there's no connectivity to the backend, this request will
