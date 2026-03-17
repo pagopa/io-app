@@ -1,5 +1,5 @@
 import { CieUtils } from "@pagopa/io-react-native-cie";
-import { Trust } from "@pagopa/io-react-native-wallet";
+import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
 import { useIOStore } from "../../../../store/hooks";
@@ -7,12 +7,17 @@ import { assert } from "../../../../utils/assert";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import * as cieUtils from "../../../authentication/login/cie/utils/cie";
 import { trackItwRequest } from "../../analytics";
+import {
+  trackWalletInstanceRenewalFailure,
+  trackWalletInstanceRenewalSuccess
+} from "../../issuance/analytics";
 import { Env } from "../../common/utils/environment";
 import {
   getAttestation,
   getIntegrityHardwareKeyTag,
   registerWalletInstance
 } from "../../common/utils/itwAttestationUtils";
+import { isAssertionGenerationError } from "../../common/utils/itwFailureUtils";
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
 import { pollForStoreValue } from "../../common/utils/itwStoreUtils";
@@ -21,11 +26,15 @@ import {
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import * as mrtdUtils from "../../common/utils/mrtd";
+import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 import {
   itwIntegrityKeyTagSelector,
   itwIntegrityServiceStatusSelector
 } from "../../issuance/store/selectors";
+import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
+import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
+import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { createCredentialUpgradeActionsImplementation } from "../upgrade/actions";
 import { createCredentialUpgradeActorsImplementation } from "../upgrade/actors";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine";
@@ -68,11 +77,13 @@ export type GetWalletAttestationActorParams = {
 /**
  * Creates the actors for the eid issuance machine
  * @param env - The environment to use for the IT Wallet API calls
+ * @param itwVersion - IT-Wallet technical specs version
  * @param store the IOStore
  * @returns the actors
  */
 export const createEidIssuanceActorsImplementation = (
   env: Env,
+  itwVersion: ItwVersion,
   store: ReturnType<typeof useIOStore>
 ) => ({
   getCieStatus: fromPromise<CieContext>(async () => {
@@ -87,20 +98,21 @@ export const createEidIssuanceActorsImplementation = (
   }),
 
   verifyTrustFederation: fromPromise(async () => {
+    const ioWallet = getIoWallet(itwVersion);
     // Evaluate the issuer trust
     const trustAnchorEntityConfig =
-      await Trust.Build.getTrustAnchorEntityConfiguration(
+      await ioWallet.Trust.getTrustAnchorEntityConfiguration(
         env.WALLET_TA_BASE_URL
       );
 
     // Create the trust chain for the PID provider
-    const builtChainJwts = await Trust.Build.buildTrustChain(
-      env.WALLET_PID_PROVIDER_BASE_URL,
+    const builtChainJwts = await ioWallet.Trust.buildTrustChain(
+      env.WALLET_PID_PROVIDER_BASE_URL.value(itwVersion),
       trustAnchorEntityConfig
     );
 
     // Perform full validation on the built chain
-    await Trust.Verify.verifyTrustChain(
+    await ioWallet.Trust.verifyTrustChain(
       trustAnchorEntityConfig,
       builtChainJwts,
       {
@@ -133,9 +145,8 @@ export const createEidIssuanceActorsImplementation = (
       integrityServiceStatus === "ready",
       `Integrity service status is ${integrityServiceStatus}`
     );
-
     const hardwareKeyTag = await getIntegrityHardwareKeyTag();
-    await registerWalletInstance(env, hardwareKeyTag, sessionToken);
+    await registerWalletInstance(env, itwVersion, hardwareKeyTag, sessionToken);
 
     return hardwareKeyTag;
   }),
@@ -143,12 +154,65 @@ export const createEidIssuanceActorsImplementation = (
   getWalletAttestation: fromPromise<
     WalletInstanceAttestations,
     GetWalletAttestationActorParams
-  >(({ input }) => {
+  >(async ({ input }) => {
     const sessionToken = sessionTokenSelector(store.getState());
     assert(sessionToken, "sessionToken is undefined");
     assert(input.integrityKeyTag, "integrityKeyTag is undefined");
 
-    return getAttestation(env, input.integrityKeyTag, sessionToken);
+    try {
+      return await getAttestation(
+        env,
+        itwVersion,
+        input.integrityKeyTag,
+        sessionToken
+      );
+    } catch (firstError) {
+      // On iOS, the stored DCAppAttest key can become invalid (DCErrorInvalidKey,
+      // com.apple.devicecheck.error 3), causing GENERATION_ASSERTION_FAILED during
+      // assertion generation. We recover by creating a new wallet instance with a
+      // fresh key and retrying the attestation once.
+      const isRenewalError = itwWalletInstanceRenewalErrorSelector(
+        store.getState()
+      );
+
+      // If the error is not related to assertion generation or if we've already attempted a renewal, we throw the error and prompt the user to retry.
+      if (!isAssertionGenerationError(firstError) || isRenewalError) {
+        throw firstError;
+      }
+
+      // Otherwise, we attempt to recover by creating a new wallet instance,
+      // which will generate a new hardware key tag,
+      // and retrying the attestation with the new key tag.
+      const newHardwareKeyTag = await getIntegrityHardwareKeyTag();
+      store.dispatch(itwStoreIntegrityKeyTag(newHardwareKeyTag));
+      await registerWalletInstance(
+        env,
+        itwVersion,
+        newHardwareKeyTag,
+        sessionToken,
+        { isRenewal: true }
+      );
+
+      return await getAttestation(
+        env,
+        itwVersion,
+        newHardwareKeyTag,
+        sessionToken
+      )
+        .then(attestation => {
+          // Track the successful renewal in Mixpanel
+          trackWalletInstanceRenewalSuccess();
+          return attestation;
+        })
+        .catch(error => {
+          // If the attestation retrieval fails again after renewing the wallet instance,
+          // we set a flag in the store to prevent further renewal attempts and prompt the user with an error.
+          store.dispatch(itwSetWalletInstanceRenewalError(true));
+          // Track the renewal failure in Mixpanel
+          trackWalletInstanceRenewalFailure(error);
+          throw error;
+        });
+    }
   }),
 
   revokeWalletInstance: fromPromise(async () => {
@@ -161,7 +225,12 @@ export const createEidIssuanceActorsImplementation = (
     }
     assert(sessionToken, "sessionToken is undefined");
 
-    await revokeCurrentWalletInstance(env, sessionToken, integrityKeyTag.value);
+    await revokeCurrentWalletInstance(
+      env,
+      itwVersion,
+      sessionToken,
+      integrityKeyTag.value
+    );
   }),
 
   startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
@@ -174,6 +243,7 @@ export const createEidIssuanceActorsImplementation = (
 
       const authenticationContext = await issuanceUtils.startAuthFlow({
         env,
+        itwVersion,
         walletAttestation: input.walletInstanceAttestation,
         identification: input.identification,
         withMRTDPoP: input.withMRTDPoP
@@ -197,6 +267,7 @@ export const createEidIssuanceActorsImplementation = (
     );
 
     return mrtdUtils.initMrtdPoPChallenge({
+      itwVersion,
       issuerConf: input.authenticationContext.issuerConf,
       walletInstanceAttestation: input.walletInstanceAttestation,
       authRedirectUrl: input.authenticationContext.callbackUrl
@@ -217,6 +288,7 @@ export const createEidIssuanceActorsImplementation = (
     assert(input.mrtdContext.mrtd, "MRTD is undefined");
 
     const { callbackUrl } = await mrtdUtils.validateMrtdPoPChallenge({
+      itwVersion,
       issuerConf: input.authenticationContext.issuerConf,
       walletInstanceAttestation: input.walletInstanceAttestation,
       mrtd_auth_session: input.mrtdContext.mrtd_auth_session,
@@ -245,6 +317,7 @@ export const createEidIssuanceActorsImplementation = (
 
       const authParams = await issuanceUtils.completeAuthFlow({
         ...input.authenticationContext,
+        itwVersion,
         walletAttestation: input.walletInstanceAttestation
       });
 
@@ -254,6 +327,7 @@ export const createEidIssuanceActorsImplementation = (
       );
 
       return issuanceUtils.getPid({
+        itwVersion,
         ...authParams,
         ...input.authenticationContext
       });
@@ -261,7 +335,7 @@ export const createEidIssuanceActorsImplementation = (
   ),
 
   credentialUpgradeMachine: itwCredentialUpgradeMachine.provide({
-    actors: createCredentialUpgradeActorsImplementation(env),
+    actors: createCredentialUpgradeActorsImplementation(env, itwVersion),
     actions: createCredentialUpgradeActionsImplementation(store)
   })
 });

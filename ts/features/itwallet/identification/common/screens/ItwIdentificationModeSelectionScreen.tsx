@@ -17,6 +17,7 @@ import { IOStackNavigationRouteProps } from "../../../../../navigation/params/Ap
 import { useIOSelector } from "../../../../../store/hooks";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { itwDisabledIdentificationMethodsSelector } from "../../../common/store/selectors/remoteConfig";
+import { trackItWalletIDMethodSelected } from "../../../analytics";
 import { EidIssuanceLevel } from "../../../machine/eid/context";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
@@ -178,7 +179,7 @@ export const ItwIdentificationModeSelectionScreen = ({
       <ContentWrapper>
         <VSpacer size={8} />
         <VStack space={16}>
-          {isReissuanceMode ? (
+          {isReissuanceMode && isL3 ? (
             <>
               {(!isCiePinDisabled || !isCieIdDisabled) && (
                 <VStack space={8}>
@@ -250,8 +251,8 @@ const CiePinMethodModule = () => {
   });
 
   const badgeProps: Badge | undefined = useMemo(() => {
-    if (mode === "reissuance" || (level === "l2" && mode === "issuance")) {
-      // Should not display the recommended badge for reissuance or L2 issuance
+    // Show the recommended badge only during the L3 activation flow.
+    if (level !== "l3" || mode === "reissuance") {
       return undefined;
     }
 
@@ -267,11 +268,17 @@ const CiePinMethodModule = () => {
     <>
       <ModuleNavigationAlt
         title={I18n.t(`${i18nNs}.mode.ciePin.title`)}
-        subtitle={I18n.t(`${i18nNs}.mode.ciePin.subtitle`)}
+        subtitle={I18n.t(
+          `${i18nNs}.mode.ciePin.subtitle.${isL3 ? "l3" : "default"}`
+        )}
         testID="CiePinMethodModuleTestID"
         icon="cieCard"
         onPress={() => {
           if (isL3) {
+            trackItWalletIDMethodSelected({
+              ITW_ID_method: "ciePin",
+              itw_flow: "L3"
+            });
             ciePinBottomSheet.present();
           } else {
             handleOnPress();
@@ -322,6 +329,10 @@ const SpidMethodModule = () => {
         icon="spid"
         onPress={() => {
           if (isL3) {
+            trackItWalletIDMethodSelected({
+              ITW_ID_method: "spid",
+              itw_flow: "L3"
+            });
             spidBottomSheet.present();
           } else {
             handleOnPress();
@@ -371,6 +382,10 @@ const CieIdMethodModule = () => {
         testID="CieIDMethodModuleTestID"
         onPress={() => {
           if (isL3) {
+            trackItWalletIDMethodSelected({
+              ITW_ID_method: "cieId",
+              itw_flow: "L3"
+            });
             cieIdBottomSheet.present();
           } else {
             handleOnPress();

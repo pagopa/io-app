@@ -1184,7 +1184,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -1422,7 +1422,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -2298,7 +2298,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -2536,7 +2536,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -3339,7 +3339,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -3577,7 +3577,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -4773,7 +4773,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -5011,7 +5011,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
