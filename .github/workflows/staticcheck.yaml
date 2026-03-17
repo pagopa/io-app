@@ -79,16 +79,34 @@ jobs:
           name: api-client
           path: definitions/
       - id: run-test
+        shell: bash
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            # Using --passWithNoTests here cause Jest might not find 
-            # related tests for every file changed on every shard
-            yarn test:ci \
-              --changedSince=origin/${{ github.base_ref }} \
-              --shard=${{ matrix.shard }}/${{ strategy.job-total }} \
-              --passWithNoTests
+            echo "Checking if lockfile or critical files changed..."
+
+            CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD)
+
+            echo "$CHANGED_FILES"
+
+            if echo "$CHANGED_FILES" | grep -E 'yarn.lock|package.json' > /dev/null; then
+              echo "Dependency change detected → running FULL test suite"
+
+              yarn test:ci \
+                --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+
+            else
+              echo "No dependency changes → running RELATED tests only"
+
+              yarn test:ci \
+                --changedSince=origin/${{ github.base_ref }} \
+                --shard=${{ matrix.shard }}/${{ strategy.job-total }} \
+                --passWithNoTests
+            fi
           else
-            yarn test:ci --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+            echo "Non-PR event → running FULL test suite"
+
+            yarn test:ci \
+              --shard=${{ matrix.shard }}/${{ strategy.job-total }}
           fi
       - id: codecov-script        
         uses: codecov/codecov-action@84508663e988701840491b86de86b666e8a86bed # v4.3.0
