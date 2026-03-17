@@ -217,6 +217,6 @@ export const remoteApiLoginUrlPrefixSelector = createSelector(
     pipe(
       remoteConfig,
       O.chain(config => O.fromNullable(config.loginConfig?.loginUrl)),
-      O.getOrElse(() => apiLoginUrlPrefix)
+      O.getOrElse(() => apiLoginUrlPrefix as string)
     )
 );

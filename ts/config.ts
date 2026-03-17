@@ -50,17 +50,17 @@ const DEFAULT_MIXPANEL_URL = "https://api-eu.mixpanel.com";
 const DEFAULT_SENTRY_DSN =
   "https://43b87dcfc91f9cfdfaf71b254eb8f58e@o4507197393469440.ingest.de.sentry.io/4507221483585616";
 
-export const environment: string = Config.ENVIRONMENT;
-export const apiUrlPrefix: string = Config.API_URL_PREFIX;
-export const apiLoginUrlPrefix: string = Config.API_LOGIN_URL_PREFIX;
-export const pagoPaApiUrlPrefix: string = Config.PAGOPA_API_URL_PREFIX;
-export const pagoPaApiUrlPrefixTest: string = Config.PAGOPA_API_URL_PREFIX_TEST;
+export const environment = Config.ENVIRONMENT;
+export const apiUrlPrefix = Config.API_URL_PREFIX;
+export const apiLoginUrlPrefix = Config.API_LOGIN_URL_PREFIX;
+export const pagoPaApiUrlPrefix = Config.PAGOPA_API_URL_PREFIX;
+export const pagoPaApiUrlPrefixTest = Config.PAGOPA_API_URL_PREFIX_TEST;
 export const mixpanelUrl = pipe(
   Config.MIXPANEL_URL,
   NonEmptyString.decode,
   E.getOrElse(() => DEFAULT_MIXPANEL_URL)
 );
-export const mixpanelToken: string = Config.MIXPANEL_TOKEN;
+export const mixpanelToken = Config.MIXPANEL_TOKEN;
 export const sentryDsn: string = pipe(
   Config.SENTRY_DSN,
   NonEmptyString.decode,
@@ -69,7 +69,7 @@ export const sentryDsn: string = pipe(
 export const isDebugBiometricIdentificationEnabled =
   Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";
 
-export const bonusApiUrlPrefix: string = Config.BONUS_API_URL_PREFIX;
+export const bonusApiUrlPrefix = Config.BONUS_API_URL_PREFIX;
 
 export const isPlaygroundsEnabled: boolean =
   Config.PLAYGROUNDS_ENABLED === "YES";
@@ -135,31 +135,31 @@ export const helpCenterHowToLoginWithEicUrl =
 // #endregion
 
 export const fetchTimeout = pipe(
-  parseInt(Config.FETCH_TIMEOUT_MS, 10),
+  parseInt(Config.FETCH_TIMEOUT_MS ?? "", 10),
   t.Integer.decode,
   E.getOrElse(() => DEFAULT_FETCH_TIMEOUT_MS)
 ) as Millisecond;
 
 export const fetchMaxRetries = pipe(
-  parseInt(Config.FETCH_MAX_RETRIES, 10),
+  parseInt(Config.FETCH_MAX_RETRIES ?? "", 10),
   t.Integer.decode,
   E.getOrElse(() => DEFAULT_FETCH_MAX_RETRIES)
 );
 
 export const fetchPagoPaTimeout = pipe(
-  parseInt(Config.FETCH_PAGOPA_TIMEOUT_MS, 10),
+  parseInt(Config.FETCH_PAGOPA_TIMEOUT_MS ?? "", 10),
   t.Integer.decode,
   E.getOrElse(() => DEFAULT_FETCH_PAGOPA_TIMEOUT_MS)
 ) as Millisecond;
 
 export const fetchPaymentManagerLongTimeout = pipe(
-  parseInt(Config.FETCH_PAYMENT_MANAGER_TIMEOUT_MS, 10),
+  parseInt(Config.FETCH_PAYMENT_MANAGER_TIMEOUT_MS ?? "", 10),
   t.Integer.decode,
   E.getOrElse(() => DEFAULT_FETCH_PAYMENT_MANAGER_LONG_TIMEOUT_MS)
 ) as Millisecond;
 
 export const backgroundActivityTimeout = pipe(
-  parseInt(Config.BACKGROUND_ACTIVITY_TIMEOUT_S, 10),
+  parseInt(Config.BACKGROUND_ACTIVITY_TIMEOUT_S ?? "", 10),
   t.Integer.decode,
   E.getOrElse(() => DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S)
 ) as Second;
@@ -176,7 +176,7 @@ export const newContentRepoUrl =
   NEW_DEFAULT_CONTENT_REPO_URL;
 
 export const totMessageFetchWorkers = pipe(
-  parseInt(Config.TOT_MESSAGE_FETCH_WORKERS, 10),
+  parseInt(Config.TOT_MESSAGE_FETCH_WORKERS ?? "", 10),
   t.Integer.decode,
   E.getOrElse(() => DEFAULT_TOT_MESSAGE_FETCH_WORKERS)
 );
@@ -206,7 +206,7 @@ export const pinPukHelpUrl: string = pipe(
 );
 
 export const fastLoginMaxRetries = pipe(
-  parseInt(Config.FAST_LOGIN_MAX_RETRIES, 10),
+  parseInt(Config.FAST_LOGIN_MAX_RETRIES ?? "", 10),
   t.Integer.decode,
   E.getOrElse(() => DEFAULT_FAST_LOGIN_MAX_RETRIES)
 );
