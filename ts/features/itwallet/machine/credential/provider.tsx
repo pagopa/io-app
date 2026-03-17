@@ -4,7 +4,10 @@ import { pipe } from "fp-ts/lib/function";
 import { PropsWithChildren } from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector, useIOStore } from "../../../../store/hooks";
-import { selectItwEnv } from "../../common/store/selectors/environment";
+import {
+  selectItwEnv,
+  selectItwSpecsVersion
+} from "../../common/store/selectors/environment";
 import { getEnv } from "../../common/utils/environment";
 import { createCredentialIssuanceActionsImplementation } from "./actions.ts";
 import { createCredentialIssuanceActorsImplementation } from "./actors.ts";
@@ -23,15 +26,16 @@ export const ItwCredentialIssuanceMachineProvider = (
   const toast = useIOToast();
 
   const env = pipe(useIOSelector(selectItwEnv), getEnv);
+  const itwVersion = useIOSelector(selectItwSpecsVersion);
 
   const credentialIssuanceMachine = itwCredentialIssuanceMachine.provide({
-    guards: createCredentialIssuanceGuardsImplementation(store),
+    guards: createCredentialIssuanceGuardsImplementation(store, itwVersion),
     actions: createCredentialIssuanceActionsImplementation(
       navigation,
       store,
       toast
     ),
-    actors: createCredentialIssuanceActorsImplementation(env, store)
+    actors: createCredentialIssuanceActorsImplementation(env, itwVersion, store)
   });
 
   return (

@@ -19,6 +19,7 @@ import {
   ItwRemoteFlowType,
   ItwRemoteRequestPayload
 } from "../utils/itwRemoteTypeUtils.ts";
+import { selectItwSpecsVersion } from "../../../common/store/selectors/environment.ts";
 
 export type ItwRemoteRequestValidationScreenNavigationParams =
   Partial<ItwRemoteRequestPayload> & {
@@ -34,6 +35,7 @@ const ItwRemoteRequestValidationScreen = ({ route }: ScreenProps) => {
   useItwDisableGestureNavigation();
 
   const startupStatus = useIOSelector(isStartupLoaded);
+  const itwVersion = useIOSelector(selectItwSpecsVersion);
 
   /**
    * Using useLayoutEffect here ensures that trackItwRemoteStart() runs
@@ -59,7 +61,7 @@ const ItwRemoteRequestValidationScreen = ({ route }: ScreenProps) => {
     );
   }
 
-  const payload = validateItwPresentationQrCodeParams(route.params);
+  const payload = validateItwPresentationQrCodeParams(itwVersion, route.params);
 
   if (E.isLeft(payload)) {
     return (

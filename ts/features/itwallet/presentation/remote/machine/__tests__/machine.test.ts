@@ -230,7 +230,9 @@ describe("itwRemoteMachine", () => {
     /**
      * Mocks
      */
-    const rpConf = {} as RelyingPartyConfiguration;
+    const rpConf = {
+      subject: T_CLIENT_ID
+    } as RelyingPartyConfiguration;
     const presentationDetails = [] as EnrichedPresentationDetails;
     const unverifiedRequestObject = "";
     const requestObject = {
@@ -250,8 +252,7 @@ describe("itwRemoteMachine", () => {
     isItWalletL3Active.mockReturnValue(true);
     isEidExpired.mockReturnValue(false);
     evaluateRelyingPartyTrust.mockResolvedValue({
-      rpConf,
-      rpSubject: T_CLIENT_ID
+      rpConf
     });
     getRequestObject.mockResolvedValue(unverifiedRequestObject);
     getPresentationDetails.mockResolvedValue({
@@ -296,8 +297,7 @@ describe("itwRemoteMachine", () => {
       ...InitialContext,
       payload: qrCodePayload,
       flowType: T_FLOW_TYPE,
-      rpConf,
-      rpSubject: T_CLIENT_ID
+      rpConf
     });
 
     /**
@@ -310,8 +310,7 @@ describe("itwRemoteMachine", () => {
       requestObjectEncodedJwt: unverifiedRequestObject,
       payload: qrCodePayload,
       flowType: T_FLOW_TYPE,
-      rpConf,
-      rpSubject: T_CLIENT_ID
+      rpConf
     });
 
     /**
@@ -327,7 +326,6 @@ describe("itwRemoteMachine", () => {
       payload: qrCodePayload,
       flowType: T_FLOW_TYPE,
       rpConf,
-      rpSubject: T_CLIENT_ID,
       requestObject,
       presentationDetails
     });
@@ -349,7 +347,6 @@ describe("itwRemoteMachine", () => {
       payload: qrCodePayload,
       flowType: T_FLOW_TYPE,
       rpConf,
-      rpSubject: T_CLIENT_ID,
       requestObject,
       presentationDetails,
       selectedOptionalCredentials: new Set(["cred01", "cred02"])
@@ -370,7 +367,6 @@ describe("itwRemoteMachine", () => {
       payload: qrCodePayload,
       flowType: T_FLOW_TYPE,
       rpConf,
-      rpSubject: T_CLIENT_ID,
       requestObject,
       presentationDetails,
       selectedOptionalCredentials: new Set(["cred01", "cred02"]),
@@ -398,13 +394,9 @@ describe("itwRemoteMachine", () => {
 
     actor.send({
       type: "start",
-      payload: {
-        client_id: T_CLIENT_ID,
-        request_uri: T_REQUEST_URI,
-        state: T_STATE,
-        request_uri_method: "get"
-      },
-      flowType: T_FLOW_TYPE
+      flowType: T_FLOW_TYPE,
+
+      payload: qrCodePayload
     });
 
     await waitFor(actor, snapshot =>
@@ -468,9 +460,8 @@ describe("itwRemoteMachine", () => {
         value: "ClaimsDisclosure",
         context: {
           ...InitialContext,
-          payload: qrCodePayload,
           flowType: T_FLOW_TYPE,
-          rpSubject: "test_rp"
+          payload: qrCodePayload
         }
       })
     });
