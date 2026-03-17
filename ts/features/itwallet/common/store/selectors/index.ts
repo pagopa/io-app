@@ -207,7 +207,7 @@ export const itwShouldRenderUpgradeBannerSelector = (state: GlobalState) =>
  * - IT Wallet instance is not active
  * - The wallet is not active (because the device does not have the nfc)
  */
-export const itwShouldRenderL2EngagementBannerSelectorWithNoActiveWallet = (
+export const itwShouldRenderL2EngagementBannerForInactiveWalletSelector = (
   state: GlobalState
 ) =>
   !offlineAccessReasonSelector(state) &&
