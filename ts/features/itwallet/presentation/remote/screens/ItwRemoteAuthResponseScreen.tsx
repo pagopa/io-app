@@ -53,21 +53,31 @@ export const ItwRemoteAuthResponseScreen = () => {
 
   const closeMachine = () => machineRef.send({ type: "close" });
 
-  const action =
-    flowType === "same-device" && redirectUri
-      ? {
-          icon: "externalLinkSmall" as const,
-          label: I18n.t("features.itWallet.presentation.remote.success.cta"),
-          onPress: () => {
-            Linking.openURL(redirectUri)
-              .catch(() => IOToast.error("global.genericError"))
-              .finally(closeMachine);
-          }
+  const isSameDeviceFlowWithRedirectUri =
+    flowType === "same-device" && !!redirectUri;
+
+  const action = isSameDeviceFlowWithRedirectUri
+    ? {
+        icon: "externalLinkSmall" as const,
+        label: I18n.t("features.itWallet.presentation.remote.success.cta"),
+        onPress: () => {
+          Linking.openURL(redirectUri)
+            .catch(() => IOToast.error("global.genericError"))
+            .finally(closeMachine);
         }
-      : {
-          label: I18n.t("global.buttons.close"),
-          onPress: closeMachine
-        };
+      }
+    : {
+        label: I18n.t("global.buttons.close"),
+        onPress: closeMachine
+      };
+
+  const secondaryAction = isSameDeviceFlowWithRedirectUri
+    ? {
+        label: I18n.t("global.buttons.close"),
+        accessibilityLabel: I18n.t("global.buttons.close"),
+        onPress: closeMachine
+      }
+    : undefined;
 
   return (
     <OperationResultScreenContent
@@ -77,6 +87,7 @@ export const ItwRemoteAuthResponseScreen = () => {
         "features.itWallet.presentation.remote.success.subtitle"
       )}
       action={action}
+      secondaryAction={secondaryAction}
     />
   );
 };
