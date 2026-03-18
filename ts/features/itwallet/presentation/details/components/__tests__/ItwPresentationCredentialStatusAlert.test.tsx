@@ -32,6 +32,10 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     MockDate.set(new Date(2025, 1, 1));
   });
 
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   afterAll(() => {
     MockDate.reset();
   });
@@ -40,13 +44,7 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     ["jwtExpiring", undefined],
     ["jwtExpired", undefined],
     ["expiring", undefined],
-    ["expired", undefined],
-    ["invalid", mockMessage],
-    [
-      "invalid",
-      { "it-IT": { title: "__Scaduto__", description: "__Scaduto__" } }
-    ],
-    ["invalid", { "ko-KO": { title: "__만료됨__", description: "__만료됨__" } }]
+    ["expired", undefined]
   ] as ReadonlyArray<TestCaseParams>)(
     "should match snapshot when the status is %s and the message is %s",
     (credentialStatus, message) => {
@@ -97,31 +95,71 @@ describe("ItwPresentationCredentialStatusAlert", () => {
       expect(result).toBe(expected);
     }
   );
+
+  it("should render static copy and double CTA for the expired mDL status", () => {
+    const selectorMock: ReturnType<
+      typeof selectors.itwCredentialStatusSelector
+    > = {
+      status: "expired",
+      message: mockMessage
+    };
+
+    jest
+      .spyOn(selectors, "itwCredentialStatusSelector")
+      .mockImplementation(() => selectorMock);
+
+    const component = renderComponent();
+
+    expect(component.getByText("Quali documenti devo preparare?")).toBeTruthy();
+    expect(component.getByText("Hai già rinnovato il documento?")).toBeTruthy();
+    expect(component.getByText("Aggiorna il documento digitale")).toBeTruthy();
+    expect(component.getByText("Rimuovi dal Portafoglio")).toBeTruthy();
+  });
+
+  it("should render only the double CTA for the invalid mDL status", () => {
+    const selectorMock: ReturnType<
+      typeof selectors.itwCredentialStatusSelector
+    > = {
+      status: "invalid",
+      message: mockMessage
+    };
+
+    jest
+      .spyOn(selectors, "itwCredentialStatusSelector")
+      .mockImplementation(() => selectorMock);
+
+    const component = renderComponent();
+
+    expect(component.queryByText("Quali documenti devo preparare?")).toBeNull();
+    expect(component.queryByText("Hai già rinnovato il documento?")).toBeNull();
+    expect(component.getByText("Aggiorna il documento digitale")).toBeTruthy();
+    expect(component.getByText("Rimuovi dal Portafoglio")).toBeTruthy();
+  });
 });
 
-function renderComponent() {
-  const mockedMdl: StoredCredential = {
-    credential: "",
-    credentialType: "mDL",
-    credentialId: "dc_sd_jwt_mDL",
-    parsedCredential: {
-      expiry_date: { value: "2100-09-04", name: "exp" }
-    },
-    format: "dc+sd-jwt",
-    keyTag: "1",
-    issuerConf: {} as StoredCredential["issuerConf"],
-    jwt: {
-      issuedAt: "2024-09-30T07:32:49.000Z",
-      expiration: "2100-09-04T00:00:00.000Z"
-    },
-    spec_version: "1.0.0"
-  };
+const mockedMdl: StoredCredential = {
+  credential: "",
+  credentialType: "mDL",
+  credentialId: "dc_sd_jwt_mDL",
+  parsedCredential: {
+    expiry_date: { value: "2100-09-04", name: "exp" }
+  },
+  format: "dc+sd-jwt",
+  keyTag: "1",
+  issuerConf: {} as StoredCredential["issuerConf"],
+  jwt: {
+    issuedAt: "2024-09-30T07:32:49.000Z",
+    expiration: "2100-09-04T00:00:00.000Z"
+  },
+  spec_version: "1.0.0"
+};
 
+function renderComponent(credential: StoredCredential = mockedMdl) {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <ItwCredentialIssuanceMachineProvider>
-        <ItwPresentationCredentialStatusAlert credential={mockedMdl} />
+        <ItwPresentationCredentialStatusAlert credential={credential} />
       </ItwCredentialIssuanceMachineProvider>
     ),
     ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,

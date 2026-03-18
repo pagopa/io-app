@@ -38,6 +38,7 @@ import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/se
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { ITW_ROUTES } from "../../../navigation/routes.ts";
 
 type Props = {
   credential: StoredCredential;
@@ -237,6 +238,7 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
           message={message!}
           credential={credential}
           onTrack={trackCredentialAlertEvent}
+          status={status}
         />
       );
     case CredentialAlertType.DOCUMENT_EXPIRED:
@@ -352,35 +354,83 @@ type IssuerDynamicErrorAlertProps = {
   message: Record<string, { title: string; description: string }>;
   credential: StoredCredential;
   onTrack: TrackCredentialAlert;
+  status?: ItwCredentialStatus;
 };
 
 const IssuerDynamicErrorAlert = ({
   message,
   credential,
-  onTrack
+  onTrack,
+  status
 }: IssuerDynamicErrorAlertProps) => {
+  const navigation = useIONavigation();
   const localizedMessage = getLocalizedMessageOrFallback(message);
-  const showCta = credential.credentialType === CredentialType.DRIVING_LICENSE;
+  const isDrivingLicense =
+    credential.credentialType === CredentialType.DRIVING_LICENSE;
+  const showDoubleActions =
+    isDrivingLicense && (status === "expired" || status === "invalid");
 
   const { confirmAndRemoveCredential } =
     useItwRemoveCredentialWithConfirm(credential);
 
+  const handleUpdateCredential = () => {
+    onTrack("press_cta");
+    bottomSheet.dismiss();
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
+      params: {
+        credentialType: credential.credentialType,
+        mode: "reissuance"
+      }
+    });
+  };
   const bottomSheet = useIOBottomSheetModal({
     title: localizedMessage.title,
     component: (
       <VStack space={24}>
         <IOMarkdown content={localizedMessage.description} />
-        {showCta && (
-          <View style={{ marginBottom: 16 }}>
+        {isDrivingLicense && status === "expired" && (
+          <IOMarkdown
+            content={I18n.t(
+              "features.itWallet.presentation.bottomSheets.mDL.expired.content"
+            )}
+          />
+        )}
+        {showDoubleActions ? (
+          <VStack space={16}>
             <IOButton
               variant="solid"
               fullWidth
               label={I18n.t(
-                "features.itWallet.presentation.alerts.mdl.invalid.cta"
+                "features.itWallet.presentation.credentialDetails.actions.updateDigitalCredential"
               )}
-              onPress={confirmAndRemoveCredential}
+              onPress={handleUpdateCredential}
             />
-          </View>
+            <View style={{ alignSelf: "center" }}>
+              <IOButton
+                variant="link"
+                color="danger"
+                textAlign="center"
+                label={I18n.t(
+                  "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
+                )}
+                onPress={confirmAndRemoveCredential}
+              />
+            </View>
+          </VStack>
+        ) : (
+          isDrivingLicense && (
+            <View style={{ marginBottom: 16 }}>
+              <IOButton
+                variant="solid"
+                fullWidth
+                label={I18n.t(
+                  "features.itWallet.presentation.alerts.mdl.invalid.cta"
+                )}
+                onPress={confirmAndRemoveCredential}
+              />
+            </View>
+          )
         )}
       </VStack>
     )
