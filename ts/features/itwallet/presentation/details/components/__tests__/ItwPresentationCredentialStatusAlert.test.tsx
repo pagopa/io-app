@@ -44,7 +44,13 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     ["jwtExpiring", undefined],
     ["jwtExpired", undefined],
     ["expiring", undefined],
-    ["expired", undefined]
+    ["expired", undefined],
+    ["invalid", mockMessage],
+    [
+      "invalid",
+      { "it-IT": { title: "__Scaduto__", description: "__Scaduto__" } }
+    ],
+    ["invalid", { "ko-KO": { title: "__만료됨__", description: "__만료됨__" } }]
   ] as ReadonlyArray<TestCaseParams>)(
     "should match snapshot when the status is %s and the message is %s",
     (credentialStatus, message) => {
