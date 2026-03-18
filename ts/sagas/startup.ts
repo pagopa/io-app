@@ -143,6 +143,7 @@ import {
   versionInfoDataSelector
 } from "../common/versionInfo/store/reducers/versionInfo";
 import { versionInfoLoadSuccess } from "../common/versionInfo/store/actions/versionInfo";
+import { checkStoredLinkingUrlSaga } from "../features/linking/sagas";
 import { maybeHandlePendingBackgroundActions } from "./backgroundActions";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -269,6 +270,8 @@ export function* initializeApplicationSaga(
   if (O.isNone(remoteConfig)) {
     yield* take(backendStatusLoadSuccess);
   }
+
+  yield* fork(checkStoredLinkingUrlSaga);
 
   // Before proceeding, ensure that version info is loaded and app is supported
   // we need to check that the min app version is satisfied to proceed any other step

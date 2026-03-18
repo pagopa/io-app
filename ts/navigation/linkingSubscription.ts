@@ -11,6 +11,7 @@ import { shouldTriggerWalletUpdate } from "../utils/deepLinkUtils";
 import { GlobalState } from "../store/reducers/types";
 import { initiateAarFlow } from "../features/pn/aar/store/actions";
 import { IO_LOGIN_CIE_URL_SCHEME } from "../features/authentication/login/cie/utils/cie";
+import { trackIOOpenedFromUniversalAppLink } from "../features/linking/analytics";
 
 // as of writing this, the only deep link that is dispatched after an app wake, but before the login's completion
 // is the CIEID login one.
@@ -23,6 +24,7 @@ const isDeepLinkBlackListed = (url: string): boolean =>
 
 export const linkingSubscription =
   (dispatch: Dispatch<Action>, store: Store<Readonly<GlobalState>>) =>
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   (listener: (url: string) => void) => {
     const subscription = Linking.addEventListener("url", ({ url }) => {
       // Message archiving/restoring hides the bottom tab bar so we must make
@@ -30,6 +32,10 @@ export const linkingSubscription =
       // a deep link may initiate a navigation flow that will later deliver the
       // user to a screen where the tab bar is hidden (while it should be shown)
       const state = store.getState();
+      const isSendAARLinkSelector = isSendAARLink(store.getState(), url);
+      trackIOOpenedFromUniversalAppLink(
+        isSendAARLinkSelector ? "aar" : "continua_su_io"
+      );
       const isArchivingDisabled = isArchivingDisabledSelector(state);
       if (!isArchivingDisabled) {
         // Auto-reset does not provide feedback to the user
