@@ -52,6 +52,7 @@ describe("itwProximityMachine", () => {
   const setHasGivenConsent = jest.fn();
   const navigateToGrantPermissionsScreen = jest.fn();
   const navigateToBluetoothActivationScreen = jest.fn();
+  const navigateToQrCodeScreen = jest.fn();
   const navigateToFailureScreen = jest.fn();
   const navigateToClaimsDisclosureScreen = jest.fn();
   const navigateToSendDocumentsResponseScreen = jest.fn();
@@ -79,6 +80,7 @@ describe("itwProximityMachine", () => {
       setHasGivenConsent,
       navigateToGrantPermissionsScreen,
       navigateToBluetoothActivationScreen,
+      navigateToQrCodeScreen,
       navigateToFailureScreen,
       navigateToClaimsDisclosureScreen,
       navigateToSendDocumentsResponseScreen,
