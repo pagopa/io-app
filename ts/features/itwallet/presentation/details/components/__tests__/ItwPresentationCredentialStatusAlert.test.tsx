@@ -137,29 +137,29 @@ describe("ItwPresentationCredentialStatusAlert", () => {
   });
 });
 
-const mockedMdl: StoredCredential = {
-  credential: "",
-  credentialType: "mDL",
-  credentialId: "dc_sd_jwt_mDL",
-  parsedCredential: {
-    expiry_date: { value: "2100-09-04", name: "exp" }
-  },
-  format: "dc+sd-jwt",
-  keyTag: "1",
-  issuerConf: {} as StoredCredential["issuerConf"],
-  jwt: {
-    issuedAt: "2024-09-30T07:32:49.000Z",
-    expiration: "2100-09-04T00:00:00.000Z"
-  },
-  spec_version: "1.0.0"
-};
+function renderComponent() {
+  const mockedMdl: StoredCredential = {
+    credential: "",
+    credentialType: "mDL",
+    credentialId: "dc_sd_jwt_mDL",
+    parsedCredential: {
+      expiry_date: { value: "2100-09-04", name: "exp" }
+    },
+    format: "dc+sd-jwt",
+    keyTag: "1",
+    issuerConf: {} as StoredCredential["issuerConf"],
+    jwt: {
+      issuedAt: "2024-09-30T07:32:49.000Z",
+      expiration: "2100-09-04T00:00:00.000Z"
+    },
+    spec_version: "1.0.0"
+  };
 
-function renderComponent(credential: StoredCredential = mockedMdl) {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <ItwCredentialIssuanceMachineProvider>
-        <ItwPresentationCredentialStatusAlert credential={credential} />
+        <ItwPresentationCredentialStatusAlert credential={mockedMdl} />
       </ItwCredentialIssuanceMachineProvider>
     ),
     ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
