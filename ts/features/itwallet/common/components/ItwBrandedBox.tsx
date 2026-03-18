@@ -55,6 +55,8 @@ export const ItwBrandedBox = ({
   const theme = useItWalletTheme();
   const { themeType } = useIOThemeContext();
   const isLightMode = themeType === "light";
+  const shouldUseGradientBackground =
+    isLightMode && backgroundVariant === "gradient";
 
   const [size, setSize] = useState<{ width: number; height: number }>({
     width: 0,
@@ -164,7 +166,7 @@ export const ItwBrandedBox = ({
         }
       ]}
     >
-      {backgroundVariant === "gradient" && (
+      {shouldUseGradientBackground && (
         <LinearGradient
           pointerEvents="none"
           colors={brandedBoxGradientColors}
