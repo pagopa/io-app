@@ -17054,23 +17054,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-screenshot-prevent@patch:react-native-screenshot-prevent@npm%3A1.2.1#./.yarn/patches/react-native-screenshot-prevent-npm-1.2.1-d115315590.patch::version=1.2.1&hash=7682fa&locator=io%40workspace%3A.":
+"react-native-screenshot-prevent@patch:react-native-screenshot-prevent@npm%3A1.2.1#./.yarn/patches/react-native-screenshot-prevent-npm-1.2.1-d115315590.patch::locator=io%40workspace%3A.":
   version: 1.2.1
-  resolution: "react-native-screenshot-prevent@patch:react-native-screenshot-prevent@npm%3A1.2.1#./.yarn/patches/react-native-screenshot-prevent-npm-1.2.1-d115315590.patch::version=1.2.1&hash=7682fa&locator=io%40workspace%3A."
+  resolution: "react-native-screenshot-prevent@patch:react-native-screenshot-prevent@npm%3A1.2.1#./.yarn/patches/react-native-screenshot-prevent-npm-1.2.1-d115315590.patch::version=1.2.1&hash=c9b6e0&locator=io%40workspace%3A."
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 2b17f9e11946507d401d17b551fc794ea48df1b7b33203e7fddfcd31a9d31f49f5b8d13579980cb8448ceb5462480097f34b81891f6ade4f86a33f3319138b09
-  languageName: node
-  linkType: hard
-
-"react-native-screenshot-prevent@patch:react-native-screenshot-prevent@patch%3Areact-native-screenshot-prevent@npm%253A1.2.1%23./.yarn/patches/react-native-screenshot-prevent-npm-1.2.1-d115315590.patch%3A%3Aversion=1.2.1&hash=7682fa&locator=io%2540workspace%253A.#./.yarn/patches/react-native-screenshot-prevent-patch-24552b42ab.patch::locator=io%40workspace%3A.":
-  version: 1.2.1
-  resolution: "react-native-screenshot-prevent@patch:react-native-screenshot-prevent@patch%3Areact-native-screenshot-prevent@npm%253A1.2.1%23./.yarn/patches/react-native-screenshot-prevent-npm-1.2.1-d115315590.patch%3A%3Aversion=1.2.1&hash=7682fa&locator=io%2540workspace%253A.#./.yarn/patches/react-native-screenshot-prevent-patch-24552b42ab.patch::version=1.2.1&hash=5ffad5&locator=io%40workspace%3A."
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: bca78f24e0fffed93dd3e6ddd3d867436dd3151ab7d4efa3be1e3625bb1311b373ff5957862f544fd8ef19b7fc81ca8cf3b4c30ca188190712d95a582911939d
+  checksum: 623c4de5f8afe88c0f8b3359b40bcb84e477e61a8104dfaf9d5761f324c38c54c66b221385aac2312774af75f8979b7311dfc574bb71dcac18368ee64e03576e
   languageName: node
   linkType: hard
 
