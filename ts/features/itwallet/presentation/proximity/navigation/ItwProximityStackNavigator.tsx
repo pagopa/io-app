@@ -3,7 +3,7 @@ import {
   TransitionPresets
 } from "@react-navigation/stack";
 import { isGestureEnabled } from "../../../../../utils/navigation";
-import { ItwPresentationQrCodeScreen } from "../screens/ItwPresentationQrCodeScreen.tsx";
+import { ItwProximityQrCodeScreen } from "../screens/ItwProximityQrCodeScreen.tsx";
 import {
   ItwProximityMachineContext,
   ItwProximityMachineProvider
@@ -41,7 +41,7 @@ const InnerNavigator = () => {
     >
       <Stack.Screen
         name={ITW_PROXIMITY_ROUTES.QR_CODE}
-        component={ItwPresentationQrCodeScreen}
+        component={ItwProximityQrCodeScreen}
         options={TransitionPresets.ModalSlideFromBottomIOS}
       />
       <Stack.Screen

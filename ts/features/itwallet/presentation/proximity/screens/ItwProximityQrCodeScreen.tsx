@@ -29,7 +29,7 @@ import ItwIcon from "../../../../../../img/features/itWallet/brand/itw_icon.svg"
 
 const QR_CODE_LOGO_SIZE = 52;
 
-export const ItwPresentationQrCodeScreen = () => {
+export const ItwProximityQrCodeScreen = () => {
   const [isRetrying, setIsRetrying] = useState(false);
   const { themeType } = useIOThemeContext();
   const { width } = useWindowDimensions();
