@@ -124,6 +124,7 @@ export const testable = isTestEnv
   ? {
       cieErrors,
       sendAarProblemJsonErrorCodes,
-      specificBehavioursByStatus
+      specificBehavioursByStatus,
+      aarGenericBehaviour
     }
   : undefined;
