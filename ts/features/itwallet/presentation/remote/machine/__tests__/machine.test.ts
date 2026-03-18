@@ -226,7 +226,9 @@ describe("itwRemoteMachine", () => {
     /**
      * Mocks
      */
-    const rpConf = {} as RelyingPartyConfiguration;
+    const rpConf = {
+      subject: T_CLIENT_ID
+    } as RelyingPartyConfiguration;
     const presentationDetails = [] as EnrichedPresentationDetails;
     const unverifiedRequestObject = "";
     const requestObject = {
@@ -246,8 +248,7 @@ describe("itwRemoteMachine", () => {
     isItWalletL3Active.mockReturnValue(true);
     isEidExpired.mockReturnValue(false);
     evaluateRelyingPartyTrust.mockResolvedValue({
-      rpConf,
-      rpSubject: T_CLIENT_ID
+      rpConf
     });
     getRequestObject.mockResolvedValue(unverifiedRequestObject);
     getPresentationDetails.mockResolvedValue({
@@ -286,8 +287,7 @@ describe("itwRemoteMachine", () => {
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
       payload: qrCodePayload,
-      rpConf,
-      rpSubject: T_CLIENT_ID
+      rpConf
     });
 
     /**
@@ -299,8 +299,7 @@ describe("itwRemoteMachine", () => {
       ...InitialContext,
       requestObjectEncodedJwt: unverifiedRequestObject,
       payload: qrCodePayload,
-      rpConf,
-      rpSubject: T_CLIENT_ID
+      rpConf
     });
 
     /**
@@ -315,7 +314,6 @@ describe("itwRemoteMachine", () => {
       requestObjectEncodedJwt: unverifiedRequestObject,
       payload: qrCodePayload,
       rpConf,
-      rpSubject: T_CLIENT_ID,
       requestObject,
       presentationDetails
     });
@@ -336,7 +334,6 @@ describe("itwRemoteMachine", () => {
       requestObjectEncodedJwt: unverifiedRequestObject,
       payload: qrCodePayload,
       rpConf,
-      rpSubject: T_CLIENT_ID,
       requestObject,
       presentationDetails,
       selectedOptionalCredentials: new Set(["cred01", "cred02"])
@@ -356,7 +353,6 @@ describe("itwRemoteMachine", () => {
       requestObjectEncodedJwt: unverifiedRequestObject,
       payload: qrCodePayload,
       rpConf,
-      rpSubject: T_CLIENT_ID,
       requestObject,
       presentationDetails,
       selectedOptionalCredentials: new Set(["cred01", "cred02"]),
@@ -384,12 +380,7 @@ describe("itwRemoteMachine", () => {
 
     actor.send({
       type: "start",
-      payload: {
-        client_id: T_CLIENT_ID,
-        request_uri: T_REQUEST_URI,
-        state: T_STATE,
-        request_uri_method: "get"
-      }
+      payload: qrCodePayload
     });
 
     await waitFor(actor, snapshot =>
@@ -452,8 +443,7 @@ describe("itwRemoteMachine", () => {
         value: "ClaimsDisclosure",
         context: {
           ...InitialContext,
-          payload: qrCodePayload,
-          rpSubject: "test_rp"
+          payload: qrCodePayload
         }
       })
     });

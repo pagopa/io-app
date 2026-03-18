@@ -4,7 +4,10 @@ import { pipe } from "fp-ts/lib/function";
 import { PropsWithChildren } from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector, useIOStore } from "../../../../store/hooks";
-import { selectItwEnv } from "../../common/store/selectors/environment";
+import {
+  selectItwEnv,
+  selectItwSpecsVersion
+} from "../../common/store/selectors/environment";
 import { getEnv } from "../../common/utils/environment";
 import { createItwTrustmarkActionsImplementation } from "./actions";
 import { createItwTrustmarkActorsImplementation } from "./actors";
@@ -27,11 +30,12 @@ export const ItwTrustmarkMachineProvider = ({
   const toast = useIOToast();
 
   const env = pipe(useIOSelector(selectItwEnv), getEnv);
+  const itwVersion = useIOSelector(selectItwSpecsVersion);
 
   const trustmarkMachine = itwTrustmarkMachine.provide({
     actions: createItwTrustmarkActionsImplementation(store, navigation, toast),
-    actors: createItwTrustmarkActorsImplementation(env, store),
-    guards: createItwTrustmarkGuardsImplementation()
+    actors: createItwTrustmarkActorsImplementation(env, itwVersion, store),
+    guards: createItwTrustmarkGuardsImplementation(itwVersion)
   });
 
   return (
