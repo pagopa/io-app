@@ -11904,6 +11904,7 @@ __metadata:
     react-native-pdf-thumbnail: ^1.3.1
     react-native-permissions: ^5.3.0
     react-native-push-notification: ^8.1.1
+    react-native-qrcode-skia: ^0.4.0
     react-native-qrcode-svg: ^6.3.12
     react-native-quick-base64: ^2.2.2
     react-native-quick-crypto: ^0.7.17
@@ -16344,7 +16345,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qrcode@npm:^1.5.1":
+"qrcode@npm:^1.5.1, qrcode@npm:^1.5.3":
   version: 1.5.4
   resolution: "qrcode@npm:1.5.4"
   dependencies:
@@ -16929,6 +16930,19 @@ __metadata:
     "@react-native-community/push-notification-ios": ^1.10.1
     react-native: ">=0.33"
   checksum: ae70b5cccabc6b48808b47bc59c5bd610f8b4cb10d3d624ab411ae0d2fe9d62afd41ebab95be69dab5922ef2f665a7daaee6debf2000a8f86cdec0f5330f9a69
+  languageName: node
+  linkType: hard
+
+"react-native-qrcode-skia@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "react-native-qrcode-skia@npm:0.4.0"
+  dependencies:
+    qrcode: ^1.5.3
+  peerDependencies:
+    "@shopify/react-native-skia": ">=1.0.0"
+    react: "*"
+    react-native: "*"
+  checksum: da99c9c30f30ea7b809830a10b0d7a52c229f97888b9ac4ad50cda8f30ff6601d67f3a6fc763bfbc375038dc6282aa4794f324518eef0b34961eeb707fb15072
   languageName: node
   linkType: hard
 

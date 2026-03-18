@@ -41,6 +41,8 @@ import { ItwParamsList } from "../../features/itwallet/navigation/ItwParamsList"
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
 import { ItwRemoteParamsList } from "../../features/itwallet/presentation/remote/navigation/ItwRemoteParamsList.ts";
 import { ITW_REMOTE_ROUTES } from "../../features/itwallet/presentation/remote/navigation/routes.ts";
+import { ItwProximityParamsList } from "../../features/itwallet/presentation/proximity/navigation/ItwProximityParamsList";
+import { ITW_PROXIMITY_ROUTES } from "../../features/itwallet/presentation/proximity/navigation/routes";
 import { MessagesParamsList } from "../../features/messages/navigation/params";
 import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
 import { PaymentsBarcodeParamsList } from "../../features/payments/barcode/navigation/params";
@@ -120,6 +122,7 @@ export type AppParamsList = {
 
   [ITW_ROUTES.MAIN]: NavigatorScreenParams<ItwParamsList>;
   [ITW_REMOTE_ROUTES.MAIN]: NavigatorScreenParams<ItwRemoteParamsList>;
+  [ITW_PROXIMITY_ROUTES.MAIN]: NavigatorScreenParams<ItwProximityParamsList>;
   [SERVICES_ROUTES.SERVICES_HOME]: undefined;
 };
 
