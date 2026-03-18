@@ -14,17 +14,17 @@ import { useEffect, useMemo, useState } from "react";
 import { StyleSheet, useWindowDimensions, View } from "react-native";
 import QRCode from "react-native-qrcode-skia";
 import I18n from "i18next";
-import { IOScrollView } from "../../../../../components/ui/IOScrollView";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { useMaxBrightness } from "../../../../../utils/brightness";
-import { ItwBrandedBox } from "../../../common/components/ItwBrandedBox";
-import { ItWalletLogo } from "../../../common/components/ItWalletLogo";
-import { ItwProximityMachineContext } from "../../proximity/machine/provider";
+import { IOScrollView } from "../../../../../components/ui/IOScrollView.tsx";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
+import { useMaxBrightness } from "../../../../../utils/brightness.ts";
+import { ItwBrandedBox } from "../../../common/components/ItwBrandedBox.tsx";
+import { ItWalletLogo } from "../../../common/components/ItWalletLogo.tsx";
+import { ItwProximityMachineContext } from "../machine/provider.tsx";
 import {
   selectIsLoading,
   selectIsQRCodeGenerationError,
   selectQRCodeString
-} from "../../proximity/machine/selectors";
+} from "../machine/selectors.ts";
 import ItwIcon from "../../../../../../img/features/itWallet/brand/itw_icon.svg";
 
 const QR_CODE_LOGO_SIZE = 52;

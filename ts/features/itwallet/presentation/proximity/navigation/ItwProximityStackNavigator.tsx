@@ -3,7 +3,7 @@ import {
   TransitionPresets
 } from "@react-navigation/stack";
 import { isGestureEnabled } from "../../../../../utils/navigation";
-import { ItwPresentationQrCodeScreen } from "../../qrcode/screens/ItwPresentationQrCodeScreen";
+import { ItwPresentationQrCodeScreen } from "../screens/ItwPresentationQrCodeScreen.tsx";
 import {
   ItwProximityMachineContext,
   ItwProximityMachineProvider
