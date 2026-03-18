@@ -34,7 +34,7 @@ export type GetWalletAttestationActorOutput = Awaited<
 >;
 
 export type RequestCredentialActorInput = Partial<
-  credentialIssuanceUtils.RequestCredential["arguments"]
+  Parameters<credentialIssuanceUtils.RequestCredential>[0]
 > & {
   skipMdocIssuance: boolean;
 };
@@ -44,7 +44,7 @@ export type RequestCredentialActorOutput = Awaited<
 >;
 
 export type ObtainCredentialActorInput = Partial<
-  credentialIssuanceUtils.ObtainCredential["arguments"]
+  Parameters<credentialIssuanceUtils.ObtainCredential>[0]
 >;
 
 export type ObtainCredentialActorOutput = Awaited<

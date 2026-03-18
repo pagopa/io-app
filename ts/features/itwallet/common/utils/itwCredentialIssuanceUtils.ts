@@ -178,15 +178,16 @@ export const obtainCredential: ObtainCredential = async ({
     }
   );
 
-  const params: Omit<RequestAndParseCredential["arguments"], "authDetails"> = {
-    accessToken,
-    clientId,
-    credentialType,
-    env,
-    dPopCryptoContext,
-    issuerConf,
-    itwVersion
-  };
+  const params: Omit<Parameters<RequestAndParseCredential>[0], "authDetails"> =
+    {
+      accessToken,
+      clientId,
+      credentialType,
+      env,
+      dPopCryptoContext,
+      issuerConf,
+      itwVersion
+    };
 
   if (SEQUENTIAL_ISSUANCE_CREDENTIALS.includes(credentialType)) {
     const credentials: Array<CredentialBundle> = [];
@@ -195,7 +196,7 @@ export const obtainCredential: ObtainCredential = async ({
       const credential = await requestAndParseCredential({
         ...params,
         authDetails
-      } as RequestAndParseCredential["arguments"]);
+      } as Parameters<RequestAndParseCredential>[0]);
       // eslint-disable-next-line functional/immutable-data
       credentials.push(credential);
     }
@@ -207,7 +208,7 @@ export const obtainCredential: ObtainCredential = async ({
       requestAndParseCredential({
         ...params,
         authDetails
-      } as RequestAndParseCredential["arguments"])
+      } as Parameters<RequestAndParseCredential>[0])
     )
   );
 };
