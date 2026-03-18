@@ -4222,7 +4222,7 @@
           "instruction": "Mostra questo codice QR a chi verifica i tuoi documenti digitali",
           "error": {
             "message": "Abbiamo avuto un problema nel generare il QR Code.",
-            "invalid": "Non puoi far verificare i tuoi documenti digitali"
+            "invalid": "Non puoi far verificare i tuoi documenti digitali."
           }
         },
         "itWalletId": {

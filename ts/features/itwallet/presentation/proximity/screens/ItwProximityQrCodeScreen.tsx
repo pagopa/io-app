@@ -10,10 +10,11 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, useWindowDimensions, View } from "react-native";
 import QRCode from "react-native-qrcode-skia";
 import I18n from "i18next";
+import { useSelector } from "react-redux";
 import { IOScrollView } from "../../../../../components/ui/IOScrollView.tsx";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
@@ -26,8 +27,24 @@ import {
   selectQRCodeString
 } from "../machine/selectors.ts";
 import ItwIcon from "../../../../../../img/features/itWallet/brand/itw_icon.svg";
+import { shouldBlockProximityQrCodeSelector } from "../store/selectors";
+import { emptyContextualHelp } from "../../../../../utils/contextualHelp.ts";
 
 const QR_CODE_LOGO_SIZE = 52;
+
+type StatusBoxProps = {
+  iconName: "warningFilled" | "qrCode";
+  description: string;
+  action?: React.ReactNode;
+};
+
+const StatusBox = ({ iconName, description, action }: StatusBoxProps) => (
+  <View style={styles.statusBox}>
+    <Icon name={iconName} size={24} color="grey-700" />
+    <Body style={styles.statusDescription}>{description}</Body>
+    {action}
+  </View>
+);
 
 export const ItwProximityQrCodeScreen = () => {
   const [isRetrying, setIsRetrying] = useState(false);
@@ -39,8 +56,11 @@ export const ItwProximityQrCodeScreen = () => {
   const qrCodeString =
     ItwProximityMachineContext.useSelector(selectQRCodeString);
   const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
-  const isError = ItwProximityMachineContext.useSelector(
+  const isProximityError = ItwProximityMachineContext.useSelector(
     selectIsQRCodeGenerationError
+  );
+  const shouldBlockProximityPresentation = useSelector(
+    shouldBlockProximityQrCodeSelector
   );
 
   // Auto-start only on the initial mount. When the flow is closing, the machine
@@ -61,7 +81,9 @@ export const ItwProximityQrCodeScreen = () => {
 
   useHeaderSecondLevel({
     title: "",
-    canGoBack: true
+    canGoBack: true,
+    contextualHelp: emptyContextualHelp,
+    supportRequest: true
   });
 
   // When the screen is removed (back button), dismiss the proximity machine
@@ -73,31 +95,51 @@ export const ItwProximityQrCodeScreen = () => {
     [navigation, machineRef]
   );
 
-  const QrCodeComponent = useMemo(() => {
-    const handleRetry = () => {
-      setIsRetrying(true);
-      machineRef.send({ type: "retry" });
-    };
+  const handleRetry = () => {
+    setIsRetrying(true);
+    machineRef.send({ type: "retry" });
+  };
 
-    if (isError) {
+  const showStatusContent =
+    isProximityError || shouldBlockProximityPresentation;
+
+  const renderQrCodeContent = () => {
+    if (isProximityError) {
       return (
-        <View style={styles.retryBox}>
-          <Icon name={"warningFilled"} size={24} color="grey-700" />
-          <Body style={styles.retryDescription}>
-            {I18n.t("features.itWallet.presentation.qrCode.error.message")}
-          </Body>
-          {/* This margin top is set to avoid a visual glitch when loading state changes */}
-          <View style={{ marginTop: isRetrying ? -4 : 0 }}>
-            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-            {/* @ts-ignore */}
-            <IOButton
-              variant="link"
-              loading={isRetrying}
-              label={I18n.t("global.buttons.retry")}
-              onPress={handleRetry}
-            />
-          </View>
-        </View>
+        <StatusBox
+          iconName="warningFilled"
+          description={I18n.t(
+            "features.itWallet.presentation.qrCode.error.message"
+          )}
+          action={
+            <View
+              style={[
+                styles.retryActionContainer,
+                isRetrying && styles.retryActionContainerLoading
+              ]}
+            >
+              {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+              {/* @ts-ignore */}
+              <IOButton
+                variant="link"
+                loading={isRetrying}
+                label={I18n.t("global.buttons.retry")}
+                onPress={handleRetry}
+              />
+            </View>
+          }
+        />
+      );
+    }
+
+    if (shouldBlockProximityPresentation) {
+      return (
+        <StatusBox
+          iconName="qrCode"
+          description={I18n.t(
+            "features.itWallet.presentation.qrCode.error.invalid"
+          )}
+        />
       );
     }
 
@@ -116,23 +158,15 @@ export const ItwProximityQrCodeScreen = () => {
         logo={<ItwIcon width={QR_CODE_LOGO_SIZE} height={QR_CODE_LOGO_SIZE} />}
       />
     );
-  }, [
-    isError,
-    isLoading,
-    isRetrying,
-    machineRef,
-    qrCodeColor,
-    qrCodeSize,
-    qrCodeString
-  ]);
+  };
 
   return (
     <IOScrollView>
-      <ItwBrandedBox variant={isError ? "error" : "default"}>
+      <ItwBrandedBox variant={showStatusContent ? "error" : "default"}>
         <View style={styles.logoContainer}>
           <ItWalletLogo width={134} height={28} />
         </View>
-        {!isError && (
+        {!showStatusContent && (
           <>
             <VSpacer size={8} />
             <BodySmall style={styles.centeredText}>
@@ -141,7 +175,7 @@ export const ItwProximityQrCodeScreen = () => {
           </>
         )}
         <VSpacer size={16} />
-        {QrCodeComponent}
+        {renderQrCodeContent()}
       </ItwBrandedBox>
     </IOScrollView>
   );
@@ -154,7 +188,7 @@ const styles = StyleSheet.create({
   centeredText: {
     textAlign: "center"
   },
-  retryBox: {
+  statusBox: {
     backgroundColor: IOColors["grey-50"],
     alignItems: "center",
     justifyContent: "center",
@@ -163,7 +197,13 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     gap: 8
   },
-  retryDescription: {
+  statusDescription: {
     textAlign: "center"
+  },
+  retryActionContainer: {
+    marginTop: 0
+  },
+  retryActionContainerLoading: {
+    marginTop: -4
   }
 });
