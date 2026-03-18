@@ -433,8 +433,10 @@
               "title": "Sprache geändert"
             }
           },
-          "banner": {
-            "button": "Mehr erfahren"
+          "translationFeedbackBanner": {
+            "title": "Hilf uns, die Übersetzungen zu verbessern",
+            "body": "Schreib uns, um eine Übersetzung zu melden, die verbessert werden kann.",
+            "action": "Eine Meldung senden"
           }
         },
         "notifications": {
