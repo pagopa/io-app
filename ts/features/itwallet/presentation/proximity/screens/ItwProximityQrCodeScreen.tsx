@@ -162,7 +162,10 @@ export const ItwProximityQrCodeScreen = () => {
 
   return (
     <IOScrollView>
-      <ItwBrandedBox variant={showStatusContent ? "error" : "default"}>
+      <ItwBrandedBox
+        variant={showStatusContent ? "error" : "default"}
+        backgroundVariant={"gradient"}
+      >
         <View style={styles.logoContainer}>
           <ItWalletLogo width={134} height={28} />
         </View>
