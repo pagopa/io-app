@@ -48,7 +48,10 @@ export function* handleMessagePrecondition(
   const keyInfo = yield* call(getKeyInfo);
 
   const { getThirdPartyMessagePrecondition } =
-    communicationClientManager.getClient(apiUrlPrefix, { token: sessionToken, keyInfo });
+    communicationClientManager.getClient(apiUrlPrefix, {
+      token: sessionToken,
+      keyInfo
+    });
 
   yield* race({
     response: call(

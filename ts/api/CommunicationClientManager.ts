@@ -24,8 +24,7 @@ class CommunicationClientManager extends ApiClientManager<
     return createClient({
       baseUrl,
       fetchApi: lollipopFetch({ nonce: uuid() }, keyInfo),
-      withDefaults: op => params =>
-        op({ Bearer: `Bearer ${token}`, ...params })
+      withDefaults: op => params => op({ Bearer: `Bearer ${token}`, ...params })
     });
   }
 }

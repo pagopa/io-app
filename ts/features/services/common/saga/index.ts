@@ -15,10 +15,7 @@ import { specialServicePreferencesSaga } from "./specialServicePreferencesSaga";
 export function* watchServicesSaga(
   identityClient: IdentityClient
 ): SagaIterator {
-  const servicesClient = yield* call(
-    createServicesClient,
-    apiUrlPrefix
-  );
+  const servicesClient = yield* call(createServicesClient, apiUrlPrefix);
 
   yield* fork(watchServicesDetailsSaga, identityClient, servicesClient);
   yield* fork(watchHomeSaga, servicesClient);

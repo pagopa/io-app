@@ -32,10 +32,13 @@ export function* handleLoadMessageById(
 
   const keyInfo = yield* call(getKeyInfo);
 
-  const { getUserMessage: getMessage } = communicationClientManager.getClient(apiUrlPrefix, {
-    token: sessionToken,
-    keyInfo
-  });
+  const { getUserMessage: getMessage } = communicationClientManager.getClient(
+    apiUrlPrefix,
+    {
+      token: sessionToken,
+      keyInfo
+    }
+  );
 
   try {
     const response = (yield* call(

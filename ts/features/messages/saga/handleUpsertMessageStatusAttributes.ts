@@ -199,7 +199,10 @@ export function* raceUpsertMessageStatusAttributes(
   const keyInfo = yield* call(getKeyInfo);
 
   const { upsertMessageStatusAttributes: putMessage } =
-    communicationClientManager.getClient(apiUrlPrefix, { token: sessionToken, keyInfo });
+    communicationClientManager.getClient(apiUrlPrefix, {
+      token: sessionToken,
+      keyInfo
+    });
 
   yield* race({
     task: call(handleUpsertMessageStatusAttributes, putMessage, action),

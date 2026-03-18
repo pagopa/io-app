@@ -80,8 +80,7 @@ const LollipopPlayground = () => {
                   verificationResult: `${status} - ${response.title}\n${response.detail}`
                 }));
               } else {
-                const response =
-                  res.value as SignMessageResponse;
+                const response = res.value as SignMessageResponse;
                 setState(s => ({
                   ...s,
                   isVerificationSuccess: true,
@@ -95,12 +94,14 @@ const LollipopPlayground = () => {
                 verificationResult: JSON.stringify(signResponse.left)
               }));
             }
-          }).catch(e =>
+          })
+          .catch(e =>
             setState(s => ({
               ...s,
               isVerificationSuccess: false,
               verificationResult: `${e}`
-            })));
+            }))
+          );
       }
     },
     [maybeSessionToken, maybePublicKey, keyTag, state.doSignBody]

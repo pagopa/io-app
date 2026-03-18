@@ -17,7 +17,7 @@ describe("index", () => {
     it("should follow expected flow", () => {
       const backendClient = {} as IdentityClient;
       const servicesClient = {} as ServicesClient;
-      
+
       testSaga(watchServicesSaga, backendClient)
         .next()
         .call(createServicesClient, apiUrlPrefix)

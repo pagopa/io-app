@@ -37,10 +37,13 @@ export function* handleReloadAllMessages(
 
   const keyInfo = yield* call(getKeyInfo);
 
-  const { getUserMessages: getMessages } = communicationClientManager.getClient(apiUrlPrefix, {
-    token: sessionToken,
-    keyInfo
-  });
+  const { getUserMessages: getMessages } = communicationClientManager.getClient(
+    apiUrlPrefix,
+    {
+      token: sessionToken,
+      keyInfo
+    }
+  );
 
   try {
     const response: SagaCallReturnType<typeof getMessages> = (yield* call(
