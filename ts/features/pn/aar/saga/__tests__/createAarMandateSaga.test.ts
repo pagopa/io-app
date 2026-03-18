@@ -207,11 +207,11 @@ describe("createAarMandateSaga", () => {
         .next(true)
         .call(withRefreshApiCall, createAarMandateMock(), mockAction)
         .next(mandateResponse)
+        .call(trackSendAARFailure, "Create Mandate", errorReason, responseValue)
+        .next()
         .call(getAarErrorBehaviour, responseValue)
         .next(aarGenericBehaviour)
         .call(aarGenericBehaviour.track, errorReason)
-        .next()
-        .call(trackSendAARFailure, "Create Mandate", errorReason, responseValue)
         .next()
         .put(
           setAarFlowState({
@@ -257,11 +257,11 @@ describe("createAarMandateSaga", () => {
       .next(true)
       .call(withRefreshApiCall, createAarMandateMock(), mockAction)
       .next(mandateResponse)
+      .call(trackSendAARFailure, "Create Mandate", errorReason, responseValue)
+      .next()
       .call(getAarErrorBehaviour, responseValue)
       .next(specificBehavioursByStatus[409][errorCode])
       .call(trackSendAarMandateRetryError, errorReason)
-      .next()
-      .call(trackSendAARFailure, "Create Mandate", errorReason, responseValue)
       .next()
       .put(
         setAarFlowState({

@@ -87,9 +87,9 @@ export function* createAarMandateSaga(
           value
         )})`;
 
+        yield* call(trackSendAARFailure, sendAarFailurePhase, reason, value);
         const { track } = yield* call(getAarErrorBehaviour, value);
         yield* call(track, reason);
-        yield* call(trackSendAARFailure, sendAarFailurePhase, reason, value);
 
         const errorState: AARFlowState = {
           type: sendAARFlowStates.ko,
