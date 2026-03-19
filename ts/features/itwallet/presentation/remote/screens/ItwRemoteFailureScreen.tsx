@@ -17,10 +17,8 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList.
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { useItwRemoteUntrustedRPBottomSheet } from "../hooks/useItwRemoteUntrustedRPBottomSheet.tsx";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog.tsx";
-import {
-  useItwFailureSupportModal,
-  ZendeskSubcategoryValue
-} from "../../../common/hooks/useItwFailureSupportModal.tsx";
+import { useItwFailureSupportModal } from "../../../common/hooks/useItwFailureSupportModal.tsx";
+import { ZendeskSubcategoryValue } from "../../../common/hooks/useItwZendeskSupport";
 import { useItwSendAuthorizationErrorResponse } from "../hooks/useItwSendAuthorizationErrorResponse.tsx";
 import { useItwRemoteEventsTracking } from "../hooks/useItwRemoteEventsTracking";
 import { trackItwRemoteInvalidAuthResponseBottomSheet } from "../analytics";
@@ -179,7 +177,11 @@ const ContentView = ({ failure }: ContentViewProps) => {
                         screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
                         params: { credentialType: missingCredentials[0] }
                       }
-                    : { screen: ITW_ROUTES.ONBOARDING }
+                    : {
+                        screen: isWhitelisted
+                          ? ITW_ROUTES.L3_ONBOARDING
+                          : ITW_ROUTES.ONBOARDING
+                      }
                 )
             },
             secondaryAction: {

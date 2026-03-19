@@ -64,7 +64,7 @@ export const updateMixpanelSuperProperties = async (
     }
     const screenReaderEnabled: boolean = await isScreenReaderEnabled();
     const fontScale = await getFontScale();
-    const biometricTechnology = await getBiometricsType();
+    const biometricTechnology = await getBiometricsType(false);
     const isScreenLockSet = await isScreenLockSetFunc();
     const LOGIN_SESSION = loginSessionConfigHandler(state);
     const NOTIFICATION_CONFIGURATION = notificationConfigurationHandler(state);

@@ -39,6 +39,11 @@ describe("ItwIdentificationModeSelectionScreen", () => {
     expect(component.queryByTestId("CiePinMethodModuleTestID")).not.toBeNull();
     expect(component.queryByTestId("SpidMethodModuleTestID")).not.toBeNull();
     expect(component.queryByTestId("CieIDMethodModuleTestID")).not.toBeNull();
+    expect(
+      component.queryByText(
+        "Dovrai usare la Carta di Identità Elettronica (CIE) e inserire il suo PIN di 8 cifre."
+      )
+    ).not.toBeNull();
     expect(component.queryByTestId("CiePinRecommendedBadgeTestID")).toBeNull();
     expect(component.queryByTestId("noCieButtonTestID")).toBeNull();
   });
@@ -65,14 +70,12 @@ describe("ItwIdentificationModeSelectionScreen", () => {
     expect(component.queryByTestId("noCieButtonTestID")).not.toBeNull();
   });
 
-  it("[reissuance, l2] should show frequency headers and list CiePin(without badge), CieId and SPID authentication methods", () => {
+  it("[reissuance, l2] should show CiePin, CieId and SPID authentication methods without the recommended badge", () => {
     const component = renderComponent("reissuance", "l2");
 
-    expect(component.queryByText("Ogni 12 mesi")).not.toBeNull();
-    expect(component.queryByText("Ogni 90 giorni")).not.toBeNull();
-    expect(
-      component.queryByTestId("CiePinReissuanceBadgeTestID")
-    ).not.toBeNull();
+    expect(component.queryByText("Ogni 12 mesi")).toBeNull();
+    expect(component.queryByText("Ogni 90 giorni")).toBeNull();
+    expect(component.queryByTestId("CiePinReissuanceBadgeTestID")).toBeNull();
     expect(component.queryByTestId("CiePinMethodModuleTestID")).not.toBeNull();
     expect(component.queryByTestId("SpidMethodModuleTestID")).not.toBeNull();
     expect(component.queryByTestId("CieIDMethodModuleTestID")).not.toBeNull();

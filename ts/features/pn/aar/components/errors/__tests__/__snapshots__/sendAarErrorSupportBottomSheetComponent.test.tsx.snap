@@ -63,7 +63,6 @@ exports[`sendAarErrorSupportBottomSheetComponent should match the snapshot with 
             allowFontScaling={true}
             dynamicTypeRamp="headline"
             maxFontSizeMultiplier={1.5}
-            role="heading"
             style={
               [
                 {},
@@ -121,7 +120,29 @@ exports[`sendAarErrorSupportBottomSheetComponent should match the snapshot with 
   >
     <View
       accessibilityElementsHidden={true}
+      collapsable={false}
       importantForAccessibility="no-hide-descendants"
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "backgroundColor": "rgba(244, 245, 248, 0)",
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "marginHorizontal": -24,
+            "paddingHorizontal": 24,
+            "paddingVertical": 12,
+          },
+        ]
+      }
       style={
         [
           {
@@ -130,12 +151,41 @@ exports[`sendAarErrorSupportBottomSheetComponent should match the snapshot with 
             "paddingVertical": 12,
           },
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "rgba(244, 245, 248, 0)",
           },
         ]
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            },
+            {
+              "columnGap": 18,
+            },
+          ]
+        }
         style={
           [
             {
@@ -149,7 +199,7 @@ exports[`sendAarErrorSupportBottomSheetComponent should match the snapshot with 
             {
               "transform": [
                 {
-                  "scale": undefined,
+                  "scale": 1,
                 },
               ],
             },
@@ -286,7 +336,6 @@ exports[`sendAarErrorSupportBottomSheetComponent should match the snapshot with 
             allowFontScaling={true}
             dynamicTypeRamp="headline"
             maxFontSizeMultiplier={1.5}
-            role="heading"
             style={
               [
                 {},
@@ -344,7 +393,29 @@ exports[`sendAarErrorSupportBottomSheetComponent should match the snapshot with 
   >
     <View
       accessibilityElementsHidden={true}
+      collapsable={false}
       importantForAccessibility="no-hide-descendants"
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "backgroundColor": "rgba(244, 245, 248, 0)",
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "marginHorizontal": -24,
+            "paddingHorizontal": 24,
+            "paddingVertical": 12,
+          },
+        ]
+      }
       style={
         [
           {
@@ -353,12 +424,41 @@ exports[`sendAarErrorSupportBottomSheetComponent should match the snapshot with 
             "paddingVertical": 12,
           },
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "rgba(244, 245, 248, 0)",
           },
         ]
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            },
+            {
+              "columnGap": 18,
+            },
+          ]
+        }
         style={
           [
             {
@@ -372,7 +472,7 @@ exports[`sendAarErrorSupportBottomSheetComponent should match the snapshot with 
             {
               "transform": [
                 {
-                  "scale": undefined,
+                  "scale": 1,
                 },
               ],
             },
@@ -561,7 +661,6 @@ exports[`sendAarErrorSupportBottomSheetComponent should match the snapshot witho
             allowFontScaling={true}
             dynamicTypeRamp="headline"
             maxFontSizeMultiplier={1.5}
-            role="heading"
             style={
               [
                 {},
@@ -619,7 +718,29 @@ exports[`sendAarErrorSupportBottomSheetComponent should match the snapshot witho
   >
     <View
       accessibilityElementsHidden={true}
+      collapsable={false}
       importantForAccessibility="no-hide-descendants"
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "backgroundColor": "rgba(244, 245, 248, 0)",
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "marginHorizontal": -24,
+            "paddingHorizontal": 24,
+            "paddingVertical": 12,
+          },
+        ]
+      }
       style={
         [
           {
@@ -628,12 +749,41 @@ exports[`sendAarErrorSupportBottomSheetComponent should match the snapshot witho
             "paddingVertical": 12,
           },
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "rgba(244, 245, 248, 0)",
           },
         ]
       }
     >
       <View
+        collapsable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            },
+            {
+              "columnGap": 18,
+            },
+          ]
+        }
         style={
           [
             {
@@ -647,7 +797,7 @@ exports[`sendAarErrorSupportBottomSheetComponent should match the snapshot witho
             {
               "transform": [
                 {
-                  "scale": undefined,
+                  "scale": 1,
                 },
               ],
             },

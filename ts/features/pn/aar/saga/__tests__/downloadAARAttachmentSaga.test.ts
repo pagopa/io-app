@@ -3,8 +3,8 @@ import ReactNativeBlobUtil from "react-native-blob-util";
 import { testSaga } from "redux-saga-test-plan";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
+import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { KeyInfo } from "../../../../lollipop/utils/crypto";
 import { downloadAttachment } from "../../../../messages/store/actions";
@@ -28,7 +28,7 @@ jest.mock("react-native-blob-util", () => ({
 }));
 
 const bearerToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30" as SessionToken;
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30";
 const keyInfo: KeyInfo = {
   keyTag: "a12e9221-c056-4bbc-8623-ca92df29361e",
   publicKey: {
@@ -128,7 +128,105 @@ describe("downloadAARAttachmentSaga", () => {
             downloadRequestAction
           )
           .throw(error)
-          .call(analytics.trackSendAARFailure, "Download Attachment", reason)
+          .call(
+            analytics.trackSendAARFailure,
+            "Download Attachment",
+            reason,
+            undefined
+          )
+          .next()
+          .put(
+            downloadAttachment.failure({
+              attachment,
+              messageId,
+              error: new Error(reason)
+            })
+          )
+          .next()
+          .cancelled()
+          .next(false)
+          .isDone();
+      });
+      it(`should pass aarProblemJson to trackSendAARFailure when a SendServerError is thrown (mandateId: ${mandateIdVariant}, UAT environment: ${useUATEnvironment})`, () => {
+        const reason = "Server error";
+        const problemJson = {
+          status: 500,
+          detail: "Internal server error",
+          errors: [{ code: "PN_GENERIC_ERROR" }]
+        } as unknown as AARProblemJson;
+        const error = new testable!.SendServerError(reason, problemJson);
+        (unknownToReason as jest.Mock).mockReturnValue(reason);
+
+        testSaga(
+          downloadAARAttachmentSaga,
+          bearerToken,
+          keyInfo,
+          mandateId,
+          downloadRequestAction
+        )
+          .next()
+          .select(isPnTestEnabledSelector)
+          .next(useUATEnvironment)
+          .call(
+            testable!.getAttachmentPrevalidatedUrl,
+            bearerToken,
+            keyInfo,
+            attachment.url,
+            useUATEnvironment,
+            mandateId,
+            downloadRequestAction
+          )
+          .throw(error)
+          .call(
+            analytics.trackSendAARFailure,
+            "Download Attachment",
+            reason,
+            problemJson
+          )
+          .next()
+          .put(
+            downloadAttachment.failure({
+              attachment,
+              messageId,
+              error: new Error(reason)
+            })
+          )
+          .next()
+          .cancelled()
+          .next(false)
+          .isDone();
+      });
+      it(`should handle a fast-login error with undefined aarProblemJson (mandateId: ${mandateIdVariant}, UAT environment: ${useUATEnvironment})`, () => {
+        const error = new Error("FAST_LOGIN_EXPIRED");
+        const reason = "FAST_LOGIN_EXPIRED";
+        (unknownToReason as jest.Mock).mockReturnValue(reason);
+
+        testSaga(
+          downloadAARAttachmentSaga,
+          bearerToken,
+          keyInfo,
+          mandateId,
+          downloadRequestAction
+        )
+          .next()
+          .select(isPnTestEnabledSelector)
+          .next(useUATEnvironment)
+          .call(
+            testable!.getAttachmentPrevalidatedUrl,
+            bearerToken,
+            keyInfo,
+            attachment.url,
+            useUATEnvironment,
+            mandateId,
+            downloadRequestAction
+          )
+          .throw(error)
+          .call(
+            analytics.trackSendAARFailure,
+            "Download Attachment",
+            "Fast login expiration",
+            undefined
+          )
           .next()
           .put(
             downloadAttachment.failure({
@@ -272,6 +370,7 @@ describe("getAttachmentMetadata", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   [undefined, mandateId].forEach(mandateIdVariant => {
     [false, true].forEach(useUATEnvironment => {
       it(`should return url on successful response (mandateId: ${mandateIdVariant} isUAT: ${useUATEnvironment})`, () => {
@@ -438,13 +537,119 @@ describe("getAttachmentMetadata", () => {
             .next(response);
         } catch (e: unknown) {
           expectionThrown = true;
-          expect(e).toEqual(
-            Error(
-              `HTTP request failed (500 401 Access denied Remote server has denied access. Check your API key)`
-            )
+          expect((e as Error).name).toBe("SendServerError");
+          expect((e as Error).message).toBe(
+            `500 401 Access denied Remote server has denied access. Check your API key`
           );
+          expect((e as any).aarProblemJson).toEqual({
+            status: 401,
+            title: "Access denied",
+            detail: "Remote server has denied access. Check your API key"
+          });
         }
         expect(expectionThrown).toBe(true);
+        expect(mockedGetNotificationAttachmentInput.mock.calls.length).toBe(1);
+        expect(mockedGetNotificationAttachmentInput.mock.calls[0].length).toBe(
+          1
+        );
+        expect(mockedGetNotificationAttachmentInput.mock.calls[0][0]).toEqual({
+          Bearer: `Bearer ${bearerToken}`,
+          urlEncodedBase64AttachmentUrl: encodedUrl,
+          "x-pagopa-pn-io-src": "QR_CODE",
+          mandateId: mandateIdVariant,
+          isTest: useUATEnvironment
+        });
+      });
+      it(`should throw PN_DELIVERY_MANDATENOTFOUND on 500 response with AAR TTL error (mandateId: ${mandateIdVariant} isUAT: ${useUATEnvironment})`, () => {
+        const errorRes = {
+          status: 404,
+          errors: [{ code: "PN_DELIVERY_MANDATENOTFOUND" }]
+        } as unknown as AARProblemJson;
+        const response = E.right({
+          status: 500,
+          value: errorRes
+        });
+        const {
+          mockedGetNotificationAttachment,
+          mockedGetNotificationAttachmentInput
+        } = generateMocks(response);
+        // eslint-disable-next-line functional/no-let
+        let exceptionThrown = false;
+        try {
+          testSaga(
+            testable!.getAttachmentMetadata,
+            bearerToken,
+            keyInfo,
+            attachment.url,
+            useUATEnvironment,
+            mandateIdVariant,
+            downloadRequestAction
+          )
+            .next()
+            .call(
+              withRefreshApiCall,
+              mockedGetNotificationAttachment,
+              downloadRequestAction
+            )
+            .next(response)
+            .call(analytics.trackSendAarNotificationDetailTtlError)
+            .next();
+        } catch (e: unknown) {
+          exceptionThrown = true;
+          expect((e as Error).name).toBe("SendServerError");
+          expect((e as Error).message).toBe("PN_DELIVERY_MANDATENOTFOUND");
+          expect((e as any).aarProblemJson).toEqual(errorRes);
+        }
+
+        expect(exceptionThrown).toBe(true);
+        expect(mockedGetNotificationAttachmentInput.mock.calls.length).toBe(1);
+        expect(mockedGetNotificationAttachmentInput.mock.calls[0].length).toBe(
+          1
+        );
+        expect(mockedGetNotificationAttachmentInput.mock.calls[0][0]).toEqual({
+          Bearer: `Bearer ${bearerToken}`,
+          urlEncodedBase64AttachmentUrl: encodedUrl,
+          "x-pagopa-pn-io-src": "QR_CODE",
+          mandateId: mandateIdVariant,
+          isTest: useUATEnvironment
+        });
+      });
+      it(`should fall through to generic HTTP error on 500 response without AAR TTL error code (mandateId: ${mandateIdVariant} isUAT: ${useUATEnvironment})`, () => {
+        const response = E.right({
+          status: 500,
+          value: {
+            status: 404,
+            errors: [{ code: "SOME_OTHER_ERROR" }]
+          }
+        });
+        const {
+          mockedGetNotificationAttachment,
+          mockedGetNotificationAttachmentInput
+        } = generateMocks(response);
+        // eslint-disable-next-line functional/no-let
+        let exceptionThrown = false;
+        try {
+          testSaga(
+            testable!.getAttachmentMetadata,
+            bearerToken,
+            keyInfo,
+            attachment.url,
+            useUATEnvironment,
+            mandateIdVariant,
+            downloadRequestAction
+          )
+            .next()
+            .call(
+              withRefreshApiCall,
+              mockedGetNotificationAttachment,
+              downloadRequestAction
+            )
+            .next(response);
+        } catch (e: unknown) {
+          exceptionThrown = true;
+          expect((e as Error).name).toBe("SendServerError");
+        }
+        expect(exceptionThrown).toBe(true);
         expect(mockedGetNotificationAttachmentInput.mock.calls.length).toBe(1);
         expect(mockedGetNotificationAttachmentInput.mock.calls[0].length).toBe(
           1
@@ -540,7 +745,7 @@ describe("getAttachmentMetadata", () => {
             .call(
               analytics.trackSendAARFailure,
               "Download Attachment",
-              "Fast login expired"
+              "Fast login expiration"
             );
         } catch (e: unknown) {
           expectionThrown = true;

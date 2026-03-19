@@ -16,10 +16,6 @@ export type Context = {
    */
   failure?: RemoteFailure;
   /**
-   * Relying party Entity Configuration subject
-   */
-  rpSubject: string | undefined;
-  /**
    * Relying party Entity Configuration metadata
    */
   rpConf: RelyingPartyConfiguration | undefined;
@@ -50,7 +46,6 @@ export type Context = {
 export const InitialContext: Context = {
   payload: undefined,
   failure: undefined,
-  rpSubject: undefined,
   rpConf: undefined,
   requestObjectEncodedJwt: undefined,
   requestObject: undefined,

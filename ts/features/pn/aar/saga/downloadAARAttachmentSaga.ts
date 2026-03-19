@@ -6,7 +6,6 @@ import { ActionType } from "typesafe-actions";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { apiUrlPrefix, fetchTimeout } from "../../../../config";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { SessionToken } from "../../../../types/SessionToken";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
 import { isTestEnv } from "../../../../utils/environment";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
@@ -20,17 +19,31 @@ import {
 } from "../../../messages/utils/attachments";
 import {
   aarProblemJsonAnalyticsReport,
-  trackSendAARFailure
+  trackSendAARFailure,
+  trackSendAarNotificationDetailTtlError
 } from "../analytics";
 import { createSendAARClientWithLollipop } from "../api/client";
+import { isAarAttachmentTtlError } from "../utils/aarErrorMappings";
+import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
+import { SendAARFailurePhase } from "../utils/stateUtils";
+class SendServerError extends Error {
+  public readonly aarProblemJson: AARProblemJson;
+  constructor(message: string, aarProblemJson: AARProblemJson) {
+    super(message);
 
+    this.name = "SendServerError";
+    this.aarProblemJson = aarProblemJson;
+  }
+}
+
+const sendAarFailurePhase: SendAARFailurePhase = "Download Attachment";
 const fastLoginType = "FAST_LOGIN_EXPIRED";
 const fastLoginError = Error(fastLoginType);
 const isFastLoginError = (e: unknown) =>
   e instanceof Error && e.message === fastLoginType;
 
 export function* downloadAARAttachmentSaga(
-  bearerToken: SessionToken,
+  bearerToken: string,
   keyInfo: KeyInfo,
   mandateId: string | undefined,
   action: ActionType<typeof downloadAttachment.request>
@@ -68,11 +81,19 @@ export function* downloadAARAttachmentSaga(
     if (isFastLoginError(e)) {
       yield* call(
         trackSendAARFailure,
-        "Download Attachment",
-        "Fast login expired"
+        sendAarFailurePhase,
+        "Fast login expiration",
+        undefined
       );
     } else {
-      yield* call(trackSendAARFailure, "Download Attachment", reason);
+      const problemJson =
+        e instanceof SendServerError ? e.aarProblemJson : undefined;
+      yield* call(
+        trackSendAARFailure,
+        sendAarFailurePhase,
+        reason,
+        problemJson
+      );
     }
 
     yield* put(
@@ -92,7 +113,7 @@ export function* downloadAARAttachmentSaga(
 }
 
 function* getAttachmentPrevalidatedUrl(
-  bearerToken: SessionToken,
+  bearerToken: string,
   keyInfo: KeyInfo,
   attachmentUrl: string,
   useUATEnvironment: boolean,
@@ -121,7 +142,7 @@ function* getAttachmentPrevalidatedUrl(
 }
 
 function* getAttachmentMetadata(
-  bearerToken: SessionToken,
+  bearerToken: string,
   keyInfo: KeyInfo,
   attachmentUrl: string,
   useUATEnvironment: boolean,
@@ -156,9 +177,16 @@ function* getAttachmentMetadata(
   if (status === 401) {
     throw fastLoginError;
   }
+  if (status === 500) {
+    const errorCode = value.errors?.[0]?.code;
+    if (isAarAttachmentTtlError(errorCode)) {
+      yield* call(trackSendAarNotificationDetailTtlError);
+      throw new SendServerError(errorCode, value);
+    }
+  }
   if (status !== 200) {
     const reason = aarProblemJsonAnalyticsReport(status, value);
-    throw Error(`HTTP request failed (${reason})`);
+    throw new SendServerError(reason, value);
   }
 
   const { retryAfter, url } = value;
@@ -215,6 +243,7 @@ export const testable = isTestEnv
       downloadAttachmentFromPrevalidatedUrl,
       encodeAttachmentUrl,
       getAttachmentMetadata,
-      getAttachmentPrevalidatedUrl
+      getAttachmentPrevalidatedUrl,
+      SendServerError
     }
   : undefined;

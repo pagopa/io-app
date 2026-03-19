@@ -1,10 +1,8 @@
 import { testSaga } from "redux-saga-test-plan";
 import * as E from "fp-ts/lib/Either";
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import * as reporters from "@pagopa/ts-commons/lib/reporters";
 import { PasswordLogin } from "../../../../../../definitions/session_manager/PasswordLogin";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import {
   testLoginRequest,
@@ -18,27 +16,27 @@ import {
   isActiveSessionLoginSelector
 } from "../../../activeSessionLogin/store/selectors";
 
-const fakePayload: PasswordLogin = {
-  username: "ABCDEF12G34H567I" as any,
-  password: "secret" as NonEmptyString
-};
+const mockPayload = {
+  username: "ABCDEF12G34H567I",
+  password: "secret"
+} as PasswordLogin;
 
-const fakePublicKey = {
+const mockPublicKey = {
   kty: "RSA",
   alg: "RS256",
   n: "someModulus",
   e: "someExponent"
 } satisfies PublicKey;
 
-const fakeToken = "test-token" as SessionToken;
+const mockToken = "mock-token";
 
-const action = testLoginRequest(fakePayload);
+const action = testLoginRequest(mockPayload);
 
 // Mock token response
 const rightResponse = {
   status: 200,
   value: {
-    token: fakeToken
+    token: mockToken
   }
 };
 
@@ -57,7 +55,7 @@ describe("handleTestLogin saga", () => {
       .next(E.right(rightResponse))
       .put(
         loginSuccess({
-          token: fakeToken,
+          token: mockToken,
           idp: "test"
         })
       )
@@ -148,7 +146,7 @@ describe("handleTestLogin saga", () => {
       .select(isFastLoginEnabledSelector)
       .next(true)
       .select(ephemeralPublicKeySelector)
-      .next(fakePublicKey)
+      .next(mockPublicKey)
       .select(isActiveSessionFastLoginEnabledSelector)
       .next(false)
       .select(isActiveSessionLoginSelector)
@@ -156,7 +154,7 @@ describe("handleTestLogin saga", () => {
       .next(E.right(rightResponse))
       .put(
         loginSuccess({
-          token: fakeToken,
+          token: mockToken,
           idp: "test"
         })
       )

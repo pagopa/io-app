@@ -18,16 +18,10 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { identificationRequest } from "../../../../identification/store/actions/index.ts";
-import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
-import {
-  trackCredentialDetail,
-  trackWalletCredentialShowTrustmark,
-  trackWalletCredentialShowFAC_SIMILE
-} from "../analytics";
 import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
+import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
 import ItwCredentialNotFound from "../../../common/components/ItwCredentialNotFound.tsx";
 import { PoweredByItWalletText } from "../../../common/components/PoweredByItWalletText.tsx";
-import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
 import { itwSetReviewPending } from "../../../common/store/actions/preferences.ts";
 import {
   itwIsL3EnabledSelector,
@@ -54,6 +48,11 @@ import { trackItwProximityShowQrCode } from "../../proximity/analytics";
 import { useItwPresentQRCode } from "../../proximity/hooks/useItwPresentQRCode.tsx";
 import { ItwProximityMachineContext } from "../../proximity/machine/provider.tsx";
 import { selectIsLoading } from "../../proximity/machine/selectors.ts";
+import {
+  trackCredentialDetail,
+  trackWalletCredentialShowFAC_SIMILE,
+  trackWalletCredentialShowTrustmark
+} from "../analytics";
 import { ItwPresentationAdditionalInfoSection } from "../components/ItwPresentationAdditionalInfoSection.tsx";
 import { ItwPresentationClaimsSection } from "../components/ItwPresentationClaimsSection.tsx";
 import { ItwPresentationCredentialInfoAlert } from "../components/ItwPresentationCredentialInfoAlert.tsx";
@@ -178,7 +177,7 @@ export const ItwPresentationCredentialDetail = ({
   const dispatch = useIODispatch();
   const itwProximityMachineRef = ItwProximityMachineContext.useActorRef();
 
-  const itwFeaturesEnabled = useItwFeaturesEnabled(credential);
+  const itwFeaturesEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isL3Credential = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
@@ -190,6 +189,9 @@ export const ItwPresentationCredentialDetail = ({
     () => getMixPanelCredential(credential.credentialType, isL3Credential),
     [credential.credentialType, isL3Credential]
   );
+  const shouldShowMdlUpdateCta =
+    credential.credentialType === CredentialType.DRIVING_LICENSE &&
+    (status === "expired" || status === "invalid");
 
   useDebugInfo(credential);
   usePreventScreenCapture();
@@ -238,6 +240,22 @@ export const ItwPresentationCredentialDetail = ({
     const credentialType = credential.credentialType;
     const contentClaim = parsedCredential[WellKnownClaim.content];
 
+    if (shouldShowMdlUpdateCta) {
+      return {
+        label: I18n.t(
+          "features.itWallet.presentation.credentialDetails.actions.updateDigitalCredential"
+        ),
+        onPress: () =>
+          navigation.navigate(ITW_ROUTES.MAIN, {
+            screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
+            params: {
+              credentialType,
+              mode: "reissuance"
+            }
+          })
+      };
+    }
+
     if (
       credentialType === CredentialType.DRIVING_LICENSE &&
       itwFeaturesEnabled
@@ -284,7 +302,8 @@ export const ItwPresentationCredentialDetail = ({
     navigation,
     isCheckingPermissions,
     itwProximityMachineRef,
-    mixPanelCredential
+    mixPanelCredential,
+    shouldShowMdlUpdateCta
   ]);
 
   if (status === "unknown") {

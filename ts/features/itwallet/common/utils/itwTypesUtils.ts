@@ -1,52 +1,32 @@
 import {
-  Credential,
-  Trust,
-  WalletInstance
+  SdJwt,
+  WalletInstance,
+  RemotePresentation,
+  CredentialStatus,
+  CredentialIssuance
 } from "@pagopa/io-react-native-wallet";
-import { type Credential as LegacyCredential } from "@pagopa/io-react-native-wallet-legacy";
 import { CredentialType } from "./itwMocksUtils.ts";
 
 /**
- * Alias type for the return type of the start issuance flow operation.
+ * Alias for RequestObject
  */
-export type StartIssuanceFlow = Awaited<
-  ReturnType<Credential.Issuance.StartFlow>
->;
-
-/** Alias for RequestObject
- * It is not exposed from the wallet package, so we extract the type
- * from the operation description.
- * Consider add the type into the package public interface
- */
-export type RequestObject = Awaited<
-  ReturnType<Credential.Presentation.VerifyRequestObject>
->["requestObject"];
+export type RequestObject = RemotePresentation.RequestObject;
 
 /**
  * Alias type for the relying party entity configuration.
  */
-export type RpEntityConfiguration =
-  Trust.Types.RelyingPartyEntityConfiguration["payload"]["metadata"];
-
-/**
- * Alias for the IssuerConfiguration type v0.7.1
- */
-export type LegacyIssuerConfiguration = Awaited<
-  ReturnType<LegacyCredential.Issuance.EvaluateIssuerTrust>
->["issuerConf"];
+export type RpEntityConfiguration = RemotePresentation.RelyingPartyConfig;
 
 /**
  * Alias for the IssuerConfiguration type
  */
-export type IssuerConfiguration = Awaited<
-  ReturnType<Credential.Issuance.EvaluateIssuerTrust>
->["issuerConf"];
+export type IssuerConfiguration = CredentialIssuance.IssuerConfig;
 
 /**
  * Alias for the SupportedCredentialConfiguration type
  */
 export type MdocSupportedCredentialConfiguration = Extract<
-  IssuerConfiguration["openid_credential_issuer"]["credential_configurations_supported"][string],
+  IssuerConfiguration["credential_configurations_supported"][string],
   { format: "mso_mdoc" }
 >;
 
@@ -54,35 +34,45 @@ export type MdocSupportedCredentialConfiguration = Extract<
  * Alias for the AccessToken type
  */
 export type CredentialAccessToken = Awaited<
-  ReturnType<Credential.Issuance.AuthorizeAccess>
+  ReturnType<CredentialIssuance.IssuanceApi["authorizeAccess"]>
 >["accessToken"];
 
 /**
  * Alias for the ParseCredential type
  */
-export type ParsedCredential = Awaited<
-  ReturnType<Credential.Issuance.VerifyAndParseCredential>
->["parsedCredential"];
+export type ParsedCredential = CredentialIssuance.ParsedCredential;
 
 /**
  * Alias for the ParsedStatusAssertion type
  */
-export type ParsedStatusAssertion = Awaited<
-  ReturnType<Credential.Status.VerifyAndParseStatusAssertion>
->["parsedStatusAssertion"]["payload"];
-
+export type ParsedStatusAssertion = CredentialStatus.ParsedStatusAssertion;
 /**
  * Alias for the WalletInstanceStatus type
  */
-export type WalletInstanceStatus = Awaited<
-  ReturnType<typeof WalletInstance.getWalletInstanceStatus>
->;
+export type WalletInstanceStatus = WalletInstance.WalletInstanceStatus;
 
 /**
  * Alias for the WalletInstanceRevocationReason type
  */
 export type WalletInstanceRevocationReason =
   WalletInstanceStatus["revocation_reason"];
+
+/**
+ * Alias for the Verification type
+ */
+export type Verification = NonNullable<
+  ReturnType<typeof SdJwt.getVerification>
+>;
+
+/**
+ * Slim version of Verification for storage.
+ * Only persists the fields actually used by the app.
+ * The `evidence` field is excluded as it's being dropped in spec v1.3.3.
+ */
+export type StoredVerification = Pick<
+  Verification,
+  "trust_framework" | "assurance_level"
+>;
 
 export type StoredStatusAssertion =
   | {
@@ -106,7 +96,7 @@ export type StoredCredential = {
   parsedCredential: ParsedCredential;
   credentialType: string;
   credentialId: string;
-  issuerConf: IssuerConfiguration | LegacyIssuerConfiguration; // The Wallet might still contain older credentials
+  issuerConf: IssuerConfiguration;
   storedStatusAssertion?: StoredStatusAssertion;
   /**
    * The SD-JWT issuance and expiration dates in ISO format.
@@ -117,6 +107,8 @@ export type StoredCredential = {
     expiration: string;
     issuedAt?: string;
   };
+  spec_version: string;
+  verification?: StoredVerification;
 };
 
 // Digital credential status

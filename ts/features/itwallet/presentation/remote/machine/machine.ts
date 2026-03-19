@@ -196,7 +196,6 @@ export const itwRemoteMachine = setup({
         src: "getPresentationDetails",
         input: ({ context }) => ({
           qrCodePayload: context.payload,
-          rpSubject: context.rpSubject,
           requestObjectEncodedJwt: context.requestObjectEncodedJwt,
           rpConf: context.rpConf
         }),
