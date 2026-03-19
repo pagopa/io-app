@@ -1,4 +1,5 @@
 import {
+  Alert,
   Body,
   BodySmall,
   Icon,
@@ -48,7 +49,7 @@ const StatusBox = ({ iconName, description, action }: StatusBoxProps) => (
 
 export const ItwProximityQrCodeScreen = () => {
   const [isRetrying, setIsRetrying] = useState(false);
-  const { themeType } = useIOThemeContext();
+  const { themeType, theme } = useIOThemeContext();
   const { width } = useWindowDimensions();
 
   const navigation = useNavigation();
@@ -168,6 +169,9 @@ export const ItwProximityQrCodeScreen = () => {
       >
         <View style={styles.logoContainer}>
           <ItWalletLogo width={134} height={28} />
+          {shouldBlockProximityPresentation && (
+            <Icon name="errorFilled" size={20} color={theme.errorIcon} />
+          )}
         </View>
         {!showStatusContent && (
           <>
@@ -180,13 +184,28 @@ export const ItwProximityQrCodeScreen = () => {
         <VSpacer size={16} />
         {renderQrCodeContent()}
       </ItwBrandedBox>
+      {shouldBlockProximityPresentation && (
+        <>
+          <VSpacer size={24} />
+          <Alert
+            testID="itwExpiredBannerTestID"
+            variant="error"
+            content={I18n.t(
+              "features.itWallet.presentation.qrCode.banner.invalid"
+            )}
+          />
+        </>
+      )}
     </IOScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   logoContainer: {
-    alignItems: "center"
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8
   },
   centeredText: {
     textAlign: "center"

@@ -4223,6 +4223,9 @@
           "error": {
             "message": "Abbiamo avuto un problema nel generare il QR Code.",
             "invalid": "Non puoi far verificare i tuoi documenti digitali."
+          },
+          "banner": {
+            "invalid": "Conferma la tua identità per continuare a usare i tuoi documenti senza limitazioni."
           }
         },
         "itWalletId": {
