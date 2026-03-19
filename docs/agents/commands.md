@@ -5,6 +5,7 @@
 ```bash
 yarn setup              # Install deps + generate APIs + locales
 yarn sync               # Full sync including iOS pods (bundle + pod install + generate)
+yarn dev:pod-install.   # Specific command to install iOS Pods on local environment with script variable
 ```
 
 ## Running the App
