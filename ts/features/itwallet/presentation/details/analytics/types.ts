@@ -5,7 +5,7 @@ import {
 
 export type TrackCredentialDetail = {
   credential: MixPanelCredential; // MixPanelCredential
-  credential_status: string;
+  credential_status: string; // ItwPg
   credential_type?: "multiple" | "unique";
 };
 
