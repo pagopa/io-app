@@ -1,7 +1,7 @@
 {
   "accessibility": {
     "buttons": {
-      "navigateBack": "Torna alla schermata precedente",
+      "navigateBack": "TEST RUNNER",
       "torch": {
         "turnOn": "Accendi la torcia",
         "turnOff": "Spegni la torcia"
