@@ -39,19 +39,25 @@ Created on **16/08/2021**
 - implementation 'androidx.core:core:1.+' not compatible with the new gradle settings used by react-native 0.64.2
 
 
-### @gorhom+bottom-sheet+5.1.2
+### @gorhom-bottom-sheet-npm-5.2.8-1ad4b8f529.patch
 
 Created on **24/03/2022**
-Updated on **23/04/2025**
+Updated on **04/03/2026**
 
 #### Reason:
 
-- The initial patch added customisazion of accessibility props on bottom sheet children components (v4). 
-  A [PR had been opened](https://github.com/gorhom/react-native-bottom-sheet/pull/889) on the package repo in order 
+- The initial patch added customisazion of accessibility props on bottom sheet children components (v4).
+  A [PR had been opened](https://github.com/gorhom/react-native-bottom-sheet/pull/889) on the package repo in order
   to fix the issue on the dependency too.
-- On v5, such customisations were not needed anymore (since the library had been updated by the author to handle 
+- On v5, such customisations were not needed anymore (since the library had been updated by the author to handle
   accessibility). Nonetheless, a new patch has been applied in order to set accessibility-order starting from
   the bottom-sheet content instead of the bottom-sheet background layer (chosen by the author as a default).
+- On v5.2.8, the patch has been regenerated to match the updated source. The content mask `Animated.View` in
+  `BottomSheet.tsx` was refactored into a `<BottomSheetContent>` component, but the same accessibility props
+  are still passed to it. The backdrop component is unchanged. Upstream PRs
+  ([#2132](https://github.com/gorhom/react-native-bottom-sheet/pull/2132),
+  [#2282](https://github.com/gorhom/react-native-bottom-sheet/pull/2282)) attempting to fix this were closed
+  without merging, so the patch remains necessary.
 
 
 ### react-native-webview-npm-13.13.5-802657184f.patch
@@ -73,13 +79,14 @@ Created on **16/01/2023**
   This was fine as long as each event was originally created and handled using this library only but 
   initially another library was used, react-native-add-calendar-event, which treated event's Id as long
 
-### react-native-screenshot-prevent-npm-1.2.1-d115315590.patch
 
-Created on **24/11/2025**
+### react-native-reanimated-npm-3.17.5-134bd4e99e.patch
+
+Created on **19/05/2025**
 
 #### Reason:
 
-- Patch to make the library ready for react-native new architecture
+- Patch to fix a visualization error that prevented cards to be incorrectly rendered in Wallet Home Screen.
 
 ### react-native-npm-0.81.5-d8232ef145.patch
 
