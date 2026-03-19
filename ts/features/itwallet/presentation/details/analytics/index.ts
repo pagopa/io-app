@@ -1,7 +1,11 @@
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { buildEventProperties } from "../../../../../utils/analytics";
 import { MixPanelCredential } from "../../../analytics/utils/types";
-import { ItwEidReissuingTrigger, TrackCredentialDetail } from "./types";
+import {
+  ItwEidReissuingTrigger,
+  TrackCredentialAction,
+  TrackCredentialDetail
+} from "./types";
 import {
   ITW_PRESENTATION_DETAILS_ACTIONS_EVENTS,
   ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS
@@ -38,10 +42,13 @@ export const trackItwCredentialBottomSheet = (
 
 // Actions events
 
-export const trackItwCredentialDelete = (credential: MixPanelCredential) => {
+export const trackItwCredentialDelete = (
+  credential: MixPanelCredential,
+  properties?: Omit<TrackCredentialAction, "credential">
+) => {
   void mixpanelTrack(
     ITW_PRESENTATION_DETAILS_ACTIONS_EVENTS.ITW_CREDENTIAL_DELETE,
-    buildEventProperties("UX", "action", { credential })
+    buildEventProperties("UX", "action", { credential, ...properties })
   );
 };
 

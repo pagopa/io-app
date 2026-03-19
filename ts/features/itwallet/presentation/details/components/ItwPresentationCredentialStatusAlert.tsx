@@ -32,6 +32,7 @@ import {
   trackItwCredentialBottomSheet,
   trackItwCredentialBottomSheetAction
 } from "../analytics";
+import { trackCredentialRenewStart } from "../../../analytics";
 import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
 import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
@@ -364,17 +365,28 @@ const IssuerDynamicErrorAlert = ({
   status
 }: IssuerDynamicErrorAlertProps) => {
   const navigation = useIONavigation();
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const localizedMessage = getLocalizedMessageOrFallback(message);
   const isDrivingLicense =
     credential.credentialType === CredentialType.DRIVING_LICENSE;
   const showDoubleActions =
     isDrivingLicense && (status === "expired" || status === "invalid");
 
-  const { confirmAndRemoveCredential } =
-    useItwRemoveCredentialWithConfirm(credential);
+  const { confirmAndRemoveCredential } = useItwRemoveCredentialWithConfirm(
+    credential,
+    "bottom_sheet"
+  );
 
   const handleUpdateCredential = () => {
-    onTrack("press_cta");
+    if (status) {
+      trackCredentialRenewStart(
+        getMixPanelCredential(credential.credentialType, isItwL3),
+        {
+          credential_status: CREDENTIAL_STATUS_MAP[status],
+          position: "bottom_sheet"
+        }
+      );
+    }
     bottomSheet.dismiss();
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,

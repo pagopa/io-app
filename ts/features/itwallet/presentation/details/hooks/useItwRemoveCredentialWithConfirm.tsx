@@ -5,20 +5,29 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { trackItwCredentialDelete } from "../analytics";
 import { getMixPanelCredential } from "../../../analytics/utils";
+import {
+  CREDENTIAL_STATUS_MAP,
+  ItwCredentialActionPosition
+} from "../../../analytics/utils/types";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { itwCredentialsRemoveByType } from "../../../credentials/store/actions";
+import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 
 /**
  * Hook that shows a confirmation dialog and, if confirmed, removes a credential from the wallet
  */
 export const useItwRemoveCredentialWithConfirm = (
-  credential: StoredCredential
+  credential: StoredCredential,
+  position: ItwCredentialActionPosition = "screen"
 ) => {
   const dispatch = useIODispatch();
   const toast = useIOToast();
   const navigation = useIONavigation();
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const { status = "unknown" } = useIOSelector(state =>
+    itwCredentialStatusSelector(state, credential.credentialType)
+  );
   const mixpanelCredential = getMixPanelCredential(
     credential.credentialType,
     isItwL3
@@ -33,7 +42,10 @@ export const useItwRemoveCredentialWithConfirm = (
   };
 
   const confirmAndRemoveCredential = () => {
-    trackItwCredentialDelete(mixpanelCredential);
+    trackItwCredentialDelete(mixpanelCredential, {
+      credential_status: CREDENTIAL_STATUS_MAP[status],
+      position
+    });
     return Alert.alert(
       I18n.t(
         "features.itWallet.presentation.credentialDetails.dialogs.remove.title"
