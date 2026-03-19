@@ -160,8 +160,8 @@ const globalStateFromStatus = (
           hasRemoteContent: false,
           hasFIMSCTA: false,
           createdAt: new Date(),
-          fci_message_type: "not_set",
-          fci_result: "not_set"
+          fciMessageType: "not_set",
+          fciResult: "not_set"
         })
       );
   }

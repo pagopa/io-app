@@ -311,12 +311,12 @@ function* dispatchSuccessAction(
   const hasFCICTA = isFCIMessage
     ? computeHasFCICTA(messageDetails, serviceId, thirdPartyMessage)
     : false;
-  const fci_message_type: "request" | "result" | "not_set" = isFCIMessage
+  const fciMessageType: "request" | "result" | "not_set" = isFCIMessage
     ? hasFCICTA
       ? "request"
       : "result"
     : "not_set";
-  const fci_result: "success" | "failure" | "not_set" =
+  const fciResult: "success" | "failure" | "not_set" =
     isFCIMessage && !hasFCICTA
       ? attachmentCount > 0
         ? "success"
@@ -328,8 +328,8 @@ function* dispatchSuccessAction(
       containsAttachments: attachmentCount > 0,
       containsPayment,
       createdAt: paginatedMessage.createdAt,
-      fci_message_type,
-      fci_result,
+      fciMessageType,
+      fciResult,
       firstTimeOpening: !paginatedMessage.isRead,
       hasFIMSCTA,
       hasRemoteContent: !!thirdPartyMessage,
