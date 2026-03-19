@@ -1,16 +1,20 @@
 import { waitFor } from "@testing-library/react-native";
+import _ from "lodash";
 import {
   assign,
   createActor,
   fromCallback,
   fromPromise,
-  SimulatedClock
+  SimulatedClock,
+  StateFrom
 } from "xstate";
+import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { itwProximityMachine } from "../machine/machine";
 import {
   CheckPermissionsInput,
   CloseActorOutput,
   GetQrCodeStringActorOutput,
+  ProximityCommunicationLogicInput,
   SendDocumentsActorInput,
   SendDocumentsActorOutput,
   SendErrorResponseActorOutput,
@@ -21,8 +25,11 @@ import { ItwTags } from "../../../machine/tags";
 import { ItwPresentationTags } from "../machine/tags";
 import type { VerifierRequest } from "../utils/itwProximityTypeUtils";
 
+type MachineSnapshot = StateFrom<typeof itwProximityMachine>;
+
 const QR_CODE_STRING = "qr-code-string";
 const CREDENTIAL_TYPE = "org.iso.18013.5.1.mDL";
+const MOCK_CREDENTIALS = { [CREDENTIAL_TYPE]: ItwStoredCredentialsMocks.mdl };
 
 const PROXIMITY_DETAILS = [
   {
@@ -72,6 +79,7 @@ describe("itwProximityMachine", () => {
 
   const mockedMachine = itwProximityMachine.provide({
     actions: {
+      onInit: jest.fn(),
       setFailure,
       setQRCodeGenerationError: assign({
         isQRCodeGenerationError: true
@@ -102,9 +110,10 @@ describe("itwProximityMachine", () => {
       closeProximityFlow: fromPromise<CloseActorOutput, void>(
         closeProximityFlow
       ),
-      proximityCommunicationLogic: fromCallback<ProximityEvents>(
-        proximityCommunicationLogic
-      ),
+      proximityCommunicationLogic: fromCallback<
+        ProximityEvents,
+        ProximityCommunicationLogicInput
+      >(proximityCommunicationLogic),
       terminateProximitySession: fromPromise<SendErrorResponseActorOutput>(
         terminateProximitySession
       ),
@@ -246,22 +255,22 @@ describe("itwProximityMachine", () => {
     });
 
     it("should proceed to QR generation when bluetooth enabled on retry", async () => {
-      checkBluetoothIsActive
-        .mockImplementationOnce(() => Promise.resolve(false))
-        .mockImplementationOnce(() => Promise.resolve(true));
+      // Start from EnableBluetooth (no active invoke) with credentials in context,
+      // simulating that the initial BT check already failed. The retry succeeds.
+      checkBluetoothIsActive.mockImplementation(() => Promise.resolve(true));
 
-      const actor = createActor(mockedMachine);
+      const initialSnapshot = createActor(itwProximityMachine).getSnapshot();
+      const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+        value: { Bluetooth: "EnableBluetooth" },
+        context: { credentials: MOCK_CREDENTIALS }
+      } as unknown as MachineSnapshot);
+      const actor = createActor(mockedMachine, { snapshot });
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
 
-      await waitFor(() =>
-        expect(actor.getSnapshot().value).toStrictEqual({
-          Bluetooth: "EnableBluetooth"
-        })
-      );
-
+      expect(actor.getSnapshot().value).toStrictEqual({
+        Bluetooth: "EnableBluetooth"
+      });
       expect(actor.getSnapshot().tags).toStrictEqual(new Set());
-      expect(navigateToBluetoothActivationScreen).toHaveBeenCalled();
 
       actor.send({ type: "continue" });
 
@@ -281,7 +290,7 @@ describe("itwProximityMachine", () => {
         })
       );
 
-      expect(checkBluetoothIsActive).toHaveBeenCalledTimes(2);
+      expect(checkBluetoothIsActive).toHaveBeenCalledTimes(1);
     });
 
     it("should show BluetoothRequired after bluetooth denied twice and handle close", async () => {
@@ -370,9 +379,18 @@ describe("itwProximityMachine", () => {
         Promise.resolve(QR_CODE_STRING)
       );
 
-      const actor = createActor(mockedMachine);
+      // Start from EnableBluetooth (no active invoke) with credentials in context.
+      // checkBluetoothIsActive is already mocked to true by beforeEach.
+      const initialSnapshot = createActor(itwProximityMachine).getSnapshot();
+      const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+        value: { Bluetooth: "EnableBluetooth" },
+        context: { credentials: MOCK_CREDENTIALS }
+      } as unknown as MachineSnapshot);
+      const actor = createActor(mockedMachine, { snapshot });
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
+
+      // Enter the QR generation flow (BT check returns true, goes to GenerateQRCode)
+      actor.send({ type: "continue" });
 
       expect(actor.getSnapshot().tags).toStrictEqual(
         new Set([ItwTags.Loading])
@@ -410,9 +428,18 @@ describe("itwProximityMachine", () => {
         Promise.resolve(QR_CODE_STRING)
       );
 
-      const actor = createActor(mockedMachine);
+      // Start from EnableBluetooth (no active invoke) with credentials in context.
+      // checkBluetoothIsActive is already mocked to true by beforeEach.
+      const initialSnapshot = createActor(itwProximityMachine).getSnapshot();
+      const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+        value: { Bluetooth: "EnableBluetooth" },
+        context: { credentials: MOCK_CREDENTIALS }
+      } as unknown as MachineSnapshot);
+      const actor = createActor(mockedMachine, { snapshot });
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
+
+      // Enter the QR generation flow (BT check returns true, goes to GenerateQRCode)
+      actor.send({ type: "continue" });
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
@@ -497,15 +524,16 @@ describe("itwProximityMachine", () => {
         Promise.resolve({ success: true })
       );
 
-      const actor = createActor(mockedMachine);
+      const initialSnapshot = createActor(itwProximityMachine).getSnapshot();
+      const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+        value: { DeviceCommunication: "DisplayQrCode" },
+        context: {
+          credentials: MOCK_CREDENTIALS,
+          walletInstanceAttestation: { jwt: "test-wia" }
+        }
+      } as unknown as MachineSnapshot);
+      const actor = createActor(mockedMachine, { snapshot });
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
-
-      await waitFor(() =>
-        expect(actor.getSnapshot().value).toStrictEqual({
-          DeviceCommunication: "DisplayQrCode"
-        })
-      );
 
       expect(actor.getSnapshot().tags).toStrictEqual(
         new Set([ItwPresentationTags.Presenting])
@@ -571,16 +599,17 @@ describe("itwProximityMachine", () => {
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       sendDocuments.mockImplementation(() => new Promise(() => {}));
 
+      const initialSnapshot = createActor(itwProximityMachine).getSnapshot();
+      const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+        value: { DeviceCommunication: "DisplayQrCode" },
+        context: {
+          credentials: MOCK_CREDENTIALS,
+          walletInstanceAttestation: { jwt: "test-wia" }
+        }
+      } as unknown as MachineSnapshot);
       const clock = new SimulatedClock();
-      const actor = createActor(mockedMachine, { clock });
+      const actor = createActor(mockedMachine, { snapshot, clock });
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
-
-      await waitFor(() =>
-        expect(actor.getSnapshot().value).toStrictEqual({
-          DeviceCommunication: "DisplayQrCode"
-        })
-      );
 
       actor.send({ type: "device-connecting" });
       actor.send({ type: "device-connected" });
@@ -625,15 +654,13 @@ describe("itwProximityMachine", () => {
         Promise.resolve({ success: true })
       );
 
-      const actor = createActor(mockedMachine, {});
+      const initialSnapshot = createActor(itwProximityMachine).getSnapshot();
+      const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+        value: { DeviceCommunication: "DisplayQrCode" },
+        context: { credentials: MOCK_CREDENTIALS }
+      } as unknown as MachineSnapshot);
+      const actor = createActor(mockedMachine, { snapshot });
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
-
-      await waitFor(() =>
-        expect(actor.getSnapshot().value).toStrictEqual({
-          DeviceCommunication: "DisplayQrCode"
-        })
-      );
 
       actor.send({ type: "device-connecting" });
       actor.send({ type: "device-connected" });
@@ -673,15 +700,13 @@ describe("itwProximityMachine", () => {
     it("should handle device connection errors and show failure screen", async () => {
       hasFailure.mockImplementation(() => true);
 
-      const actor = createActor(mockedMachine);
+      const initialSnapshot = createActor(itwProximityMachine).getSnapshot();
+      const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+        value: { DeviceCommunication: "DisplayQrCode" },
+        context: { credentials: MOCK_CREDENTIALS }
+      } as unknown as MachineSnapshot);
+      const actor = createActor(mockedMachine, { snapshot });
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
-
-      await waitFor(() =>
-        expect(actor.getSnapshot().value).toStrictEqual({
-          DeviceCommunication: "DisplayQrCode"
-        })
-      );
 
       expect(actor.getSnapshot().hasTag("Presenting")).toBe(true);
 

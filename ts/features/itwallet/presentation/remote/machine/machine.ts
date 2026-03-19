@@ -1,9 +1,5 @@
 import { assign, fromPromise, not, setup } from "xstate";
 import { type WalletInstanceAttestations } from "../../../common/utils/itwTypesUtils";
-import { Context, InitialContext } from "./context";
-import { mapEventToFailure, RemoteFailureType } from "./failure";
-import { RemoteEvents } from "./events";
-import { ItwPresentationTags } from "./tags";
 import {
   EvaluateRelyingPartyTrustInput,
   EvaluateRelyingPartyTrustOutput,
@@ -14,6 +10,10 @@ import {
   SendAuthorizationResponseInput,
   SendAuthorizationResponseOutput
 } from "./actors";
+import { Context, InitialContext } from "./context";
+import { RemoteEvents } from "./events";
+import { mapEventToFailure, RemoteFailureType } from "./failure";
+import { ItwPresentationTags } from "./tags";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -25,6 +25,7 @@ export const itwRemoteMachine = setup({
     events: {} as RemoteEvents
   },
   actions: {
+    onInit: notImplemented,
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     navigateToFailureScreen: notImplemented,
     navigateToDiscoveryScreen: notImplemented,
@@ -67,10 +68,14 @@ export const itwRemoteMachine = setup({
   id: "itwRemoteMachine",
   context: { ...InitialContext },
   initial: "Idle",
+  entry: "onInit",
   on: {
     reset: {
       target: ".Idle",
-      actions: assign({ ...InitialContext })
+      actions: assign(({ context }) => ({
+        ...InitialContext,
+        walletInstanceAttestation: context.walletInstanceAttestation
+      }))
     }
   },
   states: {
@@ -137,7 +142,12 @@ export const itwRemoteMachine = setup({
         src: "getWalletAttestation",
         onDone: {
           target: "EvaluatingRelyingPartyTrust",
-          actions: "storeWalletInstanceAttestation"
+          actions: [
+            assign(({ event }) => ({
+              walletInstanceAttestation: event.output
+            })),
+            "storeWalletInstanceAttestation"
+          ]
         },
         onError: [
           {
@@ -195,6 +205,8 @@ export const itwRemoteMachine = setup({
       invoke: {
         src: "getPresentationDetails",
         input: ({ context }) => ({
+          walletInstanceAttestation: context.walletInstanceAttestation,
+          credentials: context.credentials,
           qrCodePayload: context.payload,
           requestObjectEncodedJwt: context.requestObjectEncodedJwt,
           rpConf: context.rpConf

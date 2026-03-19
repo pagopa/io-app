@@ -7,6 +7,7 @@ import {
   itwCredentialsRemoveByType
 } from "../store/actions";
 import { itwCredentialsListByTypeSelector } from "../store/selectors";
+import { CredentialsVault } from "../utils/vault";
 
 /**
  * This saga handles the credential removal action and ensures the consistency between stored credentials and wallet state.
@@ -27,6 +28,11 @@ export function* handleItwCredentialsRemoveSaga(
     );
 
     if (sameTypeCredentials.length > 0) {
+      // Remove from vault first; only proceed with Redux/key cleanup on success
+      yield* call(
+        CredentialsVault.removeAll,
+        sameTypeCredentials.map(c => c.credentialId)
+      );
       yield* put(itwCredentialsRemove(sameTypeCredentials));
       yield* put(walletRemoveCards([`ITW_${credentialType}`]));
       yield* all(sameTypeCredentials.map(c => call(deleteKey, c.keyTag)));

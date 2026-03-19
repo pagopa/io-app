@@ -1,28 +1,69 @@
-import { fromPromise } from "xstate";
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
+import * as O from "fp-ts/Option";
+import { fromPromise } from "xstate";
+import { useIOStore } from "../../../../store/hooks";
+import { assert } from "../../../../utils/assert";
 import { Env } from "../../common/utils/environment";
+import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
+import {
+  CredentialBundle,
+  CredentialMetadata,
+  WalletInstanceAttestations
+} from "../../common/utils/itwTypesUtils";
+import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
+import { CredentialsVault } from "../../credentials/utils/vault";
+import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { EidIssuanceMode } from "../eid/context";
 
 export type UpgradeCredentialParams = {
-  pid: StoredCredential;
-  walletInstanceAttestation: string;
-  credential: StoredCredential;
+  pid: CredentialBundle | undefined;
+  walletInstanceAttestation: string | undefined;
+  credential: CredentialMetadata;
   issuanceMode: EidIssuanceMode;
 };
 
 export type UpgradeCredentialOutput = {
   credentialType: string;
-  credentials: ReadonlyArray<StoredCredential>;
+  credentials: ReadonlyArray<CredentialBundle>;
+};
+
+export type LoadContextOutput = {
+  pid: CredentialBundle;
+  walletInstanceAttestation: WalletInstanceAttestations;
 };
 
 export const createCredentialUpgradeActorsImplementation = (
   env: Env,
+  store: ReturnType<typeof useIOStore>,
   itwVersion: ItwVersion
 ) => ({
+  loadContext: fromPromise<LoadContextOutput>(async () => {
+    const walletInstanceAttestation = itwWalletInstanceAttestationSelector(
+      store.getState()
+    );
+    assert(
+      walletInstanceAttestation,
+      "walletInstanceAttestation is not present in the store"
+    );
+
+    const pidOption = itwCredentialsEidSelector(store.getState());
+    assert(O.isSome(pidOption), "PID credential is not present in the store");
+
+    const pid = await CredentialsVault.get(pidOption.value.credentialId);
+    assert(pid, "PID credential not found in secure storage");
+
+    return {
+      pid: {
+        metadata: pidOption.value,
+        credential: pid
+      },
+      walletInstanceAttestation
+    };
+  }),
+
   /**
-   * Handles both upgrading and reissuing credentials depending on issuanceMode.
+   * Handles both upgrading and reissuing credentials depending on issuanceMode,
+   * then stores the obtained credentials in the secure vault.
    * - upgrade → performs credential upgrade (skipMdocIssuance = false)
    * - reissuance → performs credential reissuing (skipMdocIssuance = true)
    */
@@ -32,6 +73,9 @@ export const createCredentialUpgradeActorsImplementation = (
   >(async ({ input }) => {
     const { pid, walletInstanceAttestation, credential, issuanceMode } = input;
     const isUpgrade = issuanceMode === "upgrade";
+
+    assert(pid, "PID credential is undefined");
+    assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
 
     const { requestedCredential, issuerConf, clientId, codeVerifier } =
       await credentialIssuanceUtils.requestCredential({
@@ -55,9 +99,16 @@ export const createCredentialUpgradeActorsImplementation = (
       pid
     });
 
+    // Store credentials in the secure vault before returning
+    await Promise.all(
+      result.map(({ metadata, credential: raw }) =>
+        CredentialsVault.store(metadata.credentialId, raw)
+      )
+    );
+
     return {
       credentialType: credential.credentialType,
-      credentials: result.credentials
+      credentials: result
     };
   })
 });

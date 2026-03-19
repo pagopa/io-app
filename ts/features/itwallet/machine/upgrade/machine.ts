@@ -1,5 +1,9 @@
 import { assign, fromPromise, setup } from "xstate";
-import { UpgradeCredentialOutput, UpgradeCredentialParams } from "./actors";
+import {
+  LoadContextOutput,
+  UpgradeCredentialOutput,
+  UpgradeCredentialParams
+} from "./actors";
 import { Context, getInitialContext } from "./context";
 import { CredentialUpgradeEvents } from "./events";
 import { mapUpgradeEventToFailure } from "./failure";
@@ -41,6 +45,7 @@ export const itwCredentialUpgradeMachine = setup({
     })
   },
   actors: {
+    loadContext: fromPromise<LoadContextOutput>(notImplemented),
     upgradeCredential: fromPromise<
       UpgradeCredentialOutput,
       UpgradeCredentialParams
@@ -56,6 +61,21 @@ export const itwCredentialUpgradeMachine = setup({
   context: ({ input }) => getInitialContext(input),
   initial: "Checking",
   states: {
+    LoadingContext: {
+      invoke: {
+        src: "loadContext",
+        input: ({ context }) => ({
+          walletInstanceAttestation: context.walletInstanceAttestation,
+          pid: context.pid
+        }),
+        onDone: {
+          target: "Checking"
+        },
+        onError: {
+          target: "Checking"
+        }
+      }
+    },
     Checking: {
       always: [
         {
@@ -69,11 +89,13 @@ export const itwCredentialUpgradeMachine = setup({
       ]
     },
     UpgradeCredential: {
+      description:
+        "This state upgrades the credential and stores it in the secure vault, then dispatches metadata to the Redux store",
       invoke: {
         src: "upgradeCredential",
         input: ({ context }) => ({
           pid: context.pid,
-          walletInstanceAttestation: context.walletInstanceAttestation,
+          walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
           credential: context.credentials[context.credentialIndex],
           issuanceMode: context.issuanceMode
         }),

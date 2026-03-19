@@ -31,7 +31,12 @@ describe("itwCredentialUpgradeMachine actions", () => {
           actorId: "upgradeCredential",
           output: {
             credentialType: "MDL",
-            credentials: [ItwStoredCredentialsMocks.L3.mdl]
+            credentials: [
+              {
+                credential: "raw-jwt",
+                metadata: ItwStoredCredentialsMocks.L3.mdl
+              }
+            ]
           }
         }
       } as unknown as ActionArgs<Context, CredentialUpgradeEvents, CredentialUpgradeEvents>);

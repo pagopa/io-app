@@ -2,12 +2,12 @@ import { renderHook } from "@testing-library/react-native";
 import React from "react";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import * as supportAssistance from "../../../../../../utils/supportAssistance";
-import { StoredCredential } from "../../../../common/utils/itwTypesUtils";
 import { ZendeskSubcategoryValue } from "../../../../common/hooks/useItwZendeskSupport";
+import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
 import { useItwStartCredentialSupportRequest } from "../useItwStartCredentialSupportRequest";
 
 jest.mock("@react-navigation/native", () => ({
@@ -33,14 +33,13 @@ const mockedAddTicketCustomField =
   supportAssistance.addTicketCustomField as jest.Mock;
 const mockedAppendLog = supportAssistance.appendLog as jest.Mock;
 
-const baseMockedCredential: StoredCredential = {
-  credential: "",
+const baseMockedCredential: CredentialMetadata = {
   credentialType: "mDL",
   credentialId: "dc_sd_jwt_mDL",
   parsedCredential: {},
   format: "dc+sd-jwt",
   keyTag: "1",
-  issuerConf: {} as StoredCredential["issuerConf"],
+  issuerConf: {} as CredentialMetadata["issuerConf"],
   jwt: {
     issuedAt: "2024-09-30T07:32:49.000Z",
     expiration: "2100-09-04T00:00:00.000Z"
@@ -48,7 +47,7 @@ const baseMockedCredential: StoredCredential = {
   spec_version: "1.0.0"
 };
 
-const renderAndAct = (credential: StoredCredential) => {
+const renderAndAct = (credential: CredentialMetadata) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const mockStore = configureMockStore<GlobalState>();
   const store = mockStore(initialState);
@@ -122,7 +121,7 @@ describe("useItwStartCredentialSupportRequest", () => {
   });
 
   it("sets the failure code field and appends log when storedStatusAssertion errorCode is present", () => {
-    const credentialWithError: StoredCredential = {
+    const credentialWithError: CredentialMetadata = {
       ...baseMockedCredential,
       storedStatusAssertion: {
         credentialStatus: "invalid",

@@ -6,12 +6,11 @@ import { mapCredentialToWalletCard } from "../../wallet/utils";
 
 /**
  * This saga handles the credential store action and ensures the consistency between stored credentials and wallet state.
- * @param itwCredentialsRemoveAction
  */
 export function* handleItwCredentialsStoreSaga(
-  itwCredentialsStoreAction: ReturnType<typeof itwCredentialsStore>
+  action: ReturnType<typeof itwCredentialsStore>
 ) {
-  const credentialsToAdd = itwCredentialsStoreAction.payload.filter(
+  const credentialsToAdd = action.payload.filter(
     c => c.credentialType !== CredentialType.PID
   );
 
