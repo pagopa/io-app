@@ -4411,6 +4411,11 @@
           "description": "Potrai ottenere IT-Wallet in qualsiasi altro momento, andando in Impostazioni > IT-Wallet.",
           "confirm": "Sì, rinuncia",
           "cancel": "Indietro"
+        },
+        "reactivation": {
+          "title": "Riattiva il tuo portafoglio IT-Wallet",
+          "description": "Per ragioni di sicurezza, se cambi dispositivo o rimuovi l’app, devi aggiungere di nuovo i tuoi documenti al Portafoglio.",
+          "confirm": "Inizia"
         }
       },
       "settings": {
