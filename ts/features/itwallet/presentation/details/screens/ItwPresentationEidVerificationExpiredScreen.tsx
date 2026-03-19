@@ -7,7 +7,11 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList.
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { useItwEidFeedbackBottomSheet } from "../../../common/hooks/useItwEidFeedbackBottomSheet.tsx";
 import { trackItwSurveyRequest } from "../../../analytics";
-import { trackItwEidReissuingMandatory } from "../analytics";
+import {
+  trackItwEidReissuingMandatory,
+  trackItwEidReissuingMandatoryCancel,
+  trackItwEidReissuingMandatoryConfirm
+} from "../analytics";
 import { ItwEidReissuingTrigger } from "../analytics/types";
 
 export const ItwPresentationEidVerificationExpiredScreen = () => {
@@ -26,6 +30,7 @@ export const ItwPresentationEidVerificationExpiredScreen = () => {
     onSecondaryAction: fallbackNavigationAction
   });
   const startEidReissuing = () => {
+    trackItwEidReissuingMandatoryConfirm(ItwEidReissuingTrigger.ADD_CREDENTIAL);
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
       params: {
@@ -85,6 +90,9 @@ export const ItwPresentationEidVerificationExpiredScreen = () => {
         secondaryAction={{
           label: I18n.t("global.buttons.cancel"),
           onPress: () => {
+            trackItwEidReissuingMandatoryCancel(
+              ItwEidReissuingTrigger.ADD_CREDENTIAL
+            );
             trackItwSurveyRequest({
               survey_id: "confirm_eid_flow_exit",
               survey_page: routeName

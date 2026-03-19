@@ -114,3 +114,20 @@ export const trackItwEidReissuingMandatory = (
     buildEventProperties("KO", "screen_view", { action })
   );
 };
+export const trackItwEidReissuingMandatoryConfirm = (
+  action: ItwEidReissuingTrigger
+) => {
+  void mixpanelTrack(
+    ITW_PRESENTATION_DETAILS_ACTIONS_EVENTS.ITW_REISSUING_EID_MANDATORY_CONFIRM,
+    buildEventProperties("KO", "action", { action })
+  );
+};
+
+export const trackItwEidReissuingMandatoryCancel = (
+  action: ItwEidReissuingTrigger
+) => {
+  void mixpanelTrack(
+    ITW_PRESENTATION_DETAILS_ACTIONS_EVENTS.ITW_REISSUING_EID_MANDATORY_CANCEL,
+    buildEventProperties("KO", "action", { action })
+  );
+};
