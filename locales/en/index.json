@@ -387,8 +387,7 @@
         "description": "Learn more about the IO app",
         "subtitle": "Here you can find more details about the IO app and learn more about its use.",
         "paragraphTitle": "About IO",
-        "paragraphBody1": "IO, the public services app, ",
-        "paragraphBody2": "provides an efficient and convenient way for citizens to interact with institutions at the local and national level (municipalities, regions, central agencies) directly from your device. IO allows administrations to contact you in a timely and personalised manner, enabling you to manage operations related to a specific service, such as notices, payments, deadlines and notifications, in a simple and secure manner.",
+        "paragraphBody": "**IO, the public services app**, provides an efficient and convenient way for citizens to interact with institutions at the local and national level (municipalities, regions, central agencies) directly from your device. IO allows administrations to contact you in a timely and personalised manner, enabling you to manage operations related to a specific service, such as notices, payments, deadlines and notifications, in a simple and secure manner.",
         "bannerBody": "Want to know more?",
         "bannerButton": "Go to IO website"
       },

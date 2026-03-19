@@ -1,12 +1,11 @@
 import {
   Banner,
-  BodyProps,
-  ComposedBodyFromArray,
   ContentWrapper,
   H4,
+  IOMarkdownLite,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { createRef, useCallback, useMemo } from "react";
+import { createRef, useCallback } from "react";
 import { View } from "react-native";
 import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -23,23 +22,6 @@ const ProfileAboutApp = () => {
     [absolutePortalLinks.io_showcase]
   );
 
-  const bodyPropsArray = useMemo(
-    () =>
-      [
-        {
-          key: "key1",
-          text: I18n.t("profile.main.appInfo.paragraphBody1"),
-          weight: "Semibold"
-        },
-        {
-          key: "key2",
-          text: I18n.t("profile.main.appInfo.paragraphBody2"),
-          weight: "Regular"
-        }
-      ] as Array<BodyProps>,
-    []
-  );
-
   return (
     <IOScrollViewWithLargeHeader
       title={{
@@ -52,7 +34,9 @@ const ProfileAboutApp = () => {
         <VSpacer size={16} />
         <H4>{I18n.t("profile.main.appInfo.paragraphTitle")}</H4>
         <VSpacer size={16} />
-        <ComposedBodyFromArray body={bodyPropsArray} textAlign="left" />
+        <IOMarkdownLite
+          content={I18n.t("profile.main.appInfo.paragraphBody")}
+        />
         <VSpacer size={32} />
         <Banner
           ref={viewRef}
