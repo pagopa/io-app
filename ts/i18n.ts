@@ -13,6 +13,7 @@ import { BackendStatusMessage } from "../definitions/content/BackendStatusMessag
 import it from "../locales/it/index.json";
 import en from "../locales/en/index.json";
 import de from "../locales/de/index.json";
+import sl from "../locales/sl/index.json";
 import { PreferredLanguageEnum } from "../definitions/session_manager/PreferredLanguage";
 // import { newContentRepoUrl } from "./config";
 
@@ -25,6 +26,9 @@ const resources = {
   },
   de: {
     index: de
+  },
+  sl: {
+    index: sl
   }
 };
 
@@ -51,23 +55,31 @@ type FallBackLocale = {
   localeEnum: PreferredLanguageEnum;
 };
 
-export const localeToLocalizedMessageKey = new Map<
+const backendSupportedLocales = {
+  it: PreferredLanguageEnum.it_IT,
+  en: PreferredLanguageEnum.en_GB,
+  de: PreferredLanguageEnum.de_DE
+} as const satisfies Partial<Record<Locales, PreferredLanguageEnum>>;
+
+export type BackendSupportedLocale = keyof typeof backendSupportedLocales;
+
+export const localeToLocalizedMessageKey: ReadonlyMap<
   Locales,
   LocalizedMessageKeys
->([
+> = new Map<BackendSupportedLocale, LocalizedMessageKeys>([
   ["it", "it-IT"],
   ["en", "en-EN"],
   ["de", "de-DE"]
 ]);
 
-export const localeToPreferredLanguageMapping = new Map<
+export const localeToPreferredLanguageMapping: ReadonlyMap<
   Locales,
   PreferredLanguageEnum
->([
-  ["it", PreferredLanguageEnum.it_IT],
-  ["en", PreferredLanguageEnum.en_GB],
-  ["de", PreferredLanguageEnum.de_DE]
-]);
+> = new Map<BackendSupportedLocale, PreferredLanguageEnum>(
+  Object.entries(backendSupportedLocales) as Array<
+    [BackendSupportedLocale, PreferredLanguageEnum]
+  >
+);
 
 // define the locale fallback used in the whole app code
 export const localeFallback: FallBackLocale = {
