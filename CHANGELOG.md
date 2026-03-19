@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.27.0-rc.1](https://github.com/pagopa/io-app/compare/3.27.0-rc.0...3.27.0-rc.1) (2026-03-18)
+
+
+### Features
+
+* [[IOCOM-2995](https://pagopa.atlassian.net/browse/IOCOM-2995)] SEND AAR TTL errors tracking ([#7938](https://github.com/pagopa/io-app/issues/7938)) ([fd699f9](https://github.com/pagopa/io-app/commit/fd699f94b851f34404db44f053e770bf60e11903))
+
 ## [3.27.0-rc.0](https://github.com/pagopa/io-app/compare/3.26.0-rc.2...3.27.0-rc.0) (2026-03-17)
 
 
