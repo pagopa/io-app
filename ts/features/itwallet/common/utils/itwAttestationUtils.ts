@@ -1,6 +1,5 @@
 import {
-  WalletInstance,
-  WalletInstanceAttestation,
+  type ItwVersion,
   createCryptoContextFor
 } from "@pagopa/io-react-native-wallet";
 import * as Sentry from "@sentry/react-native";
@@ -12,6 +11,7 @@ import {
 } from "./itwIntegrityUtils";
 import { WalletInstanceAttestations } from "./itwTypesUtils.ts";
 import { Env } from "./environment.ts";
+import { getIoWallet } from "./itwIoWallet.ts";
 
 /**
  * Getter for the integrity hardware keytag to be used for an {@link IntegrityContext}.
@@ -23,16 +23,19 @@ export const getIntegrityHardwareKeyTag = async (): Promise<string> =>
 /**
  * Register a new wallet instance with hardwareKeyTag.
  * @param env - The environment to use for the wallet provider base URL
+ * @param itwVersion - IT-Wallet technical specs version
  * @param hardwareKeyTag - the hardware key tag of the integrity Context
  * @param sessionToken - the session token to use for the API calls
  * @param options - options to specify if the registration is for a renewal or not
  */
 export const registerWalletInstance = async (
   { WALLET_PROVIDER_BASE_URL }: Env,
+  itwVersion: ItwVersion,
   hardwareKeyTag: string,
   sessionToken: string,
   options?: { isRenewal?: boolean }
 ) => {
+  const ioWallet = getIoWallet(itwVersion);
   const integrityContext = getIntegrityContext(hardwareKeyTag);
   // This must be used only for API calls mediated through our backend which are related to the wallet instance only
   const appFetch = createItWalletFetch(
@@ -40,7 +43,7 @@ export const registerWalletInstance = async (
     WALLET_PROVIDER_BASE_URL,
     WALLET_PROVIDER_BASE_URL
   );
-  await WalletInstance.createWalletInstance({
+  await ioWallet.WalletInstance.createWalletInstance({
     integrityContext,
     walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
     isRenewal: options?.isRenewal,
@@ -51,15 +54,18 @@ export const registerWalletInstance = async (
 /**
  * Getter for the wallet attestation binded to the wallet instance created with the given hardwareKeyTag.
  * @param env - The environment to use for the wallet provider base URL
+ * @param itwVersion - IT-Wallet technical specs version
  * @param hardwareKeyTag - the hardware key tag of the wallet instance
  * @param sessionToken - the session token to use for the API calls
  * @return the wallet attestation in multiple formats
  */
 export const getAttestation = async (
   { WALLET_PROVIDER_BASE_URL }: Env,
+  itwVersion: ItwVersion,
   hardwareKeyTag: string,
   sessionToken: string
 ): Promise<WalletInstanceAttestations> => {
+  const ioWallet = getIoWallet(itwVersion);
   const integrityContext = getIntegrityContext(hardwareKeyTag);
 
   await regenerateCryptoKey(WIA_KEYTAG);
@@ -70,37 +76,42 @@ export const getAttestation = async (
     WALLET_PROVIDER_BASE_URL
   );
 
-  const attestation = await WalletInstanceAttestation.getAttestation({
+  const attestations = await ioWallet.WalletInstanceAttestation.getAttestation({
     wiaCryptoContext,
     integrityContext,
     walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
     appFetch
   });
 
-  return attestation.reduce(
-    (acc, { format, wallet_attestation }) => ({
-      ...acc,
-      [format]: wallet_attestation
-    }),
-    {} as WalletInstanceAttestations
-  );
+  return attestations
+    .filter(({ type }) => type === "wallet_instance_attestation")
+    .reduce(
+      (acc, { format, attestation }) => ({
+        ...acc,
+        [format]: attestation
+      }),
+      {} as WalletInstanceAttestations
+    );
 };
 
 /**
  * Checks if the Wallet Instance Attestation needs to be requested by
  * checking the expiry date
+ * @param itwVersion - IT-Wallet technical specs version
  * @param attestation - the Wallet Instance Attestation to validate
  * @returns true if the Wallet Instance Attestation is expired or not present
  */
 export const isWalletInstanceAttestationValid = (
+  itwVersion: ItwVersion,
   attestation: string
 ): boolean => {
+  const ioWallet = getIoWallet(itwVersion);
   // To keep things simple we store the old and new attestation under the same key,
   // so we might end up with a valid old attestation for the new flow.
   // We let decoding fail and catch the error to force the correct attestation to be fetched again.
   try {
-    const { payload } = WalletInstanceAttestation.decode(attestation);
-    const expiryDate = new Date(payload.exp * 1000);
+    const decoded = ioWallet.WalletInstanceAttestation.decode(attestation);
+    const expiryDate = new Date(decoded.exp * 1000);
     const now = new Date();
     return now < expiryDate;
   } catch {
@@ -112,15 +123,17 @@ export const isWalletInstanceAttestationValid = (
  * Get the wallet instance status from the Wallet Provider.
  * This operation is more lightweight than getting a new attestation to check the status.
  * @param env - The environment to use for the wallet provider base URL
+ * @param itwVersion - IT-Wallet technical specs version
  * @param hardwareKeyTag The hardware key tag used to create the wallet instance
  * @param sessionToken The session token to use for the API calls
  */
 export const getWalletInstanceStatus = (
   { WALLET_PROVIDER_BASE_URL }: Env,
+  itwVersion: ItwVersion,
   hardwareKeyTag: string,
   sessionToken: string
 ) =>
-  WalletInstance.getWalletInstanceStatus({
+  getIoWallet(itwVersion).WalletInstance.getWalletInstanceStatus({
     id: hardwareKeyTag,
     walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
     appFetch: createItWalletFetch(
@@ -134,14 +147,17 @@ export const getWalletInstanceStatus = (
  * Get the current wallet instance status from the Wallet Provider.
  * This operation will check the wallet instance status based on the current fiscal code of the user.
  * @param env - The environment to use for the wallet provider base URL
+ * @param itwVersion - IT-Wallet technical specs version
  * @param sessionToken The session token to use for the API calls
  */
 export const getCurrentWalletInstanceStatus = (
   { WALLET_PROVIDER_BASE_URL }: Env,
+  itwVersion: ItwVersion,
   sessionToken: string
 ) => {
+  const ioWallet = getIoWallet(itwVersion);
   try {
-    return WalletInstance.getCurrentWalletInstanceStatus({
+    return ioWallet.WalletInstance.getCurrentWalletInstanceStatus({
       walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
       appFetch: createItWalletFetch(
         sessionToken,
