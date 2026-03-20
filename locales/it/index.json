@@ -954,7 +954,7 @@
     "cduScreens": {
       "validateMail": {
         "title": "È questa la tua email?",
-        "subtitle": "Per continuare a usare l’app, devi confermare che la tua email è",
+        "subtitle": "Per continuare a usare l’app, devi confermare che la tua email è **{{email}}**",
         "editButton": "No, modifica",
         "validateButton": "Sì, conferma",
         "help": {
@@ -963,8 +963,7 @@
       },
       "emailAlreadyTaken": {
         "title": "Modifica la tua email",
-        "subtitleStart": "Il tuo indirizzo email",
-        "subtitleEnd": "è già in uso su IO, devi inserirne uno diverso per continuare a usare l’app.",
+        "subtitle": "Il tuo indirizzo email **{{email}}** è già in uso su IO, devi inserirne uno diverso per continuare a usare l’app.",
         "editButton": "Modifica email",
         "help": {
           "body": "Il tuo indirizzo email risulta già in uso su IO, è necessario inserirne uno diverso per continuare a utilizzare l’app."
@@ -2355,15 +2354,7 @@
         "flow": {
           "aarTos": {
             "title": "Stai per aprire la notifica SEND",
-            "body": {
-              "firstPart": "Le notifiche SEND sono comunicazioni a valore legale inviate da un ente, come esiti di pratiche, rimborsi o multe.\n\nPremendo ",
-              "goToNotification": "Vai alla notifica SEND",
-              "youDeclareThat": " dichiari di aver letto e compreso l’",
-              "privacy": "Informativa Privacy",
-              "andThe": " e i ",
-              "tos": "Termini e Condizioni d’uso",
-              "lineEnding": "."
-            },
+            "body": "Le notifiche SEND sono comunicazioni a valore legale inviate da un ente, come esiti di pratiche, rimborsi o multe.\n\nPremendo **Vai alla notifica SEND** dichiari di aver letto e compreso l’**[Informativa Privacy]({{privacyUrl}})** e i **[Termini e Condizioni d’uso]({{tosUrl}})**.",
             "primaryAction": "Vai alla notifica SEND",
             "secondaryAction": "Chiudi"
           },
@@ -3688,13 +3679,11 @@
         "walletInstanceNotActive": {
           "documentiSuIo": {
             "title": "Attiva Documenti su IO per continuare",
-            "body": "Per aggiungere i tuoi documenti al Portafoglio è necessario attivare ",
-            "bodyBold": "Documenti su IO"
+            "subtitle": "Per aggiungere i tuoi documenti al Portafoglio è necessario attivare **Documenti su IO**"
           },
           "itWallet": {
             "title": "Ottieni IT-Wallet per continuare",
-            "body": "Per aggiungere nuovi documenti al tuo Portafoglio di IO ottieni IT-Wallet: ti basta avere con te la Carta di Identità Elettronica (CIE).",
-            "bodyBold": ""
+            "subtitle": "Per aggiungere nuovi documenti al tuo Portafoglio di IO ottieni IT-Wallet: ti basta avere con te la Carta di Identità Elettronica (CIE)."
           },
           "primaryAction": "Inizia",
           "secondaryAction": "Non ora"
@@ -3720,8 +3709,7 @@
         },
         "mdlMessageExpired": {
           "title": "Richiesta scaduta",
-          "subtitleStart": "Questa richiesta non è più valida ma puoi aggiungere di nuovo la tua ",
-          "subtitleBold": "Patente su IO.",
+          "subtitle": "Questa richiesta non è più valida ma puoi aggiungere di nuovo la tua **Patente su IO.**",
           "primaryAction": "Aggiungi di nuovo"
         },
         "mrtdChallengeInitError": {
@@ -3745,8 +3733,7 @@
         "moreInfo": "More info",
         "error": {
           "title": "Il tuo dispositivo non supporta Documenti su IO",
-          "body": "Per conoscere i requisiti di sicurezza necessari per questa funzionalità premi ",
-          "primaryAction": "Scopri di più",
+          "subtitle": "Per conoscere i requisiti di sicurezza necessari per questa funzionalità premi **[Scopri di più]({{faqUrl}})**",
           "secondaryAction": "Chiudi"
         }
       },
@@ -3916,9 +3903,7 @@
         "eid": {
           "verificationExpired": {
             "title": "Conferma la tua identità",
-            "contentStart": "È un passaggio necessario per continuare a usare ",
-            "contentBold": "Documenti su IO ",
-            "contentEnd": "senza limitazioni.",
+            "subtitle": "È un passaggio necessario per continuare a usare **Documenti su IO** senza limitazioni.",
             "primaryAction": "Inizia"
           }
         },
@@ -4826,10 +4811,7 @@
         "pleaseWait": "Un attimo di pazienza...",
         "requestSent": {
           "title": "La tua richiesta è stata inviata!",
-          "subtitleStart": "Riceverai un ",
-          "subtitleBoldStart": "messaggio su IO ",
-          "subtitleCenter": "quando l’esito della tua richiesta sarà disponibile.\n\nPuoi verificare lo stato della tua richiesta dalla sezione ",
-          "subtitleEnd": "Servizi"
+          "subtitle": "Riceverai un **messaggio su IO** quando l’esito della tua richiesta sarà disponibile.\n\nPuoi verificare lo stato della tua richiesta dalla sezione **Servizi**"
         },
         "button": {
           "continue": "Ok, chiudi"
@@ -5078,8 +5060,7 @@
         "title": "IBAN associato",
         "landing": {
           "header": "Aggiungi un IBAN al tuo Profilo",
-          "body": "Salva i dati del tuo conto e ottieni più facilmente i rimborsi a te previsti.",
-          "bodyLink": "Scopri di più",
+          "body": "Salva i dati del tuo conto e ottieni più facilmente i rimborsi a te previsti.\n\n**[Scopri di più](info://details)**",
           "modal": {
             "title": "Cosa significa?",
             "content": "Aggiungendo il tuo IBAN al Profilo dell’app IO, potrai aderire più facilmente alle iniziative, ed evitare d’inserire ogni volta i dati del tuo conto.\n\nIl tuo IBAN verrà conservato da PagoPA S.p.A. e, con il tuo consenso, potrà essere utilizzato dagli Enti promotori delle iniziative che prevedono un rimborso.\n\nL’IBAN non verrà utilizzato per altre finalità e potrai modificarlo in ogni momento, o rimuoverlo se non hai iniziative in corso.\nPuoi farlo dalle impostazioni dell'app.",

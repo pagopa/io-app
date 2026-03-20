@@ -1,5 +1,3 @@
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -44,16 +42,10 @@ export const IdPayConfigurationSuccessScreen = () => {
           label: I18n.t(
             "idpay.configuration.associationSuccess.buttons.addPaymentMethod"
           ),
-          accessibilityLabel: I18n.t(
-            "idpay.configuration.associationSuccess.buttons.addPaymentMethod"
-          ),
           onPress: handleAddPaymentMethodButtonPress
         },
         secondaryAction: {
           label: I18n.t("idpay.configuration.associationSuccess.buttons.skip"),
-          accessibilityLabel: I18n.t(
-            "idpay.configuration.associationSuccess.buttons.skip"
-          ),
           onPress: handleNavigateToInitiativePress
         }
       };
@@ -64,37 +56,21 @@ export const IdPayConfigurationSuccessScreen = () => {
         label: I18n.t(
           "idpay.configuration.associationSuccess.buttons.continue"
         ),
-        accessibilityLabel: I18n.t(
-          "idpay.configuration.associationSuccess.buttons.continue"
-        ),
         onPress: handleNavigateToInitiativePress
       }
     };
   };
-
-  const initiativeName = pipe(
-    initiativeDetails,
-    O.map(i => i.initiativeName),
-    O.toUndefined
-  );
 
   return (
     <OperationResultScreenContent
       pictogram="success"
       title={I18n.t("idpay.configuration.associationSuccess.title")}
       isHeaderVisible
-      subtitle={[
-        {
-          text: I18n.t(
-            areInstrumentsSkipped
-              ? "idpay.configuration.associationSuccess.noInstrumentsBody"
-              : "idpay.configuration.associationSuccess.body",
-            {
-              initiativeName
-            }
-          )
-        }
-      ]}
+      subtitle={I18n.t(
+        areInstrumentsSkipped
+          ? "idpay.configuration.associationSuccess.noInstrumentsBody"
+          : "idpay.configuration.associationSuccess.body"
+      )}
       {...renderActionsProps()}
     />
   );

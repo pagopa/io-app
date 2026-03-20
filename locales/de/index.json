@@ -741,7 +741,7 @@
     "cduScreens": {
       "validateMail": {
         "title": "Ist das deine E-Mail?",
-        "subtitle": "Um die App weiter nutzen zu können, musst du deine E-Mail-Adresse bestätigen:",
+        "subtitle": "Um die App weiter nutzen zu können, musst du deine E-Mail-Adresse bestätigen: **{{email}}**",
         "editButton": "Nein, ändern",
         "validateButton": "Ja, bestätigen",
         "help": {
@@ -750,8 +750,7 @@
       },
       "emailAlreadyTaken": {
         "title": "Deine E-Mail-Adresse ändern",
-        "subtitleStart": "Deine E-Mail-Adresse",
-        "subtitleEnd": "wird bereits auf IO verwendet, du musst eine andere eingeben, um die App weiter nutzen zu können.",
+        "subtitle": "Deine E-Mail-Adresse **{{email}}** wird bereits auf IO verwendet, du musst eine andere eingeben, um die App weiter nutzen zu können.",
         "editButton": "E-Mail-Adresse ändern",
         "help": {
           "body": "Deine E-Mail-Adresse wird bereits auf IO verwendet; du musst eine andere eingeben, um die App weiter benutzen zu können."
@@ -2356,8 +2355,7 @@
         "walletInstanceNotActive": {
           "documentiSuIo": {
             "title": "Aktiviere Dokumente in IO, um fortzufahren",
-            "body": "Um deine Dokumente zum Konto hinzuzufügen, musst du Folgendes aktivieren: ",
-            "bodyBold": "Dokumente in IO"
+            "subtitle": "Um deine Dokumente zum Konto hinzuzufügen, musst du Folgendes aktivieren: **Dokumente in IO**"
           },
           "primaryAction": "Start",
           "secondaryAction": "Jetzt nicht"
@@ -2383,8 +2381,7 @@
         "moreInfo": "Mehr erfahren",
         "error": {
           "title": "Dein Gerät unterstützt Dokumente in IO nicht",
-          "body": "Dein Gerät verfügt nicht über die erforderlichen Sicherheitsanforderungen für diese Funktion.",
-          "primaryAction": "Schließen",
+          "subtitle": "Dein Gerät verfügt nicht über die erforderlichen Sicherheitsanforderungen für diese Funktion. **[Schließen]({{faqUrl}})**",
           "secondaryAction": "Mehr erfahren"
         }
       },
