@@ -5,9 +5,9 @@ PODS:
     - React
   - CieSDK (0.1.20-rc.2)
   - DoubleConversion (1.1.6)
-  - EXConstants (18.0.13):
+  - EXConstants (55.0.9):
     - ExpoModulesCore
-  - Expo (54.0.33):
+  - Expo (55.0.8):
     - boost
     - DoubleConversion
     - ExpoModulesCore
@@ -38,17 +38,22 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - ExpoAsset (12.0.12):
+  - ExpoAsset (55.0.10):
     - ExpoModulesCore
-  - ExpoFileSystem (19.0.21):
+  - ExpoDomWebView (55.0.3):
     - ExpoModulesCore
-  - ExpoFont (14.0.11):
+  - ExpoFileSystem (55.0.11):
     - ExpoModulesCore
-  - ExpoKeepAwake (15.0.8):
+  - ExpoFont (55.0.4):
     - ExpoModulesCore
-  - ExpoModulesCore (3.0.29):
+  - ExpoKeepAwake (55.0.4):
+    - ExpoModulesCore
+  - ExpoLogBox (55.0.7):
+    - React-Core
+  - ExpoModulesCore (55.0.17):
     - boost
     - DoubleConversion
+    - ExpoModulesJSI
     - fast_float
     - fmt
     - glog
@@ -73,9 +78,15 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
+    - RNWorklets
     - SocketRocket
     - Yoga
-  - ExpoScreenCapture (8.0.9):
+  - ExpoModulesJSI (55.0.17):
+    - hermes-engine
+    - React-Core
+    - React-runtimescheduler
+    - ReactCommon
+  - ExpoScreenCapture (55.0.9):
     - ExpoModulesCore
   - fast_float (8.0.0)
   - FBLazyVector (0.83.4)
@@ -3804,10 +3815,13 @@ DEPENDENCIES:
   - EXConstants (from `../node_modules/expo-constants/ios`)
   - Expo (from `../node_modules/expo`)
   - ExpoAsset (from `../node_modules/expo-asset/ios`)
+  - "ExpoDomWebView (from `../node_modules/@expo/dom-webview/ios`)"
   - ExpoFileSystem (from `../node_modules/expo-file-system/ios`)
   - ExpoFont (from `../node_modules/expo-font/ios`)
   - ExpoKeepAwake (from `../node_modules/expo-keep-awake/ios`)
+  - "ExpoLogBox (from `../node_modules/@expo/log-box`)"
   - ExpoModulesCore (from `../node_modules/expo-modules-core`)
+  - ExpoModulesJSI (from `../node_modules/expo-modules-core`)
   - ExpoScreenCapture (from `../node_modules/expo-screen-capture/ios`)
   - fast_float (from `../node_modules/react-native/third-party-podspecs/fast_float.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
@@ -3977,13 +3991,19 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo"
   ExpoAsset:
     :path: "../node_modules/expo-asset/ios"
+  ExpoDomWebView:
+    :path: "../node_modules/@expo/dom-webview/ios"
   ExpoFileSystem:
     :path: "../node_modules/expo-file-system/ios"
   ExpoFont:
     :path: "../node_modules/expo-font/ios"
   ExpoKeepAwake:
     :path: "../node_modules/expo-keep-awake/ios"
+  ExpoLogBox:
+    :path: "../node_modules/@expo/log-box"
   ExpoModulesCore:
+    :path: "../node_modules/expo-modules-core"
+  ExpoModulesJSI:
     :path: "../node_modules/expo-modules-core"
   ExpoScreenCapture:
     :path: "../node_modules/expo-screen-capture/ios"
@@ -4247,14 +4267,17 @@ SPEC CHECKSUMS:
   BVLinearGradient: 44fd36b87f318e7933c4c91a6991442a5e3f5bcf
   CieSDK: f0413f57294d3df9cf915bc5b20e44b8ba2cb3cc
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
-  EXConstants: fce59a631a06c4151602843667f7cfe35f81e271
-  Expo: ffcd2fb31776b663b84501a2568cab7dd7c0f9cb
-  ExpoAsset: f867e55ceb428aab99e1e8c082b5aee7c159ea18
-  ExpoFileSystem: 858a44267a3e6e9057e0888ad7c7cfbf55d52063
-  ExpoFont: f543ce20a228dd702813668b1a07b46f51878d47
-  ExpoKeepAwake: 55f75eca6499bb9e4231ebad6f3e9cb8f99c0296
-  ExpoModulesCore: d86dab8a6c8f1184f9b0b0503ace93919882aa15
-  ExpoScreenCapture: 73e5215ce972e245806c19a546ae0ffef33ead48
+  EXConstants: 898c24a310046c0e68335619d0f379099a52e199
+  Expo: 4549ce2f30c9f20554f315905dd950671a0793f1
+  ExpoAsset: 4efd0227e808dfa84d286aa3663ded641ef73479
+  ExpoDomWebView: f101fb3db4b6eec4163fca51f7507189b7e48661
+  ExpoFileSystem: ccbe192dde132e6e97bedcd51018a1642f4fa01c
+  ExpoFont: 1aa465cf9f8ac6b670405becba8b15473581b2dd
+  ExpoKeepAwake: 7f3b28c361c37389b18841bb52a58003b39fcb33
+  ExpoLogBox: 89b634d5a8a64c4a6a7caad8f9985a28463c7002
+  ExpoModulesCore: 733d882367cd2725a6b48de516d9b2aa10f98a3f
+  ExpoModulesJSI: 7345645083e98be9c33c10027601aff2e445ba72
+  ExpoScreenCapture: 35fea6139d824fbdb1fd6003fdf2020420837749
   fast_float: b32c788ed9c6a8c584d114d0047beda9664e7cc6
   FBLazyVector: 82d1d7996af4c5850242966eb81e73f9a6dfab1e
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
@@ -4403,6 +4426,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: b512cfc74b6bf8490e589f02cf52e27ed4f2bebe
   ZXingObjC: 8898711ab495761b2dbbdec76d90164a6d7e14c5
 
-PODFILE CHECKSUM: 091ed0f19bde941539047c0724268de1f0c5a9a7
+PODFILE CHECKSUM: f6843a014e964f958dec3eac9a5ad5662624fc7e
 
 COCOAPODS: 1.15.2
