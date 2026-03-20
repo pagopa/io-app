@@ -566,28 +566,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                              textBreakStrategy="simple"
-                            >
+                            <Text>
                               È un passaggio di verifica necessario per continuare ad usare IT-Wallet e per autenticarti.
                             </Text>
                             <View
@@ -2139,28 +2118,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                              textBreakStrategy="simple"
-                            >
+                            <Text>
                               Assicurati di essere in possesso del documento richiesto valido e poi riprova.
                             </Text>
                             <View
@@ -3505,28 +3463,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                              textBreakStrategy="simple"
-                            >
+                            <Text>
                               Assicurati di essere in possesso dei documenti richiesti validi e poi riprova.
                             </Text>
                             <View
@@ -4963,28 +4900,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                              textBreakStrategy="simple"
-                            >
+                            <Text>
                               L’ente che richiede la verifica non sta comunicando i dati necessari per continuare. Riprova più tardi.
                             </Text>
                             <View
@@ -6024,28 +5940,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                              textBreakStrategy="simple"
-                            >
+                            <Text>
                               Aggiungi Patente di guida al Portafoglio e poi riprova.
                             </Text>
                             <View
@@ -7619,28 +7514,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                              textBreakStrategy="simple"
-                            >
+                            <Text>
                               Aggiungi Patente di guida, Carta Europea della Disabilità al Portafoglio e poi riprova.
                             </Text>
                             <View
@@ -9274,28 +9148,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                              textBreakStrategy="simple"
-                            >
+                            <Text>
                               Si è verificato un problema che ha impedito la comunicazione con l’ente.
 
 Genera un nuovo QR Code e riprova.
@@ -10617,28 +10470,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                              textBreakStrategy="simple"
-                            >
+                            <Text>
                               Verifica di essere in possesso dei requisiti necessari per accedere ai servizi.
                             </Text>
                             <View
@@ -12226,28 +12058,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                              textBreakStrategy="simple"
-                            >
+                            <Text>
                               Per la tua sicurezza, IO permette di condividere le tue informazioni solo con enti verificati e certificati.
                             </Text>
                             <View
@@ -13577,28 +13388,7 @@ continuare
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                              textBreakStrategy="simple"
-                            >
+                            <Text>
                               Per accedere ai servizi online è necessario attivare IT-Wallet utilizzando la tua Carta di Identità Elettronica (CIE) e il PIN.
                             </Text>
                             <View

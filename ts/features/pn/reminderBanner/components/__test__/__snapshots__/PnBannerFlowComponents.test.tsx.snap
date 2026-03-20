@@ -1696,27 +1696,7 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Riprova più tardi
                             </Text>
                             <View
@@ -3785,27 +3765,7 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Da ora in poi riceverai su IO le tue comunicazioni a valore legale!
                             </Text>
                             <View

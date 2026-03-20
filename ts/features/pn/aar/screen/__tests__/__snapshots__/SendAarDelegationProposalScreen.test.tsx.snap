@@ -6430,29 +6430,37 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                   }
                                 }
                               />
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.5}
+                              <View
                                 style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 24,
-                                    },
-                                    {
-                                      "textAlign": "center",
-                                    },
-                                  ]
+                                  {
+                                    "gap": 8,
+                                  }
                                 }
                               >
-                                Se la persona che ha ricevuto la comunicazione ti ha chiesto di farlo, puoi aprire questa notifica SEND per suo conto.
-                              </Text>
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 24,
+                                      },
+                                      {
+                                        "textAlign": "center",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Se la persona che ha ricevuto la comunicazione ti ha chiesto di farlo, puoi aprire questa notifica SEND per suo conto.
+                                </Text>
+                              </View>
                               <View
                                 style={
                                   {
