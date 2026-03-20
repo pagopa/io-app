@@ -1,6 +1,15 @@
-import { Banner, H3, IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Banner,
+  Body,
+  H3,
+  IOColors,
+  IOMarkdownLite,
+  useIOTheme,
+  VSpacer,
+  VStack
+} from "@pagopa/io-app-design-system";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { useEffect, createRef } from "react";
+import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "i18next";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
@@ -59,8 +68,6 @@ const IdPayCodeDisplayScreen = () => {
     }
   };
 
-  const bannerRef = createRef<View>();
-
   const buttonLabel: string = isOnboarding
     ? I18n.t("global.buttons.continue")
     : I18n.t("global.buttons.close");
@@ -70,25 +77,6 @@ const IdPayCodeDisplayScreen = () => {
       title={{
         label: I18n.t("idpay.code.onboarding.header")
       }}
-      description={[
-        { text: I18n.t("idpay.code.onboarding.body1") },
-        {
-          text: "\n"
-        },
-        {
-          text: I18n.t("idpay.code.onboarding.bodyBold"),
-          weight: "Semibold"
-        },
-        {
-          text: "\n"
-        },
-        {
-          text: I18n.t("idpay.code.onboarding.bodyCta"),
-          weight: "Semibold",
-          asLink: true,
-          onPress: presentCieBottomSheet
-        }
-      ]}
       contextualHelp={emptyContextualHelp}
       headerActionsProp={{ showHelp: true }}
       actions={{
@@ -101,13 +89,19 @@ const IdPayCodeDisplayScreen = () => {
       }}
       includeContentMargins
     >
+      <VStack space={8}>
+        <IOMarkdownLite content={I18n.t("idpay.code.onboarding.body")} />
+        <Body asLink weight="Semibold" onPress={presentCieBottomSheet}>
+          {I18n.t("idpay.code.onboarding.buttons.howItWorks")}
+        </Body>
+      </VStack>
+      <VSpacer size={24} />
       <LoadingSpinnerOverlay isLoading={isGeneratingCode} loadingOpacity={1}>
         <CodeDisplayComponent code={idPayCode} />
         <VSpacer size={24} />
         <Banner
           color="neutral"
           pictogramName="security"
-          ref={bannerRef}
           title={I18n.t("idpay.code.onboarding.banner.header")}
           content={I18n.t("idpay.code.onboarding.banner.body")}
         />
@@ -117,19 +111,26 @@ const IdPayCodeDisplayScreen = () => {
   );
 };
 
-const CodeDisplayComponent = ({ code }: { code: string }) => (
-  <View style={styles.codeDisplay}>
-    {[...code].map((digit, index) => (
-      <View
-        key={index}
-        style={styles.codeDigit}
-        testID={`idPayCodeDigit${index}TestID`}
-      >
-        <H3>{digit}</H3>
-      </View>
-    ))}
-  </View>
-);
+const CodeDisplayComponent = ({ code }: { code: string }) => {
+  const theme = useIOTheme();
+
+  return (
+    <View style={styles.codeDisplay}>
+      {[...code].map((digit, index) => (
+        <View
+          key={index}
+          style={[
+            styles.codeDigit,
+            { borderColor: IOColors[theme["textInputBorder-default"]] }
+          ]}
+          testID={`idPayCodeDigit${index}TestID`}
+        >
+          <H3>{digit}</H3>
+        </View>
+      ))}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   codeDigit: {
@@ -139,7 +140,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
-    borderColor: IOColors["grey-200"],
     borderRadius: 8,
     marginHorizontal: 2
   },

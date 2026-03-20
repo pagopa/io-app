@@ -4548,9 +4548,7 @@
       },
       "onboarding": {
         "header": "Ecco il tuo codice!",
-        "body1": "Ti servirà per autorizzare le spese effettuate con la tua carta d’identità elettronica:",
-        "bodyBold": "memorizzalo in un luogo sicuro",
-        "bodyCta": "Come funziona?",
+        "body": "Ti servirà per autorizzare le spese effettuate con la tua carta d’identità elettronica: **memorizzalo in un luogo sicuro**",
         "banner": {
           "header": "E se lo dimentichi?",
           "body": "Puoi reimpostare il codice in ogni momento da Impostazioni > Sicurezza."
