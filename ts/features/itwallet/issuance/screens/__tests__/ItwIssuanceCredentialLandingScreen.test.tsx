@@ -16,6 +16,7 @@ const mockReplace = jest.fn();
 const mockNavigate = jest.fn();
 const mockPopToTop = jest.fn();
 const mockReset = jest.fn();
+const mockTrackItwAlreadyHasCredential = jest.fn();
 
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual("@react-navigation/native"),
@@ -25,6 +26,12 @@ jest.mock("@react-navigation/native", () => ({
     popToTop: mockPopToTop,
     reset: mockReset
   })
+}));
+
+jest.mock("../../analytics", () => ({
+  ...jest.requireActual("../../analytics"),
+  trackItwAlreadyHasCredential: (credential: unknown) =>
+    mockTrackItwAlreadyHasCredential(credential)
 }));
 
 describe("ItwIssuanceCredentialLandingScreen", () => {
@@ -77,6 +84,16 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
         )
       ).toBeTruthy();
       expect(mockReplace).not.toHaveBeenCalled();
+    });
+
+    it("tracks the already updated KO when the credential is already valid", () => {
+      mockSelectors({ credentialStatus: "valid" });
+
+      renderComponent();
+
+      expect(mockTrackItwAlreadyHasCredential).toHaveBeenCalledWith(
+        "ITW_PG_V2"
+      );
     });
 
     it("primary action navigates to wallet home", () => {
@@ -219,6 +236,7 @@ type MockSelectorOptions = {
   credentialStatus?: string;
   pidStatus?: string;
   isItwValid?: boolean;
+  isItwL3?: boolean;
   isWhitelisted?: boolean;
 };
 
@@ -226,11 +244,15 @@ const mockSelectors = ({
   credentialStatus,
   pidStatus,
   isItwValid = false,
+  isItwL3 = false,
   isWhitelisted = false
 }: MockSelectorOptions = {}) => {
   jest
     .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
     .mockReturnValue(isItwValid);
+  jest
+    .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+    .mockReturnValue(isItwL3);
   jest
     .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
     .mockReturnValue(isWhitelisted);
