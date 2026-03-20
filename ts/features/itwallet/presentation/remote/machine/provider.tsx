@@ -3,7 +3,10 @@ import { JSX } from "react";
 import { pipe } from "fp-ts/function";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector, useIOStore } from "../../../../../store/hooks.ts";
-import { selectItwEnv } from "../../../common/store/selectors/environment.ts";
+import {
+  selectItwEnv,
+  selectItwSpecsVersion
+} from "../../../common/store/selectors/environment.ts";
 import { getEnv } from "../../../common/utils/environment.ts";
 import { itwRemoteMachine } from "./machine.ts";
 import { createRemoteActorsImplementation } from "./actors.ts";
@@ -20,11 +23,12 @@ export const ItwRemoteMachineProvider = (props: Props) => {
   const navigation = useIONavigation();
   const store = useIOStore();
   const env = pipe(useIOSelector(selectItwEnv), getEnv);
+  const itwVersion = useIOSelector(selectItwSpecsVersion);
 
   const remoteMachine = itwRemoteMachine.provide({
-    guards: createRemoteGuardsImplementation(store),
+    guards: createRemoteGuardsImplementation(itwVersion, store),
     actions: createRemoteActionsImplementation(navigation, store),
-    actors: createRemoteActorsImplementation(env, store)
+    actors: createRemoteActorsImplementation(env, itwVersion, store)
   });
 
   return (

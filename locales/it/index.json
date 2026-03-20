@@ -181,11 +181,18 @@
     "bodyAndroid": "Sul tuo dispositivo sono attivi i **permessi di root**. Questo succede quando il sistema operativo viene modificato o installato in modo anomalo. Questo potrebbe compromettere l’integrità del sistema e l'app IO potrebbe non funzionare correttamente.\n\n**Cosa fare?**\n\nTi invitiamo a usare l'app IO su un dispositivo diverso, con un sistema operativo integro e aggiornato.\n\nSe continui, accetti di proseguire a tuo rischio nell'interazione con i servizi offerti. La mancanza di integrità può portare al furto di dati o ad altre attività fraudolente. Accetti anche che lo sviluppatore dell’app non sia in alcun modo responsabile di eventuali danni, perdite o conseguenze causate dall'app IO in questo contesto di esecuzione."
   },
   "locales": {
+    "it": "italiano",
+    "en": "inglese",
+    "de": "tedesco",
+    "fr": "francese",
+    "sl": "sloveno"
+  },
+  "localesTranslated": {
     "it": "Italiano",
-    "en": "Inglese",
-    "de": "Tedesco",
-    "fr": "Francese",
-    "sl": "Sloveno"
+    "en": "English",
+    "de": "Deutsch",
+    "fr": "Français",
+    "sl": "Slovenščina"
   },
   "clipboard": {
     "copyIntoClipboard": "copia negli appunti",
@@ -549,7 +556,7 @@
         },
         "language": {
           "title": "Lingua",
-          "subtitle": "Scegli la lingua"
+          "subtitle": "Scegli la lingua per l’app e per i messaggi"
         },
         "preferred_calendar": {
           "title": "Calendario preferito",
@@ -557,18 +564,29 @@
         },
         "preferred_language": {
           "title": "Lingua preferita",
-          "subtitle": "In quale lingua vuoi usare l'applicazione?",
-          "headers": {
-            "services": "Servizi",
-            "app": "Applicazione"
+          "subtitle": "Queste impostazioni ti permettono di scegliere la lingua dell’app e quella dei messaggi che ricevi dagli enti.",
+          "sections": {
+            "messages": {
+              "title": "Nei messaggi",
+              "description": "Alcuni enti usano questa impostazione per inviarti messaggi nella lingua scelta."
+            },
+            "app": {
+              "title": "In app",
+              "description": "Scegli la lingua da usare su IO. Alcuni contenuti potrebbero essere disponibili solo in italiano."
+            }
           },
           "alert": {
-            "title": "Vuoi cambiare la lingua in",
-            "subtitle": "Dovrai riavviare l'applicazione per applicare il cambiamento"
+            "title": "Vuoi cambiare la lingua dell’app in {{lang}}?",
+            "subtitle": "Riavvia l’app per rendere effettive le modifiche"
           },
-          "toast": {
+          "toastApp": {
             "success": {
-              "title": "Hai cambiato lingua"
+              "title": "Fatto! Riavvia l’app per rendere effettive le modifiche"
+            }
+          },
+          "toastMessages": {
+            "success": {
+              "title": "Fatto!"
             }
           },
           "banner": {
@@ -2418,6 +2436,10 @@
               "primaryAction": "Come attivare una delega",
               "secondaryAction": "Chiudi"
             },
+            "pendingDelegation": {
+              "title": "Hai già inviato una richiesta per questa notifica",
+              "body": "Attendi 5 minuti prima di riprovare."
+            },
             "GENERIC": {
               "title": "Non riusciamo a recuperare i dati della notifica SEND",
               "body": "Riprova più tardi.",
@@ -2432,6 +2454,10 @@
               }
             },
             "cieValidation": {
+              "expiredTtl": {
+                "title": "È passato troppo tempo!",
+                "body": "Per motivi di sicurezza, hai 5 minuti di tempo per la lettura della CIE. Tienila a portata di mano prima di iniziare."
+              },
               "expired": {
                 "title": "La CIE risulta scaduta",
                 "body": "Consulta le altre modalità per accedere a questa notifica SEND.",
@@ -3903,6 +3929,7 @@
           },
           "actions": {
             "removeFromWallet": "Rimuovi dal Portafoglio",
+            "updateDigitalCredential": "Aggiorna il documento digitale",
             "requestAssistance": "Qualcosa non torna?",
             "hideClaimValues": "Nascondi gli attributi del documento",
             "openIPatente": "Vai al saldo punti patente"

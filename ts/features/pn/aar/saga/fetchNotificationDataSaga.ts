@@ -40,7 +40,8 @@ export function* fetchAarDataSaga(
     yield* call(
       trackSendAARFailure,
       sendAARFailurePhase,
-      `Called in wrong state (${currentState.type})`
+      `Called in wrong state (${currentState.type})`,
+      undefined
     );
     return;
   }
@@ -70,7 +71,8 @@ export function* fetchAarDataSaga(
       yield* call(
         trackSendAARFailure,
         sendAARFailurePhase,
-        "Fast login expiration"
+        "Fast login expiration",
+        undefined
       );
       return;
     }
@@ -79,7 +81,7 @@ export function* fetchAarDataSaga(
         status,
         value
       )})`;
-      yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
+      yield* call(trackSendAARFailure, sendAARFailurePhase, reason, value);
       yield* put(
         setAarFlowState({
           type: sendAARFlowStates.ko,
@@ -117,7 +119,7 @@ export function* fetchAarDataSaga(
     );
   } catch (e: unknown) {
     const reason = `An error was thrown (${unknownToReason(e)})`;
-    yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
+    yield* call(trackSendAARFailure, sendAARFailurePhase, reason, undefined);
     yield* put(
       setAarFlowState({
         type: sendAARFlowStates.ko,

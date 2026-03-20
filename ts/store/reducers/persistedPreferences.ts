@@ -56,7 +56,7 @@ export type PersistedPreferencesState = Readonly<{
 export const initialPreferencesState: PersistedPreferencesState = {
   isFingerprintEnabled: undefined,
   preferredCalendar: undefined,
-  preferredLanguage: undefined,
+  preferredLanguage: "it",
   wasServiceAlertDisplayedOnce: false,
   isPagoPATestEnabled: false,
   isCustomEmailChannelEnabled: pot.none,

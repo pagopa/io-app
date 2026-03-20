@@ -1,5 +1,6 @@
 import MockDate from "mockdate";
 import { createMigrate } from "redux-persist";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import itWalletReducer, { migrations } from "../index";
 
@@ -160,5 +161,21 @@ describe("itWalletReducer migrations", () => {
       }
     });
     MockDate.reset();
+  });
+
+  it("should migrate the store to version 11: add itWalletSpecsVersion, reset credentialsCatalogue", async () => {
+    const previousState = {
+      _persist: { version: 10, rehydrated: false },
+      environment: { env: "prod" },
+      credentialsCatalogue: { catalogue: pot.some({}) }
+    };
+
+    const newState = await migrate(previousState, 11);
+
+    expect(newState).toEqual({
+      _persist: { version: 10, rehydrated: false },
+      environment: { env: "prod", itWalletSpecsVersion: "1.0.0" },
+      credentialsCatalogue: { catalogue: pot.none }
+    });
   });
 });
