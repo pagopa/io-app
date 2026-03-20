@@ -229,14 +229,7 @@
             "title": "Dein Profil löschen",
             "description": "Du kannst jederzeit von deinem Recht Gebrauch machen, dein IO-Profil zu löschen.",
             "banner": "Dein Profil wird innerhalb von 30 Tagen nach deinem Antrag endgültig gelöscht.",
-            "body": {
-              "p1": "Wenn du dich entscheidest fortzufahren, kannst du die Mitteilungen oder Einstellungen, die du in der App festgelegt hast, nicht mehr abrufen.",
-              "p2": {
-                "firstPart": "Alle Boni oder Rabatte, die du über die IO-App erhalten hast, ",
-                "lastPart": "sind nicht mehr verfügbar."
-              },
-              "p3": "Du kannst jederzeit wieder in die IO-App einsteigen, indem du dich über SPID oder CIE erneut anmeldest."
-            },
+            "body": "Wenn du dich entscheidest fortzufahren, kannst du die Mitteilungen oder Einstellungen, die du in der App festgelegt hast, nicht mehr abrufen.\n\nAlle Boni oder Rabatte, die du über die IO-App erhalten hast, **sind nicht mehr verfügbar.**\n\nDu kannst jederzeit wieder in die IO-App einsteigen, indem du dich über SPID oder CIE erneut anmeldest.",
             "cta": "Mit der Löschung fortfahren"
           },
           "details": {
@@ -262,23 +255,7 @@
           "subtitle": "Du kannst die wichtigsten Daten deines IO-Profils jederzeit herunterladen.",
           "description": "Du erhältst eine Kopie der mit deinem IO-Profil verbundenen Daten",
           "detail": {
-            "bulletList": {
-              "title": "Deine Daten sind:",
-              "item1": "deine Steuernummer;",
-              "item2": "die von dir angegebene E-Mail-Adresse und ggf. eine Bestätigung ihrer Validierung;",
-              "item3": "den Text der Mitteilungen, die du erhalten hast;",
-              "item4": "deine Benachrichtigungseinstellungen."
-            },
-            "paragraph1": "Die Informationen werden im YAML-Format heruntergeladen, einem Standardformat, das in der Datenverarbeitung den Austausch von Daten zwischen verschiedenen Anwendungen ermöglicht.",
-            "paragraph2": {
-              "part1": "Du erhältst eine ",
-              "part2": "Mitteilung in IO ",
-              "part3": "mit einem Link und einem 15 Tage lang gültigen Passwort."
-            },
-            "paragraph3": {
-              "part1": "Weitere Informationen findest du in der",
-              "link": "IO-Datenschutzrichtlinie."
-            }
+            "body": "**Deine Daten sind:**\n- deine Steuernummer;\n- die von dir angegebene E-Mail-Adresse und ggf. eine Bestätigung ihrer Validierung;\n- den Text der Mitteilungen, die du erhalten hast;\n- deine Benachrichtigungseinstellungen.\n\nDie Informationen werden im YAML-Format heruntergeladen, einem Standardformat, das in der Datenverarbeitung den Austausch von Daten zwischen verschiedenen Anwendungen ermöglicht.\n\nDu erhältst eine **Mitteilung in IO** mit einem Link und einem 15 Tage lang gültigen Passwort.\n\nWeitere Informationen findest du in der **[IO-Datenschutzrichtlinie.](privacy://policy)**"
           },
           "alert": {
             "oldRequest": "Wir bearbeiten bereits eine Anfrage zum Datenexport",
@@ -752,26 +729,19 @@
     },
     "unlockmodal": {
       "title": "Was bedeutet das?",
-      "description1_1": "Wenn du den Zugang zu IO aus Sicherheitsgründen gesperrt hast, musst du ihn zunächst entsperren, um die App wieder öffnen zu können.",
-      "description1_2": "Alternativ kannst du die App auch über ein Login mit der",
-      "description1_3": "höchsten Sicherheitsstufe öffnen.",
-      "description1_4": "Diese Art der Authentifizierung erfordert einen Benutzernamen, ein Passwort und ein physisches Medium, wie z.B. eine CIE.",
+      "description": "Wenn du den Zugang zu IO aus Sicherheitsgründen gesperrt hast, musst du ihn zunächst entsperren, um die App wieder öffnen zu können.\nAlternativ kannst du die App auch über ein Login mit der **höchsten Sicherheitsstufe öffnen.** Diese Art der Authentifizierung erfordert einen Benutzernamen, ein Passwort und ein physisches Medium, wie z.B. eine CIE.",
       "title2": "Möchtest du den Zugang zu IO entsperren?",
       "listitem1": "Stell sicher, dass du deine digitale Identität abgesichert hast, indem du deine Anmeldedaten bei deinem Identitätsanbieter änderst.",
       "listitem2_1": "Greif über das Internet auf IO zu, indem du deine SPID-Anmeldedaten oder deine CIE verwendest.",
       "listitem2_2": "Geh zur Website",
-      "listitem3_1": "Geh zum Abschnitt",
-      "listitem3_2": "IO-Zugang entsperren",
-      "listitem3_3": "und folge den angegebenen Schritten. Wenn du dazu aufgefordert wirst, gib den",
-      "listitem3_4": "Wiederherstellungscode",
-      "listitem3_5": "ein, um den Vorgang zu bestätigen."
+      "listitem3": "Geh zum Abschnitt *IO-Zugang entsperren* und folge den angegebenen Schritten. Wenn du dazu aufgefordert wirst, gib den **Wiederherstellungscode** ein, um den Vorgang zu bestätigen."
     }
   },
   "email": {
     "cduScreens": {
       "validateMail": {
         "title": "Ist das deine E-Mail?",
-        "subtitle": "Um die App weiter nutzen zu können, musst du deine E-Mail-Adresse bestätigen:",
+        "subtitle": "Um die App weiter nutzen zu können, musst du deine E-Mail-Adresse bestätigen: **{{email}}**",
         "editButton": "Nein, ändern",
         "validateButton": "Ja, bestätigen",
         "help": {
@@ -780,8 +750,7 @@
       },
       "emailAlreadyTaken": {
         "title": "Deine E-Mail-Adresse ändern",
-        "subtitleStart": "Deine E-Mail-Adresse",
-        "subtitleEnd": "wird bereits auf IO verwendet, du musst eine andere eingeben, um die App weiter nutzen zu können.",
+        "subtitle": "Deine E-Mail-Adresse **{{email}}** wird bereits auf IO verwendet, du musst eine andere eingeben, um die App weiter nutzen zu können.",
         "editButton": "E-Mail-Adresse ändern",
         "help": {
           "body": "Deine E-Mail-Adresse wird bereits auf IO verwendet; du musst eine andere eingeben, um die App weiter benutzen zu können."
@@ -849,10 +818,7 @@
       },
       "policy": {
         "title": "Wie wähle ich den Code aus?",
-        "description": "Der Entsperrcode besteht aus 6 Ziffern und du benötigst ihn, um auf IO zuzugreifen und bestimmte Vorgänge in der App zu autorisieren.",
-        "bulletListTitle": "Wähle einen Code, der schwer zu erraten ist und nicht folgenden Inhalt hat:",
-        "firstItem": "eine sich wiederholende Zahl (z.B. 000000)",
-        "secondItem": "eine Liste von geordneten Zahlen (z.B. 123456 oder 654321)"
+        "body": "Der Entsperrcode besteht aus 6 Ziffern und du benötigst ihn, um auf IO zuzugreifen und bestimmte Vorgänge in der App zu autorisieren.\n\nWähle einen Code, der schwer zu erraten ist und nicht folgenden Inhalt hat:\n- eine sich wiederholende Zahl (z.B. 000000)\n- eine Liste von geordneten Zahlen (z.B. 123456 oder 654321)"
       },
       "success": {
         "message": "Du hast den Code geändert!"
@@ -1481,19 +1447,12 @@
       }
     },
     "banner": {
-      "content1": "Das ist eine",
-      "content2": "dynamische Mitteilung:",
-      "content3": "der Inhalt kann sich im Laufe der Zeit ändern, damit du aktuelle Informationen erhältst.",
+      "content": "Das ist eine dynamische Mitteilung: der Inhalt kann sich im Laufe der Zeit ändern, damit du aktuelle Informationen erhältst.",
       "action": "Mehr erfahren"
     },
     "bottomSheet": {
       "title": "Was ist eine dynamische Mitteilung?",
-      "body": "Die versendende Körperschaft kann den Inhalt dieser Nachricht auch nach dem Versand aktualisieren, um sicherzustellen, dass die Informationen stets korrekt und relevant sind.\n\n Dies geschieht in bestimmten Fällen, wie z. B. bei der Aktualisierung veralteter Informationen oder nicht mehr gültiger Anhänge.\n\n Wenn die Körperschaft dich über neue Informationen oder wichtige Aktualisierungen informieren muss, wird sie dies mittels einer neuen Mitteilung tun.",
-      "bodyPt1": "Es handelt sich um eine Mitteilung, die die Körperschaft ",
-      "bodyPt2": "nach dem Senden ändern kann",
-      "bodyPt3": ". Auf diese Weise sind die darin enthaltenen Informationen immer korrekt.\nEine Körperschaft kann die Informationen in einer dynamischen Mitteilung ",
-      "bodyPt4": "nur in bestimmten Fällen",
-      "bodyPt5": " ändern, zum Beispiel um alte Informationen zu ändern oder eine nicht mehr gültige Anlage zu aktualisieren.\nWenn sie dir neue Informationen oder wichtige Aktualisierungen mitteilen muss, schickt sie dir eine neue Mitteilung."
+      "body": "Es handelt sich um eine Mitteilung, die die Körperschaft **nach dem Senden ändern kann**. Auf diese Weise sind die darin enthaltenen Informationen immer korrekt.\n\nEine Körperschaft kann die Informationen in einer dynamischen Mitteilung **nur in bestimmten Fällen** ändern, zum Beispiel um alte Informationen zu ändern oder eine nicht mehr gültige Anlage zu aktualisieren.\n\nWenn sie dir neue Informationen oder wichtige Aktualisierungen mitteilen muss, schickt sie dir eine neue Mitteilung."
     },
     "footer": {
       "contacts": "Absender kontaktieren",
@@ -2396,8 +2355,7 @@
         "walletInstanceNotActive": {
           "documentiSuIo": {
             "title": "Aktiviere Dokumente in IO, um fortzufahren",
-            "body": "Um deine Dokumente zum Konto hinzuzufügen, musst du Folgendes aktivieren: ",
-            "bodyBold": "Dokumente in IO"
+            "subtitle": "Um deine Dokumente zum Konto hinzuzufügen, musst du Folgendes aktivieren: **Dokumente in IO**"
           },
           "primaryAction": "Start",
           "secondaryAction": "Jetzt nicht"
@@ -2423,8 +2381,7 @@
         "moreInfo": "Mehr erfahren",
         "error": {
           "title": "Dein Gerät unterstützt Dokumente in IO nicht",
-          "body": "Dein Gerät verfügt nicht über die erforderlichen Sicherheitsanforderungen für diese Funktion.",
-          "primaryAction": "Schließen",
+          "subtitle": "Dein Gerät verfügt nicht über die erforderlichen Sicherheitsanforderungen für diese Funktion. **[Schließen]({{faqUrl}})**",
           "secondaryAction": "Mehr erfahren"
         }
       },
@@ -2839,13 +2796,10 @@
       "subtitle": "IO wird die erforderlichen Daten an ",
       "subtitle2": " weitergeben für deine Authentifizierung bei ",
       "requiredData": "Erforderliche Daten",
-      "privacy1": "Für weitere Informationen lies bitte die ",
-      "privacyCta": "Datenschutzrichtlinie  ",
+      "privacy": "Für weitere Informationen lies bitte die **[Datenschutzrichtlinie]({{privacyUrl}})**",
       "bottomSheet": {
         "title": "Dienste von Drittanbietern über IO: So funktioniert es",
-        "body": "Damit du auf einen externen Dienst zugreifen kannst, ohne dich jedes Mal zu authentifizieren, gibt die IO-App einige deiner Daten an den Anbieter weiter.",
-        "body2": "Deine Daten sind sicher und werden nur zu den Zwecken verarbeitet, die von der Körperschaft angegeben sind.",
-        "bodyPrivacy": "Datenschutzrichtlinie"
+        "body": "Damit du auf einen externen Dienst zugreifen kannst, ohne dich jedes Mal zu authentifizieren, gibt die IO-App einige deiner Daten an den Anbieter weiter.\n\nDeine Daten sind sicher und werden nur zu den Zwecken verarbeitet, die von der Körperschaft angegeben sind. **[Datenschutzrichtlinie]({{privacyUrl}})**"
       }
     }
   },

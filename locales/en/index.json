@@ -261,14 +261,7 @@
             "title": "Delete your profile",
             "description": "You can delete your IO profile at any time.",
             "banner": "Your profile will be deleted within 30 days of your request.",
-            "body": {
-              "p1": "If you decide to continue, you will no longer be able to retrieve the messages or preferences you have set in the app.",
-              "p2": {
-                "firstPart": "Any bonuses or discounts you get via the IO app ",
-                "lastPart": "won't be available anymore."
-              },
-              "p3": "You can re-subscribe to the IO App at any time by carrying out a new registration procedure with SPID or CIE."
-            },
+            "body": "If you decide to continue, you will no longer be able to retrieve the messages or preferences you have set in the app.\n\nAny bonuses or discounts you get via the IO app **won't be available anymore.**\n\nYou can re-subscribe to the IO App at any time by carrying out a new registration procedure with SPID or CIE.",
             "cta": "Delete"
           },
           "details": {
@@ -295,23 +288,7 @@
           "description": "Receive a copy of the data associated with your IO profile",
           "a11y": "Done. You asked for a copy of your data.",
           "detail": {
-            "bulletList": {
-              "title": "Your data are:",
-              "item1": "your tax code;",
-              "item2": "your email address and, if applicable, confirmation of its validation;",
-              "item3": "the text of the Messages you received;",
-              "item4": "your notification preferences."
-            },
-            "paragraph1": "The information will be downloaded in YAML format, a standard format for exchanging data between different applications.",
-            "paragraph2": {
-              "part1": "You will get ",
-              "part2": "a message on IO ",
-              "part3": "with a link and password that lasts 15 days."
-            },
-            "paragraph3": {
-              "part1": "For more information see the.",
-              "link": "IO Privacy Policy."
-            }
+            "body": "**Your data are:**\n- your tax code;\n- your email address and, if applicable, confirmation of its validation;\n- the text of the Messages you received;\n- your notification preferences.\n\nThe information will be downloaded in YAML format, a standard format for exchanging data between different applications.\n\nYou will get **a message on IO** with a link and password that lasts 15 days.\n\nFor more information see the **[IO Privacy Policy.](privacy://policy)**"
           },
           "alert": {
             "oldRequest": "We are already proceeding to export all your data",
@@ -387,8 +364,7 @@
         "description": "Learn more about the IO app",
         "subtitle": "Here you can find more details about the IO app and learn more about its use.",
         "paragraphTitle": "About IO",
-        "paragraphBody1": "IO, the public services app, ",
-        "paragraphBody2": "provides an efficient and convenient way for citizens to interact with institutions at the local and national level (municipalities, regions, central agencies) directly from your device. IO allows administrations to contact you in a timely and personalised manner, enabling you to manage operations related to a specific service, such as notices, payments, deadlines and notifications, in a simple and secure manner.",
+        "paragraphBody": "**IO, the public services app**, provides an efficient and convenient way for citizens to interact with institutions at the local and national level (municipalities, regions, central agencies) directly from your device. IO allows administrations to contact you in a timely and personalised manner, enabling you to manage operations related to a specific service, such as notices, payments, deadlines and notifications, in a simple and secure manner.",
         "bannerBody": "Want to know more?",
         "bannerButton": "Go to IO website"
       },
@@ -882,26 +858,19 @@
     },
     "unlockmodal": {
       "title": "What does it mean?",
-      "description1_1": "If you have blocked access to IO for security reasons, you must first unlock it in order to re-enter the app.",
-      "description1_2": "Otherwise, you can access it in the app by logging in with the",
-      "description1_3": "maximum level of safety.",
-      "description1_4": "This type of authentication requires a username, password, and physical device, such as CIE.",
+      "description": "If you have blocked access to IO for security reasons, you must first unlock it in order to re-enter the app.\nOtherwise, you can access it in the app by logging in with the **maximum level of safety.** This type of authentication requires a username, password, and physical device, such as CIE.",
       "title2": "Do you want to unlock access to IO?",
       "listitem1": "Make sure you have secured your digital identity by changing your login credentials with your Identity Provider.",
       "listitem2_1": "Access IO from the web, using your SPID or CIE credentials.",
       "listitem2_2": "Go to the site",
-      "listitem3_1": "Go to the section",
-      "listitem3_2": "Unlock access to IO",
-      "listitem3_3": "and follow the given steps. When prompted enter the",
-      "listitem3_4": "recovery code",
-      "listitem3_5": "to confirm the operation."
+      "listitem3": "Go to the section *Unlock access to IO* and follow the given steps. When prompted enter the **recovery code** to confirm the operation."
     }
   },
   "email": {
     "cduScreens": {
       "validateMail": {
         "title": "Is this your email?",
-        "subtitle": "To continue using the app, you must confirm that your email is",
+        "subtitle": "To continue using the app, you must confirm that your email is **{{email}}**",
         "editButton": "No, change email",
         "validateButton": "Yes, confirm",
         "help": {
@@ -910,8 +879,7 @@
       },
       "emailAlreadyTaken": {
         "title": "Edit your email address",
-        "subtitleStart": "This email address",
-        "subtitleEnd": "seems to be already in use on IO. Please enter a different one to continue using the app.",
+        "subtitle": "This email address **{{email}}** seems to be already in use on IO. Please enter a different one to continue using the app.",
         "editButton": "Edit email address",
         "help": {
           "body": "This email address seems to be already in use on IO. Please enter a different one to continue using the app."
@@ -983,10 +951,7 @@
       },
       "policy": {
         "title": "How to choose the code?",
-        "description": "It's a six-digit code you'll use to login and authorize some in-app operations.",
-        "bulletListTitle": "Choose a code that's hard to guess and doesn't contain::",
-        "firstItem": "a single repeated number (e.g. 000000)",
-        "secondItem": "a list of ordered numbers (e.g. 123456 or 654321)"
+        "body": "It's a six-digit code you'll use to login and authorize some in-app operations.\n\nChoose a code that's hard to guess and doesn't contain:\n- a single repeated number (e.g. 000000)\n- a list of ordered numbers (e.g. 123456 or 654321)"
       },
       "success": {
         "message": "Done!"
@@ -1398,19 +1363,12 @@
       }
     },
     "banner": {
-      "content1": "This is a",
-      "content2": "dynamic message:",
-      "content3": "its content may change over time to give you up-to-date information.",
+      "content": "This is a dynamic message: its content may change over time to give you up-to-date information.",
       "action": "Learn more"
     },
     "bottomSheet": {
       "title": "What's a dynamic message?",
-      "body": "It's a message that the sender can edit after you've received it. This way, the information it includes will always be up-to-date.\n\nThe sender can edit the information in a dynamic message only in specific cases. For example, to change outdated information or replace an attachment that is no longer valid.\n\nIf the sender needs to share new information or important updates with you, you'll receive a new message.",
-      "bodyPt1": "It's a message that the sender can edit ",
-      "bodyPt2": "after you've received it",
-      "bodyPt3": ". This way, the information it includes will always be up-to-date.\n\nThe sender can edit the information in a dynamic message only ",
-      "bodyPt4": "specific cases",
-      "bodyPt5": ". For example, to change outdated information or replace an attachment that is no longer valid.\n\nIf the sender needs to share new information or important updates with you, you'll receive a new message."
+      "body": "It's a message that the sender can edit **after you've received it**. This way, the information it includes will always be up-to-date.\n\nThe sender can edit the information in a dynamic message only in **specific cases**. For example, to change outdated information or replace an attachment that is no longer valid.\n\nIf the sender needs to share new information or important updates with you, you'll receive a new message."
     },
     "footer": {
       "contacts": "Contact the sender",

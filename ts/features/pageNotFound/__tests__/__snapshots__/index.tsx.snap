@@ -191,27 +191,7 @@ exports[`PageNotFound Should match the snapshot 1`] = `
           }
         }
       />
-      <Text
-        allowFontScaling={true}
-        dynamicTypeRamp="body"
-        maxFontSizeMultiplier={1.5}
-        style={
-          [
-            {},
-            {
-              "color": "#555C70",
-              "fontFamily": "Titillio",
-              "fontSize": 16,
-              "fontStyle": "normal",
-              "fontWeight": "400",
-              "lineHeight": 24,
-            },
-            {
-              "textAlign": "center",
-            },
-          ]
-        }
-      >
+      <Text>
         Questa pagina non esiste o non è disponibile nella versione dell’app che stai usando.
 Prova ad aggiornare IO.
       </Text>

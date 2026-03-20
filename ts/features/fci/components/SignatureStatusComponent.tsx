@@ -1,4 +1,4 @@
-import { BodyProps, IOPictograms } from "@pagopa/io-app-design-system";
+import { IOPictograms } from "@pagopa/io-app-design-system";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import I18n from "i18next";
 import { Linking } from "react-native";
@@ -133,43 +133,18 @@ const SignatureStatusComponent = ({
     };
   };
 
-  /* This is a result of a quick refactor. If there's an additional email address,
-  we compose the different `Body` components, otherwise we just display the text. */
-  const operationResultComposedBody: Array<BodyProps> = email
-    ? [
-        {
-          text: `${subTitle}\n`,
-          style: {
-            textAlign: "center"
-          }
-        },
-        {
-          asLink: true,
-          avoidPressable: true,
-          onPress: () => Linking.openURL(`mailto:${email}`),
-          text: email,
-          style: {
-            textAlign: "center"
-          },
-          weight: "Semibold"
-        }
-      ]
-    : [
-        {
-          text: subTitle,
-          style: {
-            textAlign: "center"
-          }
-        }
-      ];
+  const composedSubtitle = email
+    ? `${subTitle}\n\n**[${email}](mailto:${email})**`
+    : subTitle;
 
   return (
     <OperationResultScreenContent
       isHeaderVisible={false}
       title={title}
-      subtitle={operationResultComposedBody}
+      subtitle={composedSubtitle}
       pictogram={pictogram}
       testID={testID}
+      onSubtitleLinkPress={url => Linking.openURL(url)}
       {...operationResultActions()}
     />
   );

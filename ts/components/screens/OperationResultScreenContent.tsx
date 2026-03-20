@@ -1,10 +1,8 @@
 import {
-  Body,
-  BodyProps,
-  ComposedBodyFromArray,
   H3,
   IOButton,
   IOButtonProps,
+  IOMarkdownLite,
   IOPictograms,
   IOVisualCostants,
   Pictogram,
@@ -34,8 +32,8 @@ type ButtonProps = Pick<
 type OperationResultScreenContentProps = WithTestID<{
   pictogram: IOPictograms | IOAnimatedPictograms;
   title: string;
-  subtitle?: string | Array<BodyProps>;
-  subtitleProps?: Pick<BodyProps, "textBreakStrategy" | "lineBreakStrategyIOS">;
+  subtitle?: string;
+  onSubtitleLinkPress?: (url: string) => void;
   topElement?: ReactNode;
   action?: ButtonProps;
   secondaryAction?: ButtonProps;
@@ -60,12 +58,12 @@ const OperationResultScreenContent = forwardRef<
       pictogram,
       title,
       subtitle,
+      onSubtitleLinkPress,
       action,
       secondaryAction,
       children,
       testID,
       isHeaderVisible,
-      subtitleProps,
       topElement = undefined
     },
     ref
@@ -106,13 +104,11 @@ const OperationResultScreenContent = forwardRef<
           {subtitle && (
             <>
               <VSpacer size={8} />
-              {typeof subtitle === "string" ? (
-                <Body style={{ textAlign: "center" }} {...subtitleProps}>
-                  {subtitle}
-                </Body>
-              ) : (
-                <ComposedBodyFromArray body={subtitle} textAlign="center" />
-              )}
+              <IOMarkdownLite
+                content={subtitle}
+                textAlign="center"
+                onLinkPress={onSubtitleLinkPress}
+              />
             </>
           )}
           {action && (

@@ -1,18 +1,14 @@
 import {
-  Body,
-  BodyProps,
-  ComposedBodyFromArray,
   ContentWrapper,
+  IOMarkdown,
   VSpacer,
   useIOToast
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { ComponentProps, useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect } from "react";
 import { AccessibilityInfo } from "react-native";
 import I18n from "i18next";
 import { UserDataProcessingChoiceEnum } from "../../../../../definitions/backend/UserDataProcessingChoice";
-import { BulletList, BulletListItem } from "../../../../components/BulletList";
-import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { upsertUserDataProcessing } from "../../common/store/actions/userDataProcessing";
@@ -93,64 +89,6 @@ const DownloadProfileDataScreen = () => {
     });
   }, [navigate]);
 
-  const actions = useMemo<IOScrollViewActions>(
-    () => ({
-      type: "SingleButton",
-      primary: {
-        testID: "export-data-download-button",
-        color: "primary",
-        label: I18n.t("profile.main.privacy.exportData.cta"),
-        accessibilityLabel: I18n.t("profile.main.privacy.exportData.cta"),
-        loading: isLoading,
-        onPress: handleDownloadPress
-      }
-    }),
-    [handleDownloadPress, isLoading]
-  );
-
-  const listItems = useMemo<Array<BulletListItem>>(
-    () => [
-      {
-        id: "first_item",
-        value: I18n.t("profile.main.privacy.exportData.detail.bulletList.item1")
-      },
-      {
-        id: "second_item",
-        value: I18n.t("profile.main.privacy.exportData.detail.bulletList.item2")
-      },
-      {
-        id: "third_item",
-        value: I18n.t("profile.main.privacy.exportData.detail.bulletList.item3")
-      },
-      {
-        id: "fourth_item",
-        value: I18n.t("profile.main.privacy.exportData.detail.bulletList.item4")
-      }
-    ],
-    []
-  );
-
-  const titleProps = useMemo<ComponentProps<typeof Body>>(
-    () => ({ weight: "Semibold" }),
-    []
-  );
-
-  const secondParagraph = useMemo<Array<BodyProps>>(
-    () => [
-      {
-        text: I18n.t("profile.main.privacy.exportData.detail.paragraph2.part1")
-      },
-      {
-        text: I18n.t("profile.main.privacy.exportData.detail.paragraph2.part2"),
-        weight: "Semibold"
-      },
-      {
-        text: I18n.t("profile.main.privacy.exportData.detail.paragraph2.part3")
-      }
-    ],
-    []
-  );
-
   return (
     <IOScrollViewWithLargeHeader
       title={{
@@ -158,34 +96,24 @@ const DownloadProfileDataScreen = () => {
         testID: "share-data-component-title"
       }}
       description={I18n.t("profile.main.privacy.exportData.subtitle")}
-      actions={actions}
+      actions={{
+        type: "SingleButton",
+        primary: {
+          testID: "export-data-download-button",
+          color: "primary",
+          label: I18n.t("profile.main.privacy.exportData.cta"),
+          accessibilityLabel: I18n.t("profile.main.privacy.exportData.cta"),
+          loading: isLoading,
+          onPress: handleDownloadPress
+        }
+      }}
     >
       <VSpacer size={8} />
       <ContentWrapper>
-        <BulletList
-          title={I18n.t(
-            "profile.main.privacy.exportData.detail.bulletList.title"
-          )}
-          titleProps={titleProps}
-          list={listItems}
+        <IOMarkdown
+          content={I18n.t("profile.main.privacy.exportData.detail.body")}
+          onLinkPress={handleNavigateToProfilePrivacy}
         />
-        <VSpacer size={16} />
-        <Body>
-          {I18n.t("profile.main.privacy.exportData.detail.paragraph1")}
-        </Body>
-        <VSpacer />
-        <ComposedBodyFromArray textAlign="left" body={secondParagraph} />
-        <VSpacer />
-        <Body accessibilityRole="link" onPress={handleNavigateToProfilePrivacy}>
-          {I18n.t("profile.main.privacy.exportData.detail.paragraph3.part1")}
-          <Body
-            asLink
-            weight="Semibold"
-            onPress={handleNavigateToProfilePrivacy}
-          >
-            {I18n.t("profile.main.privacy.exportData.detail.paragraph3.link")}
-          </Body>
-        </Body>
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>
   );
