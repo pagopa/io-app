@@ -131,6 +131,16 @@ jest.mock("@gorhom/bottom-sheet", () => {
 
 jest.mock("@sentry/react-native");
 
+jest.mock("@pagopa/io-app-design-system", () => {
+  const actual = jest.requireActual("@pagopa/io-app-design-system");
+  const React = require("react");
+  const { Text } = require("react-native");
+  return {
+    ...actual,
+    IOMarkdownLite: ({ content }) => React.createElement(Text, null, content)
+  };
+});
+
 jest.mock("react-native-device-info", () => mockRNDeviceInfo);
 
 jest.mock("react-native-pdf", () => jest.fn());
