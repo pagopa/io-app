@@ -18,6 +18,7 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { identificationRequest } from "../../../../identification/store/actions/index.ts";
+import { trackCredentialRenewStart } from "../../../analytics";
 import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
 import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
 import ItwCredentialNotFound from "../../../common/components/ItwCredentialNotFound.tsx";
@@ -245,14 +246,19 @@ export const ItwPresentationCredentialDetail = ({
         label: I18n.t(
           "features.itWallet.presentation.credentialDetails.actions.updateDigitalCredential"
         ),
-        onPress: () =>
+        onPress: () => {
+          trackCredentialRenewStart(mixPanelCredential, {
+            credential_status: CREDENTIAL_STATUS_MAP[status],
+            position: "screen"
+          });
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
             params: {
               credentialType,
               mode: "reissuance"
             }
-          })
+          });
+        }
       };
     }
 
@@ -303,7 +309,8 @@ export const ItwPresentationCredentialDetail = ({
     isCheckingPermissions,
     itwProximityMachineRef,
     mixPanelCredential,
-    shouldShowMdlUpdateCta
+    shouldShowMdlUpdateCta,
+    status
   ]);
 
   if (status === "unknown") {

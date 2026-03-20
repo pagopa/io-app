@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.27.0-rc.1](https://github.com/pagopa/io-app/compare/3.27.0-rc.0...3.27.0-rc.1) (2026-03-18)
+
+
+### Features
+
+* [[IOCOM-2995](https://pagopa.atlassian.net/browse/IOCOM-2995)] SEND AAR TTL errors tracking ([#7938](https://github.com/pagopa/io-app/issues/7938)) ([fd699f9](https://github.com/pagopa/io-app/commit/fd699f94b851f34404db44f053e770bf60e11903))
+
+## [3.27.0-rc.0](https://github.com/pagopa/io-app/compare/3.26.0-rc.2...3.27.0-rc.0) (2026-03-17)
+
+
+### Features
+
+* [[IOCOM-2969](https://pagopa.atlassian.net/browse/IOCOM-2969)] SEND AAR TTL error screens ([#7897](https://github.com/pagopa/io-app/issues/7897)) ([64a5bba](https://github.com/pagopa/io-app/commit/64a5bba741cb1628519513778fc1f9a04bee5eb2))
+* [[IOCOM-3038](https://pagopa.atlassian.net/browse/IOCOM-3038)] SEND AAR flow tracking refactor ([#7936](https://github.com/pagopa/io-app/issues/7936)) ([d8da09a](https://github.com/pagopa/io-app/commit/d8da09a74bf8b06ec92284f3d3ebd26dad437808))
+* [[IOPLT-1555](https://pagopa.atlassian.net/browse/IOPLT-1555)] Properly handles app language selection and persistence ([#7817](https://github.com/pagopa/io-app/issues/7817)) ([cd307b8](https://github.com/pagopa/io-app/commit/cd307b88470d59c2c7a084cfda7efd8afa777600))
+* **IT-Wallet:** [[SIW-3854](https://pagopa.atlassian.net/browse/SIW-3854)] Add cta for expired/invalid mDL ([#7894](https://github.com/pagopa/io-app/issues/7894)) ([9b40c44](https://github.com/pagopa/io-app/commit/9b40c44c4481bdb88d81b078fe15bd898fdb8011))
+
+
+### Chores
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Adjust bottom-sheet spacing ([#7927](https://github.com/pagopa/io-app/issues/7927)) ([1546b8f](https://github.com/pagopa/io-app/commit/1546b8f57299b61172f94db9427fe91df32d40bc))
+* [[IOPLT-1661](https://pagopa.atlassian.net/browse/IOPLT-1661)] Update `react-native-bottom-sheet` and relative patch ([#7914](https://github.com/pagopa/io-app/issues/7914)) ([949f9d5](https://github.com/pagopa/io-app/commit/949f9d5b7b39ebbf17ac7d19051356f192b40c19))
+* [[IOPLT-1689](https://pagopa.atlassian.net/browse/IOPLT-1689)] Remove duplicated values from locales ([#7934](https://github.com/pagopa/io-app/issues/7934)) ([2b0dbc3](https://github.com/pagopa/io-app/commit/2b0dbc32040f920d43f0b1cbd8b75eba2860d59f))
+* [[SIW-3986](https://pagopa.atlassian.net/browse/SIW-3986)] Introduce support for multiple IT-Wallet specs versions ([#7926](https://github.com/pagopa/io-app/issues/7926)) ([9371f6b](https://github.com/pagopa/io-app/commit/9371f6b179e22ba80c84a52bb791f9df2a3541c6))
+
 ## [3.26.0-rc.2](https://github.com/pagopa/io-app/compare/3.26.0-rc.1...3.26.0-rc.2) (2026-03-12)
 
 

@@ -1,9 +1,19 @@
-import { MixPanelCredential } from "../../../analytics/utils/types";
+import {
+  ItwCredentialActionPosition,
+  MixPanelCredential
+} from "../../../analytics/utils/types";
 
 export type TrackCredentialDetail = {
   credential: MixPanelCredential; // MixPanelCredential
   credential_status: string; // ItwPg
   credential_type?: "multiple" | "unique";
+};
+
+export type TrackCredentialAction = Pick<
+  TrackCredentialDetail,
+  "credential" | "credential_status"
+> & {
+  position: ItwCredentialActionPosition;
 };
 
 /**

@@ -26,8 +26,10 @@ const ItwPresentationDetailsFooter = ({
   const startAndTrackSupportRequest = useOfflineToastGuard(
     useItwStartCredentialSupportRequest(credential)
   );
-  const { confirmAndRemoveCredential } =
-    useItwRemoveCredentialWithConfirm(credential);
+  const { confirmAndRemoveCredential } = useItwRemoveCredentialWithConfirm(
+    credential,
+    "screen"
+  );
   const credentialActions = useMemo(
     () => getCredentialActions(credential),
     [credential]

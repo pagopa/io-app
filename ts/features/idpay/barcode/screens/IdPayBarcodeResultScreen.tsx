@@ -6,6 +6,7 @@ import {
   IOColors,
   IOText,
   IOVisualCostants,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -155,6 +156,7 @@ const SuccessContent = ({
   });
 
   const [isBarcodeExpired, setIsBarcodeExpired] = useState(false);
+  const theme = useIOTheme();
 
   useEffect(() => {
     if (isBarcodeExpired) {
@@ -205,6 +207,7 @@ const SuccessContent = ({
         <Barcode format="CODE128" value={trx} />
         <View style={{ alignItems: "center" }}>
           <IOText
+            color={theme["textBody-default"]}
             font="FiraCode"
             size={h3FontSize}
             lineHeight={h3LineHeight}
@@ -264,7 +267,7 @@ const BarcodeExpiredContent = ({
 const LoadingScreen = () => (
   /* TODO: We should use a `LoadingScreenContent` component, to avoid
     duplicates of the loading screen throughout the app */
-  <SafeAreaView style={styles.loadingWrapper}>
+  <SafeAreaView style={styles.loadingWrapper} testID="idpay-bar-code-loading">
     <LoadingIndicator />
     <VSpacer size={24} />
     <H3>{I18n.t("idpay.barCode.resultScreen.loading.body")}</H3>

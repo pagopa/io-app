@@ -1,3 +1,5 @@
+import { fireEvent } from "@testing-library/react-native";
+import { Alert } from "react-native";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../../store/actions/application.ts";
 import { appReducer } from "../../../../../../store/reducers";
@@ -12,8 +14,22 @@ import { ItwCredentialIssuanceMachineContext } from "../../../../machine/credent
 import { ITW_ROUTES } from "../../../../navigation/routes.ts";
 import { ItwPresentationDetailsFooter } from "../ItwPresentationDetailsFooter.tsx";
 import * as remoteConfigSelectors from "../../../../common/store/selectors/remoteConfig.ts";
+import * as credentialSelectors from "../../../../credentials/store/selectors";
+
+const mockTrackItwCredentialDelete = jest.fn();
+
+jest.mock("../../analytics", () => ({
+  ...jest.requireActual("../../analytics"),
+  trackItwCredentialDelete: (credential: unknown, properties: unknown) =>
+    mockTrackItwCredentialDelete(credential, properties)
+}));
 
 describe("ItwPresentationDetailsFooter", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+
   it("should render actions", () => {
     const { queryByTestId } = renderComponent(
       CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
@@ -38,6 +54,25 @@ describe("ItwPresentationDetailsFooter", () => {
     expect(queryByTestId("requestAssistanceActionTestID")).not.toBeNull();
     expect(queryByTestId("removeCredentialActionTestID")).not.toBeNull();
     expect(queryByTestId("openIPatenteActionTestID")).not.toBeNull();
+  });
+
+  it("tracks credential deletion from the detail screen with status and position", () => {
+    jest.spyOn(Alert, "alert").mockImplementation(jest.fn());
+    jest
+      .spyOn(credentialSelectors, "itwCredentialStatusSelector")
+      .mockImplementation(() => ({
+        status: "expired",
+        message: undefined
+      }));
+
+    const { getByTestId } = renderComponent(CredentialType.DRIVING_LICENSE);
+
+    fireEvent.press(getByTestId("removeCredentialActionTestID"));
+
+    expect(mockTrackItwCredentialDelete).toHaveBeenCalledWith("ITW_PG_V2", {
+      credential_status: "expired",
+      position: "screen"
+    });
   });
 });
 
