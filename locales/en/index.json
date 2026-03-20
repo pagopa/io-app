@@ -261,14 +261,7 @@
             "title": "Delete your profile",
             "description": "You can delete your IO profile at any time.",
             "banner": "Your profile will be deleted within 30 days of your request.",
-            "body": {
-              "p1": "If you decide to continue, you will no longer be able to retrieve the messages or preferences you have set in the app.",
-              "p2": {
-                "firstPart": "Any bonuses or discounts you get via the IO app ",
-                "lastPart": "won't be available anymore."
-              },
-              "p3": "You can re-subscribe to the IO App at any time by carrying out a new registration procedure with SPID or CIE."
-            },
+            "body": "If you decide to continue, you will no longer be able to retrieve the messages or preferences you have set in the app.\n\nAny bonuses or discounts you get via the IO app **won't be available anymore.**\n\nYou can re-subscribe to the IO App at any time by carrying out a new registration procedure with SPID or CIE.",
             "cta": "Delete"
           },
           "details": {

@@ -563,118 +563,12 @@ exports[`RemoveAccountInfoScreen should match snapshot 1`] = `
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Se decidi di proseguire non potrai più recuperare i messaggi o le preferenze che hai impostato nell'app.
-                            </Text>
-                            <View
-                              style={
-                                {
-                                  "height": 16,
-                                }
-                              }
-                            />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 24,
-                                    },
-                                  ]
-                                }
-                              >
-                                Eventuali bonus o sconti ottenuti tramite l'app IO 
-                              </Text>
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 24,
-                                    },
-                                  ]
-                                }
-                              >
-                                non saranno più accessibili.
-                              </Text>
-                            </Text>
-                            <View
-                              style={
-                                {
-                                  "height": 16,
-                                }
-                              }
-                            />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
-                              Potrai entrare di nuovo su IO in qualsiasi momento, effettuando una nuova registrazione tramite SPID o CIE.
+
+Eventuali bonus o sconti ottenuti tramite l'app IO **non saranno più accessibili.**
+
+Potrai entrare di nuovo su IO in qualsiasi momento, effettuando una nuova registrazione tramite SPID o CIE.
                             </Text>
                           </View>
                         </View>

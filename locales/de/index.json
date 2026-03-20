@@ -229,14 +229,7 @@
             "title": "Dein Profil löschen",
             "description": "Du kannst jederzeit von deinem Recht Gebrauch machen, dein IO-Profil zu löschen.",
             "banner": "Dein Profil wird innerhalb von 30 Tagen nach deinem Antrag endgültig gelöscht.",
-            "body": {
-              "p1": "Wenn du dich entscheidest fortzufahren, kannst du die Mitteilungen oder Einstellungen, die du in der App festgelegt hast, nicht mehr abrufen.",
-              "p2": {
-                "firstPart": "Alle Boni oder Rabatte, die du über die IO-App erhalten hast, ",
-                "lastPart": "sind nicht mehr verfügbar."
-              },
-              "p3": "Du kannst jederzeit wieder in die IO-App einsteigen, indem du dich über SPID oder CIE erneut anmeldest."
-            },
+            "body": "Wenn du dich entscheidest fortzufahren, kannst du die Mitteilungen oder Einstellungen, die du in der App festgelegt hast, nicht mehr abrufen.\n\nAlle Boni oder Rabatte, die du über die IO-App erhalten hast, **sind nicht mehr verfügbar.**\n\nDu kannst jederzeit wieder in die IO-App einsteigen, indem du dich über SPID oder CIE erneut anmeldest.",
             "cta": "Mit der Löschung fortfahren"
           },
           "details": {
