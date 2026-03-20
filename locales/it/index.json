@@ -347,23 +347,7 @@
           "description": "Ricevi una copia dei dati associati al tuo profilo IO",
           "a11y": "Fatto. Hai richiesto una copia dei tuoi dati.",
           "detail": {
-            "bulletList": {
-              "title": "I dati sono:",
-              "item1": "il tuo codice fiscale;",
-              "item2": "l’indirizzo email da te indicato e, nel caso, la conferma della sua validazione;",
-              "item3": "il testo dei Messaggi che hai ricevuto;",
-              "item4": "le tue preferenze di notifica."
-            },
-            "paragraph1": "Le informazioni saranno scaricate in formato YAML, un formato standard che in informatica consente lo scambio di dati fra applicazioni diverse.",
-            "paragraph2": {
-              "part1": "Riceverai un ",
-              "part2": "messaggio su IO ",
-              "part3": "in cui sono presenti un link e una password validi per 15 giorni."
-            },
-            "paragraph3": {
-              "part1": "Per maggiori informazioni consulta l’",
-              "link": "Informativa privacy di IO."
-            }
+            "body": "**I dati sono:**\n- il tuo codice fiscale;\n- l’indirizzo email da te indicato e, nel caso, la conferma della sua validazione;\n- il testo dei Messaggi che hai ricevuto;\n- le tue preferenze di notifica.\n\nLe informazioni saranno scaricate in formato YAML, un formato standard che in informatica consente lo scambio di dati fra applicazioni diverse.\n\nRiceverai un **messaggio su IO** in cui sono presenti un link e una password validi per 15 giorni.\n\nPer maggiori informazioni consulta l’**[Informativa privacy di IO.](privacy://policy)**"
           },
           "alert": {
             "oldRequest": "Abbiamo già preso in carico una richiesta di esportazione dei dati.",

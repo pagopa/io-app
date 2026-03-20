@@ -255,23 +255,7 @@
           "subtitle": "Du kannst die wichtigsten Daten deines IO-Profils jederzeit herunterladen.",
           "description": "Du erhältst eine Kopie der mit deinem IO-Profil verbundenen Daten",
           "detail": {
-            "bulletList": {
-              "title": "Deine Daten sind:",
-              "item1": "deine Steuernummer;",
-              "item2": "die von dir angegebene E-Mail-Adresse und ggf. eine Bestätigung ihrer Validierung;",
-              "item3": "den Text der Mitteilungen, die du erhalten hast;",
-              "item4": "deine Benachrichtigungseinstellungen."
-            },
-            "paragraph1": "Die Informationen werden im YAML-Format heruntergeladen, einem Standardformat, das in der Datenverarbeitung den Austausch von Daten zwischen verschiedenen Anwendungen ermöglicht.",
-            "paragraph2": {
-              "part1": "Du erhältst eine ",
-              "part2": "Mitteilung in IO ",
-              "part3": "mit einem Link und einem 15 Tage lang gültigen Passwort."
-            },
-            "paragraph3": {
-              "part1": "Weitere Informationen findest du in der",
-              "link": "IO-Datenschutzrichtlinie."
-            }
+            "body": "**Deine Daten sind:**\n- deine Steuernummer;\n- die von dir angegebene E-Mail-Adresse und ggf. eine Bestätigung ihrer Validierung;\n- den Text der Mitteilungen, die du erhalten hast;\n- deine Benachrichtigungseinstellungen.\n\nDie Informationen werden im YAML-Format heruntergeladen, einem Standardformat, das in der Datenverarbeitung den Austausch von Daten zwischen verschiedenen Anwendungen ermöglicht.\n\nDu erhältst eine **Mitteilung in IO** mit einem Link und einem 15 Tage lang gültigen Passwort.\n\nWeitere Informationen findest du in der **[IO-Datenschutzrichtlinie.](privacy://policy)**"
           },
           "alert": {
             "oldRequest": "Wir bearbeiten bereits eine Anfrage zum Datenexport",

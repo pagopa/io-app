@@ -288,23 +288,7 @@
           "description": "Receive a copy of the data associated with your IO profile",
           "a11y": "Done. You asked for a copy of your data.",
           "detail": {
-            "bulletList": {
-              "title": "Your data are:",
-              "item1": "your tax code;",
-              "item2": "your email address and, if applicable, confirmation of its validation;",
-              "item3": "the text of the Messages you received;",
-              "item4": "your notification preferences."
-            },
-            "paragraph1": "The information will be downloaded in YAML format, a standard format for exchanging data between different applications.",
-            "paragraph2": {
-              "part1": "You will get ",
-              "part2": "a message on IO ",
-              "part3": "with a link and password that lasts 15 days."
-            },
-            "paragraph3": {
-              "part1": "For more information see the.",
-              "link": "IO Privacy Policy."
-            }
+            "body": "**Your data are:**\n- your tax code;\n- your email address and, if applicable, confirmation of its validation;\n- the text of the Messages you received;\n- your notification preferences.\n\nThe information will be downloaded in YAML format, a standard format for exchanging data between different applications.\n\nYou will get **a message on IO** with a link and password that lasts 15 days.\n\nFor more information see the **[IO Privacy Policy.](privacy://policy)**"
           },
           "alert": {
             "oldRequest": "We are already proceeding to export all your data",

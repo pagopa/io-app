@@ -137,6 +137,7 @@ jest.mock("@pagopa/io-app-design-system", () => {
   const { Text } = require("react-native");
   return {
     ...actual,
+    IOMarkdown: ({ content }) => React.createElement(Text, null, content),
     IOMarkdownLite: ({ content }) => React.createElement(Text, null, content)
   };
 });
