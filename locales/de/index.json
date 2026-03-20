@@ -819,10 +819,7 @@
       },
       "policy": {
         "title": "Wie wähle ich den Code aus?",
-        "description": "Der Entsperrcode besteht aus 6 Ziffern und du benötigst ihn, um auf IO zuzugreifen und bestimmte Vorgänge in der App zu autorisieren.",
-        "bulletListTitle": "Wähle einen Code, der schwer zu erraten ist und nicht folgenden Inhalt hat:",
-        "firstItem": "eine sich wiederholende Zahl (z.B. 000000)",
-        "secondItem": "eine Liste von geordneten Zahlen (z.B. 123456 oder 654321)"
+        "body": "Der Entsperrcode besteht aus 6 Ziffern und du benötigst ihn, um auf IO zuzugreifen und bestimmte Vorgänge in der App zu autorisieren.\n\nWähle einen Code, der schwer zu erraten ist und nicht folgenden Inhalt hat:\n- eine sich wiederholende Zahl (z.B. 000000)\n- eine Liste von geordneten Zahlen (z.B. 123456 oder 654321)"
       },
       "success": {
         "message": "Du hast den Code geändert!"

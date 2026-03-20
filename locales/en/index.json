@@ -952,10 +952,7 @@
       },
       "policy": {
         "title": "How to choose the code?",
-        "description": "It's a six-digit code you'll use to login and authorize some in-app operations.",
-        "bulletListTitle": "Choose a code that's hard to guess and doesn't contain::",
-        "firstItem": "a single repeated number (e.g. 000000)",
-        "secondItem": "a list of ordered numbers (e.g. 123456 or 654321)"
+        "body": "It's a six-digit code you'll use to login and authorize some in-app operations.\n\nChoose a code that's hard to guess and doesn't contain:\n- a single repeated number (e.g. 000000)\n- a list of ordered numbers (e.g. 123456 or 654321)"
       },
       "success": {
         "message": "Done!"
