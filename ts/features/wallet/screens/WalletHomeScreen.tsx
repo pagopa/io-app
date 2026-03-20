@@ -1,7 +1,7 @@
 import { IOToast } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { IOScrollView } from "../../../components/ui/IOScrollView";
 import { useHeaderFirstLevel } from "../../../hooks/useHeaderFirstLevel";
@@ -22,7 +22,10 @@ import {
 import { itwMixPanelCredentialDetailsSelector } from "../../itwallet/analytics/store/selectors/index.ts";
 import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
 import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences.ts";
-import { itwIsL3EnabledSelector } from "../../itwallet/common/store/selectors/preferences.ts";
+import {
+  itwIsActivationDisabledSelector,
+  itwIsL3EnabledSelector
+} from "../../itwallet/common/store/selectors/preferences.ts";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
@@ -50,6 +53,9 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     itwMixPanelCredentialDetailsSelector
   );
   const isItWalletEnabled = useIOSelector(itwIsL3EnabledSelector);
+  const isItWalletActivationDisabled = useIOSelector(
+    itwIsActivationDisabledSelector
+  );
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
   const isRequiredEidFeedback = useRef(
@@ -67,6 +73,18 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   // For example, the payments section
   const [isRefreshing, setIsRefreshing] = useState(false);
 
+  const onboardingScreen = useMemo(() => {
+    if (!isItWalletEnabled) {
+      return ITW_ROUTES.ONBOARDING;
+    }
+
+    if (isItWalletActivationDisabled) {
+      return ITW_ROUTES.L2_ONBOARDING;
+    }
+
+    return ITW_ROUTES.L3_ONBOARDING;
+  }, [isItWalletEnabled, isItWalletActivationDisabled]);
+
   useEffect(() => {
     // Mutate the local state only when the refresh ends
     if (!isRefreshingContent) {
@@ -76,12 +94,11 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
 
   const handleAddToWalletButtonPress = useCallback(() => {
     trackWalletAdd();
+
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: isItWalletEnabled
-        ? ITW_ROUTES.L3_ONBOARDING
-        : ITW_ROUTES.ONBOARDING
+      screen: onboardingScreen
     });
-  }, [navigation, isItWalletEnabled]);
+  }, [navigation, onboardingScreen]);
 
   useHeaderFirstLevel({
     currentRoute: ROUTES.WALLET_HOME,

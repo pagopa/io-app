@@ -15,12 +15,14 @@ import {
   ItwEidInfoBottomSheetTitle
 } from "../../common/components/ItwEidInfoBottomSheetContent";
 import { ItwEidLifecycleAlert } from "../../common/components/ItwEidLifecycleAlert";
+import { ItwL2EngagementBanner } from "../../common/components/ItwL2EngagementBanner.tsx";
 import { ItwWalletReadyBanner } from "../../common/components/ItwWalletReadyBanner";
 import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingReviewRequest";
 import { useItwStatusIconColor } from "../../common/hooks/useItwStatusIconColor.ts";
 import {
   itwShouldHideEidLifecycleAlert,
   itwShouldRenderNewItWalletSelector,
+  itwShouldRenderL2EngagementBannerSelector,
   itwShouldRenderUpgradeBannerSelector
 } from "../../common/store/selectors";
 import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils.ts";
@@ -44,6 +46,9 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const shouldHideEidAlert = useIOSelector(itwShouldHideEidLifecycleAlert);
   const shouldRenderUpgradeBanner = useIOSelector(
     itwShouldRenderUpgradeBannerSelector
+  );
+  const shouldRenderL2EngagementBanner = useIOSelector(
+    itwShouldRenderL2EngagementBannerSelector
   );
 
   const cards = useIOSelector(state =>
@@ -137,6 +142,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         topElement={
           <VStack space={16}>
             {shouldRenderUpgradeBanner && <ItwDiscoveryBanner flow="wallet" />}
+            {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
             <ItwWalletReadyBanner />
             {!shouldHideEidAlert && (
               <ItwEidLifecycleAlert
