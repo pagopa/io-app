@@ -1467,19 +1467,12 @@
       }
     },
     "banner": {
-      "content1": "Das ist eine",
-      "content2": "dynamische Mitteilung:",
-      "content3": "der Inhalt kann sich im Laufe der Zeit ändern, damit du aktuelle Informationen erhältst.",
+      "content": "Das ist eine dynamische Mitteilung: der Inhalt kann sich im Laufe der Zeit ändern, damit du aktuelle Informationen erhältst.",
       "action": "Mehr erfahren"
     },
     "bottomSheet": {
       "title": "Was ist eine dynamische Mitteilung?",
-      "body": "Die versendende Körperschaft kann den Inhalt dieser Nachricht auch nach dem Versand aktualisieren, um sicherzustellen, dass die Informationen stets korrekt und relevant sind.\n\n Dies geschieht in bestimmten Fällen, wie z. B. bei der Aktualisierung veralteter Informationen oder nicht mehr gültiger Anhänge.\n\n Wenn die Körperschaft dich über neue Informationen oder wichtige Aktualisierungen informieren muss, wird sie dies mittels einer neuen Mitteilung tun.",
-      "bodyPt1": "Es handelt sich um eine Mitteilung, die die Körperschaft ",
-      "bodyPt2": "nach dem Senden ändern kann",
-      "bodyPt3": ". Auf diese Weise sind die darin enthaltenen Informationen immer korrekt.\nEine Körperschaft kann die Informationen in einer dynamischen Mitteilung ",
-      "bodyPt4": "nur in bestimmten Fällen",
-      "bodyPt5": " ändern, zum Beispiel um alte Informationen zu ändern oder eine nicht mehr gültige Anlage zu aktualisieren.\nWenn sie dir neue Informationen oder wichtige Aktualisierungen mitteilen muss, schickt sie dir eine neue Mitteilung."
+      "body": "Es handelt sich um eine Mitteilung, die die Körperschaft **nach dem Senden ändern kann**. Auf diese Weise sind die darin enthaltenen Informationen immer korrekt.\n\nEine Körperschaft kann die Informationen in einer dynamischen Mitteilung **nur in bestimmten Fällen** ändern, zum Beispiel um alte Informationen zu ändern oder eine nicht mehr gültige Anlage zu aktualisieren.\n\nWenn sie dir neue Informationen oder wichtige Aktualisierungen mitteilen muss, schickt sie dir eine neue Mitteilung."
     },
     "footer": {
       "contacts": "Absender kontaktieren",
