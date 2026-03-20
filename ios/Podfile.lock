@@ -76,11 +76,11 @@ PODS:
   - jail-monkey (2.8.3):
     - React-Core
   - JOSESwift (3.0.0)
-  - Mixpanel-swift (4.2.0):
-    - Mixpanel-swift/Complete (= 4.2.0)
-  - Mixpanel-swift/Complete (4.2.0)
-  - MixpanelReactNative (2.4.1):
-    - Mixpanel-swift (= 4.2.0)
+  - Mixpanel-swift (5.2.0):
+    - Mixpanel-swift/Complete (= 5.2.0)
+  - Mixpanel-swift/Complete (5.2.0)
+  - MixpanelReactNative (3.3.0):
+    - Mixpanel-swift (= 5.2.0)
     - React-Core
   - OpenSSL-Universal (3.3.3001)
   - pagopa-io-react-native-cieid (0.4.0):
@@ -3215,7 +3215,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - RNCPushNotificationIOS (1.8.0):
+  - RNCPushNotificationIOS (1.12.0):
     - React-Core
   - RNDeviceInfo (14.0.4):
     - React-Core
@@ -3305,8 +3305,34 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - RNQrGenerator (1.4.0):
-    - React
+  - RNQrGenerator (2.0.0):
+    - boost
+    - DoubleConversion
+    - fast_float
+    - fmt
+    - glog
+    - hermes-engine
+    - RCT-Folly
+    - RCT-Folly/Fabric
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - SocketRocket
+    - Yoga
     - ZXingObjC
   - RNReactNativeHapticFeedback (2.3.3):
     - boost
@@ -4199,8 +4225,8 @@ SPEC CHECKSUMS:
   IOWalletProximity: 1836d6b5df0a64a97e09f355d15d5155f086f830
   jail-monkey: 9298d04aa09f8c9cdcf04e7bf597ea423b52b5bf
   JOSESwift: 7784b1b844194d0f534eb6ac4fba5af683bccc79
-  Mixpanel-swift: e5dd85295923e6a875acf17ccbab8d2ecb10ea65
-  MixpanelReactNative: 37259ace491ca9d927c0f81498e6577a32a69f43
+  Mixpanel-swift: de454db5987bf6f601106520a44663fc556e8cfa
+  MixpanelReactNative: 1f0d8718b2be7174f719ed5db8e8f75d7975dea4
   OpenSSL-Universal: 6082b0bf950e5636fe0d78def171184e2b3899c2
   pagopa-io-react-native-cieid: ff8a232612c44f72846202a4b857a4e16ff9db4d
   pagopa-io-react-native-crypto: eb62bb6767b44ea610ce169d855c89604b9e96d9
@@ -4305,13 +4331,13 @@ SPEC CHECKSUMS:
   RNCalendarEvents: f90f73666b6bcbb3cc8a491ffbb5e48c0db3de37
   RNCAsyncStorage: a38d050067936ce8617a322dd4c63fce66429e5e
   RNCClipboard: 4b58c780f63676367640f23c8e114e9bd0cf86ac
-  RNCPushNotificationIOS: 9f3ee8e3b19b6d1941990d0e6306e89fc7610c83
+  RNCPushNotificationIOS: 85957a0534fd1309b4c028ccbe5b1baf9ab5cf57
   RNDeviceInfo: d863506092aef7e7af3a1c350c913d867d795047
   RNFS: 4f02bbb5c95d71bade3d36a1b6514305ccefc4c9
   RNGestureHandler: 73726300d4c5ca4d80378cae85f9dad8908b3289
   RNKeychain: a2c134ab796272c3d605e035ab727591000b30f3
   RNPermissions: 17e12d62da7494e48c47ccb800a6214d036cfc19
-  RNQrGenerator: 60eab4f7c9e3f09db78029636fe356dca5cb585f
+  RNQrGenerator: 3318e98283e861e9d93e58111fc4de8e03e2ddb3
   RNReactNativeHapticFeedback: be4f1b4bf0398c30b59b76ed92ecb0a2ff3a69c6
   RNReanimated: 18324d3313d6477e1d12836c20c3ee30afb5de30
   RNScreens: 0bbf16c074ae6bb1058a7bf2d1ae017f4306797c

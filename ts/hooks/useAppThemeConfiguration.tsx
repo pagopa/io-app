@@ -15,13 +15,20 @@ export const useAppThemeConfiguration = () => {
     AsyncStorage.getItem(THEME_PERSISTENCE_KEY)
       .then(value => {
         if (value === null || value === "auto") {
-          Appearance.setColorScheme("unspecified");
+          // there's an issue on new react-native color scheme handling
+          // see https://github.com/facebook/react-native/issues/54959
+          // TODO: remove this timeout once the issue is fixed
+          const timeoutId = setTimeout(() => {
+            Appearance.setColorScheme("unspecified");
+          }, 50);
           setTheme(systemColorScheme);
-          return;
+          return () => clearTimeout(timeoutId);
         }
         const colorScheme = value as ColorSchemeName;
         Appearance.setColorScheme(colorScheme);
         setTheme(colorScheme);
+        // eslint-disable-next-line sonarjs/no-redundant-jump
+        return;
       })
       .catch(() => {
         Appearance.setColorScheme("light");
@@ -30,6 +37,6 @@ export const useAppThemeConfiguration = () => {
   }, [setTheme, systemColorScheme]);
 
   useEffect(() => {
-    updateNavigationBarColor(themeType);
+    updateNavigationBarColor(themeType === "unspecified" ? "auto" : themeType);
   }, [themeType]);
 };
