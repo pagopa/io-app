@@ -5458,13 +5458,10 @@
       "subtitle": "IO condividerà con ",
       "subtitle2": " i dati necessari alla tua autenticazione su ",
       "requiredData": "Dati richiesti",
-      "privacy1": "Per maggiori informazioni, leggi ",
-      "privacyCta": "l’Informativa sulla Privacy ",
+      "privacy": "Per maggiori informazioni, leggi **[l’Informativa sulla Privacy]({{privacyUrl}})**",
       "bottomSheet": {
         "title": "Servizi di terze parti tramite IO: come funziona",
-        "body": "Per consentirti di accedere a un servizio esterno senza autenticarti ogni volta, l'app IO condivide alcuni tuoi dati con l'ente che lo eroga.",
-        "body2": "I tuoi dati sono al sicuro e saranno trattati solo per le finalità indicate dall’ente e consultabili nell’",
-        "bodyPrivacy": "Informativa sulla Privacy."
+        "body": "Per consentirti di accedere a un servizio esterno senza autenticarti ogni volta, l’app IO condivide alcuni tuoi dati con l’ente che lo eroga.\n\nI tuoi dati sono al sicuro e saranno trattati solo per le finalità indicate dall’ente e consultabili nell’**[Informativa sulla Privacy.]({{privacyUrl}})**"
       }
     }
   },

@@ -2818,13 +2818,10 @@
       "subtitle": "IO wird die erforderlichen Daten an ",
       "subtitle2": " weitergeben für deine Authentifizierung bei ",
       "requiredData": "Erforderliche Daten",
-      "privacy1": "Für weitere Informationen lies bitte die ",
-      "privacyCta": "Datenschutzrichtlinie  ",
+      "privacy": "Für weitere Informationen lies bitte die **[Datenschutzrichtlinie]({{privacyUrl}})**",
       "bottomSheet": {
         "title": "Dienste von Drittanbietern über IO: So funktioniert es",
-        "body": "Damit du auf einen externen Dienst zugreifen kannst, ohne dich jedes Mal zu authentifizieren, gibt die IO-App einige deiner Daten an den Anbieter weiter.",
-        "body2": "Deine Daten sind sicher und werden nur zu den Zwecken verarbeitet, die von der Körperschaft angegeben sind.",
-        "bodyPrivacy": "Datenschutzrichtlinie"
+        "body": "Damit du auf einen externen Dienst zugreifen kannst, ohne dich jedes Mal zu authentifizieren, gibt die IO-App einige deiner Daten an den Anbieter weiter.\n\nDeine Daten sind sicher und werden nur zu den Zwecken verarbeitet, die von der Körperschaft angegeben sind. **[Datenschutzrichtlinie]({{privacyUrl}})**"
       }
     }
   },
