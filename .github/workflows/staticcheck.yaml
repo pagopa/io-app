@@ -3,6 +3,32 @@ on:
   - merge_group
   - workflow_call
 jobs:
+  configure:
+    runs-on: ubuntu-latest
+    outputs:
+      shard_matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        with:
+          fetch-depth: 0
+      - id: set-matrix
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            # Count file changed in the PR to determine the number of shards needed
+            FILES_CHANGED=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | wc -l)
+            
+            # Logic: 1 shard per 20 files changed
+            # (e.g., >= 200 files = 10 shards)
+            SHARDS=$(( (FILES_CHANGED / 20) + 1 ))
+            [ "$SHARDS" -gt 10 ] && SHARDS=10
+          else
+            # Default for merge_group or master
+            SHARDS=10
+          fi
+          
+          JSON=$(node -e "console.log(JSON.stringify(Array.from({length: $SHARDS}, (_, i) => i + 1)))")
+          echo "matrix={\"shard\":$JSON}" >> $GITHUB_OUTPUT
   static-checks:
     runs-on: ubuntu-latest
     concurrency:
@@ -11,6 +37,8 @@ jobs:
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        with:
+          fetch-depth: 0
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: run-tsc
@@ -22,13 +50,15 @@ jobs:
   unit-test:
     runs-on: ubuntu-latest
     environment: dev
-    needs: static-checks
+    needs: [static-checks, configure]
     strategy:
-      matrix:
-        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.configure.outputs.shard_matrix) }}
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        with:
+          fetch-depth: 0
       - id: setup-node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
@@ -49,7 +79,35 @@ jobs:
           name: api-client
           path: definitions/
       - id: run-test
-        run: yarn test:ci --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "Checking if lockfile or critical files changed..."
+
+            CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD)
+
+            echo "$CHANGED_FILES"
+
+            if echo "$CHANGED_FILES" | grep -E 'yarn.lock|package.json' > /dev/null; then
+              echo "Dependency change detected → running FULL test suite"
+
+              yarn test:ci \
+                --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+
+            else
+              echo "No dependency changes → running RELATED tests only"
+
+              yarn test:ci \
+                --changedSince=origin/${{ github.base_ref }} \
+                --shard=${{ matrix.shard }}/${{ strategy.job-total }} \
+                --passWithNoTests
+            fi
+          else
+            echo "Non-PR event → running FULL test suite"
+
+            yarn test:ci \
+              --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+          fi
       - id: codecov-script        
         uses: codecov/codecov-action@84508663e988701840491b86de86b666e8a86bed # v4.3.0
         with:
