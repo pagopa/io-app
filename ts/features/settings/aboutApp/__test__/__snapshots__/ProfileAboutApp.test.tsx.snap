@@ -356,67 +356,8 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "left",
-                                  },
-                                ]
-                              }
-                            >
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 24,
-                                    },
-                                  ]
-                                }
-                              >
-                                IO, l’app dei servizi pubblici, 
-                              </Text>
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 24,
-                                    },
-                                  ]
-                                }
-                              >
-                                ti offre un unico canale per interagire facilmente con gli Enti, locali e nazionali (Comuni, Regioni, agenzie centrali), direttamente dal tuo dispositivo. Grazie a IO, sono le singole amministrazioni a contattarti in modo puntuale e personalizzato, consentendoti di gestire operazioni legate a uno specifico servizio - come avvisi, pagamenti, scadenze e notifiche - in tutta semplicità e sicurezza.
-                              </Text>
+                            <Text>
+                              **IO, l’app dei servizi pubblici**, ti offre un unico canale per interagire facilmente con gli Enti, locali e nazionali (Comuni, Regioni, agenzie centrali), direttamente dal tuo dispositivo. Grazie a IO, sono le singole amministrazioni a contattarti in modo puntuale e personalizzato, consentendoti di gestire operazioni legate a uno specifico servizio - come avvisi, pagamenti, scadenze e notifiche - in tutta semplicità e sicurezza.
                             </Text>
                             <View
                               style={
