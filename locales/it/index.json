@@ -2369,28 +2369,10 @@
       "aar": {
         "serviceActivation": {
           "failure": "Non riusciamo ad attivare il servizio SEND",
-          "feature1": {
-            "part1": "Attiva SEND su IO e ricevi in app le ",
-            "part2": "comunicazioni a valore legale",
-            "part3": " che ti inviano gli enti"
-          },
-          "feature2": {
-            "part1": "Se leggi la comunicazione online in tempo, ",
-            "part2": "eviti la raccomandata e risparmi"
-          },
-          "feature3": {
-            "part1": "Puoi pagare direttamente in app: è ",
-            "part2": "facile e veloce"
-          },
-          "footer": {
-            "part1": "Premendo ",
-            "part2": "Attiva SEND su IO",
-            "part3": " dichiari di aver letto e compreso l’",
-            "part4": "Informativa Privacy",
-            "part5": " e i ",
-            "part6": "Termini e Condizioni d’uso",
-            "part7": "."
-          },
+          "feature1": "Attiva SEND su IO e ricevi in app le **comunicazioni a valore legale** che ti inviano gli enti",
+          "feature2": "Se leggi la comunicazione online in tempo, **eviti la raccomandata e risparmi**",
+          "feature3": "Puoi pagare direttamente in app: è **facile e veloce**",
+          "footer": "Premendo **Attiva SEND su IO** dichiari di aver letto e compreso l’**[Informativa Privacy]({{privacyUrl}})** e i **[Termini e Condizioni d’uso]({{tosUrl}})**.",
           "headerAction": "Chiudi",
           "primaryAction": "Attiva SEND su IO",
           "serviceActivated": "Hai attivato SEND su IO",
