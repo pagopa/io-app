@@ -5,7 +5,8 @@ import { isPnTestEnabledSelector } from "../../../../../store/reducers/persisted
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import {
   aarProblemJsonAnalyticsReport,
-  trackSendAARFailure
+  trackSendAARFailure,
+  trackSendAarMandateRetryError
 } from "../../analytics";
 import { setAarFlowState } from "../../store/actions";
 import { sendAARFlowStates } from "../../utils/stateUtils";
@@ -14,13 +15,23 @@ import {
   sendAarMockStates
 } from "../../utils/testUtils";
 import { createAarMandateSaga } from "../createAarMandateSaga";
+import {
+  getAarErrorBehaviour,
+  testable as errorMappingsTestable
+} from "../../utils/aarErrorMappings";
 
 const sessionToken = "mock-session-token";
 const createAarMandateMock = jest.fn();
 const currentState = sendAarMockStateFactory.creatingMandate();
 const mockAction = setAarFlowState(currentState);
+const { specificBehavioursByStatus, aarGenericBehaviour } =
+  errorMappingsTestable!;
 
 describe("createAarMandateSaga", () => {
+  beforeEach(() => {
+    jest.restoreAllMocks();
+  });
+
   sendAarMockStates
     .filter(state => state.type !== sendAARFlowStates.creatingMandate)
     .forEach(state => {
@@ -198,6 +209,10 @@ describe("createAarMandateSaga", () => {
         .next(mandateResponse)
         .call(trackSendAARFailure, "Create Mandate", errorReason, responseValue)
         .next()
+        .call(getAarErrorBehaviour, responseValue)
+        .next(aarGenericBehaviour)
+        .call(aarGenericBehaviour.track, errorReason)
+        .next()
         .put(
           setAarFlowState({
             type: sendAARFlowStates.ko,
@@ -212,5 +227,54 @@ describe("createAarMandateSaga", () => {
         .next()
         .isDone();
     });
+  });
+
+  it("should handle and track a 409 response for a TTL error", () => {
+    const errorCode = "PN_MANDATE_ALREADYEXISTS";
+    const responseValue = {
+      status: 409 as 599,
+      detail: "detail",
+      errors: [{ code: errorCode }]
+    };
+    const mandateResponse = E.right({
+      status: 500,
+      value: responseValue
+    });
+
+    const errorReason = `HTTP request failed (${aarProblemJsonAnalyticsReport(
+      500,
+      responseValue
+    )})`;
+
+    testSaga(
+      createAarMandateSaga,
+      createAarMandateMock,
+      sessionToken,
+      mockAction
+    )
+      .next()
+      .select(isPnTestEnabledSelector)
+      .next(true)
+      .call(withRefreshApiCall, createAarMandateMock(), mockAction)
+      .next(mandateResponse)
+      .call(trackSendAARFailure, "Create Mandate", errorReason, responseValue)
+      .next()
+      .call(getAarErrorBehaviour, responseValue)
+      .next(specificBehavioursByStatus[409][errorCode])
+      .call(trackSendAarMandateRetryError, errorReason)
+      .next()
+      .put(
+        setAarFlowState({
+          type: sendAARFlowStates.ko,
+          previousState: currentState,
+          error: responseValue,
+          debugData: {
+            phase: "Create Mandate",
+            reason: errorReason
+          }
+        })
+      )
+      .next()
+      .isDone();
   });
 });
