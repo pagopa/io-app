@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.27.0-rc.2](https://github.com/pagopa/io-app/compare/3.27.0-rc.1...3.27.0-rc.2) (2026-03-20)
+
+
+### Features
+
+* [[IOPLT-1572](https://pagopa.atlassian.net/browse/IOPLT-1572)] Adds expo-modules support and install expo-screen-capture ([#7840](https://github.com/pagopa/io-app/issues/7840)) ([ac74742](https://github.com/pagopa/io-app/commit/ac74742afdda720d913fda3f1519984adc0dcd2b))
+
+
+### Chores
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Update session manager version ([#7947](https://github.com/pagopa/io-app/issues/7947)) ([865e16c](https://github.com/pagopa/io-app/commit/865e16c69ce1edfc14585b5e26940eaf2e616fd1))
+
 ## [3.27.0-rc.1](https://github.com/pagopa/io-app/compare/3.27.0-rc.0...3.27.0-rc.1) (2026-03-18)
 
 
