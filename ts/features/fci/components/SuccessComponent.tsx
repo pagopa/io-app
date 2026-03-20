@@ -1,9 +1,17 @@
 import I18n from "i18next";
+import { useEffect, useMemo } from "react";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { fciEndRequest, fciStartRequest } from "../store/actions";
 import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
-import { trackFciDocOpening } from "../analytics";
+import {
+  trackFciDocAlreadySigned,
+  trackFciDocOpening,
+  trackFciDocSignatureInProgress,
+  trackFciSignatureCancelled,
+  trackFciSignatureExpired,
+  trackFciSignatureRejected
+} from "../analytics";
 import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignatureRequest";
 import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 import SignatureStatusComponent from "./SignatureStatusComponent";
@@ -14,21 +22,75 @@ import SignatureStatusComponent from "./SignatureStatusComponent";
 const SuccessComponent = (props: {
   signatureRequest: SignatureRequestDetailView;
 }) => {
-  const now = new Date();
-  const expires_at = new Date(props.signatureRequest.expires_at);
   const issuer_email = props.signatureRequest.issuer.email;
   const status = props.signatureRequest.status;
   const fciDocuments = useIOSelector(fciSignatureDetailDocumentsSelector);
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const dispatch = useIODispatch();
 
+  const now = new Date();
+  const expires_at = useMemo(
+    () => new Date(props.signatureRequest.expires_at),
+    [props.signatureRequest.expires_at]
+  );
   // if the user (signer) has not signed and the request is expired
   // the user can no longer sign anymore
-  if (
+  const isExpiredDocument =
     (status === SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE ||
       status === SignatureRequestStatusEnum.REJECTED) &&
-    expires_at < now
-  ) {
+    expires_at < now;
+
+  useEffect(() => {
+    const nowEffect = new Date();
+    const expires_at_effect = new Date(props.signatureRequest.expires_at);
+
+    const isExpiredDocumentEffect =
+      (status === SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE ||
+        status === SignatureRequestStatusEnum.REJECTED) &&
+      expires_at_effect < nowEffect;
+
+    if (isExpiredDocumentEffect) {
+      trackFciSignatureExpired();
+      return;
+    }
+
+    switch (status) {
+      case SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE:
+        trackFciDocOpening(
+          expires_at_effect,
+          fciDocuments.length,
+          fciEnvironment
+        );
+        dispatch(fciStartRequest());
+        break;
+      case SignatureRequestStatusEnum.WAIT_FOR_QTSP:
+        trackFciDocSignatureInProgress();
+        break;
+      case SignatureRequestStatusEnum.SIGNED:
+        trackFciDocAlreadySigned();
+        break;
+      case SignatureRequestStatusEnum.REJECTED:
+        trackFciSignatureRejected();
+        break;
+      case SignatureRequestStatusEnum.CANCELLED:
+        trackFciSignatureCancelled();
+        break;
+      default:
+        break;
+    }
+  }, [
+    dispatch,
+    expires_at,
+    fciDocuments.length,
+    fciEnvironment,
+    isExpiredDocument,
+    props.signatureRequest.expires_at,
+    status
+  ]);
+
+  // if the user (signer) has not signed and the request is expired
+  // the user can no longer sign anymore
+  if (isExpiredDocument) {
     return (
       <SignatureStatusComponent
         title={I18n.t("features.fci.errors.expired.title")}
@@ -44,8 +106,6 @@ const SuccessComponent = (props: {
   // the signature request could have various status
   switch (status) {
     case SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE:
-      trackFciDocOpening(expires_at, fciDocuments.length, fciEnvironment);
-      dispatch(fciStartRequest());
       return null;
     case SignatureRequestStatusEnum.WAIT_FOR_QTSP:
       return (
@@ -90,6 +150,12 @@ const SuccessComponent = (props: {
         />
       );
     default:
+      /* This case should not occur because all cases mapped
+      by openapi are handled. If the status we receive
+      from the BE is not mapped in the specifications,
+      we receive an error handled by the error branch in
+      the ts/features/fci/screens/FciRouterScreen.tsx file,
+      so this default is never triggered. */
       return (
         <SignatureStatusComponent
           title={I18n.t("features.fci.errors.generic.default.title")}

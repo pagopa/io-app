@@ -25,6 +25,7 @@ import SuccessComponent from "../components/SuccessComponent";
 import { FciParamsList } from "../navigation/params";
 import { fciEndRequest, fciSignatureRequestFromId } from "../store/actions";
 import { fciSignatureRequestSelector } from "../store/reducers/fciSignatureRequest";
+import { trackFciSignatureDetailFailureAction } from "../analytics";
 
 export type FciRouterScreenNavigationParams = Readonly<{
   signatureRequestId: SignatureRequestDetailView["id"];
@@ -63,9 +64,9 @@ const FciSignatureScreen = (
     <LoadingComponent testID={"FciRouterLoadingScreenTestID"} />
   );
 
-  const GenericError = (status?: ProblemJson["status"]) => {
-    // if the status is 404, the user is not the owner of the signature request
-    if (status === 404) {
+  const GenericError = (problemJson?: ProblemJson) => {
+    const errorReason = problemJson ? problemJson.toString() : "unknown_error";
+    if (problemJson?.status === 404) {
       return (
         <ErrorComponent
           title={I18n.t("features.fci.errors.generic.wrongUser.title")}
@@ -76,14 +77,27 @@ const FciSignatureScreen = (
         />
       );
     }
-
     return (
       <SignatureStatusComponent
         title={I18n.t("features.fci.errors.generic.default.title")}
         subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
-        onPress={() => dispatch(fciEndRequest())}
+        onPress={() => {
+          trackFciSignatureDetailFailureAction(
+            errorReason,
+            "custom_1",
+            I18n.t("features.fci.errors.buttons.close")
+          );
+          dispatch(fciEndRequest());
+        }}
         pictogram={"umbrella"}
         testID="GenericErrorComponentTestID"
+        onPressAssistance={() => {
+          trackFciSignatureDetailFailureAction(
+            errorReason,
+            "custom_2",
+            I18n.t("features.fci.errors.buttons.assistance")
+          );
+        }}
       />
     );
   };
@@ -94,13 +108,13 @@ const FciSignatureScreen = (
       error,
       O.fromNullable,
       O.map(e => getErrorFromNetworkError(e)),
-      O.map(error => getGenericError(error)),
-      O.chain(error => pipe(error.value.message, J.parse, O.fromEither)),
+      O.map(err => getGenericError(err)),
+      O.chain(err => pipe(err.value.message, J.parse, O.fromEither)),
       O.map(ProblemJson.decode),
       O.map(
         E.fold(
           () => GenericError(),
-          problemJson => GenericError(problemJson.status)
+          problemJson => GenericError(problemJson)
         )
       ),
       O.getOrElse(() => GenericError())
