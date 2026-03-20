@@ -745,19 +745,12 @@
     },
     "unlockmodal": {
       "title": "Was bedeutet das?",
-      "description1_1": "Wenn du den Zugang zu IO aus Sicherheitsgründen gesperrt hast, musst du ihn zunächst entsperren, um die App wieder öffnen zu können.",
-      "description1_2": "Alternativ kannst du die App auch über ein Login mit der",
-      "description1_3": "höchsten Sicherheitsstufe öffnen.",
-      "description1_4": "Diese Art der Authentifizierung erfordert einen Benutzernamen, ein Passwort und ein physisches Medium, wie z.B. eine CIE.",
+      "description": "Wenn du den Zugang zu IO aus Sicherheitsgründen gesperrt hast, musst du ihn zunächst entsperren, um die App wieder öffnen zu können.\nAlternativ kannst du die App auch über ein Login mit der **höchsten Sicherheitsstufe öffnen.** Diese Art der Authentifizierung erfordert einen Benutzernamen, ein Passwort und ein physisches Medium, wie z.B. eine CIE.",
       "title2": "Möchtest du den Zugang zu IO entsperren?",
       "listitem1": "Stell sicher, dass du deine digitale Identität abgesichert hast, indem du deine Anmeldedaten bei deinem Identitätsanbieter änderst.",
       "listitem2_1": "Greif über das Internet auf IO zu, indem du deine SPID-Anmeldedaten oder deine CIE verwendest.",
       "listitem2_2": "Geh zur Website",
-      "listitem3_1": "Geh zum Abschnitt",
-      "listitem3_2": "IO-Zugang entsperren",
-      "listitem3_3": "und folge den angegebenen Schritten. Wenn du dazu aufgefordert wirst, gib den",
-      "listitem3_4": "Wiederherstellungscode",
-      "listitem3_5": "ein, um den Vorgang zu bestätigen."
+      "listitem3": "Geh zum Abschnitt *IO-Zugang entsperren* und folge den angegebenen Schritten. Wenn du dazu aufgefordert wirst, gib den **Wiederherstellungscode** ein, um den Vorgang zu bestätigen."
     }
   },
   "email": {

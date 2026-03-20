@@ -874,19 +874,12 @@
     },
     "unlockmodal": {
       "title": "What does it mean?",
-      "description1_1": "If you have blocked access to IO for security reasons, you must first unlock it in order to re-enter the app.",
-      "description1_2": "Otherwise, you can access it in the app by logging in with the",
-      "description1_3": "maximum level of safety.",
-      "description1_4": "This type of authentication requires a username, password, and physical device, such as CIE.",
+      "description": "If you have blocked access to IO for security reasons, you must first unlock it in order to re-enter the app.\nOtherwise, you can access it in the app by logging in with the **maximum level of safety.** This type of authentication requires a username, password, and physical device, such as CIE.",
       "title2": "Do you want to unlock access to IO?",
       "listitem1": "Make sure you have secured your digital identity by changing your login credentials with your Identity Provider.",
       "listitem2_1": "Access IO from the web, using your SPID or CIE credentials.",
       "listitem2_2": "Go to the site",
-      "listitem3_1": "Go to the section",
-      "listitem3_2": "Unlock access to IO",
-      "listitem3_3": "and follow the given steps. When prompted enter the",
-      "listitem3_4": "recovery code",
-      "listitem3_5": "to confirm the operation."
+      "listitem3": "Go to the section *Unlock access to IO* and follow the given steps. When prompted enter the **recovery code** to confirm the operation."
     }
   },
   "email": {
