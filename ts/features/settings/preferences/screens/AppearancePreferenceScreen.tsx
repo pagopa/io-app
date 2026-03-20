@@ -40,7 +40,7 @@ import {
 
 const { NavigationBarManager } = NativeModules;
 
-export const updateNavigationBarColor = (theme?: ColorModeChoice | null) => {
+export const updateNavigationBarColor = (theme?: ColorModeChoice) => {
   if (Platform.OS === "android" && NavigationBarManager && theme) {
     const resolvedTheme = theme === "auto" ? "light" : theme;
     const backgroundColor =
@@ -98,9 +98,19 @@ const AppearancePreferenceScreen = (): ReactElement => {
       dispatch(preferencesThemeSet(choice));
       setSelectedColorMode(choice);
       if (choice === "auto") {
-        Appearance.setColorScheme(undefined);
+        console.log(
+          "setColorScheme to unspecified, systemColorScheme: ",
+          systemColorScheme
+        );
+        Appearance.setColorScheme("unspecified");
+        console.log(
+          "2 setColorScheme to unspecified, systemColorScheme: ",
+          systemColorScheme
+        );
         setTheme(systemColorScheme);
-        updateNavigationBarColor(systemColorScheme || "light");
+        updateNavigationBarColor(
+          systemColorScheme === "unspecified" ? "light" : systemColorScheme
+        );
         return;
       }
       Appearance.setColorScheme(choice);
