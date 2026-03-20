@@ -27,6 +27,8 @@
   <uses-permission android:name="android.permission.READ_PHONE_STATE" tools:node="remove" />
   <!-- Force removal of RECORD_AUDIO since the app doesn't need it see https://www.pivotaltracker.com/story/show/171897210 -->
   <uses-permission android:name="android.permission.RECORD_AUDIO" tools:node="remove" />
+  <!-- Force removal of READ_MEDIA_IMAGES since the expo-screen-capture is not using the specific callback https://docs.expo.dev/versions/latest/sdk/screen-capture/#example-callback-for-screen-capture -->
+  <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" tools:node="remove"/>
 
   <!-- Required by react-native-calendar-events -->
   <uses-permission android:name="android.permission.READ_CALENDAR" />
