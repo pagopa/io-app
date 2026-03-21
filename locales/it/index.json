@@ -3970,7 +3970,7 @@
           "trustmark": "Mostra certificato di autenticità",
           "openPdf": "Mostra documento",
           "shareButton": "Salva o condividi",
-          "showQRCode": "Mostra QR Code di verifica"
+          "showQRCode": "Mostra codice QR"
         },
         "eid": {
           "verificationExpired": {
@@ -4224,6 +4224,16 @@
           "success": {
             "title": "Fatto!",
             "subtitle": "La verifica è stata completata con successo."
+          }
+        },
+        "qrCode": {
+          "instruction": "Mostra questo codice QR a chi verifica i tuoi documenti digitali",
+          "error": {
+            "message": "Abbiamo avuto un problema nel generare il QR Code.",
+            "invalid": "Non puoi far verificare i tuoi documenti digitali."
+          },
+          "banner": {
+            "invalid": "Conferma la tua identità per continuare a usare i tuoi documenti senza limitazioni."
           }
         },
         "itWalletId": {

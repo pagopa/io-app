@@ -6,10 +6,6 @@ import { ProximityFailure } from "./failure";
 
 export type Context = {
   /**
-   * The type of credential to be presented
-   */
-  credentialType: string | undefined;
-  /**
    * The string used to generate the QR Code
    */
   qrCodeString?: string;
@@ -38,7 +34,6 @@ export type Context = {
 };
 
 export const InitialContext: Context = {
-  credentialType: undefined,
   failure: undefined,
   proximityDetails: undefined,
   verifierRequest: undefined
