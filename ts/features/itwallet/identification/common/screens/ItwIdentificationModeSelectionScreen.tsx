@@ -15,13 +15,16 @@ import LoadingScreenContent from "../../../../../components/screens/LoadingScree
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
+import { trackItWalletIDMethodSelected } from "../../../analytics";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { itwDisabledIdentificationMethodsSelector } from "../../../common/store/selectors/remoteConfig";
-import { trackItWalletIDMethodSelected } from "../../../analytics";
+import { isL2Credential } from "../../../common/utils/itwCredentialUtils";
+import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
 import { EidIssuanceLevel } from "../../../machine/eid/context";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
+  selectCredentialType,
   selectIsLoading,
   selectIssuanceLevel,
   selectIssuanceMode
@@ -67,6 +70,9 @@ export const ItwIdentificationModeSelectionScreen = ({
   const disabledIdentificationMethods = useIOSelector(
     itwDisabledIdentificationMethodsSelector
   );
+  const isL2Active = useIOSelector(itwLifecycleIsValidSelector);
+  const credentialType =
+    ItwEidIssuanceMachineContext.useSelector(selectCredentialType);
 
   const isCiePinDisabled = useMemo(
     () =>
@@ -130,27 +136,23 @@ export const ItwIdentificationModeSelectionScreen = ({
   );
 
   const handleNoCiePress = useCallback(() => {
-    if (mode === "upgrade") {
-      trackItwUserWithoutL3Requirements({
-        screen_name: routeName,
-        reason: "user_without_cie",
-        position: "screen"
-      });
-      // If the user is in the L3 upgrade flow, he cannot proceed without a CIE card
-      machineRef.send({ type: "go-to-cie-warning", warning: "card" });
-    } else {
-      trackItwUserWithoutL3Requirements({
-        screen_name: routeName,
-        reason: "user_without_cie",
-        position: "screen"
-      });
+    trackItwUserWithoutL3Requirements({
+      screen_name: routeName,
+      reason: "user_without_cie",
+      position: "screen"
+    });
+
+    if (!isL2Active && isL2Credential(credentialType)) {
       machineRef.send({
         type: "restart",
         mode: "issuance",
-        level: "l2-fallback"
+        level: "l2-fallback",
+        credentialType
       });
+    } else {
+      machineRef.send({ type: "go-to-cie-warning", warning: "card" });
     }
-  }, [mode, machineRef, routeName]);
+  }, [machineRef, routeName, credentialType, isL2Active]);
 
   const dismissalDialog = useItwDismissalDialog({
     enabled: params.eidReissuing,
@@ -179,7 +181,7 @@ export const ItwIdentificationModeSelectionScreen = ({
       <ContentWrapper>
         <VSpacer size={8} />
         <VStack space={16}>
-          {isReissuanceMode ? (
+          {isReissuanceMode && isL3 ? (
             <>
               {(!isCiePinDisabled || !isCieIdDisabled) && (
                 <VStack space={8}>
@@ -251,8 +253,8 @@ const CiePinMethodModule = () => {
   });
 
   const badgeProps: Badge | undefined = useMemo(() => {
-    if (mode === "reissuance" || (level === "l2" && mode === "issuance")) {
-      // Should not display the recommended badge for reissuance or L2 issuance
+    // Show the recommended badge only during the L3 activation flow.
+    if (level !== "l3" || mode === "reissuance") {
       return undefined;
     }
 
@@ -268,7 +270,9 @@ const CiePinMethodModule = () => {
     <>
       <ModuleNavigationAlt
         title={I18n.t(`${i18nNs}.mode.ciePin.title`)}
-        subtitle={I18n.t(`${i18nNs}.mode.ciePin.subtitle`)}
+        subtitle={I18n.t(
+          `${i18nNs}.mode.ciePin.subtitle.${isL3 ? "l3" : "default"}`
+        )}
         testID="CiePinMethodModuleTestID"
         icon="cieCard"
         onPress={() => {
