@@ -11254,13 +11254,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-screen-capture@npm:~8.0.9":
+"expo-screen-capture@npm:8.0.9":
   version: 8.0.9
   resolution: "expo-screen-capture@npm:8.0.9"
   peerDependencies:
     expo: "*"
     react: "*"
   checksum: 2642315a7e56e63a55cf3c0f037dcf3ccd2e9b6b0e366de37d6865b057af23f72c429d0d352365c5c7c1c9d2247a416b96aad98c7058efdc1b37030450316b02
+  languageName: node
+  linkType: hard
+
+"expo-screen-capture@patch:expo-screen-capture@npm%3A8.0.9#./.yarn/patches/expo-screen-capture-npm-8.0.9-d1b801bc95.patch::locator=io%40workspace%3A.":
+  version: 8.0.9
+  resolution: "expo-screen-capture@patch:expo-screen-capture@npm%3A8.0.9#./.yarn/patches/expo-screen-capture-npm-8.0.9-d1b801bc95.patch::version=8.0.9&hash=68b418&locator=io%40workspace%3A."
+  peerDependencies:
+    expo: "*"
+    react: "*"
+  checksum: 9618e45e96fc7c78285b2d40c4285ef5e5cdcc24324b4a3d5a8cd6dbe0534db3be1fa3b3a298fdd62c3cd2431de0fc83643311d07fe8a724ec283b1a4316e644
   languageName: node
   linkType: hard
 
