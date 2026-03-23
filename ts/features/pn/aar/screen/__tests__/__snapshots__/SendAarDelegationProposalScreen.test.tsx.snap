@@ -6458,7 +6458,25 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                     ]
                                   }
                                 >
-                                  Se la persona che ha ricevuto la comunicazione ti ha chiesto di farlo, puoi aprire questa notifica SEND per suo conto.
+                                  <Text
+                                    allowFontScaling={true}
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": undefined,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Se la persona che ha ricevuto la comunicazione ti ha chiesto di farlo, puoi aprire questa notifica SEND per suo conto.
+                                  </Text>
                                 </Text>
                               </View>
                               <View
