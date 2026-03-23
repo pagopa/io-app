@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.27.0-rc.3](https://github.com/pagopa/io-app/compare/3.27.0-rc.2...3.27.0-rc.3) (2026-03-23)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-3953](https://pagopa.atlassian.net/browse/SIW-3953)] new KO no CIE fallback cases ([#7919](https://github.com/pagopa/io-app/issues/7919)) ([7a61b4b](https://github.com/pagopa/io-app/commit/7a61b4bac2a48a3e514332eadba396c2c8b933ad))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4014](https://pagopa.atlassian.net/browse/SIW-4014)] Handle cta in `ItwRemoteAuthResponseScreen` ([#7937](https://github.com/pagopa/io-app/issues/7937)) ([b227116](https://github.com/pagopa/io-app/commit/b2271164a431659e619847a65803c79ac8797fbe))
+
+
+### Chores
+
+* [[IOPLT-0000](https://pagopa.atlassian.net/browse/IOPLT-0000)] Removes not necessary android permission for expo-screen-capture and patches to fix iOS black screen blocking UI ([#7952](https://github.com/pagopa/io-app/issues/7952)) ([12bf27e](https://github.com/pagopa/io-app/commit/12bf27eed53a2841d4ef0ddb67fe7b4aba76f6ad))
+
 ## [3.27.0-rc.2](https://github.com/pagopa/io-app/compare/3.27.0-rc.1...3.27.0-rc.2) (2026-03-20)
 
 
