@@ -276,7 +276,8 @@
     "react-native-webview@^13.16.0": "patch:react-native-webview@npm%3A13.16.0#./.yarn/patches/react-native-webview-npm-13.16.0-82f4e13202.patch",
     "react-native-pdf@7.0.3": "patch:react-native-pdf@npm%3A7.0.3#./.yarn/patches/react-native-pdf-npm-7.0.3-6313469aca.patch",
     "react-native@0.81.5": "patch:react-native@npm%3A0.81.5#./.yarn/patches/react-native-npm-0.81.5-d8232ef145.patch",
-    "@gorhom/bottom-sheet@^5.2.8": "patch:@gorhom/bottom-sheet@npm%3A5.2.8#./.yarn/patches/@gorhom-bottom-sheet-npm-5.2.8-1ad4b8f529.patch"
+    "@gorhom/bottom-sheet@^5.2.8": "patch:@gorhom/bottom-sheet@npm%3A5.2.8#./.yarn/patches/@gorhom-bottom-sheet-npm-5.2.8-1ad4b8f529.patch",
+    "expo-screen-capture@~8.0.9": "patch:expo-screen-capture@npm%3A8.0.9#./.yarn/patches/expo-screen-capture-npm-8.0.9-d1b801bc95.patch"
   },
   "react-native": {
     "path": "path-browserify",
