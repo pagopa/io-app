@@ -69,8 +69,7 @@ const ItwRemoteRequestValidationScreen = ({ route }: ScreenProps) => {
     );
   }
 
-  const flowType =
-    route.params?.flowType === "cross-device" ? "cross-device" : "same-device";
+  const flowType = route.params?.flowType ?? "same-device";
 
   return <ContentView payload={payload.right} flowType={flowType} />;
 };

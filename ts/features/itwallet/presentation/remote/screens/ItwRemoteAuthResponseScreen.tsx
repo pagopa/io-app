@@ -74,7 +74,6 @@ export const ItwRemoteAuthResponseScreen = () => {
   const secondaryAction = isSameDeviceFlowWithRedirectUri
     ? {
         label: I18n.t("global.buttons.close"),
-        accessibilityLabel: I18n.t("global.buttons.close"),
         onPress: closeMachine
       }
     : undefined;

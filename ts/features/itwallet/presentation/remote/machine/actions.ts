@@ -52,19 +52,7 @@ export const createRemoteActionsImplementation = (
     });
   },
 
-  closePresentation: ({
-    context
-  }: ActionArgs<Context, RemoteEvents, RemoteEvents>) => {
-    if (context.flowType === "cross-device") {
-      /**
-       * Cross-device flows enter from BARCODE_SCAN via navigation.replace.
-       * goBack removes ITW_REMOTE_MAIN and returns to the pre-scanner screen
-       * without briefly showing the barcode screen.
-       */
-      navigation.goBack();
-      return;
-    }
-
+  closePresentation: () => {
     navigation.popToTop();
   },
 
