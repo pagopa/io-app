@@ -341,6 +341,23 @@ export const trackSendAarMandateCieNotRelatedToDelegatorError = () => {
   void mixpanelTrack(eventName, eventProps);
 };
 
+export const trackSendAarMandateRetryError = () => {
+  const eventName = "SEND_MANDATE_RETRY_ERROR";
+  const eventProps = buildEventProperties("KO", undefined);
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarMandateTtlExpiredError = () => {
+  const eventName = "SEND_MANDATE_TTL_EXPIRED_ERROR";
+  const eventProps = buildEventProperties("KO", undefined);
+  void mixpanelTrack(eventName, eventProps);
+};
+export const trackSendAarNotificationDetailTtlError = () => {
+  const eventName = "SEND_NOTIFICATION_DETAIL_TIME_EXPIRED_ERROR";
+  const eventProps = buildEventProperties("KO", undefined);
+  void mixpanelTrack(eventName, eventProps);
+};
+
 export const trackSendAarMandateCieDataError = (reason: string) => {
   const eventName = "SEND_MANDATE_CIE_DATA_ERROR";
   const eventProps = buildEventProperties("KO", undefined, { reason });
