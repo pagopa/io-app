@@ -868,6 +868,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -898,7 +899,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -1154,6 +1154,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -1184,7 +1185,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -1440,6 +1440,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -1470,7 +1471,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -1726,6 +1726,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -1756,7 +1757,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -2012,6 +2012,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -2042,7 +2043,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -2298,6 +2298,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -2328,7 +2329,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -2584,6 +2584,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -2614,7 +2615,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -3246,6 +3246,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -3276,7 +3277,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -3532,6 +3532,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -3562,7 +3563,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -3818,6 +3818,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -3848,7 +3849,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -4104,6 +4104,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -4134,7 +4135,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -4390,6 +4390,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -4420,7 +4421,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -4676,6 +4676,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -4706,7 +4707,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -4962,6 +4962,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -4992,7 +4993,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -6174,6 +6174,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -6204,7 +6205,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -6459,6 +6459,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -6489,7 +6490,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -6744,6 +6744,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -6774,7 +6775,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -7029,6 +7029,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -7059,7 +7060,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -7920,6 +7920,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -7950,7 +7951,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -8205,6 +8205,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -8235,7 +8236,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -8490,6 +8490,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -8520,7 +8521,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -8775,6 +8775,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -8805,7 +8806,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -9666,6 +9666,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -9696,7 +9697,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -9951,6 +9951,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -9981,7 +9982,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -10236,6 +10236,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -10266,7 +10267,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -10521,6 +10521,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -10551,7 +10552,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -11655,6 +11655,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -11685,7 +11686,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -11940,6 +11940,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -11970,7 +11971,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -12225,6 +12225,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -12255,7 +12256,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -12510,6 +12510,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -12540,7 +12541,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },

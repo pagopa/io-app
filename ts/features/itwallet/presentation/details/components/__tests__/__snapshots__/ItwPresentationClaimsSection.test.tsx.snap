@@ -3554,6 +3554,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       "borderCurve": "continuous",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                      "overflow": "hidden",
                                     },
                                     {
                                       "borderRadius": 36,
@@ -3584,7 +3585,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       },
                                       {
                                         "alignSelf": "center",
-                                        "flexShrink": 1,
                                         "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },

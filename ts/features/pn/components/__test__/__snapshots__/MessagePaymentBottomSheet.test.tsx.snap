@@ -1151,6 +1151,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "borderCurve": "continuous",
                                               "flexDirection": "row",
                                               "justifyContent": "center",
+                                              "overflow": "hidden",
                                             },
                                             {
                                               "borderRadius": 36,
@@ -1181,7 +1182,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               },
                                               {
                                                 "alignSelf": "center",
-                                                "flexShrink": 1,
                                                 "letterSpacing": 0.5,
                                                 "textTransform": "uppercase",
                                               },
@@ -1436,6 +1436,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "borderCurve": "continuous",
                                               "flexDirection": "row",
                                               "justifyContent": "center",
+                                              "overflow": "hidden",
                                             },
                                             {
                                               "borderRadius": 36,
@@ -1466,7 +1467,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               },
                                               {
                                                 "alignSelf": "center",
-                                                "flexShrink": 1,
                                                 "letterSpacing": 0.5,
                                                 "textTransform": "uppercase",
                                               },
@@ -1721,6 +1721,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "borderCurve": "continuous",
                                               "flexDirection": "row",
                                               "justifyContent": "center",
+                                              "overflow": "hidden",
                                             },
                                             {
                                               "borderRadius": 36,
@@ -1751,7 +1752,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               },
                                               {
                                                 "alignSelf": "center",
-                                                "flexShrink": 1,
                                                 "letterSpacing": 0.5,
                                                 "textTransform": "uppercase",
                                               },
@@ -2006,6 +2006,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "borderCurve": "continuous",
                                               "flexDirection": "row",
                                               "justifyContent": "center",
+                                              "overflow": "hidden",
                                             },
                                             {
                                               "borderRadius": 36,
@@ -2036,7 +2037,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               },
                                               {
                                                 "alignSelf": "center",
-                                                "flexShrink": 1,
                                                 "letterSpacing": 0.5,
                                                 "textTransform": "uppercase",
                                               },
@@ -2291,6 +2291,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "borderCurve": "continuous",
                                               "flexDirection": "row",
                                               "justifyContent": "center",
+                                              "overflow": "hidden",
                                             },
                                             {
                                               "borderRadius": 36,
@@ -2321,7 +2322,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               },
                                               {
                                                 "alignSelf": "center",
-                                                "flexShrink": 1,
                                                 "letterSpacing": 0.5,
                                                 "textTransform": "uppercase",
                                               },
@@ -2576,6 +2576,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "borderCurve": "continuous",
                                               "flexDirection": "row",
                                               "justifyContent": "center",
+                                              "overflow": "hidden",
                                             },
                                             {
                                               "borderRadius": 36,
@@ -2606,7 +2607,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               },
                                               {
                                                 "alignSelf": "center",
-                                                "flexShrink": 1,
                                                 "letterSpacing": 0.5,
                                                 "textTransform": "uppercase",
                                               },

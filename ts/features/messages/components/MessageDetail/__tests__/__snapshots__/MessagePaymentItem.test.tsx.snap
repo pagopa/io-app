@@ -2183,6 +2183,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -2213,7 +2214,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },

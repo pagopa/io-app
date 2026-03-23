@@ -5998,6 +5998,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -6028,7 +6029,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -6837,6 +6837,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -6867,7 +6868,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -7676,6 +7676,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -7706,7 +7707,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -8515,6 +8515,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -8545,7 +8546,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -9354,6 +9354,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -9384,7 +9385,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -10193,6 +10193,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -10223,7 +10224,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -11032,6 +11032,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -11062,7 +11063,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -11871,6 +11871,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -11901,7 +11902,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -12710,6 +12710,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -12740,7 +12741,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -13549,6 +13549,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -13579,7 +13580,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -13808,6 +13808,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -13838,7 +13839,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -14647,6 +14647,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -14677,7 +14678,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -14906,6 +14906,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -14936,7 +14937,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -15745,6 +15745,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -15775,7 +15776,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -16004,6 +16004,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -16034,7 +16035,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -16843,6 +16843,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -16873,7 +16874,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -17102,6 +17102,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -17132,7 +17133,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -17941,6 +17941,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -17971,7 +17972,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -18200,6 +18200,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -18230,7 +18231,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -19039,6 +19039,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -19069,7 +19070,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -19298,6 +19298,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -19328,7 +19329,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -20137,6 +20137,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -20167,7 +20168,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -20396,6 +20396,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -20426,7 +20427,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -21235,6 +21235,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -21265,7 +21266,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -21494,6 +21494,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -21524,7 +21525,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -22333,6 +22333,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -22363,7 +22364,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
@@ -22592,6 +22592,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
                                           },
                                           {
                                             "borderRadius": 36,
@@ -22622,7 +22623,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                             },
                                             {
                                               "alignSelf": "center",
-                                              "flexShrink": 1,
                                               "letterSpacing": 0.5,
                                               "textTransform": "uppercase",
                                             },
