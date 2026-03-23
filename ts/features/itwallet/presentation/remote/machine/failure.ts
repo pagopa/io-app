@@ -1,10 +1,14 @@
-import { Credential, Errors, Trust } from "@pagopa/io-react-native-wallet";
+import {
+  RemotePresentation,
+  Errors,
+  Trust
+} from "@pagopa/io-react-native-wallet";
 import { isDefined } from "../../../../../utils/guards.ts";
 import { isFederationError } from "../../../common/utils/itwFailureUtils.ts";
 import { getCredentialTypeByVct } from "../utils/itwRemotePresentationUtils.ts";
 import { RemoteEvents } from "./events.ts";
 
-const { CredentialsNotFoundError } = Credential.Presentation.Errors;
+const { CredentialsNotFoundError } = RemotePresentation.Errors;
 const { isRelyingPartyResponseError, RelyingPartyResponseErrorCodes: Codes } =
   Errors;
 
@@ -33,8 +37,8 @@ export enum RemoteFailureType {
  * Type that contains the possible error types thrown when the requested Request Object is invalid.
  */
 type InvalidRequestObjectError =
-  | Credential.Presentation.Errors.InvalidRequestObjectError
-  | Credential.Presentation.Errors.DcqlError;
+  | RemotePresentation.Errors.InvalidRequestObjectError
+  | RemotePresentation.Errors.DcqlError;
 
 /**
  * Guard used to check if the error is of type `InvalidRequestObjectError`
@@ -42,8 +46,8 @@ type InvalidRequestObjectError =
 const isRequestObjectInvalidError = (
   error: unknown
 ): error is InvalidRequestObjectError =>
-  error instanceof Credential.Presentation.Errors.InvalidRequestObjectError ||
-  error instanceof Credential.Presentation.Errors.DcqlError;
+  error instanceof RemotePresentation.Errors.InvalidRequestObjectError ||
+  error instanceof RemotePresentation.Errors.DcqlError;
 
 /**
  * Type that maps known reasons with the corresponding failure, in order to avoid unknowns as much as possible.
@@ -95,7 +99,7 @@ export const mapEventToFailure = (event: RemoteEvents): RemoteFailure => {
       // Missing credentials are identified by their VCT
       reason: {
         missingCredentials: error.details
-          .flatMap(c => c.vctValues)
+          .flatMap(c => (c.format === "dc+sd-jwt" ? c.vctValues : [])) // TODO: [SIW-3998] Support MDOC remote presentation
           .filter(isDefined)
           .map(getCredentialTypeByVct)
           .filter(isDefined)

@@ -10,6 +10,7 @@ import {
   PersistPartial,
   persistReducer
 } from "redux-persist";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Action } from "../../../../../store/actions/types";
 import { isDevEnv } from "../../../../../utils/environment";
 import itwCredentialsReducer, {
@@ -60,7 +61,7 @@ const itwReducer = combineReducers({
   banners: bannersReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 10;
+const CURRENT_REDUX_ITW_STORE_VERSION = 11;
 
 export const migrations: MigrationManifest = {
   // Added preferences store
@@ -152,6 +153,14 @@ export const migrations: MigrationManifest = {
       "preferences.hideDiscoveryBannerUntilDate",
       "preferences.walletUpgradeMDLDetailsBannerHidden"
     ]);
+  },
+
+  // Added IT-Wallet specs version
+  // Reset credentials catalogue
+  "11": (state: PersistedState): PersistedState => {
+    _.set(state, "environment.itWalletSpecsVersion", "1.0.0");
+    _.set(state, "credentialsCatalogue.catalogue", pot.none);
+    return state;
   }
 };
 
