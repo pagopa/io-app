@@ -11,7 +11,10 @@ import { NativeModules, AccessibilityInfo, AppState } from "react-native";
 import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
 import mockZendesk from "./ts/__mocks__/io-react-native-zendesk.ts";
 import { initI18n } from "./ts/i18n.ts";
+import "react-native-gesture-handler/jestSetup";
+import { setUpTests } from "react-native-reanimated";
 
+setUpTests();
 void initI18n();
 
 const mockRNQRGenerator = {
@@ -72,11 +75,6 @@ jest.mock("@react-native-clipboard/clipboard", () => mockClipboard);
 jest.mock("react-native-worklets", () =>
   require("react-native-worklets/lib/module/mock")
 );
-
-// Setup react-native-reanimated for testing (v4.x)
-// See: https://docs.swmansion.com/react-native-reanimated/docs/guides/testing/
-const { setUpTests } = require("react-native-reanimated");
-setUpTests();
 
 jest.mock("react-native-blob-util", () => ({
   DocumentDir: () => jest.fn(),
@@ -199,7 +197,9 @@ jest.mock(
     };
   }
 );
-jest.spyOn(AppState, "addEventListener").mockImplementation(() => ({remove: jest.fn()}));
+jest
+  .spyOn(AppState, "addEventListener")
+  .mockImplementation(() => ({ remove: jest.fn() }));
 
 jest.mock("mixpanel-react-native", () => ({
   __esModule: true,
@@ -272,3 +272,30 @@ jest.mock("@pagopa/io-react-native-iso18013", () => ({
 jest.mock("@pagopa/io-react-native-cie", () => ({
   CieManager: jest.fn()
 }));
+
+// Mock to prevent Timeout.closing [as _onTimeout] (node_modules/@react-navigation/stack/src/views/Stack/Card.tsx:413:9)
+// Cannot read properties of undefined (reading 'spring')
+jest.mock("@react-navigation/stack", () => {
+  const React = require("react");
+  const actual = jest.requireActual("@react-navigation/stack");
+
+  return {
+    ...actual,
+    // We override the Card to be a simple wrapper that ignores animations
+    Card: React.forwardRef(({ children, style }, ref) => {
+      const { View } = require("react-native");
+      return React.createElement(View, { ref, style }, children);
+    }),
+    // Force transitions to have 0 duration logic
+    TransitionPresets: {
+      ...actual.TransitionPresets,
+      DefaultTransition: {
+        ...actual.TransitionPresets.DefaultTransition,
+        transitionSpec: {
+          open: { animation: 'timing', config: { duration: 0 } },
+          close: { animation: 'timing', config: { duration: 0 } },
+        },
+      },
+    },
+  };
+});

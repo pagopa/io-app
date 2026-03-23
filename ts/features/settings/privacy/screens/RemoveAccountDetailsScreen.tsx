@@ -12,7 +12,15 @@ import {
 } from "@pagopa/io-app-design-system";
 import { StackActions } from "@react-navigation/native";
 import I18n from "i18next";
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  ComponentRef,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import { AccessibilityInfo, Alert, Keyboard, View } from "react-native";
 import {
   SafeAreaView,
@@ -37,6 +45,7 @@ import {
   isUserDataProcessingDeleteErrorSelector,
   isUserDataProcessingDeleteLoadingSelector
 } from "../../common/store/selectors/userDataProcessing";
+import { useInputFocus } from "../../../payments/checkout/hooks/useInputFocus";
 
 type FooterButtonProps = {
   isLoading: boolean;
@@ -211,6 +220,9 @@ const RemoveAccountDetails = () => {
     selectedMotivation
   ]);
 
+  const textInputRef = useRef<ComponentRef<typeof TextInput>>(null);
+  useInputFocus(textInputRef);
+
   const otherMotivationInput = useMemo(() => {
     if (isOtherMotivation) {
       return (
@@ -225,7 +237,7 @@ const RemoveAccountDetails = () => {
             )}
             value={otherMotivation}
             onChangeText={setOtherMotivation}
-            autoFocus
+            ref={textInputRef}
             textInputProps={{
               inputMode: "text",
               returnKeyType: "done",

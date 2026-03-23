@@ -5,6 +5,15 @@ import { applicationChangeState } from "../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 const markdownString: string = `
 # Main Title
 

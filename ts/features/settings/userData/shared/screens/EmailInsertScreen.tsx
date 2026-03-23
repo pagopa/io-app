@@ -17,7 +17,14 @@ import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  ComponentRef,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import {
   AccessibilityInfo,
   Alert,
@@ -39,8 +46,8 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import themeVariables from "../../../../../theme/variables";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { getFlowType } from "../../../../../utils/analytics";
-import { isDisplayZoomed } from "../../../../../utils/device";
 import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
+import { isDisplayZoomed } from "../../../../../utils/device";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../../../../utils/hooks/usePrevious";
 import { areStringsEqual } from "../../../../../utils/options";
@@ -53,6 +60,7 @@ import {
 } from "../../../../mailCheck/analytics";
 import { emailValidationSelector } from "../../../../mailCheck/store/selectors/emailValidation";
 import { abortOnboarding } from "../../../../onboarding/store/actions";
+import { useInputFocus } from "../../../../payments/checkout/hooks/useInputFocus";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 import { profileUpsert } from "../../../common/store/actions";
 import {
@@ -382,7 +390,10 @@ const EmailInsertScreen = () => {
     acknowledgeOnEmailValidated.value === false &&
     isOnboarding;
 
-  const useAutoFocus = !isScreenZoomed && !userNavigateToEmailValidationScreen;
+  const canAutoFocus = !isScreenZoomed && !userNavigateToEmailValidationScreen;
+
+  const textInputRef = useRef<ComponentRef<typeof TextInputValidation>>(null);
+  useInputFocus(textInputRef, undefined, canAutoFocus);
 
   // If we navigate to this screen with acknowledgeOnEmailValidated set to false,
   // let the user navigate the email validation screen
@@ -536,7 +547,7 @@ const EmailInsertScreen = () => {
             </Body>
             <VSpacer size={16} />
             <TextInputValidation
-              autoFocus={useAutoFocus}
+              ref={textInputRef}
               testID="email-input"
               textInputProps={{
                 autoCorrect: false,

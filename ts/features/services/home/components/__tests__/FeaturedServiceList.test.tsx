@@ -11,6 +11,15 @@ import { getNetworkError, NetworkError } from "../../../../../utils/errors";
 import { FeaturedServices } from "../../../../../../definitions/services/FeaturedServices";
 import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 const MOCK_FEATURED_SERVICES: FeaturedServices = {
   services: [
     {

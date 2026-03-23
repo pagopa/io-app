@@ -5,6 +5,15 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { RemoteContentBanner } from "../RemoteContentBanner";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 describe("RemoteContentBanner", () => {
   it("Should match snapshot", () => {
     const component = renderComponent();

@@ -8,6 +8,15 @@ import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "../ItwIssuanceCredentialTrustIssuerScreen";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 jest.mock("../../../../../utils/hooks/usePreventScreenCapture", () => ({
   usePreventScreenCapture: jest.fn()
 }));

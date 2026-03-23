@@ -1,24 +1,32 @@
-import _ from "lodash";
 import { createStore } from "redux";
+import * as LOADING_SCREEN from "../../../../../components/screens/LoadingScreenContent";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import PN_ROUTES from "../../../navigation/routes";
+import * as ANALYTICS from "../../analytics";
 import * as ERROR_COMPONENT from "../../components/errors/SendAARErrorComponent";
+import * as NFC_NOT_SUPPORTED_COMPONENT from "../../components/errors/SendAarNfcNotSupportedComponent";
 import * as NOT_ADDRESSEE_COMPONENT from "../../components/errors/SendAarNotAddresseeKoComponent";
+import * as SELECTORS from "../../store/selectors";
+import * as ERROR_MAPPINGS from "../../utils/aarErrorMappings";
 import {
   AARFlowState,
   AARFlowStateName,
   sendAARFlowStates
 } from "../../utils/stateUtils";
-import { SendAARErrorScreen } from "../SendAARErrorScreen";
 import { sendAarMockStates } from "../../utils/testUtils";
-import * as SELECTORS from "../../store/selectors";
-import * as ANALYTICS from "../../analytics";
-import * as NFC_NOT_SUPPORTED_COMPONENT from "../../components/errors/SendAarNfcNotSupportedComponent";
-import * as ERROR_MAPPINGS from "../../utils/aarErrorMappings";
-import * as LOADING_SCREEN from "../../../../../components/screens/LoadingScreenContent";
+import { SendAARErrorScreen } from "../SendAARErrorScreen";
+
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
 
 const handledRetryStates: Array<AARFlowStateName> = [
   sendAARFlowStates.cieCanAdvisory
@@ -31,8 +39,15 @@ jest.mock("@react-navigation/native", () => {
     ...actualNav,
     useNavigation: () =>
       new Proxy(actualNav.useNavigation?.(), {
-        get: (_target, prop) =>
-          prop === "replace" ? mockReplace : mockShouldNeverCall
+        get: (_target, prop) => {
+          if (prop === "replace") {
+            return mockReplace;
+          }
+          if (prop === "addListener") {
+            return jest.fn(() => jest.fn());
+          }
+          return mockShouldNeverCall;
+        }
       })
   };
 });

@@ -7,6 +7,15 @@ import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwCredentialPreviewClaimsList } from "../ItwCredentialPreviewClaimsList";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 describe("ItwCredentialPreviewClaimsList", () => {
   it("should match the snapshot", () => {
     const component = renderComponent();

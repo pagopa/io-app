@@ -6,6 +6,15 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { FimsHistoryHeaderComponent } from "../FimsHistoryHeaderComponent";
 import { FIMS_ROUTES } from "../../../common/navigation";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 describe("FimsHistoryHeaderComponent", () => {
   it("should match snapshot", () => {
     expect(renderComponent().toJSON()).toMatchSnapshot();

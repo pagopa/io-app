@@ -1,5 +1,4 @@
 import { IOSkeleton, VStack } from "@pagopa/io-app-design-system";
-import { useLinkTo } from "@react-navigation/native";
 import { useCallback } from "react";
 import { View } from "react-native";
 import I18n from "i18next";
@@ -31,15 +30,22 @@ import { PreconditionsFeedback } from "./PreconditionsFeedback";
 
 type PreconditionsContentProps = {
   footerHeight: number;
+  linkTo: (path: string) => void;
 };
 
 export const PreconditionsContent = ({
-  footerHeight
+  footerHeight,
+  linkTo
 }: PreconditionsContentProps) => {
   const content = useIOSelector(preconditionsContentSelector);
   switch (content) {
     case "content":
-      return <PreconditionsContentMarkdown footerHeight={footerHeight} />;
+      return (
+        <PreconditionsContentMarkdown
+          footerHeight={footerHeight}
+          linkTo={linkTo}
+        />
+      );
     case "error":
       return <PreconditionsContentError />;
     case "loading":
@@ -51,11 +57,11 @@ export const PreconditionsContent = ({
 };
 
 const PreconditionsContentMarkdown = ({
-  footerHeight
+  footerHeight,
+  linkTo
 }: PreconditionsContentProps) => {
   const dispatch = useIODispatch();
   const store = useIOStore();
-  const linkTo = useLinkTo();
 
   const useIOMarkdown = useIOSelector(
     isIOMarkdownEnabledForMessagesAndServicesSelector

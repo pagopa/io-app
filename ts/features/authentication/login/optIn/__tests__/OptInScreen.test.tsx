@@ -7,6 +7,15 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import OptInScreen from "../screens/OptInScreen";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 describe("OptInScreen", () => {
   it("the components into the page should be render correctly", () => {
     const component = renderComponent();

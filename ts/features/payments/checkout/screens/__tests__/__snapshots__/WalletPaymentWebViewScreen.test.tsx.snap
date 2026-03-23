@@ -10,6 +10,7 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -21,15 +22,32 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
+      <View
+        pointerEvents="box-none"
+        style={
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "end": 0,
+                "position": "absolute",
+                "start": 0,
+                "top": 0,
+              },
+            ],
+          ]
+        }
+      />
       <RNSScreenContainer
         onLayout={[Function]}
         style={
@@ -40,7 +58,9 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -57,11 +77,13 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -72,34 +94,14 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -107,35 +109,22 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -153,17 +142,10 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -188,104 +170,19 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
                     <View
+                      pointerEvents="box-none"
                       style={
                         {
-                          "flex": 1,
+                          "zIndex": 1,
                         }
                       }
                     >
-                      <RNCSafeAreaView
-                        edges={
-                          {
-                            "bottom": "additive",
-                            "left": "off",
-                            "right": "off",
-                            "top": "off",
-                          }
-                        }
-                        style={
-                          {
-                            "flex": 1,
-                          }
-                        }
-                      >
-                        <View
-                          style={
-                            [
-                              {
-                                "flex": 1,
-                                "overflow": "hidden",
-                              },
-                              undefined,
-                            ]
-                          }
-                        >
-                          <RNCWebView
-                            allowsBackForwardNavigationGestures={true}
-                            allowsPictureInPictureMediaPlayback={true}
-                            androidCameraAccessDisabled={true}
-                            androidMicrophoneAccessDisabled={true}
-                            cacheEnabled={true}
-                            fraudulentWebsiteWarningEnabled={true}
-                            hasOnFileDownload={false}
-                            hasOnOpenWindowEvent={false}
-                            injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
-                            injectedJavaScriptForMainFrameOnly={true}
-                            javaScriptEnabled={true}
-                            messagingEnabled={false}
-                            messagingModuleName=""
-                            newSource={
-                              {
-                                "uri": "https://google.com",
-                              }
-                            }
-                            onContentProcessDidTerminate={[Function]}
-                            onHttpError={[Function]}
-                            onLoadingError={[Function]}
-                            onLoadingFinish={[Function]}
-                            onLoadingProgress={[Function]}
-                            onLoadingStart={[Function]}
-                            onMessage={[Function]}
-                            onShouldStartLoadWithRequest={[Function]}
-                            paymentRequestEnabled={true}
-                            source={
-                              {
-                                "uri": "https://google.com",
-                              }
-                            }
-                            style={
-                              [
-                                {
-                                  "flex": 1,
-                                  "overflow": "hidden",
-                                },
-                                {
-                                  "backgroundColor": "#ffffff",
-                                },
-                                {
-                                  "flex": 1,
-                                },
-                              ]
-                            }
-                            testID="webview"
-                            textInteractionEnabled={true}
-                            useSharedProcessPool={true}
-                          />
-                        </View>
-                      </RNCSafeAreaView>
-                    </View>
-                    <View
-                      collapsable={false}
-                      pointerEvents="box-none"
-                    >
                       <View
-                        accessibilityElementsHidden={false}
-                        importantForAccessibility="auto"
+                        aria-hidden={false}
                         onLayout={[Function]}
                         pointerEvents="box-none"
                         style={null}
@@ -613,6 +510,93 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
                         </View>
                       </View>
                     </View>
+                    <View
+                      style={
+                        {
+                          "flex": 1,
+                        }
+                      }
+                    >
+                      <RNCSafeAreaView
+                        edges={
+                          {
+                            "bottom": "additive",
+                            "left": "off",
+                            "right": "off",
+                            "top": "off",
+                          }
+                        }
+                        style={
+                          {
+                            "flex": 1,
+                          }
+                        }
+                      >
+                        <View
+                          style={
+                            [
+                              {
+                                "flex": 1,
+                                "overflow": "hidden",
+                              },
+                              undefined,
+                            ]
+                          }
+                        >
+                          <RNCWebView
+                            allowsBackForwardNavigationGestures={true}
+                            allowsPictureInPictureMediaPlayback={true}
+                            androidCameraAccessDisabled={true}
+                            androidMicrophoneAccessDisabled={true}
+                            cacheEnabled={true}
+                            fraudulentWebsiteWarningEnabled={true}
+                            hasOnFileDownload={false}
+                            hasOnOpenWindowEvent={false}
+                            injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
+                            injectedJavaScriptForMainFrameOnly={true}
+                            javaScriptEnabled={true}
+                            messagingEnabled={false}
+                            messagingModuleName=""
+                            newSource={
+                              {
+                                "uri": "https://google.com",
+                              }
+                            }
+                            onContentProcessDidTerminate={[Function]}
+                            onHttpError={[Function]}
+                            onLoadingError={[Function]}
+                            onLoadingFinish={[Function]}
+                            onLoadingProgress={[Function]}
+                            onLoadingStart={[Function]}
+                            onMessage={[Function]}
+                            onShouldStartLoadWithRequest={[Function]}
+                            paymentRequestEnabled={true}
+                            source={
+                              {
+                                "uri": "https://google.com",
+                              }
+                            }
+                            style={
+                              [
+                                {
+                                  "flex": 1,
+                                  "overflow": "hidden",
+                                },
+                                {
+                                  "backgroundColor": "#ffffff",
+                                },
+                                {
+                                  "flex": 1,
+                                },
+                              ]
+                            }
+                            testID="webview"
+                            textInteractionEnabled={true}
+                            useSharedProcessPool={true}
+                          />
+                        </View>
+                      </RNCSafeAreaView>
+                    </View>
                   </View>
                 </View>
               </View>
@@ -620,20 +604,6 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
           </View>
         </RNSScreen>
       </RNSScreenContainer>
-      <View
-        collapsable={false}
-        pointerEvents="box-none"
-        style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
-        }
-      />
     </View>
   </RNCSafeAreaProvider>
 </View>

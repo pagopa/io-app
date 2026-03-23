@@ -11,6 +11,15 @@ import { FeaturedInstitutionList } from "../FeaturedInstitutionList";
 import { Institutions } from "../../../../../../definitions/services/Institutions";
 import { OrganizationFiscalCode } from "../../../../../../definitions/services/OrganizationFiscalCode";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 const MOCK_FEATURED_INSTITUTIONS: Institutions = {
   institutions: [
     {
