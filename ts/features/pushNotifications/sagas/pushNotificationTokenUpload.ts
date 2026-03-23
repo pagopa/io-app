@@ -3,8 +3,8 @@ import * as E from "fp-ts/lib/Either";
 import { Platform } from "react-native";
 import { SagaIterator } from "redux-saga";
 import { call, put, select, take } from "typed-redux-saga/macro";
-import { PlatformEnum } from "../../../../definitions/backend/Platform";
-import { BackendClient } from "../../../api/backend";
+import { PlatformEnum } from "../../../../definitions/backend/communication/Platform";
+import { CommunicationClient } from "../../../api/CommunicationClientManager";
 import {
   canSkipTokenRegistrationSelector,
   notificationsInstallationSelector
@@ -19,6 +19,7 @@ import {
   newPushNotificationsToken,
   pushNotificationsTokenUploaded
 } from "../store/actions/installation";
+import { InstallationID } from "../../../../definitions/backend/communication/InstallationID";
 
 export const notificationsPlatform: PlatformEnum =
   Platform.select<PlatformEnum>({
@@ -28,9 +29,7 @@ export const notificationsPlatform: PlatformEnum =
   });
 
 export function* pushNotificationTokenUpload(
-  createOrUpdateInstallation: ReturnType<
-    typeof BackendClient
-  >["createOrUpdateInstallation"]
+  createOrUpdateInstallation: CommunicationClient["createOrUpdateInstallation"]
 ): SagaIterator {
   // Await for a notification token, since it may not
   // be available yet when this function is caled
@@ -53,7 +52,7 @@ export function* pushNotificationTokenUpload(
   try {
     // Send the token to the backend
     const response = yield* call(createOrUpdateInstallation, {
-      installationID: notificationsInstallation.id,
+      installationID: notificationsInstallation.id as InstallationID,
       body: {
         platform: notificationsPlatform,
         pushChannel: notificationsInstallation.token

@@ -22,10 +22,10 @@ import {
   updatePaymentForMessage,
   upsertMessageStatusAttributes
 } from "..";
-import { PaymentInfoResponse } from "../../../../../../definitions/backend/PaymentInfoResponse";
-import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
+import { PaymentInfoResponse } from "../../../../../../definitions/backend/communication/PaymentInfoResponse";
+import { PaymentFaultV2Enum } from "../../../../../../definitions/backend/communication/PaymentFaultV2";
+import { ServiceId } from "../../../../../../definitions/backend/communication/ServiceId";
+import { ThirdPartyAttachment } from "../../../../../../definitions/backend/communication/ThirdPartyAttachment";
 import { UIMessage, UIMessageDetails } from "../../../types";
 import {
   MessagePaymentError,
@@ -50,7 +50,7 @@ describe("index", () => {
   const genericError: MessagePaymentError =
     toGenericMessagePaymentError("An error occurred");
   const specificError: MessagePaymentError = toSpecificMessagePaymentError(
-    Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+    PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO
   );
   const timeoutError: MessagePaymentError = toTimeoutMessagePaymentError();
   const paymentId = "00123456789001122334455667788";

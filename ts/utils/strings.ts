@@ -5,7 +5,6 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
-import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
 
 /**
  * Check if the source includes searchText.
@@ -43,65 +42,6 @@ export function capitalize(text: string, separator: string = " ") {
     );
 }
 
-/**
- * Convert the EnteBEneficiario content type in a readable string
- * @param e organization data
- */
-export const formatTextRecipient = (e: EnteBeneficiario): string => {
-  const denomUnitOper = pipe(
-    e.denomUnitOperBeneficiario,
-    O.fromNullable,
-    O.map(d => ` - ${d}`),
-    O.getOrElse(() => "")
-  );
-  const address = pipe(
-    e.indirizzoBeneficiario,
-    O.fromNullable,
-    O.getOrElse(() => "")
-  );
-  const civicNumber = pipe(
-    e.civicoBeneficiario,
-    O.fromNullable,
-    O.map(c => ` n. ${c}`),
-    O.getOrElse(() => "")
-  );
-  const cap = pipe(
-    e.capBeneficiario,
-    O.fromNullable,
-    O.map(c => `${c} `),
-    O.getOrElse(() => "")
-  );
-  const city = pipe(
-    e.localitaBeneficiario,
-    O.fromNullable,
-    O.map(l => `${l} `),
-    O.getOrElse(() => "")
-  );
-  const province = pipe(
-    e.provinciaBeneficiario,
-    O.fromNullable,
-    O.map(p => `(${p})`),
-    O.getOrElse(() => "")
-  );
-
-  return `${e.denominazioneBeneficiario}${denomUnitOper}\n
-${address}${civicNumber}\n
-${cap}${city}${province}`.trim();
-};
-
-/**
- * Fetch only an organization's name as readable string from an EnteBeneficiario object
- * @param recipient organization data
- */
-export const getRecepientName = (recipient: EnteBeneficiario) => {
-  const denomUnitOper = pipe(
-    recipient.denomUnitOperBeneficiario,
-    O.fromNullable,
-    O.map(d => ` - ${d}`),
-    O.getOrElse(() => "")
-  );
-  return `${recipient.denominazioneBeneficiario}${denomUnitOper}`.trim();
-};
 /**
  * determine if the text is undefined or empty (or composed only by blanks)
  * @param text

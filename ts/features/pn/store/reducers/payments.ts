@@ -8,7 +8,7 @@ import {
   isReady,
   RemoteValue
 } from "../../../../common/model/RemoteValue";
-import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
+import { PaymentInfoResponse } from "../../../../../definitions/backend/communication/PaymentInfoResponse";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import { getRptIdStringFromPayment } from "../../../pn/utils/rptId";
 import { SinglePaymentState } from "../../../messages/store/reducers/payments";

@@ -1,4 +1,4 @@
-import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
+import { PaymentFaultV2Enum } from "../../../../definitions/backend/communication/PaymentFaultV2";
 import { isError, RemoteValue } from "../../../common/model/RemoteValue";
 import { isOngoingPaymentFromDetailV2Enum } from "../../../utils/payment";
 
@@ -9,7 +9,7 @@ export type MessagePaymentError =
 export type MessagePaymentGenericError = { type: "generic"; message: string };
 export type MessagePaymentSpecificError = {
   type: "specific";
-  details: Detail_v2Enum;
+  details: PaymentFaultV2Enum;
 };
 export type MessagePaymentTimeoutError = { type: "timeout" };
 
@@ -38,7 +38,7 @@ export const toGenericMessagePaymentError = (
   message
 });
 export const toSpecificMessagePaymentError = (
-  details: Detail_v2Enum
+  details: PaymentFaultV2Enum
 ): MessagePaymentError => ({
   type: "specific",
   details

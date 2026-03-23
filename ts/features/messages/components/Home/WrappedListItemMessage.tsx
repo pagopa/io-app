@@ -8,8 +8,8 @@ import {
   useIOStore
 } from "../../../../store/hooks";
 import { UIMessage } from "../../types";
-import { TagEnum as PaymentTagEnum } from "../../../../../definitions/backend/MessageCategoryPayment";
-import { TagEnum as SENDTagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
+import { TagEnum as PaymentTagEnum } from "../../../../../definitions/backend/communication/MessageCategoryPayment";
+import { TagEnum as SENDTagEnum } from "../../../../../definitions/backend/communication/MessageCategoryPN";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { MESSAGES_ROUTES } from "../../navigation/routes";

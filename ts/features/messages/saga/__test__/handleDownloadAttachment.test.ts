@@ -15,7 +15,7 @@ import {
   downloadAttachment
 } from "../../store/actions";
 import { mockPdfAttachment } from "../../__mocks__/attachment";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/backend/communication/ServiceId";
 import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector

@@ -1,14 +1,14 @@
 import { createClient } from "../../../../../definitions/services/client";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 
-export const createServicesClient = (baseUrl: string, token: string) =>
-  createClient<"Bearer">({
+export const createServicesClient = (baseUrl: string) =>
+  createClient<"ApiKeyAuth">({
     baseUrl,
     fetchApi: defaultRetryingFetch(),
     withDefaults: op => params =>
       op({
         ...params,
-        Bearer: `Bearer ${token}`
+        ApiKeyAuth: ""
       })
   });
 

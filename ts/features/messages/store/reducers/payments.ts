@@ -24,7 +24,7 @@ import {
   reloadAllMessages,
   updatePaymentForMessage
 } from "../actions";
-import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
+import { PaymentInfoResponse } from "../../../../../definitions/backend/communication/PaymentInfoResponse";
 import { isProfileEmailValidatedSelector } from "../../../settings/common/store/selectors";
 import { isPagoPaSupportedSelector } from "../../../../common/versionInfo/store/reducers/versionInfo";
 import {
