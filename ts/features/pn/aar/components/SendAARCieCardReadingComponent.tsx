@@ -10,6 +10,7 @@ import {
   CieCardReadContentProps
 } from "../../../common/components/cie/CieCardReadContent";
 import {
+  CieReadState,
   isErrorState,
   isReadingState,
   isSuccessState,
@@ -42,7 +43,24 @@ export const SendAARCieCardReadingComponent = ({
 }: SendAARCieCardReadingComponentProps) => {
   const dispatch = useIODispatch();
   const theme = useIOTheme();
-  const { startReading, readState } = useCieInternalAuthAndMrtdReading();
+  const { startReading } = useCieInternalAuthAndMrtdReading();
+
+  const readState = {
+    status: ReadStatus.SUCCESS,
+    data: {
+      mrtd_data: {
+        dg1: "",
+        dg11: "",
+        sod: ""
+      },
+      nis_data: {
+        nis: "",
+        publicKey: "",
+        signedChallenge: "",
+        sod: ""
+      }
+    }
+  } as CieReadState;
 
   useTrackCieReadingEvents(readState);
 
