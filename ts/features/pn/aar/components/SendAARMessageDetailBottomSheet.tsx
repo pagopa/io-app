@@ -1,7 +1,7 @@
 import {
-  BodySmall,
   FeatureInfo,
   IOButton,
+  IOMarkdownLite,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
@@ -26,9 +26,9 @@ export const SendAARMessageDetailBottomSheet = ({
   const isDelegate = sendUserType === "mandatory";
   const sendVisitTheWebsiteUrl = useIOSelector(sendVisitTheWebsiteUrlSelector);
 
-  const onLinkPress = () => {
+  const onLinkPress = (url: string) => {
     trackSendAarNotificationClosureExit(sendUserType);
-    openWebUrl(sendVisitTheWebsiteUrl);
+    openWebUrl(url);
   };
 
   return (
@@ -48,19 +48,14 @@ export const SendAARMessageDetailBottomSheet = ({
         <>
           <FeatureInfo
             body={
-              <>
-                <BodySmall testID={"body_nomandate"}>
-                  {I18n.t("features.pn.aar.flow.closeNotification.paragraph3")}
-                </BodySmall>
-                <BodySmall
-                  asLink
-                  onPress={onLinkPress}
-                  weight="Semibold"
-                  testID="link"
-                >
-                  {I18n.t("features.pn.aar.flow.closeNotification.link")}
-                </BodySmall>
-              </>
+              <IOMarkdownLite
+                content={I18n.t(
+                  "features.pn.aar.flow.closeNotification.paragraph3",
+                  { url: sendVisitTheWebsiteUrl }
+                )}
+                onLinkPress={onLinkPress}
+                small
+              />
             }
             iconName="website"
           />

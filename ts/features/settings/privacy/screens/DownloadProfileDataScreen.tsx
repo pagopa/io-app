@@ -102,7 +102,6 @@ const DownloadProfileDataScreen = () => {
           testID: "export-data-download-button",
           color: "primary",
           label: I18n.t("profile.main.privacy.exportData.cta"),
-          accessibilityLabel: I18n.t("profile.main.privacy.exportData.cta"),
           loading: isLoading,
           onPress: handleDownloadPress
         }

@@ -1454,10 +1454,7 @@
         "quickConfig": {
           "title": "Use quick setup",
           "successAlert": "You have enabled the quick setup",
-          "body": {
-            "text1": "You'll receive messages only by the institutions which have something important to tell you.",
-            "text2": "You can always deactivate communications by services that do not interest you."
-          }
+          "body": "You'll receive messages only by the institutions which have something important to tell you. **You can always deactivate communications by services that do not interest you.**"
         },
         "manualConfig": {
           "title": "Configure manually",

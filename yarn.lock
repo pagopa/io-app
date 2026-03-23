@@ -4126,7 +4126,7 @@ __metadata:
 
 "@pagopa/io-app-design-system@https://github.com/pagopa/io-app-design-system#SIW-3249-markdown-lite":
   version: 6.0.7
-  resolution: "@pagopa/io-app-design-system@https://github.com/pagopa/io-app-design-system.git#commit=60fc709892708cecd3a19cb3fe329d45ad24679c"
+  resolution: "@pagopa/io-app-design-system@https://github.com/pagopa/io-app-design-system.git#commit=078aa706dfb9b16f96752f6498bb66e512ecc38f"
   dependencies:
     auto-changelog: ^2.4.0
     markdown-it: ^14.1.0
@@ -4149,7 +4149,7 @@ __metadata:
     react-native-safe-area-context: "*"
     react-native-svg: "*"
     react-native-worklets: "*"
-  checksum: 029c7db211dd285bc1ee2b63a495334d8d519116ee5f8324c03d26f746a7c4a09861bbe2c9626969502edaa144b4caedd8c2192d2c3ae6770a4cc6641f0ac118
+  checksum: 7a48bd142c0914f462b45c8cbd712ff3d2758862962ae2230c72ab9baf05772fbf8a18db006f4f7c547c60c21009e7559967c0ddf798603e5554394822665b85
   languageName: node
   linkType: hard
 

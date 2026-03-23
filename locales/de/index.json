@@ -1533,10 +1533,7 @@
         "quickConfig": {
           "title": "Schnelleinrichtung benutzen",
           "successAlert": "Du hast die Schnelleinrichtung aktiviert",
-          "body": {
-            "text1": "Nur Dienste, die dir etwas Wichtiges mitzuteilen haben, werden dich kontaktieren.",
-            "text2": "Du kannst die Mitteilungen von Diensten, die dich nicht interessieren, jederzeit deaktivieren."
-          }
+          "body": "Nur Dienste, die dir etwas Wichtiges mitzuteilen haben, werden dich kontaktieren. **Du kannst die Mitteilungen von Diensten, die dich nicht interessieren, jederzeit deaktivieren.**"
         },
         "manualConfig": {
           "title": "Manuell konfigurieren",

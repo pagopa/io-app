@@ -1805,10 +1805,7 @@
         "quickConfig": {
           "title": "Usa configurazione rapida",
           "successAlert": "Hai abilitato la configurazione rapida",
-          "body": {
-            "text1": "Ti contatteranno solo gli enti che hanno qualcosa di importante da dirti.",
-            "text2": "Potrai sempre disattivare le comunicazioni dei servizi che non ti interessano."
-          }
+          "body": "Ti contatteranno solo gli enti che hanno qualcosa di importante da dirti. **Potrai sempre disattivare le comunicazioni dei servizi che non ti interessano.**"
         },
         "manualConfig": {
           "title": "Configura manualmente",
@@ -2430,8 +2427,7 @@
             "title": "Vuoi chiudere la notifica SEND?",
             "paragraph1": "Conserva il codice QR, ti servirà per rileggere la notifica in app",
             "paragraph2": "Puoi inquadrarlo oppure caricare una sua foto su IO",
-            "paragraph3": "Tutte le tue notifiche sono disponibili sul sito di SEND - Notifiche Digitali",
-            "link": "Vai sul sito di SEND",
+            "paragraph3": "Tutte le tue notifiche sono disponibili sul sito di SEND - Notifiche Digitali\n\n**[Vai sul sito di SEND]({{url}})**",
             "primaryAction": "Torna alla notifica",
             "secondaryAction": "Chiudi la notifica"
           },
