@@ -81,7 +81,8 @@ export const itwRemoteMachine = setup({
         reset: {}, // Do nothing if the machine is already idle
         start: {
           actions: assign(({ event }) => ({
-            payload: event.payload
+            payload: event.payload,
+            flowType: event.flowType
           })),
           target: "PreliminaryChecks"
         }
