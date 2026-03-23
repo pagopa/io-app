@@ -24,7 +24,9 @@ export const mockSessionManagerClient: jest.Mocked<SessionManagerClient> = {
   login: jest.fn(),
   testLogin: jest.fn(),
   healthcheck: jest.fn(),
-  acs: jest.fn()
+  acs: jest.fn(),
+  getMetadata: jest.fn(),
+  getUserIdentity: jest.fn()
 };
 
 export const sessionManagerClientManager = {
