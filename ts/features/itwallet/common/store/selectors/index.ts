@@ -158,6 +158,7 @@ export const itwShouldHideEidLifecycleAlert = (state: GlobalState): boolean =>
  * - The wallet is not offline
  * - The L3 feature flag is enabled
  * - The wallet is not valid (not yet active)
+ * - The itw activation is not disabled (nfc available)
  */
 export const itwShouldRenderDiscoveryBannerSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&

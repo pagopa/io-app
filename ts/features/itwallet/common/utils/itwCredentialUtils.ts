@@ -34,7 +34,6 @@ export const newCredentials = [
 ] as const;
 
 export type NewCredential = (typeof newCredentials)[number];
-export type L2Credential = (typeof l2Credentials)[number];
 
 export type L2Credential = (typeof l2Credentials)[number];
 
