@@ -1,8 +1,12 @@
 import { select, call, all, put } from "typed-redux-saga/macro";
+import { ActionType } from "typesafe-actions";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Errors } from "@pagopa/io-react-native-wallet";
-import { itwCredentialsSelector } from "../store/selectors";
+import {
+  itwCredentialSelector,
+  itwCredentialsSelector
+} from "../store/selectors";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
   shouldRequestStatusAssertion,
@@ -14,7 +18,10 @@ import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
 } from "../../lifecycle/store/selectors";
-import { itwCredentialsStore } from "../store/actions";
+import {
+  itwCredentialsStore,
+  itwCredentialsRefreshStatusByType
+} from "../store/actions";
 import {
   selectItwEnv,
   selectItwSpecsVersion
@@ -145,4 +152,18 @@ export function* checkCredentialsStatusAssertion() {
   }
 
   yield* call(syncItwAnalyticsProperties);
+}
+
+export function* handleCredentialStatusAssertionRetry(
+  acion: ActionType<typeof itwCredentialsRefreshStatusByType>
+) {
+  const credential = yield* select(itwCredentialSelector(acion.payload));
+
+  if (O.isSome(credential)) {
+    const updatedCredential = yield* call(
+      updateCredentialStatusAssertionSaga,
+      credential.value
+    );
+    yield* put(itwCredentialsStore([updatedCredential]));
+  }
 }
