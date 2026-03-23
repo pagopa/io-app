@@ -2,6 +2,7 @@ import { ItwDiscoveryInfoScreenNavigationParams } from "../discovery/screens/Itw
 import { ItwCieInternalAuthAndMrtdScreenParams } from "../identification/cie/screens/ItwCieInternalAuthAndMrtdScreen.tsx";
 import { ItwIdentificationCieWarningScreenNavigationParams } from "../identification/cie/screens/ItwIdentificationCieWarningScreen.tsx";
 import { ItwIdentificationNavigationParams } from "../identification/common/screens/ItwIdentificationModeSelectionScreen.tsx";
+import { ItwIssuanceCredentialOfferValidationScreenNavigationParams } from "../issuance/offer/screens/ItwIssuanceCredentialOfferValidation.tsx";
 import { ItwIssuanceCredentialLandingScreenNavigationParams } from "../issuance/screens/ItwIssuanceCredentialLandingScreen.tsx";
 import { ItwIssuanceCredentialTrustIssuerNavigationParams } from "../issuance/screens/ItwIssuanceCredentialTrustIssuerScreen";
 import { ItwCardOnboardingL3NavigationParams } from "../onboarding/screens/ItwCardOnboardingL3Screen.tsx";
@@ -64,6 +65,8 @@ export type ItwParamsList = {
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_FAILURE]: undefined;
   [ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL]: undefined;
   [ITW_ROUTES.ISSUANCE.UPGRADE_CREDENTIALS]: undefined;
+  [ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER
+    .VALIDATION]: ItwIssuanceCredentialOfferValidationScreenNavigationParams;
   // PRESENTATION
   [ITW_ROUTES.PRESENTATION
     .CREDENTIAL_DETAIL]: ItwPresentationCredentialDetailNavigationParams;

@@ -6,8 +6,11 @@ import {
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
   ObtainStatusAssertionActorInput,
+  ProcessCredentialOfferActorInput,
+  ProcessCredentialOfferActorOutput,
   RequestCredentialActorInput,
-  RequestCredentialActorOutput
+  RequestCredentialActorOutput,
+  VerifyTrustFederationActorInput
 } from "./actors";
 import { Context, InitialContext } from "./context";
 import { CredentialIssuanceEvents } from "./events";
@@ -63,7 +66,9 @@ export const itwCredentialIssuanceMachine = setup({
     trackCredentialIssuingDataShareAccepted: notImplemented
   },
   actors: {
-    verifyTrustFederation: fromPromise<void>(notImplemented),
+    verifyTrustFederation: fromPromise<void, VerifyTrustFederationActorInput>(
+      notImplemented
+    ),
     getWalletAttestation:
       fromPromise<GetWalletAttestationActorOutput>(notImplemented),
     requestCredential: fromPromise<
@@ -77,6 +82,10 @@ export const itwCredentialIssuanceMachine = setup({
     obtainStatusAssertion: fromPromise<
       Array<StoredCredential>,
       ObtainStatusAssertionActorInput
+    >(notImplemented),
+    processCredentialOffer: fromPromise<
+      ProcessCredentialOfferActorOutput,
+      ProcessCredentialOfferActorInput
     >(notImplemented)
   },
   guards: {
@@ -96,16 +105,49 @@ export const itwCredentialIssuanceMachine = setup({
         "Waits for a credential selection in order to proceed with the issuance",
       tags: [ItwTags.Loading],
       on: {
+        "start-credential-offer": {
+          target: "CredentialOfferValidation",
+          actions: assign(({ event }) => ({
+            credentialOfferUri: event.itwCredentialOfferUri,
+            mode: "issuance",
+            issuanceSource: "credential-offer"
+          }))
+        },
         "select-credential": {
           target: "EvaluateFlow",
           actions: [
             "onInit",
             assign(({ event }) => ({
               credentialType: event.credentialType,
-              mode: event.mode
+              mode: event.mode,
+              issuanceSource: "catalogue"
             }))
           ]
         }
+      }
+    },
+    CredentialOfferValidation: {
+      description: "Resolves and validates the credential offer URI",
+      invoke: {
+        src: "processCredentialOffer",
+        input: ({ context }) => ({
+          credentialOfferUri: context.credentialOfferUri!
+        }),
+        onDone: {
+          target: "EvaluateFlow",
+          actions: assign(({ event }) => ({
+            resolvedCredentialOffer: {
+              offer: event.output.offer,
+              grantDetails: event.output.grantDetails
+            },
+            trustIssuerBaseUrl: event.output.trustIssuerBaseUrl,
+            credentialType:
+              event.output.grantDetails.authorizationCodeGrant.scope
+          }))
+        },
+
+        // TODO [SIW-3996]: better handle different error cases (e.g. invalid offer, network error, etc.) and map them to specific failure states
+        onError: {}
       }
     },
     EvaluateFlow: {
@@ -147,10 +189,18 @@ export const itwCredentialIssuanceMachine = setup({
         continue: {
           target: "TrustFederationVerification"
         },
-        back: {
-          target: "Idle",
-          actions: "navigateToCardOnboardingScreen"
-        }
+        back: [
+          {
+            guard: ({ context }) =>
+              context.issuanceSource === "credential-offer",
+            target: "Idle",
+            actions: "closeIssuance"
+          },
+          {
+            target: "Idle",
+            actions: "navigateToCardOnboardingScreen"
+          }
+        ]
       }
     },
     TrustFederationVerification: {
@@ -159,6 +209,9 @@ export const itwCredentialIssuanceMachine = setup({
       tags: [ItwTags.Loading],
       invoke: {
         src: "verifyTrustFederation",
+        input: ({ context }) => ({
+          trustIssuerBaseUrl: context.trustIssuerBaseUrl
+        }),
         onDone: {
           target: "CheckingWalletInstanceAttestation"
         },
