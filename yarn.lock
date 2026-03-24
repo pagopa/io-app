@@ -11494,10 +11494,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-server@npm:^55.0.6":
-  version: 55.0.6
-  resolution: "expo-server@npm:55.0.6"
-  checksum: 0676127a104977a4549233e34c3c4f97e62be53aa05e72a95cb2da3b3d0c8dc0c49bbfc1cb3ddf4d89d157ccbb7adb4606623122e9f455d982fb9810d113603f
+"expo-screen-capture@patch:expo-screen-capture@npm%3A8.0.9#./.yarn/patches/expo-screen-capture-npm-8.0.9-d1b801bc95.patch::locator=io%40workspace%3A.":
+  version: 8.0.9
+  resolution: "expo-screen-capture@patch:expo-screen-capture@npm%3A8.0.9#./.yarn/patches/expo-screen-capture-npm-8.0.9-d1b801bc95.patch::version=8.0.9&hash=68b418&locator=io%40workspace%3A."
+  peerDependencies:
+    expo: "*"
+    react: "*"
+  checksum: 9618e45e96fc7c78285b2d40c4285ef5e5cdcc24324b4a3d5a8cd6dbe0534db3be1fa3b3a298fdd62c3cd2431de0fc83643311d07fe8a724ec283b1a4316e644
+  languageName: node
+  linkType: hard
+
+"expo-server@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "expo-server@npm:1.0.5"
+  checksum: b22f58614e969dff93c4e961f7ab991e26dbc415cce7acc3bee74251765799c2ef2ece2c6f9dab444bde16d91ea22fbe4c3369bafee152b8ae40839bd0937eef
   languageName: node
   linkType: hard
 

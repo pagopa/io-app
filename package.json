@@ -1,6 +1,6 @@
 {
   "name": "io",
-  "version": "3.27.0-rc.2",
+  "version": "3.27.0-rc.4",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -280,7 +280,8 @@
     "@react-native-cookies/cookies@^6.2.1": "patch:@react-native-cookies/cookies@npm%3A6.2.1#./.yarn/patches/@react-native-cookies-cookies-npm-6.2.1-13b1e04ec5.patch",
     "@react-native-community/art@^1.2.0": "patch:@react-native-community/art@npm%3A1.2.0#./.yarn/patches/@react-native-community-art-npm-1.2.0-1c93d63acc.patch",
     "react-native-exception-handler@^2.10.8": "patch:react-native-exception-handler@npm%3A2.10.8#./.yarn/patches/react-native-exception-handler-npm-2.10.8-0346a1ef37.patch",
-    "@gorhom/bottom-sheet@^5.2.8": "patch:@gorhom/bottom-sheet@npm%3A5.2.8#./.yarn/patches/@gorhom-bottom-sheet-npm-5.2.8-1ad4b8f529.patch"
+    "@gorhom/bottom-sheet@^5.2.8": "patch:@gorhom/bottom-sheet@npm%3A5.2.8#./.yarn/patches/@gorhom-bottom-sheet-npm-5.2.8-1ad4b8f529.patch",
+    "expo-screen-capture@~8.0.9": "patch:expo-screen-capture@npm%3A8.0.9#./.yarn/patches/expo-screen-capture-npm-8.0.9-d1b801bc95.patch"
   },
   "react-native": {
     "path": "path-browserify",

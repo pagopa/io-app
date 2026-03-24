@@ -28,8 +28,9 @@ import { Dimensions, Platform, ScrollView, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
+import { contentRepoUrl } from "../../../config";
 
-const cdnPath = "https://assets.cdn.io.italia.it/logos/organizations/";
+const cdnPath = `${contentRepoUrl}/logos/organizations/`;
 
 const organizationsURIs = [
   {
