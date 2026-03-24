@@ -45,6 +45,7 @@ export const SendAARCieCardReadingComponent = ({
   const theme = useIOTheme();
   const { startReading } = useCieInternalAuthAndMrtdReading();
 
+  // TODO remove this change, it is needed only to skip card reading on simulator
   const readState = {
     status: ReadStatus.SUCCESS,
     data: {
