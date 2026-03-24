@@ -1,17 +1,6 @@
 import { act } from "@testing-library/react-native";
 import { Action, createStore } from "redux";
 import { fromPromise } from "xstate";
-import { ITW_REMOTE_ROUTES } from "../../navigation/routes.ts";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper.tsx";
-import { GlobalState } from "../../../../../../store/reducers/types.ts";
-import { ItwRemoteRequestValidationScreen } from "../ItwRemoteRequestValidationScreen.tsx";
-import { appReducer } from "../../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../../store/actions/application.ts";
-import {
-  ItwRemoteFlowType,
-  ItwRemoteRequestPayload
-} from "../../utils/itwRemoteTypeUtils.ts";
-import { ItwRemoteMachineContext } from "../../machine/provider.tsx";
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList.ts";
 import { applicationChangeState } from "../../../../../../store/actions/application.ts";
 import { startupLoadSuccess } from "../../../../../../store/actions/startup.ts";
@@ -25,7 +14,10 @@ import { itwRemoteMachine } from "../../machine/machine.ts";
 import { ItwRemoteMachineContext } from "../../machine/provider.tsx";
 import { ItwRemoteParamsList } from "../../navigation/ItwRemoteParamsList.ts";
 import { ITW_REMOTE_ROUTES } from "../../navigation/routes.ts";
-import { ItwRemoteRequestPayload } from "../../utils/itwRemoteTypeUtils.ts";
+import {
+  ItwRemoteFlowType,
+  ItwRemoteRequestPayload
+} from "../../utils/itwRemoteTypeUtils.ts";
 import { ItwRemoteRequestValidationScreen } from "../ItwRemoteRequestValidationScreen.tsx";
 
 type ActorRef = ReturnType<typeof ItwRemoteMachineContext.useActorRef>;
