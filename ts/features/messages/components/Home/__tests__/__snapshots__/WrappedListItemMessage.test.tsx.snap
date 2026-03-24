@@ -395,7 +395,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -815,7 +815,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -1235,7 +1235,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -1655,7 +1655,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -2075,7 +2075,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -2495,7 +2495,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -2915,7 +2915,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -3335,7 +3335,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -3755,7 +3755,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -4175,7 +4175,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -4595,7 +4595,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -5015,7 +5015,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -5435,7 +5435,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -5855,7 +5855,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -6275,7 +6275,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -6695,7 +6695,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -7115,7 +7115,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -7535,7 +7535,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -7955,7 +7955,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -8375,7 +8375,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -8795,7 +8795,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -9215,7 +9215,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -9635,7 +9635,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -10055,7 +10055,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -10475,7 +10475,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -10895,7 +10895,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -11315,7 +11315,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -11735,7 +11735,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -12155,7 +12155,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -12575,7 +12575,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -12995,7 +12995,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -13415,7 +13415,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -13835,7 +13835,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -14255,7 +14255,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -14675,7 +14675,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -15095,7 +15095,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -15515,7 +15515,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -15935,7 +15935,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -16355,7 +16355,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -16775,7 +16775,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -17195,7 +17195,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -17615,7 +17615,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -18035,7 +18035,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -18455,7 +18455,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -18875,7 +18875,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -19295,7 +19295,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -19715,7 +19715,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -20135,7 +20135,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -20555,7 +20555,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -20975,7 +20975,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -21395,7 +21395,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -21815,7 +21815,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -22235,7 +22235,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -22655,7 +22655,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -23075,7 +23075,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -23495,7 +23495,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -23915,7 +23915,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -24335,7 +24335,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -24755,7 +24755,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -25175,7 +25175,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -25595,7 +25595,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -26015,7 +26015,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -26435,7 +26435,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -26855,7 +26855,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -27275,7 +27275,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -27695,7 +27695,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -28115,7 +28115,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -28535,7 +28535,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -28955,7 +28955,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -29375,7 +29375,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -29795,7 +29795,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -30215,7 +30215,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -30635,7 +30635,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -31055,7 +31055,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -31475,7 +31475,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -31895,7 +31895,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -32315,7 +32315,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -32735,7 +32735,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -33155,7 +33155,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -33575,7 +33575,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -33995,7 +33995,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -34415,7 +34415,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -34835,7 +34835,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -35255,7 +35255,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -35675,7 +35675,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -36095,7 +36095,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -36515,7 +36515,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -36935,7 +36935,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -37355,7 +37355,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -37775,7 +37775,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -38195,7 +38195,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -38615,7 +38615,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -39035,7 +39035,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -39455,7 +39455,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -39875,7 +39875,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -40295,7 +40295,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -40715,7 +40715,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -41135,7 +41135,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -41555,7 +41555,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -41975,7 +41975,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -42395,7 +42395,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -42815,7 +42815,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -43235,7 +43235,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -43655,7 +43655,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -44075,7 +44075,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -44495,7 +44495,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -44915,7 +44915,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -45335,7 +45335,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -45755,7 +45755,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -46175,7 +46175,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -46595,7 +46595,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -47015,7 +47015,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -47435,7 +47435,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -47855,7 +47855,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -48275,7 +48275,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -48695,7 +48695,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -49115,7 +49115,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -49535,7 +49535,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -49955,7 +49955,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -50375,7 +50375,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -50795,7 +50795,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -51215,7 +51215,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -51635,7 +51635,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -52055,7 +52055,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -52475,7 +52475,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -52895,7 +52895,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -53315,7 +53315,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -53735,7 +53735,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -54155,7 +54155,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -54575,7 +54575,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -54995,7 +54995,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -55415,7 +55415,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -55835,7 +55835,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -56255,7 +56255,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -56675,7 +56675,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -57095,7 +57095,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -57515,7 +57515,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -57935,7 +57935,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -58355,7 +58355,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -58775,7 +58775,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -59195,7 +59195,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -59615,7 +59615,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -60035,7 +60035,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
@@ -60455,7 +60455,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          [{"uri":"https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
+                          [{"uri":"https://assets.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png","width":180,"height":180},{"uri":"https://assets.io.pagopa.it/logos/organizations/RGNFSCCDO.png","width":180,"height":180}]
                         </Text>
                         <Text>
                           Service name
