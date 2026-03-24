@@ -4124,9 +4124,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-app-design-system@https://github.com/pagopa/io-app-design-system#SIW-3249-markdown-lite":
-  version: 6.0.7
-  resolution: "@pagopa/io-app-design-system@https://github.com/pagopa/io-app-design-system.git#commit=078aa706dfb9b16f96752f6498bb66e512ecc38f"
+"@pagopa/io-app-design-system@npm:6.1.0":
+  version: 6.1.0
+  resolution: "@pagopa/io-app-design-system@npm:6.1.0"
   dependencies:
     auto-changelog: ^2.4.0
     markdown-it: ^14.1.0
@@ -4149,7 +4149,7 @@ __metadata:
     react-native-safe-area-context: "*"
     react-native-svg: "*"
     react-native-worklets: "*"
-  checksum: 7a48bd142c0914f462b45c8cbd712ff3d2758862962ae2230c72ab9baf05772fbf8a18db006f4f7c547c60c21009e7559967c0ddf798603e5554394822665b85
+  checksum: 2cb6968aed1f8342fae2550ae8859d1bf8086479b5d7dc47bcfa5b56a139837998dd5c626bafb50253baa451ce10a50da139cae00c1b9f11aa4dd07e5dd55aff
   languageName: node
   linkType: hard
 
@@ -12959,7 +12959,7 @@ __metadata:
     "@craftzdog/react-native-buffer": ^6.1.1
     "@gorhom/bottom-sheet": ^5.2.8
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
-    "@pagopa/io-app-design-system": "https://github.com/pagopa/io-app-design-system#SIW-3249-markdown-lite"
+    "@pagopa/io-app-design-system": 6.1.0
     "@pagopa/io-pagopa-commons": ^3.1.0
     "@pagopa/io-react-native-cie": 1.3.5-rc.2
     "@pagopa/io-react-native-cieid": 0.4.0
