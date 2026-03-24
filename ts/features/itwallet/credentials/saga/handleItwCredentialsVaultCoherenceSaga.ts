@@ -24,28 +24,33 @@ export function* handleItwCredentialsVaultCoherenceSaga() {
     (s: GlobalState) => s.features.itWallet.credentials.legacyCredentials
   );
 
-  const vaultCredentialIds = yield* call(CredentialsVault.list);
+  try {
+    const vaultCredentialIds = yield* call(CredentialsVault.list);
 
-  // 1. Credentials in Redux but missing from vault → remove from Redux
-  // Skip credentials with a pending legacy migration entry (migration will retry on next boot)
-  const missingInVault = reduxCredentialIds.filter(
-    id => !vaultCredentialIds.includes(id) && !(id in legacyCredentials)
-  );
+    // 1. Credentials in Redux but missing from vault → remove from Redux
+    // Skip credentials with a pending legacy migration entry (migration will retry on next boot)
+    const missingInVault = reduxCredentialIds.filter(
+      id => !vaultCredentialIds.includes(id) && !(id in legacyCredentials)
+    );
 
-  if (missingInVault.length > 0) {
-    const toRemove = missingInVault
-      .map(id => reduxCredentials[id])
-      .filter(Boolean);
-    yield* put(itwCredentialsRemove(toRemove));
-    yield* all(toRemove.map(c => call(deleteKey, c.keyTag)));
-  }
+    if (missingInVault.length > 0) {
+      const toRemove = missingInVault
+        .map(id => reduxCredentials[id])
+        .filter(Boolean);
+      yield* put(itwCredentialsRemove(toRemove));
+      yield* all(toRemove.map(c => call(deleteKey, c.keyTag)));
+    }
 
-  // 2. Credentials in vault but missing from Redux → remove orphans from vault
-  const orphanedInVault = vaultCredentialIds.filter(
-    id => !reduxCredentialIds.includes(id)
-  );
+    // 2. Credentials in vault but missing from Redux → remove orphans from vault
+    const orphanedInVault = vaultCredentialIds.filter(
+      id => !reduxCredentialIds.includes(id)
+    );
 
-  if (orphanedInVault.length > 0) {
-    yield* call(CredentialsVault.removeAll, orphanedInVault);
+    if (orphanedInVault.length > 0) {
+      yield* call(CredentialsVault.removeAll, orphanedInVault);
+    }
+  } catch {
+    // Errors are currently not handled, just make sure the saga doesn't crash
+    // and the app can continue booting.
   }
 }
