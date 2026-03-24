@@ -214,7 +214,6 @@ const getPid: GetPid = async ({
       credentialType: CREDENTIAL_TYPE,
       credentialId: credentialIdentifierDefinition.credential_configuration_id,
       format,
-      credential,
       jwt: {
         expiration: expiration.toISOString(),
         issuedAt: issuedAt?.toISOString()
