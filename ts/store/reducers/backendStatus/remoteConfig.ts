@@ -629,23 +629,7 @@ export const paymentsFeedbackBannerConfigSelector = createSelector(
     )
 );
 
-export const isPnFeedbackBannerEnabledSelector = createSelector(
-  remoteConfigSelector,
-  (remoteConfig): boolean =>
-    pipe(
-      remoteConfig,
-      O.map(config =>
-        isVersionSupported(
-          Platform.OS === "ios"
-            ? config.newPaymentSection.feedbackBanner?.min_app_version.ios
-            : config.newPaymentSection.feedbackBanner?.min_app_version.android,
-          getAppVersion()
-        )
-      ),
-      O.getOrElse(() => false)
-    )
-);
-
+// TODO change to new field
 export const pnFeedbackBannerConfigSelector = createSelector(
   remoteConfigSelector,
   (remoteConfig): Banner | undefined =>

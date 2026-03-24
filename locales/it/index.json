@@ -2500,10 +2500,6 @@
             "paragraph2": "Puoi inquadrarlo oppure caricare una sua foto su IO",
             "paragraph3": "Tutte le tue notifiche sono disponibili sul sito di SEND - Notifiche Digitali",
             "link": "Vai sul sito di SEND",
-            "surveyBanner": {
-              "description": "Raccontaci la tua esperienza con la notifica e aiutaci a migliorare.",
-              "action": "Vai al sondaggio"
-            },
             "primaryAction": "Torna alla notifica",
             "secondaryAction": "Chiudi la notifica"
           },
