@@ -31,7 +31,8 @@ export function* fetchAARQrCodeSaga(
     yield* call(
       trackSendAARFailure,
       sendAARFailurePhase,
-      `Called in wrong state (${currentState.type})`
+      `Called in wrong state (${currentState.type})`,
+      undefined
     );
     return;
   }
@@ -76,7 +77,8 @@ export function* fetchAARQrCodeSaga(
         yield* call(
           trackSendAARFailure,
           sendAARFailurePhase,
-          "Fast login expiration"
+          "Fast login expiration",
+          undefined
         );
         return;
 
@@ -101,7 +103,7 @@ export function* fetchAARQrCodeSaga(
           status,
           value
         )})`;
-        yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
+        yield* call(trackSendAARFailure, sendAARFailurePhase, reason, value);
         const errorState: AARFlowState = {
           type: sendAARFlowStates.ko,
           previousState: { ...currentState },
@@ -116,7 +118,7 @@ export function* fetchAARQrCodeSaga(
     }
   } catch (e) {
     const reason = `An error was thrown (${unknownToReason(e)})`;
-    yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
+    yield* call(trackSendAARFailure, sendAARFailurePhase, reason, undefined);
     yield* put(
       setAarFlowState({
         type: sendAARFlowStates.ko,

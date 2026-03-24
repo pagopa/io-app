@@ -98,7 +98,7 @@ describe("ActiveSessionCieIdLoginScreen", () => {
 
     act(() => {
       fireEvent(webView, "onShouldStartLoadWithRequest", {
-        url: `${API_PREFIX_URL}/profile.html?token=my-token`
+        url: `${API_PREFIX_URL}/profile.html#token=my-token`
       });
     });
 

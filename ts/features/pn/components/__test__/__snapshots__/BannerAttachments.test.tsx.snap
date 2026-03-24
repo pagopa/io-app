@@ -986,7 +986,7 @@ Se i documenti non sono più disponibili, contatta l'ente che li ha inviati.
                                         [
                                           {},
                                           {
-                                            "color": "#0E0F13",
+                                            "color": undefined,
                                             "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",

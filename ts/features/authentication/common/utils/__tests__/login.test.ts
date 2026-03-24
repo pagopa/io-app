@@ -29,19 +29,19 @@ describe("hook the login outcome from the url", () => {
     [string, string, ReturnType<typeof extractLoginResult>]
   > = [
     [
-      "success happy case (query param)",
+      "token in query param is ignored",
       `${remoteHost}${successSuffix}?token=${successToken}`,
-      { success: true, token: successToken }
+      { success: false }
     ],
     [
-      "with other params (query param)",
+      "token in query param with other params is ignored",
       `${remoteHost}${successSuffix}?token=${successToken}&param1=abc&param2=123`,
-      { success: true, token: successToken }
+      { success: false }
     ],
     [
-      "with token as not the first param (query param)",
+      "token in query param not first is ignored",
       `${remoteHost}${successSuffix}?param1=987&token=${successToken}&param2=123`,
-      { success: true, token: successToken }
+      { success: false }
     ],
 
     [
@@ -66,19 +66,19 @@ describe("hook the login outcome from the url", () => {
     ],
 
     [
-      "fallback to query if fragment is empty",
+      "no fallback to query if fragment is empty",
       `${remoteHost}${successSuffix}?token=${successToken}#`,
-      { success: true, token: successToken }
+      { success: false }
     ],
     [
-      "fallback to query if fragment exists but has no token",
+      "no fallback to query if fragment exists but has no token",
       `${remoteHost}${successSuffix}?token=${successToken}#other=123`,
-      { success: true, token: successToken }
+      { success: false }
     ],
     [
-      "fallback to query if fragment token is empty string",
+      "no fallback to query if fragment token is empty string",
       `${remoteHost}${successSuffix}?token=${successToken}#token=`,
-      { success: true, token: successToken }
+      { success: false }
     ],
 
     [

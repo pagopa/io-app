@@ -8,6 +8,7 @@ export const PoweredByItWalletText = () => (
     <BodySmall>
       {I18n.t("features.itWallet.presentation.credentialDetails.partOf")}
     </BodySmall>
+    {/* eslint-disable-next-line i18next/no-literal-string */}
     <ItWalletLogo width={80} height={16} accessibilityLabel="IT Wallet" />
   </View>
 );

@@ -227,7 +227,7 @@ describe(CieIdLoginWebView, () => {
     const webView = getByTestId("cie-id-webview");
     act(() => {
       fireEvent(webView, "onShouldStartLoadWithRequest", {
-        url: `${API_PREFIX_URL}/profile.html?token=my-token`
+        url: `${API_PREFIX_URL}/profile.html#token=my-token`
       });
     });
     expect(mockReplace).toHaveBeenCalledTimes(0);

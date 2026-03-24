@@ -1140,7 +1140,7 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",

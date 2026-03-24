@@ -777,7 +777,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         [
                                           {},
                                           {
-                                            "color": "#0E0F13",
+                                            "color": undefined,
                                             "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
@@ -1174,7 +1174,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -1992,7 +1992,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         [
                                           {},
                                           {
-                                            "color": "#0E0F13",
+                                            "color": undefined,
                                             "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
@@ -2389,7 +2389,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -2615,7 +2615,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -2851,7 +2851,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -3670,7 +3670,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         [
                                           {},
                                           {
-                                            "color": "#0E0F13",
+                                            "color": undefined,
                                             "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
@@ -4067,7 +4067,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -4303,7 +4303,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -5290,7 +5290,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -6276,7 +6276,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -6502,7 +6502,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -6738,7 +6738,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -7725,7 +7725,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -7961,7 +7961,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -8757,7 +8757,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         [
                                           {},
                                           {
-                                            "color": "#0E0F13",
+                                            "color": undefined,
                                             "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
@@ -9154,7 +9154,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -9949,7 +9949,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         [
                                           {},
                                           {
-                                            "color": "#0E0F13",
+                                            "color": undefined,
                                             "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
@@ -10346,7 +10346,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -10572,7 +10572,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -10808,7 +10808,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -11604,7 +11604,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         [
                                           {},
                                           {
-                                            "color": "#0E0F13",
+                                            "color": undefined,
                                             "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
@@ -12001,7 +12001,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -12237,7 +12237,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -13201,7 +13201,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -14164,7 +14164,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -14390,7 +14390,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -14626,7 +14626,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -15590,7 +15590,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -15826,7 +15826,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",

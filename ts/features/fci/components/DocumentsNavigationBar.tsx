@@ -1,14 +1,15 @@
-import { View, StyleSheet } from "react-native";
 import {
-  IOColors,
-  HSpacer,
-  H6,
-  IconButton,
-  WithTestID,
   ContentWrapper,
+  H6,
+  HSpacer,
+  HStack,
+  IconButton,
+  IOColors,
   useIOTheme,
-  HStack
+  WithTestID
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
+import { StyleSheet, View } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
@@ -59,7 +60,7 @@ const renderNavigationComponent = (
       testID={"DocumentsNavigationBarLeftButtonTestID"}
       icon="chevronLeft"
       iconSize={24}
-      accessibilityLabel="previous"
+      accessibilityLabel={I18n.t("global.buttons.previous")}
     />
     <H6>{title}</H6>
     {/* button right */}
@@ -69,7 +70,7 @@ const renderNavigationComponent = (
       testID={"DocumentsNavigationBarRightButtonTestID"}
       icon="chevronRight"
       iconSize={24}
-      accessibilityLabel="next"
+      accessibilityLabel={I18n.t("global.buttons.next")}
     />
   </HStack>
 );

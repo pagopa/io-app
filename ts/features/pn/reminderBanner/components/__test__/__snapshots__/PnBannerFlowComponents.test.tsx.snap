@@ -1124,7 +1124,7 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -1926,7 +1926,7 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -2350,24 +2350,37 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                             }
                             jestAnimatedStyle={
                               {
-                                "value": {
-                                  "transform": [
-                                    {
-                                      "rotateZ": "0deg",
-                                    },
-                                  ],
-                                },
+                                "value": {},
                               }
                             }
-                            jestInlineStyle={{}}
+                            jestInlineStyle={
+                              {
+                                "animationDuration": 850,
+                                "animationIterationCount": "infinite",
+                                "animationName": {
+                                  "from": {
+                                    "transform": [
+                                      {
+                                        "rotateZ": "0deg",
+                                      },
+                                    ],
+                                  },
+                                  "to": {
+                                    "transform": [
+                                      {
+                                        "rotateZ": "360deg",
+                                      },
+                                    ],
+                                  },
+                                },
+                                "animationTimingFunction": "linear",
+                                "transformOrigin": "center",
+                              }
+                            }
                             style={
                               [
                                 {
-                                  "transform": [
-                                    {
-                                      "rotateZ": "0deg",
-                                    },
-                                  ],
+                                  "transformOrigin": "center",
                                 },
                               ]
                             }
@@ -2420,7 +2433,7 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                                     }
                                     gradientTransform={null}
                                     gradientUnits={0}
-                                    name="spinner-secondHalf"
+                                    name="«r0»-secondHalf"
                                     x1="0%"
                                     x2="100%"
                                     y1="0%"
@@ -2437,7 +2450,7 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                                     }
                                     gradientTransform={null}
                                     gradientUnits={0}
-                                    name="spinner-firstHalf"
+                                    name="«r0»-firstHalf"
                                     x1="0%"
                                     x2="100%"
                                     y1="0%"
@@ -2473,7 +2486,7 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                                     }
                                     stroke={
                                       {
-                                        "brushRef": "spinner-secondHalf",
+                                        "brushRef": "«r0»-secondHalf",
                                         "type": 1,
                                       }
                                     }
@@ -2493,7 +2506,7 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                                     }
                                     stroke={
                                       {
-                                        "brushRef": "spinner-firstHalf",
+                                        "brushRef": "«r0»-firstHalf",
                                         "type": 1,
                                       }
                                     }
@@ -2979,24 +2992,37 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                             }
                             jestAnimatedStyle={
                               {
-                                "value": {
-                                  "transform": [
-                                    {
-                                      "rotateZ": "0deg",
-                                    },
-                                  ],
-                                },
+                                "value": {},
                               }
                             }
-                            jestInlineStyle={{}}
+                            jestInlineStyle={
+                              {
+                                "animationDuration": 850,
+                                "animationIterationCount": "infinite",
+                                "animationName": {
+                                  "from": {
+                                    "transform": [
+                                      {
+                                        "rotateZ": "0deg",
+                                      },
+                                    ],
+                                  },
+                                  "to": {
+                                    "transform": [
+                                      {
+                                        "rotateZ": "360deg",
+                                      },
+                                    ],
+                                  },
+                                },
+                                "animationTimingFunction": "linear",
+                                "transformOrigin": "center",
+                              }
+                            }
                             style={
                               [
                                 {
-                                  "transform": [
-                                    {
-                                      "rotateZ": "0deg",
-                                    },
-                                  ],
+                                  "transformOrigin": "center",
                                 },
                               ]
                             }
@@ -3049,7 +3075,7 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                                     }
                                     gradientTransform={null}
                                     gradientUnits={0}
-                                    name="spinner-secondHalf"
+                                    name="«r1»-secondHalf"
                                     x1="0%"
                                     x2="100%"
                                     y1="0%"
@@ -3066,7 +3092,7 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                                     }
                                     gradientTransform={null}
                                     gradientUnits={0}
-                                    name="spinner-firstHalf"
+                                    name="«r1»-firstHalf"
                                     x1="0%"
                                     x2="100%"
                                     y1="0%"
@@ -3102,7 +3128,7 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                                     }
                                     stroke={
                                       {
-                                        "brushRef": "spinner-secondHalf",
+                                        "brushRef": "«r1»-secondHalf",
                                         "type": 1,
                                       }
                                     }
@@ -3122,7 +3148,7 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                                     }
                                     stroke={
                                       {
-                                        "brushRef": "spinner-firstHalf",
+                                        "brushRef": "«r1»-firstHalf",
                                         "type": 1,
                                       }
                                     }
@@ -3989,7 +4015,7 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",

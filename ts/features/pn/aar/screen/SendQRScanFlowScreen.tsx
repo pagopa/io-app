@@ -20,7 +20,7 @@ export const SendQRScanFlowScreen = () => {
     "send",
     {
       onLanding: () =>
-        trackSendAARFailure("Entry Point", "App update required"),
+        trackSendAARFailure("Entry Point", "App update required", undefined),
       onConfirm: () => undefined
     }
   );

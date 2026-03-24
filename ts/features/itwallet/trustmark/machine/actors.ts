@@ -1,5 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
+import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import { useIOStore } from "../../../../store/hooks";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { assert } from "../../../../utils/assert";
@@ -30,6 +31,7 @@ export type GetCredentialTrustmarkUrlActorOutput = Awaited<
  */
 export const createItwTrustmarkActorsImplementation = (
   env: Env,
+  itwVersion: ItwVersion,
   store: ReturnType<typeof useIOStore>
 ) => {
   /**
@@ -48,6 +50,7 @@ export const createItwTrustmarkActorsImplementation = (
        */
       return await itwAttestationUtils.getAttestation(
         env,
+        itwVersion,
         integrityKeyTag.value,
         sessionToken
       );
@@ -66,6 +69,7 @@ export const createItwTrustmarkActorsImplementation = (
     // Generate trustmark url to be presented
     return await itwTrustmarkUtils.getCredentialTrustmark(
       env,
+      itwVersion,
       input.walletInstanceAttestation,
       input.credential
     );

@@ -1,10 +1,6 @@
 import { fromPromise } from "xstate";
 import * as O from "fp-ts/lib/Option";
-import {
-  createCryptoContextFor,
-  Credential,
-  Trust
-} from "@pagopa/io-react-native-wallet";
+import { ItwVersion, RemotePresentation } from "@pagopa/io-react-native-wallet";
 import {
   DcqlQuery,
   EnrichedPresentationDetails,
@@ -25,6 +21,7 @@ import {
   getInvalidCredentials
 } from "../utils/itwRemotePresentationUtils";
 import { assert } from "../../../../../utils/assert";
+import { IO_UNIVERSAL_LINK_PREFIX } from "../../../../../utils/navigation";
 import {
   itwIntegrityKeyTagSelector,
   itwIntegrityServiceStatusSelector
@@ -32,19 +29,18 @@ import {
 import { sessionTokenSelector } from "../../../../authentication/common/store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors";
 import { WIA_KEYTAG } from "../../../common/utils/itwCryptoContextUtils";
+import { getIoWallet } from "../../../common/utils/itwIoWallet";
 import { pollForStoreValue } from "../../../common/utils/itwStoreUtils";
 import { itwCredentialsAllSelector } from "../../../credentials/store/selectors";
 import { InvalidCredentialsStatusError } from "./failure";
 
-type CredentialsSdJwt =
-  Parameters<Credential.Presentation.EvaluateDcqlQuery>[0];
+type CredentialsSdJwt = Array<RemotePresentation.Credential4Dcql>;
 
 export type EvaluateRelyingPartyTrustInput = Partial<{
   qrCodePayload: ItwRemoteRequestPayload;
 }>;
 export type EvaluateRelyingPartyTrustOutput = {
   rpConf: RelyingPartyConfiguration;
-  rpSubject: string;
 };
 export type GetRequestObjectInput = Partial<{
   qrCodePayload: ItwRemoteRequestPayload;
@@ -52,7 +48,6 @@ export type GetRequestObjectInput = Partial<{
 export type GetRequestObjectOutput = string;
 export type GetPresentationDetailsInput = Partial<{
   rpConf: RelyingPartyConfiguration;
-  rpSubject: string;
   qrCodePayload: ItwRemoteRequestPayload;
   requestObjectEncodedJwt: string;
 }>;
@@ -73,28 +68,31 @@ export type SendAuthorizationResponseOutput = {
 
 export const createRemoteActorsImplementation = (
   env: Env,
+  itwVersion: ItwVersion,
   store: ReturnType<typeof useIOStore>
 ) => {
   const evaluateRelyingPartyTrust = fromPromise<
     EvaluateRelyingPartyTrustOutput,
     EvaluateRelyingPartyTrustInput
   >(async ({ input }) => {
+    const ioWallet = getIoWallet(itwVersion);
+
     const { qrCodePayload } = input;
     assert(qrCodePayload?.client_id, "Missing required client ID");
 
     const trustAnchorEntityConfig =
-      await Trust.Build.getTrustAnchorEntityConfiguration(
+      await ioWallet.Trust.getTrustAnchorEntityConfiguration(
         env.WALLET_TA_BASE_URL
       );
 
     // Create the trust chain for the Relying Party
-    const builtChainJwts = await Trust.Build.buildTrustChain(
+    const builtChainJwts = await ioWallet.Trust.buildTrustChain(
       qrCodePayload.client_id,
       trustAnchorEntityConfig
     );
 
     // Perform full validation on the built chainW
-    await Trust.Verify.verifyTrustChain(
+    await ioWallet.Trust.verifyTrustChain(
       trustAnchorEntityConfig,
       builtChainJwts,
       {
@@ -105,12 +103,12 @@ export const createRemoteActorsImplementation = (
     );
 
     // Determine the Relying Party configuration and subject
-    const { rpConf, subject } =
-      await Credential.Presentation.evaluateRelyingPartyTrust(
+    const { rpConf } =
+      await ioWallet.RemotePresentation.evaluateRelyingPartyTrust(
         qrCodePayload.client_id
       );
 
-    return { rpConf, rpSubject: subject };
+    return { rpConf };
   });
 
   // The retrieval of the Request Object is managed by a dedicated actor to enable access
@@ -121,10 +119,14 @@ export const createRemoteActorsImplementation = (
   >(async ({ input }) => {
     const { qrCodePayload } = input;
     assert(qrCodePayload, "Missing required qrCodePayload");
-    const { request_uri } = qrCodePayload;
 
+    const ioWallet = getIoWallet(itwVersion);
+
+    const authRequestUrl = `${IO_UNIVERSAL_LINK_PREFIX}/itw/auth?${new URLSearchParams(
+      qrCodePayload
+    )}`;
     const { requestObjectEncodedJwt } =
-      await Credential.Presentation.getRequestObject(request_uri);
+      await ioWallet.RemotePresentation.getRequestObject(authRequestUrl);
 
     return requestObjectEncodedJwt;
   });
@@ -133,23 +135,24 @@ export const createRemoteActorsImplementation = (
     GetPresentationDetailsOutput,
     GetPresentationDetailsInput
   >(async ({ input }) => {
-    const { rpConf, rpSubject, qrCodePayload, requestObjectEncodedJwt } = input;
+    const { rpConf, qrCodePayload, requestObjectEncodedJwt } = input;
     assert(
-      rpConf && rpSubject && qrCodePayload && requestObjectEncodedJwt,
+      rpConf && qrCodePayload && requestObjectEncodedJwt,
       "Missing required getPresentationDetails actor params"
     );
 
+    const ioWallet = getIoWallet(itwVersion);
     const { client_id, state } = qrCodePayload;
 
-    const { requestObject } = await Credential.Presentation.verifyRequestObject(
-      requestObjectEncodedJwt,
-      {
-        rpConf,
-        clientId: client_id,
-        rpSubject,
-        state
-      }
-    );
+    const { requestObject } =
+      await ioWallet.RemotePresentation.verifyRequestObject(
+        requestObjectEncodedJwt,
+        {
+          rpConf,
+          clientId: client_id,
+          state
+        }
+      );
 
     assert(requestObject.dcql_query, "Missing required DCQL query");
 
@@ -165,13 +168,16 @@ export const createRemoteActorsImplementation = (
     // Prepare credentials to evaluate the Relying Party request
     const credentialsSdJwt = prepareCredentialsForDcqlEvaluation([
       ...Object.values(credentials),
-      { keyTag: WIA_KEYTAG, credential: wiaSdJwt }
+      {
+        keyTag: WIA_KEYTAG,
+        credential: wiaSdJwt.endsWith("~") ? wiaSdJwt : `${wiaSdJwt}~`
+      }
     ]);
 
     // Evaluate the DCQL query against the credentials contained in the Wallet
-    const result = Credential.Presentation.evaluateDcqlQuery(
-      credentialsSdJwt,
-      requestObject.dcql_query as DcqlQuery
+    const result = await ioWallet.RemotePresentation.evaluateDcqlQuery(
+      requestObject.dcql_query as DcqlQuery,
+      credentialsSdJwt
     );
 
     // Check whether any of the requested credential is invalid
@@ -199,27 +205,27 @@ export const createRemoteActorsImplementation = (
       "Missing required sendAuthorizationResponse actor params"
     );
 
+    const ioWallet = getIoWallet(itwVersion);
+
     // Get required credentials and optional credentials that have been selected by the user
-    const credentialsToPresent = presentationDetails
-      .filter(
-        c =>
-          c.purposes.some(({ required }) => required) ||
-          optionalCredentials.has(c.id)
-      )
-      .map(({ requiredDisclosures, ...rest }) => ({
-        ...rest,
-        requestedClaims: requiredDisclosures.map(([, claimName]) => claimName)
-      }));
+    const credentialsToPresent = presentationDetails.filter(
+      c =>
+        c.purposes.some(({ required }) => required) ||
+        optionalCredentials.has(c.id)
+    );
 
     const remotePresentations =
-      await Credential.Presentation.prepareRemotePresentations(
+      await ioWallet.RemotePresentation.prepareRemotePresentations(
         credentialsToPresent,
-        requestObject.nonce,
-        requestObject.client_id
+        {
+          nonce: requestObject.nonce,
+          clientId: requestObject.client_id,
+          responseUri: requestObject.response_uri
+        }
       );
 
     const authResponse =
-      await Credential.Presentation.sendAuthorizationResponse(
+      await ioWallet.RemotePresentation.sendAuthorizationResponse(
         requestObject,
         remotePresentations,
         rpConf
@@ -254,7 +260,7 @@ export const createRemoteActorsImplementation = (
       assert(sessionToken, "sessionToken is undefined");
       assert(integrityKeyTag, "integrityKeyTag is undefined");
 
-      return getAttestation(env, integrityKeyTag, sessionToken);
+      return getAttestation(env, itwVersion, integrityKeyTag, sessionToken);
     }
   );
 
@@ -269,5 +275,4 @@ export const createRemoteActorsImplementation = (
 
 const prepareCredentialsForDcqlEvaluation = (
   credentials: Array<Pick<StoredCredential, "keyTag" | "credential">>
-): CredentialsSdJwt =>
-  credentials.map(c => [createCryptoContextFor(c.keyTag), c.credential]);
+): CredentialsSdJwt => credentials.map(c => [c.keyTag, c.credential]);

@@ -1,5 +1,4 @@
 import { useEffect, useMemo } from "react";
-import { Credential } from "@pagopa/io-react-native-wallet";
 import { constNull } from "fp-ts/lib/function";
 import { Nullable } from "@pagopa/io-app-design-system";
 import { AuthErrorResponseBody } from "../utils/itwRemoteTypeUtils";
@@ -7,6 +6,7 @@ import { RemoteFailure, RemoteFailureType } from "../machine/failure";
 import { selectUnverifiedRequestObject } from "../machine/selectors";
 import { ItwRemoteMachineContext } from "../machine/provider";
 import { OperationResultScreenContentProps } from "../../../../../components/screens/OperationResultScreenContent";
+import { useIoWallet } from "../../../common/utils/itwIoWallet";
 
 type Props = {
   failure: RemoteFailure;
@@ -17,6 +17,8 @@ export const useItwSendAuthorizationErrorResponse = ({
   failure,
   resultScreenProps
 }: Props) => {
+  const ioWallet = useIoWallet();
+
   const unverifiedRequestObject = ItwRemoteMachineContext.useSelector(
     selectUnverifiedRequestObject
   );
@@ -49,10 +51,10 @@ export const useItwSendAuthorizationErrorResponse = ({
 
   useEffect(() => {
     if (unverifiedRequestObject && authErrorBody) {
-      void Credential.Presentation.sendAuthorizationErrorResponse(
+      void ioWallet.RemotePresentation.sendAuthorizationErrorResponse(
         unverifiedRequestObject,
         authErrorBody
       ).catch(constNull); // Catching errors to ensure the app doesn't crash if sending the authorization error response fails.
     }
-  }, [authErrorBody, unverifiedRequestObject]);
+  }, [ioWallet, authErrorBody, unverifiedRequestObject]);
 };

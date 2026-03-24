@@ -12,6 +12,13 @@ import {
   StoredVerification
 } from "./itwTypesUtils";
 
+// Credentials that can be obtained with valid a Documenti su IO instance
+export const l2Credentials = [
+  CredentialType.DRIVING_LICENSE,
+  CredentialType.EUROPEAN_DISABILITY_CARD,
+  CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+] as const;
+
 // Credentials that can be actively requested and obtained by the user
 export const availableCredentials = [
   CredentialType.DRIVING_LICENSE,
@@ -28,6 +35,8 @@ export const newCredentials = [
 
 export type NewCredential = (typeof newCredentials)[number];
 
+export type L2Credential = (typeof l2Credentials)[number];
+
 // Credentials that will be available in the future
 export const upcomingCredentials = [] as ReadonlyArray<string>;
 
@@ -36,6 +45,10 @@ export const isUpcomingCredential = (type: string): boolean =>
 
 export const isNewCredential = (type: string): type is NewCredential =>
   newCredentials.includes(type as NewCredential);
+
+export const isL2Credential = (
+  type: string | undefined
+): type is L2Credential => l2Credentials.includes(type as L2Credential);
 
 export const itwGetCredentialNameByCredentialType = (
   isItwCredential: boolean

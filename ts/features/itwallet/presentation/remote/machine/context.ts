@@ -1,6 +1,7 @@
 import { RequestObject } from "../../../common/utils/itwTypesUtils";
 import {
   EnrichedPresentationDetails,
+  ItwRemoteFlowType,
   ItwRemoteRequestPayload,
   RelyingPartyConfiguration
 } from "../utils/itwRemoteTypeUtils";
@@ -15,10 +16,6 @@ export type Context = {
    * The failure of the remote presentation machine
    */
   failure?: RemoteFailure;
-  /**
-   * Relying party Entity Configuration subject
-   */
-  rpSubject: string | undefined;
   /**
    * Relying party Entity Configuration metadata
    */
@@ -41,6 +38,10 @@ export type Context = {
    */
   selectedOptionalCredentials: Set<string>;
   /**
+   * The type of flow for the remote presentation, which can be either "same-device" or "cross-device".
+   */
+  flowType: ItwRemoteFlowType | undefined;
+  /**
    * The URI to redirect the user to access the Relying Party's service
    * It is not required in cross-device presentation
    */
@@ -50,10 +51,10 @@ export type Context = {
 export const InitialContext: Context = {
   payload: undefined,
   failure: undefined,
-  rpSubject: undefined,
   rpConf: undefined,
   requestObjectEncodedJwt: undefined,
   requestObject: undefined,
   presentationDetails: undefined,
-  selectedOptionalCredentials: new Set()
+  selectedOptionalCredentials: new Set(),
+  flowType: undefined
 };

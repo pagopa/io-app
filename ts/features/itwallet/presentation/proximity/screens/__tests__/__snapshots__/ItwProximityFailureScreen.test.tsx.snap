@@ -760,7 +760,7 @@ exports[`ItwProximityFailureScreen should render failure screen for RELYING_PART
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -1667,7 +1667,7 @@ exports[`ItwProximityFailureScreen should render failure screen for TIMEOUT 1`] 
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -2607,7 +2607,7 @@ exports[`ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -2845,7 +2845,7 @@ exports[`ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP
                                           [
                                             {},
                                             {
-                                              "color": "#0E0F13",
+                                              "color": undefined,
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",

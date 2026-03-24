@@ -21,7 +21,9 @@ const WalletEmptyScreenContent = () => {
   const handleAddToWalletButtonPress = () => {
     trackWalletAdd();
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ONBOARDING
+      screen: isItWalletEnabled
+        ? ITW_ROUTES.L3_ONBOARDING
+        : ITW_ROUTES.ONBOARDING
     });
   };
 

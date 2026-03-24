@@ -90,7 +90,6 @@ export const itwCredentialIssuanceMachine = setup({
   id: "itwCredentialIssuanceMachine",
   context: { ...InitialContext },
   initial: "Idle",
-  entry: "onInit",
   states: {
     Idle: {
       description:
@@ -99,10 +98,13 @@ export const itwCredentialIssuanceMachine = setup({
       on: {
         "select-credential": {
           target: "EvaluateFlow",
-          actions: assign(({ event }) => ({
-            credentialType: event.credentialType,
-            mode: event.mode
-          }))
+          actions: [
+            "onInit",
+            assign(({ event }) => ({
+              credentialType: event.credentialType,
+              mode: event.mode
+            }))
+          ]
         }
       }
     },

@@ -8,7 +8,7 @@ import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { Errors } from "io-ts";
 import I18n from "i18next";
-import { Locales } from "../../locales/locales";
+import { Locales } from "../i18n";
 import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
 import { getLocalePrimary } from "./locale";
 import { NumberFromString } from "./number";

@@ -73,7 +73,7 @@ export const IdPayIbanOnboardingScreen = () => {
           });
         }}
         counterLimit={27}
-        placeholder="IBAN"
+        placeholder={I18n.t("idpay.initiative.operationDetails.refund.iban")}
       />
       <VSpacer size={16} />
       <TextInputValidation

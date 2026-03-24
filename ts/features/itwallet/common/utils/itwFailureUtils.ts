@@ -39,6 +39,15 @@ export const isLocalIntegrityError = (e: unknown): e is IntegrityError =>
   localIntegrityErrors.includes(e.message as IntegrityErrorCodes);
 
 /**
+ * Guard used to check if the error is a `GENERATION_ASSERTION_FAILED` error.
+ * This occurs on iOS when the stored DCAppAttest key becomes invalid
+ * (DCErrorInvalidKey, com.apple.devicecheck.error 3), e.g. after a device
+ * restore or app reinstall.
+ */
+export const isAssertionGenerationError = (e: unknown): e is IntegrityError =>
+  e instanceof Error && e.message === "GENERATION_ASSERTION_FAILED";
+
+/**
  * Enrich instances of Error with `credentialId` so it is possible to retrieve the credential configuration
  * from `credential_configurations_supported` in the Issuer's EC. This is needed during multi-credential issuance
  * to get dynamic error messages, because the original error may not contain the credential configuration ID.

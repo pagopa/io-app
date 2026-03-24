@@ -330,7 +330,7 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                   [
                     {},
                     {
-                      "color": "#0E0F13",
+                      "color": undefined,
                       "fontFamily": "Titillio",
                       "fontSize": 16,
                       "fontStyle": "normal",
@@ -727,7 +727,7 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                 [
                   {},
                   {
-                    "color": "#0E0F13",
+                    "color": undefined,
                     "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
@@ -964,7 +964,7 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                   [
                     {},
                     {
-                      "color": "#0E0F13",
+                      "color": undefined,
                       "fontFamily": "Titillio",
                       "fontSize": 16,
                       "fontStyle": "normal",
@@ -1324,7 +1324,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   [
                     {},
                     {
-                      "color": "#0E0F13",
+                      "color": undefined,
                       "fontFamily": "Titillio",
                       "fontSize": 16,
                       "fontStyle": "normal",
@@ -1779,7 +1779,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     [
                       {},
                       {
-                        "color": "#0E0F13",
+                        "color": undefined,
                         "fontFamily": "Titillio",
                         "fontSize": 16,
                         "fontStyle": "normal",
@@ -2184,7 +2184,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 [
                   {},
                   {
-                    "color": "#0E0F13",
+                    "color": undefined,
                     "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
@@ -2421,7 +2421,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   [
                     {},
                     {
-                      "color": "#0E0F13",
+                      "color": undefined,
                       "fontFamily": "Titillio",
                       "fontSize": 16,
                       "fontStyle": "normal",
@@ -3657,7 +3657,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 [
                   {},
                   {
-                    "color": "#0E0F13",
+                    "color": undefined,
                     "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
@@ -4169,7 +4169,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                 [
                   {},
                   {
-                    "color": "#0E0F13",
+                    "color": undefined,
                     "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
@@ -4406,7 +4406,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                   [
                     {},
                     {
-                      "color": "#0E0F13",
+                      "color": undefined,
                       "fontFamily": "Titillio",
                       "fontSize": 16,
                       "fontStyle": "normal",

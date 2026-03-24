@@ -81,7 +81,8 @@ export const itwRemoteMachine = setup({
         reset: {}, // Do nothing if the machine is already idle
         start: {
           actions: assign(({ event }) => ({
-            payload: event.payload
+            payload: event.payload,
+            flowType: event.flowType
           })),
           target: "PreliminaryChecks"
         }
@@ -196,7 +197,6 @@ export const itwRemoteMachine = setup({
         src: "getPresentationDetails",
         input: ({ context }) => ({
           qrCodePayload: context.payload,
-          rpSubject: context.rpSubject,
           requestObjectEncodedJwt: context.requestObjectEncodedJwt,
           rpConf: context.rpConf
         }),

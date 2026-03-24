@@ -40,7 +40,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
     }
   >
     <View
-      accessibilityLabel="previous"
+      accessibilityLabel="Indietro"
       accessibilityRole="button"
       accessibilityState={
         {
@@ -217,7 +217,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
       Documento 1 di 2
     </Text>
     <View
-      accessibilityLabel="next"
+      accessibilityLabel="Avanti"
       accessibilityRole="button"
       accessibilityState={
         {
