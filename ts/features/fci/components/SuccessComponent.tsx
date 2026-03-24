@@ -5,12 +5,8 @@ import { SignatureRequestDetailView } from "../../../../definitions/fci/Signatur
 import { fciEndRequest, fciStartRequest } from "../store/actions";
 import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
 import {
-  trackFciDocAlreadySigned,
-  trackFciDocOpening,
-  trackFciDocSignatureInProgress,
-  trackFciSignatureCancelled,
-  trackFciSignatureExpired,
-  trackFciSignatureRejected
+  trackFciSignatureRequestStatus,
+  trackFciSignatureExpired
 } from "../analytics";
 import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignatureRequest";
 import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
@@ -54,29 +50,16 @@ const SuccessComponent = (props: {
       return;
     }
 
-    switch (status) {
-      case SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE:
-        trackFciDocOpening(
-          expires_at_effect,
-          fciDocuments.length,
-          fciEnvironment
-        );
-        dispatch(fciStartRequest());
-        break;
-      case SignatureRequestStatusEnum.WAIT_FOR_QTSP:
-        trackFciDocSignatureInProgress();
-        break;
-      case SignatureRequestStatusEnum.SIGNED:
-        trackFciDocAlreadySigned();
-        break;
-      case SignatureRequestStatusEnum.REJECTED:
-        trackFciSignatureRejected();
-        break;
-      case SignatureRequestStatusEnum.CANCELLED:
-        trackFciSignatureCancelled();
-        break;
-      default:
-        break;
+    if (status === SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE) {
+      trackFciSignatureRequestStatus({
+        status,
+        expiresAt: expires_at_effect,
+        totalDocCount: fciDocuments.length,
+        environment: fciEnvironment
+      });
+      dispatch(fciStartRequest());
+    } else {
+      trackFciSignatureRequestStatus({ status });
     }
   }, [
     dispatch,

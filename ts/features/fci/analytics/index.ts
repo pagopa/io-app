@@ -14,6 +14,7 @@ import {
 import { getNetworkErrorMessage } from "../../../utils/errors";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { buildEventProperties } from "../../../utils/analytics";
+import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
 
 export const trackFciSignatureCancelled = () =>
   mixpanelTrack(
@@ -44,6 +45,50 @@ export const trackFciDocAlreadySigned = () =>
     "FCI_DOC_ALREADY_SIGNED",
     buildEventProperties("KO", "screen_view")
   );
+
+/**
+ * Centralized analytics tracking for signature request status changes.
+ * Handles all status-based tracking logic in one place.
+ */
+export const trackFciSignatureRequestStatus = (
+  params:
+    | {
+        status: SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE;
+        expiresAt: Date;
+        totalDocCount: number;
+        environment: string;
+      }
+    | {
+        status: Exclude<
+          SignatureRequestStatusEnum,
+          SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE
+        >;
+      }
+) => {
+  switch (params.status) {
+    case SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE:
+      trackFciDocOpening(
+        params.expiresAt,
+        params.totalDocCount,
+        params.environment
+      );
+      break;
+    case SignatureRequestStatusEnum.WAIT_FOR_QTSP:
+      trackFciDocSignatureInProgress();
+      break;
+    case SignatureRequestStatusEnum.SIGNED:
+      trackFciDocAlreadySigned();
+      break;
+    case SignatureRequestStatusEnum.REJECTED:
+      trackFciSignatureRejected();
+      break;
+    case SignatureRequestStatusEnum.CANCELLED:
+      trackFciSignatureCancelled();
+      break;
+    default:
+      break;
+  }
+};
 
 export const trackFciSignatureDetailFailureAction = (
   reason: string,
