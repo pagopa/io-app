@@ -493,12 +493,12 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                                       [
                                         {
                                           "height": 180,
-                                          "uri": "https://assets.cdn.io.pagopa.it/logos/services/1.png",
+                                          "uri": "https://assets.io.pagopa.it/logos/services/1.png",
                                           "width": 180,
                                         },
                                         {
                                           "height": 180,
-                                          "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/.png",
+                                          "uri": "https://assets.io.pagopa.it/logos/organizations/.png",
                                           "width": 180,
                                         },
                                       ]
@@ -1057,12 +1057,12 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                       [
                                         {
                                           "height": 180,
-                                          "uri": "https://assets.cdn.io.pagopa.it/logos/services/1.png",
+                                          "uri": "https://assets.io.pagopa.it/logos/services/1.png",
                                           "width": 180,
                                         },
                                         {
                                           "height": 180,
-                                          "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/.png",
+                                          "uri": "https://assets.io.pagopa.it/logos/organizations/.png",
                                           "width": 180,
                                         },
                                       ]

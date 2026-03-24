@@ -579,12 +579,12 @@ exports[`MessageDetailsHeader component should match the snapshot with a valid t
                                     [
                                       {
                                         "height": 180,
-                                        "uri": "https://assets.cdn.io.pagopa.it/logos/services/service_one.png",
+                                        "uri": "https://assets.io.pagopa.it/logos/services/service_one.png",
                                         "width": 180,
                                       },
                                       {
                                         "height": 180,
-                                        "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/FSCLCD.png",
+                                        "uri": "https://assets.io.pagopa.it/logos/organizations/FSCLCD.png",
                                         "width": 180,
                                       },
                                     ]
@@ -1174,12 +1174,12 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                     [
                                       {
                                         "height": 180,
-                                        "uri": "https://assets.cdn.io.pagopa.it/logos/services/service_one.png",
+                                        "uri": "https://assets.io.pagopa.it/logos/services/service_one.png",
                                         "width": 180,
                                       },
                                       {
                                         "height": 180,
-                                        "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/FSCLCD.png",
+                                        "uri": "https://assets.io.pagopa.it/logos/organizations/FSCLCD.png",
                                         "width": 180,
                                       },
                                     ]
