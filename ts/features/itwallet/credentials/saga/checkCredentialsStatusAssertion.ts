@@ -44,11 +44,11 @@ export function* updateCredentialStatusAssertionSaga(
   );
   try {
     const credential = yield* call(() =>
-      CredentialsVault.get(metadata.credentialType)
+      CredentialsVault.get(metadata.credentialId)
     );
     if (!credential) {
       throw new Error(
-        `Credential of type ${metadata.credentialType} not found in secure storage`
+        `Credential with id ${metadata.credentialId} not found in secure storage`
       );
     }
 

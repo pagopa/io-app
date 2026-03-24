@@ -153,7 +153,7 @@ export const groupCredentialsByPurpose = (
  */
 export const getInvalidCredentials = (
   presentationDetails: PresentationDetails,
-  credentialsByType: Record<string, CredentialMetadata>
+  credentialsByType: Record<string, CredentialMetadata | undefined>
 ) =>
   presentationDetails
     .filter(isPresentationDetailSdJwt) // TODO: [SIW-3998] Support MDOC remote presentation

@@ -2,10 +2,7 @@ import { ActionType, createStandardAction } from "typesafe-actions";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 
 /**
- * This actions stores one or multiple credentials using the CredentialBundle payload:
- * the metadata is stored in the Redux store and the raw credential is stored in the
- * secure storage.
- *
+ * This actions stores one or multiple credentials using the CredentialMetadata payload.
  * Credentials are stored using the credential ID as key, the new credential completely
  * overwrites the previous one.
  */
