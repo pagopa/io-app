@@ -22,6 +22,8 @@ type Props = {
 /**
  * Rendered when it is not possible to determine the status of a credential,
  * i.e. the API call to fetch the status assertion from the issuer failed.
+ *
+ * The screen allows the user to retry the status assertion once, or reissue the credential.
  */
 export const ItwPresentationCredentialUnknownStatus = ({
   credential
@@ -46,6 +48,10 @@ export const ItwPresentationCredentialUnknownStatus = ({
     headerShown: false
   });
 
+  // To determine whether the retry is complete we compare the two status assertion objects:
+  // when their references change, the store was updated with the result.
+  // This approach avoids storing additional data in the global store and ensures this logic
+  // can be removed in the future with minimal impact.
   useEffect(() => {
     if (
       isRetrying &&
@@ -111,6 +117,7 @@ export const ItwPresentationCredentialUnknownStatus = ({
         "features.itWallet.presentation.statusAssertionUnknown.content"
       )}
       action={{
+        testID: "RetryButtonTestID",
         label: I18n.t("global.genericRetry"),
         onPress: () => {
           setIsRetrying(true);

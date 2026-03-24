@@ -154,10 +154,14 @@ export function* checkCredentialsStatusAssertion() {
   yield* call(syncItwAnalyticsProperties);
 }
 
+/**
+ * Saga that updates a specific credential status assertion without additional logic.
+ * It is triggered by the user when the credential status is unknown.
+ */
 export function* handleCredentialStatusAssertionRetry(
-  acion: ActionType<typeof itwCredentialsRefreshStatusByType>
+  action: ActionType<typeof itwCredentialsRefreshStatusByType>
 ) {
-  const credential = yield* select(itwCredentialSelector(acion.payload));
+  const credential = yield* select(itwCredentialSelector(action.payload));
 
   if (O.isSome(credential)) {
     const updatedCredential = yield* call(
