@@ -5,6 +5,7 @@ import {
 } from "../../../common/utils/itwTypesUtils";
 import {
   EnrichedPresentationDetails,
+  ItwRemoteFlowType,
   ItwRemoteRequestPayload,
   RelyingPartyConfiguration
 } from "../utils/itwRemoteTypeUtils";
@@ -49,6 +50,10 @@ export type Context = {
    */
   selectedOptionalCredentials: Set<string>;
   /**
+   * The type of flow for the remote presentation, which can be either "same-device" or "cross-device".
+   */
+  flowType: ItwRemoteFlowType | undefined;
+  /**
    * The URI to redirect the user to access the Relying Party's service
    * It is not required in cross-device presentation
    */
@@ -64,5 +69,6 @@ export const InitialContext: Context = {
   requestObjectEncodedJwt: undefined,
   requestObject: undefined,
   presentationDetails: undefined,
-  selectedOptionalCredentials: new Set()
+  selectedOptionalCredentials: new Set(),
+  flowType: undefined
 };

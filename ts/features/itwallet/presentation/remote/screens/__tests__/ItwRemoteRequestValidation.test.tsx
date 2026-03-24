@@ -1,6 +1,17 @@
 import { act } from "@testing-library/react-native";
 import { Action, createStore } from "redux";
 import { fromPromise } from "xstate";
+import { ITW_REMOTE_ROUTES } from "../../navigation/routes.ts";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper.tsx";
+import { GlobalState } from "../../../../../../store/reducers/types.ts";
+import { ItwRemoteRequestValidationScreen } from "../ItwRemoteRequestValidationScreen.tsx";
+import { appReducer } from "../../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../../store/actions/application.ts";
+import {
+  ItwRemoteFlowType,
+  ItwRemoteRequestPayload
+} from "../../utils/itwRemoteTypeUtils.ts";
+import { ItwRemoteMachineContext } from "../../machine/provider.tsx";
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList.ts";
 import { applicationChangeState } from "../../../../../../store/actions/application.ts";
 import { startupLoadSuccess } from "../../../../../../store/actions/startup.ts";
@@ -23,7 +34,7 @@ jest.useFakeTimers();
 
 describe("ItwRemoteRequestValidationScreen", () => {
   it("it should render the screen correctly", () => {
-    const component = renderComponent();
+    const component = renderComponent({}, true, "same-device");
     expect(component).toBeTruthy();
   });
 
@@ -41,13 +52,14 @@ describe("ItwRemoteRequestValidationScreen", () => {
       .spyOn(ItwRemoteMachineContext, "useActorRef")
       .mockReturnValue({ send: mockSend } as unknown as ActorRef);
 
-    const { getByTestId } = renderComponent(validPayload);
+    const { getByTestId } = renderComponent(validPayload, true, "same-device");
 
     act(() => {
       expect(mockSend).toHaveBeenCalledWith({ type: "reset" });
       expect(mockSend).toHaveBeenCalledWith({
         type: "start",
-        payload: validPayload
+        payload: validPayload,
+        flowType: "same-device"
       });
       expect(getByTestId("loader")).toBeTruthy();
     });
@@ -58,7 +70,11 @@ describe("ItwRemoteRequestValidationScreen", () => {
       request_uri: "https://example.com/callback"
     } as ItwRemoteRequestPayload;
 
-    const { getByTestId } = renderComponent(partialPayload);
+    const { getByTestId } = renderComponent(
+      partialPayload,
+      true,
+      "same-device"
+    );
 
     expect(getByTestId("failure")).toBeTruthy();
   });
@@ -70,7 +86,11 @@ describe("ItwRemoteRequestValidationScreen", () => {
       state: "hyqizm592"
     } as ItwRemoteRequestPayload;
 
-    const { getByTestId } = renderComponent(partialPayload);
+    const { getByTestId } = renderComponent(
+      partialPayload,
+      true,
+      "same-device"
+    );
 
     expect(getByTestId("failure")).toBeTruthy();
   });
@@ -87,7 +107,7 @@ describe("ItwRemoteRequestValidationScreen", () => {
       .spyOn(ItwRemoteMachineContext, "useActorRef")
       .mockReturnValue({ send: mockSend } as unknown as ActorRef);
 
-    const { getByTestId } = renderComponent(validPayload, false);
+    const { getByTestId } = renderComponent(validPayload, false, "same-device");
 
     act(() => {
       expect(mockSend).not.toHaveBeenCalled();
@@ -109,7 +129,7 @@ describe("ItwRemoteRequestValidationScreen", () => {
       .spyOn(ItwRemoteMachineContext, "useActorRef")
       .mockReturnValue({ send: mockSend } as unknown as ActorRef);
 
-    const { getByTestId } = renderComponent(validPayload);
+    const { getByTestId } = renderComponent(validPayload, true, "same-device");
 
     expect(getByTestId("loader")).toBeTruthy();
 
@@ -123,7 +143,8 @@ describe("ItwRemoteRequestValidationScreen", () => {
 
 const renderComponent = (
   payload: Partial<ItwRemoteRequestPayload> = {},
-  isAuthenticated = true
+  isAuthenticated = true,
+  flowType: ItwRemoteFlowType
 ) => {
   const sequenceOfActions: ReadonlyArray<Action> = [
     applicationChangeState("active"),
@@ -154,7 +175,10 @@ const renderComponent = (
   const route = {
     key: "ITW_REMOTE_REQUEST_VALIDATION",
     name: ITW_REMOTE_ROUTES.REQUEST_VALIDATION,
-    params: payload
+    params: {
+      ...payload,
+      flowType
+    }
   };
 
   const logic = itwRemoteMachine.provide({
@@ -183,7 +207,10 @@ const renderComponent = (
       </ItwRemoteMachineContext.Provider>
     ),
     ITW_REMOTE_ROUTES.REQUEST_VALIDATION,
-    payload,
+    {
+      ...payload,
+      flowType
+    },
     createStore(appReducer, globalState as any)
   );
 };
