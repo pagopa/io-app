@@ -50,29 +50,16 @@ describe("IOScrollViewWithListItems", () => {
       expect(toJSON()).toMatchSnapshot();
     });
 
-    it("renders subtitle as array correctly", () => {
-      const propsWithArraySubtitle: IOScrollViewWithListItems = {
+    it("renders subtitle with markdown correctly", () => {
+      const propsWithMarkdownSubtitle: IOScrollViewWithListItems = {
         ...defaultProps,
-        subtitle: [
-          {
-            text: "Subtitle Part 1",
-            style: {
-              textAlign: "center"
-            }
-          },
-          {
-            text: "Subtitle Part 2 Bold",
-            style: {
-              textAlign: "center"
-            },
-            weight: "Semibold"
-          }
-        ]
+        subtitle: "Subtitle Part 1 **Subtitle Part 2 Bold**"
       };
-      const { getByText, toJSON } = renderComponent(propsWithArraySubtitle);
+      const { getByText, toJSON } = renderComponent(propsWithMarkdownSubtitle);
 
-      expect(getByText("Subtitle Part 1")).toBeTruthy();
-      expect(getByText("Subtitle Part 2 Bold")).toBeTruthy();
+      expect(
+        getByText("Subtitle Part 1 **Subtitle Part 2 Bold**")
+      ).toBeTruthy();
 
       // Snapshot test
       expect(toJSON()).toMatchSnapshot();

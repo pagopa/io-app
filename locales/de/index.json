@@ -1514,7 +1514,7 @@
   },
   "send_email_messages": {
     "title": "Mitteilungen mittels E-Mail weiterleiten",
-    "subtitle": "Möchtest du, dass IO eine Vorschau der Mitteilung an die E-Mail-Adresse sendet:",
+    "subtitle": "Möchtest du, dass IO eine Vorschau der Mitteilung an die E-Mail-Adresse **{{email}}** sendet?",
     "switch": {
       "title": "Eine Vorschau per E-Mail senden",
       "subtitle": "Du erhältst eine Vorschau der Mitteilung an deine E-Mail-Adresse, sofern der Dienst dies zulässt."

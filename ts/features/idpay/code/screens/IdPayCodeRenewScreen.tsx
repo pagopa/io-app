@@ -1,4 +1,4 @@
-import { ListItemAction } from "@pagopa/io-app-design-system";
+import { Body, ListItemAction } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import { Alert } from "react-native";
 import I18n from "i18next";
@@ -61,20 +61,14 @@ export const IdPayCodeRenewScreen = () => {
       title={{
         label: I18n.t("idpay.code.renew.screen.header")
       }}
-      description={[
-        { text: I18n.t("idpay.code.renew.screen.body") },
-        { text: "\n" },
-        {
-          text: I18n.t("idpay.code.renew.screen.link"),
-          onPress: presentCieBottomSheet,
-          weight: "Semibold",
-          asLink: true
-        }
-      ]}
+      description={I18n.t("idpay.code.renew.screen.body")}
       contextualHelp={emptyContextualHelp}
       headerActionsProp={{ showHelp: true }}
       includeContentMargins
     >
+      <Body asLink weight="Semibold" onPress={presentCieBottomSheet}>
+        {I18n.t("idpay.code.renew.screen.link")}
+      </Body>
       <ListItemAction
         label={I18n.t("idpay.code.renew.screen.generateCTA")}
         onPress={() => customAlert(handleConfirm)}

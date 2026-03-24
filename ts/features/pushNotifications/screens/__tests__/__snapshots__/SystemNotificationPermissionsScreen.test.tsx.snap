@@ -606,27 +606,7 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                 >
                                   Non perderti i messaggi importanti!
                                 </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 24,
-                                      },
-                                      {
-                                        "textAlign": "center",
-                                      },
-                                    ]
-                                  }
-                                >
+                                <Text>
                                   Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.
                                 </Text>
                               </View>

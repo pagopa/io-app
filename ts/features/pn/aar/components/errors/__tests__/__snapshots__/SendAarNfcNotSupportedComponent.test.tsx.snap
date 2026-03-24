@@ -410,27 +410,7 @@ exports[`SendAarNfcNotSupportedComponent should match the snapshot 1`] = `
                                 >
                                   Il tuo dispositivo non supporta la lettura della CIE
                                 </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 24,
-                                      },
-                                      {
-                                        "textAlign": "center",
-                                      },
-                                    ]
-                                  }
-                                >
+                                <Text>
                                   Controlla che il sistema operativo sia aggiornato oppure scopri cosa fare.
                                 </Text>
                               </View>

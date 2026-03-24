@@ -1,11 +1,9 @@
 import {
-  Body,
-  BodyProps,
-  ComposedBodyFromArray,
   ContentWrapper,
   H3,
   IOButton,
   IOButtonProps,
+  IOMarkdownLite,
   IOPictograms,
   IOVisualCostants,
   Pictogram,
@@ -21,7 +19,7 @@ type ButtonProps = Pick<
 
 export type CustomWizardScreenProps = {
   title: string;
-  description?: string | Array<BodyProps>;
+  description?: string;
   pictogram: IOPictograms;
   primaryButton: ButtonProps;
   actionButton?: ButtonProps;
@@ -64,7 +62,7 @@ const CustomWizardScreen = ({
 
 type CustomWizardBodyProps = {
   title: string;
-  description?: string | Array<BodyProps>;
+  description?: string;
   pictogram: IOPictograms;
   buttonLink?: Pick<
     IOButtonProps,
@@ -88,11 +86,7 @@ const WizardBody = ({
       {description && (
         <>
           <VSpacer size={8} />
-          {typeof description === "string" ? (
-            <Body style={styles.textCenter}>{description}</Body>
-          ) : (
-            <ComposedBodyFromArray body={description} textAlign="center" />
-          )}
+          <IOMarkdownLite content={description} textAlign="center" />
         </>
       )}
       {buttonLink && (

@@ -1435,7 +1435,7 @@
   },
   "send_email_messages": {
     "title": "Forward messages by email",
-    "subtitle": "You want IO to forward message previews to",
+    "subtitle": "You want IO to forward message previews to **{{email}}**?",
     "switch": {
       "title": "Email a preview",
       "subtitle": "You will get a preview of the message at your email address if the service allows."

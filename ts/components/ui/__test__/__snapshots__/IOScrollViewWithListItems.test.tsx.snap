@@ -400,24 +400,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                               }
                             }
                           />
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
+                          <Text>
                             Test Subtitle
                           </Text>
                           <View
@@ -1880,7 +1863,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
 </View>
 `;
 
-exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly 1`] = `
+exports[`IOScrollViewWithListItems Rendering renders subtitle with markdown correctly 1`] = `
 <View
   style={
     {
@@ -2280,73 +2263,8 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                               }
                             }
                           />
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 24,
-                                },
-                                {
-                                  "textAlign": "center",
-                                },
-                              ]
-                            }
-                          >
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
-                              Subtitle Part 1
-                            </Text>
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
-                              Subtitle Part 2 Bold
-                            </Text>
+                          <Text>
+                            Subtitle Part 1 **Subtitle Part 2 Bold**
                           </Text>
                           <View
                             style={

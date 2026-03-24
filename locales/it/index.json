@@ -1786,7 +1786,7 @@
   },
   "send_email_messages": {
     "title": "Inoltro dei messaggi via email",
-    "subtitle": "Vuoi che IO inoltri un’anteprima dei messaggi all’indirizzo",
+    "subtitle": "Vuoi che IO inoltri un’anteprima dei messaggi all’indirizzo **{{email}}**?",
     "switch": {
       "title": "Invia un’anteprima via email",
       "subtitle": "Riceverai un'anteprima del messaggio al tuo indirizzo email, se il servizio lo consente."
