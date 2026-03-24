@@ -1696,7 +1696,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                             }
                                             gradientTransform={null}
                                             gradientUnits={0}
-                                            name="«rj»-secondHalf"
+                                            name="_r_j_-secondHalf"
                                             x1="0%"
                                             x2="100%"
                                             y1="0%"
@@ -1713,7 +1713,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                             }
                                             gradientTransform={null}
                                             gradientUnits={0}
-                                            name="«rj»-firstHalf"
+                                            name="_r_j_-firstHalf"
                                             x1="0%"
                                             x2="100%"
                                             y1="0%"
@@ -1749,7 +1749,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                             }
                                             stroke={
                                               {
-                                                "brushRef": "«rj»-secondHalf",
+                                                "brushRef": "_r_j_-secondHalf",
                                                 "type": 1,
                                               }
                                             }
@@ -1769,7 +1769,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                             }
                                             stroke={
                                               {
-                                                "brushRef": "«rj»-firstHalf",
+                                                "brushRef": "_r_j_-firstHalf",
                                                 "type": 1,
                                               }
                                             }
@@ -3527,7 +3527,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                             }
                                             gradientTransform={null}
                                             gradientUnits={0}
-                                            name="«r1»-secondHalf"
+                                            name="_r_1_-secondHalf"
                                             x1="0%"
                                             x2="100%"
                                             y1="0%"
@@ -3544,7 +3544,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                             }
                                             gradientTransform={null}
                                             gradientUnits={0}
-                                            name="«r1»-firstHalf"
+                                            name="_r_1_-firstHalf"
                                             x1="0%"
                                             x2="100%"
                                             y1="0%"
@@ -3580,7 +3580,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                             }
                                             stroke={
                                               {
-                                                "brushRef": "«r1»-secondHalf",
+                                                "brushRef": "_r_1_-secondHalf",
                                                 "type": 1,
                                               }
                                             }
@@ -3600,7 +3600,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                             }
                                             stroke={
                                               {
-                                                "brushRef": "«r1»-firstHalf",
+                                                "brushRef": "_r_1_-firstHalf",
                                                 "type": 1,
                                               }
                                             }
@@ -5258,7 +5258,7 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                                             }
                                             gradientTransform={null}
                                             gradientUnits={0}
-                                            name="«rr»-secondHalf"
+                                            name="_r_r_-secondHalf"
                                             x1="0%"
                                             x2="100%"
                                             y1="0%"
@@ -5275,7 +5275,7 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                                             }
                                             gradientTransform={null}
                                             gradientUnits={0}
-                                            name="«rr»-firstHalf"
+                                            name="_r_r_-firstHalf"
                                             x1="0%"
                                             x2="100%"
                                             y1="0%"
@@ -5311,7 +5311,7 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                                             }
                                             stroke={
                                               {
-                                                "brushRef": "«rr»-secondHalf",
+                                                "brushRef": "_r_r_-secondHalf",
                                                 "type": 1,
                                               }
                                             }
@@ -5331,7 +5331,7 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                                             }
                                             stroke={
                                               {
-                                                "brushRef": "«rr»-firstHalf",
+                                                "brushRef": "_r_r_-firstHalf",
                                                 "type": 1,
                                               }
                                             }
