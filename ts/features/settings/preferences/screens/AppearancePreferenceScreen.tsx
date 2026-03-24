@@ -98,15 +98,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
       dispatch(preferencesThemeSet(choice));
       setSelectedColorMode(choice);
       if (choice === "auto") {
-        console.log(
-          "setColorScheme to unspecified, systemColorScheme: ",
-          systemColorScheme
-        );
         Appearance.setColorScheme("unspecified");
-        console.log(
-          "2 setColorScheme to unspecified, systemColorScheme: ",
-          systemColorScheme
-        );
         setTheme(systemColorScheme);
         updateNavigationBarColor(
           systemColorScheme === "unspecified" ? "light" : systemColorScheme
