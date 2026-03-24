@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { takeLeading, takeLatest } from "typed-redux-saga/macro";
+import { takeLeading } from "typed-redux-saga/macro";
 import {
   itwCredentialsRemoveByType,
   itwCredentialsStore,
@@ -15,7 +15,7 @@ export function* watchItwCredentialsSaga(): SagaIterator {
     itwCredentialsRemoveByType,
     handleItwCredentialsRemoveSaga
   );
-  yield* takeLatest(
+  yield* takeLeading(
     itwCredentialsRefreshStatusByType,
     handleCredentialStatusAssertionRetry
   );
