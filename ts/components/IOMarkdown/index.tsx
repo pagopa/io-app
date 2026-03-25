@@ -21,9 +21,7 @@ export type IOMarkdownProps = {
    * The `markdown` string to render.
    */
   content: string;
-  onError?:
-    | ((error: unknown, componentStack: string | undefined) => void)
-    | undefined;
+  onError?: (error: unknown, componentStack: string | undefined) => void;
   /**
    * The render rules that can be used to override the `DEFAULT_RULES`.
    */

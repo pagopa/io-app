@@ -1,18 +1,15 @@
-import * as React from "react";
-import { PropsWithChildren } from "react";
+import { Component, ErrorInfo, PropsWithChildren, ReactNode } from "react";
 
 type Props = PropsWithChildren<{
-  fallback: React.ReactNode;
-  onError?:
-    | ((error: unknown, componentStack: string | undefined) => void)
-    | undefined;
+  fallback: ReactNode;
+  onError?: (error: unknown, componentStack: string | undefined) => void;
 }>;
 
 type State = {
   hasError: boolean;
 };
 
-class ErrorBoundary extends React.Component<Props, State> {
+class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false };
@@ -23,7 +20,7 @@ class ErrorBoundary extends React.Component<Props, State> {
     return { hasError: true };
   }
 
-  componentDidCatch(error: unknown, info: React.ErrorInfo) {
+  componentDidCatch(error: unknown, info: ErrorInfo) {
     this.props.onError?.(error, info.componentStack ?? "");
   }
 
