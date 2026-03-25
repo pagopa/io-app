@@ -4234,6 +4234,9 @@
           },
           "banner": {
             "invalid": "Conferma la tua identità per continuare a usare i tuoi documenti senza limitazioni."
+          },
+          "reissue": {
+            "cta": "Conferma identità"
           }
         },
         "itWalletId": {

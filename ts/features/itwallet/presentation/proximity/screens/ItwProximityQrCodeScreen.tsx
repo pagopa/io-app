@@ -10,17 +10,21 @@ import {
   useIOThemeContext,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { StyleSheet, useWindowDimensions, View } from "react-native";
 import QRCode from "react-native-qrcode-skia";
 import I18n from "i18next";
-import { useSelector } from "react-redux";
-import { IOScrollView } from "../../../../../components/ui/IOScrollView.tsx";
+import {
+  IOScrollView,
+  IOScrollViewActions
+} from "../../../../../components/ui/IOScrollView.tsx";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
+import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
 import { ItwBrandedBox } from "../../../common/components/ItwBrandedBox.tsx";
 import { ItWalletLogo } from "../../../common/components/ItWalletLogo.tsx";
+import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
 import {
   selectIsLoading,
@@ -52,7 +56,7 @@ export const ItwProximityQrCodeScreen = () => {
   const { themeType, theme } = useIOThemeContext();
   const { width } = useWindowDimensions();
 
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const machineRef = ItwProximityMachineContext.useActorRef();
   const qrCodeString =
     ItwProximityMachineContext.useSelector(selectQRCodeString);
@@ -60,10 +64,9 @@ export const ItwProximityQrCodeScreen = () => {
   const isProximityError = ItwProximityMachineContext.useSelector(
     selectIsQRCodeGenerationError
   );
-  const shouldBlockProximityPresentation = useSelector(
+  const shouldBlockProximityPresentation = useIOSelector(
     shouldBlockProximityQrCodeSelector
   );
-
   // Auto-start only on the initial mount. When the flow is closing, the machine
   // transitions back to Idle briefly before unmount, and we must not restart it.
   useEffect(() => {
@@ -100,6 +103,27 @@ export const ItwProximityQrCodeScreen = () => {
     setIsRetrying(true);
     machineRef.send({ type: "retry" });
   };
+
+  const handleReissuePress = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
+      params: {
+        eidReissuing: true,
+        level: "l3"
+      }
+    });
+  };
+
+  const scrollViewActions: IOScrollViewActions | undefined =
+    shouldBlockProximityPresentation
+      ? {
+          type: "SingleButton",
+          primary: {
+            label: I18n.t("features.itWallet.presentation.qrCode.reissue.cta"),
+            onPress: handleReissuePress
+          }
+        }
+      : undefined;
 
   const showStatusContent =
     isProximityError || shouldBlockProximityPresentation;
@@ -162,7 +186,7 @@ export const ItwProximityQrCodeScreen = () => {
   };
 
   return (
-    <IOScrollView>
+    <IOScrollView actions={scrollViewActions}>
       <ItwBrandedBox
         variant={showStatusContent ? "error" : "default"}
         backgroundVariant={"gradient"}

@@ -75,11 +75,12 @@ export const areAllPresentableCredentialsExpired = (
 };
 
 /**
- * Selector to determine whether the Proximity QR Code Selector should be blocked.
- * It should be blocked if the PID credential is expired and all presentable credentials are expired.
+ * Selector to determine whether the Proximity QR Code screen should be blocked.
+ * It is blocked when the PID is expired AND all presentable credentials are expired.
+ * In this case the user must reissue the PID, which will renew all documents too.
  *
  * @param state - The global state.
- * @returns `true` if the Proximity QR Code Selector should be blocked, `false` otherwise.
+ * @returns `true` if the Proximity QR Code screen should be blocked, `false` otherwise.
  */
 export const shouldBlockProximityQrCodeSelector = createSelector(
   itwCredentialsEidStatusSelector,
