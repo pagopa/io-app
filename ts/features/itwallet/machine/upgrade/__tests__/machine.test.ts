@@ -1,7 +1,13 @@
 import { createActor, fromPromise, waitFor } from "xstate";
 import { itwCredentialUpgradeMachine } from "../machine";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
-import { UpgradeCredentialParams, UpgradeCredentialOutput } from "../actors";
+import {
+  LoadContextOutput,
+  UpgradeCredentialParams,
+  UpgradeCredentialOutput
+} from "../actors";
+
+const mockLoadContext = jest.fn(() => Promise.resolve({} as LoadContextOutput));
 
 const makeCredential = (
   overrides: Partial<CredentialMetadata> = {}
@@ -33,6 +39,7 @@ describe("itwCredentialUpgradeMachine", () => {
 
     const machine = itwCredentialUpgradeMachine.provide({
       actors: {
+        loadContext: fromPromise<LoadContextOutput>(mockLoadContext),
         upgradeCredential: fromPromise<
           UpgradeCredentialOutput,
           UpgradeCredentialParams
@@ -47,6 +54,8 @@ describe("itwCredentialUpgradeMachine", () => {
       }
     });
     actor.start();
+
+    await waitFor(actor, snap => snap.matches("Completed"));
 
     expect(mockUpgradeCredential).not.toHaveBeenCalled();
     expect(mockStoreCredential).not.toHaveBeenCalled();
@@ -63,6 +72,7 @@ describe("itwCredentialUpgradeMachine", () => {
 
     const machine = itwCredentialUpgradeMachine.provide({
       actors: {
+        loadContext: fromPromise<LoadContextOutput>(mockLoadContext),
         upgradeCredential: fromPromise<
           UpgradeCredentialOutput,
           UpgradeCredentialParams
@@ -105,6 +115,7 @@ describe("itwCredentialUpgradeMachine", () => {
 
     const machine = itwCredentialUpgradeMachine.provide({
       actors: {
+        loadContext: fromPromise<LoadContextOutput>(mockLoadContext),
         upgradeCredential: fromPromise<
           UpgradeCredentialOutput,
           UpgradeCredentialParams

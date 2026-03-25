@@ -70,9 +70,6 @@ export const itwCredentialUpgradeMachine = setup({
         }),
         onDone: {
           target: "Checking"
-        },
-        onError: {
-          target: "Checking"
         }
       }
     },

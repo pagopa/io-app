@@ -89,8 +89,6 @@ describe("itwCredentialIssuanceMachine", () => {
   const requestCredential = jest.fn();
   const obtainCredential = jest.fn();
   const obtainStatusAssertion = jest.fn();
-  const storeCredentials = jest.fn();
-
   const isSessionExpired = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn();
   const isStatusError = jest.fn();
@@ -130,10 +128,7 @@ describe("itwCredentialIssuanceMachine", () => {
       obtainStatusAssertion: fromPromise<
         ReadonlyArray<CredentialBundle>,
         ObtainStatusAssertionActorInput
-      >(obtainStatusAssertion),
-      storeCredentials: fromPromise<void, ReadonlyArray<CredentialBundle>>(
-        storeCredentials
-      )
+      >(obtainStatusAssertion)
     },
     guards: {
       isSessionExpired,
@@ -149,7 +144,6 @@ describe("itwCredentialIssuanceMachine", () => {
     hasValidWalletInstanceAttestation.mockImplementation(() => false);
     isEidExpired.mockImplementation(() => false);
     isSkipNavigation.mockImplementation(() => true);
-    storeCredentials.mockResolvedValue(undefined);
     jest.useFakeTimers();
   });
 
