@@ -1,10 +1,9 @@
-import { VStack } from "@pagopa/io-app-design-system";
+import { IOMarkdown, VStack } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useMemo } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { AnimatedImage } from "../../../../../components/AnimatedImage";
-import IOMarkdown from "../../../../../components/IOMarkdown";
 import { renderActionButtons } from "../../../../../components/ui/IOScrollView";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
@@ -20,6 +19,41 @@ import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { CieWarningType } from "../utils/types";
 
 type Props = { type: CieWarningType; showSecondaryAction?: boolean };
+
+const getCieBottomSheetLocales = (type: CieWarningType) => {
+  switch (type) {
+    case "card":
+      return {
+        title: I18n.t(
+          "features.itWallet.identification.cie.bottomSheet.card.title"
+        ),
+        content: I18n.t(
+          "features.itWallet.identification.cie.bottomSheet.card.content"
+        ),
+        primaryAction: I18n.t(
+          "features.itWallet.identification.cie.bottomSheet.card.primaryAction"
+        ),
+        secondaryAction: I18n.t(
+          "features.itWallet.identification.cie.bottomSheet.card.secondaryAction"
+        )
+      };
+    case "pin":
+      return {
+        title: I18n.t(
+          "features.itWallet.identification.cie.bottomSheet.pin.title"
+        ),
+        content: I18n.t(
+          "features.itWallet.identification.cie.bottomSheet.pin.content"
+        ),
+        primaryAction: I18n.t(
+          "features.itWallet.identification.cie.bottomSheet.pin.primaryAction"
+        ),
+        secondaryAction: I18n.t(
+          "features.itWallet.identification.cie.bottomSheet.pin.secondaryAction"
+        )
+      };
+  }
+};
 
 const trackBottomSheetView = (
   type: CieWarningType,
@@ -130,17 +164,13 @@ export const useCieInfoBottomSheet = ({
     }
   }, [type]);
 
+  const locales = getCieBottomSheetLocales(type);
+
   const bottomSheet = useIOBottomSheetModal({
-    title: I18n.t(
-      `features.itWallet.identification.cie.bottomSheet.${type}.title`
-    ),
+    title: locales.title,
     component: (
       <VStack space={24}>
-        <IOMarkdown
-          content={I18n.t(
-            `features.itWallet.identification.cie.bottomSheet.${type}.content`
-          )}
-        />
+        <IOMarkdown content={locales.content} />
         <AnimatedImage source={imageSrc} style={styles.image} />
         <View>
           {renderActionButtons(
@@ -149,17 +179,13 @@ export const useCieInfoBottomSheet = ({
                 {
                   type: "TwoButtons",
                   primary: {
-                    label: I18n.t(
-                      `features.itWallet.identification.cie.bottomSheet.${type}.primaryAction`
-                    ),
+                    label: locales.primaryAction,
                     onPress: () => {
                       bottomSheet.dismiss();
                     }
                   },
                   secondary: {
-                    label: I18n.t(
-                      `features.itWallet.identification.cie.bottomSheet.${type}.secondaryAction`
-                    ),
+                    label: locales.secondaryAction,
                     onPress: () => {
                       trackItwUserWithoutL3Requirements({
                         screen_name: routeName,
@@ -175,9 +201,7 @@ export const useCieInfoBottomSheet = ({
                 {
                   type: "SingleButton",
                   primary: {
-                    label: I18n.t(
-                      `features.itWallet.identification.cie.bottomSheet.${type}.primaryAction`
-                    ),
+                    label: locales.primaryAction,
                     onPress: () => {
                       bottomSheet.dismiss();
                     }

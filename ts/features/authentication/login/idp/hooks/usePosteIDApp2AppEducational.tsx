@@ -1,9 +1,13 @@
-import { Body, FeatureInfo, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  FeatureInfo,
+  IOMarkdownLite,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { View } from "react-native";
 import I18n from "i18next";
-import IOMarkdown from "../../../../../components/IOMarkdown";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { SpidIdp } from "../../../../../utils/idps";
 import { StandardLoginRequestInfo } from "../store/types";
@@ -28,7 +32,7 @@ export const usePosteIDApp2AppEducational = ({
         <FeatureInfo
           iconName="logout"
           body={
-            <IOMarkdown
+            <IOMarkdownLite
               content={I18n.t(
                 "authentication.idp_login.poste_id.bottom_sheet.feature_1"
               )}
@@ -39,7 +43,7 @@ export const usePosteIDApp2AppEducational = ({
         <FeatureInfo
           iconName="fingerprint"
           body={
-            <IOMarkdown
+            <IOMarkdownLite
               content={I18n.t(
                 "authentication.idp_login.poste_id.bottom_sheet.feature_2"
               )}
@@ -50,7 +54,7 @@ export const usePosteIDApp2AppEducational = ({
         <FeatureInfo
           iconName="change"
           body={
-            <IOMarkdown
+            <IOMarkdownLite
               content={I18n.t(
                 "authentication.idp_login.poste_id.bottom_sheet.feature_3"
               )}

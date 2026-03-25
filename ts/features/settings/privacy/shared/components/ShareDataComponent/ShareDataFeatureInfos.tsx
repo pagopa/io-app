@@ -1,10 +1,14 @@
-import { Body, FeatureInfo, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  FeatureInfo,
+  IOMarkdownLite,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useCallback, useMemo, useRef } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "i18next";
-import IOMarkdown from "../../../../../../components/IOMarkdown";
 import { setAccessibilityFocus } from "../../../../../../utils/accessibility";
 import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../../../utils/url";
@@ -40,7 +44,7 @@ const MarkdownBody = () => {
         accessibilityElementsHidden
         importantForAccessibility="no-hide-descendants"
       >
-        <IOMarkdown
+        <IOMarkdownLite
           content={I18n.t("profile.main.privacy.shareData.whyBottomSheet.body")}
         />
       </View>

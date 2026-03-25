@@ -1,13 +1,12 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { IOMarkdownLite, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { WALLET_PAYMENT_SHOW_OTHER_CHANNELS_URL } from "../utils";
-import IOMarkdown from "../../../../components/IOMarkdown";
 
 export const usePaymentReversedInfoBottomSheet = () => {
   const getModalContent = () => (
     <>
-      <IOMarkdown
+      <IOMarkdownLite
         content={I18n.t(
           "features.payments.checkout.bottomSheet.PAYMENT_REVERSED.payNotice",
           {
@@ -16,13 +15,13 @@ export const usePaymentReversedInfoBottomSheet = () => {
         )}
       />
       <VSpacer size={24} />
-      <IOMarkdown
+      <IOMarkdownLite
         content={I18n.t(
           "features.payments.checkout.bottomSheet.PAYMENT_REVERSED.waitRefund"
         )}
       />
       <VSpacer size={24} />
-      <IOMarkdown
+      <IOMarkdownLite
         content={I18n.t(
           "features.payments.checkout.bottomSheet.PAYMENT_REVERSED.contactSupport"
         )}
