@@ -52,5 +52,6 @@ export function* handleItwCredentialsVaultCoherenceSaga() {
   } catch {
     // Errors are currently not handled, just make sure the saga doesn't crash
     // and the app can continue booting.
+    // TODO log errors to Mixpanel
   }
 }

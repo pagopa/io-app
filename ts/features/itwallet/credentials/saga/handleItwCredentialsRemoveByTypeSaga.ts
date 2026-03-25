@@ -15,7 +15,7 @@ import { CredentialsVault } from "../utils/vault";
  * If multiple credentials with the same type are found in the store, all of them are removed.
  * @param itwCredentialsRemoveByType
  */
-export function* handleItwCredentialsRemoveSaga(
+export function* handleItwCredentialsRemoveByTypeSaga(
   action: ReturnType<typeof itwCredentialsRemoveByType>
 ) {
   try {

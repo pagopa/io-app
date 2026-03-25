@@ -1,14 +1,28 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
+import {
+  CredentialBundle,
+  CredentialMetadata
+} from "../../../common/utils/itwTypesUtils";
+
+/**
+ * @internal To properly add a credential, dispatch `itwCredentialsStoreBundle`.
+ *
+ * This actions stores one or multiple credentials using the CredentialMetadata payload.
+ * Credentials are stored using the credential ID as key, the new credential completely
+ * overwrites the previous one.
+ */
+export const itwCredentialsStore = createStandardAction(
+  "@@internal/ITW_CREDENTIALS_STORE"
+)<ReadonlyArray<CredentialMetadata>>();
 
 /**
  * This actions stores one or multiple credentials using the CredentialMetadata payload.
  * Credentials are stored using the credential ID as key, the new credential completely
  * overwrites the previous one.
  */
-export const itwCredentialsStore = createStandardAction(
-  "ITW_CREDENTIALS_STORE"
-)<ReadonlyArray<CredentialMetadata>>();
+export const itwCredentialsStoreBundle = createStandardAction(
+  "ITW_CREDENTIALS_STORE_BUNDLE"
+)<ReadonlyArray<CredentialBundle>>();
 
 /**
  * @internal To properly remove a credential, dispatch `itwCredentialsRemoveByType`.
@@ -17,7 +31,7 @@ export const itwCredentialsStore = createStandardAction(
  * the saga that orchestrates the deletion of a credential type.
  */
 export const itwCredentialsRemove = createStandardAction(
-  "ITW_CREDENTIALS_REMOVE"
+  "@@internal/ITW_CREDENTIALS_REMOVE"
 )<ReadonlyArray<CredentialMetadata>>();
 
 /**
@@ -39,6 +53,7 @@ export const itwCredentialsVaultMigrationComplete = createStandardAction(
 )<ReadonlyArray<string>>();
 
 export type ItwCredentialsActions =
+  | ActionType<typeof itwCredentialsStoreBundle>
   | ActionType<typeof itwCredentialsStore>
   | ActionType<typeof itwCredentialsRemove>
   | ActionType<typeof itwCredentialsRemoveByType>
