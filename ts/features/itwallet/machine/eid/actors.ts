@@ -18,10 +18,7 @@ import { getIoWallet } from "../../common/utils/itwIoWallet";
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
 import { pollForStoreValue } from "../../common/utils/itwStoreUtils";
-import {
-  CredentialBundle,
-  WalletInstanceAttestations
-} from "../../common/utils/itwTypesUtils";
+import { WalletInstanceAttestations } from "../../common/utils/itwTypesUtils";
 import * as mrtdUtils from "../../common/utils/mrtd";
 import { CredentialsVault } from "../../credentials/utils/vault";
 import {
@@ -342,10 +339,6 @@ export const createEidIssuanceActorsImplementation = (
       });
     }
   ),
-
-  storeEidCredential: fromPromise<void, CredentialBundle>(async ({ input }) => {
-    await CredentialsVault.store(input.metadata.credentialId, input.credential);
-  }),
 
   credentialUpgradeMachine: itwCredentialUpgradeMachine.provide({
     actors: createCredentialUpgradeActorsImplementation(env, store, itwVersion),

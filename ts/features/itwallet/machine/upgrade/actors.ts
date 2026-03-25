@@ -99,13 +99,6 @@ export const createCredentialUpgradeActorsImplementation = (
       pid
     });
 
-    // Store credentials in the secure vault before returning
-    await Promise.all(
-      result.map(({ metadata, credential: raw }) =>
-        CredentialsVault.store(metadata.credentialId, raw)
-      )
-    );
-
     return {
       credentialType: credential.credentialType,
       credentials: result

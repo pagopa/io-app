@@ -24,7 +24,7 @@ import {
 import { itwIsPidReissuingSurveyHiddenSelector } from "../../common/store/selectors/preferences";
 import {
   itwCredentialsRemoveByType,
-  itwCredentialsStore
+  itwCredentialsStoreBundle
 } from "../../credentials/store/actions";
 import { itwCredentialsSelector } from "../../credentials/store/selectors";
 import {
@@ -285,15 +285,17 @@ export const createEidIssuanceActionsImplementation = (
   storeEidCredential: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    assert(context.eid, "eID is undefined");
+    const { eid } = context;
+
+    assert(eid, "eID is undefined");
     // When upgrading to IT-Wallet it is possible to end up with the old and the new PID
     // at the same time, because they have different IDs and are not overwritten. To avoid this issue,
     // the eID is always removed before storing the new one. If no previous eID is present, the action is a no-op.
 
-    const { metadata } = context.eid;
-
-    store.dispatch(itwCredentialsRemoveByType(metadata.credentialType));
-    store.dispatch(itwCredentialsStore([metadata]));
+    // Removes the old eID
+    store.dispatch(itwCredentialsRemoveByType(eid.metadata.credentialType));
+    // Stores the new obtained eID
+    store.dispatch(itwCredentialsStoreBundle([eid]));
   },
 
   handleSessionExpired: () =>

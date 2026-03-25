@@ -182,7 +182,6 @@ export const itwEidIssuanceMachine = setup({
     requestEid: fromPromise<CredentialBundle, RequestEidActorParams>(
       notImplemented
     ),
-    storeEidCredential: fromPromise<void, CredentialBundle>(notImplemented),
 
     /**
      * Credential upgrade actors
@@ -1122,26 +1121,6 @@ export const itwEidIssuanceMachine = setup({
         DisplayingPreview: {
           on: {
             "add-to-wallet": {
-              target: "StoringCredential"
-            },
-            close: {
-              actions: ["closeIssuance"]
-            }
-          }
-        },
-        StoringCredential: {
-          description:
-            "This state is responsible for storing the obtained PID in the secure storage then, if success, in the Redux store",
-          invoke: {
-            src: "storeEidCredential",
-            input: ({ context }) => {
-              assert(
-                context.eid,
-                "EID credential must be defined to be stored"
-              );
-              return context.eid;
-            },
-            onDone: {
               target: "Completed",
               actions: [
                 "storeEidCredential",
@@ -1149,9 +1128,8 @@ export const itwEidIssuanceMachine = setup({
                 "freezeSimplifiedActivationRequirements"
               ]
             },
-            onError: {
-              actions: "setFailure",
-              target: "#itwEidIssuanceMachine.Failure"
+            close: {
+              actions: ["closeIssuance"]
             }
           }
         },

@@ -256,22 +256,11 @@ export const createCredentialIssuanceActorsImplementation = (
     );
   });
 
-  const storeCredentials = fromPromise<void, ReadonlyArray<CredentialBundle>>(
-    async ({ input }) => {
-      await Promise.all(
-        input.map(({ metadata, credential }) =>
-          CredentialsVault.store(metadata.credentialId, credential)
-        )
-      );
-    }
-  );
-
   return {
     verifyTrustFederation,
     getWalletAttestation,
     requestCredential,
     obtainCredential,
-    obtainStatusAssertion,
-    storeCredentials
+    obtainStatusAssertion
   };
 };

@@ -2,7 +2,7 @@ import { ActionArgs, DoneActorEvent } from "xstate";
 import { useIOStore } from "../../../../store/hooks";
 import {
   itwCredentialsRemoveByType,
-  itwCredentialsStore
+  itwCredentialsStoreBundle
 } from "../../credentials/store/actions";
 import { Context } from "./context";
 import { CredentialUpgradeEvents } from "./events";
@@ -19,6 +19,6 @@ export const createCredentialUpgradeActionsImplementation = (
     // Removes old credential using the credential type
     store.dispatch(itwCredentialsRemoveByType(credentialType));
     // Stores the new credentials
-    store.dispatch(itwCredentialsStore(credentials.map(c => c.metadata)));
+    store.dispatch(itwCredentialsStoreBundle(credentials));
   }
 });
