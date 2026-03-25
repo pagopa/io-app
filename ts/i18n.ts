@@ -142,26 +142,25 @@ export interface SmartBackendOptions {
 //   }
 // }
 
-export const initI18n = async () =>
-  await i18next
-    .use(initReactI18next)
-    // .use(SmartI18nextBackend)
-    .init({
-      lng: "it",
-      fallbackLng: "it",
-      supportedLngs: availableTranslations,
-      initAsync: false,
-      ns: ["index"],
-      defaultNS: "index",
-      react: {
-        useSuspense: true
-      },
-      resources,
-      // backend: {
-      //   localResources: resources
-      // },
-      interpolation: { escapeValue: false }
-    });
+void i18next
+  .use(initReactI18next)
+  // .use(SmartI18nextBackend)
+  .init({
+    lng: "it",
+    fallbackLng: "it",
+    supportedLngs: availableTranslations,
+    initAsync: false,
+    ns: ["index"],
+    defaultNS: "index",
+    react: {
+      useSuspense: true
+    },
+    resources,
+    // backend: {
+    //   localResources: resources
+    // },
+    interpolation: { escapeValue: false }
+  });
 
 export const setLocale = (locale: Locales) => {
   void i18next.changeLanguage(locale);

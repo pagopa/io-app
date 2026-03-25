@@ -21,11 +21,9 @@ import {
 import * as Sentry from "@sentry/react-native";
 
 import App from "./ts/App";
-import { initI18n } from "./ts/i18n";
+import "./ts/i18n";
 import { isMixpanelInstanceInitialized, mixpanelTrack } from "./ts/mixpanel";
 import { name as appName } from "./app.json";
-
-void initI18n();
 
 const errorHandler = (e, isFatal) => {
   if (isFatal) {
