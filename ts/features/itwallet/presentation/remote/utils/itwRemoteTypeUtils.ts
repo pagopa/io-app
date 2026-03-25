@@ -48,3 +48,8 @@ export type DcqlQuery = Parameters<
 export type AuthErrorResponseBody = Parameters<
   RemotePresentationApi["sendAuthorizationErrorResponse"]
 >[1];
+
+/**
+ * Type that defines the possible flows for the remote presentation, which can be either "same-device" or "cross-device".
+ */
+export type ItwRemoteFlowType = "same-device" | "cross-device";

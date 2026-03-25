@@ -11,6 +11,7 @@ import {
 } from "../analytics";
 import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
+import { getAarErrorBehaviour } from "../utils/aarErrorMappings";
 import {
   AARFlowState,
   SendAARFailurePhase,
@@ -85,7 +86,11 @@ export function* createAarMandateSaga(
           status,
           value
         )})`;
+
         yield* call(trackSendAARFailure, sendAarFailurePhase, reason, value);
+        const { track } = yield* call(getAarErrorBehaviour, value);
+        yield* call(track, reason);
+
         const errorState: AARFlowState = {
           type: sendAARFlowStates.ko,
           previousState: currentState,

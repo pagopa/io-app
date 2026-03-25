@@ -102,9 +102,9 @@ export function* validateMandateSaga(
           status,
           value
         )})`;
+        yield* call(trackSendAARFailure, sendAARFailurePhase, reason, value);
         const { track } = getAarErrorBehaviour(value);
         track(reason);
-        yield* call(trackSendAARFailure, sendAARFailurePhase, reason, value);
         const errorState: AARFlowState = {
           type: sendAARFlowStates.ko,
           previousState: { ...action.payload },
