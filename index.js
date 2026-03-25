@@ -8,10 +8,7 @@ import "react-native-get-random-values";
 import "react-native-quick-base64";
 import {
   AlertStatic as Alert,
-  AppRegistry,
-  Text,
-  TextInput,
-  LogBox
+  AppRegistry
 } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import {
