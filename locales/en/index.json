@@ -214,7 +214,6 @@
       "forgetCurrentSession": "Forget current session",
       "clearAsyncStorage": "Clear AsyncStorage",
       "dumpAsyncStorage": "Dump AsyncStorage content to console",
-      "sentryTestEvent": "Send Exception to Sentry",
       "contextualHelpTitle": "What you can do in Settings section",
       "contextualHelpContent": "**Settings section lets you manage your data and preferences.** In particular, you can manage your preferences, privacy and account.  \nIn this section you can also access your identity documents in a digital format: interact with the cards in the top part of the screen to see more details.",
       "developerModeOn": "Developer mode enabled",

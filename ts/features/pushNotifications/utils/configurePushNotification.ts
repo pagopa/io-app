@@ -2,7 +2,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
-import { captureMessage } from "@sentry/react-native";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { Platform } from "react-native";
 import PushNotification, {
@@ -72,9 +71,10 @@ const onPushNotificationTokenAvailable = (
   }
 ) => {
   if (token == null || token.token == null) {
-    captureMessage(
-      `onPushNotificationTokenAvailable received a nullish token (or inner 'token' instance) (${token})`
-    );
+    // TODO: Replace Sentry capture exception with a new logging solution
+    // captureMessage(
+    //   `onPushNotificationTokenAvailable received a nullish token (or inner 'token' instance) (${token})`
+    // );
     return;
   }
   // Dispatch an action to save the token in the store

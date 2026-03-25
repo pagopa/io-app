@@ -2,7 +2,6 @@ import {
   type ItwVersion,
   createCryptoContextFor
 } from "@pagopa/io-react-native-wallet";
-import * as Sentry from "@sentry/react-native";
 import { createItWalletFetch } from "../../api/client";
 import { regenerateCryptoKey, WIA_KEYTAG } from "./itwCryptoContextUtils";
 import {
@@ -166,11 +165,13 @@ export const getCurrentWalletInstanceStatus = (
       )
     });
   } catch (e) {
-    Sentry.captureException(e, {
-      tags: {
-        isRequired: true
-      }
-    });
-    throw e;
+    return;
+    // TODO: Replace Sentry capture exception with a new logging solution
+    // Sentry.captureException(e, {
+    //   tags: {
+    //     isRequired: true
+    //   }
+    // });
+    // throw e;
   }
 };

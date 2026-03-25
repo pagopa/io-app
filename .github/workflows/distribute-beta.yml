@@ -39,7 +39,6 @@ jobs:
         env:
           APP_STORE_API_KEY_ID: ${{secrets.APP_STORE_API_KEY_ID}}
           APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
-          ENCODED_IO_APP_SENTRY_PROPERTIES: ${{secrets.ENCODED_IO_APP_SENTRY_PROPERTIES}}
       - id: distribute-app-testflight
         name: Distribute beta to specific groupd
         run: |

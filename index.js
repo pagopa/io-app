@@ -18,7 +18,6 @@ import {
   setJSExceptionHandler,
   setNativeExceptionHandler
 } from "react-native-exception-handler";
-import * as Sentry from "@sentry/react-native";
 
 import App from "./ts/App";
 import { initI18n } from "./ts/i18n";
@@ -29,8 +28,6 @@ void initI18n();
 
 const errorHandler = (e, isFatal) => {
   if (isFatal) {
-    Sentry.captureMessage("JSException");
-    Sentry.captureException(e);
     if (isMixpanelInstanceInitialized()) {
       mixpanelTrack("APPLICATION_ERROR", {
         TYPE: "js",
@@ -53,8 +50,6 @@ const errorHandler = (e, isFatal) => {
 
 setJSExceptionHandler(errorHandler);
 setNativeExceptionHandler(exceptionString => {
-  Sentry.captureMessage("NativeException");
-  Sentry.captureException(exceptionString);
   if (isMixpanelInstanceInitialized()) {
     mixpanelTrack("APPLICATION_ERROR", {
       TYPE: "native",

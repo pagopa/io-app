@@ -6,7 +6,6 @@ import {
   setCookie
 } from "@pagopa/io-react-native-http-client";
 import { supportsInAppBrowser } from "@pagopa/io-react-native-login-utils";
-import * as Sentry from "@sentry/react-native";
 import * as E from "fp-ts/lib/Either";
 import { identity, pipe } from "fp-ts/lib/function";
 import { call, put, select } from "typed-redux-saga/macro";
@@ -221,10 +220,11 @@ const safeParseFailureResponseBody = (failureResponseBody: string) => {
   try {
     return JSON.parse(failureResponseBody);
   } catch (e) {
-    Sentry.captureException(e);
-    Sentry.captureMessage(
-      `handleFimsGetConsentsList.safeParseFailureResponseBody: JSON.parse threw an exception on a ${failureResponseBody?.length}-character long input string`
-    );
+    // TODO: Replace Sentry capture exception with a new logging solution
+    // Sentry.captureException(e);
+    // Sentry.captureMessage(
+    //   `handleFimsGetConsentsList.safeParseFailureResponseBody: JSON.parse threw an exception on a ${failureResponseBody?.length}-character long input string`
+    // );
     return undefined;
   }
 };
