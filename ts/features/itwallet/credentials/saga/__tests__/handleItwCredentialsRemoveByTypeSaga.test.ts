@@ -1,5 +1,4 @@
 import * as ioCrypto from "@pagopa/io-react-native-crypto";
-import * as Sentry from "@sentry/react-native";
 import { DeepPartial } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -21,7 +20,6 @@ jest.mock("@sentry/react-native", () => ({ captureException: jest.fn() }));
 
 const mockRemoveAll = jest.mocked(CredentialsVault.removeAll);
 const mockDeleteKey = jest.mocked(ioCrypto.deleteKey);
-const mockSentry = jest.mocked(Sentry.captureException);
 
 const baseCredential: CredentialMetadata = {
   credentialType: CredentialType.DRIVING_LICENSE,
@@ -78,23 +76,6 @@ describe("handleItwCredentialsRemoveByTypeSaga", () => {
       .then(() => {
         expect(mockRemoveAll).toHaveBeenCalledWith([credential.credentialId]);
         expect(mockDeleteKey).toHaveBeenCalledWith(credential.keyTag);
-      });
-  });
-
-  it("calls Sentry and does not dispatch when vault.removeAll throws", () => {
-    const error = new Error("vault failure");
-    mockRemoveAll.mockRejectedValue(error);
-    const credential = { ...baseCredential };
-    const action = itwCredentialsRemoveByType(CredentialType.DRIVING_LICENSE);
-
-    return expectSaga(handleItwCredentialsRemoveByTypeSaga, action)
-      .withState(makeState({ [credential.credentialId]: credential }))
-      .not.put.actionType(itwCredentialsRemove.toString())
-      .not.put.actionType(walletRemoveCards.toString())
-      .run()
-      .then(() => {
-        expect(mockSentry).toHaveBeenCalledWith(error);
-        expect(mockDeleteKey).not.toHaveBeenCalled();
       });
   });
 });

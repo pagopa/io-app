@@ -52,9 +52,19 @@ export const itwCredentialsVaultMigrationComplete = createStandardAction(
   "ITW_CREDENTIALS_VAULT_MIGRATION_COMPLETE"
 )<ReadonlyArray<string>>();
 
+/**
+ * Atomically removes all credentials of the specified type and stores the new ones.
+ * The credential type is derived from the first bundle's metadata.
+ * This avoids the race condition of dispatching remove and store as two separate actions.
+ */
+export const itwCredentialsReplaceByType = createStandardAction(
+  "ITW_CREDENTIALS_REPLACE_BY_TYPE"
+)<ReadonlyArray<CredentialBundle>>();
+
 export type ItwCredentialsActions =
   | ActionType<typeof itwCredentialsStoreBundle>
   | ActionType<typeof itwCredentialsStore>
   | ActionType<typeof itwCredentialsRemove>
   | ActionType<typeof itwCredentialsRemoveByType>
+  | ActionType<typeof itwCredentialsReplaceByType>
   | ActionType<typeof itwCredentialsVaultMigrationComplete>;

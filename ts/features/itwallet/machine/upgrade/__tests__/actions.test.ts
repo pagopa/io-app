@@ -8,10 +8,7 @@ import { createCredentialUpgradeActionsImplementation } from "../actions";
 import { Context } from "../context";
 import { CredentialUpgradeEvents } from "../events";
 import { useIOStore } from "../../../../../store/hooks";
-import {
-  itwCredentialsRemoveByType,
-  itwCredentialsStoreBundle
-} from "../../../credentials/store/actions";
+import { itwCredentialsReplaceByType } from "../../../credentials/store/actions";
 
 describe("itwCredentialUpgradeMachine actions", () => {
   describe("storeCredential", () => {
@@ -42,10 +39,7 @@ describe("itwCredentialUpgradeMachine actions", () => {
       } as unknown as ActionArgs<Context, CredentialUpgradeEvents, CredentialUpgradeEvents>);
 
       expect(mockDispatch).toHaveBeenCalledWith(
-        itwCredentialsRemoveByType("MDL")
-      );
-      expect(mockDispatch).toHaveBeenCalledWith(
-        itwCredentialsStoreBundle([
+        itwCredentialsReplaceByType([
           { credential: "raw-jwt", metadata: ItwStoredCredentialsMocks.L3.mdl }
         ])
       );

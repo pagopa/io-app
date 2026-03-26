@@ -160,9 +160,6 @@ describe("itwEidIssuanceMachine", () => {
       requestEid: fromPromise<CredentialBundle, RequestEidActorParams>(
         requestEid
       ),
-      storeEidCredential: fromPromise<void, CredentialBundle>(
-        storeEidCredentialActor
-      ),
       startAuthFlow: fromPromise<
         AuthenticationContext,
         StartAuthFlowActorParams
