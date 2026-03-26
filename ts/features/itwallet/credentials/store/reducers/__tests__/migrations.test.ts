@@ -845,16 +845,14 @@ describe("ITW credentials reducer migrations", () => {
       }
     };
 
+    const omitCredential = ({ credential: __, ...rest }: any) => rest;
+
     const persistedStateAt9 = {
       credentials: {
-        dc_sd_jwt_PersonIdentificationData: {
-          ...inputCredentials.dc_sd_jwt_PersonIdentificationData,
-          credential: undefined
-        },
-        mso_mdoc_mDL: {
-          ...inputCredentials.mso_mdoc_mDL,
-          credential: undefined
-        }
+        dc_sd_jwt_PersonIdentificationData: omitCredential(
+          inputCredentials.dc_sd_jwt_PersonIdentificationData
+        ),
+        mso_mdoc_mDL: omitCredential(inputCredentials.mso_mdoc_mDL)
       },
       legacyCredentials: basePersistedStateAt8.credentials,
       _persist: {
