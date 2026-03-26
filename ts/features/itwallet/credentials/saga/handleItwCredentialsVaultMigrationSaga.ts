@@ -5,7 +5,7 @@ import { itwCredentialsVaultMigrationComplete } from "../store/actions";
 
 /**
  * SIW-2178 introduced CredentialsVault to keep raw JWTs out of Redux.
- * Migration v8 populates `legacyCredentials` as a staging area: it copies the
+ * Migration v9 populates `legacyCredentials` as a staging area: it copies the
  * pre-migration `credentials` (with the `credential` JWT intact) and strips
  * `credential` from `credentials` so Redux is JWT-free right after upgrade.
  *

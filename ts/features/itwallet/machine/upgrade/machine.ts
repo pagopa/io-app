@@ -64,12 +64,12 @@ export const itwCredentialUpgradeMachine = setup({
     LoadingContext: {
       invoke: {
         src: "loadContext",
-        input: ({ context }) => ({
-          walletInstanceAttestation: context.walletInstanceAttestation,
-          pid: context.pid
-        }),
         onDone: {
-          target: "Checking"
+          target: "Checking",
+          actions: assign(({ event }) => ({
+            pid: event.output.pid,
+            walletInstanceAttestation: event.output.walletInstanceAttestation
+          }))
         }
       }
     },
