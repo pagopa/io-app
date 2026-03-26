@@ -12,7 +12,7 @@ import Config from "react-native-config";
 // #region Defaults
 
 // default repository for fetching app content (e.g. services metadata)
-const DEFAULT_CONTENT_REPO_URL =
+export const DEFAULT_CONTENT_REPO_URL =
   "https://assets.io.pagopa.it" as NonEmptyString;
 
 const DEFAULT_API_URL_PREFIX = "https://api-app.io.pagopa.it" as NonEmptyString;
