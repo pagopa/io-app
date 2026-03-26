@@ -10,7 +10,6 @@ import {
   CieCardReadContentProps
 } from "../../../common/components/cie/CieCardReadContent";
 import {
-  CieReadState,
   isErrorState,
   isReadingState,
   isSuccessState,
@@ -43,25 +42,7 @@ export const SendAARCieCardReadingComponent = ({
 }: SendAARCieCardReadingComponentProps) => {
   const dispatch = useIODispatch();
   const theme = useIOTheme();
-  const { startReading } = useCieInternalAuthAndMrtdReading();
-
-  // TODO remove this change, it is needed only to skip card reading on simulator
-  const readState = {
-    status: ReadStatus.SUCCESS,
-    data: {
-      mrtd_data: {
-        dg1: "",
-        dg11: "",
-        sod: ""
-      },
-      nis_data: {
-        nis: "",
-        publicKey: "",
-        signedChallenge: "",
-        sod: ""
-      }
-    }
-  } as CieReadState;
+  const { startReading, readState } = useCieInternalAuthAndMrtdReading();
 
   useTrackCieReadingEvents(readState);
 

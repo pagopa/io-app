@@ -629,13 +629,12 @@ export const paymentsFeedbackBannerConfigSelector = createSelector(
     )
 );
 
-// TODO change to new field
 export const pnFeedbackBannerConfigSelector = createSelector(
   remoteConfigSelector,
   (remoteConfig): Banner | undefined =>
     pipe(
       remoteConfig,
-      O.map(config => config.newPaymentSection.feedbackBanner),
+      O.map(config => config.pn.aar?.feedbackBanner),
       O.toUndefined
     )
 );
