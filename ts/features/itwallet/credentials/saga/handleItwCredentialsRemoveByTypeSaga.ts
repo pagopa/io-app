@@ -1,5 +1,4 @@
 import { deleteKey } from "@pagopa/io-react-native-crypto";
-import * as Sentry from "@sentry/react-native";
 import { call, put, select, all } from "typed-redux-saga/macro";
 import { walletRemoveCards } from "../../../wallet/store/actions/cards";
 import {
@@ -37,7 +36,7 @@ export function* handleItwCredentialsRemoveByTypeSaga(
       yield* put(walletRemoveCards([`ITW_${credentialType}`]));
       yield* all(sameTypeCredentials.map(c => call(deleteKey, c.keyTag)));
     }
-  } catch (e) {
-    Sentry.captureException(e);
+  } catch {
+    // TODO [SIW-4080] Log failures to Mixpanel
   }
 }

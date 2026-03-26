@@ -26,7 +26,6 @@ export function* handleItwCredentialsStoreBundleSaga(
       itwCredentialsStore(action.payload.map(({ metadata }) => metadata))
     );
   } catch {
-    // Errors are currently not handled, just make sure the saga doesn't crash
-    // TODO log errors to Mixpanel
+    // TODO [SIW-4080] Log failure to Mixpanel
   }
 }

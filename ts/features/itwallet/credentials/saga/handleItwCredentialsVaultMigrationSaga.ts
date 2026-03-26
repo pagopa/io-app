@@ -21,7 +21,6 @@ export function* handleItwCredentialsVaultMigrationSaga() {
   );
 
   const entries = Object.values(legacyCredentials);
-
   if (entries.length === 0) {
     return;
   }
@@ -40,6 +39,9 @@ export function* handleItwCredentialsVaultMigrationSaga() {
   );
 
   const succeeded = results.filter(r => r.success).map(r => r.credentialId);
+
+  // TODO [SIW-4080] Log failures to Mixpanel, including count and IDs
+  // const failed = results.filter(r => !r.success).map(r => r.credentialId);
 
   if (succeeded.length > 0) {
     yield* put(itwCredentialsVaultMigrationComplete(succeeded));

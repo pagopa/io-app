@@ -34,6 +34,7 @@ export function* handleItwCredentialsVaultCoherenceSaga() {
     );
 
     if (missingInVault.length > 0) {
+      // TODO [SIW-4080] Log orphaned credential to Mixpanel
       const toRemove = missingInVault
         .map(id => reduxCredentials[id])
         .filter(Boolean);
@@ -47,11 +48,10 @@ export function* handleItwCredentialsVaultCoherenceSaga() {
     );
 
     if (orphanedInVault.length > 0) {
+      // TODO [SIW-4080] Log orphaned credential to Mixpanel
       yield* call(CredentialsVault.removeAll, orphanedInVault);
     }
   } catch {
-    // Errors are currently not handled, just make sure the saga doesn't crash
-    // and the app can continue booting.
-    // TODO log errors to Mixpanel
+    // TODO [SIW-4080] Log failures to Mixpanel
   }
 }
