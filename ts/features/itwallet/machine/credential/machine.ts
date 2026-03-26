@@ -223,8 +223,7 @@ export const itwCredentialIssuanceMachine = setup({
         src: "requestCredential",
         input: ({ context }) => ({
           credentialType: context.credentialType,
-          walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
-          skipMdocIssuance: !context.isItWalletValid // Do not request mDoc credentials for non IT-Wallet instances
+          walletInstanceAttestation: context.walletInstanceAttestation?.jwt
         }),
         onDone: {
           target: "DisplayingTrustIssuer",

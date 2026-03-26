@@ -25,10 +25,6 @@ export type Context = {
    */
   mode: CredentialIssuanceMode;
   /**
-   * Flag to indicate if the user has access to the L3 features.
-   */
-  isItWalletValid: boolean;
-  /**
    * The type of the credential being issued.
    */
   credentialType: string | undefined;
@@ -63,7 +59,6 @@ export type Context = {
 
 export const InitialContext: Context = {
   mode: "issuance",
-  isItWalletValid: false,
   credentialType: undefined,
   wiaCryptoContext: undefined,
   walletInstanceAttestation: undefined,

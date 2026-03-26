@@ -25,6 +25,7 @@ import {
 } from "../../issuance/analytics";
 import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
 import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
 import { type Context } from "./context";
@@ -35,9 +36,7 @@ export type GetWalletAttestationActorOutput = Awaited<
 
 export type RequestCredentialActorInput = Partial<
   Parameters<credentialIssuanceUtils.RequestCredential>[0]
-> & {
-  skipMdocIssuance: boolean;
-};
+>;
 
 export type RequestCredentialActorOutput = Awaited<
   ReturnType<typeof credentialIssuanceUtils.requestCredential>
@@ -157,18 +156,24 @@ export const createCredentialIssuanceActorsImplementation = (
     RequestCredentialActorOutput,
     RequestCredentialActorInput
   >(async ({ input }) => {
-    const { credentialType, walletInstanceAttestation, skipMdocIssuance } =
-      input;
+    const { credentialType, walletInstanceAttestation } = input;
 
     assert(credentialType, "credentialType is undefined");
     assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
+
+    // For mDoc credentials, we want to skip the issuance step for non IT-Wallet (L3) instances.
+    // This check MUST be done as late as possible in the flow, to ensure that the PID storing
+    // has completed.
+    const isItWalletValid = itwLifecycleIsITWalletValidSelector(
+      store.getState()
+    );
 
     return await credentialIssuanceUtils.requestCredential({
       env,
       itwVersion,
       credentialType,
       walletInstanceAttestation,
-      skipMdocIssuance
+      skipMdocIssuance: !isItWalletValid
     });
   });
 
