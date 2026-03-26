@@ -11,7 +11,11 @@ import { watchBonusCgnSaga } from "../../saga";
 
 const mockFetch: typeof fetch = async (input, init) => {
   const url =
-    input instanceof Request ? input.url : typeof input === "string" ? input : input.toString();
+    input instanceof Request
+      ? input.url
+      : typeof input === "string"
+      ? input
+      : input.toString();
   if (url.endsWith("/api/v1/cgn/operator-search/count")) {
     return new Response(JSON.stringify({ count: merchantList.length }), {
       status: 200,
