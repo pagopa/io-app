@@ -2,7 +2,6 @@ import {
   ContentWrapper,
   TabItem,
   TabNavigation,
-  VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -60,7 +59,6 @@ const ItwPlayground = () => {
             <>
               <ItwEnvironmentSection />
               <ItwLifecycleSection />
-              <VSpacer />
               <ItwSpecsVersionSection />
             </>
           )}
