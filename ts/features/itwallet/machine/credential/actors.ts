@@ -29,7 +29,7 @@ import {
 import { type Context } from "./context";
 
 export type GetWalletAttestationActorOutput = Awaited<
-  ReturnType<typeof itwAttestationUtils.getAttestation>
+  ReturnType<typeof itwAttestationUtils.getWalletInstanceAttestation>
 >;
 
 export type RequestCredentialActorInput =
@@ -97,7 +97,7 @@ export const createCredentialIssuanceActorsImplementation = (
       assert(O.isSome(integrityKeyTag), "integriyKeyTag is not present");
 
       try {
-        return await itwAttestationUtils.getAttestation(
+        return await itwAttestationUtils.getWalletInstanceAttestation(
           env,
           itwVersion,
           integrityKeyTag.value,
@@ -132,7 +132,12 @@ export const createCredentialIssuanceActorsImplementation = (
         );
 
         return await itwAttestationUtils
-          .getAttestation(env, itwVersion, newHardwareKeyTag, sessionToken)
+          .getWalletInstanceAttestation(
+            env,
+            itwVersion,
+            newHardwareKeyTag,
+            sessionToken
+          )
           .then(attestation => {
             // Track the successful renewal in Mixpanel
             trackWalletInstanceRenewalSuccess();

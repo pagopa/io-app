@@ -4,6 +4,7 @@ import {
 } from "@pagopa/io-react-native-wallet";
 import { isAfter } from "date-fns";
 import * as t from "io-ts";
+import { assert } from "../../../../utils/assert";
 import {
   CredentialFormat,
   IssuerConfiguration,
@@ -22,11 +23,10 @@ export const getCredentialStatusAssertion = async (
 ) => {
   const ioWallet = getIoWallet(itwVersion);
 
-  if (!ioWallet.CredentialStatus.statusAssertion.isSupported) {
-    throw new Error(
-      `Status assertion is not supported in IT-Wallet v${itwVersion}`
-    );
-  }
+  assert(
+    ioWallet.CredentialStatus.statusAssertion.isSupported,
+    `Status assertion is not supported by IT-Wallet v${itwVersion}`
+  );
 
   // Legacy credentials carry the legacy Issuer configuration, which is incompatible with the new API.
   // In this scenario the new configuration is fetched and used instead of `credential.issuerConf`.

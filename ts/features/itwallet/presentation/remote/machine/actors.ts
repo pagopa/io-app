@@ -14,7 +14,7 @@ import {
   WalletInstanceAttestations
 } from "../../../common/utils/itwTypesUtils";
 import { Env } from "../../../common/utils/environment";
-import { getAttestation } from "../../../common/utils/itwAttestationUtils";
+import { getWalletInstanceAttestation } from "../../../common/utils/itwAttestationUtils";
 import { useIOStore } from "../../../../../store/hooks";
 import {
   enrichPresentationDetails,
@@ -260,7 +260,12 @@ export const createRemoteActorsImplementation = (
       assert(sessionToken, "sessionToken is undefined");
       assert(integrityKeyTag, "integrityKeyTag is undefined");
 
-      return getAttestation(env, itwVersion, integrityKeyTag, sessionToken);
+      return getWalletInstanceAttestation(
+        env,
+        itwVersion,
+        integrityKeyTag,
+        sessionToken
+      );
     }
   );
 

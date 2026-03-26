@@ -13,7 +13,7 @@ import {
 } from "../../issuance/analytics";
 import { Env } from "../../common/utils/environment";
 import {
-  getAttestation,
+  getWalletInstanceAttestation,
   getIntegrityHardwareKeyTag,
   registerWalletInstance
 } from "../../common/utils/itwAttestationUtils";
@@ -160,7 +160,7 @@ export const createEidIssuanceActorsImplementation = (
     assert(input.integrityKeyTag, "integrityKeyTag is undefined");
 
     try {
-      return await getAttestation(
+      return await getWalletInstanceAttestation(
         env,
         itwVersion,
         input.integrityKeyTag,
@@ -193,7 +193,7 @@ export const createEidIssuanceActorsImplementation = (
         { isRenewal: true }
       );
 
-      return await getAttestation(
+      return await getWalletInstanceAttestation(
         env,
         itwVersion,
         newHardwareKeyTag,

@@ -27,3 +27,8 @@ export const IT_WALLET_SURVEY_EID_REISSUANCE_SUCCESS =
   "https://pagopa.qualtrics.com/jfe/form/SV_3JmGHi0IjGYESYC";
 export const IT_WALLET_SURVEY_EID_REISSUANCE_FAILURE =
   "https://pagopa.qualtrics.com/jfe/form/SV_5bhV8w1e2ujl9xs";
+
+/**
+ * Fixed Wallet Solution identifier to get the Wallet Instance and Wallet Unit attestations.
+ */
+export const WALLET_SOLUTION_ID = "appio";

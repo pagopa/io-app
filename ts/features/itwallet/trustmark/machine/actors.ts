@@ -11,7 +11,7 @@ import * as itwTrustmarkUtils from "../utils";
 import { Env } from "../../common/utils/environment";
 
 export type GetWalletAttestationActorOutput = Awaited<
-  ReturnType<typeof itwAttestationUtils.getAttestation>
+  ReturnType<typeof itwAttestationUtils.getWalletInstanceAttestation>
 >;
 
 export type GetCredentialTrustmarkUrlActorInput = {
@@ -48,7 +48,7 @@ export const createItwTrustmarkActorsImplementation = (
       /**
        * Get the wallet instance attestation
        */
-      return await itwAttestationUtils.getAttestation(
+      return await itwAttestationUtils.getWalletInstanceAttestation(
         env,
         itwVersion,
         integrityKeyTag.value,
