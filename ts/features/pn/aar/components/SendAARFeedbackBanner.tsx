@@ -4,15 +4,19 @@ import {
   fallbackForLocalizedMessageKeys,
   getFullLocale
 } from "../../../../utils/locale";
-import { pnFeedbackBannerConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import {
+  isPnFeedbackBannerEnabledSelector,
+  pnFeedbackBannerConfigSelector
+} from "../../../../store/reducers/backendStatus/remoteConfig";
 import { openWebUrl } from "../../../../utils/url";
 
 export const SendAArFeedbackBanner = () => {
+  const isBannerEnabled = useIOSelector(isPnFeedbackBannerEnabledSelector);
   const feedbackBannerConfig = useIOSelector(pnFeedbackBannerConfigSelector);
   const locale = getFullLocale();
   const localeFallback = fallbackForLocalizedMessageKeys(locale);
 
-  if (!feedbackBannerConfig) {
+  if (!isBannerEnabled || !feedbackBannerConfig) {
     return null;
   }
 
