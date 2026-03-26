@@ -266,7 +266,7 @@ exports[`SendAarCieCardReadingEducationalScreen should match the snapshot 1`] = 
                                 }
                               >
                                 <Text
-                                  accessibilityLabel="features.pn.aar.flow.cieScanningAdvisory.title"
+                                  accessibilityLabel="Posiziona la CIE su una superficie stabile per la lettura"
                                   accessibilityRole="header"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="title1"
@@ -285,7 +285,7 @@ exports[`SendAarCieCardReadingEducationalScreen should match the snapshot 1`] = 
                                     ]
                                   }
                                 >
-                                  features.pn.aar.flow.cieScanningAdvisory.title
+                                  Posiziona la CIE su una superficie stabile per la lettura
                                 </Text>
                               </View>
                             </View>
@@ -321,7 +321,7 @@ exports[`SendAarCieCardReadingEducationalScreen should match the snapshot 1`] = 
                                   ]
                                 }
                               >
-                                features.pn.aar.flow.cieScanningAdvisory.description
+                                Dovrai poggiare il retro del telefono sulla carta e tenerlo fermo per la lettura.
                               </Text>
                             </View>
                             <View
@@ -538,7 +538,7 @@ exports[`SendAarCieCardReadingEducationalScreen should match the snapshot 1`] = 
                             }
                           >
                             <View
-                              accessibilityLabel="features.pn.aar.flow.cieScanningAdvisory.primaryAction"
+                              accessibilityLabel="Inizia lettura CIE"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -750,7 +750,7 @@ exports[`SendAarCieCardReadingEducationalScreen should match the snapshot 1`] = 
                                       ]
                                     }
                                   >
-                                    features.pn.aar.flow.cieScanningAdvisory.primaryAction
+                                    Inizia lettura CIE
                                   </Text>
                                 </View>
                               </View>
@@ -852,7 +852,7 @@ exports[`SendAarCieCardReadingEducationalScreen should match the snapshot 1`] = 
                             }
                           >
                             <View
-                              accessibilityLabel="global.buttons.back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1009,7 +1009,7 @@ exports[`SendAarCieCardReadingEducationalScreen should match the snapshot 1`] = 
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="features.pn.aar.flow.cieScanningAdvisory.title"
+                              accessibilityLabel="Posiziona la CIE su una superficie stabile per la lettura"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -1070,7 +1070,7 @@ exports[`SendAarCieCardReadingEducationalScreen should match the snapshot 1`] = 
                                   ]
                                 }
                               >
-                                features.pn.aar.flow.cieScanningAdvisory.title
+                                Posiziona la CIE su una superficie stabile per la lettura
                               </Text>
                             </View>
                             <View
@@ -1084,7 +1084,7 @@ exports[`SendAarCieCardReadingEducationalScreen should match the snapshot 1`] = 
                               }
                             >
                               <View
-                                accessibilityLabel="global.accessibility.contextualHelp.open.label"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

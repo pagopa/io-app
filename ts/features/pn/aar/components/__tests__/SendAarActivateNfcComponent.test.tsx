@@ -1,3 +1,4 @@
+import I18n from "i18next";
 import { act, fireEvent, render, waitFor } from "@testing-library/react-native";
 import { Alert } from "react-native";
 import * as NFC_HOOK from "../../hooks/useIsNfcFeatureEnabled";
@@ -29,10 +30,6 @@ jest.mock("@react-navigation/native");
 
 jest.mock("@react-navigation/stack", () => ({
   createStackNavigator: jest.fn()
-}));
-
-jest.mock("i18next", () => ({
-  t: (path: string) => path
 }));
 
 jest.mock("react-native-safe-area-context", () => ({
@@ -113,7 +110,9 @@ describe("SendAarActivateNfcComponent", () => {
           const confirmButton = spyOnAlert.mock.calls[0][2]![1];
 
           expect(alertTitle).toBe(
-            "features.pn.aar.flow.androidNfcActivation.alertOnContinue.title"
+            I18n.t(
+              "features.pn.aar.flow.androidNfcActivation.alertOnContinue.title"
+            )
           );
           expect(alertMessage).toBeUndefined();
           expect(cancelButton.onPress).toBe(

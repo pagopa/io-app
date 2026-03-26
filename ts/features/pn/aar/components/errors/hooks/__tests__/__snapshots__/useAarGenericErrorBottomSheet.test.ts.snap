@@ -20,7 +20,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
       ]
     }
   >
-    features.pn.aar.flow.ko.GENERIC.detail.subTitle
+    Prendi nota del codice di errore, potrebbe servirti per richiedere assistenza.
   </Text>,
   <View
     style={
@@ -55,7 +55,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
         }
       >
         <View
-          accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.supportTitle"
+          accessibilityLabel="Contatta l'assistenza"
           accessibilityRole="header"
           accessible={true}
         >
@@ -77,14 +77,14 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.supportTitle
+            Contatta l'assistenza
           </Text>
         </View>
       </View>
     </View>
   </View>,
   <View
-    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.chat"
+    accessibilityLabel="Chiedi aiuto in chat"
     accessibilityRole="button"
     accessibilityState={
       {
@@ -288,7 +288,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.chat
+            Chiedi aiuto in chat
           </Text>
         </View>
       </View>
@@ -328,7 +328,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
         }
       >
         <View
-          accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.additionalDataTitle"
+          accessibilityLabel="Dati aggiuntivi"
           accessibilityRole="header"
           accessible={true}
         >
@@ -350,14 +350,14 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.additionalDataTitle
+            Dati aggiuntivi
           </Text>
         </View>
       </View>
     </View>
   </View>,
   <View
-    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.errorCode"
+    accessibilityLabel="Codice errore"
     accessibilityRole="button"
     accessibilityState={
       {
@@ -504,7 +504,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.errorCode
+            Codice errore
           </Text>
           <Text
             allowFontScaling={true}
@@ -618,7 +618,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
       ]
     }
   >
-    features.pn.aar.flow.ko.GENERIC.detail.subTitle
+    Prendi nota del codice di errore, potrebbe servirti per richiedere assistenza.
   </Text>,
   <View
     style={
@@ -653,7 +653,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
         }
       >
         <View
-          accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.supportTitle"
+          accessibilityLabel="Contatta l'assistenza"
           accessibilityRole="header"
           accessible={true}
         >
@@ -675,14 +675,14 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.supportTitle
+            Contatta l'assistenza
           </Text>
         </View>
       </View>
     </View>
   </View>,
   <View
-    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.chat"
+    accessibilityLabel="Chiedi aiuto in chat"
     accessibilityRole="button"
     accessibilityState={
       {
@@ -886,7 +886,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.chat
+            Chiedi aiuto in chat
           </Text>
         </View>
       </View>
@@ -926,7 +926,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
         }
       >
         <View
-          accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.additionalDataTitle"
+          accessibilityLabel="Dati aggiuntivi"
           accessibilityRole="header"
           accessible={true}
         >
@@ -948,14 +948,14 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.additionalDataTitle
+            Dati aggiuntivi
           </Text>
         </View>
       </View>
     </View>
   </View>,
   <View
-    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.errorCode"
+    accessibilityLabel="Codice errore"
     accessibilityRole="button"
     accessibilityState={
       {
@@ -1102,7 +1102,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.errorCode
+            Codice errore
           </Text>
           <Text
             allowFontScaling={true}
@@ -1216,7 +1216,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
       ]
     }
   >
-    features.pn.aar.flow.ko.GENERIC.detail.subTitle
+    Prendi nota del codice di errore, potrebbe servirti per richiedere assistenza.
   </Text>,
   <View
     style={
@@ -1251,7 +1251,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
         }
       >
         <View
-          accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.supportTitle"
+          accessibilityLabel="Contatta l'assistenza"
           accessibilityRole="header"
           accessible={true}
         >
@@ -1273,14 +1273,14 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.supportTitle
+            Contatta l'assistenza
           </Text>
         </View>
       </View>
     </View>
   </View>,
   <View
-    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.chat"
+    accessibilityLabel="Chiedi aiuto in chat"
     accessibilityRole="button"
     accessibilityState={
       {
@@ -1484,7 +1484,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.chat
+            Chiedi aiuto in chat
           </Text>
         </View>
       </View>
@@ -1524,7 +1524,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
         }
       >
         <View
-          accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.additionalDataTitle"
+          accessibilityLabel="Dati aggiuntivi"
           accessibilityRole="header"
           accessible={true}
         >
@@ -1546,14 +1546,14 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.additionalDataTitle
+            Dati aggiuntivi
           </Text>
         </View>
       </View>
     </View>
   </View>,
   <View
-    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.errorCode"
+    accessibilityLabel="Codice errore"
     accessibilityRole="button"
     accessibilityState={
       {
@@ -1700,7 +1700,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.errorCode
+            Codice errore
           </Text>
           <Text
             allowFontScaling={true}
@@ -1814,7 +1814,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
       ]
     }
   >
-    features.pn.aar.flow.ko.GENERIC.detail.subTitle
+    Prendi nota del codice di errore, potrebbe servirti per richiedere assistenza.
   </Text>,
   <View
     style={
@@ -1849,7 +1849,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
         }
       >
         <View
-          accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.supportTitle"
+          accessibilityLabel="Contatta l'assistenza"
           accessibilityRole="header"
           accessible={true}
         >
@@ -1871,14 +1871,14 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.supportTitle
+            Contatta l'assistenza
           </Text>
         </View>
       </View>
     </View>
   </View>,
   <View
-    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.chat"
+    accessibilityLabel="Chiedi aiuto in chat"
     accessibilityRole="button"
     accessibilityState={
       {
@@ -2082,7 +2082,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.chat
+            Chiedi aiuto in chat
           </Text>
         </View>
       </View>
@@ -2118,7 +2118,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
       ]
     }
   >
-    features.pn.aar.flow.ko.GENERIC.detail.subTitle
+    Prendi nota del codice di errore, potrebbe servirti per richiedere assistenza.
   </Text>,
   <View
     style={
@@ -2153,7 +2153,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
         }
       >
         <View
-          accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.supportTitle"
+          accessibilityLabel="Contatta l'assistenza"
           accessibilityRole="header"
           accessible={true}
         >
@@ -2175,14 +2175,14 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.supportTitle
+            Contatta l'assistenza
           </Text>
         </View>
       </View>
     </View>
   </View>,
   <View
-    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.chat"
+    accessibilityLabel="Chiedi aiuto in chat"
     accessibilityRole="button"
     accessibilityState={
       {
@@ -2386,7 +2386,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.chat
+            Chiedi aiuto in chat
           </Text>
         </View>
       </View>
@@ -2426,7 +2426,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
         }
       >
         <View
-          accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.additionalDataTitle"
+          accessibilityLabel="Dati aggiuntivi"
           accessibilityRole="header"
           accessible={true}
         >
@@ -2448,14 +2448,14 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.additionalDataTitle
+            Dati aggiuntivi
           </Text>
         </View>
       </View>
     </View>
   </View>,
   <View
-    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.errorCode"
+    accessibilityLabel="Codice errore"
     accessibilityRole="button"
     accessibilityState={
       {
@@ -2602,7 +2602,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.errorCode
+            Codice errore
           </Text>
           <Text
             allowFontScaling={true}
@@ -2716,7 +2716,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
       ]
     }
   >
-    features.pn.aar.flow.ko.GENERIC.detail.subTitle
+    Prendi nota del codice di errore, potrebbe servirti per richiedere assistenza.
   </Text>,
   <View
     style={
@@ -2751,7 +2751,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
         }
       >
         <View
-          accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.supportTitle"
+          accessibilityLabel="Contatta l'assistenza"
           accessibilityRole="header"
           accessible={true}
         >
@@ -2773,14 +2773,14 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.supportTitle
+            Contatta l'assistenza
           </Text>
         </View>
       </View>
     </View>
   </View>,
   <View
-    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.chat"
+    accessibilityLabel="Chiedi aiuto in chat"
     accessibilityRole="button"
     accessibilityState={
       {
@@ -2984,7 +2984,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.chat
+            Chiedi aiuto in chat
           </Text>
         </View>
       </View>
@@ -3024,7 +3024,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
         }
       >
         <View
-          accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.additionalDataTitle"
+          accessibilityLabel="Dati aggiuntivi"
           accessibilityRole="header"
           accessible={true}
         >
@@ -3046,14 +3046,14 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.additionalDataTitle
+            Dati aggiuntivi
           </Text>
         </View>
       </View>
     </View>
   </View>,
   <View
-    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.errorCode"
+    accessibilityLabel="Codice errore"
     accessibilityRole="button"
     accessibilityState={
       {
@@ -3200,7 +3200,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.errorCode
+            Codice errore
           </Text>
           <Text
             allowFontScaling={true}
@@ -3314,7 +3314,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
       ]
     }
   >
-    features.pn.aar.flow.ko.GENERIC.detail.subTitle
+    Prendi nota del codice di errore, potrebbe servirti per richiedere assistenza.
   </Text>,
   <View
     style={
@@ -3349,7 +3349,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
         }
       >
         <View
-          accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.supportTitle"
+          accessibilityLabel="Contatta l'assistenza"
           accessibilityRole="header"
           accessible={true}
         >
@@ -3371,14 +3371,14 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.supportTitle
+            Contatta l'assistenza
           </Text>
         </View>
       </View>
     </View>
   </View>,
   <View
-    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.chat"
+    accessibilityLabel="Chiedi aiuto in chat"
     accessibilityRole="button"
     accessibilityState={
       {
@@ -3582,7 +3582,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.chat
+            Chiedi aiuto in chat
           </Text>
         </View>
       </View>
@@ -3622,7 +3622,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
         }
       >
         <View
-          accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.additionalDataTitle"
+          accessibilityLabel="Dati aggiuntivi"
           accessibilityRole="header"
           accessible={true}
         >
@@ -3644,14 +3644,14 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.additionalDataTitle
+            Dati aggiuntivi
           </Text>
         </View>
       </View>
     </View>
   </View>,
   <View
-    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.errorCode"
+    accessibilityLabel="Codice errore"
     accessibilityRole="button"
     accessibilityState={
       {
@@ -3798,7 +3798,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.errorCode
+            Codice errore
           </Text>
           <Text
             allowFontScaling={true}
@@ -3912,7 +3912,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
       ]
     }
   >
-    features.pn.aar.flow.ko.GENERIC.detail.subTitle
+    Prendi nota del codice di errore, potrebbe servirti per richiedere assistenza.
   </Text>,
   <View
     style={
@@ -3947,7 +3947,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
         }
       >
         <View
-          accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.supportTitle"
+          accessibilityLabel="Contatta l'assistenza"
           accessibilityRole="header"
           accessible={true}
         >
@@ -3969,14 +3969,14 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.supportTitle
+            Contatta l'assistenza
           </Text>
         </View>
       </View>
     </View>
   </View>,
   <View
-    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.chat"
+    accessibilityLabel="Chiedi aiuto in chat"
     accessibilityRole="button"
     accessibilityState={
       {
@@ -4180,7 +4180,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
               ]
             }
           >
-            features.pn.aar.flow.ko.GENERIC.detail.chat
+            Chiedi aiuto in chat
           </Text>
         </View>
       </View>

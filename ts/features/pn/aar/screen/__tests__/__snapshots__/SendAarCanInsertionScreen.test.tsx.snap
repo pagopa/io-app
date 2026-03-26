@@ -279,7 +279,7 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                                   }
                                 >
                                   <Text
-                                    accessibilityLabel="features.pn.aar.flow.cieCanInsertion.title"
+                                    accessibilityLabel="Inserisci il codice a 6 cifre che trovi in basso a destra della CIE"
                                     accessibilityRole="header"
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title1"
@@ -298,7 +298,7 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                                       ]
                                     }
                                   >
-                                    features.pn.aar.flow.cieCanInsertion.title
+                                    Inserisci il codice a 6 cifre che trovi in basso a destra della CIE
                                   </Text>
                                 </View>
                               </View>
@@ -334,7 +334,7 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                                     ]
                                   }
                                 >
-                                  features.pn.aar.flow.cieCanInsertion.description
+                                  È il codice a 6 cifre (CAN) che trovi stampato sul fronte della Carta di Identità Elettronica, in basso a destra.
                                 </Text>
                               </View>
                               <View
@@ -430,8 +430,8 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                                     onStartShouldSetResponder={[Function]}
                                   >
                                     <TextInput
-                                      accessibilityHint="authentication.cie.pin.accessibility.hint"
-                                      accessibilityLabel="authentication.cie.pin.accessibility.label"
+                                      accessibilityHint="Inserire in questo campo il pin a 8 cifre della propria Carta di Identità Elettronica"
+                                      accessibilityLabel="Campo di inserimento per pin della Carta di Identità elettronica"
                                       accessibilityValue={
                                         {
                                           "text": "",
@@ -761,7 +761,7 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                             }
                           >
                             <View
-                              accessibilityLabel="global.buttons.back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -918,7 +918,7 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="features.pn.aar.flow.cieCanInsertion.title"
+                              accessibilityLabel="Inserisci il codice a 6 cifre che trovi in basso a destra della CIE"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -979,7 +979,7 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                                   ]
                                 }
                               >
-                                features.pn.aar.flow.cieCanInsertion.title
+                                Inserisci il codice a 6 cifre che trovi in basso a destra della CIE
                               </Text>
                             </View>
                             <View
@@ -993,7 +993,7 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                               }
                             >
                               <View
-                                accessibilityLabel="global.accessibility.contextualHelp.open.label"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

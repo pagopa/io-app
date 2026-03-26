@@ -1,3 +1,4 @@
+import I18n from "i18next";
 import { act, fireEvent } from "@testing-library/react-native";
 import _ from "lodash";
 import { Alert } from "react-native";
@@ -30,10 +31,6 @@ jest.mock("../../analytics", () => ({
   trackSendAarMandateCieReadingClosureAlertAccepted: jest.fn(),
   trackSendAarMandateCieReadingClosureAlertContinue: jest.fn(),
   trackSendAarMandateCieNfcActivation: jest.fn()
-}));
-
-jest.mock("i18next", () => ({
-  t: (path: string) => path
 }));
 
 jest.mock("../../hooks/useSendAarFlowManager", () => ({
@@ -110,16 +107,20 @@ describe("SendAarActivateNfcScreen", () => {
     );
     expect(spyOnAlert).toHaveBeenCalledTimes(1);
     expect(spyOnAlert).toHaveBeenCalledWith(
-      "features.pn.aar.flow.androidNfcActivation.alertOnClose.title",
-      "features.pn.aar.flow.androidNfcActivation.alertOnClose.message",
+      I18n.t("features.pn.aar.flow.androidNfcActivation.alertOnClose.title"),
+      I18n.t("features.pn.aar.flow.androidNfcActivation.alertOnClose.message"),
       [
         {
-          text: "features.pn.aar.flow.androidNfcActivation.alertOnClose.confirm",
+          text: I18n.t(
+            "features.pn.aar.flow.androidNfcActivation.alertOnClose.confirm"
+          ),
           style: "destructive",
           onPress: expect.any(Function)
         },
         {
-          text: "features.pn.aar.flow.androidNfcActivation.alertOnClose.cancel",
+          text: I18n.t(
+            "features.pn.aar.flow.androidNfcActivation.alertOnClose.cancel"
+          ),
           onPress: expect.any(Function)
         }
       ]
