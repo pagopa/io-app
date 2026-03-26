@@ -92,7 +92,7 @@ export const ItwPresentationCredentialUnknownStatus = ({
           onPress: () => {
             machineRef.send({
               type: "select-credential",
-              mode: "issuance",
+              mode: "reissuance",
               credentialType: credential.credentialType
             });
           }
