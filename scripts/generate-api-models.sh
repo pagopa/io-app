@@ -2,7 +2,7 @@
 
 IO_BACKEND_VERSION=v17.5.2
 # need to change after merge on io-services-metadata
-IO_SERVICES_METADATA_VERSION=1.0.97
+IO_SERVICES_METADATA_VERSION=1.0.98
 # Session manager version
 IO_SESSION_MANAGER_VERSION=1.23.1
 # IO Wallet user function version
