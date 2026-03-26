@@ -64,6 +64,19 @@ const store = async (
 };
 
 /**
+ * Store multiple credentials' SD-JWT/MDOC in the Secure Storage.
+ * @param credentials An array of objects containing credentialId and credential string
+ * @throws If any Secure Storage operation fails
+ */
+const storeAll = async (
+  credentials: ReadonlyArray<{ credentialId: string; credential: string }>
+) => {
+  await Promise.all(
+    credentials.map(data => store(data.credentialId, data.credential))
+  );
+};
+
+/**
  * Retrieves a credential's SD-JWT/MDOC from the Secure Storage using its type.
  * @param credentialId The credential ID (e.g., "dc_sd_jwt_PersonalIdentificationData")
  * @returns A promise that resolves to the credential's SD-JWT/MDOC as a string, or undefined if not found
@@ -113,6 +126,7 @@ const clear = async () => {
 
 export const CredentialsVault = {
   store,
+  storeAll,
   get,
   remove,
   removeAll,

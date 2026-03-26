@@ -9,10 +9,10 @@ import { CredentialsVault } from "../../utils/vault";
 import { handleItwCredentialsStoreBundleSaga } from "../handleItwCredentialsStoreBundleSaga";
 
 jest.mock("../../utils/vault", () => ({
-  CredentialsVault: { store: jest.fn() }
+  CredentialsVault: { storeAll: jest.fn() }
 }));
 
-const mockStore = jest.mocked(CredentialsVault.store);
+const mockStoreAll = jest.mocked(CredentialsVault.storeAll);
 
 const makeBundle = (
   overrides: Partial<CredentialBundle> = {}
@@ -27,8 +27,8 @@ const makeBundle = (
 describe("handleItwCredentialsStoreBundleSaga", () => {
   beforeEach(() => jest.clearAllMocks());
 
-  it("stores each credential in vault and dispatches itwCredentialsStore with metadata", () => {
-    mockStore.mockResolvedValue(undefined);
+  it("stores all credentials in vault and dispatches itwCredentialsStore with metadata", () => {
+    mockStoreAll.mockResolvedValue(undefined);
     const payload = makeBundle();
     const action = itwCredentialsStoreBundle(payload);
 
@@ -36,16 +36,18 @@ describe("handleItwCredentialsStoreBundleSaga", () => {
       .put(itwCredentialsStore(payload.map(b => b.metadata)))
       .run()
       .then(() => {
-        expect(mockStore).toHaveBeenCalledTimes(1);
-        expect(mockStore).toHaveBeenCalledWith(
-          payload[0].metadata.credentialId,
-          payload[0].credential
+        expect(mockStoreAll).toHaveBeenCalledTimes(1);
+        expect(mockStoreAll).toHaveBeenCalledWith(
+          payload.map(b => ({
+            credentialId: b.metadata.credentialId,
+            credential: b.credential
+          }))
         );
       });
   });
 
   it("does not dispatch itwCredentialsStore if vault throws", () => {
-    mockStore.mockRejectedValue(new Error("vault error"));
+    mockStoreAll.mockRejectedValue(new Error("vault error"));
     const action = itwCredentialsStoreBundle(makeBundle());
 
     return expectSaga(handleItwCredentialsStoreBundleSaga, action)

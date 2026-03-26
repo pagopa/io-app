@@ -64,6 +64,48 @@ describe("vault", () => {
     });
   });
 
+  describe("storeAll", () => {
+    it("should store all credentials with ID and data", async () => {
+      mockSecureStorage.put.mockResolvedValue(undefined);
+
+      await CredentialsVault.storeAll([
+        { credentialId: "credential1", credential: "value1" },
+        { credentialId: "credential2", credential: "value2" }
+      ]);
+
+      expect(mockSecureStorage.put).toHaveBeenCalledTimes(2);
+      expect(mockSecureStorage.put).toHaveBeenCalledWith(
+        "itw:credential:credential1",
+        "value1"
+      );
+      expect(mockSecureStorage.put).toHaveBeenCalledWith(
+        "itw:credential:credential2",
+        "value2"
+      );
+    });
+
+    it("should handle empty array gracefully", async () => {
+      mockSecureStorage.put.mockResolvedValue(undefined);
+
+      await CredentialsVault.storeAll([]);
+
+      expect(mockSecureStorage.put).not.toHaveBeenCalled();
+    });
+
+    it("should throw if any store fails", async () => {
+      mockSecureStorage.put
+        .mockRejectedValueOnce(new Error("Storage error"))
+        .mockResolvedValueOnce(undefined);
+
+      await expect(
+        CredentialsVault.storeAll([
+          { credentialId: "credential1", credential: "value1" },
+          { credentialId: "credential2", credential: "value2" }
+        ])
+      ).rejects.toThrow("Storage error");
+    });
+  });
+
   describe("get", () => {
     it("should return credential value on success", async () => {
       mockSecureStorage.get.mockResolvedValue(CREDENTIAL_VALUE);

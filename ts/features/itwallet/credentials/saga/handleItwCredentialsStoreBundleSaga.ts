@@ -14,10 +14,11 @@ export function* handleItwCredentialsStoreBundleSaga(
 ) {
   try {
     yield* call(() =>
-      Promise.all(
-        action.payload.map(({ metadata, credential }) =>
-          CredentialsVault.store(metadata.credentialId, credential)
-        )
+      CredentialsVault.storeAll(
+        action.payload.map(({ metadata, credential }) => ({
+          credentialId: metadata.credentialId,
+          credential
+        }))
       )
     );
 
