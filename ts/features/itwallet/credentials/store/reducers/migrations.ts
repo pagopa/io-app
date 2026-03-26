@@ -245,9 +245,9 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
     ...state,
     legacyCredentials: state.credentials,
     credentials: Object.values<Record<string, any>>(state.credentials).reduce(
-      (acc, c) => ({
+      (acc, { credential: _, ...c }) => ({
         ...acc,
-        [c.credentialId]: { ...c, credential: undefined }
+        [c.credentialId]: c
       }),
       {}
     )
