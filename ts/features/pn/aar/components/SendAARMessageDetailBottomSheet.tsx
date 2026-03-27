@@ -11,6 +11,7 @@ import { sendVisitTheWebsiteUrlSelector } from "../../../../store/reducers/backe
 import { openWebUrl } from "../../../../utils/url";
 import { trackSendAarNotificationClosureExit } from "../analytics";
 import { SendUserType } from "../../../pushNotifications/analytics";
+import { SendAArFeedbackBanner } from "./SendAARFeedbackBanner";
 
 export type SendAARMessageDetailBottomSheetProps = {
   onPrimaryActionPress: () => void;
@@ -67,6 +68,9 @@ export const SendAARMessageDetailBottomSheet = ({
           <VSpacer size={24} />
         </>
       )}
+
+      {isDelegate && <SendAArFeedbackBanner />}
+
       <IOButton
         label={I18n.t("features.pn.aar.flow.closeNotification.primaryAction")}
         onPress={onPrimaryActionPress}
