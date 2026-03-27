@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.27.0-rc.7](https://github.com/pagopa/io-app/compare/3.27.0-rc.6...3.27.0-rc.7) (2026-03-26)
+
+
+### Bug Fixes
+
+* [[IOPLT-1725](https://pagopa.atlassian.net/browse/IOPLT-1725)] Restore assets in the local env of the DS section ([#7964](https://github.com/pagopa/io-app/issues/7964)) ([052ea3f](https://github.com/pagopa/io-app/commit/052ea3fd2e0b7a0dd0997fd782c46864e9d85a51))
+
 ## [3.27.0-rc.6](https://github.com/pagopa/io-app/compare/3.27.0-rc.5...3.27.0-rc.6) (2026-03-26)
 
 
