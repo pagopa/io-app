@@ -40,6 +40,7 @@ export const createCredentialIssuanceActionsImplementation = (
     const state = store.getState();
 
     return {
+      isItWalletValid: itwLifecycleIsITWalletValidSelector(state),
       walletInstanceAttestation: itwWalletInstanceAttestationSelector(state),
       credentialsCatalogue: itwCredentialsCatalogueByTypesSelector(state)
     };
@@ -90,13 +91,17 @@ export const createCredentialIssuanceActionsImplementation = (
     });
   },
 
-  navigateToCardOnboardingScreen: () => {
-    const isItWalletValid = itwLifecycleIsITWalletValidSelector(
-      store.getState()
-    );
-
+  navigateToCardOnboardingScreen: ({
+    context
+  }: ActionArgs<
+    Context,
+    CredentialIssuanceEvents,
+    CredentialIssuanceEvents
+  >) => {
     navigation.replace(ITW_ROUTES.MAIN, {
-      screen: isItWalletValid ? ITW_ROUTES.L3_ONBOARDING : ITW_ROUTES.ONBOARDING
+      screen: context.isItWalletValid
+        ? ITW_ROUTES.L3_ONBOARDING
+        : ITW_ROUTES.ONBOARDING
     });
   },
 
