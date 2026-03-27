@@ -39,9 +39,15 @@ describe("itwCredentialUpgradeMachine actions", () => {
       } as unknown as ActionArgs<Context, CredentialUpgradeEvents, CredentialUpgradeEvents>);
 
       expect(mockDispatch).toHaveBeenCalledWith(
-        itwCredentialsReplaceByType([
-          { credential: "raw-jwt", metadata: ItwStoredCredentialsMocks.L3.mdl }
-        ])
+        itwCredentialsReplaceByType(
+          [
+            {
+              credential: "raw-jwt",
+              metadata: ItwStoredCredentialsMocks.L3.mdl
+            }
+          ],
+          {}
+        )
       );
     });
   });

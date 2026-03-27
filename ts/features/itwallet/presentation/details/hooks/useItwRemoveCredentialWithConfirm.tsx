@@ -25,7 +25,7 @@ export const useItwRemoveCredentialWithConfirm = (
   );
 
   const handleRemoveCredential = () => {
-    dispatch(itwCredentialsRemoveByType(credential.credentialType));
+    dispatch(itwCredentialsRemoveByType(credential.credentialType, {}));
     toast.success(
       I18n.t("features.itWallet.presentation.credentialDetails.toast.removed")
     );
