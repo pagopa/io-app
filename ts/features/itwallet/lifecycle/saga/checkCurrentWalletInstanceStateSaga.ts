@@ -3,7 +3,10 @@ import { ReduxSagaEffect } from "../../../../types/utils";
 import { assert } from "../../../../utils/assert";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { itwSetWalletInstanceRemotelyActive } from "../../common/store/actions/preferences.ts";
-import { selectItwEnv } from "../../common/store/selectors/environment.ts";
+import {
+  selectItwEnv,
+  selectItwSpecsVersion
+} from "../../common/store/selectors/environment.ts";
 import { getEnv } from "../../common/utils/environment.ts";
 import { getCurrentWalletInstanceStatus } from "../../common/utils/itwAttestationUtils.ts";
 import { itwLifecycleIsValidSelector } from "../store/selectors";
@@ -13,9 +16,15 @@ export function* getCurrentStatusWalletInstance() {
   assert(sessionToken, "Missing session token");
 
   const env = getEnv(yield* select(selectItwEnv));
+  const itwVersion = yield* select(selectItwSpecsVersion);
 
   try {
-    return yield* call(getCurrentWalletInstanceStatus, env, sessionToken);
+    return yield* call(
+      getCurrentWalletInstanceStatus,
+      env,
+      itwVersion,
+      sessionToken
+    );
   } catch (e) {
     return undefined;
   }

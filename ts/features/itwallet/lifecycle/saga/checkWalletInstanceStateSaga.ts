@@ -5,7 +5,10 @@ import { ReduxSagaEffect } from "../../../../types/utils";
 import { assert } from "../../../../utils/assert";
 import { getNetworkError } from "../../../../utils/errors";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { selectItwEnv } from "../../common/store/selectors/environment";
+import {
+  selectItwEnv,
+  selectItwSpecsVersion
+} from "../../common/store/selectors/environment";
 import { getEnv } from "../../common/utils/environment";
 import { getWalletInstanceStatus } from "../../common/utils/itwAttestationUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
@@ -25,11 +28,13 @@ export function* getStatusOrResetWalletInstance(integrityKeyTag: string) {
   assert(sessionToken, "Missing session token");
 
   const env = getEnv(yield* select(selectItwEnv));
+  const itwVersion = yield* select(selectItwSpecsVersion);
 
   try {
     const walletInstanceStatus = yield* call(
       getWalletInstanceStatus,
       env,
+      itwVersion,
       integrityKeyTag,
       sessionToken
     );

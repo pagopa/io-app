@@ -1,0 +1,469 @@
+{
+  "sub": "https://pre.eaa.wallet.ipzs.it",
+  "metadata": {
+    "openid_credential_issuer": {
+      "jwks": {
+        "keys": [
+          {
+            "kty": "EC",
+            "use": "sig",
+            "crv": "P-256",
+            "kid": "UK-uw9i_TkL1jkqn8mUfcr1aLDNP5IFDtHDVNjjmoWA",
+            "x": "IYPCLUMkxQLqKRRS-Y0Fjq1sp_kyIm7mN7deLni9HxQ",
+            "y": "SRwE84x8EM4vs1EFHTvzgV1lVAcF9tEK7w7j5aSWtsU",
+            "alg": "ES256"
+          }
+        ]
+      },
+      "credential_issuer": "https://pre.eaa.wallet.ipzs.it",
+      "display": [
+        {
+          "name": "Istituto Poligrafico e Zecca dello Stato",
+          "locale": "it-IT"
+        },
+        {
+          "name": "Istituto Poligrafico e Zecca dello Stato",
+          "locale": "en-US"
+        }
+      ],
+      "status_attestation_endpoint": "https://pre.eaa.wallet.ipzs.it/status",
+      "revocation_endpoint": "https://pre.eaa.wallet.ipzs.it/revoke",
+      "credential_configurations_supported": {
+        "MDL": {
+          "authentic_source": "MIT - Direzione Generale per la Motorizzazione",
+          "vct": "MDL",
+          "scope": "MDL",
+          "cryptographic_binding_methods_supported": ["jwk"],
+          "display": [
+            {
+              "name": "Patente di guida",
+              "locale": "it-IT"
+            },
+            {
+              "name": "Mobile Driver's License",
+              "locale": "en-US"
+            }
+          ],
+          "issuance_errors_supported": {
+            "credential_expired": {
+              "display": [
+                {
+                  "title": "La tua Patente risulta scaduta",
+                  "description": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente. Rinnova il documento presso la Motorizzazione Civile o un ente abilitato del tuo territorio.",
+                  "locale": "it-IT"
+                }
+              ]
+            },
+            "credential_suspended": {
+              "display": [
+                {
+                  "title": "La tua Patente risulta sospesa",
+                  "description": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente. Rivolgiti alla Motorizzazione Civile per maggiori dettagli sul termine del periodo di sospensione.",
+                  "locale": "it-IT"
+                }
+              ]
+            },
+            "credential_revoked": {
+              "display": [
+                {
+                  "title": "La tua Patente risulta revocata",
+                  "description": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente. Rivolgiti alla Motorizzazione Civile per maggiori dettagli.",
+                  "locale": "it-IT"
+                }
+              ]
+            },
+            "credential_voided": {
+              "display": [
+                {
+                  "title": "La tua Patente risulta annullata",
+                  "description": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente. Rivolgiti alla Motorizzazione Civile per maggiori dettagli.",
+                  "locale": "it-IT"
+                }
+              ]
+            },
+            "credential_invalid": {
+              "display": [
+                {
+                  "title": "La tua Patente risulta non valida",
+                  "description": "Rivolgiti alla Motorizzazione Civile per maggiori dettagli.",
+                  "locale": "it-IT"
+                }
+              ]
+            },
+            "credential_not_found": {
+              "display": [
+                {
+                  "title": "Non è possibile aggiungere il documento al Portafoglio",
+                  "description": "La Motorizzazione Civile ha rilevato un errore. Rivolgiti alla Motorizzazione Civile per maggiori dettagli.",
+                  "locale": "it-IT"
+                }
+              ]
+            },
+            "credential_conflict": {
+              "display": [
+                {
+                  "title": "Non è possibile aggiungere il documento al portafoglio",
+                  "description": "La Motorizzazione Civile ha rilevato incongruenze anagrafiche. Per assistenza, contatta uco.dgmot@mit.gov.it, oppure chiama il numero verde 800 232323 (da fisso) o il 06 45775927 (da cellulare).",
+                  "locale": "it-IT"
+                }
+              ]
+            }
+          },
+          "format": "vc+sd-jwt",
+          "claims": {
+            "given_name": {
+              "value_type": "string",
+              "display": [
+                {
+                  "name": "Nome",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "First Name",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            "family_name": {
+              "value_type": "string",
+              "display": [
+                {
+                  "name": "Cognome",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Family Name",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            "birth_date": {
+              "value_type": "string",
+              "display": [
+                {
+                  "name": "Data di nascita",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Date of birth",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            "place_of_birth": {
+              "value_type": "string",
+              "display": [
+                {
+                  "name": "Luogo di nascita",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Place of birth",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            "portrait": {
+              "value_type": "string",
+              "display": [
+                {
+                  "name": "Fotografia",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Portrait",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            "issue_date": {
+              "value_type": "string",
+              "display": [
+                {
+                  "name": "Data di rilascio",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Issue date",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            "issuing_country": {
+              "value_type": "string",
+              "display": [
+                {
+                  "name": "Paese di rilascio",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Issuing country",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            "driving_privileges": {
+              "value_type": "string",
+              "display": [
+                {
+                  "name": "Categoria",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Driving privileges",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            "expiry_date": {
+              "value_type": "string",
+              "display": [
+                {
+                  "name": "Scadenza",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Expiry date",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            "document_number": {
+              "value_type": "string",
+              "display": [
+                {
+                  "name": "Numero",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Document number",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            "restrictions_conditions": {
+              "value_type": "string",
+              "display": [
+                {
+                  "name": "Codici",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Restriction condition",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            "driving_privileges_details": {
+              "value_type": "string",
+              "display": [
+                {
+                  "name": "Dettagli patente",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Driving privilege details",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            "issuing_authority": {
+              "value_type": "string",
+              "display": [
+                {
+                  "name": "Rilasciato da",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Issuing authority",
+                  "locale": "en-US"
+                }
+              ]
+            }
+          },
+          "credential_signing_alg_values_supported": [
+            "ES256",
+            "ES384",
+            "ES512"
+          ],
+          "proof_types_supported": {
+            "jwt": {
+              "proof_signing_alg_values_supported": ["ES256", "ES384", "ES512"]
+            }
+          }
+        }
+      },
+      "credential_endpoint": "https://pre.eaa.wallet.ipzs.it/credential"
+    },
+    "oauth_authorization_server": {
+      "client_registration_types_supported": ["automatic"],
+      "pushed_authorization_request_endpoint": "https://pre.eaa.wallet.ipzs.it/as/par",
+      "jwks": {
+        "keys": [
+          {
+            "kty": "EC",
+            "use": "sig",
+            "crv": "P-256",
+            "kid": "UK-uw9i_TkL1jkqn8mUfcr1aLDNP5IFDtHDVNjjmoWA",
+            "x": "IYPCLUMkxQLqKRRS-Y0Fjq1sp_kyIm7mN7deLni9HxQ",
+            "y": "SRwE84x8EM4vs1EFHTvzgV1lVAcF9tEK7w7j5aSWtsU",
+            "alg": "ES256"
+          }
+        ]
+      },
+      "grant_types_supported": ["authorization_code"],
+      "scopes_supported": ["MDL"],
+      "issuer": "https://pre.eaa.wallet.ipzs.it",
+      "acr_values_supported": [
+        "https://www.spid.gov.it/SpidL2",
+        "https://www.spid.gov.it/SpidL3"
+      ],
+      "authorization_endpoint": "https://pre.eaa.wallet.ipzs.it/authorize",
+      "token_endpoint_auth_signing_alg_values_supported": [
+        "ES256",
+        "ES384",
+        "ES512"
+      ],
+      "code_challenge_methods_supported": ["S256"],
+      "token_endpoint_auth_methods_supported": ["attest_jwt_client_auth"],
+      "authorization_signing_alg_values_supported": ["ES256"],
+      "response_modes_supported": ["form_post.jwt", "query"],
+      "request_object_signing_alg_values_supported": [
+        "ES256",
+        "ES384",
+        "ES512"
+      ],
+      "token_endpoint": "https://pre.eaa.wallet.ipzs.it/token"
+    },
+    "federation_entity": {
+      "homepage_uri": "https://pre.eid.wallet.ipzs.it",
+      "logo_uri": "https://pre.eid.wallet.ipzs.it/public/logo.svg",
+      "organization_name": "Istituto Poligrafico e Zecca dello Stato",
+      "tos_uri": "https://pre.eid.wallet.ipzs.it/public/info_policy.html",
+      "contacts": ["informazioni@ipzs.it", "protocollo@pec.ipzs.it"],
+      "policy_uri": "https://pre.eid.wallet.ipzs.it/public/privacy_policy.html"
+    },
+    "wallet_relying_party": {
+      "authorization_signed_response_alg": ["ES256", "ES384", "ES512"],
+      "jwks": {
+        "keys": [
+          {
+            "kty": "EC",
+            "use": "sig",
+            "crv": "P-256",
+            "kid": "LvkYQBylsTp3XXSHa7TJjA0L4ZVqskXsixqWUKv-hrc",
+            "x": "cnKcdbVE87XppOtXq7Tiuhh7pwv7FAgz1RdcXndP548",
+            "y": "xkICf7LUDopOuiSqnxzZIgqALgiBwz1buDR8OVw_Ll0",
+            "alg": "ES256"
+          }
+        ]
+      },
+      "application_type": "web",
+      "default_acr_values": [
+        "https://www.spid.gov.it/SpidL2",
+        "https://www.spid.gov.it/SpidL3"
+      ],
+      "presentation_definitions": [
+        {
+          "input_descriptors": [
+            {
+              "format": {
+                "vc+sd-jwt": {
+                  "alg": ["ES256", "ES384", "ES512"]
+                },
+                "constraints": {
+                  "limit_disclosure": "required",
+                  "fields": [
+                    {
+                      "filter": {
+                        "const": "PersonIdentificationData",
+                        "type": "string"
+                      },
+                      "path": ["$.vct"]
+                    },
+                    {
+                      "filter": {
+                        "type": "object"
+                      },
+                      "path": ["$.cnf.jwk"]
+                    },
+                    {
+                      "path": ["$.unique_id"]
+                    },
+                    {
+                      "path": ["$.tax_id_code"]
+                    }
+                  ]
+                }
+              },
+              "id": "PersonIdentificationData"
+            },
+            {
+              "format": {
+                "jwt": {
+                  "alg": ["ES256", "ES384", "ES512"]
+                },
+                "constraints": {
+                  "limit_disclosure": "required",
+                  "fields": [
+                    {
+                      "filter": {
+                        "type": "string"
+                      },
+                      "path": ["$.iss"]
+                    },
+                    {
+                      "filter": {
+                        "type": "object"
+                      },
+                      "path": ["$.cnf.jwk"]
+                    }
+                  ]
+                }
+              },
+              "id": "WalletAttestation"
+            }
+          ],
+          "id": "d76c51b7-ea90-49bb-8368-6b3d194fc131"
+        }
+      ],
+      "client_id": "https://pre.eaa.wallet.ipzs.it",
+      "vp_formats": {
+        "vc+sd-jwt": {
+          "sd-jwt_alg_values": ["ES256", "ES384", "ES512"]
+        }
+      },
+      "authorization_encrypted_response_alg": ["RSA-OAEP-256"],
+      "authorization_encrypted_response_enc": [
+        "A128CBC-HS256",
+        "A192CBC-HS384",
+        "A256CBC-HS512",
+        "A128GCM",
+        "A192GCM",
+        "A256GCM"
+      ],
+      "response_uris": ["https://pre.eaa.wallet.ipzs.it/response_uri"],
+      "request_uris": ["https://pre.eaa.wallet.ipzs.it/request_uri"],
+      "client_name": "Organization Name",
+      "contacts": ["informazioni@example.it", "protocollo@pec.example.it"],
+      "request_object_signing_alg_values_supported": ["ES256", "ES384", "ES512"]
+    }
+  },
+  "jwks": {
+    "keys": [
+      {
+        "kty": "EC",
+        "use": "sig",
+        "crv": "P-256",
+        "kid": "HH9JY9xFA3eBp7GvQsJEfvgYXzHv4dEe8lnkxt0v0cQ",
+        "x": "Pm93czfLFUy8xFbWVra_JDZcOeDJ0sbp4bS0dWXAhZw",
+        "y": "maDVY3SuVjSoiHSD0I5_QvXcsqKzbPiciRgAN1o0Sdw",
+        "alg": "ES256"
+      }
+    ]
+  },
+  "iss": "https://pre.eaa.wallet.ipzs.it",
+  "authority_hints": ["https://eid.wallet.ipzs.it/trust_anchor"],
+  "exp": 2500000000,
+  "iat": 1718207217
+}
