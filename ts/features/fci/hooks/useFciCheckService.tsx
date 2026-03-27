@@ -7,7 +7,12 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { upsertServicePreference } from "../../services/details/store/actions/preference";
 import { isServicePreferenceResponseSuccess } from "../../services/details/types/ServicePreferenceResponse";
-import { trackFciUxConversion } from "../analytics";
+import {
+  trackFciUxConversion,
+  trackFciBottomsheetMessagePermissionRequest,
+  trackFciBottomsheetMessagePermissionAccepted,
+  trackFciBottomsheetMessagePermissionDeclined
+} from "../analytics";
 import { fciStartSigningRequest } from "../store/actions";
 import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 import { fciMetadataServiceIdSelector } from "../store/reducers/fciMetadata";
@@ -29,6 +34,7 @@ export const useFciCheckService = () => {
   >["startAction"] = {
     color: "primary",
     onPress: () => {
+      trackFciBottomsheetMessagePermissionDeclined();
       dispatch(fciStartSigningRequest());
       dismiss();
     },
@@ -40,6 +46,7 @@ export const useFciCheckService = () => {
   >["endAction"] = {
     color: "primary",
     onPress: () => {
+      trackFciBottomsheetMessagePermissionAccepted();
       if (
         fciServiceId &&
         servicePreferenceValue &&
@@ -59,7 +66,11 @@ export const useFciCheckService = () => {
     },
     label: I18n.t("features.fci.checkService.confirm")
   };
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
+  const {
+    present: presentBottomSheet,
+    bottomSheet,
+    dismiss
+  } = useIOBottomSheetModal({
     component: (
       <Body weight={"Regular"}>
         {I18n.t("features.fci.checkService.content")}
@@ -74,6 +85,11 @@ export const useFciCheckService = () => {
       />
     )
   });
+
+  const present = () => {
+    trackFciBottomsheetMessagePermissionRequest();
+    presentBottomSheet();
+  };
 
   return {
     dismiss,

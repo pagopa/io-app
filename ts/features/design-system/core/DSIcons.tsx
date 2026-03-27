@@ -15,8 +15,8 @@ import {
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import { StyleSheet, View } from "react-native";
-import { JSX } from "react";
+import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
+import { JSX, useCallback } from "react";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DSIconViewerBox, iconItemGutter } from "../components/DSIconViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
@@ -50,6 +50,23 @@ const filteredIOIcons = filterIconSet(
   IOIcons
 );
 
+const IOIconsNewKeys = new Set(Object.keys(IOIconsNew));
+const iconGridNumColumns = 6;
+
+// Pad with empty strings so the last row is always full,
+// preventing flex: 1 from stretching partial rows.
+const filteredIOIconKeys = (() => {
+  const keys = Object.keys(filteredIOIcons);
+  const remainder = keys.length % iconGridNumColumns;
+  if (remainder === 0) {
+    return keys;
+  }
+  const placeholders = Array.from<string>({
+    length: iconGridNumColumns - remainder
+  }).fill("");
+  return [...keys, ...placeholders];
+})();
+
 // Just for demo purposes
 // Once we defined a general set of icon sizes,
 // just replace the following array:
@@ -63,36 +80,63 @@ const styles = StyleSheet.create({
     marginLeft: (iconItemGutter / 2) * -1,
     marginRight: (iconItemGutter / 2) * -1,
     rowGap: 16
+  },
+  gridColumnWrapper: {
+    columnGap: "1%"
+  },
+  gridContentContainer: {
+    rowGap: 16
+  },
+  gridItem: {
+    flex: 1
   }
 });
 
 const sectionMargin = 40;
 const sectionTitleMargin = 16;
 
+const keyExtractor = (item: string, index: number) =>
+  item || `placeholder-${index}`;
+
 export const DSIcons = () => {
   const theme = useIOTheme();
+  const iconColor = theme["icon-default"];
+
+  const renderGeneralIconItem = useCallback(
+    ({ item }: ListRenderItemInfo<string>) => (
+      <View style={styles.gridItem}>
+        {item ? (
+          <DSIconViewerBox
+            name={item}
+            size="small"
+            fullWidth
+            image={
+              <Icon name={item as IOIcons} color={iconColor} size="100%" />
+            }
+            withDot={IOIconsNewKeys.has(item)}
+          />
+        ) : null}
+      </View>
+    ),
+    [iconColor]
+  );
 
   return (
     <DesignSystemScreen title={"Icons"}>
       <VStack space={sectionMargin}>
         {/* General Set */}
-        <View style={styles.itemsWrapper}>
-          {Object.entries(filteredIOIcons).map(([iconItemName]) => (
-            <DSIconViewerBox
-              key={iconItemName}
-              name={iconItemName}
-              size="small"
-              image={
-                <Icon
-                  name={iconItemName as IOIcons}
-                  color={theme["icon-default"]}
-                  size="100%"
-                />
-              }
-              withDot={Object.keys(IOIconsNew).includes(iconItemName)}
-            />
-          ))}
-        </View>
+        <FlatList
+          scrollEnabled={false}
+          data={filteredIOIconKeys}
+          keyExtractor={keyExtractor}
+          renderItem={renderGeneralIconItem}
+          numColumns={iconGridNumColumns}
+          columnWrapperStyle={styles.gridColumnWrapper}
+          contentContainerStyle={styles.gridContentContainer}
+          initialNumToRender={30}
+          maxToRenderPerBatch={30}
+          windowSize={5}
+        />
 
         {/* Navigation */}
         <VStack space={sectionTitleMargin}>
