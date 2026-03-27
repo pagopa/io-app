@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.27.0-rc.8](https://github.com/pagopa/io-app/compare/3.27.0-rc.7...3.27.0-rc.8) (2026-03-27)
+
+
+### Chores
+
+* [[IEL-223](https://pagopa.atlassian.net/browse/IEL-223)] Replaced useIOStore with useIOSelector for SendAARMessageDetailBottomSheetComponent ([#7961](https://github.com/pagopa/io-app/issues/7961)) ([ccc6ae8](https://github.com/pagopa/io-app/commit/ccc6ae8661250e10a08fdfd2f3a7048a77a0516d))
+* [[IOPLT-1724](https://pagopa.atlassian.net/browse/IOPLT-1724)] Use `FlatList` instead of `map` to render main icon set ([#7962](https://github.com/pagopa/io-app/issues/7962)) ([dc595e5](https://github.com/pagopa/io-app/commit/dc595e573e0fa2bb571f47010d96554d81832149))
+
 ## [3.27.0-rc.7](https://github.com/pagopa/io-app/compare/3.27.0-rc.6...3.27.0-rc.7) (2026-03-26)
 
 
