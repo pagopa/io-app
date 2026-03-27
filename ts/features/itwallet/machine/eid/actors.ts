@@ -51,6 +51,7 @@ export type RequestEidActorParams = {
   walletInstanceAttestation: string | undefined;
   authenticationContext: AuthenticationContext | undefined;
   level: EidIssuanceLevel | undefined;
+  integrityKeyTag: string | undefined;
 };
 
 export type StartAuthFlowActorParams = {
@@ -315,11 +316,16 @@ export const createEidIssuanceActorsImplementation = (
         "authenticationContext must exist when the identification mode is ciePin"
       );
 
+      assert(input.integrityKeyTag, "integrityKeyTag is undefined");
+
       const authParams = await issuanceUtils.completeAuthFlow({
         ...input.authenticationContext,
         itwVersion,
         walletAttestation: input.walletInstanceAttestation
       });
+
+      const sessionToken = sessionTokenSelector(store.getState());
+      assert(sessionToken, "sessionToken is undefined");
 
       trackItwRequest(
         input.identification.mode,
@@ -327,6 +333,9 @@ export const createEidIssuanceActorsImplementation = (
       );
 
       return issuanceUtils.getPid({
+        env,
+        sessionToken,
+        hardwareKeyTag: input.integrityKeyTag,
         itwVersion,
         ...authParams,
         ...input.authenticationContext
