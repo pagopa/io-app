@@ -135,7 +135,7 @@ export const createCredentialIssuanceActionsImplementation = (
     assert(context.credentialType, "credentialType is undefined");
     assert(context.credentials, "credentials is undefined");
     // Removes any credentials with the same type and stores the new ones atomically
-    store.dispatch(itwCredentialsReplaceByType(context.credentials));
+    store.dispatch(itwCredentialsReplaceByType(context.credentials, {}));
     // Clear older upgrade-failed flag for this credential after a successful issuance/upgrade.
     store.dispatch(itwClearCredentialUpgradeFailed(context.credentialType));
   },

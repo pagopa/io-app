@@ -60,9 +60,10 @@ describe("handleItwCredentialsReplaceByTypeSaga", () => {
     mockStoreAll.mockResolvedValue(undefined);
     mockDeleteKey.mockResolvedValue(undefined);
 
-    const action = itwCredentialsReplaceByType([
-      { credential: "raw-jwt", metadata: newMetadata }
-    ]);
+    const action = itwCredentialsReplaceByType(
+      [{ credential: "raw-jwt", metadata: newMetadata }],
+      {}
+    );
 
     return expectSaga(handleItwCredentialsReplaceByTypeSaga, action)
       .withState(makeState({ [baseCredential.credentialId]: baseCredential }))
@@ -84,9 +85,10 @@ describe("handleItwCredentialsReplaceByTypeSaga", () => {
   it("only stores when no existing credentials of that type", () => {
     mockStoreAll.mockResolvedValue(undefined);
 
-    const action = itwCredentialsReplaceByType([
-      { credential: "raw-jwt", metadata: newMetadata }
-    ]);
+    const action = itwCredentialsReplaceByType(
+      [{ credential: "raw-jwt", metadata: newMetadata }],
+      {}
+    );
 
     return expectSaga(handleItwCredentialsReplaceByTypeSaga, action)
       .withState(makeState({}))
@@ -104,9 +106,10 @@ describe("handleItwCredentialsReplaceByTypeSaga", () => {
     mockRemoveAll.mockRejectedValue(new Error("vault failure"));
     mockStoreAll.mockResolvedValue(undefined);
 
-    const action = itwCredentialsReplaceByType([
-      { credential: "raw-jwt", metadata: newMetadata }
-    ]);
+    const action = itwCredentialsReplaceByType(
+      [{ credential: "raw-jwt", metadata: newMetadata }],
+      {}
+    );
 
     return expectSaga(handleItwCredentialsReplaceByTypeSaga, action)
       .withState(makeState({ [baseCredential.credentialId]: baseCredential }))
@@ -123,9 +126,10 @@ describe("handleItwCredentialsReplaceByTypeSaga", () => {
     mockStoreAll.mockRejectedValue(new Error("store failure"));
     mockDeleteKey.mockResolvedValue(undefined);
 
-    const action = itwCredentialsReplaceByType([
-      { credential: "raw-jwt", metadata: newMetadata }
-    ]);
+    const action = itwCredentialsReplaceByType(
+      [{ credential: "raw-jwt", metadata: newMetadata }],
+      {}
+    );
 
     return expectSaga(handleItwCredentialsReplaceByTypeSaga, action)
       .withState(makeState({ [baseCredential.credentialId]: baseCredential }))

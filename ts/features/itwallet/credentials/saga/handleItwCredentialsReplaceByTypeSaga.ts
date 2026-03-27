@@ -16,6 +16,7 @@ export function* handleItwCredentialsReplaceByTypeSaga(
   action: ReturnType<typeof itwCredentialsReplaceByType>
 ) {
   const credentials = action.payload;
+  const { onComplete, onError } = action.meta;
 
   if (credentials.length === 0) {
     return;
@@ -26,10 +27,12 @@ export function* handleItwCredentialsReplaceByTypeSaga(
   // Remove first, then store — sequential execution, no race condition
   yield* call(
     handleItwCredentialsRemoveByTypeSaga,
-    itwCredentialsRemoveByType(credentialType)
+    itwCredentialsRemoveByType(credentialType, { onError })
   );
   yield* call(
     handleItwCredentialsStoreBundleSaga,
-    itwCredentialsStoreBundle(credentials)
+    itwCredentialsStoreBundle(credentials, { onError })
   );
+
+  onComplete?.();
 }

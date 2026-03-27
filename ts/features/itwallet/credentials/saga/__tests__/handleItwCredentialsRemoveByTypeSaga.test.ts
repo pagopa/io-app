@@ -49,7 +49,10 @@ describe("handleItwCredentialsRemoveByTypeSaga", () => {
   beforeEach(() => jest.clearAllMocks());
 
   it("does nothing when no credentials of that type exist", () => {
-    const action = itwCredentialsRemoveByType(CredentialType.DRIVING_LICENSE);
+    const action = itwCredentialsRemoveByType(
+      CredentialType.DRIVING_LICENSE,
+      {}
+    );
 
     return expectSaga(handleItwCredentialsRemoveByTypeSaga, action)
       .withState(makeState({}))
@@ -66,7 +69,10 @@ describe("handleItwCredentialsRemoveByTypeSaga", () => {
     mockRemoveAll.mockResolvedValue(undefined);
     mockDeleteKey.mockResolvedValue(undefined);
     const credential = { ...baseCredential };
-    const action = itwCredentialsRemoveByType(CredentialType.DRIVING_LICENSE);
+    const action = itwCredentialsRemoveByType(
+      CredentialType.DRIVING_LICENSE,
+      {}
+    );
 
     return expectSaga(handleItwCredentialsRemoveByTypeSaga, action)
       .withState(makeState({ [credential.credentialId]: credential }))

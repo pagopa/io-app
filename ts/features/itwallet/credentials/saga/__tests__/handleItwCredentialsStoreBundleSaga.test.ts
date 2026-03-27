@@ -30,7 +30,7 @@ describe("handleItwCredentialsStoreBundleSaga", () => {
   it("stores all credentials in vault and dispatches itwCredentialsStore with metadata", () => {
     mockStoreAll.mockResolvedValue(undefined);
     const payload = makeBundle();
-    const action = itwCredentialsStoreBundle(payload);
+    const action = itwCredentialsStoreBundle(payload, {});
 
     return expectSaga(handleItwCredentialsStoreBundleSaga, action)
       .put(itwCredentialsStore(payload.map(b => b.metadata)))
@@ -48,7 +48,7 @@ describe("handleItwCredentialsStoreBundleSaga", () => {
 
   it("does not dispatch itwCredentialsStore if vault throws", () => {
     mockStoreAll.mockRejectedValue(new Error("vault error"));
-    const action = itwCredentialsStoreBundle(makeBundle());
+    const action = itwCredentialsStoreBundle(makeBundle(), {});
 
     return expectSaga(handleItwCredentialsStoreBundleSaga, action)
       .not.put.actionType(itwCredentialsStore.toString())

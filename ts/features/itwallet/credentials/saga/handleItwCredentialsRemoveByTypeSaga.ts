@@ -17,9 +17,10 @@ import { CredentialsVault } from "../utils/vault";
 export function* handleItwCredentialsRemoveByTypeSaga(
   action: ReturnType<typeof itwCredentialsRemoveByType>
 ) {
-  try {
-    const credentialType = action.payload;
+  const credentialType = action.payload;
+  const { onComplete, onError } = action.meta;
 
+  try {
     // We first select all credentials of the same type to get their keytag,
     // THEN dispatch the action to remove them from the store
     const sameTypeCredentials = yield* select(
@@ -36,7 +37,9 @@ export function* handleItwCredentialsRemoveByTypeSaga(
       yield* put(walletRemoveCards([`ITW_${credentialType}`]));
       yield* all(sameTypeCredentials.map(c => call(deleteKey, c.keyTag)));
     }
-  } catch {
+    onComplete?.();
+  } catch (e) {
     // TODO [SIW-4080] Log failures to Mixpanel
+    onError?.(e instanceof Error ? e : new Error("Unknown error"));
   }
 }

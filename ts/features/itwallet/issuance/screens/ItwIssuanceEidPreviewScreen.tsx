@@ -15,6 +15,7 @@ import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useCallback, useLayoutEffect } from "react";
 import IOMarkdown from "../../../../components/IOMarkdown";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -29,7 +30,8 @@ import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
   selectEidOption,
-  selectIdentification
+  selectIdentification,
+  selectIsLoading
 } from "../../machine/eid/selectors";
 import {
   trackCredentialPreview,
@@ -66,15 +68,17 @@ type ContentViewProps = {
  * @param eid - the decoded eID
  */
 const ContentView = ({ eid }: ContentViewProps) => {
+  const dispatch = useIODispatch();
+  const navigation = useIONavigation();
+  const route = useRoute();
+
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const identification =
     ItwEidIssuanceMachineContext.useSelector(selectIdentification);
   const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
-  const dispatch = useIODispatch();
-  const navigation = useIONavigation();
-  const route = useRoute();
+  const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
 
   const isL3 = isL3FeaturesEnabled && isItwCredential(eid);
   const mixPanelCredential = isL3 ? "ITW_PID" : "ITW_ID_V2";
@@ -146,61 +150,66 @@ const ContentView = ({ eid }: ContentViewProps) => {
   }, [navigation, dismissDialog]);
 
   return (
-    <ForceScrollDownView
-      contentContainerStyle={{ flexGrow: 1 }}
-      footerActions={{
-        actions: {
-          type: "TwoButtons",
-          primary: {
-            label: I18n.t(
-              "features.itWallet.issuance.eidPreview.actions.primary"
-            ),
-            onPress: () => {
-              trackSaveCredentialToWallet(mixPanelCredential);
-              handleSaveToWallet();
+    <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
+      <ForceScrollDownView
+        contentContainerStyle={{ flexGrow: 1 }}
+        footerActions={{
+          actions: {
+            type: "TwoButtons",
+            primary: {
+              label: I18n.t(
+                "features.itWallet.issuance.eidPreview.actions.primary"
+              ),
+              onPress: () => {
+                trackSaveCredentialToWallet(mixPanelCredential);
+                handleSaveToWallet();
+              }
+            },
+            secondary: {
+              label: I18n.t(
+                "features.itWallet.issuance.eidPreview.actions.secondary"
+              ),
+              onPress: dismissDialog.show
             }
-          },
-          secondary: {
-            label: I18n.t(
-              "features.itWallet.issuance.eidPreview.actions.secondary"
-            ),
-            onPress: dismissDialog.show
           }
-        }
-      }}
-    >
-      <ContentWrapper style={{ flexGrow: 1 }}>
-        <VStack space={24}>
-          <HStack space={8} style={{ alignItems: "center" }}>
-            {!isL3 && (
-              <Icon
-                name="legalValue"
-                color={theme["interactiveElem-default"]}
-              />
-            )}
-            <H2>
-              {I18n.t(
+        }}
+      >
+        <ContentWrapper style={{ flexGrow: 1 }}>
+          <VStack space={24}>
+            <HStack space={8} style={{ alignItems: "center" }}>
+              {!isL3 && (
+                <Icon
+                  name="legalValue"
+                  color={theme["interactiveElem-default"]}
+                />
+              )}
+              <H2>
+                {I18n.t(
+                  `features.itWallet.issuance.eidPreview.${
+                    isL3 ? "titleL3" : "title"
+                  }`
+                )}
+              </H2>
+            </HStack>
+            <IOMarkdown
+              content={I18n.t(
                 `features.itWallet.issuance.eidPreview.${
-                  isL3 ? "titleL3" : "title"
+                  isL3 ? "subtitleL3" : "subtitle"
                 }`
               )}
-            </H2>
-          </HStack>
-          <IOMarkdown
-            content={I18n.t(
-              `features.itWallet.issuance.eidPreview.${
-                isL3 ? "subtitleL3" : "subtitle"
-              }`
+            />
+            <ItwCredentialPreviewClaimsList
+              data={eid}
+              releaserVisible={false}
+            />
+            {isL3 && (
+              <BodySmall>
+                {I18n.t("features.itWallet.issuance.eidPreview.bottomTextL3")}
+              </BodySmall>
             )}
-          />
-          <ItwCredentialPreviewClaimsList data={eid} releaserVisible={false} />
-          {isL3 && (
-            <BodySmall>
-              {I18n.t("features.itWallet.issuance.eidPreview.bottomTextL3")}
-            </BodySmall>
-          )}
-        </VStack>
-      </ContentWrapper>
-    </ForceScrollDownView>
+          </VStack>
+        </ContentWrapper>
+      </ForceScrollDownView>
+    </LoadingSpinnerOverlay>
   );
 };

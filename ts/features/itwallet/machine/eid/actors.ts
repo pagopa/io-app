@@ -18,8 +18,12 @@ import { getIoWallet } from "../../common/utils/itwIoWallet";
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
 import { pollForStoreValue } from "../../common/utils/itwStoreUtils";
-import { WalletInstanceAttestations } from "../../common/utils/itwTypesUtils";
+import {
+  CredentialBundle,
+  WalletInstanceAttestations
+} from "../../common/utils/itwTypesUtils";
 import * as mrtdUtils from "../../common/utils/mrtd";
+import { itwCredentialsReplaceByType } from "../../credentials/store/actions";
 import { CredentialsVault } from "../../credentials/utils/vault";
 import {
   trackWalletInstanceRenewalFailure,
@@ -33,7 +37,6 @@ import {
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
 import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
-import { createCredentialUpgradeActionsImplementation } from "../upgrade/actions";
 import { createCredentialUpgradeActorsImplementation } from "../upgrade/actors";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine";
 import type {
@@ -74,6 +77,10 @@ export type ValidateMrtdPoPChallengeActorParams = {
 
 export type GetWalletAttestationActorParams = {
   integrityKeyTag: string | undefined;
+};
+
+export type StoreEidCredentialActorParams = {
+  eid: CredentialBundle | undefined;
 };
 
 /**
@@ -340,8 +347,23 @@ export const createEidIssuanceActorsImplementation = (
     }
   ),
 
+  storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
+    async ({ input }) => {
+      const { eid } = input;
+      assert(eid, "eID credential is undefined");
+
+      // Waits for the credential store/replace to complete before proceeding
+      await new Promise<void>(resolve => {
+        store.dispatch(
+          itwCredentialsReplaceByType([eid], {
+            onComplete: resolve
+          })
+        );
+      });
+    }
+  ),
+
   credentialUpgradeMachine: itwCredentialUpgradeMachine.provide({
-    actors: createCredentialUpgradeActorsImplementation(env, store, itwVersion),
-    actions: createCredentialUpgradeActionsImplementation(store)
+    actors: createCredentialUpgradeActorsImplementation(env, store, itwVersion)
   })
 });

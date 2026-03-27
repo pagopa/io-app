@@ -22,6 +22,7 @@ import {
   InitMrtdPoPChallengeActorParams,
   type RequestEidActorParams,
   StartAuthFlowActorParams,
+  StoreEidCredentialActorParams,
   ValidateMrtdPoPChallengeActorParams
 } from "./actors";
 import {
@@ -83,7 +84,6 @@ export const itwEidIssuanceMachine = setup({
     cleanupIntegrityKeyTag: notImplemented,
     storeWalletInstanceAttestation: notImplemented,
     storeAuthLevel: notImplemented,
-    storeEidCredential: notImplemented,
     storeCredentialUpgradeFailures: notImplemented,
     handleSessionExpired: notImplemented,
     resetWalletInstance: notImplemented,
@@ -180,6 +180,9 @@ export const itwEidIssuanceMachine = setup({
      */
 
     requestEid: fromPromise<CredentialBundle, RequestEidActorParams>(
+      notImplemented
+    ),
+    storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
       notImplemented
     ),
 
@@ -1121,15 +1124,32 @@ export const itwEidIssuanceMachine = setup({
         DisplayingPreview: {
           on: {
             "add-to-wallet": {
+              target: "StoringCredential"
+            },
+            close: {
+              actions: ["closeIssuance"]
+            }
+          }
+        },
+        StoringCredential: {
+          description:
+            "This state stores the obtained credential in the secure storage and redux",
+          tags: [ItwTags.Loading],
+          invoke: {
+            src: "storeEidCredential",
+            input: ({ context }) => ({
+              eid: context.eid
+            }),
+            onDone: {
               target: "Completed",
               actions: [
-                "storeEidCredential",
                 "trackWalletInstanceCreation",
                 "freezeSimplifiedActivationRequirements"
               ]
             },
-            close: {
-              actions: ["closeIssuance"]
+            onError: {
+              target: "#itwEidIssuanceMachine.Failure",
+              actions: "setFailure"
             }
           }
         },

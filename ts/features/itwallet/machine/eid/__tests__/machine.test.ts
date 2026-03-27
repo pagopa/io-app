@@ -20,6 +20,7 @@ import {
   InitMrtdPoPChallengeActorParams,
   RequestEidActorParams,
   StartAuthFlowActorParams,
+  StoreEidCredentialActorParams,
   ValidateMrtdPoPChallengeActorParams
 } from "../actors";
 import {
@@ -66,7 +67,6 @@ const navigateToUpgradeCredentialsScreen = jest.fn();
 const storeIntegrityKeyTag = jest.fn();
 const cleanupIntegrityKeyTag = jest.fn();
 const storeWalletInstanceAttestation = jest.fn();
-const storeEidCredential = jest.fn();
 const closeIssuance = jest.fn();
 const handleSessionExpired = jest.fn();
 const resetWalletInstance = jest.fn();
@@ -135,7 +135,6 @@ describe("itwEidIssuanceMachine", () => {
       storeIntegrityKeyTag,
       cleanupIntegrityKeyTag,
       storeWalletInstanceAttestation,
-      storeEidCredential,
       closeIssuance,
       handleSessionExpired,
       resetWalletInstance,
@@ -159,6 +158,9 @@ describe("itwEidIssuanceMachine", () => {
       getCieStatus: fromPromise<CieContext>(getCieStatus),
       requestEid: fromPromise<CredentialBundle, RequestEidActorParams>(
         requestEid
+      ),
+      storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
+        storeEidCredentialActor
       ),
       startAuthFlow: fromPromise<
         AuthenticationContext,
@@ -424,7 +426,6 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "add-to-wallet" });
 
     await waitForActor(actor, snap => snap.matches("Success"));
-    expect(storeEidCredential).toHaveBeenCalledTimes(1);
     expect(navigateToSuccessScreen).toHaveBeenCalledTimes(1);
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
@@ -1380,7 +1381,6 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "add-to-wallet" });
 
     await waitForActor(actor, snap => snap.matches("Success"));
-    expect(storeEidCredential).toHaveBeenCalledTimes(1);
 
     actor.send({ type: "go-to-wallet" });
 

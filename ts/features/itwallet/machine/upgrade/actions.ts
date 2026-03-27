@@ -14,6 +14,6 @@ export const createCredentialUpgradeActionsImplementation = (
     const doneEvent = event as DoneActorEvent<UpgradeCredentialOutput>;
     const { credentials } = doneEvent.output;
     // Removes old credentials and stores the new ones atomically
-    store.dispatch(itwCredentialsReplaceByType(credentials));
+    store.dispatch(itwCredentialsReplaceByType(credentials, {}));
   }
 });
