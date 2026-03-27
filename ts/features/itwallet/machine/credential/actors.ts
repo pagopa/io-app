@@ -186,8 +186,11 @@ export const createCredentialIssuanceActorsImplementation = (
       clientId,
       codeVerifier
     } = input;
+    const state = store.getState();
 
-    const eid = itwCredentialsEidSelector(store.getState());
+    const eid = itwCredentialsEidSelector(state);
+    const sessionToken = sessionTokenSelector(state);
+    const integrityKeyTag = itwIntegrityKeyTagSelector(state);
 
     assert(credentialType, "credentialType is undefined");
     assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
@@ -195,7 +198,9 @@ export const createCredentialIssuanceActorsImplementation = (
     assert(issuerConf, "issuerConf is undefined");
     assert(clientId, "clientId is undefined");
     assert(codeVerifier, "codeVerifier is undefined");
+    assert(sessionToken, "sessionToken is undefined");
     assert(O.isSome(eid), "eID is undefined");
+    assert(O.isSome(integrityKeyTag), "integriyKeyTag is undefined");
 
     return await credentialIssuanceUtils.obtainCredential({
       env,
@@ -206,7 +211,9 @@ export const createCredentialIssuanceActorsImplementation = (
       issuerConf,
       clientId,
       codeVerifier,
-      pid: eid.value
+      pid: eid.value,
+      sessionToken,
+      hardwareKeyTag: integrityKeyTag.value
     });
   });
 

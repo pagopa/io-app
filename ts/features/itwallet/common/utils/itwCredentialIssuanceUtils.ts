@@ -21,6 +21,7 @@ import { extractVerification } from "./itwCredentialUtils";
 import { Env } from "./environment";
 import { enrichErrorWithMetadata } from "./itwFailureUtils";
 import { getIoWallet } from "./itwIoWallet";
+import { getWalletUnitAttestation } from "./itwAttestationUtils";
 
 export type RequestCredentialParams = {
   env: Env;
@@ -105,6 +106,8 @@ export type ObtainCredentialParams = {
   clientId: string;
   codeVerifier: string;
   issuerConf: IssuerConfiguration;
+  hardwareKeyTag: string;
+  sessionToken: string;
 };
 
 /**
@@ -129,7 +132,9 @@ export const obtainCredential = async ({
   walletInstanceAttestation,
   clientId,
   codeVerifier,
-  issuerConf
+  issuerConf,
+  hardwareKeyTag,
+  sessionToken
 }: ObtainCredentialParams) => {
   const ioWallet = getIoWallet(itwVersion);
 
@@ -164,7 +169,17 @@ export const obtainCredential = async ({
     }
   );
 
-  const params: Omit<RequestAndParseCredentialParams, "authDetails"> = {
+  const credentialIssuanceMaterials = await prepareCredentialIssuanceMaterials(
+    accessToken,
+    {
+      env,
+      itwVersion,
+      hardwareKeyTag,
+      sessionToken
+    }
+  );
+
+  const commonParams: RequestAndParseCredentialParams = {
     accessToken,
     clientId,
     credentialType,
@@ -176,10 +191,10 @@ export const obtainCredential = async ({
 
   if (SEQUENTIAL_ISSUANCE_CREDENTIALS.includes(credentialType)) {
     const credentials: Array<StoredCredential> = [];
-    for (const authDetails of accessToken.authorization_details) {
+    for (const credentialParams of credentialIssuanceMaterials) {
       const credential = await requestAndParseCredential({
-        ...params,
-        authDetails
+        ...commonParams,
+        ...credentialParams
       });
       // eslint-disable-next-line functional/immutable-data
       credentials.push(credential);
@@ -188,8 +203,8 @@ export const obtainCredential = async ({
   }
 
   const credentials = await Promise.all(
-    accessToken.authorization_details.map(authDetails =>
-      requestAndParseCredential({ ...params, authDetails })
+    credentialIssuanceMaterials.map(credentialParams =>
+      requestAndParseCredential({ ...commonParams, ...credentialParams })
     )
   );
 
@@ -225,7 +240,6 @@ type RequestAndParseCredentialParams = {
   issuerConf: IssuerConfiguration;
   credentialType: string;
   accessToken: CredentialAccessToken;
-  authDetails: CredentialAccessToken["authorization_details"][number];
   clientId: string;
   env: Env;
   itwVersion: ItwVersion;
@@ -240,13 +254,14 @@ const requestAndParseCredential = async ({
   clientId,
   dPopCryptoContext,
   env,
-  itwVersion
-}: RequestAndParseCredentialParams) => {
+  itwVersion,
+  keyTag,
+  walletUnitAttestation,
+  walletUnitAttestationId
+}: RequestAndParseCredentialParams & CredentialIssuanceMaterials) => {
   const ioWallet = getIoWallet(itwVersion);
   const { credential_configuration_id, credential_identifiers } = authDetails;
-  const credentialKeyTag = uuidv4().toString();
-  await generate(credentialKeyTag);
-  const credentialCryptoContext = createCryptoContextFor(credentialKeyTag);
+  const credentialCryptoContext = createCryptoContextFor(keyTag);
 
   // Obtain the credential
   const { credential, format } =
@@ -289,12 +304,69 @@ const requestAndParseCredential = async ({
     credentialId: credential_configuration_id,
     format,
     issuerConf,
-    keyTag: credentialKeyTag,
+    keyTag,
     jwt: {
       expiration: expiration.toISOString(),
       issuedAt: issuedAt?.toISOString()
     },
     spec_version: ioWallet.version,
-    verification: extractVerification({ format, credential, parsedCredential })
+    verification: extractVerification({ format, credential, parsedCredential }),
+    walletUnitAttestation,
+    walletUnitAttestationId
   };
+};
+
+type CredentialIssuanceMaterials = {
+  keyTag: string;
+  authDetails: CredentialAccessToken["authorization_details"][number];
+  walletUnitAttestation?: string;
+  walletUnitAttestationId?: string;
+};
+
+export const prepareCredentialIssuanceMaterials = async (
+  accessToken: CredentialAccessToken,
+  {
+    env,
+    itwVersion,
+    hardwareKeyTag,
+    sessionToken
+  }: {
+    env: Env;
+    itwVersion: ItwVersion;
+    hardwareKeyTag: string;
+    sessionToken: string;
+  }
+): Promise<Array<CredentialIssuanceMaterials>> => {
+  const ioWallet = getIoWallet(itwVersion);
+
+  // Create a key tag for each credential to request
+  const materials = accessToken.authorization_details.map(authDetails => ({
+    keyTag: uuidv4().toString(),
+    authDetails
+  }));
+
+  // When the WUA is not supported, only generate cryptographic keys
+  if (!ioWallet.WalletUnitAttestation.isSupported) {
+    await Promise.all(materials.map(x => generate(x.keyTag)));
+    return materials;
+  }
+
+  // Request the WUA: keys are generated via the KeyAttestationCryptoContext
+  // and sent to the Wallet Provider to get the attestation
+  const walletUnitAttestation = await getWalletUnitAttestation(
+    env,
+    itwVersion,
+    materials.map(x => x.keyTag),
+    hardwareKeyTag,
+    sessionToken
+  );
+
+  // Create a unique ID to correlate multiple keys to the same WUA
+  const walletUnitAttestationId = uuidv4().toString();
+
+  return materials.map(material => ({
+    ...material,
+    walletUnitAttestation,
+    walletUnitAttestationId
+  }));
 };

@@ -34,7 +34,12 @@ export const itwSetWalletInstanceRenewalError = createStandardAction(
   "ITW_SET_WALLET_INSTANCE_RENEWAL_ERROR"
 )<boolean>();
 
+export const itwWalletUnitAttestationStore = createStandardAction(
+  "ITW_WALLET_UNIT_ATTESTATION_STORE"
+)<[id: string, attestation: string]>();
+
 export type ItwWalletInstanceActions =
   | ActionType<typeof itwWalletInstanceAttestationStore>
   | ActionType<typeof itwUpdateWalletInstanceStatus>
-  | ActionType<typeof itwSetWalletInstanceRenewalError>;
+  | ActionType<typeof itwSetWalletInstanceRenewalError>
+  | ActionType<typeof itwWalletUnitAttestationStore>;

@@ -13,7 +13,8 @@ import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import {
   itwWalletInstanceAttestationStore,
   itwUpdateWalletInstanceStatus,
-  itwSetWalletInstanceRenewalError
+  itwSetWalletInstanceRenewalError,
+  itwWalletUnitAttestationStore
 } from "../actions";
 import {
   WalletInstanceStatus,
@@ -36,12 +37,19 @@ export type ItwWalletInstanceState = {
    * Used to prevent re-entering the recovery block on subsequent actor retries.
    */
   renewalError: boolean;
+  /**
+   * Record of Wallet Unit Attestations keyed by ID. They are not stored on
+   * credentials to avoid duplication (one WUA might contain multiple keys)
+   * and to avoid bloating the stored credential unnecessarily.
+   */
+  walletUnitAttestations: Record<string, string>;
 };
 
 export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
   attestation: undefined,
   status: pot.none,
-  renewalError: false
+  renewalError: false,
+  walletUnitAttestations: {}
 };
 
 type MigrationState = PersistedState & Record<string, any>;
@@ -75,6 +83,7 @@ const reducer = (
   switch (action.type) {
     case getType(itwWalletInstanceAttestationStore): {
       return {
+        ...state,
         status: pot.none,
         attestation: action.payload,
         renewalError: false
@@ -107,6 +116,17 @@ const reducer = (
         ...state,
         renewalError: action.payload
       };
+
+    case getType(itwWalletUnitAttestationStore): {
+      const [id, attestation] = action.payload;
+      return {
+        ...state,
+        walletUnitAttestations: {
+          ...state.walletUnitAttestations,
+          [id]: attestation
+        }
+      };
+    }
 
     case getType(itwLifecycleStoresReset):
       return { ...itwWalletInstanceInitialState };

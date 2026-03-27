@@ -207,7 +207,7 @@ export const getWalletUnitAttestation = async (
     WALLET_PROVIDER_BASE_URL
   );
 
-  const wua = await ioWallet.WalletUnitAttestation.getAttestation(
+  const { attestation } = await ioWallet.WalletUnitAttestation.getAttestation(
     {
       walletSolutionId: WALLET_SOLUTION_ID,
       walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
@@ -219,4 +219,6 @@ export const getWalletUnitAttestation = async (
       appFetch
     }
   );
+
+  return attestation;
 };
