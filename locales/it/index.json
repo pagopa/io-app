@@ -589,8 +589,10 @@
               "title": "Fatto!"
             }
           },
-          "banner": {
-            "button": "Scopri di più"
+          "translationFeedbackBanner": {
+            "title": "Aiutaci a migliorare le traduzioni",
+            "body": "Scrivici per segnalare una traduzione che può essere migliorata.",
+            "action": "Invia una segnalazione"
           }
         },
         "notifications": {

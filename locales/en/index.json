@@ -518,6 +518,11 @@
           },
           "banner": {
             "button": "Learn more"
+          },
+          "translationFeedbackBanner": {
+            "title": "Help us improve translations",
+            "body": "Write to us to report a translation that can be improved.",
+            "action": "Send a report"
           }
         },
         "notifications": {
