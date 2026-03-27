@@ -30,7 +30,11 @@ import { useEidEventsTracking } from "../hooks/useEidEventsTracking";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
 import { useIOSelector } from "../../../../store/hooks";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { DOCUMENTS_ON_IO_FAQ_12_URL_BODY } from "../../../../urls";
+import {
+  DOCUMENTS_ON_IO_FAQ_12_URL_BODY,
+  DOCUMENTS_ON_IO_FAQ_URL_BODY
+} from "../../../../urls";
+import { isPidIssuanceBlockedByAnprError } from "../../common/utils/itwFailureUtils";
 
 // Errors that allow a user to send a support request to Zendesk
 const zendeskAssistanceErrors = [
@@ -78,6 +82,13 @@ const ContentView = ({ failure }: ContentViewProps) => {
       DOCUMENTS_ON_IO_FAQ_12_URL_BODY
     )
   );
+  const PID_ANPR_FAQ_URL = useIOSelector(state =>
+    generateDynamicUrlSelector(
+      state,
+      "io_showcase",
+      DOCUMENTS_ON_IO_FAQ_URL_BODY
+    )
+  );
 
   useDebugInfo({
     failure: serializeFailureReason(failure)
@@ -120,6 +131,44 @@ const ContentView = ({ failure }: ContentViewProps) => {
             }
           };
         case IssuanceFailureType.ISSUER_GENERIC:
+          if (isPidIssuanceBlockedByAnprError(failure.reason)) {
+            return {
+              title: I18n.t(
+                "features.itWallet.issuance.pidAnprMismatchError.title"
+              ),
+              subtitle: I18n.t(
+                "features.itWallet.issuance.pidAnprMismatchError.body"
+              ),
+              pictogram: "accessDenied",
+              action: {
+                label: I18n.t(
+                  "features.itWallet.issuance.pidAnprMismatchError.primaryAction"
+                ),
+                onPress: () => {
+                  trackItwKoStateAction({
+                    reason: failure.reason,
+                    cta_category: "custom_1",
+                    cta_id: I18n.t(
+                      "features.itWallet.issuance.pidAnprMismatchError.primaryAction"
+                    )
+                  });
+                  openWebUrl(PID_ANPR_FAQ_URL, () =>
+                    toast.error(I18n.t("global.jserror.title"))
+                  );
+                }
+              },
+              secondaryAction: {
+                label: I18n.t("global.buttons.close"),
+                onPress: () =>
+                  closeIssuance({
+                    reason: failure.reason,
+                    cta_category: "custom_2",
+                    cta_id: I18n.t("global.buttons.close")
+                  })
+              }
+            };
+          }
+
           return {
             title: I18n.t("features.itWallet.issuance.genericError.title"),
             subtitle: I18n.t("features.itWallet.issuance.genericError.body"),

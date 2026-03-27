@@ -3,7 +3,7 @@ import {
   IntegrityError,
   IntegrityErrorCodes
 } from "@pagopa/io-react-native-integrity";
-import { Trust } from "@pagopa/io-react-native-wallet";
+import { Errors, Trust } from "@pagopa/io-react-native-wallet";
 import { WithCredentialMetadata } from "./ItwFailureTypes";
 
 /**
@@ -46,6 +46,21 @@ export const isLocalIntegrityError = (e: unknown): e is IntegrityError =>
  */
 export const isAssertionGenerationError = (e: unknown): e is IntegrityError =>
   e instanceof Error && e.message === "GENERATION_ASSERTION_FAILED";
+
+/**
+ * Guard used to identify the PID issuance error caused by an ANPR mismatch.
+ *
+ * The wallet SDK can surface the same HTTP 404 either as
+ * `ERR_CREDENTIAL_REQUEST_FAILED` or `ERR_CREDENTIAL_INVALID_STATUS`
+ * depending on the issuance step / specs version.
+ */
+export const isPidIssuanceBlockedByAnprError = (
+  e: unknown
+): e is Errors.IssuerResponseError =>
+  Errors.isIssuerResponseError(e) &&
+  e.statusCode === 404 &&
+  (e.code === Errors.IssuerResponseErrorCodes.CredentialRequestFailed ||
+    e.code === Errors.IssuerResponseErrorCodes.CredentialInvalidStatus);
 
 /**
  * Enrich instances of Error with `credentialId` so it is possible to retrieve the credential configuration

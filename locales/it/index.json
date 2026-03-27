@@ -3722,6 +3722,11 @@
           "body": "Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.",
           "primaryAction": "Ho capito"
         },
+        "pidAnprMismatchError": {
+          "title": "Non puoi proseguire con la richiesta",
+          "body": "Abbiamo rilevato incongruenze nei tuoi dati su ANPR (Anagrafe nazionale della popolazione residente).",
+          "primaryAction": "Leggi cosa fare"
+        },
         "issuerNotTrustedCommonError": {
           "title": "Un problema non permette di continuare",
           "subtitle": "Si è verificato un errore tecnico che impedisce di ottenere {{credential}}. Riprova.\nSe il problema persiste, contatta l’assistenza.",
