@@ -1,10 +1,12 @@
-import { FooterActionsInline } from "@pagopa/io-app-design-system";
+import {
+  FooterActionsInline,
+  IOMarkdownLite
+} from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
-import IOMarkdown from "../../../../../components/IOMarkdown";
 
 const ManualConfigConfirm = (): React.ReactElement => (
-  <IOMarkdown
+  <IOMarkdownLite
     content={I18n.t("services.optIn.preferences.manualConfig.bottomSheet.body")}
   />
 );

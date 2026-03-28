@@ -5,6 +5,7 @@ import {
   FooterActions,
   H4,
   HeaderSecondLevel,
+  IOMarkdownLite,
   IOToast,
   ListItemInfo,
   useIOTheme,
@@ -431,7 +432,7 @@ const ZendeskSupportHelpCenter = () => {
             <ListItemInfo
               numberOfLines={5}
               value={
-                <IOMarkdown
+                <IOMarkdownLite
                   content={I18n.t(
                     "support.helpCenter.supportComponent.messageProblem"
                   )}
@@ -442,7 +443,7 @@ const ZendeskSupportHelpCenter = () => {
             <ListItemInfo
               numberOfLines={3}
               value={
-                <IOMarkdown
+                <IOMarkdownLite
                   content={I18n.t(
                     "support.helpCenter.supportComponent.appProblem"
                   )}
@@ -453,7 +454,7 @@ const ZendeskSupportHelpCenter = () => {
             <ListItemInfo
               numberOfLines={2}
               value={
-                <IOMarkdown
+                <IOMarkdownLite
                   content={I18n.t(
                     "support.helpCenter.supportComponent.checkRequests"
                   )}

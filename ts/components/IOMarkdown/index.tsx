@@ -55,7 +55,7 @@ const UnsafeIOMarkdown = ({ content, rules }: UnsafeProps) => {
   return <View>{parsedContent.map(renderMarkdown)}</View>;
 };
 
-const IOMarkdown = ({ content, rules, onError }: IOMarkdownProps) => (
+const IOMarkdownComponent = ({ content, rules, onError }: IOMarkdownProps) => (
   <Sentry.ErrorBoundary
     fallback={
       <View>
@@ -67,4 +67,10 @@ const IOMarkdown = ({ content, rules, onError }: IOMarkdownProps) => (
     <UnsafeIOMarkdown content={content} rules={rules} />
   </Sentry.ErrorBoundary>
 );
-export default memo(IOMarkdown);
+
+/**
+ * @deprecated Use `IOMarkdown` or `IOMarkdownLite` from `@pagopa/io-app-design-system` instead.
+ * Remaining usages with custom render rules need to be tested against the DS version before migrating.
+ */
+const IOMarkdown = memo(IOMarkdownComponent);
+export default IOMarkdown;

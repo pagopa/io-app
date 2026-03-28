@@ -3,12 +3,12 @@ import {
   VStack,
   FeatureInfo,
   IOButton,
+  IOMarkdownLite,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import i18n from "i18next";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useRef } from "react";
-import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { setSendEngagementScreenHasBeenDismissed } from "../store/actions";
@@ -44,7 +44,7 @@ export const useSendAreYouSureBottomSheet = () => {
         <FeatureInfo
           pictogramProps={{ name: "savingMoney", pictogramStyle: "default" }}
           body={
-            <IOMarkdown
+            <IOMarkdownLite
               content={i18n.t(
                 "features.pn.loginEngagement.send.areYouSureBottomSheet.content.features.savingMoney"
               )}
@@ -54,14 +54,14 @@ export const useSendAreYouSureBottomSheet = () => {
         <FeatureInfo
           pictogramProps={{ name: "message", pictogramStyle: "default" }}
           body={
-            <IOMarkdown
+            <IOMarkdownLite
               content={i18n.t(
                 "features.pn.loginEngagement.send.areYouSureBottomSheet.content.features.notification"
               )}
             />
           }
         />
-        <IOMarkdown
+        <IOMarkdownLite
           content={i18n.t(
             "features.pn.loginEngagement.send.areYouSureBottomSheet.content.privacyAndTos",
             { privacyUrl: privacy, tosUrl: tos }

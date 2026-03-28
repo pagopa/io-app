@@ -545,48 +545,9 @@ exports[`ActiveSessionIdpLoginScreen should match snapshots 1`] = `
                                       }
                                     }
                                   >
-                                    <View>
-                                      <Text
-                                        allowFontScaling={true}
-                                        dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.5}
-                                        style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#555C70",
-                                              "fontFamily": "Titillio",
-                                              "fontSize": 16,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "400",
-                                              "lineHeight": 24,
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        Tocca su 
-                                        <Text
-                                          allowFontScaling={true}
-                                          maxFontSizeMultiplier={1.5}
-                                          style={
-                                            [
-                                              {},
-                                              {
-                                                "color": undefined,
-                                                "fontFamily": "Titillio",
-                                                "fontSize": 16,
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                                "lineHeight": undefined,
-                                              },
-                                            ]
-                                          }
-                                        >
-                                          "Accedi più rapidamente"
-                                        </Text>
-                                         nella fascia grigia al centro della schermata
-                                      </Text>
-                                    </View>
+                                    <Text>
+                                      Tocca su **"Accedi più rapidamente"** nella fascia grigia al centro della schermata
+                                    </Text>
                                   </View>
                                 </View>
                                 <View
@@ -673,28 +634,9 @@ exports[`ActiveSessionIdpLoginScreen should match snapshots 1`] = `
                                       }
                                     }
                                   >
-                                    <View>
-                                      <Text
-                                        allowFontScaling={true}
-                                        dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.5}
-                                        style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#555C70",
-                                              "fontFamily": "Titillio",
-                                              "fontSize": 16,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "400",
-                                              "lineHeight": 24,
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        Inserisci il codice PosteID o usa il biometrico
-                                      </Text>
-                                    </View>
+                                    <Text>
+                                      Inserisci il codice PosteID o usa il biometrico
+                                    </Text>
                                   </View>
                                 </View>
                                 <View
@@ -781,67 +723,9 @@ exports[`ActiveSessionIdpLoginScreen should match snapshots 1`] = `
                                       }
                                     }
                                   >
-                                    <View>
-                                      <Text
-                                        allowFontScaling={true}
-                                        dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.5}
-                                        style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#555C70",
-                                              "fontFamily": "Titillio",
-                                              "fontSize": 16,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "400",
-                                              "lineHeight": 24,
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        Quando vedrai apparire 
-                                        <Text
-                                          allowFontScaling={true}
-                                          maxFontSizeMultiplier={1.5}
-                                          style={
-                                            [
-                                              {},
-                                              {
-                                                "color": undefined,
-                                                "fontFamily": "Titillio",
-                                                "fontSize": 16,
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                                "lineHeight": undefined,
-                                              },
-                                            ]
-                                          }
-                                        >
-                                          Autorizzazione concessa
-                                        </Text>
-                                        , torna su IO e premi 
-                                        <Text
-                                          allowFontScaling={true}
-                                          maxFontSizeMultiplier={1.5}
-                                          style={
-                                            [
-                                              {},
-                                              {
-                                                "color": undefined,
-                                                "fontFamily": "Titillio",
-                                                "fontSize": 16,
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                                "lineHeight": undefined,
-                                              },
-                                            ]
-                                          }
-                                        >
-                                          Acconsento
-                                        </Text>
-                                      </Text>
-                                    </View>
+                                    <Text>
+                                      Quando vedrai apparire **Autorizzazione concessa**, torna su IO e premi **Acconsento**
+                                    </Text>
                                   </View>
                                 </View>
                                 <View

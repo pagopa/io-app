@@ -1,9 +1,8 @@
 import { View } from "react-native";
 import i18n from "i18next";
-import { IOButton, VStack } from "@pagopa/io-app-design-system";
+import { IOButton, IOMarkdownLite, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useRef } from "react";
-import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { useIOSelector } from "../../../../store/hooks";
@@ -31,7 +30,7 @@ export const useSendActivationBottomSheet = () => {
     ),
     component: (
       <VStack space={24}>
-        <IOMarkdown
+        <IOMarkdownLite
           content={i18n.t(
             "features.pn.loginEngagement.send.activationBottomSheet.content",
             { privacyUrl: privacy, tosUrl: tos }

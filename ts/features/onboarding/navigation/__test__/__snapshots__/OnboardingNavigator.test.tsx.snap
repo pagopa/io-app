@@ -545,94 +545,11 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                       accessible={false}
                                       importantForAccessibility="no-hide-descendants"
                                     >
-                                      <View>
-                                        <Text
-                                          allowFontScaling={true}
-                                          dynamicTypeRamp="body"
-                                          maxFontSizeMultiplier={1.5}
-                                          style={
-                                            [
-                                              {},
-                                              {
-                                                "color": "#555C70",
-                                                "fontFamily": "Titillio",
-                                                "fontSize": 16,
-                                                "fontStyle": "normal",
-                                                "fontWeight": "400",
-                                                "lineHeight": 24,
-                                              },
-                                            ]
-                                          }
-                                        >
-                                          Non raccogliamo dati per finalità di marketing.
-                                        </Text>
-                                        <View
-                                          style={
-                                            {
-                                              "height": 8,
-                                            }
-                                          }
-                                        />
-                                        <Text
-                                          allowFontScaling={true}
-                                          dynamicTypeRamp="body"
-                                          maxFontSizeMultiplier={1.5}
-                                          style={
-                                            [
-                                              {},
-                                              {
-                                                "color": "#555C70",
-                                                "fontFamily": "Titillio",
-                                                "fontSize": 16,
-                                                "fontStyle": "normal",
-                                                "fontWeight": "400",
-                                                "lineHeight": 24,
-                                              },
-                                            ]
-                                          }
-                                        >
-                                          Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’app, per 
-                                          <Text
-                                            allowFontScaling={true}
-                                            maxFontSizeMultiplier={1.5}
-                                            style={
-                                              [
-                                                {},
-                                                {
-                                                  "color": undefined,
-                                                  "fontFamily": "Titillio",
-                                                  "fontSize": 16,
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                  "lineHeight": undefined,
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            fornirti un servizio migliore
-                                          </Text>
-                                           e 
-                                          <Text
-                                            allowFontScaling={true}
-                                            maxFontSizeMultiplier={1.5}
-                                            style={
-                                              [
-                                                {},
-                                                {
-                                                  "color": undefined,
-                                                  "fontFamily": "Titillio",
-                                                  "fontSize": 16,
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                  "lineHeight": undefined,
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            assisterti in caso di necessità.
-                                          </Text>
-                                        </Text>
-                                      </View>
+                                      <Text>
+                                        Non raccogliamo dati per finalità di marketing.  
+
+Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’app, per **fornirti un servizio migliore** e **assisterti in caso di necessità.**
+                                      </Text>
                                     </View>
                                     <View
                                       style={

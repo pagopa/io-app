@@ -1,7 +1,11 @@
-import { ContentWrapper, H2, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  ContentWrapper,
+  H2,
+  IOMarkdownLite,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { useState } from "react";
 import I18n from "i18next";
-import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -83,7 +87,7 @@ const ItwIpzsPrivacyScreen = () => {
             )}
           </H2>
           <VSpacer size={16} />
-          <IOMarkdown
+          <IOMarkdownLite
             content={I18n.t("features.itWallet.discovery.ipzsPrivacy.warning")}
           />
           <VSpacer size={16} />

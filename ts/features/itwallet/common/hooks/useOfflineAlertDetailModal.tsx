@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { VStack, IOButton } from "@pagopa/io-app-design-system";
+import { VStack, IOButton, IOMarkdown } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { useIODispatch } from "../../../../store/hooks";
 import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
@@ -8,8 +8,52 @@ import { resetOfflineAccessReason } from "../../../ingress/store/actions";
 import { startupLoadSuccess } from "../../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../../store/reducers/startup";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import IOMarkdown from "../../../../components/IOMarkdown";
 import { useAppRestartAction } from "../../wallet/hooks/useAppRestartAction";
+
+const getOfflineModalLocales = (reason: OfflineAccessReasonEnum) => {
+  switch (reason) {
+    // TODO: Content values use wrong heading levels. We should
+    // use customRules such as in the Messages
+    case OfflineAccessReasonEnum.DEVICE_OFFLINE:
+      return {
+        title: I18n.t("features.itWallet.offline.device_offline.modal.title"),
+        content: I18n.t(
+          "features.itWallet.offline.device_offline.modal.content"
+        ),
+        footerAction: I18n.t(
+          "features.itWallet.offline.device_offline.modal.footerAction"
+        )
+      };
+    case OfflineAccessReasonEnum.SESSION_REFRESH:
+      return {
+        title: I18n.t("features.itWallet.offline.session_refresh.modal.title"),
+        content: I18n.t(
+          "features.itWallet.offline.session_refresh.modal.content"
+        ),
+        footerAction: I18n.t(
+          "features.itWallet.offline.session_refresh.modal.footerAction"
+        )
+      };
+    case OfflineAccessReasonEnum.SESSION_EXPIRED:
+      return {
+        title: I18n.t("features.itWallet.offline.session_expired.modal.title"),
+        content: I18n.t(
+          "features.itWallet.offline.session_expired.modal.content"
+        ),
+        footerAction: I18n.t(
+          "features.itWallet.offline.session_expired.modal.footerAction"
+        )
+      };
+    case OfflineAccessReasonEnum.TIMEOUT:
+      return {
+        title: I18n.t("features.itWallet.offline.timeout.modal.title"),
+        content: I18n.t("features.itWallet.offline.timeout.modal.content"),
+        footerAction: I18n.t(
+          "features.itWallet.offline.timeout.modal.footerAction"
+        )
+      };
+  }
+};
 
 /**
  * Hook that creates and manages a bottom sheet modal to display detailed information
@@ -52,22 +96,16 @@ export const useOfflineAlertDetailModal = (
     }
   }, [handleAppRestart, navigateOnAuthPage, offlineAccessReason]);
 
+  const locales = getOfflineModalLocales(offlineAccessReason);
+
   return useIOBottomSheetModal({
-    title: I18n.t(
-      `features.itWallet.offline.${offlineAccessReason}.modal.title`
-    ),
+    title: locales.title,
     component: (
       <VStack space={24}>
-        <IOMarkdown
-          content={I18n.t(
-            `features.itWallet.offline.${offlineAccessReason}.modal.content`
-          )}
-        />
+        <IOMarkdown content={locales.content} />
         <IOButton
           variant="solid"
-          label={I18n.t(
-            `features.itWallet.offline.${offlineAccessReason}.modal.footerAction`
-          )}
+          label={locales.footerAction}
           onPress={handlePressModalAction}
         />
       </VStack>

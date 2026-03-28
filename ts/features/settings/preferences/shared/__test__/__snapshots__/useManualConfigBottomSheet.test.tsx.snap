@@ -340,28 +340,9 @@ exports[`useManualConfigBottomSheet should match snapshot 1`] = `
                         }
                       }
                     >
-                      <View>
-                        <Text
-                          allowFontScaling={true}
-                          dynamicTypeRamp="body"
-                          maxFontSizeMultiplier={1.5}
-                          style={
-                            [
-                              {},
-                              {
-                                "color": "#555C70",
-                                "fontFamily": "Titillio",
-                                "fontSize": 16,
-                                "fontStyle": "normal",
-                                "fontWeight": "400",
-                                "lineHeight": 24,
-                              },
-                            ]
-                          }
-                        >
-                          Con la configurazione manuale i servizi di IO, presenti o futuri, non possono inviarti messaggi. Per permettere ai servizi che ti interessano di contattarti, dovrai configurarli uno a uno abilitando la voce “Contattarti in app” che trovi in ogni scheda servizio.
-                        </Text>
-                      </View>
+                      <Text>
+                        Con la configurazione manuale i servizi di IO, presenti o futuri, non possono inviarti messaggi. Per permettere ai servizi che ti interessano di contattarti, dovrai configurarli uno a uno abilitando la voce “Contattarti in app” che trovi in ogni scheda servizio.
+                      </Text>
                       <View
                         style={
                           [
