@@ -3982,9 +3982,13 @@
           }
         },
         "statusAssertionUnknown": {
-          "title": "Non siamo riusciti a caricare {{credentialName}}",
-          "content": "Chiudi e riapri l'app per riprovare.",
-          "primaryAction": "Ho capito"
+          "title": "Non riusciamo a caricare {{credentialName}}",
+          "content": "Riprova. Se il problema persiste, dovrai aggiornare il documento digitale.",
+          "retryFailure": {
+            "title": "Qualcosa non va",
+            "content": "Non riusciamo a caricare {{credentialName}}.\nAggiorna il documento digitale per continuare.",
+            "primaryAction": "Aggiorna documento digitale"
+          }
         },
         "selectiveDisclosure": {
           "title": "Dati richiesti",
