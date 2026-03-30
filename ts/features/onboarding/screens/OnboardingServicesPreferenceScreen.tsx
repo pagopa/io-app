@@ -7,7 +7,7 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ReactElement, useCallback, useEffect, useState } from "react";
 import I18n from "i18next";
-import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
+import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/identity/ServicesPreferencesMode";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import {
   IOStackNavigationRouteProps,

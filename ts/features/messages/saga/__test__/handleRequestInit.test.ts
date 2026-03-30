@@ -6,7 +6,7 @@ import {
   testableHandleRequestInitFactory
 } from "../handleRequestInit";
 import { lollipopRequestInit } from "../../../lollipop/utils/fetch";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/communication/ThirdPartyAttachment";
 import { messageId_1 } from "../../__mocks__/messages";
 import { KeyInfo } from "../../../lollipop/utils/crypto";
 

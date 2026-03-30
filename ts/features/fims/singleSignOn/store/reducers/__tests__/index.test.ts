@@ -8,7 +8,7 @@ import reducer, {
   FimsSSOState,
   INITIAL_STATE
 } from "../";
-import { ServiceId } from "../../../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../../../definitions/backend/communication/ServiceId";
 import {
   Consent,
   TypeEnum

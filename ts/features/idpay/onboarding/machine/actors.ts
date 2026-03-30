@@ -4,7 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { fromPromise } from "xstate";
 import { TransientError } from "@pagopa/ts-commons/lib/tasks";
-import { PreferredLanguage } from "../../../../../definitions/backend/PreferredLanguage";
+import { PreferredLanguage } from "../../../../../definitions/backend/identity/PreferredLanguage";
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
 import { CodeEnum as OnboardingErrorCodeEnum } from "../../../../../definitions/idpay/OnboardingErrorDTO";
 import { OnboardingInitiativeDTO } from "../../../../../definitions/idpay/OnboardingInitiativeDTO";

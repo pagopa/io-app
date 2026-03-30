@@ -1,6 +1,6 @@
-import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
-import { UserDataProcessingChoiceEnum } from "../../../../definitions/backend/UserDataProcessingChoice";
-import { UserDataProcessingStatusEnum } from "../../../../definitions/backend/UserDataProcessingStatus";
+import { InitializedProfile } from "../../../../definitions/backend/identity/InitializedProfile";
+import { UserDataProcessingChoiceEnum } from "../../../../definitions/backend/identity/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "../../../../definitions/backend/identity/UserDataProcessingStatus";
 import {
   clearCurrentSession,
   idpLoginUrlChanged,

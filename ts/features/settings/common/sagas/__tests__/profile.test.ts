@@ -8,7 +8,7 @@ import { getType } from "typesafe-actions";
 import { IResponseType } from "@pagopa/ts-commons/lib/requests";
 import * as t from "io-ts";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
-import { AppVersion } from "../../../../../../definitions/backend/AppVersion";
+import { AppVersion } from "../../../../../../definitions/backend/identity/AppVersion";
 import {
   differentProfileLoggedIn,
   setProfileHashedFiscalCode
@@ -35,14 +35,14 @@ import {
 } from "../profile";
 import { upsertUserDataProcessing } from "../../store/actions/userDataProcessing";
 import { navigateToRemoveAccountSuccess } from "../../../../../store/actions/navigation";
-import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/UserDataProcessingChoice";
-import { UserDataProcessingStatusEnum } from "../../../../../../definitions/backend/UserDataProcessingStatus";
-import { EmailAddress } from "../../../../../../definitions/backend/EmailAddress";
-import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
-import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/backend/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../../../../definitions/backend/ReminderStatus";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/ServicesPreferencesMode";
-import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
+import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/identity/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "../../../../../../definitions/backend/identity/UserDataProcessingStatus";
+import { EmailAddress } from "../../../../../../definitions/backend/identity/EmailAddress";
+import { InitializedProfile } from "../../../../../../definitions/backend/identity/InitializedProfile";
+import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/backend/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "../../../../../../definitions/backend/identity/ReminderStatus";
+import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/identity/ServicesPreferencesMode";
+import { PreferredLanguageEnum } from "../../../../../../definitions/backend/identity/PreferredLanguage";
 
 const hash = (value: string): string =>
   sha("sha256").update(value).digest("hex");

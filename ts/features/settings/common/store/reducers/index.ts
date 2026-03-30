@@ -5,7 +5,7 @@
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
+import { InitializedProfile } from "../../../../../../definitions/backend/identity/InitializedProfile";
 import {
   profileLoadFailure,
   profileLoadRequest,

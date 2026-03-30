@@ -7,7 +7,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { appReducer } from "../../../../../store/reducers";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/ServicesPreferencesMode";
+import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/identity/ServicesPreferencesMode";
 import * as hooks from "../../../../../store/hooks";
 import * as selectors from "../../../common/store/selectors";
 import * as usePreviousHook from "../../../../../utils/hooks/usePrevious";

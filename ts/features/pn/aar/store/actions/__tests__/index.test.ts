@@ -8,8 +8,8 @@ import {
 } from "..";
 import { ThirdPartyMessage } from "../../../../../../../definitions/pn/ThirdPartyMessage";
 import { AARFlowState, sendAARFlowStates } from "../../../utils/stateUtils";
-import { MessageBodyMarkdown } from "../../../../../../../definitions/backend/MessageBodyMarkdown";
-import { MessageSubject } from "../../../../../../../definitions/backend/MessageSubject";
+import { MessageBodyMarkdown } from "../../../../../../../definitions/backend/communication/MessageBodyMarkdown";
+import { MessageSubject } from "../../../../../../../definitions/backend/communication/MessageSubject";
 
 describe("AARFlowStateActions", () => {
   const payload: AARFlowState = {

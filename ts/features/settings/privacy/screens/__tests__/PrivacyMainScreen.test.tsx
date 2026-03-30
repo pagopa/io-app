@@ -3,13 +3,13 @@ import { within, fireEvent } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
 import { Alert } from "react-native";
 import I18n from "i18next";
-import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/UserDataProcessingChoice";
+import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/identity/UserDataProcessingChoice";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import PrivacyMainScreen from "../PrivacyMainScreen";
-import { UserDataProcessingStatusEnum } from "../../../../../../definitions/backend/UserDataProcessingStatus";
+import { UserDataProcessingStatusEnum } from "../../../../../../definitions/backend/identity/UserDataProcessingStatus";
 import * as hooks from "../../../../../utils/hooks/usePrevious";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 

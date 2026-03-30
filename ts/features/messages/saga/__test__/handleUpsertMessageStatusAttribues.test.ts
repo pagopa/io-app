@@ -8,7 +8,8 @@ import {
 import { successReloadMessagesPayload } from "../../__mocks__/messages";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { handleUpsertMessageStatusAttributes } from "../handleUpsertMessageStatusAttributes";
-import { BackendClient } from "../../../../api/__mocks__/backend";
+
+const mockUpsertMessageStatusAttributes = jest.fn();
 
 describe("handleUpsertMessageStatusAttributes", () => {
   const actionPayload: UpsertMessageStatusAttributesPayload = {
@@ -34,13 +35,13 @@ describe("handleUpsertMessageStatusAttributes", () => {
     )} with the original payload`, () => {
       testSaga(
         handleUpsertMessageStatusAttributes,
-        BackendClient.upsertMessageStatusAttributes,
+        mockUpsertMessageStatusAttributes,
         action.request(actionPayload)
       )
         .next()
         .call(
           withRefreshApiCall,
-          BackendClient.upsertMessageStatusAttributes(callPayload),
+          mockUpsertMessageStatusAttributes(callPayload),
           action.request(actionPayload)
         )
         .next(E.right({ status: 200, value: {} }))
@@ -56,13 +57,13 @@ describe("handleUpsertMessageStatusAttributes", () => {
     it(`should put ${getType(action.failure)} with the error message`, () => {
       testSaga(
         handleUpsertMessageStatusAttributes,
-        BackendClient.upsertMessageStatusAttributes,
+        mockUpsertMessageStatusAttributes,
         action.request(actionPayload)
       )
         .next()
         .call(
           withRefreshApiCall,
-          BackendClient.upsertMessageStatusAttributes(callPayload),
+          mockUpsertMessageStatusAttributes(callPayload),
           action.request(actionPayload)
         )
         .next(
@@ -88,7 +89,7 @@ describe("handleUpsertMessageStatusAttributes", () => {
     it(`should catch it and put ${getType(action.failure)}`, () => {
       testSaga(
         handleUpsertMessageStatusAttributes,
-        BackendClient.upsertMessageStatusAttributes,
+        mockUpsertMessageStatusAttributes,
         action.request(actionPayload)
       )
         .next()

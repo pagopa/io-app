@@ -11,22 +11,22 @@ import {
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { handleLoadMessageDetails } from "../handleLoadMessageDetails";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { backendClientManager } from "../../../../api/BackendClientManager";
+import { communicationClientManager } from "../../../../api/CommunicationClientManager";
+import { getKeyInfo } from "../../../lollipop/saga";
 
 const id = paymentValidInvalidAfterDueDate.id;
 
-// Mock the backendClientManager
-jest.mock("../../../../api/BackendClientManager");
+// Mock the communicationClientManager
+jest.mock("../../../../api/CommunicationClientManager");
 
 const mockGetMessage = jest.fn();
-const mockBackendClientManager = backendClientManager as jest.Mocked<
-  typeof backendClientManager
->;
+const mockCommunicationClientManager =
+  communicationClientManager as jest.Mocked<typeof communicationClientManager>;
 
 beforeEach(() => {
   jest.clearAllMocks();
-  mockBackendClientManager.getBackendClient.mockReturnValue({
-    getMessage: mockGetMessage
+  mockCommunicationClientManager.getClient.mockReturnValue({
+    getUserMessage: mockGetMessage
   } as any);
 });
 
@@ -42,6 +42,8 @@ describe("handleLoadMessageDetails", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .call(getKeyInfo)
+        .next()
         .call(
           withRefreshApiCall,
           mockGetMessage(getMessagesPayload),
@@ -61,6 +63,8 @@ describe("handleLoadMessageDetails", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .call(getKeyInfo)
+        .next()
         .call(
           withRefreshApiCall,
           mockGetMessage(getMessagesPayload),
@@ -79,6 +83,8 @@ describe("handleLoadMessageDetails", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .call(getKeyInfo)
+        .next()
         .throw(new Error("I made a boo-boo, sir!"))
         .put(
           action.failure({

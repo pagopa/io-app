@@ -1,4 +1,4 @@
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/communication/ThirdPartyAttachment";
 import {
   attachmentContentType,
   attachmentDisplayName,

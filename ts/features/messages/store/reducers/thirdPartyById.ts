@@ -5,9 +5,9 @@ import * as RA from "fp-ts/lib/ReadonlyArray";
 import { pipe } from "fp-ts/lib/function";
 import _ from "lodash";
 import { getType } from "typesafe-actions";
-import { HasPreconditionEnum } from "../../../../../definitions/backend/HasPrecondition";
-import { RemoteContentDetails } from "../../../../../definitions/backend/RemoteContentDetails";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { HasPreconditionEnum } from "../../../../../definitions/backend/communication/HasPrecondition";
+import { RemoteContentDetails } from "../../../../../definitions/backend/communication/RemoteContentDetails";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/communication/ThirdPartyAttachment";
 import { Action } from "../../../../store/actions/types";
 import { IndexedById } from "../../../../store/helpers/indexer";
 import {

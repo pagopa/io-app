@@ -1,12 +1,12 @@
 import { IOButton } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
+import { ThirdPartyAttachment } from "../../../../definitions/backend/communication/ThirdPartyAttachment";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { MessageDetailsAttachmentItem } from "../../messages/components/MessageDetail/MessageDetailsAttachmentItem";
 import { trackPNShowF24 } from "../analytics";
 import { useIODispatch } from "../../../store/hooks";
 import { cancelPreviousAttachmentDownload } from "../../messages/store/actions";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../definitions/backend/communication/ServiceId";
 import {
   SendOpeningSource,
   SendUserType

@@ -4,9 +4,9 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { PaymentInfoResponse } from "../../../../../definitions/backend/communication/PaymentInfoResponse";
+import { ServiceId } from "../../../../../definitions/backend/communication/ServiceId";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/communication/ThirdPartyAttachment";
 import { UIMessage, UIMessageDetails } from "../../types";
 import { MessageListCategory } from "../../types/messageListCategory";
 import { ThirdPartyMessageUnion } from "../../types/thirdPartyById";
