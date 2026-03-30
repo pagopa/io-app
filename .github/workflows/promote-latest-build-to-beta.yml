@@ -1,7 +1,8 @@
-name: Distribute latest uploaded beta
+name: Promote latest build to beta
 on: workflow_dispatch
 jobs:
   distribute-android:
+    name: Distribute Android build to closed testing track
     environment: prod
     runs-on: ubuntu-24.04
     steps:
@@ -23,6 +24,7 @@ jobs:
           RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
           ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}
   distribute-ios:
+    name: Distribute iOS build to TestFlight external testers
     environment: prod
     runs-on: macos-26-xlarge
     steps:
@@ -41,7 +43,6 @@ jobs:
           APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
           ENCODED_IO_APP_SENTRY_PROPERTIES: ${{secrets.ENCODED_IO_APP_SENTRY_PROPERTIES}}
       - id: distribute-app-testflight
-        name: Distribute beta to specific groupd
         run: |
           cd ios
           bundle exec fastlane distribute_beta_testflight
@@ -53,6 +54,7 @@ jobs:
           APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
           APP_STORE_API_KEY_ISSUER_ID: ${{secrets.APP_STORE_API_KEY_ISSUER_ID}}
   notify-new-version:
+    name: Send notification about new beta version on Slack
     environment: dev
     runs-on: ubuntu-24.04
     needs:
