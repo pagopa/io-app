@@ -3,7 +3,8 @@ import {
   WalletInstance,
   RemotePresentation,
   CredentialStatus,
-  CredentialIssuance
+  CredentialIssuance,
+  CredentialOffer
 } from "@pagopa/io-react-native-wallet";
 import { CredentialType } from "./itwMocksUtils.ts";
 
@@ -134,6 +135,11 @@ export type WalletInstanceAttestations = {
   jwt: string;
   [CredentialFormat.SD_JWT]?: string;
   [CredentialFormat.MDOC]?: string;
+};
+
+export type CredentialOfferResolved = {
+  offer: CredentialOffer.CredentialOffer;
+  grantDetails: CredentialOffer.ExtractGrantDetailsResult;
 };
 
 // A predefined list of credential types that are potentially multi-level.

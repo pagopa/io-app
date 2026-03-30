@@ -1,6 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
-import { ItwVersion } from "@pagopa/io-react-native-wallet";
+import { CredentialOffer, ItwVersion } from "@pagopa/io-react-native-wallet";
 import { useIOStore } from "../../../../store/hooks";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { assert } from "../../../../utils/assert";
@@ -50,6 +50,20 @@ export type ObtainCredentialActorOutput = Awaited<
 
 export type ObtainStatusAssertionActorInput = Pick<Context, "credentials">;
 
+export type ProcessCredentialOfferActorInput = {
+  credentialOfferUri: string;
+};
+
+export type ProcessCredentialOfferActorOutput = {
+  offer: CredentialOffer.CredentialOffer;
+  grantDetails: CredentialOffer.ExtractGrantDetailsResult;
+  trustIssuerBaseUrl: string;
+};
+
+export type VerifyTrustFederationActorInput = {
+  trustIssuerBaseUrl: string | undefined;
+};
+
 /**
  * Creates the actors for the eid issuance machine
  * @param env - The environment to use for the IT Wallet API calls
@@ -62,8 +76,13 @@ export const createCredentialIssuanceActorsImplementation = (
   itwVersion: ItwVersion,
   store: ReturnType<typeof useIOStore>
 ) => {
-  const verifyTrustFederation = fromPromise<void>(async () => {
+  const verifyTrustFederation = fromPromise<
+    void,
+    VerifyTrustFederationActorInput
+  >(async ({ input }) => {
+    const { trustIssuerBaseUrl } = input;
     const ioWallet = getIoWallet(itwVersion);
+
     // Evaluate the issuer trust
     const trustAnchorEntityConfig =
       await ioWallet.Trust.getTrustAnchorEntityConfiguration(
@@ -72,7 +91,7 @@ export const createCredentialIssuanceActorsImplementation = (
 
     // Create the trust chain for the PID provider
     const builtChainJwts = await ioWallet.Trust.buildTrustChain(
-      env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion),
+      trustIssuerBaseUrl ?? env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion),
       trustAnchorEntityConfig
     );
 
@@ -239,11 +258,32 @@ export const createCredentialIssuanceActorsImplementation = (
     );
   });
 
+  const processCredentialOffer = fromPromise<
+    ProcessCredentialOfferActorOutput,
+    ProcessCredentialOfferActorInput
+  >(async ({ input }) => {
+    assert(input.credentialOfferUri, "credentialOfferUri is undefined");
+    const ioWallet = getIoWallet(itwVersion);
+
+    const offer = await ioWallet.CredentialsOffer.resolveCredentialOffer(
+      input.credentialOfferUri
+    );
+
+    const grantDetails = ioWallet.CredentialsOffer.extractGrantDetails(offer);
+
+    const trustIssuerBaseUrl =
+      grantDetails.authorizationCodeGrant.authorizationServer ??
+      offer.credential_issuer;
+
+    return { offer, grantDetails, trustIssuerBaseUrl };
+  });
+
   return {
     verifyTrustFederation,
     getWalletAttestation,
     requestCredential,
     obtainCredential,
-    obtainStatusAssertion
+    obtainStatusAssertion,
+    processCredentialOffer
   };
 };

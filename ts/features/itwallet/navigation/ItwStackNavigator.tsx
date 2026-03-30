@@ -66,6 +66,7 @@ import { ItwProximitySendDocumentsResponseScreen } from "../presentation/proximi
 import { ItwSettingsScreen } from "../settings/screens/ItwSettingsScreen.tsx";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
+import { ItwIssuanceCredentialOfferValidationScreen } from "../issuance/offer/screens/ItwIssuanceCredentialOfferValidation";
 import { ItwCardOnboardingL3Screen } from "../onboarding/screens/ItwCardOnboardingL3Screen.tsx";
 import { ItwCardOnboardingL2Screen } from "../onboarding/screens/ItwCardOnboardingL2Screen.tsx";
 import { ItwParamsList } from "./ItwParamsList";
@@ -279,6 +280,10 @@ const InnerNavigator = memo(() => {
         name={ITW_ROUTES.ISSUANCE.UPGRADE_CREDENTIALS}
         component={ItwIssuanceUpgradeCredentialsScreen}
         options={hiddenHeader}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER.VALIDATION}
+        component={ItwIssuanceCredentialOfferValidationScreen}
       />
       {/* CREDENTIAL PRESENTATION */}
       <Stack.Screen

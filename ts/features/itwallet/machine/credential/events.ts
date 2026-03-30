@@ -31,6 +31,11 @@ export type Continue = {
   type: "continue";
 };
 
+export type StartCredentialOffer = {
+  type: "start-credential-offer";
+  itwCredentialOfferUri: string;
+};
+
 export type CredentialIssuanceEvents =
   | SelectCredential
   | ConfirmTrustData
@@ -39,4 +44,5 @@ export type CredentialIssuanceEvents =
   | Back
   | Close
   | Continue
-  | ErrorActorEvent;
+  | ErrorActorEvent
+  | StartCredentialOffer;

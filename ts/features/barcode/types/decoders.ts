@@ -16,6 +16,7 @@ import { ItwRemoteRequestPayload } from "../../itwallet/presentation/remote/util
 import { validateItwPresentationQrCodeParams } from "../../itwallet/presentation/remote/utils/itwRemotePresentationUtils";
 import { selectItwSpecsVersion } from "../../itwallet/common/store/selectors/environment";
 import { pnAARQRCodeRegexSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { isCredentialOfferUri } from "../../itwallet/issuance/offer/itwCredentialOfferUtils";
 import { IOBarcodeType } from "./IOBarcode";
 
 // Discriminated barcode type
@@ -53,6 +54,10 @@ type StaticDecodedIOBarcode =
   | {
       type: "FCI";
       signatureRequestId: SignatureRequestDetailView["id"];
+    }
+  | {
+      type: "ITW_CREDENTIAL_OFFER";
+      itwCredentialOfferUri: string;
     };
 type RuntimeDecodedIOBarcode =
   | {
@@ -63,6 +68,7 @@ type RuntimeDecodedIOBarcode =
       type: "ITW_REMOTE";
       itwRemoteRequestPayload: ItwRemoteRequestPayload;
     };
+
 export type DecodedIOBarcode = StaticDecodedIOBarcode | RuntimeDecodedIOBarcode;
 
 // Barcode decoder function which is used to determine the type and content of a barcode
@@ -154,6 +160,18 @@ const decodeItwRemoteBarcode: IOBarcodeRuntimeDecoderFn = (
     }))
   );
 
+const decodeItwCredentialOfferBarcode: IOBarcodeStaticDecoderFn = (
+  data: string
+) =>
+  pipe(
+    O.some(data),
+    O.filter(isCredentialOfferUri),
+    O.map(itwCredentialOfferUri => ({
+      type: "ITW_CREDENTIAL_OFFER",
+      itwCredentialOfferUri
+    }))
+  );
+
 const decodeSENDAARBarcode: IOBarcodeRuntimeDecoderFn = (
   state: GlobalState,
   data: string
@@ -183,7 +201,8 @@ const decodeSENDAARBarcode: IOBarcodeRuntimeDecoderFn = (
 const StaticIOBarcodeDecoders: IOBarcodeStaticDecodersType = {
   IDPAY: decodeIdPayBarcode,
   PAGOPA: decodePagoPABarcode,
-  FCI: decodeFciBarcode
+  FCI: decodeFciBarcode,
+  ITW_CREDENTIAL_OFFER: decodeItwCredentialOfferBarcode
 };
 
 const RuntimeIOBarcodeDecoders: IOBarcodeRuntimeDecodersType = {
