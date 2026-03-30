@@ -4463,6 +4463,13 @@
             "action": "Esci dall'ambiente di test"
           }
         },
+        "itwSpecsVersion": {
+          "description": "Cambia la versione delle specifiche tecniche. Questa azione reimposta lo stato di IT-Wallet.",
+          "alert": {
+            "title": "IT-Wallet v{{itwVersion}}",
+            "content": "Stai per cambiare la versione delle specifiche tecniche utilizzate.\nQuesta funzionalità è sperimentale e potrebbe causare malfunzionamenti di IT-Wallet."
+          }
+        },
         "walletL3": {
           "alert": {
             "title": "Disattiva IT-Wallet L3",
