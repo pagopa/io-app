@@ -96,7 +96,7 @@ Created on **15/01/2026**
 
 - Patch to fix RefreshControl issues on Fabric enablement
 
-### expo-screen-capture-npm-8.0.9-d1b801bc95.patch
+### expo-screen-capture-npm-55.0.9-45e031d22f.patch
 
 Created on **23/03/2026**
 

@@ -1,6 +1,6 @@
 
 import UIKit
-import Expo
+internal import Expo
 import React
 import React_RCTAppDelegate
 import ReactAppDependencyProvider
@@ -23,7 +23,6 @@ class AppDelegate: ExpoAppDelegate, UNUserNotificationCenterDelegate {
 
     self.reactNativeDelegate = delegate
     self.reactNativeFactory = factory
-    bindReactNativeFactory(factory)
 
     self.window = UIWindow(frame: UIScreen.main.bounds)
 

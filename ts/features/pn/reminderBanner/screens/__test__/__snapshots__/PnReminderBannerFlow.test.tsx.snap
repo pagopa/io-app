@@ -2991,7 +2991,7 @@ exports[`loading screens + error interop should render the correct loading scree
                                     }
                                     gradientTransform={null}
                                     gradientUnits={0}
-                                    name="«r0»-secondHalf"
+                                    name="_r_0_-secondHalf"
                                     x1="0%"
                                     x2="100%"
                                     y1="0%"
@@ -3008,7 +3008,7 @@ exports[`loading screens + error interop should render the correct loading scree
                                     }
                                     gradientTransform={null}
                                     gradientUnits={0}
-                                    name="«r0»-firstHalf"
+                                    name="_r_0_-firstHalf"
                                     x1="0%"
                                     x2="100%"
                                     y1="0%"
@@ -3044,7 +3044,7 @@ exports[`loading screens + error interop should render the correct loading scree
                                     }
                                     stroke={
                                       {
-                                        "brushRef": "«r0»-secondHalf",
+                                        "brushRef": "_r_0_-secondHalf",
                                         "type": 1,
                                       }
                                     }
@@ -3064,7 +3064,7 @@ exports[`loading screens + error interop should render the correct loading scree
                                     }
                                     stroke={
                                       {
-                                        "brushRef": "«r0»-firstHalf",
+                                        "brushRef": "_r_0_-firstHalf",
                                         "type": 1,
                                       }
                                     }
@@ -3633,7 +3633,7 @@ exports[`loading screens + error interop should render the correct loading scree
                                     }
                                     gradientTransform={null}
                                     gradientUnits={0}
-                                    name="«r3»-secondHalf"
+                                    name="_r_3_-secondHalf"
                                     x1="0%"
                                     x2="100%"
                                     y1="0%"
@@ -3650,7 +3650,7 @@ exports[`loading screens + error interop should render the correct loading scree
                                     }
                                     gradientTransform={null}
                                     gradientUnits={0}
-                                    name="«r3»-firstHalf"
+                                    name="_r_3_-firstHalf"
                                     x1="0%"
                                     x2="100%"
                                     y1="0%"
@@ -3686,7 +3686,7 @@ exports[`loading screens + error interop should render the correct loading scree
                                     }
                                     stroke={
                                       {
-                                        "brushRef": "«r3»-secondHalf",
+                                        "brushRef": "_r_3_-secondHalf",
                                         "type": 1,
                                       }
                                     }
@@ -3706,7 +3706,7 @@ exports[`loading screens + error interop should render the correct loading scree
                                     }
                                     stroke={
                                       {
-                                        "brushRef": "«r3»-firstHalf",
+                                        "brushRef": "_r_3_-firstHalf",
                                         "type": 1,
                                       }
                                     }
@@ -4275,7 +4275,7 @@ exports[`loading screens + error interop should render the correct loading scree
                                     }
                                     gradientTransform={null}
                                     gradientUnits={0}
-                                    name="«r4»-secondHalf"
+                                    name="_r_4_-secondHalf"
                                     x1="0%"
                                     x2="100%"
                                     y1="0%"
@@ -4292,7 +4292,7 @@ exports[`loading screens + error interop should render the correct loading scree
                                     }
                                     gradientTransform={null}
                                     gradientUnits={0}
-                                    name="«r4»-firstHalf"
+                                    name="_r_4_-firstHalf"
                                     x1="0%"
                                     x2="100%"
                                     y1="0%"
@@ -4328,7 +4328,7 @@ exports[`loading screens + error interop should render the correct loading scree
                                     }
                                     stroke={
                                       {
-                                        "brushRef": "«r4»-secondHalf",
+                                        "brushRef": "_r_4_-secondHalf",
                                         "type": 1,
                                       }
                                     }
@@ -4348,7 +4348,7 @@ exports[`loading screens + error interop should render the correct loading scree
                                     }
                                     stroke={
                                       {
-                                        "brushRef": "«r4»-firstHalf",
+                                        "brushRef": "_r_4_-firstHalf",
                                         "type": 1,
                                       }
                                     }
@@ -4917,7 +4917,7 @@ exports[`loading screens + error interop should render the correct loading scree
                                     }
                                     gradientTransform={null}
                                     gradientUnits={0}
-                                    name="«r1»-secondHalf"
+                                    name="_r_1_-secondHalf"
                                     x1="0%"
                                     x2="100%"
                                     y1="0%"
@@ -4934,7 +4934,7 @@ exports[`loading screens + error interop should render the correct loading scree
                                     }
                                     gradientTransform={null}
                                     gradientUnits={0}
-                                    name="«r1»-firstHalf"
+                                    name="_r_1_-firstHalf"
                                     x1="0%"
                                     x2="100%"
                                     y1="0%"
@@ -4970,7 +4970,7 @@ exports[`loading screens + error interop should render the correct loading scree
                                     }
                                     stroke={
                                       {
-                                        "brushRef": "«r1»-secondHalf",
+                                        "brushRef": "_r_1_-secondHalf",
                                         "type": 1,
                                       }
                                     }
@@ -4990,7 +4990,7 @@ exports[`loading screens + error interop should render the correct loading scree
                                     }
                                     stroke={
                                       {
-                                        "brushRef": "«r1»-firstHalf",
+                                        "brushRef": "_r_1_-firstHalf",
                                         "type": 1,
                                       }
                                     }
@@ -5559,7 +5559,7 @@ exports[`loading screens + error interop should render the correct loading scree
                                     }
                                     gradientTransform={null}
                                     gradientUnits={0}
-                                    name="«r2»-secondHalf"
+                                    name="_r_2_-secondHalf"
                                     x1="0%"
                                     x2="100%"
                                     y1="0%"
@@ -5576,7 +5576,7 @@ exports[`loading screens + error interop should render the correct loading scree
                                     }
                                     gradientTransform={null}
                                     gradientUnits={0}
-                                    name="«r2»-firstHalf"
+                                    name="_r_2_-firstHalf"
                                     x1="0%"
                                     x2="100%"
                                     y1="0%"
@@ -5612,7 +5612,7 @@ exports[`loading screens + error interop should render the correct loading scree
                                     }
                                     stroke={
                                       {
-                                        "brushRef": "«r2»-secondHalf",
+                                        "brushRef": "_r_2_-secondHalf",
                                         "type": 1,
                                       }
                                     }
@@ -5632,7 +5632,7 @@ exports[`loading screens + error interop should render the correct loading scree
                                     }
                                     stroke={
                                       {
-                                        "brushRef": "«r2»-firstHalf",
+                                        "brushRef": "_r_2_-firstHalf",
                                         "type": 1,
                                       }
                                     }

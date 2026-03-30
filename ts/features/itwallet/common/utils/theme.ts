@@ -61,5 +61,5 @@ const ItWalletThemes = {
  */
 export const useItWalletTheme = () => {
   const { themeType } = useIOThemeContext();
-  return ItWalletThemes[themeType ?? "light"];
+  return ItWalletThemes[themeType === "unspecified" ? "light" : themeType];
 };

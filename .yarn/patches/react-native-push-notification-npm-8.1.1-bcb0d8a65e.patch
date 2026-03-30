@@ -1,3 +1,23 @@
+diff --git a/android/build.gradle b/android/build.gradle
+index d6019f61c32172db04eeecb85d87d4ef506ee8e6..4e5f5701a6d219a8c5f00464086959147bcfde61 100644
+--- a/android/build.gradle
++++ b/android/build.gradle
+@@ -2,7 +2,6 @@ buildscript {
+     repositories {
+         mavenCentral()
+         google()
+-        jcenter()
+     }
+     dependencies {
+         classpath 'com.android.tools.build:gradle:3.2.0'
+@@ -13,7 +12,6 @@ allprojects {
+     repositories {
+         mavenCentral()
+         google()
+-        jcenter()
+     }
+ }
+ 
 diff --git a/android/src/main/java/com/dieam/reactnativepushnotification/modules/RNPushNotificationHelper.java b/android/src/main/java/com/dieam/reactnativepushnotification/modules/RNPushNotificationHelper.java
 index 248ff0825af89ce82e2c7346ef1edc104b06c91c..7a40b165c9cfcbbd21e4bf8c2bd0eaa632ddecf2 100644
 --- a/android/src/main/java/com/dieam/reactnativepushnotification/modules/RNPushNotificationHelper.java
@@ -14,13 +34,13 @@ index 248ff0825af89ce82e2c7346ef1edc104b06c91c..7a40b165c9cfcbbd21e4bf8c2bd0eaa6
                  bundle.getString("id"), Long.toString(fireDate)));
          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 diff --git a/android/src/main/java/com/dieam/reactnativepushnotification/modules/RNReceivedMessageHandler.java b/android/src/main/java/com/dieam/reactnativepushnotification/modules/RNReceivedMessageHandler.java
-index 721ca40cc44a558cbf3cd083849407bcf01ddd79..00b12106723ded1d6e4c0070c82240ebab8f8764 100644
+index 721ca40cc44a558cbf3cd083849407bcf01ddd79..6f5c48732bcefa25c3409a89d2f5964ee4790ba0 100644
 --- a/android/src/main/java/com/dieam/reactnativepushnotification/modules/RNReceivedMessageHandler.java
 +++ b/android/src/main/java/com/dieam/reactnativepushnotification/modules/RNReceivedMessageHandler.java
-@@ -116,6 +116,17 @@ public class RNReceivedMessageHandler {
-                 bundle.putString("largeIconUrl", imageUrl);
+@@ -117,6 +117,18 @@ public class RNReceivedMessageHandler {
              }
          }
+ 
 +        // GCM legacy handling patch
 +        else
 +        {
@@ -32,6 +52,7 @@ index 721ca40cc44a558cbf3cd083849407bcf01ddd79..00b12106723ded1d6e4c0070c82240eb
 +          }
 +        }
 +        // End patch
- 
++
          Bundle dataBundle = new Bundle();
          Map<String, String> notificationData = message.getData();
+         

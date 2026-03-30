@@ -31,7 +31,7 @@ export type IdPayCardProps = {
 };
 
 const idPayCardColorPalette: Record<
-  NonNullable<ColorSchemeName>,
+  NonNullable<Exclude<ColorSchemeName, "unspecified">>,
   {
     title: IOColors;
     amountLabel: IOColors;

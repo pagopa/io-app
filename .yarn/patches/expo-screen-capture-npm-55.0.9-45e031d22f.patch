@@ -1,0 +1,13 @@
+diff --git a/ios/ScreenCaptureModule.swift b/ios/ScreenCaptureModule.swift
+index ae59d79a8b17e7d3c5e58ad389b360b93c70edb1..9caedc89332d342a7af5e9ec9d9dd2638bb7cdbe 100644
+--- a/ios/ScreenCaptureModule.swift
++++ b/ios/ScreenCaptureModule.swift
+@@ -35,7 +35,7 @@ public final class ScreenCaptureModule: Module {
+     }
+ 
+     AsyncFunction("preventScreenCapture") {
+-      self.preventScreenRecording()
++      // self.preventScreenRecording()
+       self.preventScreenshots()
+ 
+       NotificationCenter.default.addObserver(

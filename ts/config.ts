@@ -9,9 +9,18 @@ import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import Config from "react-native-config";
 
+// #region Defaults
+
 // default repository for fetching app content (e.g. services metadata)
 export const DEFAULT_CONTENT_REPO_URL =
   "https://assets.io.pagopa.it" as NonEmptyString;
+
+const DEFAULT_API_URL_PREFIX = "https://api-app.io.pagopa.it" as NonEmptyString;
+
+const DEFAULT_WALLET_API_BASEURL =
+  "https://api.platform.pagopa.it" as NonEmptyString;
+const DEFAULT_WALLET_API_UAT_BASEURL =
+  "https://api.uat.platform.pagopa.it" as NonEmptyString;
 
 // default timeout of fetch (in ms)
 const DEFAULT_FETCH_TIMEOUT_MS = 8000;
@@ -47,17 +56,34 @@ const DEFAULT_MIXPANEL_URL = "https://api-eu.mixpanel.com";
 const DEFAULT_SENTRY_DSN =
   "https://43b87dcfc91f9cfdfaf71b254eb8f58e@o4507197393469440.ingest.de.sentry.io/4507221483585616";
 
-export const environment: string = Config.ENVIRONMENT;
-export const apiUrlPrefix: string = Config.API_URL_PREFIX;
-export const apiLoginUrlPrefix: string = Config.API_LOGIN_URL_PREFIX;
-export const pagoPaApiUrlPrefix: string = Config.PAGOPA_API_URL_PREFIX;
-export const pagoPaApiUrlPrefixTest: string = Config.PAGOPA_API_URL_PREFIX_TEST;
+const DEFAULT_PAGOPA_API_URL_PREFIX =
+  "https://wisp2.pagopa.gov.it/pp-restapi-CD" as NonEmptyString;
+const DEFAULT_PAGOPA_API_URL_PREFIX_TEST =
+  "https://uat.wisp2.pagopa.gov.it/pp-restapi-CD" as NonEmptyString;
+
+const DEFAULT_IDPAY_API_BASEURL =
+  "https://api-io.cstar.pagopa.it" as NonEmptyString;
+const DEFAULT_IDPAY_API_UAT_BASEURL =
+  "https://api-io.uat.cstar.pagopa.it" as NonEmptyString;
+
+const DEFAULT_IDPAY_API_VERSION = "v2.9.1" as NonEmptyString;
+
+const DEFAULT_IDPAY_API_UAT_VERSION = "v2.9.1" as NonEmptyString;
+// #endregion
+
+export const environment = Config.ENVIRONMENT;
+export const apiUrlPrefix = Config.API_URL_PREFIX ?? DEFAULT_API_URL_PREFIX;
+export const apiLoginUrlPrefix = Config.API_LOGIN_URL_PREFIX;
+export const pagoPaApiUrlPrefix =
+  Config.PAGOPA_API_URL_PREFIX ?? DEFAULT_PAGOPA_API_URL_PREFIX;
+export const pagoPaApiUrlPrefixTest =
+  Config.PAGOPA_API_URL_PREFIX_TEST ?? DEFAULT_PAGOPA_API_URL_PREFIX_TEST;
 export const mixpanelUrl = pipe(
   Config.MIXPANEL_URL,
   NonEmptyString.decode,
   E.getOrElse(() => DEFAULT_MIXPANEL_URL)
 );
-export const mixpanelToken: string = Config.MIXPANEL_TOKEN;
+export const mixpanelToken = Config.MIXPANEL_TOKEN;
 export const sentryDsn: string = pipe(
   Config.SENTRY_DSN,
   NonEmptyString.decode,
@@ -66,7 +92,7 @@ export const sentryDsn: string = pipe(
 export const isDebugBiometricIdentificationEnabled =
   Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";
 
-export const bonusApiUrlPrefix: string = Config.BONUS_API_URL_PREFIX;
+export const bonusApiUrlPrefix = Config.BONUS_API_URL_PREFIX;
 
 export const isPlaygroundsEnabled: boolean =
   Config.PLAYGROUNDS_ENABLED === "YES";
@@ -128,31 +154,31 @@ export const helpCenterHowToLoginWithEicUrl =
 // #endregion
 
 export const fetchTimeout = pipe(
-  parseInt(Config.FETCH_TIMEOUT_MS, 10),
+  parseInt(Config.FETCH_TIMEOUT_MS ?? "", 10),
   t.Integer.decode,
   E.getOrElse(() => DEFAULT_FETCH_TIMEOUT_MS)
 ) as Millisecond;
 
 export const fetchMaxRetries = pipe(
-  parseInt(Config.FETCH_MAX_RETRIES, 10),
+  parseInt(Config.FETCH_MAX_RETRIES ?? "", 10),
   t.Integer.decode,
   E.getOrElse(() => DEFAULT_FETCH_MAX_RETRIES)
 );
 
 export const fetchPagoPaTimeout = pipe(
-  parseInt(Config.FETCH_PAGOPA_TIMEOUT_MS, 10),
+  parseInt(Config.FETCH_PAGOPA_TIMEOUT_MS ?? "", 10),
   t.Integer.decode,
   E.getOrElse(() => DEFAULT_FETCH_PAGOPA_TIMEOUT_MS)
 ) as Millisecond;
 
 export const fetchPaymentManagerLongTimeout = pipe(
-  parseInt(Config.FETCH_PAYMENT_MANAGER_TIMEOUT_MS, 10),
+  parseInt(Config.FETCH_PAYMENT_MANAGER_TIMEOUT_MS ?? "", 10),
   t.Integer.decode,
   E.getOrElse(() => DEFAULT_FETCH_PAYMENT_MANAGER_LONG_TIMEOUT_MS)
 ) as Millisecond;
 
 export const backgroundActivityTimeout = pipe(
-  parseInt(Config.BACKGROUND_ACTIVITY_TIMEOUT_S, 10),
+  parseInt(Config.BACKGROUND_ACTIVITY_TIMEOUT_S ?? "", 10),
   t.Integer.decode,
   E.getOrElse(() => DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S)
 ) as Second;
@@ -164,7 +190,7 @@ export const contentRepoUrl = pipe(
 );
 
 export const totMessageFetchWorkers = pipe(
-  parseInt(Config.TOT_MESSAGE_FETCH_WORKERS, 10),
+  parseInt(Config.TOT_MESSAGE_FETCH_WORKERS ?? "", 10),
   t.Integer.decode,
   E.getOrElse(() => DEFAULT_TOT_MESSAGE_FETCH_WORKERS)
 );
@@ -194,7 +220,7 @@ export const pinPukHelpUrl: string = pipe(
 );
 
 export const fastLoginMaxRetries = pipe(
-  parseInt(Config.FAST_LOGIN_MAX_RETRIES, 10),
+  parseInt(Config.FAST_LOGIN_MAX_RETRIES ?? "", 10),
   t.Integer.decode,
   E.getOrElse(() => DEFAULT_FAST_LOGIN_MAX_RETRIES)
 );
@@ -230,14 +256,20 @@ export const POSTE_DATAMATRIX_SCAN_PREFERRED_PSPS:
 export const idPayTestToken =
   Config.IDPAY_API_TEST_TOKEN !== "" ? Config.IDPAY_API_TEST_TOKEN : undefined;
 
-export const idPayApiUatBaseUrl = Config.IDPAY_API_UAT_BASEURL;
-export const idPayApiUatVersion = Config.IDPAY_API_UAT_VERSION;
+export const idPayApiUatBaseUrl =
+  Config.IDPAY_API_UAT_BASEURL ?? DEFAULT_IDPAY_API_UAT_BASEURL;
+export const idPayApiUatVersion =
+  Config.IDPAY_API_UAT_VERSION ?? DEFAULT_IDPAY_API_UAT_VERSION;
 
-export const idPayApiBaseUrl = Config.IDPAY_API_BASEURL;
-export const idPayApiVersion = Config.IDPAY_API_VERSION;
+export const idPayApiBaseUrl =
+  Config.IDPAY_API_BASEURL ?? DEFAULT_IDPAY_API_BASEURL;
+export const idPayApiVersion =
+  Config.IDPAY_API_VERSION ?? DEFAULT_IDPAY_API_VERSION;
 
-export const walletApiBaseUrl = Config.WALLET_API_BASEURL;
-export const walletApiUatBaseUrl = Config.WALLET_API_UAT_BASEURL;
+export const walletApiBaseUrl =
+  Config.WALLET_API_BASEURL ?? DEFAULT_WALLET_API_BASEURL;
+export const walletApiUatBaseUrl =
+  Config.WALLET_API_UAT_BASEURL ?? DEFAULT_WALLET_API_UAT_BASEURL;
 
 // Default pin for dev mode
 export const defaultPin = "162534";

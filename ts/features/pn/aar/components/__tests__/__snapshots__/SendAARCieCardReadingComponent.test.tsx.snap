@@ -472,7 +472,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               >
                                 <View>
                                   <View
-                                    accessibilityLabel="features.pn.aar.flow.cieScanning.success.title"
+                                    accessibilityLabel="Lettura completata!"
                                     accessibilityLiveRegion="polite"
                                     accessible={true}
                                     importantForAccessibility="yes"
@@ -503,7 +503,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       ]
                                     }
                                   >
-                                    features.pn.aar.flow.cieScanning.success.title
+                                    Lettura completata!
                                   </Text>
                                 </View>
                               </View>
@@ -1058,7 +1058,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               >
                                 <View>
                                   <View
-                                    accessibilityLabel="features.pn.aar.flow.cieScanning.error.GENERIC.title"
+                                    accessibilityLabel="Non siamo riusciti a recuperare i dati dalla carta"
                                     accessibilityLiveRegion="polite"
                                     accessible={true}
                                     importantForAccessibility="yes"
@@ -1089,7 +1089,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       ]
                                     }
                                   >
-                                    features.pn.aar.flow.cieScanning.error.GENERIC.title
+                                    Non siamo riusciti a recuperare i dati dalla carta
                                   </Text>
                                 </View>
                                 <Text
@@ -1110,7 +1110,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     ]
                                   }
                                 >
-                                  features.pn.aar.flow.cieScanning.error.GENERIC.subtitle
+                                  Attendi qualche minuto e riprova.
                                 </Text>
                               </View>
                               <RNSVGSvgView
@@ -1293,7 +1293,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                             }
                           >
                             <View
-                              accessibilityLabel="global.buttons.retry"
+                              accessibilityLabel="Riprova"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1505,7 +1505,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       ]
                                     }
                                   >
-                                    global.buttons.retry
+                                    Riprova
                                   </Text>
                                 </View>
                               </View>
@@ -1518,7 +1518,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               }
                             >
                               <View
-                                accessibilityLabel="features.pn.aar.flow.cieScanning.error.GENERIC.secondaryAction"
+                                accessibilityLabel="Mostra dettagli"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -1734,7 +1734,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         ]
                                       }
                                     >
-                                      features.pn.aar.flow.cieScanning.error.GENERIC.secondaryAction
+                                      Mostra dettagli
                                     </Text>
                                   </View>
                                 </View>
@@ -2161,7 +2161,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               >
                                 <View>
                                   <View
-                                    accessibilityLabel="features.pn.aar.flow.cieScanning.error.GENERIC.title"
+                                    accessibilityLabel="Non siamo riusciti a recuperare i dati dalla carta"
                                     accessibilityLiveRegion="polite"
                                     accessible={true}
                                     importantForAccessibility="yes"
@@ -2192,7 +2192,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       ]
                                     }
                                   >
-                                    features.pn.aar.flow.cieScanning.error.GENERIC.title
+                                    Non siamo riusciti a recuperare i dati dalla carta
                                   </Text>
                                 </View>
                                 <Text
@@ -2213,7 +2213,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     ]
                                   }
                                 >
-                                  features.pn.aar.flow.cieScanning.error.GENERIC.subtitle
+                                  Attendi qualche minuto e riprova.
                                 </Text>
                               </View>
                               <RNSVGSvgView
@@ -2396,7 +2396,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                             }
                           >
                             <View
-                              accessibilityLabel="global.buttons.retry"
+                              accessibilityLabel="Riprova"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -2608,7 +2608,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       ]
                                     }
                                   >
-                                    global.buttons.retry
+                                    Riprova
                                   </Text>
                                 </View>
                               </View>
@@ -2621,7 +2621,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               }
                             >
                               <View
-                                accessibilityLabel="features.pn.aar.flow.cieScanning.error.GENERIC.secondaryAction"
+                                accessibilityLabel="Mostra dettagli"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -2837,7 +2837,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         ]
                                       }
                                     >
-                                      features.pn.aar.flow.cieScanning.error.GENERIC.secondaryAction
+                                      Mostra dettagli
                                     </Text>
                                   </View>
                                 </View>
@@ -3264,7 +3264,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               >
                                 <View>
                                   <View
-                                    accessibilityLabel="features.pn.aar.flow.cieScanning.error.GENERIC.title"
+                                    accessibilityLabel="Non siamo riusciti a recuperare i dati dalla carta"
                                     accessibilityLiveRegion="polite"
                                     accessible={true}
                                     importantForAccessibility="yes"
@@ -3295,7 +3295,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       ]
                                     }
                                   >
-                                    features.pn.aar.flow.cieScanning.error.GENERIC.title
+                                    Non siamo riusciti a recuperare i dati dalla carta
                                   </Text>
                                 </View>
                                 <Text
@@ -3316,7 +3316,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     ]
                                   }
                                 >
-                                  features.pn.aar.flow.cieScanning.error.GENERIC.subtitle
+                                  Attendi qualche minuto e riprova.
                                 </Text>
                               </View>
                               <RNSVGSvgView
@@ -3499,7 +3499,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                             }
                           >
                             <View
-                              accessibilityLabel="global.buttons.retry"
+                              accessibilityLabel="Riprova"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -3711,7 +3711,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       ]
                                     }
                                   >
-                                    global.buttons.retry
+                                    Riprova
                                   </Text>
                                 </View>
                               </View>
@@ -3724,7 +3724,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               }
                             >
                               <View
-                                accessibilityLabel="features.pn.aar.flow.cieScanning.error.GENERIC.secondaryAction"
+                                accessibilityLabel="Mostra dettagli"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -3940,7 +3940,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         ]
                                       }
                                     >
-                                      features.pn.aar.flow.cieScanning.error.GENERIC.secondaryAction
+                                      Mostra dettagli
                                     </Text>
                                   </View>
                                 </View>
@@ -4367,7 +4367,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               >
                                 <View>
                                   <View
-                                    accessibilityLabel="features.pn.aar.flow.cieScanning.error.TAG_LOST.title"
+                                    accessibilityLabel="Hai rimosso il telefono troppo presto!"
                                     accessibilityLiveRegion="polite"
                                     accessible={true}
                                     importantForAccessibility="yes"
@@ -4398,7 +4398,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       ]
                                     }
                                   >
-                                    features.pn.aar.flow.cieScanning.error.TAG_LOST.title
+                                    Hai rimosso il telefono troppo presto!
                                   </Text>
                                 </View>
                                 <Text
@@ -4419,7 +4419,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     ]
                                   }
                                 >
-                                  features.pn.aar.flow.cieScanning.error.TAG_LOST.subtitle
+                                  Riprova e tieni fermo il telefono per la lettura.
                                 </Text>
                               </View>
                               <RNSVGSvgView
@@ -4554,7 +4554,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                             }
                           >
                             <View
-                              accessibilityLabel="global.buttons.retry"
+                              accessibilityLabel="Riprova"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -4765,7 +4765,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       ]
                                     }
                                   >
-                                    global.buttons.retry
+                                    Riprova
                                   </Text>
                                 </View>
                               </View>
@@ -4778,7 +4778,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               }
                             >
                               <View
-                                accessibilityLabel="global.buttons.close"
+                                accessibilityLabel="Chiudi"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -4994,7 +4994,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         ]
                                       }
                                     >
-                                      global.buttons.close
+                                      Chiudi
                                     </Text>
                                   </View>
                                 </View>
@@ -5482,7 +5482,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               >
                                 <View>
                                   <View
-                                    accessibilityLabel="features.pn.aar.flow.cieScanning.idle.title"
+                                    accessibilityLabel="Poggia il retro del telefono sulla CIE"
                                     accessibilityLiveRegion="polite"
                                     accessible={true}
                                     importantForAccessibility="yes"
@@ -5513,7 +5513,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       ]
                                     }
                                   >
-                                    features.pn.aar.flow.cieScanning.idle.title
+                                    Poggia il retro del telefono sulla CIE
                                   </Text>
                                 </View>
                               </View>
@@ -5754,7 +5754,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               }
                             >
                               <View
-                                accessibilityLabel="global.buttons.close"
+                                accessibilityLabel="Chiudi"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -5970,7 +5970,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         ]
                                       }
                                     >
-                                      global.buttons.close
+                                      Chiudi
                                     </Text>
                                   </View>
                                 </View>
@@ -6458,7 +6458,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               >
                                 <View>
                                   <View
-                                    accessibilityLabel="features.pn.aar.flow.cieScanning.reading.title"
+                                    accessibilityLabel="La lettura è in corso..."
                                     accessibilityLiveRegion="polite"
                                     accessible={true}
                                     importantForAccessibility="yes"
@@ -6489,7 +6489,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       ]
                                     }
                                   >
-                                    features.pn.aar.flow.cieScanning.reading.title
+                                    La lettura è in corso...
                                   </Text>
                                 </View>
                                 <Text
@@ -6510,7 +6510,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     ]
                                   }
                                 >
-                                  features.pn.aar.flow.cieScanning.reading.subtitle
+                                  Non muovere il telefono.
                                 </Text>
                               </View>
                               <RNSVGSvgView
@@ -6750,7 +6750,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               }
                             >
                               <View
-                                accessibilityLabel="global.buttons.close"
+                                accessibilityLabel="Chiudi"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -6966,7 +6966,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         ]
                                       }
                                     >
-                                      global.buttons.close
+                                      Chiudi
                                     </Text>
                                   </View>
                                 </View>
@@ -7454,7 +7454,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               >
                                 <View>
                                   <View
-                                    accessibilityLabel="features.pn.aar.flow.cieScanning.reading.title"
+                                    accessibilityLabel="La lettura è in corso..."
                                     accessibilityLiveRegion="polite"
                                     accessible={true}
                                     importantForAccessibility="yes"
@@ -7485,7 +7485,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       ]
                                     }
                                   >
-                                    features.pn.aar.flow.cieScanning.reading.title
+                                    La lettura è in corso...
                                   </Text>
                                 </View>
                                 <Text
@@ -7506,7 +7506,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     ]
                                   }
                                 >
-                                  features.pn.aar.flow.cieScanning.reading.subtitle
+                                  Non muovere il telefono.
                                 </Text>
                               </View>
                               <RNSVGSvgView
@@ -7746,7 +7746,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               }
                             >
                               <View
-                                accessibilityLabel="global.buttons.close"
+                                accessibilityLabel="Chiudi"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -7962,7 +7962,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         ]
                                       }
                                     >
-                                      global.buttons.close
+                                      Chiudi
                                     </Text>
                                   </View>
                                 </View>
@@ -8450,7 +8450,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               >
                                 <View>
                                   <View
-                                    accessibilityLabel="features.pn.aar.flow.cieScanning.reading.title"
+                                    accessibilityLabel="La lettura è in corso..."
                                     accessibilityLiveRegion="polite"
                                     accessible={true}
                                     importantForAccessibility="yes"
@@ -8481,7 +8481,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                       ]
                                     }
                                   >
-                                    features.pn.aar.flow.cieScanning.reading.title
+                                    La lettura è in corso...
                                   </Text>
                                 </View>
                                 <Text
@@ -8502,7 +8502,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                     ]
                                   }
                                 >
-                                  features.pn.aar.flow.cieScanning.reading.subtitle
+                                  Non muovere il telefono.
                                 </Text>
                               </View>
                               <RNSVGSvgView
@@ -8742,7 +8742,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                               }
                             >
                               <View
-                                accessibilityLabel="global.buttons.close"
+                                accessibilityLabel="Chiudi"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -8958,7 +8958,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
                                         ]
                                       }
                                     >
-                                      global.buttons.close
+                                      Chiudi
                                     </Text>
                                   </View>
                                 </View>

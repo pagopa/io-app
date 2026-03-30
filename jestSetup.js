@@ -10,9 +10,7 @@ import nodeFetch from "node-fetch";
 import { NativeModules, AccessibilityInfo, AppState } from "react-native";
 import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
 import mockZendesk from "./ts/__mocks__/io-react-native-zendesk.ts";
-import { initI18n } from "./ts/i18n.ts";
-
-void initI18n();
+import "./ts/i18n.ts";
 
 const mockRNQRGenerator = {
   default: {
