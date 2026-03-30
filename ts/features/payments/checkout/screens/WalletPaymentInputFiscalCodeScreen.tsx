@@ -8,14 +8,16 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { flow, pipe } from "fp-ts/lib/function";
-import { useEffect, useRef, useState } from "react";
-import { InputAccessoryView, Keyboard, Platform, View } from "react-native";
 import I18n from "i18next";
+import { ComponentRef, useEffect, useRef, useState } from "react";
+import { InputAccessoryView, Keyboard, Platform, View } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../store/hooks";
+import { isScreenReaderEnabledSelector } from "../../../../store/reducers/preferences";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
@@ -23,11 +25,9 @@ import {
   validateOrganizationFiscalCode
 } from "../../common/utils/validation";
 import * as analytics from "../analytics";
+import { useInputFocus } from "../hooks/useInputFocus";
 import { usePagoPaPayment } from "../hooks/usePagoPaPayment";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
-import { TextInputValidationRefProps } from "../types";
-import { useIOSelector } from "../../../../store/hooks";
-import { isScreenReaderEnabledSelector } from "../../../../store/reducers/preferences";
 
 export type WalletPaymentInputFiscalCodeScreenNavigationParams = {
   paymentNoticeNumber: O.Option<PaymentNoticeNumberFromString>;
@@ -53,9 +53,8 @@ const WalletPaymentInputFiscalCodeScreen = () => {
     fiscalCodeText: "",
     fiscalCode: O.none
   });
-
+  const textInputRef = useRef<ComponentRef<typeof TextInputValidation>>(null);
   const textInputWrapperRef = useRef<View>(null);
-  const textInputRef = useRef<TextInputValidationRefProps>(null);
   const screenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
   const [showInput, setShowInput] = useState(
     Platform.OS === "ios" || !screenReaderEnabled
@@ -106,6 +105,8 @@ const WalletPaymentInputFiscalCodeScreen = () => {
   useOnFirstRender(() => {
     analytics.trackPaymentOrganizationDataEntry();
   });
+
+  useInputFocus(textInputRef);
 
   return (
     <>
@@ -163,7 +164,6 @@ const WalletPaymentInputFiscalCodeScreen = () => {
               returnKeyType: "done",
               inputAccessoryViewID: "fiscalCodeInputAccessoryView"
             }}
-            autoFocus
           />
         )}
       </IOScrollViewWithLargeHeader>

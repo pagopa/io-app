@@ -10,6 +10,15 @@ import {
   OperationResultScreenContentProps
 } from "../OperationResultScreenContent";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 const defaultProps: OperationResultScreenContentProps = {
   pictogram: "umbrella",
   title: "title",

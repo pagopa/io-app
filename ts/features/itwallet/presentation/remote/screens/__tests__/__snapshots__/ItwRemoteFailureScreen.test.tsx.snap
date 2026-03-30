@@ -10,6 +10,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -21,64 +22,28 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -93,6 +58,39 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -103,11 +101,16 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -115,10 +118,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -137,14 +141,15 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -158,10 +163,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -181,7 +187,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -198,11 +206,13 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -213,34 +223,14 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -248,35 +238,22 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -294,17 +271,10 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -329,7 +299,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -1619,6 +1588,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -1630,64 +1600,28 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -1702,6 +1636,39 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -1712,11 +1679,16 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -1724,10 +1696,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -1746,14 +1719,15 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -1767,10 +1741,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -1790,7 +1765,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1807,11 +1784,13 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1822,34 +1801,14 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -1857,35 +1816,22 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -1903,17 +1849,10 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1938,7 +1877,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -2954,6 +2892,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -2965,64 +2904,28 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -3037,6 +2940,39 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -3047,11 +2983,16 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -3059,10 +3000,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -3081,14 +3023,15 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -3102,10 +3045,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -3125,7 +3069,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3142,11 +3088,13 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -3157,34 +3105,14 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -3192,35 +3120,22 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -3238,17 +3153,10 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3273,7 +3181,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -4320,6 +4227,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -4331,64 +4239,28 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -4403,6 +4275,39 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -4413,11 +4318,16 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -4425,10 +4335,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -4447,14 +4358,15 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -4468,10 +4380,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -4491,7 +4404,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4508,11 +4423,13 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -4523,34 +4440,14 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -4558,35 +4455,22 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -4604,17 +4488,10 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4639,7 +4516,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -5482,6 +5358,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -5493,64 +5370,28 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -5565,6 +5406,39 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -5575,11 +5449,16 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -5587,10 +5466,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -5609,14 +5489,15 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -5630,10 +5511,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -5653,7 +5535,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5670,11 +5554,13 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -5685,34 +5571,14 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -5720,35 +5586,22 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -5766,17 +5619,10 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5801,7 +5647,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -7077,6 +6922,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -7088,64 +6934,28 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -7160,6 +6970,39 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -7170,11 +7013,16 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -7182,10 +7030,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -7204,14 +7053,15 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -7225,10 +7075,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -7248,7 +7099,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7265,11 +7118,13 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -7280,34 +7135,14 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -7315,35 +7150,22 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -7361,17 +7183,10 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -7396,7 +7211,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -8672,6 +8486,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -8683,64 +8498,28 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -8755,6 +8534,39 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -8765,11 +8577,16 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -8777,10 +8594,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -8799,14 +8617,15 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -8820,10 +8639,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -8843,7 +8663,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8860,11 +8682,13 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -8875,34 +8699,14 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -8910,35 +8714,22 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -8956,17 +8747,10 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -8991,7 +8775,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -10033,6 +9816,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -10044,64 +9828,28 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -10116,6 +9864,39 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -10126,11 +9907,16 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -10138,10 +9924,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -10160,14 +9947,15 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -10181,10 +9969,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -10204,7 +9993,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10221,11 +10012,13 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -10236,34 +10029,14 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -10271,35 +10044,22 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -10317,17 +10077,10 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -10352,7 +10105,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -11642,6 +11394,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -11653,64 +11406,28 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -11725,6 +11442,39 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -11735,11 +11485,16 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -11747,10 +11502,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -11769,14 +11525,15 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -11790,10 +11547,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -11813,7 +11571,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -11830,11 +11590,13 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -11845,34 +11607,14 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -11880,35 +11622,22 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -11926,17 +11655,10 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -11961,7 +11683,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -12983,6 +12704,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -12994,64 +12716,28 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -13066,6 +12752,39 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -13076,11 +12795,16 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -13088,10 +12812,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -13110,14 +12835,15 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -13131,10 +12857,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -13154,7 +12881,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -13171,11 +12900,13 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -13186,34 +12917,14 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -13221,35 +12932,22 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -13267,17 +12965,10 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -13302,7 +12993,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >

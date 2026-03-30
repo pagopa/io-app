@@ -32,6 +32,15 @@ const mockDispatch = jest.fn();
 const mockTerminateFlow = jest.fn();
 const mockPresentBottomSheet = jest.fn();
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 jest.mock("react-redux", () => ({
   ...jest.requireActual("react-redux"),
   useDispatch: () => mockDispatch

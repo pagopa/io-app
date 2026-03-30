@@ -7,6 +7,15 @@ import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 describe("ServicesContactComponent", () => {
   it("should NOT call onSelectMode if the same mode is selected", () => {
     const mockOnSelectMode = jest.fn();

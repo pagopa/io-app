@@ -6,6 +6,15 @@ import PN_ROUTES from "../../navigation/routes";
 import { PaidPaymentScreen } from "../PaidPaymentScreen";
 import { GlobalState } from "../../../../store/reducers/types";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 describe("PaidPaymentScreen", () => {
   it("should match snapshot", () => {
     const screen = renderScreen();

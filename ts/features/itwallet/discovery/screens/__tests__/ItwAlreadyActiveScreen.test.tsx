@@ -6,6 +6,15 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwAlreadyActiveScreen } from "../ItwAlreadyActiveScreen";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 describe("Test ItwAlreadyActive screen", () => {
   it("it should render the screen correctly", () => {
     const component = renderComponent();

@@ -10,6 +10,7 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -21,64 +22,28 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -93,6 +58,39 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -103,11 +101,16 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -115,10 +118,11 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -137,14 +141,15 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -158,10 +163,11 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -181,7 +187,9 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -198,11 +206,13 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -213,34 +223,14 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -248,35 +238,22 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -294,17 +271,10 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -329,7 +299,6 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -1175,6 +1144,7 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -1186,64 +1156,28 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -1258,6 +1192,39 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -1268,11 +1235,16 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -1280,10 +1252,11 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -1302,14 +1275,15 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -1323,10 +1297,11 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -1346,7 +1321,9 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1363,11 +1340,13 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1378,34 +1357,14 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -1413,35 +1372,22 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -1459,17 +1405,10 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1494,7 +1433,6 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -1980,6 +1918,7 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -1991,64 +1930,28 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -2063,6 +1966,39 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -2073,11 +2009,16 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -2085,10 +2026,11 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -2107,14 +2049,15 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -2128,10 +2071,11 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -2151,7 +2095,9 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2168,11 +2114,13 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -2183,34 +2131,14 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -2218,35 +2146,22 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -2264,17 +2179,10 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2299,7 +2207,6 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -2622,6 +2529,7 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -2633,64 +2541,28 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -2705,6 +2577,39 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -2715,11 +2620,16 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -2727,10 +2637,11 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -2749,14 +2660,15 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -2770,10 +2682,11 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -2793,7 +2706,9 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2810,11 +2725,13 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -2825,34 +2742,14 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -2860,35 +2757,22 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -2906,17 +2790,10 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2941,7 +2818,6 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -3264,6 +3140,7 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -3275,64 +3152,28 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -3347,6 +3188,39 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -3357,11 +3231,16 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -3369,10 +3248,11 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -3391,14 +3271,15 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -3412,10 +3293,11 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -3435,7 +3317,9 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3452,11 +3336,13 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -3467,34 +3353,14 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -3502,35 +3368,22 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -3548,17 +3401,10 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3583,7 +3429,6 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >

@@ -10,6 +10,15 @@ import CGN_ROUTES from "../../../navigation/routes";
 import { cgnActivationCancel } from "../../../store/actions/activation";
 import CgnAlreadyActiveScreen from "../CgnAlreadyActiveScreen";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 jest.mock("../../../../../../store/hooks", () => ({
   useIODispatch: jest.fn(),
   useIOStore: jest.fn(),

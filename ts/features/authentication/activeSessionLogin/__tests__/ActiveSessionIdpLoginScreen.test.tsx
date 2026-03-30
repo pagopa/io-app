@@ -15,7 +15,8 @@ jest.mock("@react-navigation/native", () => {
   return {
     ...actualNav,
     useNavigation: () => ({
-      navigate: mockNavigate
+      navigate: mockNavigate,
+      addListener: jest.fn(() => jest.fn())
     })
   };
 });
@@ -96,8 +97,9 @@ describe("ActiveSessionIdpLoginScreen", () => {
   it("should navigate to AuthErrorScreen when requestState is error", () => {
     const mockReplace = jest.fn();
     // eslint-disable-next-line functional/immutable-data, @typescript-eslint/no-var-requires
-    (require("@react-navigation/native") as any).useNavigation = () => ({
-      replace: mockReplace
+    require("@react-navigation/native").useNavigation = () => ({
+      replace: mockReplace,
+      addListener: jest.fn(() => jest.fn())
     });
 
     const { getByTestId } = renderComponent();

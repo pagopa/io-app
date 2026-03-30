@@ -14,6 +14,15 @@ import {
 import * as ANALYTICS from "../../analytics";
 import * as IO_BOTTOM_SHEET from "../../../../utils/hooks/bottomSheet";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 const numberToThirdPartyAttachment = (index: number) =>
   ({
     id: `${index}`,

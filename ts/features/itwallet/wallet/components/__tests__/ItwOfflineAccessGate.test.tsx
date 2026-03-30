@@ -7,6 +7,15 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import * as selectors from "../../../common/store/selectors/securePreferences";
 import { ItwOfflineAccessGate } from "../ItwOfflineAccessGate";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 describe("itwOfflineAccessCounterSelector", () => {
   it("should render the children when the offline access limit is not reached", () => {
     jest

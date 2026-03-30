@@ -8,6 +8,15 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as selectors from "../../store/selectors";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 describe("withWalletCategoryFilter", () => {
   it("should return null if the category filter does not match", () => {
     const WrappedComponent = () => (

@@ -10,6 +10,15 @@ import {
   PaymentCardsCarouselProps
 } from "../PaymentsCardsCarousel";
 
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+
 const onPress = () => undefined;
 
 const cardsDataForCarousel: PaymentCardsCarouselProps = {
