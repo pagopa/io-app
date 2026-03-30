@@ -25,12 +25,12 @@ import { ItwOnboardingModuleCredential } from "./ItwOnboardingModuleCredential";
 
 type Props = {
   credentialTypesToDisplay: Array<string>;
-  isRestrictedMode?: boolean;
+  isL2Credential?: boolean;
 };
 
 export const ItwOnboardingModuleCredentialsList = ({
   credentialTypesToDisplay,
-  isRestrictedMode
+  isL2Credential
 }: Props) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const navigation = useIONavigation();
@@ -67,12 +67,23 @@ export const ItwOnboardingModuleCredentialsList = ({
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL
           });
-        } else if (isRestrictedMode && isL2WalletValid) {
-          /**
-           * User has a whitelisted fiscal code but has requested a credential in restricted mode
-           * the user has DocIO enabled
-           */
-          sendSelectCredential();
+        } else if (isL2Credential && !isItWalletValid) {
+          if (isL2WalletValid) {
+            /**
+             * User has a whitelisted fiscal code but has requested a credential in restricted mode
+             * the user has DocIO enabled
+             */
+            sendSelectCredential();
+          } else {
+            /**
+             * User has a whitelisted fiscal code but has requested a credential in restricted mode
+             * the user has DocIO disabled
+             */
+            navigation.navigate(ITW_ROUTES.MAIN, {
+              screen: ITW_ROUTES.DISCOVERY.INFO,
+              params: { level: "l2-fallback", credentialType: type }
+            });
+          }
         } else if (isL3Enabled && !isItWalletValid) {
           /**
            * User has a whitelisted fiscal code but has not yet obtained an IT Wallet.
@@ -95,7 +106,7 @@ export const ItwOnboardingModuleCredentialsList = ({
         isL3Enabled,
         isItWalletValid,
         isL2WalletValid,
-        isRestrictedMode
+        isL2Credential
       ]
     )
   );
