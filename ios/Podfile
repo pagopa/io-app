@@ -76,4 +76,20 @@ target 'IO' do
       # :ccache_enabled => true
     )
   end
+  # TODO: Remove when https://github.com/expo/expo/issues/44229 gets resolved.
+  # Workaround for fmt compilation error with Xcode 26 / newer Apple Clang
+  post_integrate do |installer|
+    fmt_base_h = File.join(installer.sandbox.root, 'fmt', 'include', 'fmt', 'base.h')
+    if File.exist?(fmt_base_h)
+      content = File.read(fmt_base_h)
+      patched = content.sub(
+        '#elif defined(__cpp_consteval)',
+        "#elif defined(__apple_build_version__)\n#  define FMT_USE_CONSTEVAL 0  // consteval is broken in newer Apple clang too\n#elif defined(__cpp_consteval)"
+      )
+      if patched != content
+        File.chmod(0644, fmt_base_h)
+        File.write(fmt_base_h, patched)
+      end
+    end
+  end
 end
