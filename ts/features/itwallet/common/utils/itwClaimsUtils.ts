@@ -38,6 +38,7 @@ export enum WellKnownClaim {
    * the credential expiration or to know if the credential is expired
    */
   expiry_date = "expiry_date",
+  date_of_expiry = "date_of_expiry",
   /**
    * Claim used to display a QR Code for the Disability Card. It must be excluded from the common claims list
    * and rendered using a {@link QRCodeImage} (currently used for the European Disability Card)
@@ -604,8 +605,10 @@ export const ClaimValue = t.union([
 export const getCredentialExpireDate = (
   credential: ParsedCredential
 ): Date | undefined => {
-  // A credential could contain its expiration date in `expiry_date`
-  const expireDate = credential[WellKnownClaim.expiry_date];
+  // A credential could contain its expiration date in `expiry_date` or `date_of_expiry`
+  const expireDate =
+    credential[WellKnownClaim.expiry_date] ||
+    credential[WellKnownClaim.date_of_expiry];
 
   if (!expireDate?.value) {
     return undefined;
@@ -649,7 +652,8 @@ export const extractFiscalCode = (s: string) =>
 export const getSafeText = (text: string) => truncate(text, { length: 128 });
 
 export const isExpirationDateClaim = (claim: ClaimDisplayFormat) =>
-  claim.id === WellKnownClaim.expiry_date;
+  claim.id === WellKnownClaim.expiry_date ||
+  claim.id === WellKnownClaim.date_of_expiry;
 
 /**
  *

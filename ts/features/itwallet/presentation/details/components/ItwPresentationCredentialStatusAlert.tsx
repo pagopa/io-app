@@ -47,7 +47,9 @@ const excludedCredentialTypes = [
   CredentialType.PID,
   CredentialType.EDUCATION_DEGREE,
   CredentialType.EDUCATION_ENROLLMENT,
-  CredentialType.RESIDENCY
+  CredentialType.RESIDENCY,
+  CredentialType.EDUCATION_DIPLOMA,
+  CredentialType.EDUCATION_ATTENDANCE
 ] as const;
 
 type ExcludedCredentialTypes = (typeof excludedCredentialTypes)[number];

@@ -22,6 +22,8 @@ export type MixPanelCredentialVersion = "V2" | "V3";
  * ITW_ED: ED (obtained with IT Wallet)
  * ITW_EE: EE (obtained with IT Wallet)
  * ITW_RES: Residency (obtained with IT Wallet)
+ * ITW_EDIP: Education Diploma (obtained with IT Wallet)
+ * ITW_EDAT: Education Attendance (obtained with IT Wallet)
  * UNKNOWN: placeholder used when a credential exists in the app but is not yet tracked on Mixpanel
  */
 const mixPanelCredentials = [
@@ -36,6 +38,8 @@ const mixPanelCredentials = [
   "ITW_ED",
   "ITW_EE",
   "ITW_RES",
+  "ITW_EDIP",
+  "ITW_EDAT",
   "UNKNOWN"
 ] as const;
 
@@ -59,7 +63,9 @@ export const CREDENTIALS_MAP: Record<
   EuropeanDisabilityCard: { V2: "ITW_CED_V2", V3: "ITW_CED_V3" },
   education_degree: "ITW_ED",
   education_enrollment: "ITW_EE",
-  residency: "ITW_RES"
+  residency: "ITW_RES",
+  education_diploma: "ITW_EDIP",
+  education_attendance: "ITW_EDAT"
 };
 
 export type CredentialStatusAssertionFailure = {
