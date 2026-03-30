@@ -25,7 +25,7 @@ import { format } from "../../../../../utils/dates.ts";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
-import { useItwRemoveCredentialWithConfirm } from "../hooks/useItwRemoveCredentialWithConfirm";
+import { useItwIssuerDynamicErrorBottomSheet } from "../hooks/useItwIssuerDynamicErrorBottomSheet";
 import { openWebUrl } from "../../../../../utils/url";
 import {
   trackItwCredentialTapBanner,
@@ -232,13 +232,14 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
         />
       );
     case CredentialAlertType.ISSUER_DYNAMIC_ERROR:
-      return (
+      return message ? (
         <IssuerDynamicErrorAlert
-          message={message!}
+          message={message}
           credential={credential}
           onTrack={trackCredentialAlertEvent}
+          status={status}
         />
-      );
+      ) : null;
     case CredentialAlertType.DOCUMENT_EXPIRED:
       return (
         <Alert
@@ -352,38 +353,21 @@ type IssuerDynamicErrorAlertProps = {
   message: Record<string, { title: string; description: string }>;
   credential: StoredCredential;
   onTrack: TrackCredentialAlert;
+  status?: ItwCredentialStatus;
 };
 
 const IssuerDynamicErrorAlert = ({
   message,
   credential,
-  onTrack
+  onTrack,
+  status
 }: IssuerDynamicErrorAlertProps) => {
   const localizedMessage = getLocalizedMessageOrFallback(message);
-  const showCta = credential.credentialType === CredentialType.DRIVING_LICENSE;
-
-  const { confirmAndRemoveCredential } =
-    useItwRemoveCredentialWithConfirm(credential);
-
-  const bottomSheet = useIOBottomSheetModal({
-    title: localizedMessage.title,
-    component: (
-      <VStack space={24}>
-        <IOMarkdown content={localizedMessage.description} />
-        {showCta && (
-          <View style={{ marginBottom: 16 }}>
-            <IOButton
-              variant="solid"
-              fullWidth
-              label={I18n.t(
-                "features.itWallet.presentation.alerts.mdl.invalid.cta"
-              )}
-              onPress={confirmAndRemoveCredential}
-            />
-          </View>
-        )}
-      </VStack>
-    )
+  const bottomSheet = useItwIssuerDynamicErrorBottomSheet({
+    credential,
+    localizedMessage,
+    status,
+    onTrackPressCta: () => onTrack("press_cta")
   });
 
   const handleAlertPress = useAlertPressHandler(onTrack, bottomSheet);
