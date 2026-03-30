@@ -139,7 +139,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
               subtitle: I18n.t(
                 "features.itWallet.issuance.pidAnprMismatchError.body"
               ),
-              pictogram: "accessDenied",
+              pictogram: "fatalError",
               action: {
                 label: I18n.t(
                   "features.itWallet.issuance.pidAnprMismatchError.primaryAction"
