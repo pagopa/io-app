@@ -28,10 +28,10 @@ export const SendAarDelegationProposalScreen = () => {
     useNavigation<
       StackNavigationProp<PnParamsList, "SEND_AAR_DELEGATION_PROPOSAL">
     >();
-  const { warning, hideAll } = useIOToast();
+  const { info, hideAll } = useIOToast();
 
   useOnFirstRender(() => {
-    warning(i18n.t("features.pn.aar.flow.delegated.notAdressee.warningAlert"));
+    info(i18n.t("features.pn.aar.flow.delegated.notAdressee.infoAlert"));
   });
 
   useEffect(() => {

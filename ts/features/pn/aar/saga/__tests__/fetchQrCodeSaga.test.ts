@@ -2,7 +2,6 @@ import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { trackSendAARFailure } from "../../analytics";
 import { SendAARClient } from "../../api/client";
@@ -21,8 +20,8 @@ const fetchingQrRequestAction = setAarFlowState(
 
 describe("fetchQrCodeSaga", () => {
   const aQRCode = "TESTTEST";
-  const sessionToken = "test-session-token" as SessionToken;
-  const sessionTokenWithBearer = `Bearer ${sessionToken}` as SessionToken;
+  const sessionToken = "mock-session-token";
+  const sessionTokenWithBearer = `Bearer ${sessionToken}`;
   const getMockKoState = (
     prevState: AARFlowState,
     error: AARProblemJson | undefined,
@@ -140,7 +139,12 @@ describe("fetchQrCodeSaga", () => {
         .next(isSendUATEnvironment)
         .call(withRefreshApiCall, mockApiCall(), fetchingQrRequestAction)
         .next(tokenExpiredResponse)
-        .call(trackSendAARFailure, "Fetch QRCode", "Fast login expiration")
+        .call(
+          trackSendAARFailure,
+          "Fetch QRCode",
+          "Fast login expiration",
+          undefined
+        )
         .next()
         .isDone();
 
@@ -245,7 +249,7 @@ describe("fetchQrCodeSaga", () => {
           .next(isSendUATEnvironment)
           .call(withRefreshApiCall, mockFetchQrCode(), fetchingQrRequestAction)
           .next(res)
-          .call(trackSendAARFailure, "Fetch QRCode", reason)
+          .call(trackSendAARFailure, "Fetch QRCode", reason, error)
           .next()
           .put(
             setAarFlowState(getMockKoState(mockFetchingQrState, error, reason))
@@ -277,7 +281,8 @@ describe("fetchQrCodeSaga", () => {
       .call(
         trackSendAARFailure,
         "Fetch QRCode",
-        "Called in wrong state (displayingAARToS)"
+        "Called in wrong state (displayingAARToS)",
+        undefined
       )
       .next()
       .isDone();
@@ -296,7 +301,12 @@ describe("fetchQrCodeSaga", () => {
       .next(true)
       .call(withRefreshApiCall, mockFetchQrCode(), fetchingQrRequestAction)
       .throw(new Error())
-      .call(trackSendAARFailure, "Fetch QRCode", "An error was thrown ()")
+      .call(
+        trackSendAARFailure,
+        "Fetch QRCode",
+        "An error was thrown ()",
+        undefined
+      )
       .next()
       .put(
         setAarFlowState(
@@ -337,7 +347,7 @@ describe("fetchQrCodeSaga", () => {
       .next(true)
       .call(withRefreshApiCall, mockApiCall(), fetchingQrRequestAction)
       .next(failureDecodingResponse)
-      .call(trackSendAARFailure, "Fetch QRCode", failureReason)
+      .call(trackSendAARFailure, "Fetch QRCode", failureReason, undefined)
       .next()
       .put(
         setAarFlowState(

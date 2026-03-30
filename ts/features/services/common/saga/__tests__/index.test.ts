@@ -1,7 +1,6 @@
 import { testSaga } from "redux-saga-test-plan";
 import { watchServicesSaga } from "..";
 import { BackendClient } from "../../../../../api/backend";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { createServicesClient, ServicesClient } from "../../api/servicesClient";
 import { apiUrlPrefix } from "../../../../../config";
 import { watchServicesDetailsSaga } from "../../../details/saga";
@@ -18,7 +17,7 @@ describe("index", () => {
     it("should follow expected flow", () => {
       const backendClient = {} as BackendClient;
       const bearerToken =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.fakePayload.XYZ123abcDEF456ghi789JKL" as SessionToken;
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.fakePayload.XYZ123abcDEF456ghi789JKL";
       const servicesClient = {} as ServicesClient;
       testSaga(watchServicesSaga, backendClient, bearerToken)
         .next()

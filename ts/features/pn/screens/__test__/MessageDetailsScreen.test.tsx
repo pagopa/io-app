@@ -116,7 +116,7 @@ describe("MessageDetailsScreen", () => {
 
         if (sendOpeningSource === "aar") {
           expect(spiedOnMockedTrackSendAARFailure.mock.calls.length).toBe(1);
-          expect(spiedOnMockedTrackSendAARFailure.mock.calls[0].length).toBe(2);
+          expect(spiedOnMockedTrackSendAARFailure.mock.calls[0].length).toBe(3);
           expect(spiedOnMockedTrackSendAARFailure.mock.calls[0][0]).toBe(
             "Show Notification"
           );
@@ -325,40 +325,35 @@ describe("MessageDetailsScreen", () => {
         const spiedOnMockedTrackSendAARNotificationClosure = jest
           .spyOn(AAR_ANALYTICS, "trackSendAarNotificationClosure")
           .mockImplementation();
-        const spiedOnMockedUseHardwareBackButton = jest
-          .spyOn(HARDWARE_BACK_BUTTON, "useHardwareBackButton")
+        const spiedOnMockedUseHardwareBackButtonWhenFocused = jest
+          .spyOn(HARDWARE_BACK_BUTTON, "useHardwareBackButtonWhenFocused")
           .mockImplementation();
 
         renderComponent(store, false, sendOpeningSource, sendUserType);
+        const { calls: backButtonCalls = [] } =
+          spiedOnMockedUseHardwareBackButtonWhenFocused.mock;
 
-        expect(spiedOnMockedUseHardwareBackButton.mock.calls.length).toBe(1);
-        expect(spiedOnMockedUseHardwareBackButton.mock.calls[0].length).toBe(1);
-        expect(
-          spiedOnMockedUseHardwareBackButton.mock.calls[0][0]
-        ).toBeDefined();
+        expect(backButtonCalls.length).toBe(1);
+        expect(backButtonCalls[0].length).toBe(1);
+        expect(backButtonCalls[0][0]).toBeDefined();
 
-        const useHardwareBackButtonCallback =
-          spiedOnMockedUseHardwareBackButton.mock.calls[0][0];
+        const useHardwareBackButtonCallback = backButtonCalls[0][0];
         expect(typeof useHardwareBackButtonCallback).toBe("function");
         const result = useHardwareBackButtonCallback();
 
+        const { calls: notificationClosureCalls = [] } =
+          spiedOnMockedTrackSendAARNotificationClosure.mock;
         if (sendOpeningSource === "aar") {
-          expect(
-            spiedOnMockedTrackSendAARNotificationClosure.mock.calls.length
-          ).toBe(1);
-          expect(
-            spiedOnMockedTrackSendAARNotificationClosure.mock.calls[0].length
-          ).toBe(1);
-          expect(
-            spiedOnMockedTrackSendAARNotificationClosure.mock.calls[0][0]
-          ).toBe(sendUserType);
+          expect(notificationClosureCalls.length).toBe(1);
+          expect(notificationClosureCalls[0].length).toBe(1);
+          expect(notificationClosureCalls[0][0]).toBe(sendUserType);
           expect(result).toBe(true);
         } else {
-          expect(
-            spiedOnMockedTrackSendAARNotificationClosure.mock.calls.length
-          ).toBe(0);
+          expect(notificationClosureCalls.length).toBe(0);
           expect(result).toBe(false);
         }
+
+        spiedOnMockedUseHardwareBackButtonWhenFocused.mockRestore();
       });
 
       it(`should ${

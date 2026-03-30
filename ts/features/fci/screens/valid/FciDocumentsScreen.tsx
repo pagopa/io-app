@@ -15,6 +15,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as S from "fp-ts/lib/string";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useRef, useState, useEffect, ComponentProps } from "react";
 import { StyleSheet, View } from "react-native";
 import Pdf, { PdfRef } from "react-native-pdf";
@@ -24,7 +25,11 @@ import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp";
-import { trackFciDocOpeningSuccess, trackFciSigningDoc } from "../../analytics";
+import {
+  trackFciDocOpeningSuccess,
+  trackFciDocumentsView,
+  trackFciSigningDoc
+} from "../../analytics";
 import DocumentsNavigationBar from "../../components/DocumentsNavigationBar";
 import LoadingComponent from "../../components/LoadingComponent";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
@@ -32,19 +37,22 @@ import { useFciNoSignatureFields } from "../../hooks/useFciNoSignatureFields";
 import { FciParamsList } from "../../navigation/params";
 import { FCI_ROUTES } from "../../navigation/routes";
 import {
-  fciClearStateRequest,
   fciDownloadPreview,
   fciUpdateDocumentSignaturesRequest
 } from "../../store/actions";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
-import { fciSignatureDetailDocumentsSelector } from "../../store/reducers/fciSignatureRequest";
+import {
+  fciSignatureDetailDocumentsSelector,
+  fciSignatureRequestSelector
+} from "../../store/reducers/fciSignatureRequest";
 import {
   getOptionalSignatureFields,
   getRequiredSignatureFields,
   getSignatureFieldsLength
 } from "../../utils/signatureFields";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -64,6 +72,7 @@ const FciDocumentsScreen = () => {
   const route = useRoute<RouteProp<FciParamsList, "FCI_DOCUMENTS">>();
   const currentDoc = route.params.currentDoc ?? 0;
   const documents = useIOSelector(fciSignatureDetailDocumentsSelector);
+  const signatureRequest = useIOSelector(fciSignatureRequestSelector);
   const downloadPath = useIOSelector(fciDownloadPathSelector);
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const navigation = useNavigation();
@@ -79,13 +88,13 @@ const FciDocumentsScreen = () => {
     handleFooterActionsInlineMeasurements
   } = useFooterActionsInlineMeasurements();
 
+  useOnFirstRender(() => {
+    trackFciDocumentsView();
+  });
+
+  // Initialize document signatures once when documents are loaded
   useEffect(() => {
-    if (documents.length !== 0 && isFocused) {
-      dispatch(fciDownloadPreview.request({ url: documents[currentDoc].url }));
-    }
-    // if the user hasn't checked any signauture field,
-    // we need to initialize the documentSignatures state
-    if (RA.isEmpty(documentSignaturesSelector)) {
+    if (RA.isEmpty(documentSignaturesSelector) && documents.length > 0) {
       pipe(
         documents,
         RA.map(d => {
@@ -99,8 +108,16 @@ const FciDocumentsScreen = () => {
         })
       );
     }
-  }, [dispatch, documentSignaturesSelector, documents, currentDoc, isFocused]);
+  }, [dispatch, documentSignaturesSelector, documents]);
 
+  // Download document when currentDoc changes or screen becomes focused
+  useEffect(() => {
+    if (documents.length !== 0 && isFocused) {
+      dispatch(fciDownloadPreview.request({ url: documents[currentDoc].url }));
+    }
+  }, [dispatch, documents, currentDoc, isFocused]);
+
+  // Reset PDF state when screen refocuses
   useEffect(() => {
     if (isFocused) {
       // needed to re-trigger pdf load when opening the same document twice
@@ -246,13 +263,14 @@ const FciDocumentsScreen = () => {
     contextualHelp: emptyContextualHelp,
     goBack: () => {
       if (currentDoc <= 0) {
-        dispatch(fciClearStateRequest());
+        present();
+      } else {
+        navigation.goBack();
       }
-      navigation.goBack();
     }
   });
 
-  if (S.isEmpty(downloadPath)) {
+  if (pot.isLoading(signatureRequest) || S.isEmpty(downloadPath)) {
     return <LoadingComponent />;
   }
 

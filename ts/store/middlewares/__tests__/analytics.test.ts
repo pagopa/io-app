@@ -16,7 +16,6 @@ import {
 } from "../../../features/authentication/common/store/actions";
 import { cieAuthenticationError } from "../../../features/authentication/login/cie/store/actions";
 import { loadAvailableBonuses } from "../../../features/bonus/common/store/actions/availableBonusesTypes";
-import { SessionToken } from "../../../types/SessionToken";
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
@@ -263,7 +262,7 @@ describe("analytics", () => {
 
     it("should call 'mixpanelTrack' for 'loginSuccess' with proper parameters", () => {
       const action = loginSuccess({
-        token: "" as SessionToken,
+        token: "mock-token",
         idp: "test"
       });
 

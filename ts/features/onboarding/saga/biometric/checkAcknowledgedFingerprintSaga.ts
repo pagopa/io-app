@@ -2,7 +2,7 @@ import { call, put, select } from "typed-redux-saga/macro";
 import { fingerprintAcknowledged } from "../../../../features/onboarding/store/actions";
 import { isFingerprintAcknowledgedSelector } from "../../../../features/onboarding/store/selectors";
 import { ReduxSagaEffect } from "../../../../types/utils";
-import { getBometricState } from "../../../../utils/biometrics";
+import { getBiometricState } from "../../../../utils/biometrics";
 import { isFingerprintEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { isScreenLockSet } from "../../../../utils/device";
 import { isDevEnv } from "../../../../utils/environment";
@@ -20,7 +20,7 @@ function* onboardFingerprintIfAvailableSaga(): Generator<
 > {
   yield* put(fingerprintAcknowledged());
 
-  const biometricState = yield* call(getBometricState);
+  const biometricState = yield* call(getBiometricState);
 
   if (biometricState === "Available") {
     yield* call(handleBiometricAvailable);

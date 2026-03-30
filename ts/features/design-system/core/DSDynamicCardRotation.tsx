@@ -86,30 +86,25 @@ export const DSDynamicCardRotation = () => {
   /* On first render, store the current device orientation
   using quaternions */
   const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
-  const { roll: initialRoll, pitch: initialPitch } =
-    rotationSensor.sensor.value;
 
-  const roll = useSharedValue(0);
-  const pitch = useSharedValue(0);
+  // Store initial values on first sensor reading
+  const initialRoll = useSharedValue<number | null>(null);
+  const initialPitch = useSharedValue<number | null>(null);
   const skiaTranslateX = useSharedValue(0);
   const skiaTranslateY = useSharedValue(0);
 
-  useAnimatedReaction(
-    () => rotationSensor.sensor.value,
-    sensor => {
-      roll.value = sensor.roll;
-      pitch.value = sensor.pitch;
-    },
-    []
-  );
   /* Not all devices are in an initial flat position on a surface
     (e.g. a table) then we use relative rotation values,
-    not absolute ones  */
-  const relativeRoll = useDerivedValue(() => -(initialRoll - roll.value));
-  const relativePitch = useDerivedValue(() => initialPitch - pitch.value);
+    not absolute ones. Initial values are captured on first read. */
+  const relativeRoll = useDerivedValue(() => {
+    const { roll } = rotationSensor.sensor.value;
+    return -((initialRoll.value ??= roll) - roll);
+  });
 
-  // eslint-disable-next-line no-console
-  console.log("Sensor values:", `qx: ${roll.value}, qy: ${pitch.value}`);
+  const relativePitch = useDerivedValue(() => {
+    const { pitch } = rotationSensor.sensor.value;
+    return (initialPitch.value ??= pitch) - pitch;
+  });
 
   /* Get both card and light sizes to set the basic boundaries */
   const [cardSize, setCardSize] = useState<CardSize>();
@@ -165,33 +160,40 @@ export const DSDynamicCardRotation = () => {
     };
   });
 
-  const skiaLightTranslateValues = useDerivedValue(() => {
-    skiaTranslateX.value = withSpring(
-      interpolate(
-        relativeRoll.value,
-        [-sensorRange, sensorRange],
-        [maxTranslateX, -maxTranslateX],
-        Extrapolation.CLAMP
-      ),
-      springConfig
-    );
+  useAnimatedReaction(
+    () => ({
+      roll: relativeRoll.value,
+      pitch: relativePitch.value
+    }),
+    current => {
+      skiaTranslateX.value = withSpring(
+        interpolate(
+          current.roll,
+          [-sensorRange, sensorRange],
+          [maxTranslateX, -maxTranslateX],
+          Extrapolation.CLAMP
+        ),
+        springConfig
+      );
 
-    skiaTranslateY.value = withSpring(
-      interpolate(
-        relativePitch.value,
-        [-sensorRange, sensorRange],
-        [-maxTranslateY, maxTranslateY],
-        Extrapolation.CLAMP
-      ),
-      springConfig
-    );
+      skiaTranslateY.value = withSpring(
+        interpolate(
+          current.pitch,
+          [-sensorRange, sensorRange],
+          [-maxTranslateY, maxTranslateY],
+          Extrapolation.CLAMP
+        ),
+        springConfig
+      );
+    }
+  );
 
-    return [
-      { translateX: skiaTranslateX.value },
-      { translateY: skiaTranslateY.value },
-      { scale: lightScaleMultiplier }
-    ];
-  });
+  // Derive transform array from the animated shared values (pure, no side effects)
+  const skiaLightTranslateValues = useDerivedValue(() => [
+    { translateX: skiaTranslateX.value },
+    { translateY: skiaTranslateY.value },
+    { scale: lightScaleMultiplier }
+  ]);
 
   // Inner card (border excluded)
   const CardInnerMask = () => (

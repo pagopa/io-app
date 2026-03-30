@@ -4,7 +4,7 @@ import {
   Gesture,
   GestureDetector
 } from "react-native-gesture-handler";
-import { runOnJS } from "react-native-reanimated";
+import { scheduleOnRN } from "react-native-worklets";
 
 const directions = {
   updown: Directions.UP + Directions.DOWN,
@@ -29,7 +29,7 @@ export const FlipGestureDetector = ({
 }: FlipsGestureDetectorProps) => {
   const flipGesture = Gesture.Fling()
     .direction(directions[direction])
-    .onEnd(() => runOnJS(setIsFlipped)(!isFlipped));
+    .onEnd(() => scheduleOnRN(setIsFlipped, !isFlipped));
 
   return <GestureDetector gesture={flipGesture}>{children}</GestureDetector>;
 };

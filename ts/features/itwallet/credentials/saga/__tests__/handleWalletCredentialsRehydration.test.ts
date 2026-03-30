@@ -24,7 +24,8 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     jwt: {
       issuedAt: "2024-09-30T07:32:49.000Z",
       expiration: jwtExpiration
-    }
+    },
+    spec_version: "1.0.0"
   };
   const mockedMdl: StoredCredential = {
     credential: "",
@@ -39,7 +40,8 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     jwt: {
       issuedAt: "2024-09-30T07:32:49.000Z",
       expiration: jwtExpiration
-    }
+    },
+    spec_version: "1.0.0"
   };
   const mockedDc: StoredCredential = {
     credential: "",
@@ -54,7 +56,8 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     jwt: {
       issuedAt: "2024-09-30T07:32:49.000Z",
       expiration: jwtExpiration
-    }
+    },
+    spec_version: "1.0.0"
   };
 
   const mockedEd: StoredCredential = {
@@ -71,7 +74,8 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     jwt: {
       issuedAt: "2024-09-30T07:32:49.000Z",
       expiration: jwtExpiration
-    }
+    },
+    spec_version: "1.0.0"
   };
 
   it("should not rehydrate the eID when the wallet is valid", () => {

@@ -5,7 +5,6 @@ import useNavigateToLoginMethod, {
   IdpCIE
 } from "../../hooks/useNavigateToLoginMethod";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { TranslationKeys } from "../../../../../../locales/locales";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton";
 import {
   trackCieIdErrorCiePinFallbackScreen,
@@ -21,6 +20,7 @@ import {
   setFinishedActiveSessionLoginFlow,
   setIdpSelectedActiveSessionLogin
 } from "../../../activeSessionLogin/store/actions";
+import { TranslationKeys } from "../../../../../i18n";
 
 const CIE_PIN_DESC: TranslationKeys =
   "authentication.cie_id.error_screen.cie_pin_supported.description";

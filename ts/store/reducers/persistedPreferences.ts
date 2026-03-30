@@ -6,7 +6,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Calendar } from "react-native-calendar-events";
 import { createSelector } from "reselect";
 import { isActionOf } from "typesafe-actions";
-import { Locales } from "../../../locales/locales";
 import { setMixpanelEnabled } from "../actions/mixpanel";
 import {
   continueWithRootOrJailbreak,
@@ -27,6 +26,7 @@ import {
 import { Action } from "../actions/types";
 import { differentProfileLoggedIn } from "../actions/crossSessions";
 import { ColorModeChoice } from "../../hooks/useAppThemeConfiguration";
+import { Locales } from "../../i18n";
 import { GlobalState } from "./types";
 
 export type PersistedPreferencesState = Readonly<{
@@ -56,7 +56,7 @@ export type PersistedPreferencesState = Readonly<{
 export const initialPreferencesState: PersistedPreferencesState = {
   isFingerprintEnabled: undefined,
   preferredCalendar: undefined,
-  preferredLanguage: undefined,
+  preferredLanguage: "it",
   wasServiceAlertDisplayedOnce: false,
   isPagoPATestEnabled: false,
   isCustomEmailChannelEnabled: pot.none,

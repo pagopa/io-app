@@ -2,9 +2,9 @@
 
 IO_BACKEND_VERSION=v17.5.2
 # need to change after merge on io-services-metadata
-IO_SERVICES_METADATA_VERSION=1.0.95
+IO_SERVICES_METADATA_VERSION=1.0.98
 # Session manager version
-IO_SESSION_MANAGER_VERSION=1.8.0
+IO_SESSION_MANAGER_VERSION=1.23.1
 # IO Wallet user function version
 IO_WALLET_USER_FUNC_VERSION=4.1.11
 # Send function version
@@ -70,5 +70,3 @@ done
 wait
 
 cp google-services-dev.json ./android/app/google-services.json
-
-yarn generate:locales

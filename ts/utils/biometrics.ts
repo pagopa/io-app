@@ -40,8 +40,12 @@ export type BiometricsType = BiometricsErrorType | BiometricsValidType;
  * function of its usage.
  *
  * More info about library can be found here: https://github.com/hieuvp/react-native-fingerprint-scanner
+ *
+ * @param shouldTrackError - If true, tracks BIOMETRIC_ERROR event on Mixpanel when biometrics are unavailable. Default: true
  */
-export const getBiometricsType = (): Promise<BiometricsType> =>
+export const getBiometricsType = (
+  shouldTrackError: boolean = true
+): Promise<BiometricsType> =>
   FingerprintScanner.isSensorAvailable()
     .then((biometryType: Biometrics) => {
       switch (biometryType) {
@@ -56,7 +60,11 @@ export const getBiometricsType = (): Promise<BiometricsType> =>
       }
     })
     .catch(e => {
-      void mixpanelTrack("BIOMETRIC_ERROR", { error: e.message ?? "unknown" });
+      if (shouldTrackError) {
+        void mixpanelTrack("BIOMETRIC_ERROR", {
+          error: e.message ?? "unknown"
+        });
+      }
       return "UNAVAILABLE";
     });
 
@@ -97,21 +105,19 @@ export const biometricAuthenticationRequest = (
       void FingerprintScanner.release();
     });
 
-type biometricState = "Available" | "NotEnrolled" | "NotSupported";
+type BiometricState = "Available" | "NotEnrolled" | "NotSupported";
 
-export const getBometricState = (): Promise<biometricState> =>
-  new Promise(resolve => {
-    FingerprintScanner.isSensorAvailable()
-      .then(_ => resolve("Available"))
-      .catch(e => {
-        const error = e as FingerprintScannerError;
-        if (error.name === "FingerprintScannerNotEnrolled") {
-          resolve("NotEnrolled");
-        } else {
-          resolve("NotSupported");
-        }
-      });
-  });
+export const getBiometricState = async (): Promise<BiometricState> => {
+  try {
+    await FingerprintScanner.isSensorAvailable();
+    return "Available";
+  } catch (e) {
+    const error = e as FingerprintScannerError;
+    return error.name === "FingerprintScannerNotEnrolled"
+      ? "NotEnrolled"
+      : "NotSupported";
+  }
+};
 
 export type BiometriActivationUserType =
   | "ACTIVATED"

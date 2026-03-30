@@ -22,7 +22,6 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { idpContextualHelpDataFromIdSelector } from "../../../../../store/reducers/content";
-import { SessionToken } from "../../../../../types/SessionToken";
 // import { trackSpidLoginError } from "../../../../../utils/analytics";
 import { emptyContextualHelp } from "../../../../../utils/contextualHelp";
 import {
@@ -195,7 +194,7 @@ const ActiveSessionIdpLoginScreen = () => {
   );
 
   const handleLoginSuccess = useCallback(
-    (token: SessionToken) => {
+    (token: string) => {
       setIsFinishingLogin(true);
       handleSendAssistanceLog(choosenTool, `login success`);
       if (idp) {

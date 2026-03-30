@@ -32,14 +32,47 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
     testID="LoadingIndicator"
   >
     <View
-      style={
+      collapsable={false}
+      jestAnimatedProps={
         {
-          "transform": [
-            {
-              "rotateZ": "0deg",
-            },
-          ],
+          "value": {},
         }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {},
+        }
+      }
+      jestInlineStyle={
+        {
+          "animationDuration": 850,
+          "animationIterationCount": "infinite",
+          "animationName": {
+            "from": {
+              "transform": [
+                {
+                  "rotateZ": "0deg",
+                },
+              ],
+            },
+            "to": {
+              "transform": [
+                {
+                  "rotateZ": "360deg",
+                },
+              ],
+            },
+          },
+          "animationTimingFunction": "linear",
+          "transformOrigin": "center",
+        }
+      }
+      style={
+        [
+          {
+            "transformOrigin": "center",
+          },
+        ]
       }
       testID="LoadingSpinnerAnimatedTestID"
     >
@@ -90,7 +123,7 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
               }
               gradientTransform={null}
               gradientUnits={0}
-              name="spinner-secondHalf"
+              name="«r0»-secondHalf"
               x1="0%"
               x2="100%"
               y1="0%"
@@ -107,7 +140,7 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
               }
               gradientTransform={null}
               gradientUnits={0}
-              name="spinner-firstHalf"
+              name="«r0»-firstHalf"
               x1="0%"
               x2="100%"
               y1="0%"
@@ -143,7 +176,7 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
               }
               stroke={
                 {
-                  "brushRef": "spinner-secondHalf",
+                  "brushRef": "«r0»-secondHalf",
                   "type": 1,
                 }
               }
@@ -163,7 +196,7 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
               }
               stroke={
                 {
-                  "brushRef": "spinner-firstHalf",
+                  "brushRef": "«r0»-firstHalf",
                   "type": 1,
                 }
               }

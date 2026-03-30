@@ -25,14 +25,47 @@ exports[`BoxedRefreshIndicator Should match all-properties snapshot 1`] = `
     testID="refreshIndicator"
   >
     <View
-      style={
+      collapsable={false}
+      jestAnimatedProps={
         {
-          "transform": [
-            {
-              "rotateZ": "0deg",
-            },
-          ],
+          "value": {},
         }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {},
+        }
+      }
+      jestInlineStyle={
+        {
+          "animationDuration": 850,
+          "animationIterationCount": "infinite",
+          "animationName": {
+            "from": {
+              "transform": [
+                {
+                  "rotateZ": "0deg",
+                },
+              ],
+            },
+            "to": {
+              "transform": [
+                {
+                  "rotateZ": "360deg",
+                },
+              ],
+            },
+          },
+          "animationTimingFunction": "linear",
+          "transformOrigin": "center",
+        }
+      }
+      style={
+        [
+          {
+            "transformOrigin": "center",
+          },
+        ]
       }
       testID="LoadingSpinnerAnimatedTestID"
     >
@@ -83,7 +116,7 @@ exports[`BoxedRefreshIndicator Should match all-properties snapshot 1`] = `
               }
               gradientTransform={null}
               gradientUnits={0}
-              name="spinner-secondHalf"
+              name="«r1»-secondHalf"
               x1="0%"
               x2="100%"
               y1="0%"
@@ -100,7 +133,7 @@ exports[`BoxedRefreshIndicator Should match all-properties snapshot 1`] = `
               }
               gradientTransform={null}
               gradientUnits={0}
-              name="spinner-firstHalf"
+              name="«r1»-firstHalf"
               x1="0%"
               x2="100%"
               y1="0%"
@@ -136,7 +169,7 @@ exports[`BoxedRefreshIndicator Should match all-properties snapshot 1`] = `
               }
               stroke={
                 {
-                  "brushRef": "spinner-secondHalf",
+                  "brushRef": "«r1»-secondHalf",
                   "type": 1,
                 }
               }
@@ -156,7 +189,7 @@ exports[`BoxedRefreshIndicator Should match all-properties snapshot 1`] = `
               }
               stroke={
                 {
-                  "brushRef": "spinner-firstHalf",
+                  "brushRef": "«r1»-firstHalf",
                   "type": 1,
                 }
               }
@@ -222,14 +255,47 @@ exports[`BoxedRefreshIndicator Should match base snapshot 1`] = `
     testID="refreshIndicator"
   >
     <View
-      style={
+      collapsable={false}
+      jestAnimatedProps={
         {
-          "transform": [
-            {
-              "rotateZ": "0deg",
-            },
-          ],
+          "value": {},
         }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {},
+        }
+      }
+      jestInlineStyle={
+        {
+          "animationDuration": 850,
+          "animationIterationCount": "infinite",
+          "animationName": {
+            "from": {
+              "transform": [
+                {
+                  "rotateZ": "0deg",
+                },
+              ],
+            },
+            "to": {
+              "transform": [
+                {
+                  "rotateZ": "360deg",
+                },
+              ],
+            },
+          },
+          "animationTimingFunction": "linear",
+          "transformOrigin": "center",
+        }
+      }
+      style={
+        [
+          {
+            "transformOrigin": "center",
+          },
+        ]
       }
       testID="LoadingSpinnerAnimatedTestID"
     >
@@ -280,7 +346,7 @@ exports[`BoxedRefreshIndicator Should match base snapshot 1`] = `
               }
               gradientTransform={null}
               gradientUnits={0}
-              name="spinner-secondHalf"
+              name="«r0»-secondHalf"
               x1="0%"
               x2="100%"
               y1="0%"
@@ -297,7 +363,7 @@ exports[`BoxedRefreshIndicator Should match base snapshot 1`] = `
               }
               gradientTransform={null}
               gradientUnits={0}
-              name="spinner-firstHalf"
+              name="«r0»-firstHalf"
               x1="0%"
               x2="100%"
               y1="0%"
@@ -333,7 +399,7 @@ exports[`BoxedRefreshIndicator Should match base snapshot 1`] = `
               }
               stroke={
                 {
-                  "brushRef": "spinner-secondHalf",
+                  "brushRef": "«r0»-secondHalf",
                   "type": 1,
                 }
               }
@@ -353,7 +419,7 @@ exports[`BoxedRefreshIndicator Should match base snapshot 1`] = `
               }
               stroke={
                 {
-                  "brushRef": "spinner-firstHalf",
+                  "brushRef": "«r0»-firstHalf",
                   "type": 1,
                 }
               }

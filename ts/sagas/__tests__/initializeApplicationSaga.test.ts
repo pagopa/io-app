@@ -5,7 +5,6 @@ import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../../features/authentication/common/store/selectors";
-import { SessionToken } from "../../types/SessionToken";
 import { previousInstallationDataDeleteSaga } from "../installation";
 import {
   initMixpanel,
@@ -52,7 +51,7 @@ import {
 } from "../../common/versionInfo/store/reducers/versionInfo";
 import { VersionInfo } from "../../../definitions/content/VersionInfo";
 
-const aSessionToken = "a_session_token" as SessionToken;
+const aSessionToken = "mock-session-token";
 const aSessionInfo = O.some({
   spidLevel: "https://www.spid.gov.it/SpidL2",
   walletToken: "wallet_token",

@@ -11,7 +11,6 @@ import {
   fciSignatureRequestFromId
 } from "../../store/actions";
 import { getNetworkError } from "../../../../utils/errors";
-import { SessionToken } from "../../../../types/SessionToken";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { Environment } from "../../../../../definitions/fci/Environment";
@@ -22,7 +21,7 @@ import { FciHeaders } from "../../utils/fciHeaders";
  */
 export function* handleGetSignatureRequestById(
   getSignatureRequestById: FciClient["getSignatureRequestById"],
-  bearerToken: SessionToken,
+  bearerToken: string,
   action: ActionType<(typeof fciSignatureRequestFromId)["request"]>
 ): SagaIterator {
   try {

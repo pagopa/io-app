@@ -1,16 +1,16 @@
 import { ListItemAction } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { memo, ReactNode, useMemo } from "react";
 import { View } from "react-native";
-import I18n from "i18next";
+import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
+import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
+import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailableToastGuard.ts";
 import { itwIPatenteCtaConfigSelector } from "../../../common/store/selectors/remoteConfig.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
-import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
 import { getCredentialDocumentNumber } from "../../../trustmark/utils";
-import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
-import { useItwStartCredentialSupportRequest } from "../hooks/useItwStartCredentialSupportRequest.tsx";
 import { useItwRemoveCredentialWithConfirm } from "../hooks/useItwRemoveCredentialWithConfirm";
-import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailableToastGuard.ts";
+import { useItwStartCredentialSupportRequest } from "../hooks/useItwStartCredentialSupportRequest.tsx";
 
 type ItwPresentationDetailFooterProps = {
   credential: StoredCredential;
@@ -23,8 +23,9 @@ type IPatenteListItemActionProps = {
 const ItwPresentationDetailsFooter = ({
   credential
 }: ItwPresentationDetailFooterProps) => {
-  const startAndTrackSupportRequest =
-    useItwStartCredentialSupportRequest(credential);
+  const startAndTrackSupportRequest = useOfflineToastGuard(
+    useItwStartCredentialSupportRequest(credential)
+  );
   const { confirmAndRemoveCredential } =
     useItwRemoveCredentialWithConfirm(credential);
   const credentialActions = useMemo(

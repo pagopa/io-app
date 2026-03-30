@@ -67,7 +67,8 @@ export const itwShouldRenderWalletReadyBannerSelector = (state: GlobalState) =>
   !itwIsWalletInstanceStatusFailureSelector(state) &&
   itwCredentialsEidStatusSelector(state) !== "jwtExpired" &&
   itwCredentialsEidStatusSelector(state) !== "jwtExpiring" &&
-  itwIsWalletEmptySelector(state);
+  itwIsWalletEmptySelector(state) &&
+  !itwIsL3EnabledSelector(state);
 
 /**
  * Selectors that returns if the wallet is available for offline access. It joins three

@@ -9,6 +9,10 @@ import {
 } from "../biometrics";
 import * as Biometric from "../biometrics";
 
+afterEach(() => {
+  jest.clearAllMocks();
+});
+
 describe("getBiometricsType function", () => {
   it.each`
     input           | expected
@@ -30,6 +34,8 @@ describe("getBiometricsType function", () => {
   });
 
   describe("when an error occurs", () => {
+    const mixpanelSpy = jest.spyOn(mixpanel, "mixpanelTrack");
+
     it("returns UNAVAILABLE", async () => {
       const spy = jest.spyOn(FingerprintScanner, "isSensorAvailable");
       spy.mockRejectedValue("it exploded");
@@ -37,14 +43,20 @@ describe("getBiometricsType function", () => {
       expect(result).toMatch("UNAVAILABLE");
     });
 
-    it("reports BIOMETRIC_ERROR to mixpanel with the relevant message", async () => {
+    it("reports BIOMETRIC_ERROR to mixpanel with the relevant message when shouldTrackError is true (default)", async () => {
       const sensorSpy = jest.spyOn(FingerprintScanner, "isSensorAvailable");
       sensorSpy.mockRejectedValue(new Error("it exploded"));
-      const mixpanelSpy = jest.spyOn(mixpanel, "mixpanelTrack");
       await getBiometricsType();
       expect(mixpanelSpy).toHaveBeenCalledWith("BIOMETRIC_ERROR", {
         error: "it exploded"
       });
+    });
+
+    it("does not report BIOMETRIC_ERROR to mixpanel when shouldTrackError is false", async () => {
+      const sensorSpy = jest.spyOn(FingerprintScanner, "isSensorAvailable");
+      sensorSpy.mockRejectedValue(new Error("it exploded"));
+      await getBiometricsType(false);
+      expect(mixpanelSpy).not.toHaveBeenCalled();
     });
   });
 });

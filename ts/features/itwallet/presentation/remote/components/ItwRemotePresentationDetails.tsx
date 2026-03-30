@@ -35,6 +35,7 @@ const RequestedCredentialsBlock = ({
   return (
     <VStack space={24}>
       {credentials
+        .filter(c => c.format === "dc+sd-jwt") // TODO: [SIW-3998] Support MDOC remote presentation
         .filter(c => c.claimsToDisplay.length > 0)
         .map(c => {
           const credentialType = getCredentialTypeByVct(c.vct);

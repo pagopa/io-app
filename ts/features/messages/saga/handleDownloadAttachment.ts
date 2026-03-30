@@ -12,7 +12,6 @@ import ReactNativeBlobUtil from "react-native-blob-util";
 import I18n from "i18next";
 import { ReduxSagaEffect } from "../../../types/utils";
 import { fetchTimeout } from "../../../config";
-import { SessionToken } from "../../../types/SessionToken";
 import { getError } from "../../../utils/errors";
 import { isTestEnv } from "../../../utils/environment";
 import {
@@ -106,7 +105,7 @@ function* computeThirdPartyMessageData(messageId: string): Generator<
 }
 
 function* downloadAttachmentWorker(
-  bearerToken: SessionToken,
+  bearerToken: string,
   keyInfo: KeyInfo,
   action: ActionType<typeof downloadAttachment.request>
 ): Generator<ReduxSagaEffect, void> {

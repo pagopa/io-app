@@ -35,7 +35,6 @@ import {
 } from "../../../common/store/selectors";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { idpContextualHelpDataFromIdSelector } from "../../../../../store/reducers/content";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { trackSpidLoginError } from "../../../../../utils/analytics";
 import { emptyContextualHelp } from "../../../../../utils/contextualHelp";
 import {
@@ -186,7 +185,7 @@ const IdpLoginScreen = () => {
   );
 
   const handleLoginSuccess = useCallback(
-    (token: SessionToken) => {
+    (token: string) => {
       handleSendAssistanceLog(choosenTool, `login success`);
       if (idp) {
         dispatch(loginSuccess({ token, idp }));

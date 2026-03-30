@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
@@ -62,12 +63,8 @@ const mockStore = {
   dispatch: mockedDispatch
 } as unknown as Store;
 
-const mockCaptureMessage = jest.fn();
 jest.mock("@sentry/react-native", () => ({
-  captureMessage: (message: string, captureContext?: unknown) => {
-    mockCaptureMessage(message, captureContext);
-    return "";
-  }
+  captureMessage: jest.fn()
 }));
 
 describe("configurePushNotifications", () => {
@@ -124,12 +121,10 @@ describe("configurePushNotifications", () => {
 
           testable!.onPushNotificationTokenAvailable(mockStore, input as any);
 
-          expect(mockCaptureMessage.mock.calls.length).toBe(1);
-          expect(mockCaptureMessage.mock.calls[0].length).toBe(2);
-          expect(mockCaptureMessage.mock.calls[0][0]).toEqual(
+          expect(Sentry.captureMessage).toHaveBeenCalledTimes(1);
+          expect(Sentry.captureMessage).toHaveBeenCalledWith(
             `onPushNotificationTokenAvailable received a nullish token (or inner 'token' instance) (${input})`
           );
-          expect(mockCaptureMessage.mock.calls[0][1]).toBeUndefined();
           expect(mockedDispatch.mock.calls.length).toBe(0);
           expect(spiedOnAnalytics.mock.calls.length).toBe(0);
           expect(
@@ -153,7 +148,7 @@ describe("configurePushNotifications", () => {
 
       testable!.onPushNotificationTokenAvailable(mockStore, mockToken as any);
 
-      expect(mockCaptureMessage.mock.calls.length).toBe(0);
+      expect(Sentry.captureMessage).toHaveBeenCalledTimes(0);
       expect(mockedDispatch.mock.calls.length).toBe(1);
       expect(mockedDispatch.mock.calls[0].length).toBe(1);
       expect(mockedDispatch.mock.calls[0][0]).toEqual(

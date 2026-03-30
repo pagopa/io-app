@@ -34,19 +34,6 @@ import { VSpacer, H3, Body, IOColors, useIOToast } from "@pagopa/io-app-design-s
 
 Never create custom typography or spacing.
 
-## Internationalization
-
-Translations in `locales/{it,en,de}/` as YAML. Only Italian (`it`) is mandatory.
-
-```bash
-yarn generate:locales  # After modifying YAML files
-```
-
-```tsx
-import I18n from "../../i18n";
-I18n.t("features.itWallet.discovery.title")
-```
-
 ## Import Restrictions
 
 - Import `I18n` from `ts/i18n.ts`, not from `i18n-js`

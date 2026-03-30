@@ -5,7 +5,6 @@ import { ActionType } from "typesafe-actions";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { fciLoadQtspClauses } from "../../store/actions";
 import { getNetworkError } from "../../../../utils/errors";
-import { SessionToken } from "../../../../types/SessionToken";
 import { FciClient } from "../../api/backendFci";
 import { fciIssuerEnvironmentSelector } from "../../store/reducers/fciSignatureRequest";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
@@ -16,7 +15,7 @@ import { SagaCallReturnType } from "../../../../types/utils";
  */
 export function* handleGetQtspMetadata(
   getQtspClausesMetadata: FciClient["getQtspClausesMetadata"],
-  bearerToken: SessionToken,
+  bearerToken: string,
   action: ActionType<(typeof fciLoadQtspClauses)["request"]>
 ): SagaIterator {
   try {

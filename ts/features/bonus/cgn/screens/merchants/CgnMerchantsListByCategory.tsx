@@ -197,11 +197,11 @@ const CgnMerchantsListByCategory = () => {
                 accessibilityLabel={I18n.t(
                   "bonus.cgn.merchantsList.a11yTitle",
                   {
-                    categoryName: I18n.t(categorySpecs.nameKey as any)
+                    categoryName: I18n.t(categorySpecs.nameKey)
                   }
                 )}
               >
-                {I18n.t(categorySpecs.nameKey as any)}
+                {I18n.t(categorySpecs.nameKey)}
               </H3>
             </View>
           </View>

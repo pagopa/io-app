@@ -20,7 +20,7 @@ import { StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedRef,
   useDerivedValue,
-  useScrollViewOffset,
+  useScrollOffset,
   useSharedValue
 } from "react-native-reanimated";
 import Feature1Image from "../../../../../img/features/itWallet/discovery/feature_1.svg";
@@ -134,7 +134,7 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
 
   const productHighlightsRef = useRef<View>(null);
   const animatedRef = useAnimatedRef<Animated.ScrollView>();
-  const scrollPosition = useScrollViewOffset(animatedRef);
+  const scrollPosition = useScrollOffset(animatedRef);
   const hideAnchorLink = useSharedValue(false);
 
   useDerivedValue(() => {

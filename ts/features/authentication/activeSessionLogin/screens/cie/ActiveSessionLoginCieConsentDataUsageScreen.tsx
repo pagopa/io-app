@@ -15,7 +15,6 @@ import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhite
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch } from "../../../../../store/hooks";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { onLoginUriChanged } from "../../../common/utils/login";
 import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
@@ -53,11 +52,6 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   const navigation = useIONavigation();
   const { forceLogoutAndNavigateToLanding } = useActiveSessionLoginNavigation();
 
-  //   const loginSuccessDispatch = useCallback(
-  //     (token: SessionToken) => dispatch(loginSuccess({ token, idp: "cie" })),
-  //     [dispatch]
-  //   );
-
   useOnFirstRender(() => {
     void trackLoginCieConsentDataUsageScreen("reauth");
   });
@@ -89,10 +83,9 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   });
 
   const handleLoginSuccess = useCallback(
-    (token: SessionToken) => {
+    (token: string) => {
       setIsLoginSuccess(true);
       setHasError(false);
-      //   loginSuccessDispatch(token);
       dispatch(activeSessionLoginSuccess(token));
     },
     [dispatch]

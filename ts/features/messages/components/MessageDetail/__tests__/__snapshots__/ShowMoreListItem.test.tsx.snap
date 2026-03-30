@@ -377,7 +377,29 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -386,12 +408,41 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -405,7 +456,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -933,7 +984,29 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -942,12 +1015,41 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -961,7 +1063,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -1123,7 +1225,6 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
                                       maxFontSizeMultiplier={1.5}
-                                      role="heading"
                                       style={
                                         [
                                           {},
@@ -1544,7 +1645,29 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -1553,12 +1676,41 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -1572,7 +1724,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -1734,7 +1886,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
                                       maxFontSizeMultiplier={1.5}
-                                      role="heading"
                                       style={
                                         [
                                           {},
@@ -1791,7 +1942,29 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                             >
                               <View
                                 accessibilityElementsHidden={true}
+                                collapsable={false}
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "marginHorizontal": -24,
+                                      "paddingHorizontal": 24,
+                                      "paddingVertical": 12,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -1800,12 +1973,41 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                       "paddingVertical": 12,
                                     },
                                     {
-                                      "backgroundColor": undefined,
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
                                     },
                                   ]
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-between",
+                                      },
+                                      {
+                                        "columnGap": 18,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -1819,7 +2021,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                       {
                                         "transform": [
                                           {
-                                            "scale": undefined,
+                                            "scale": 1,
                                           },
                                         ],
                                       },
@@ -2335,7 +2537,29 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -2344,12 +2568,41 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -2363,7 +2616,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -2525,7 +2778,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
                                       maxFontSizeMultiplier={1.5}
-                                      role="heading"
                                       style={
                                         [
                                           {},
@@ -2582,7 +2834,29 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                             >
                               <View
                                 accessibilityElementsHidden={true}
+                                collapsable={false}
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "marginHorizontal": -24,
+                                      "paddingHorizontal": 24,
+                                      "paddingVertical": 12,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -2591,12 +2865,41 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                       "paddingVertical": 12,
                                     },
                                     {
-                                      "backgroundColor": undefined,
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
                                     },
                                   ]
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-between",
+                                      },
+                                      {
+                                        "columnGap": 18,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -2610,7 +2913,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                       {
                                         "transform": [
                                           {
-                                            "scale": undefined,
+                                            "scale": 1,
                                           },
                                         ],
                                       },
@@ -3126,7 +3429,29 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -3135,12 +3460,41 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -3154,7 +3508,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -3316,7 +3670,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
                                       maxFontSizeMultiplier={1.5}
-                                      role="heading"
                                       style={
                                         [
                                           {},
@@ -3373,7 +3726,29 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                             >
                               <View
                                 accessibilityElementsHidden={true}
+                                collapsable={false}
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "marginHorizontal": -24,
+                                      "paddingHorizontal": 24,
+                                      "paddingVertical": 12,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -3382,12 +3757,41 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                       "paddingVertical": 12,
                                     },
                                     {
-                                      "backgroundColor": undefined,
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
                                     },
                                   ]
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-between",
+                                      },
+                                      {
+                                        "columnGap": 18,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -3401,7 +3805,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                       {
                                         "transform": [
                                           {
-                                            "scale": undefined,
+                                            "scale": 1,
                                           },
                                         ],
                                       },
@@ -3561,7 +3965,29 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                             >
                               <View
                                 accessibilityElementsHidden={true}
+                                collapsable={false}
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "marginHorizontal": -24,
+                                      "paddingHorizontal": 24,
+                                      "paddingVertical": 12,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -3570,12 +3996,41 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                       "paddingVertical": 12,
                                     },
                                     {
-                                      "backgroundColor": undefined,
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
                                     },
                                   ]
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-between",
+                                      },
+                                      {
+                                        "columnGap": 18,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -3589,7 +4044,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                       {
                                         "transform": [
                                           {
-                                            "scale": undefined,
+                                            "scale": 1,
                                           },
                                         ],
                                       },
@@ -4105,7 +4560,29 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -4114,12 +4591,41 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -4133,7 +4639,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -4295,7 +4801,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
                                       maxFontSizeMultiplier={1.5}
-                                      role="heading"
                                       style={
                                         [
                                           {},
@@ -4352,7 +4857,29 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                             >
                               <View
                                 accessibilityElementsHidden={true}
+                                collapsable={false}
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "marginHorizontal": -24,
+                                      "paddingHorizontal": 24,
+                                      "paddingVertical": 12,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -4361,12 +4888,41 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                       "paddingVertical": 12,
                                     },
                                     {
-                                      "backgroundColor": undefined,
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
                                     },
                                   ]
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-between",
+                                      },
+                                      {
+                                        "columnGap": 18,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -4380,7 +4936,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                       {
                                         "transform": [
                                           {
-                                            "scale": undefined,
+                                            "scale": 1,
                                           },
                                         ],
                                       },
@@ -4540,7 +5096,29 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                             >
                               <View
                                 accessibilityElementsHidden={true}
+                                collapsable={false}
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "marginHorizontal": -24,
+                                      "paddingHorizontal": 24,
+                                      "paddingVertical": 12,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -4549,12 +5127,41 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                       "paddingVertical": 12,
                                     },
                                     {
-                                      "backgroundColor": undefined,
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
                                     },
                                   ]
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-between",
+                                      },
+                                      {
+                                        "columnGap": 18,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -4568,7 +5175,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                       {
                                         "transform": [
                                           {
-                                            "scale": undefined,
+                                            "scale": 1,
                                           },
                                         ],
                                       },
@@ -5084,7 +5691,29 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -5093,12 +5722,41 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -5112,7 +5770,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -5274,7 +5932,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
                                       maxFontSizeMultiplier={1.5}
-                                      role="heading"
                                       style={
                                         [
                                           {},
@@ -5331,7 +5988,29 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                             >
                               <View
                                 accessibilityElementsHidden={true}
+                                collapsable={false}
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "marginHorizontal": -24,
+                                      "paddingHorizontal": 24,
+                                      "paddingVertical": 12,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -5340,12 +6019,41 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       "paddingVertical": 12,
                                     },
                                     {
-                                      "backgroundColor": undefined,
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
                                     },
                                   ]
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-between",
+                                      },
+                                      {
+                                        "columnGap": 18,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -5359,7 +6067,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       {
                                         "transform": [
                                           {
-                                            "scale": undefined,
+                                            "scale": 1,
                                           },
                                         ],
                                       },
@@ -5509,7 +6217,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
                                       maxFontSizeMultiplier={1.5}
-                                      role="heading"
                                       style={
                                         [
                                           {},
@@ -5566,7 +6273,29 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                             >
                               <View
                                 accessibilityElementsHidden={true}
+                                collapsable={false}
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "marginHorizontal": -24,
+                                      "paddingHorizontal": 24,
+                                      "paddingVertical": 12,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -5575,12 +6304,41 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       "paddingVertical": 12,
                                     },
                                     {
-                                      "backgroundColor": undefined,
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
                                     },
                                   ]
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-between",
+                                      },
+                                      {
+                                        "columnGap": 18,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -5594,7 +6352,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       {
                                         "transform": [
                                           {
-                                            "scale": undefined,
+                                            "scale": 1,
                                           },
                                         ],
                                       },
@@ -5754,7 +6512,29 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                             >
                               <View
                                 accessibilityElementsHidden={true}
+                                collapsable={false}
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "marginHorizontal": -24,
+                                      "paddingHorizontal": 24,
+                                      "paddingVertical": 12,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -5763,12 +6543,41 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       "paddingVertical": 12,
                                     },
                                     {
-                                      "backgroundColor": undefined,
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
                                     },
                                   ]
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-between",
+                                      },
+                                      {
+                                        "columnGap": 18,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -5782,7 +6591,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       {
                                         "transform": [
                                           {
-                                            "scale": undefined,
+                                            "scale": 1,
                                           },
                                         ],
                                       },
@@ -5932,7 +6741,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
                                       maxFontSizeMultiplier={1.5}
-                                      role="heading"
                                       style={
                                         [
                                           {},
@@ -5989,7 +6797,29 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                             >
                               <View
                                 accessibilityElementsHidden={true}
+                                collapsable={false}
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "marginHorizontal": -24,
+                                      "paddingHorizontal": 24,
+                                      "paddingVertical": 12,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -5998,12 +6828,41 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       "paddingVertical": 12,
                                     },
                                     {
-                                      "backgroundColor": undefined,
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
                                     },
                                   ]
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-between",
+                                      },
+                                      {
+                                        "columnGap": 18,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -6017,7 +6876,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       {
                                         "transform": [
                                           {
-                                            "scale": undefined,
+                                            "scale": 1,
                                           },
                                         ],
                                       },
@@ -6177,7 +7036,29 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                             >
                               <View
                                 accessibilityElementsHidden={true}
+                                collapsable={false}
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "marginHorizontal": -24,
+                                      "paddingHorizontal": 24,
+                                      "paddingVertical": 12,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -6186,12 +7067,41 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       "paddingVertical": 12,
                                     },
                                     {
-                                      "backgroundColor": undefined,
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
                                     },
                                   ]
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-between",
+                                      },
+                                      {
+                                        "columnGap": 18,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -6205,7 +7115,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       {
                                         "transform": [
                                           {
-                                            "scale": undefined,
+                                            "scale": 1,
                                           },
                                         ],
                                       },
@@ -6365,7 +7275,29 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                             >
                               <View
                                 accessibilityElementsHidden={true}
+                                collapsable={false}
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "marginHorizontal": -24,
+                                      "paddingHorizontal": 24,
+                                      "paddingVertical": 12,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -6374,12 +7306,41 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       "paddingVertical": 12,
                                     },
                                     {
-                                      "backgroundColor": undefined,
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
                                     },
                                   ]
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-between",
+                                      },
+                                      {
+                                        "columnGap": 18,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -6393,7 +7354,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       {
                                         "transform": [
                                           {
-                                            "scale": undefined,
+                                            "scale": 1,
                                           },
                                         ],
                                       },
@@ -6909,7 +7870,29 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                       >
                         <View
                           accessibilityElementsHidden={true}
+                          collapsable={false}
                           importantForAccessibility="no-hide-descendants"
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "marginHorizontal": -24,
+                                "paddingHorizontal": 24,
+                                "paddingVertical": 12,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -6918,12 +7901,41 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                 "paddingVertical": 12,
                               },
                               {
-                                "backgroundColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -6937,7 +7949,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -7099,7 +8111,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
                                       maxFontSizeMultiplier={1.5}
-                                      role="heading"
                                       style={
                                         [
                                           {},
@@ -7156,7 +8167,29 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                             >
                               <View
                                 accessibilityElementsHidden={true}
+                                collapsable={false}
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "marginHorizontal": -24,
+                                      "paddingHorizontal": 24,
+                                      "paddingVertical": 12,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -7165,12 +8198,41 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                       "paddingVertical": 12,
                                     },
                                     {
-                                      "backgroundColor": undefined,
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
                                     },
                                   ]
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-between",
+                                      },
+                                      {
+                                        "columnGap": 18,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -7184,7 +8246,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                       {
                                         "transform": [
                                           {
-                                            "scale": undefined,
+                                            "scale": 1,
                                           },
                                         ],
                                       },
@@ -7334,7 +8396,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
                                       maxFontSizeMultiplier={1.5}
-                                      role="heading"
                                       style={
                                         [
                                           {},
@@ -7391,7 +8452,29 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                             >
                               <View
                                 accessibilityElementsHidden={true}
+                                collapsable={false}
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "marginHorizontal": -24,
+                                      "paddingHorizontal": 24,
+                                      "paddingVertical": 12,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -7400,12 +8483,41 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                       "paddingVertical": 12,
                                     },
                                     {
-                                      "backgroundColor": undefined,
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
                                     },
                                   ]
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-between",
+                                      },
+                                      {
+                                        "columnGap": 18,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -7419,7 +8531,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                       {
                                         "transform": [
                                           {
-                                            "scale": undefined,
+                                            "scale": 1,
                                           },
                                         ],
                                       },
@@ -7579,7 +8691,29 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                             >
                               <View
                                 accessibilityElementsHidden={true}
+                                collapsable={false}
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "marginHorizontal": -24,
+                                      "paddingHorizontal": 24,
+                                      "paddingVertical": 12,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -7588,12 +8722,41 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                       "paddingVertical": 12,
                                     },
                                     {
-                                      "backgroundColor": undefined,
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
                                     },
                                   ]
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-between",
+                                      },
+                                      {
+                                        "columnGap": 18,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -7607,7 +8770,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                       {
                                         "transform": [
                                           {
-                                            "scale": undefined,
+                                            "scale": 1,
                                           },
                                         ],
                                       },

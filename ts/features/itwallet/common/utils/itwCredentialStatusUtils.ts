@@ -3,11 +3,7 @@ import { differenceInCalendarDays } from "date-fns";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { getCredentialExpireDate } from "./itwClaimsUtils";
-import {
-  IssuerConfiguration,
-  ItwCredentialStatus,
-  StoredCredential
-} from "./itwTypesUtils";
+import { ItwCredentialStatus, StoredCredential } from "./itwTypesUtils";
 
 const DEFAULT_EXPIRING_DAYS = 30;
 
@@ -38,11 +34,6 @@ export const getCredentialStatus = (
     parsedCredential,
     storedStatusAssertion: statusAssertion
   } = credential;
-  // We could not determine the status of the credential.
-  // This happens when the status assertion API call fails.
-  if (statusAssertion?.credentialStatus === "unknown") {
-    return "unknown";
-  }
 
   const now = Date.now();
 
@@ -85,6 +76,12 @@ export const getCredentialStatus = (
     return "expiring";
   }
 
+  // We could not determine the status of the credential.
+  // This happens when the status assertion API call fails.
+  if (statusAssertion?.credentialStatus === "unknown") {
+    return "unknown";
+  }
+
   return "valid";
 };
 
@@ -105,7 +102,7 @@ export const getCredentialStatusObject = (credential: StoredCredential) => {
     O.chain(code =>
       O.tryCatch(() =>
         Errors.extractErrorMessageFromIssuerConf(code, {
-          issuerConf: issuerConf as IssuerConfiguration,
+          issuerConf,
           credentialType: credentialId
         })
       )

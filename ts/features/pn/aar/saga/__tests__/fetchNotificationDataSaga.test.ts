@@ -5,7 +5,6 @@ import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJ
 import { ThirdPartyMessage } from "../../../../../../definitions/pn/aar/ThirdPartyMessage";
 import { pnMessagingServiceIdSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { profileFiscalCodeSelector } from "../../../../settings/common/store/selectors";
 import { trackSendAARFailure } from "../../analytics";
@@ -40,8 +39,8 @@ const fetchingNotificationDataRequestAction = setAarFlowState(
 );
 
 const { aarMessageDataPayloadFromResponse } = testable!;
-const mockSessionToken = "token" as SessionToken;
-const mockSessionTokenWithBearer = `Bearer ${mockSessionToken}` as SessionToken;
+const mockSessionToken = "mock-session-token";
+const mockSessionTokenWithBearer = `Bearer ${mockSessionToken}`;
 const mockIUn = "01K83208Z4CPBJXPFH7X9GDDMK";
 const mockSubject = "Message subject";
 const mockFiscalCode = "NMUVCN66S01F138R";
@@ -92,7 +91,8 @@ describe("fetchAarDataSaga", () => {
         .call(
           trackSendAARFailure,
           "Fetch Notification",
-          "Called in wrong state (none)"
+          "Called in wrong state (none)",
+          undefined
         )
         .next()
         .isDone();
@@ -121,7 +121,12 @@ describe("fetchAarDataSaga", () => {
           fetchingNotificationDataRequestAction
         )
         .next(mockFailure)
-        .call(trackSendAARFailure, "Fetch Notification", failureReason)
+        .call(
+          trackSendAARFailure,
+          "Fetch Notification",
+          failureReason,
+          undefined
+        )
         .next()
         .put(
           setAarFlowState({
@@ -174,7 +179,8 @@ describe("fetchAarDataSaga", () => {
         .call(
           trackSendAARFailure,
           "Fetch Notification",
-          "HTTP request failed (400 400 A detail)"
+          "HTTP request failed (400 400 A detail)",
+          mockResolved.value
         )
         .next()
         .put(
@@ -218,7 +224,8 @@ describe("fetchAarDataSaga", () => {
         .call(
           trackSendAARFailure,
           "Fetch Notification",
-          "An error was thrown (fail)"
+          "An error was thrown (fail)",
+          undefined
         )
         .next()
         .put(
@@ -273,7 +280,8 @@ describe("fetchAarDataSaga", () => {
         .call(
           trackSendAARFailure,
           "Fetch Notification",
-          "Fast login expiration"
+          "Fast login expiration",
+          undefined
         )
         .next()
         .isDone();
@@ -317,7 +325,8 @@ describe("fetchAarDataSaga", () => {
         .call(
           trackSendAARFailure,
           "Fetch Notification",
-          "An error was thrown (Unable to retrieve user fiscal code)"
+          "An error was thrown (Unable to retrieve user fiscal code)",
+          undefined
         )
         .next()
         .put(

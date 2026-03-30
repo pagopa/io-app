@@ -50,9 +50,10 @@ describe("SendAARErrorScreen", () => {
   const loadingScreenSpy = jest
     .spyOn(LOADING_SCREEN, "default")
     .mockImplementation(() => <></>);
-  jest
-    .spyOn(ERROR_MAPPINGS, "getSendAarErrorComponent")
-    .mockImplementation(() => mockKoComponent);
+  jest.spyOn(ERROR_MAPPINGS, "getAarErrorBehaviour").mockImplementation(() => ({
+    track: jest.fn(),
+    Component: mockKoComponent
+  }));
 
   const getSpecificErrorScreenSpy = (flowState: AARFlowState) => {
     switch (flowState.type) {

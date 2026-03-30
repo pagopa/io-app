@@ -1,5 +1,6 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import { useIOStore } from "../../../../store/hooks";
 import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
@@ -22,6 +23,7 @@ type GuardsImplementationOptions = Partial<{
 
 export const createEidIssuanceGuardsImplementation = (
   store: ReturnType<typeof useIOStore>,
+  itwVersion: ItwVersion,
   options?: GuardsImplementationOptions
 ) => ({
   /**
@@ -48,7 +50,9 @@ export const createEidIssuanceGuardsImplementation = (
   hasValidWalletInstanceAttestation: ({ context }: { context: Context }) =>
     pipe(
       O.fromNullable(context.walletInstanceAttestation?.jwt),
-      O.map(isWalletInstanceAttestationValid),
+      O.map(attestation =>
+        isWalletInstanceAttestationValid(itwVersion, attestation)
+      ),
       O.getOrElse(() => false)
     ),
 

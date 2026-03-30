@@ -139,7 +139,7 @@ const CgnDetailScreen = (props: Props): ReactElement => {
 
   const theme = useIOTheme();
 
-  const startCgnActiviation = () => {
+  const startCgnActivation = () => {
     dispatch(loadAvailableBonuses.request());
     dispatch(cgnActivationStart());
   };
@@ -223,7 +223,7 @@ const CgnDetailScreen = (props: Props): ReactElement => {
         subtitle={I18n.t("bonus.cgn.detail.empty.subtitle")}
         action={{
           label: I18n.t("bonus.cgn.detail.empty.activateCta"),
-          onPress: startCgnActiviation
+          onPress: startCgnActivation
         }}
         secondaryAction={{
           label: I18n.t("global.buttons.close"),

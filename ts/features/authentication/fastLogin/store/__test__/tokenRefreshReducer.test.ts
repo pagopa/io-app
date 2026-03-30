@@ -1,4 +1,3 @@
-import { SessionToken } from "../../../../../types/SessionToken";
 import {
   askUserToRefreshSessionToken,
   clearPendingAction,
@@ -15,7 +14,7 @@ import {
 } from "../reducers/tokenRefreshReducer";
 
 const dummyAction = { type: "DUMMY_ACTION" };
-const aSessionToken = "a_session_token" as SessionToken;
+const aSessionToken = "mock-session-token";
 
 describe("FastLoginTokenRefreshReducer", () => {
   if (!testableFastLoginTokenRefreshReducer) {

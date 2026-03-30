@@ -4,11 +4,10 @@ import { handleGetWhitelistedStatus } from "../handleGetWhitelistedStatus";
 import { itwSetFiscalCodeWhitelisted } from "../../../common/store/actions/preferences";
 import { mockItWalletClient } from "../../../api/__mocks__/client.ts";
 import { ItWalletClient } from "../../../api/client.ts";
-import { SessionToken } from "../../../../../types/SessionToken.ts";
 
 describe("handleGetWhitelistedStatus Saga", () => {
   it("should dispatch itwSetFiscalCodeWhitelisted(true) on success response with whitelisted true", () => {
-    const sessionToken = "sessionToken";
+    const sessionToken = "mock-session-token";
     const response = E.right({
       status: 200,
       value: { whitelisted: true }
@@ -17,7 +16,7 @@ describe("handleGetWhitelistedStatus Saga", () => {
     testSaga(
       handleGetWhitelistedStatus,
       mockItWalletClient as ItWalletClient,
-      sessionToken as SessionToken
+      sessionToken
     )
       .next()
       .call(mockItWalletClient.isFiscalCodeWhitelisted!, {
@@ -30,7 +29,7 @@ describe("handleGetWhitelistedStatus Saga", () => {
   });
 
   it("should dispatch itwSetFiscalCodeWhitelisted(false) on success response with whitelisted false", () => {
-    const sessionToken = "sessionToken";
+    const sessionToken = "mock-session-token";
     const response = E.right({
       status: 200,
       value: { whitelisted: false }
@@ -39,7 +38,7 @@ describe("handleGetWhitelistedStatus Saga", () => {
     testSaga(
       handleGetWhitelistedStatus,
       mockItWalletClient as ItWalletClient,
-      sessionToken as SessionToken
+      sessionToken
     )
       .next()
       .call(mockItWalletClient.isFiscalCodeWhitelisted!, {
@@ -52,13 +51,13 @@ describe("handleGetWhitelistedStatus Saga", () => {
   });
 
   it("should dispatch itwSetFiscalCodeWhitelisted(false) on error", () => {
-    const sessionToken = "sessionToken";
+    const sessionToken = "mock-session-token";
     const error = new Error("Something went wrong");
 
     testSaga(
       handleGetWhitelistedStatus,
       mockItWalletClient as ItWalletClient,
-      sessionToken as SessionToken
+      sessionToken
     )
       .next()
       .call(mockItWalletClient.isFiscalCodeWhitelisted!, {

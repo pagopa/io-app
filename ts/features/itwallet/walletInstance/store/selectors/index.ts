@@ -17,3 +17,10 @@ export const itwWalletInstanceStatusSelector = (state: GlobalState) =>
  */
 export const itwIsWalletInstanceStatusFailureSelector = (state: GlobalState) =>
   pot.isError(state.features.itWallet.walletInstance.status);
+
+/**
+ * Selector that returns whether a wallet instance renewal has already failed.
+ * Used to prevent re-entering the recovery block on subsequent actor retries.
+ */
+export const itwWalletInstanceRenewalErrorSelector = (state: GlobalState) =>
+  state.features.itWallet.walletInstance.renewalError;

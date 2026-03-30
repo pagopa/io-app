@@ -15,7 +15,6 @@ import {
   watchCieAuthenticationSaga
 } from "../../../login/cie/sagas/cie";
 import { loginSuccess } from "../../store/actions";
-import { SessionToken } from "../../../../../types/SessionToken";
 import * as storeSelectors from "../../store/selectors";
 import * as selectors from "../../../fastLogin/store/selectors";
 import {
@@ -28,7 +27,7 @@ import {
   IdpCIE_ID
 } from "../../../login/hooks/useNavigateToLoginMethod";
 
-const aSessionToken = "a_session_token" as SessionToken;
+const aSessionToken = "mock-session-token";
 
 jest.mock("react-native-background-timer", () => ({
   startTimer: jest.fn()

@@ -11,13 +11,16 @@ import { assistanceToolConfigSelector } from "../../../../store/reducers/backend
 import {
   addTicketCustomField,
   assistanceToolRemoteConfig,
+  defaultZendeskBonusesCategory,
   resetCustomFields,
+  zendeskBonusAndInitiativeCategoryId,
   zendeskCategoryId,
   zendeskFCICategory,
   zendeskFciId
 } from "../../../../utils/supportAssistance";
 import {
   zendeskSelectedCategory,
+  zendeskSelectedSubcategory,
   zendeskSupportStart
 } from "../../../zendesk/store/actions";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
@@ -35,7 +38,14 @@ const FciSignatureRequestsScreen = () => {
     signatureRequestId: SignatureRequestListView["id"]
   ) => {
     resetCustomFields();
-    addTicketCustomField(zendeskCategoryId, zendeskFCICategory.value);
+    addTicketCustomField(
+      zendeskCategoryId,
+      defaultZendeskBonusesCategory.value
+    );
+    addTicketCustomField(
+      zendeskBonusAndInitiativeCategoryId,
+      zendeskFCICategory.value
+    );
     addTicketCustomField(zendeskFciId, signatureRequestId ?? "");
     dispatch(
       zendeskSupportStart({
@@ -45,7 +55,8 @@ const FciSignatureRequestsScreen = () => {
         }
       })
     );
-    dispatch(zendeskSelectedCategory(zendeskFCICategory));
+    dispatch(zendeskSelectedCategory(defaultZendeskBonusesCategory));
+    dispatch(zendeskSelectedSubcategory(zendeskFCICategory));
   };
 
   const handleAskAssistance = (

@@ -3,20 +3,16 @@ import { pipe } from "fp-ts/lib/function";
 import { GlobalState } from "../../../../store/reducers/types";
 import { itwAuthLevelSelector } from "../../common/store/selectors/preferences";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
-import { isItwCredential } from "../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import {
   itwCredentialsEidStatusSelector,
   itwCredentialsSelector
 } from "../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils";
 import { mapPIDStatusToMixpanel } from "../utils";
 import {
-  ItwStatus,
-  ItwPIDStatus,
-  ItwCredentialMixpanelStatus,
-  CREDENTIAL_STATUS_MAP
+  CREDENTIAL_STATUS_MAP,
+  ItwCredentialMixpanelStatus
 } from "../utils/types";
 import { ItwBaseProperties } from "./propertyTypes";
 
@@ -26,84 +22,80 @@ import { ItwBaseProperties } from "./propertyTypes";
 export const buildItwBaseProperties = (
   state: GlobalState
 ): ItwBaseProperties => {
-  const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
-
-  const ITW_STATUS_V2 = getWalletStatus(state);
-  const ITW_PID = getPIDMixpanelStatus(state, true);
-
-  const ITW_PG_V3 = getMixpanelCredentialStatus(
-    CredentialType.DRIVING_LICENSE,
-    state,
-    isItwL3
-  );
-  const ITW_TS_V3 = getMixpanelCredentialStatus(
-    CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
-    state,
-    isItwL3
-  );
-  const ITW_CED_V3 = getMixpanelCredentialStatus(
-    CredentialType.EUROPEAN_DISABILITY_CARD,
-    state,
-    isItwL3
-  );
-
-  /**
-   * V2 properties are not sent when IT-Wallet is active,
-   * in order to preserve their last tracked status.
-   */
-  const v2Props = !isItwL3
-    ? {
-        ITW_ID_V2: getPIDMixpanelStatus(state, false),
-        ITW_PG_V2: getMixpanelCredentialStatus(
-          CredentialType.DRIVING_LICENSE,
-          state
-        ),
-        ITW_TS_V2: getMixpanelCredentialStatus(
-          CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
-          state
-        ),
-        ITW_CED_V2: getMixpanelCredentialStatus(
-          CredentialType.EUROPEAN_DISABILITY_CARD,
-          state
-        )
-      }
-    : {};
+  const pidProps = buildPidProperties(state);
+  const credentialProps = buildCredentialProperties(state);
 
   return {
-    ITW_STATUS_V2,
-    ITW_PID,
-    ITW_PG_V3,
-    ITW_TS_V3,
-    ITW_CED_V3,
-    ...v2Props
+    ITW_STATUS_V2: itwAuthLevelSelector(state) ?? "not_active",
+    ...pidProps,
+    ...credentialProps
   };
 };
 
-const getWalletStatus = (state: GlobalState): ItwStatus => {
-  const authLevel = itwAuthLevelSelector(state);
-  return authLevel ? authLevel : "not_active";
+/**
+ * Builds PID properties for Mixpanel analytics
+ * IT-Wallet (L3) -> PID status is mapped to ITW_PID, while ITW_ID_V2 is not sent to preserve historical data.
+ * Documenti su IO (L2) -> PID status is mapped to ITW_ID_V2, while ITW_PID shoul be "not_available".
+ */
+export const buildPidProperties = (state: GlobalState) => {
+  const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
+  const pidStatus = itwCredentialsEidStatusSelector(state);
+
+  const v2Props = {
+    ITW_ID_V2: mapPIDStatusToMixpanel(pidStatus),
+    ITW_PID: "not_available"
+  } as const;
+
+  const v3Props = {
+    ITW_PID: mapPIDStatusToMixpanel(pidStatus)
+  };
+
+  return isItwL3 ? v3Props : v2Props;
 };
 
 /**
- * Returns the PID status for Mixpanel analytics.
- * - If `isL3` is true → we consider the status from the current L3 PID (IT Wallet).
- * - If `isL3` is false → we use the current eID status.
+ * IT-Wallet (L3) -> V2 properties are not sent to preserve historical data.
  */
-export const getPIDMixpanelStatus = (
-  state: GlobalState,
-  isL3: boolean
-): ItwPIDStatus =>
-  pipe(
-    isL3
-      ? pipe(
-          itwLifecycleIsITWalletValidSelector(state),
-          O.fromPredicate(Boolean),
-          O.chain(() => O.fromNullable(itwCredentialsEidStatusSelector(state)))
-        )
-      : O.fromNullable(itwCredentialsEidStatusSelector(state)),
-    O.map<ItwJwtCredentialStatus, ItwPIDStatus>(mapPIDStatusToMixpanel),
-    O.getOrElse((): ItwPIDStatus => "not_available")
-  );
+export const buildCredentialProperties = (state: GlobalState) => {
+  const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
+
+  const v3Props = {
+    ITW_PG_V3: getMixpanelCredentialStatus(
+      CredentialType.DRIVING_LICENSE,
+      state,
+      isItwL3
+    ),
+    ITW_TS_V3: getMixpanelCredentialStatus(
+      CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+      state,
+      isItwL3
+    ),
+    ITW_CED_V3: getMixpanelCredentialStatus(
+      CredentialType.EUROPEAN_DISABILITY_CARD,
+      state,
+      isItwL3
+    )
+  } as const;
+
+  const v2Props = {
+    ITW_PG_V2: getMixpanelCredentialStatus(
+      CredentialType.DRIVING_LICENSE,
+      state
+    ),
+    ITW_TS_V2: getMixpanelCredentialStatus(
+      CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+      state
+    ),
+    ITW_CED_V2: getMixpanelCredentialStatus(
+      CredentialType.EUROPEAN_DISABILITY_CARD,
+      state
+    )
+  } as const;
+
+  // V3 props are always included, while V2 props are included only if IT-Wallet is not valid
+  // to preserve historical data consistency.
+  return isItwL3 ? { ...v3Props } : { ...v3Props, ...v2Props };
+};
 
 /**
  * Returns the Mixpanel status for a credential type, considering IT Wallet.
@@ -121,9 +113,6 @@ const getMixpanelCredentialStatus = (
     return "not_available";
   }
   const credential = itwCredentialsSelector(state)[type];
-  if (isItwL3 && credential && !isItwCredential(credential)) {
-    return "not_available";
-  }
 
   return pipe(
     O.fromNullable(credential),

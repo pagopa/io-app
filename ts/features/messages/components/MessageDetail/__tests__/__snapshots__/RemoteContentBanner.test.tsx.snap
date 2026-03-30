@@ -379,6 +379,38 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                         onStartShouldSetResponder={[Function]}
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "transform": [
+                                  {
+                                    "scale": 1,
+                                  },
+                                ],
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "alignContent": "center",
+                                "alignItems": "flex-start",
+                                "borderCurve": "continuous",
+                                "borderRadius": 8,
+                                "flexDirection": "row",
+                                "padding": 16,
+                              },
+                              {
+                                "backgroundColor": "#F4F5F8",
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -395,7 +427,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                               {
                                 "transform": [
                                   {
-                                    "scale": undefined,
+                                    "scale": 1,
                                   },
                                 ],
                               },

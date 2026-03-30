@@ -3,13 +3,13 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { PreferredLanguageEnum } from "../../definitions/backend/PreferredLanguage";
-import { Locales } from "../../locales/locales";
 import {
   availableTranslations,
   localeFallback,
   localeToLocalizedMessageKey,
   localeToPreferredLanguageMapping,
-  LocalizedMessageKeys
+  LocalizedMessageKeys,
+  Locales
 } from "../i18n";
 import { LanguageEnum } from "../../definitions/pagopa/ecommerce/RequestAuthorizationRequest";
 /**

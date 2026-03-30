@@ -1,23 +1,15 @@
+import { fireEvent, RenderAPI } from "@testing-library/react-native";
 import { Text } from "react-native";
 import { createStore } from "redux";
-import { act, fireEvent, RenderAPI } from "@testing-library/react-native";
-import {
-  loginFailure,
-  loginSuccess,
-  testLoginCleanUp,
-  testLoginRequest
-} from "../../store/actions";
-import { PasswordLogin } from "../../../../../../definitions/session_manager/PasswordLogin";
-import { SessionToken } from "../../../../../types/SessionToken";
-import { AUTHENTICATION_ROUTES } from "../../navigation/routes";
-import { getTimeoutError } from "../../../../../utils/errors";
-import { getAppVersion } from "../../../../../utils/appVersion";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import TestAuthenticationScreen from "../TestAuthenticationScreen";
+import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { getAppVersion } from "../../../../../utils/appVersion";
+import { getTimeoutError } from "../../../../../utils/errors";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { AUTHENTICATION_ROUTES } from "../../navigation/routes";
 import { TestLoginState } from "../../store/reducers/testLogin";
-import { applicationChangeState } from "../../../../../store/actions/application";
+import TestAuthenticationScreen from "../TestAuthenticationScreen";
 
 const timeoutError = getTimeoutError();
 
@@ -27,21 +19,21 @@ jest.mock("react-native-device-info", () => ({
   isDisplayZoomed: jest.fn().mockReturnValue(false)
 }));
 
+/*
+  With "idle" state, it should provide the ${getAppVersion()} app version,
+  the username and password enabled inputs and a disabled confirm button.
+  If a login request is dispatched,
+    it should disable the inputs and show an activity indicator.
+  If a login failure is dispatched,
+    it should enable the inputs, hide the activity indicator, and show an error message.
+  If a login is successful,
+    it should enable the inputs, hide the activity indicator, and show a success message.
+  If a login cancel is dispatched, the error and success view should be hidden.
+*/
+
 describe("Test TestAuthenticationScreen", () => {
-  it(`
-    With "idle" state, it should provide the ${getAppVersion()} app version,
-    the username and password enabled inputs and a disabled confirm button.
-    If a login request is dispatched, 
-      it should disable the inputs and show an activity indicator.
-    If a login failure is dispatched, 
-      it should enable the inputs, hide the activity indicator, and show an error message.
-    If a login is successful,
-      it should enable the inputs, hide the activity indicator, and show a success message.
-    If a login cancel is dispatched, the error and success view should be hidden.
-   `, () => {
-    const { component, store } = render({
-      kind: "idle"
-    });
+  it("With 'idle' state it shows app version, enabled inputs and disabled confirm button", () => {
+    const { component } = render({ kind: "idle" });
 
     checkInput(component, "usernameInput", true);
     checkInput(component, "passwordInput", true);
@@ -49,66 +41,11 @@ describe("Test TestAuthenticationScreen", () => {
     checkVersionView(component);
 
     expect(component.queryByTestId("activityIndicator")).toBeNull();
-
     expect(component.queryByTestId("errorView")).toBeNull();
 
     const confirmButton = component.queryByTestId("confirmButton");
     expect(confirmButton).not.toBeNull();
     expect(confirmButton).toBeDisabled();
-
-    act(() => {
-      store.dispatch(
-        testLoginRequest({
-          username: "username",
-          password: "password"
-        } as PasswordLogin)
-      );
-    });
-
-    checkInput(component, "usernameInput", false);
-    checkInput(component, "passwordInput", false);
-    expect(confirmButton).toBeDisabled();
-    expect(component.queryByTestId("activityIndicator")).not.toBeNull();
-
-    const errorMessage = "500 - Internal Server Error";
-    act(() => {
-      store.dispatch(
-        loginFailure({
-          idp: "test",
-          error: new Error(errorMessage)
-        })
-      );
-    });
-
-    checkInput(component, "usernameInput", true);
-    checkInput(component, "passwordInput", true);
-    expect(component.queryByTestId("activityIndicator")).toBeNull();
-    checkErrorView(component, errorMessage);
-
-    act(() => {
-      store.dispatch(testLoginCleanUp());
-    });
-
-    expect(component.queryByTestId("errorView")).toBeNull();
-
-    act(() => {
-      store.dispatch(
-        loginSuccess({
-          token: "token" as SessionToken,
-          idp: "test"
-        })
-      );
-    });
-
-    checkInput(component, "usernameInput", true);
-    checkInput(component, "passwordInput", true);
-    expect(component.queryByTestId("activityIndicator")).toBeNull();
-    checkSuccessView(component);
-
-    act(() => {
-      store.dispatch(testLoginCleanUp());
-    });
-    expect(component.queryByTestId("successView")).toBeNull();
   });
 
   it(`

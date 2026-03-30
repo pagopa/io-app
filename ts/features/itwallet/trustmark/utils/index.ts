@@ -1,6 +1,6 @@
 import {
   createCryptoContextFor,
-  Credential
+  ItwVersion
 } from "@pagopa/io-react-native-wallet";
 import {
   ParsedCredential,
@@ -9,6 +9,7 @@ import {
 import { WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { WIA_KEYTAG } from "../../common/utils/itwCryptoContextUtils";
 import { Env } from "../../common/utils/environment";
+import { getIoWallet } from "../../common/utils/itwIoWallet";
 
 /**
  * Returns the document number for a credential, if applicable
@@ -46,9 +47,11 @@ const getCredentialTypeForTrustmark = ({
  */
 export const getCredentialTrustmark = async (
   { VERIFIER_BASE_URL }: Env,
+  itwVersion: ItwVersion,
   walletInstanceAttestation: string,
   credential: StoredCredential
 ) => {
+  const ioWallet = getIoWallet(itwVersion);
   /**
    * Create the crypto context for the WIA
    */
@@ -63,7 +66,7 @@ export const getCredentialTrustmark = async (
    * Generate the trustmark
    */
   const { jwt, expirationTime } =
-    await Credential.Trustmark.getCredentialTrustmark({
+    await ioWallet.Trustmark.getCredentialTrustmark({
       walletInstanceAttestation,
       wiaCryptoContext,
       docNumber,
