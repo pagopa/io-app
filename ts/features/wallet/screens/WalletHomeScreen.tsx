@@ -53,9 +53,6 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     itwMixPanelCredentialDetailsSelector
   );
   const isItWalletEnabled = useIOSelector(itwIsL3EnabledSelector);
-  const isItWalletActivationDisabled = useIOSelector(
-    itwIsActivationDisabledSelector
-  );
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
   const isRequiredEidFeedback = useRef(
@@ -78,12 +75,8 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
       return ITW_ROUTES.ONBOARDING;
     }
 
-    if (isItWalletActivationDisabled) {
-      return ITW_ROUTES.L2_ONBOARDING;
-    }
-
     return ITW_ROUTES.L3_ONBOARDING;
-  }, [isItWalletEnabled, isItWalletActivationDisabled]);
+  }, [isItWalletEnabled]);
 
   useEffect(() => {
     // Mutate the local state only when the refresh ends

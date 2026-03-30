@@ -2980,7 +2980,7 @@
       "onboarding": {
         "title": "Cosa vuoi aggiungere al Portafoglio?",
         "sections": {
-          "itw": "Documenti su IO",
+          "itw": "Documenti",
           "other": "Altro"
         },
         "l3-sections": {
@@ -3004,6 +3004,10 @@
         "cta": {
           "addBonus": "Vuoi aggiungere un bonus o un metodo di pagamento?",
           "addRestricted": "Aggiungi documenti con funzionalità ridotte"
+        },
+        "no-nfc-banner": {
+          "content": "Il tuo dispositivo non supporta i documenti IT-Wallet. Puoi aggiungere solo alcuni documenti digitali con funzionalità ridotte.",
+          "cta": "Scopri di più"
         }
       }
     },

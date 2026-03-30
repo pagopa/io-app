@@ -5,10 +5,15 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwIsWalletEmptySelector } from "../../credentials/store/selectors";
+import { itwIsActivationDisabledSelector } from "../store/selectors/preferences";
 
 export const ItwL2EngagementBanner = () => {
   const navigation = useIONavigation();
   const shouldRender = useIOSelector(itwIsWalletEmptySelector);
+
+  const isItWalletActivationDisabled = useIOSelector(
+    itwIsActivationDisabledSelector
+  );
 
   if (!shouldRender) {
     return null;
@@ -16,7 +21,9 @@ export const ItwL2EngagementBanner = () => {
 
   const handleOnPress = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.L2_ONBOARDING
+      screen: isItWalletActivationDisabled
+        ? ITW_ROUTES.L3_ONBOARDING
+        : ITW_ROUTES.L2_ONBOARDING
     });
   };
 
