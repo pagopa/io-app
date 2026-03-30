@@ -1,4 +1,3 @@
-import { captureException, captureMessage } from "@sentry/react-native";
 import { v4 as uuid } from "uuid";
 import { PermissionsAndroid } from "react-native";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
@@ -35,12 +34,13 @@ export const checkNotificationPermissions = () =>
         });
       }
     } catch (e) {
-      captureException(e);
-      captureMessage(
-        `[PushNotifications] 'checkNotificationPermissions' has thrown an exception on ${
-          isIos ? "iOS" : "Android"
-        }`
-      );
+      // TODO: Replace Sentry capture exception with a new logging solution
+      // captureException(e);
+      // captureMessage(
+      //   `[PushNotifications] 'checkNotificationPermissions' has thrown an exception on ${
+      //     isIos ? "iOS" : "Android"
+      //   }`
+      // );
       resolve(false);
     }
   });
@@ -65,12 +65,13 @@ export const requestNotificationPermissions = async () => {
       return permissionStatus === PermissionsAndroid.RESULTS.GRANTED;
     }
   } catch (e) {
-    captureException(e);
-    captureMessage(
-      `[PushNotifications] 'requestNotificationPermissions' has thrown an exception on ${
-        isIos ? "iOS" : "Android"
-      }`
-    );
+    // TODO: Replace Sentry capture exception with a new logging solution
+    // captureException(e);
+    // captureMessage(
+    //   `[PushNotifications] 'requestNotificationPermissions' has thrown an exception on ${
+    //     isIos ? "iOS" : "Android"
+    //   }`
+    // );
     return false;
   }
 };

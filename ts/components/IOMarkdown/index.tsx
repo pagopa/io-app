@@ -1,10 +1,10 @@
 import { memo } from "react";
 import { View } from "react-native";
 import { Body } from "@pagopa/io-app-design-system";
-import * as Sentry from "@sentry/react-native";
 import I18n from "i18next";
 import { useIOSelector } from "../../store/hooks";
 import { isScreenReaderEnabledSelector } from "../../store/reducers/preferences";
+import ErrorBoundary from "../error/ErrorBoundary";
 import { IOMarkdownRenderRules } from "./types";
 import {
   convertReferenceLinksToInline,
@@ -21,13 +21,7 @@ export type IOMarkdownProps = {
    * The `markdown` string to render.
    */
   content: string;
-  onError?:
-    | ((
-        error: unknown,
-        componentStack: string | undefined,
-        eventId: string
-      ) => void)
-    | undefined;
+  onError?: (error: unknown, componentStack: string | undefined) => void;
   /**
    * The render rules that can be used to override the `DEFAULT_RULES`.
    */
@@ -56,7 +50,7 @@ const UnsafeIOMarkdown = ({ content, rules }: UnsafeProps) => {
 };
 
 const IOMarkdown = ({ content, rules, onError }: IOMarkdownProps) => (
-  <Sentry.ErrorBoundary
+  <ErrorBoundary
     fallback={
       <View>
         <Body>{I18n.t("global.markdown.decodeError")}</Body>
@@ -65,6 +59,6 @@ const IOMarkdown = ({ content, rules, onError }: IOMarkdownProps) => (
     onError={onError}
   >
     <UnsafeIOMarkdown content={content} rules={rules} />
-  </Sentry.ErrorBoundary>
+  </ErrorBoundary>
 );
 export default memo(IOMarkdown);

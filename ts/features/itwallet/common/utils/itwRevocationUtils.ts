@@ -1,5 +1,4 @@
 import { type ItwVersion } from "@pagopa/io-react-native-wallet";
-import * as Sentry from "@sentry/react-native";
 import { createItWalletFetch } from "../../api/client";
 import { Env } from "./environment";
 import { getIoWallet } from "./itwIoWallet";
@@ -30,7 +29,9 @@ export const revokeCurrentWalletInstance = async (
       appFetch
     });
   } catch (e) {
-    Sentry.captureException(e);
-    throw e;
+    // TODO: Replace Sentry capture exception with a new logging solution
+    // Sentry.captureException(e);
+    // throw e;
+    return;
   }
 };

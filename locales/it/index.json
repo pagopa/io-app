@@ -273,7 +273,6 @@
       "forgetCurrentSession": "Dimentica sessione corrente",
       "clearAsyncStorage": "Cancella contenuto di AsyncStorage",
       "dumpAsyncStorage": "Scarica contenuto di AsyncStorage",
-      "sentryTestEvent": "Invia Exception a Sentry",
       "contextualHelpTitle": "Cosa puoi fare nella sezione Impostazioni",
       "contextualHelpContent": "**Nella sezione Impostazioni puoi gestire i tuoi dati e le preferenze.**\nIn particolare qui puoi gestire le tue preferenze, la tua privacy e il tuo account. In questa sezione puoi inoltre accedere a i tuoi documenti in versione digitale, selezionando le card che compaiono nella parte alta della schermata.",
       "developerModeOn": "Modalità sviluppatore attivata",

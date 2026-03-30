@@ -7,7 +7,6 @@ import i18next from "i18next";
 // } from "i18next";
 import { initReactI18next } from "react-i18next";
 
-// import { captureException } from "@sentry/react-native";
 import { BackendStatusMessage } from "../definitions/content/BackendStatusMessage";
 
 import it from "../locales/it/index.json";
@@ -126,11 +125,6 @@ export interface SmartBackendOptions {
 //       const url = `${contentRepoUrl}/locales/${language}/${namespace}.json`;
 //       const response = await fetch(url);
 //       if (!response.ok) {
-//         captureException(
-//           new Error(
-//             `Failed to load remote translations: ${response.status} ${response.statusText} for ${url}`
-//           )
-//         );
 //         return;
 //       }
 //       const remoteData = await response.json();

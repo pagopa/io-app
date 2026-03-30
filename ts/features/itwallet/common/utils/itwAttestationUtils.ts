@@ -2,7 +2,6 @@ import {
   type ItwVersion,
   createCryptoContextFor
 } from "@pagopa/io-react-native-wallet";
-import * as Sentry from "@sentry/react-native";
 import { createItWalletFetch } from "../../api/client";
 import { regenerateCryptoKey, WIA_KEYTAG } from "./itwCryptoContextUtils";
 import {
@@ -156,6 +155,7 @@ export const getCurrentWalletInstanceStatus = (
   sessionToken: string
 ) => {
   const ioWallet = getIoWallet(itwVersion);
+  // eslint-disable-next-line no-useless-catch
   try {
     return ioWallet.WalletInstance.getCurrentWalletInstanceStatus({
       walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
@@ -165,12 +165,14 @@ export const getCurrentWalletInstanceStatus = (
         WALLET_PROVIDER_BASE_URL
       )
     });
+    // eslint-disable-next-line sonarjs/no-useless-catch
   } catch (e) {
-    Sentry.captureException(e, {
-      tags: {
-        isRequired: true
-      }
-    });
+    // TODO: Replace Sentry capture exception with a new logging solution
+    // Sentry.captureException(e, {
+    //   tags: {
+    //     isRequired: true
+    //   }
+    // });
     throw e;
   }
 };

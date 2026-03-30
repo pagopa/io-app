@@ -129,8 +129,6 @@ jest.mock("@gorhom/bottom-sheet", () => {
   };
 });
 
-jest.mock("@sentry/react-native");
-
 jest.mock("react-native-device-info", () => mockRNDeviceInfo);
 
 jest.mock("react-native-pdf", () => jest.fn());

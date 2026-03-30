@@ -1,4 +1,3 @@
-import * as Sentry from "@sentry/react-native";
 import { Appearance, ColorSchemeName } from "react-native";
 import {
   isMixpanelInstanceInitialized,
@@ -101,7 +100,8 @@ export const updateMixpanelSuperProperties = async (
 
     registerSuperProperties(superPropertiesObject);
   } catch (e) {
-    Sentry.captureException(e);
+    // TODO: Replace Sentry capture exception with a new logging solution
+    // Sentry.captureException(e);
   }
 };
 

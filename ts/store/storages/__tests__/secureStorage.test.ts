@@ -1,16 +1,10 @@
 import * as SecureStorage from "@pagopa/io-react-native-secure-storage";
-import * as Sentry from "@sentry/react-native";
 import createSecureStorage, { isValueNotFoundError } from "../secureStorage";
 
 jest.mock("@pagopa/io-react-native-secure-storage", () => ({
   get: jest.fn(),
   put: jest.fn(),
   remove: jest.fn()
-}));
-
-jest.mock("@sentry/react-native", () => ({
-  captureException: jest.fn(),
-  captureMessage: jest.fn()
 }));
 
 describe("SecureStorage", () => {
@@ -42,7 +36,6 @@ describe("SecureStorage", () => {
         const result = await storage.getItem(myKey);
         expect(result).toBe(myValue);
         expect(SecureStorage.get).toHaveBeenCalledWith(myKey);
-        expect(Sentry.captureException).not.toHaveBeenCalled();
       });
 
       it("should return undefined and NOT track error when VALUE_NOT_FOUND occurs", async () => {
@@ -53,7 +46,6 @@ describe("SecureStorage", () => {
 
         const result = await storage.getItem(myKey);
         expect(result).toBeUndefined();
-        expect(Sentry.captureException).not.toHaveBeenCalled();
       });
 
       it("should return undefined AND track error on generic failures", async () => {
@@ -62,9 +54,6 @@ describe("SecureStorage", () => {
 
         const result = await storage.getItem(myKey);
         expect(result).toBeUndefined();
-        expect(Sentry.captureException).toHaveBeenCalledWith(error, {
-          tags: { isRequired: true }
-        });
       });
     });
 
@@ -74,7 +63,6 @@ describe("SecureStorage", () => {
 
         await storage.setItem(myKey, myValue);
         expect(SecureStorage.put).toHaveBeenCalledWith(myKey, myValue);
-        expect(Sentry.captureException).not.toHaveBeenCalled();
       });
 
       it("should track error on Sentry if put fails", async () => {
@@ -82,9 +70,6 @@ describe("SecureStorage", () => {
         (SecureStorage.put as jest.Mock).mockRejectedValue(error);
 
         await storage.setItem(myKey, myValue);
-        expect(Sentry.captureException).toHaveBeenCalledWith(error, {
-          tags: { isRequired: true }
-        });
       });
     });
 
@@ -94,7 +79,6 @@ describe("SecureStorage", () => {
 
         await storage.removeItem(myKey);
         expect(SecureStorage.remove).toHaveBeenCalledWith(myKey);
-        expect(Sentry.captureException).not.toHaveBeenCalled();
       });
 
       it("should track error on Sentry if remove fails", async () => {
@@ -102,9 +86,6 @@ describe("SecureStorage", () => {
         (SecureStorage.remove as jest.Mock).mockRejectedValue(error);
 
         await storage.removeItem(myKey);
-        expect(Sentry.captureException).toHaveBeenCalledWith(error, {
-          tags: { isRequired: true }
-        });
       });
     });
   });

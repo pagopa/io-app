@@ -3309,36 +3309,6 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - RNSentry (7.4.0):
-    - boost
-    - DoubleConversion
-    - fast_float
-    - fmt
-    - glog
-    - hermes-engine
-    - RCT-Folly
-    - RCT-Folly/Fabric
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-hermes
-    - React-ImageManager
-    - React-jsi
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-renderercss
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - Sentry/HybridSDK (= 8.57.0)
-    - SocketRocket
-    - Yoga
   - RNShare (12.0.9):
     - boost
     - DoubleConversion
@@ -3513,7 +3483,6 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - Sentry/HybridSDK (8.57.0)
   - SocketRocket (0.7.1)
   - SwiftCBOR (0.5.0)
   - VisionCamera (4.7.3):
@@ -3676,7 +3645,6 @@ DEPENDENCIES:
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
-  - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNWorklets (from `../node_modules/react-native-worklets`)
@@ -3694,7 +3662,6 @@ SPEC REPOS:
     - Mixpanel-swift
     - OpenSSL-Universal
     - React-Codegen
-    - Sentry
     - SocketRocket
     - SwiftCBOR
     - ZendeskAnswerBotProvidersSDK
@@ -3962,8 +3929,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
-  RNSentry:
-    :path: "../node_modules/@sentry/react-native"
   RNShare:
     :path: "../node_modules/react-native-share"
   RNSVG:
@@ -4109,11 +4074,9 @@ SPEC CHECKSUMS:
   RNReactNativeHapticFeedback: be4f1b4bf0398c30b59b76ed92ecb0a2ff3a69c6
   RNReanimated: 28141b41781ded169829afdb6fd80f3498de254e
   RNScreens: 0bbf16c074ae6bb1058a7bf2d1ae017f4306797c
-  RNSentry: 3ffb79c1393af4800c85bc96bc880c20316fc67a
   RNShare: 1dba46787d6e5543e05655efaefa0e4bb98380d9
   RNSVG: d260beec1775108e1bd065a0ed666ff2c5565158
   RNWorklets: 5dd32e6d649594b9a938cdd75673dffb2266e119
-  Sentry: e1b49e5f49367ff211b25c431a60e2bd83b792aa
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   SwiftCBOR: aa87349b4ccddd19f861aa544f7c27d43dee5772
   VisionCamera: 7187b3dac1ff3071234ead959ce311875748e14f

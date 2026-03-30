@@ -1,5 +1,4 @@
 import { deleteKey } from "@pagopa/io-react-native-crypto";
-import * as Sentry from "@sentry/react-native";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { identity, pipe } from "fp-ts/lib/function";
@@ -47,6 +46,7 @@ export function* handleWalletInstanceResetSaga() {
     // Update every mixpanel property related to the wallet instance and its credentials.
     void updatePropertiesWalletRevoked();
   } catch (e) {
-    Sentry.captureException(e);
+    // TODO: Replace Sentry capture exception with a new logging solution
+    // Sentry.captureException(e);
   }
 }

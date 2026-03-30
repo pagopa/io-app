@@ -1,5 +1,4 @@
 import { deleteKey } from "@pagopa/io-react-native-crypto";
-import * as Sentry from "@sentry/react-native";
 import { call, put, select, all } from "typed-redux-saga/macro";
 import { walletRemoveCards } from "../../../wallet/store/actions/cards";
 import {
@@ -32,6 +31,8 @@ export function* handleItwCredentialsRemoveSaga(
       yield* all(sameTypeCredentials.map(c => call(deleteKey, c.keyTag)));
     }
   } catch (e) {
-    Sentry.captureException(e);
+    // TODO: Replace Sentry capture exception with a new logging solution
+    // Sentry.captureException(e);
+    return;
   }
 }

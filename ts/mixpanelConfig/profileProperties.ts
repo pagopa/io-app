@@ -1,5 +1,4 @@
 import * as O from "fp-ts/lib/Option";
-import * as Sentry from "@sentry/react-native";
 import { getPeople, isMixpanelInstanceInitialized } from "../mixpanel.ts";
 import { GlobalState } from "../store/reducers/types";
 import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
@@ -115,7 +114,8 @@ export const updateMixpanelProfileProperties = async (
 
     getPeople()?.set(profilePropertiesObject);
   } catch (e) {
-    Sentry.captureException(e);
+    // TODO: Replace Sentry capture exception with a new logging solution
+    // Sentry.captureException(e);
   }
 };
 
