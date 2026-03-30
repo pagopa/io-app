@@ -115,10 +115,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
 
   return (
     <>
-      <OperationResultScreenContent
-        {...resultScreenProps}
-        subtitleProps={{ textBreakStrategy: "simple" }}
-      />
+      <OperationResultScreenContent {...resultScreenProps} />
       {bottomSheet}
     </>
   );

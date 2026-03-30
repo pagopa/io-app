@@ -199,27 +199,7 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
           }
         }
       />
-      <Text
-        allowFontScaling={true}
-        dynamicTypeRamp="body"
-        maxFontSizeMultiplier={1.5}
-        style={
-          [
-            {},
-            {
-              "color": "#555C70",
-              "fontFamily": "Titillio",
-              "fontSize": 16,
-              "fontStyle": "normal",
-              "fontWeight": "400",
-              "lineHeight": 24,
-            },
-            {
-              "textAlign": "center",
-            },
-          ]
-        }
-      >
+      <Text>
         Se hai SPID, entra su IO inserendo le tue credenziali. Puoi usare anche il tuo volto o l’impronta o il codice impostato per l’app del tuo fornitore di SPID.
       </Text>
       <View
@@ -900,27 +880,7 @@ exports[`CieIdErrorScreen where device supports NFC Should match the snapshot 1`
           }
         }
       />
-      <Text
-        allowFontScaling={true}
-        dynamicTypeRamp="body"
-        maxFontSizeMultiplier={1.5}
-        style={
-          [
-            {},
-            {
-              "color": "#555C70",
-              "fontFamily": "Titillio",
-              "fontSize": 16,
-              "fontStyle": "normal",
-              "fontWeight": "400",
-              "lineHeight": 24,
-            },
-            {
-              "textAlign": "center",
-            },
-          ]
-        }
-      >
+      <Text>
         Se hai la tua Carta di Identità Elettronica a portata di mano, usala per accedere a IO.
 
 Inserisci il PIN della CIE e avvicinala al dispositivo per consentire la lettura dei dati.

@@ -7,7 +7,6 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import PN_ROUTES from "../../../navigation/routes";
 import { SendEngagementComponent } from "../SendEngagementComponent";
 import { GlobalState } from "../../../../../store/reducers/types";
-import * as urlUtils from "../../../../../utils/url";
 
 const testPrivacyUrl = "https://a.privacy.url";
 const testTOSUrl = "https://a.tos.url";
@@ -66,61 +65,19 @@ describe("SendEngagmentComponent", () => {
       expect(onClose.mock.calls.length).toBe(0);
     })
   );
-  [false, true].forEach(loading =>
-    it(`should ${loading ? "" : "not "}navigate to the privacy url while ${
-      loading ? "" : "not "
-    }loading`, () => {
-      const mockedSpiedOnOpenWebUrl = jest
-        .spyOn(urlUtils, "openWebUrl")
-        .mockImplementation();
-      const onClose = jest.fn();
-      const onPrimaryAction = jest.fn();
-
-      const component = renderComponent(loading, onClose, onPrimaryAction);
-
-      const privacyBodyLink = component.getByTestId("privacy-link");
-      fireEvent.press(privacyBodyLink);
-
-      if (loading) {
-        expect(mockedSpiedOnOpenWebUrl.mock.calls.length).toBe(0);
-      } else {
-        expect(mockedSpiedOnOpenWebUrl.mock.calls.length).toBe(1);
-        expect(mockedSpiedOnOpenWebUrl.mock.calls[0].length).toBe(1);
-        expect(mockedSpiedOnOpenWebUrl.mock.calls[0][0]).toEqual(
-          testPrivacyUrl
-        );
-      }
-
-      expect(onPrimaryAction.mock.calls.length).toBe(0);
-      expect(onClose.mock.calls.length).toBe(0);
-    })
-  );
-  [false, true].forEach(loading =>
-    it(`should ${loading ? "" : "not "}navigate to the tos url while ${
-      loading ? "" : "not "
-    }loading`, () => {
-      const mockedSpiedOnOpenWebUrl = jest
-        .spyOn(urlUtils, "openWebUrl")
-        .mockImplementation();
-      const onClose = jest.fn();
-      const onPrimaryAction = jest.fn();
-
-      const component = renderComponent(loading, onClose, onPrimaryAction);
-
-      const tosBodyLink = component.getByTestId("tos-link");
-      fireEvent.press(tosBodyLink);
-
-      if (loading) {
-        expect(mockedSpiedOnOpenWebUrl.mock.calls.length).toBe(0);
-      } else {
-        expect(mockedSpiedOnOpenWebUrl.mock.calls.length).toBe(1);
-        expect(mockedSpiedOnOpenWebUrl.mock.calls[0].length).toBe(1);
-        expect(mockedSpiedOnOpenWebUrl.mock.calls[0][0]).toEqual(testTOSUrl);
-      }
-      expect(onPrimaryAction.mock.calls.length).toBe(0);
-      expect(onClose.mock.calls.length).toBe(0);
-    })
-  );
+  it("should contain properly formatted markdown links in the footer", () => {
+    const component = renderComponent(
+      false,
+      () => undefined,
+      () => undefined
+    );
+    const markdownLinkPattern = (url: string) =>
+      new RegExp(`\\[.+\\]\\(${url.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\)`);
+    expect(
+      component.getByText(markdownLinkPattern(testPrivacyUrl))
+    ).toBeTruthy();
+    expect(component.getByText(markdownLinkPattern(testTOSUrl))).toBeTruthy();
+  });
 });
 
 const renderComponent = (

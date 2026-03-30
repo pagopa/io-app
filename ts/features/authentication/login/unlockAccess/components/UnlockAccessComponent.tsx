@@ -1,11 +1,10 @@
 import {
-  Body,
   FeatureInfo,
   H6,
-  IOColors,
+  IOMarkdownLite,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import I18n from "i18next";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../../utils/url";
@@ -29,15 +28,9 @@ const UnlockAccessComponent = (props: UnlockAccessProps) => {
 
   const ModalContent = () => (
     <View testID="modal-view-test">
-      <Body weight="Regular" color="grey-700">
-        {I18n.t("authentication.unlockmodal.description1_1")}
-        {"\n"}
-        {I18n.t("authentication.unlockmodal.description1_2")}{" "}
-        <Text style={{ color: IOColors["grey-700"], fontWeight: "bold" }}>
-          {I18n.t("authentication.unlockmodal.description1_3")}{" "}
-        </Text>
-        {I18n.t("authentication.unlockmodal.description1_4")}{" "}
-      </Body>
+      <IOMarkdownLite
+        content={I18n.t("authentication.unlockmodal.description")}
+      />
       <VSpacer size={24} />
       <H6>{I18n.t("authentication.unlockmodal.title2")}</H6>
       <VSpacer size={24} />
@@ -58,17 +51,9 @@ const UnlockAccessComponent = (props: UnlockAccessProps) => {
       <FeatureInfo
         iconName="locked"
         body={
-          <Body weight="Regular" color="grey-700">
-            {I18n.t("authentication.unlockmodal.listitem3_1")}{" "}
-            <Text style={{ fontStyle: "italic" }}>
-              {I18n.t("authentication.unlockmodal.listitem3_2")}{" "}
-            </Text>
-            {I18n.t("authentication.unlockmodal.listitem3_3")}{" "}
-            <Text style={{ fontWeight: "bold" }}>
-              {I18n.t("authentication.unlockmodal.listitem3_4")}{" "}
-            </Text>
-            {I18n.t("authentication.unlockmodal.listitem3_5")}
-          </Body>
+          <IOMarkdownLite
+            content={I18n.t("authentication.unlockmodal.listitem3")}
+          />
         }
       />
     </View>

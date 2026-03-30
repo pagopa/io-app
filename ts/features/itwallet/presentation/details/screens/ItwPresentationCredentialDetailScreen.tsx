@@ -118,23 +118,31 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   );
 
   if (!isWalletValid) {
-    const ns = "features.itWallet.issuance.walletInstanceNotActive";
-
-    const copy = isL3 ? `${ns}.itWallet` : `${ns}.documentiSuIo`;
-
     return (
       <OperationResultScreenContent
-        title={I18n.t(`${copy}.title`)}
-        subtitle={[
-          { text: I18n.t(`${copy}.body`) },
-          {
-            text: I18n.t(`${copy}.bodyBold`),
-            weight: "Semibold"
-          }
-        ]}
+        title={
+          isL3
+            ? I18n.t(
+                "features.itWallet.issuance.walletInstanceNotActive.itWallet.title"
+              )
+            : I18n.t(
+                "features.itWallet.issuance.walletInstanceNotActive.documentiSuIo.title"
+              )
+        }
+        subtitle={
+          isL3
+            ? I18n.t(
+                "features.itWallet.issuance.walletInstanceNotActive.itWallet.subtitle"
+              )
+            : I18n.t(
+                "features.itWallet.issuance.walletInstanceNotActive.documentiSuIo.subtitle"
+              )
+        }
         pictogram="itWallet"
         action={{
-          label: I18n.t(`${ns}.primaryAction`),
+          label: I18n.t(
+            "features.itWallet.issuance.walletInstanceNotActive.primaryAction"
+          ),
           onPress: () =>
             navigation.replace(ITW_ROUTES.MAIN, {
               screen: ITW_ROUTES.DISCOVERY.INFO,
@@ -144,7 +152,9 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
             })
         }}
         secondaryAction={{
-          label: I18n.t(`${ns}.secondaryAction`),
+          label: I18n.t(
+            "features.itWallet.issuance.walletInstanceNotActive.secondaryAction"
+          ),
           onPress: () => navigation.popToTop()
         }}
       />

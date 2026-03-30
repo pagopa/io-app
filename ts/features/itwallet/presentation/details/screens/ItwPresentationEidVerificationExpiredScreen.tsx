@@ -1,4 +1,3 @@
-import { BodyProps } from "@pagopa/io-app-design-system";
 import { useCallback } from "react";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
@@ -40,34 +39,6 @@ export const ItwPresentationEidVerificationExpiredScreen = () => {
     }, [])
   );
 
-  const bodyPropsArray: Array<BodyProps> = [
-    {
-      text: I18n.t(
-        "features.itWallet.presentation.eid.verificationExpired.contentStart"
-      ),
-      style: {
-        textAlign: "center"
-      }
-    },
-    {
-      text: I18n.t(
-        "features.itWallet.presentation.eid.verificationExpired.contentBold"
-      ),
-      weight: "Semibold",
-      style: {
-        textAlign: "center"
-      }
-    },
-    {
-      text: I18n.t(
-        "features.itWallet.presentation.eid.verificationExpired.contentEnd"
-      ),
-      style: {
-        textAlign: "center"
-      }
-    }
-  ];
-
   return (
     <>
       <OperationResultScreenContent
@@ -75,7 +46,9 @@ export const ItwPresentationEidVerificationExpiredScreen = () => {
         title={I18n.t(
           "features.itWallet.presentation.eid.verificationExpired.title"
         )}
-        subtitle={bodyPropsArray}
+        subtitle={I18n.t(
+          "features.itWallet.presentation.eid.verificationExpired.subtitle"
+        )}
         action={{
           label: I18n.t(
             "features.itWallet.presentation.eid.verificationExpired.primaryAction"

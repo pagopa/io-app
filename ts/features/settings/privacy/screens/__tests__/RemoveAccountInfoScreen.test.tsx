@@ -39,7 +39,7 @@ describe("RemoveAccountInfoScreen", () => {
         .length
     ).toBeGreaterThanOrEqual(1);
     expect(
-      getByText(I18n.t("profile.main.privacy.removeAccount.info.body.p1"))
+      getByText(I18n.t("profile.main.privacy.removeAccount.info.body"))
     ).toBeTruthy();
   });
 

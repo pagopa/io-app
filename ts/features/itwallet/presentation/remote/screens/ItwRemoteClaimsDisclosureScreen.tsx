@@ -3,10 +3,10 @@ import {
   FeatureInfo,
   ForceScrollDownView,
   H2,
+  IOMarkdownLite,
   VStack
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import IOMarkdown from "../../../../../components/IOMarkdown/index.tsx";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIODispatch } from "../../../../../store/hooks.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
@@ -14,6 +14,9 @@ import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwar
 import { identificationRequest } from "../../../../identification/store/actions";
 import { ItwDataExchangeIcons } from "../../../common/components/ItwDataExchangeIcons.tsx";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
+import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
+import { trackItwRemoteContinuePresentation } from "../analytics";
+import { ITW_REMOTE_SCREENVIEW_EVENTS } from "../analytics/enum";
 import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen.tsx";
 import { ItwRemotePresentationDetails } from "../components/ItwRemotePresentationDetails.tsx";
 import { ItwRemoteMachineContext } from "../machine/provider.tsx";
@@ -22,9 +25,6 @@ import {
   selectRelyingPartyData,
   selectRemoteCredentialCombination
 } from "../machine/selectors.ts";
-import { trackItwRemoteContinuePresentation } from "../analytics";
-import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
-import { ITW_REMOTE_SCREENVIEW_EVENTS } from "../analytics/enum";
 
 const ItwRemoteClaimsDisclosureScreen = () => {
   usePreventScreenCapture();
@@ -129,7 +129,7 @@ const ContentView = () => {
                 "features.itWallet.presentation.selectiveDisclosure.title"
               )}
             </H2>
-            <IOMarkdown
+            <IOMarkdownLite
               content={I18n.t(
                 "features.itWallet.presentation.selectiveDisclosure.subtitle",
                 { relyingParty: rpData?.organization_name }
@@ -149,7 +149,7 @@ const ContentView = () => {
               "features.itWallet.presentation.selectiveDisclosure.disclaimer.1"
             )}
           />
-          <IOMarkdown
+          <IOMarkdownLite
             content={I18n.t(
               "features.itWallet.presentation.selectiveDisclosure.tos",
               { privacyUrl: rpData?.policy_uri }

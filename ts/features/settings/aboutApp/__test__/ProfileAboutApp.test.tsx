@@ -26,10 +26,7 @@ describe("ProfileAboutApp", () => {
       getAllByText(I18n.t("profile.main.appInfo.paragraphTitle")).length
     ).toBeGreaterThanOrEqual(1);
     expect(
-      getByText(I18n.t("profile.main.appInfo.paragraphBody1"))
-    ).toBeTruthy();
-    expect(
-      getByText(I18n.t("profile.main.appInfo.paragraphBody2"))
+      getByText(I18n.t("profile.main.appInfo.paragraphBody"))
     ).toBeTruthy();
     expect(getByText(I18n.t("profile.main.appInfo.bannerBody"))).toBeTruthy();
     expect(getByText(I18n.t("profile.main.appInfo.bannerButton"))).toBeTruthy();

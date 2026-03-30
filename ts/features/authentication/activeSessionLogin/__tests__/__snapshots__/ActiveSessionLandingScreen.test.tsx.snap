@@ -1520,6 +1520,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                               "borderCurve": "continuous",
                                               "flexDirection": "row",
                                               "justifyContent": "center",
+                                              "overflow": "hidden",
                                             },
                                             {
                                               "borderRadius": 36,
@@ -1550,7 +1551,6 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                               },
                                               {
                                                 "alignSelf": "center",
-                                                "flexShrink": 1,
                                                 "letterSpacing": 0.5,
                                                 "textTransform": "uppercase",
                                               },

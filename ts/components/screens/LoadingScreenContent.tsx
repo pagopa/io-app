@@ -3,14 +3,12 @@
  */
 import {
   Banner,
-  Body,
-  BodyProps,
-  ComposedBodyFromArray,
   ContentWrapper,
   H3,
   IOButton,
   IOButtonProps,
   IOColors,
+  IOMarkdownLite,
   useIOTheme,
   VSpacer,
   VStack
@@ -42,7 +40,7 @@ const SPACE_BETWEEN_SPINNER_AND_TEXT = 24;
 
 type LoadingScreenContentProps = WithTestID<{
   title: string;
-  subtitle?: string | Array<BodyProps>;
+  subtitle?: string;
   action?: ButtonProps;
   headerVisible?: boolean;
   animatedPictogramSource?: IOAnimatedPictograms;
@@ -109,12 +107,9 @@ export const LoadingScreenContent = ({
             >
               {title}
             </H3>
-            {subtitle &&
-              (typeof subtitle === "string" ? (
-                <Body style={{ textAlign: "center" }}>{subtitle}</Body>
-              ) : (
-                <ComposedBodyFromArray textAlign="center" body={subtitle} />
-              ))}
+            {subtitle && (
+              <IOMarkdownLite content={subtitle} textAlign="center" />
+            )}
             {action && (
               <View>
                 <VSpacer size={16} />

@@ -155,23 +155,15 @@ const ContentView = ({ failure }: ContentViewProps) => {
         case IssuanceFailureType.UNSUPPORTED_DEVICE:
           return {
             title: I18n.t("features.itWallet.unsupportedDevice.error.title"),
-            subtitle: [
-              {
-                text: I18n.t("features.itWallet.unsupportedDevice.error.body")
-              },
-              {
-                text: I18n.t(
-                  "features.itWallet.unsupportedDevice.error.primaryAction"
-                ),
-                asLink: true,
-                weight: "Semibold",
-                onPress: () => {
-                  openWebUrl(FAQ_URL, () =>
-                    toast.error(I18n.t("global.jserror.title"))
-                  );
-                }
-              }
-            ],
+            subtitle: I18n.t(
+              "features.itWallet.unsupportedDevice.error.subtitle",
+              { faqUrl: FAQ_URL }
+            ),
+            onSubtitleLinkPress: url => {
+              openWebUrl(url, () =>
+                toast.error(I18n.t("global.jserror.title"))
+              );
+            },
             pictogram: "workInProgress",
             action: supportModalAction,
             secondaryAction: {
@@ -319,10 +311,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
 
   return (
     <>
-      <OperationResultScreenContent
-        {...resultScreenProps}
-        subtitleProps={{ textBreakStrategy: "simple" }}
-      />
+      <OperationResultScreenContent {...resultScreenProps} />
       {supportModal.bottomSheet}
     </>
   );

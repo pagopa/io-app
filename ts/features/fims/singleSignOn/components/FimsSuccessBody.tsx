@@ -9,6 +9,7 @@ import {
   Icon,
   IOButton,
   IOColors,
+  IOMarkdownLite,
   IOVisualCostants,
   ListItemHeader,
   VSpacer
@@ -55,7 +56,7 @@ export const FimsFlowSuccessBody = ({
   // --------- HOOKS
 
   const BottomSheet = useIOBottomSheetModal(
-    generateBottomSheetProps(privacyUrl)
+    generateBottomSheetProps(privacyUrl ?? "")
   );
 
   useEffect(() => {
@@ -161,26 +162,15 @@ export const FimsFlowSuccessBody = ({
 };
 
 type BSPropType = Parameters<typeof useIOBottomSheetModal>[0];
-const generateBottomSheetProps = (
-  privacyUrl: string | undefined
-): BSPropType => ({
+const generateBottomSheetProps = (privacyUrl: string): BSPropType => ({
   title: I18n.t("FIMS.consentsScreen.bottomSheet.title"),
   component: (
-    <>
-      <Body>{I18n.t("FIMS.consentsScreen.bottomSheet.body")}</Body>
-      <VSpacer size={8} />
-      <Body>
-        {I18n.t("FIMS.consentsScreen.bottomSheet.body2")}
-        <Body
-          avoidPressable
-          weight="Semibold"
-          asLink
-          onPress={() => privacyUrl && openWebUrl(privacyUrl)}
-        >
-          {I18n.t("FIMS.consentsScreen.bottomSheet.bodyPrivacy")}
-        </Body>
-      </Body>
-    </>
+    <IOMarkdownLite
+      content={I18n.t("FIMS.consentsScreen.bottomSheet.body", {
+        privacyUrl
+      })}
+      onLinkPress={openWebUrl}
+    />
   ),
   snapPoint: [340]
 });

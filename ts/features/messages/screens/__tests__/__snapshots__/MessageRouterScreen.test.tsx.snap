@@ -490,27 +490,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                               >
                                 Stiamo caricando il messaggio
                               </Text>
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 24,
-                                    },
-                                    {
-                                      "textAlign": "center",
-                                    },
-                                  ]
-                                }
-                              >
+                              <Text>
                                 Attendi qualche secondo
                               </Text>
                             </View>
@@ -1517,27 +1497,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                               >
                                 Stiamo caricando il messaggio
                               </Text>
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 24,
-                                    },
-                                    {
-                                      "textAlign": "center",
-                                    },
-                                  ]
-                                }
-                              >
+                              <Text>
                                 Attendi qualche secondo
                               </Text>
                             </View>
@@ -3911,27 +3871,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                               >
                                 Stiamo caricando il messaggio
                               </Text>
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 24,
-                                    },
-                                    {
-                                      "textAlign": "center",
-                                    },
-                                  ]
-                                }
-                              >
+                              <Text>
                                 Attendi qualche secondo
                               </Text>
                             </View>
@@ -4938,27 +4878,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                               >
                                 Stiamo caricando il messaggio
                               </Text>
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 24,
-                                    },
-                                    {
-                                      "textAlign": "center",
-                                    },
-                                  ]
-                                }
-                              >
+                              <Text>
                                 Attendi qualche secondo
                               </Text>
                             </View>

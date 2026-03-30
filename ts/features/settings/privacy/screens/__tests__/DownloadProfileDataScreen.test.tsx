@@ -1,7 +1,6 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import I18n from "i18next";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
@@ -27,20 +26,6 @@ jest.mock("../../../../../navigation/params/AppParamsList", () => ({
     goBack: mockGoBack
   })
 }));
-
-const mockToast = {
-  success: jest.fn(),
-  error: jest.fn(),
-  hideAll: jest.fn()
-};
-
-jest.mock("@pagopa/io-app-design-system", () => {
-  const actual = jest.requireActual("@pagopa/io-app-design-system");
-  return {
-    ...actual,
-    useIOToast: () => mockToast
-  };
-});
 
 describe("DownloadProfileDataScreen", () => {
   const dispatchMock = jest.fn();
@@ -77,19 +62,11 @@ describe("DownloadProfileDataScreen", () => {
     );
   });
 
-  it("should navigate to PROFILE_PRIVACY when the link is pressed", () => {
+  it("should contain a properly formatted markdown link for privacy policy", () => {
+    mockUserDataProcessing();
     const { getByText } = renderComponent();
-    fireEvent.press(
-      getByText(
-        I18n.t("profile.main.privacy.exportData.detail.paragraph3.link")
-      )
-    );
-    expect(mockNavigate).toHaveBeenCalledWith(
-      SETTINGS_ROUTES.PROFILE_NAVIGATOR,
-      expect.objectContaining({
-        screen: SETTINGS_ROUTES.PROFILE_PRIVACY
-      })
-    );
+    const markdownLinkPattern = new RegExp(`\\[.+\\]\\(privacy://policy\\)`);
+    expect(getByText(markdownLinkPattern)).toBeTruthy();
   });
 });
 

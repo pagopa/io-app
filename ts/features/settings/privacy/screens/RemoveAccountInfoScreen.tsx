@@ -1,7 +1,7 @@
 import {
   Banner,
-  Body,
   ContentWrapper,
+  IOMarkdownLite,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
@@ -59,24 +59,9 @@ const RemoveAccountInfo = () => {
           content={I18n.t("profile.main.privacy.removeAccount.info.banner")}
         />
         <VSpacer size={24} />
-        <Body weight="Regular">
-          {I18n.t("profile.main.privacy.removeAccount.info.body.p1")}
-        </Body>
-        <VSpacer size={16} />
-        <Body>
-          <Body>
-            {I18n.t(
-              "profile.main.privacy.removeAccount.info.body.p2.firstPart"
-            )}
-          </Body>
-          <Body weight="Semibold">
-            {I18n.t("profile.main.privacy.removeAccount.info.body.p2.lastPart")}
-          </Body>
-        </Body>
-        <VSpacer size={16} />
-        <Body weight="Regular">
-          {I18n.t("profile.main.privacy.removeAccount.info.body.p3")}
-        </Body>
+        <IOMarkdownLite
+          content={I18n.t("profile.main.privacy.removeAccount.info.body")}
+        />
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>
   );

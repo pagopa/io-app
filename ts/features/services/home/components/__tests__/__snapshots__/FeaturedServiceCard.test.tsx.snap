@@ -1086,6 +1086,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                       "borderCurve": "continuous",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                      "overflow": "hidden",
                                     },
                                     {
                                       "borderRadius": 36,
@@ -1116,7 +1117,6 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                       },
                                       {
                                         "alignSelf": "center",
-                                        "flexShrink": 1,
                                         "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
