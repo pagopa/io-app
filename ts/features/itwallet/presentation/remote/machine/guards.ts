@@ -1,14 +1,14 @@
+import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import { useIOStore } from "../../../../../store/hooks.ts";
-import { isItwEnabledSelector } from "../../../common/store/selectors/remoteConfig.ts";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
-import { itwCredentialsEidStatusSelector } from "../../../credentials/store/selectors";
-import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences.ts";
-import { isWalletInstanceAttestationValid } from "../../../common/utils/itwAttestationUtils.ts";
-import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors/index.ts";
 import { ItwSessionExpiredError } from "../../../api/client.ts";
+import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences.ts";
+import { isItwEnabledSelector } from "../../../common/store/selectors/remoteConfig.ts";
+import { isWalletInstanceAttestationValid } from "../../../common/utils/itwAttestationUtils.ts";
+import { itwCredentialsEidStatusSelector } from "../../../credentials/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors/index.ts";
 import { RemoteEvents } from "./events.ts";
 
 export const createRemoteGuardsImplementation = (

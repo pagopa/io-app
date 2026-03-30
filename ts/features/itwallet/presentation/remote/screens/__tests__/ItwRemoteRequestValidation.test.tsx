@@ -1,24 +1,24 @@
-import { createStore, Action } from "redux";
-import { fromPromise } from "xstate";
 import { act } from "@testing-library/react-native";
-import { ITW_REMOTE_ROUTES } from "../../navigation/routes.ts";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper.tsx";
-import { GlobalState } from "../../../../../../store/reducers/types.ts";
-import { ItwRemoteRequestValidationScreen } from "../ItwRemoteRequestValidationScreen.tsx";
-import { appReducer } from "../../../../../../store/reducers";
+import { Action, createStore } from "redux";
+import { fromPromise } from "xstate";
+import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList.ts";
 import { applicationChangeState } from "../../../../../../store/actions/application.ts";
+import { startupLoadSuccess } from "../../../../../../store/actions/startup.ts";
+import { appReducer } from "../../../../../../store/reducers";
+import { StartupStatusEnum } from "../../../../../../store/reducers/startup.ts";
+import { GlobalState } from "../../../../../../store/reducers/types.ts";
+import { reproduceSequence } from "../../../../../../utils/tests.ts";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper.tsx";
+import { identificationSuccess } from "../../../../../identification/store/actions/index.ts";
+import { itwRemoteMachine } from "../../machine/machine.ts";
+import { ItwRemoteMachineContext } from "../../machine/provider.tsx";
+import { ItwRemoteParamsList } from "../../navigation/ItwRemoteParamsList.ts";
+import { ITW_REMOTE_ROUTES } from "../../navigation/routes.ts";
 import {
   ItwRemoteFlowType,
   ItwRemoteRequestPayload
 } from "../../utils/itwRemoteTypeUtils.ts";
-import { ItwRemoteMachineContext } from "../../machine/provider.tsx";
-import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList.ts";
-import { ItwRemoteParamsList } from "../../navigation/ItwRemoteParamsList.ts";
-import { itwRemoteMachine } from "../../machine/machine.ts";
-import { identificationSuccess } from "../../../../../identification/store/actions/index.ts";
-import { startupLoadSuccess } from "../../../../../../store/actions/startup.ts";
-import { StartupStatusEnum } from "../../../../../../store/reducers/startup.ts";
-import { reproduceSequence } from "../../../../../../utils/tests.ts";
+import { ItwRemoteRequestValidationScreen } from "../ItwRemoteRequestValidationScreen.tsx";
 
 type ActorRef = ReturnType<typeof ItwRemoteMachineContext.useActorRef>;
 
@@ -179,7 +179,8 @@ const renderComponent = (
       isEidExpired: jest.fn().mockReturnValue(false)
     },
     actions: {
-      navigateToClaimsDisclosureScreen: jest.fn()
+      navigateToClaimsDisclosureScreen: jest.fn(),
+      onInit: jest.fn()
     },
     actors: {
       evaluateRelyingPartyTrust: fromPromise(jest.fn()),

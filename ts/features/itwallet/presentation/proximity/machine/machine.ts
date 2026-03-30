@@ -1,17 +1,18 @@
 import { assign, fromCallback, fromPromise, setup, stateIn } from "xstate";
-import { InitialContext, Context } from "./context";
-import { ProximityEvents } from "./events";
-import { ItwPresentationTags } from "./tags";
 import {
-  SendErrorResponseActorOutput,
-  SendDocumentsActorInput,
-  SendDocumentsActorOutput,
-  StartProximityFlowInput,
   CheckPermissionsInput,
   CloseActorOutput,
-  GetQrCodeStringActorOutput
+  GetQrCodeStringActorOutput,
+  ProximityCommunicationLogicInput,
+  SendDocumentsActorInput,
+  SendDocumentsActorOutput,
+  SendErrorResponseActorOutput,
+  StartProximityFlowInput
 } from "./actors";
+import { Context, InitialContext } from "./context";
+import { ProximityEvents } from "./events";
 import { mapEventToFailure } from "./failure";
+import { ItwPresentationTags } from "./tags";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -23,6 +24,7 @@ export const itwProximityMachine = setup({
     events: {} as ProximityEvents
   },
   actions: {
+    onInit: notImplemented,
     /**
      * Context manipulation
      */
@@ -61,7 +63,10 @@ export const itwProximityMachine = setup({
       notImplemented
     ),
     closeProximityFlow: fromPromise<CloseActorOutput, void>(notImplemented),
-    proximityCommunicationLogic: fromCallback<ProximityEvents>(notImplemented),
+    proximityCommunicationLogic: fromCallback<
+      ProximityEvents,
+      ProximityCommunicationLogicInput
+    >(notImplemented),
     terminateProximitySession:
       fromPromise<SendErrorResponseActorOutput>(notImplemented),
     sendDocuments: fromPromise<
@@ -76,15 +81,18 @@ export const itwProximityMachine = setup({
   id: "itwProximityMachine",
   context: { ...InitialContext },
   initial: "Idle",
+  entry: "onInit",
   states: {
     Idle: {
       description:
         "The machine is in idle, ready to start the proximity presentation flow",
       on: {
         start: {
-          actions: assign(({ event }) => ({
-            ...InitialContext,
-            credentialType: event.credentialType
+          // Resets context
+          actions: assign(() => ({
+            failure: undefined,
+            proximityDetails: undefined,
+            verifierRequest: undefined
           })),
           target: "Permissions"
         }
@@ -323,7 +331,14 @@ export const itwProximityMachine = setup({
         "Manages the communication lifecycle between the device and the verifier",
       invoke: {
         id: "proximityCommunicationLogic",
-        src: "proximityCommunicationLogic"
+        src: "proximityCommunicationLogic",
+        input: ({ context }) => ({
+          credentials: context.credentials
+        }),
+        onError: {
+          actions: "setFailure",
+          target: "#itwProximityMachine.Failure"
+        }
       },
       on: {
         "device-connecting": {
@@ -398,6 +413,8 @@ export const itwProximityMachine = setup({
             id: "sendDocuments",
             src: "sendDocuments",
             input: ({ context }) => ({
+              walletInstanceAttestation: context.walletInstanceAttestation,
+              credentials: context.credentials,
               verifierRequest: context.verifierRequest
             }),
             onDone: {

@@ -15,10 +15,7 @@ import {
 } from "../../analytics";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
-import {
-  itwCredentialsRemoveByType,
-  itwCredentialsStore
-} from "../../credentials/store/actions";
+import { itwCredentialsReplaceByType } from "../../credentials/store/actions";
 import { itwClearCredentialUpgradeFailed } from "../../common/store/actions/preferences";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
@@ -136,11 +133,9 @@ export const createCredentialIssuanceActionsImplementation = (
     CredentialIssuanceEvents
   >) => {
     assert(context.credentialType, "credentialType is undefined");
-    assert(context.credentials, "credential is undefined");
-    // Removes any credentials with thye same type stored in the wallet
-    store.dispatch(itwCredentialsRemoveByType(context.credentialType));
-    // Stores the new obtained credentials
-    store.dispatch(itwCredentialsStore(context.credentials));
+    assert(context.credentials, "credentials is undefined");
+    // Removes any credentials with the same type and stores the new ones atomically
+    store.dispatch(itwCredentialsReplaceByType(context.credentials, {}));
     // Clear older upgrade-failed flag for this credential after a successful issuance/upgrade.
     store.dispatch(itwClearCredentialUpgradeFailed(context.credentialType));
   },

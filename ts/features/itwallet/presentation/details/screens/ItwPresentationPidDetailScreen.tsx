@@ -14,8 +14,8 @@ import {
 } from "../../../common/components/ItwBrandedSkiaGradient";
 import { PoweredByItWalletText } from "../../../common/components/PoweredByItWalletText";
 import {
-  ItwJwtCredentialStatus,
-  StoredCredential
+  CredentialMetadata,
+  ItwJwtCredentialStatus
 } from "../../../common/utils/itwTypesUtils";
 import {
   itwCredentialsEidSelector,
@@ -41,7 +41,7 @@ export const ItwPresentationPidDetailScreen = () => {
     }, [maybeEidStatus])
   );
 
-  const getContent = (credential: StoredCredential) => (
+  const getContent = (credential: CredentialMetadata) => (
     <ItwPresentationDetailsScreenBase credential={credential}>
       {/* Header with logo and description */}
       <ItwPresentationPidDetailHeader />

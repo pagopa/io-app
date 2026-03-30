@@ -3,8 +3,15 @@ import * as O from "fp-ts/Option";
 import { SagaIterator } from "redux-saga";
 import { call, fork, put, select, takeLatest } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+import {
+  syncItwAnalyticsProperties,
+  updateNfcInfoTrackingProperties,
+  watchItwAnalyticsSaga
+} from "../../analytics/saga";
 import { watchItwCredentialsSaga } from "../../credentials/saga";
 import { checkCredentialsStatusAssertion } from "../../credentials/saga/checkCredentialsStatusAssertion";
+import { handleItwCredentialsVaultCoherenceSaga } from "../../credentials/saga/handleItwCredentialsVaultCoherenceSaga";
+import { handleItwCredentialsVaultMigrationSaga } from "../../credentials/saga/handleItwCredentialsVaultMigrationSaga";
 import { handleWalletCredentialsRehydration } from "../../credentials/saga/handleWalletCredentialsRehydration";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors/index.ts";
 import { watchItwCredentialsCatalogueSaga } from "../../credentialsCatalogue/saga/index.ts";
@@ -17,11 +24,6 @@ import {
   checkWalletInstanceStateSaga
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
 import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga.ts";
-import {
-  watchItwAnalyticsSaga,
-  syncItwAnalyticsProperties,
-  updateNfcInfoTrackingProperties
-} from "../../analytics/saga";
 import {
   itwFreezeSimplifiedActivationRequirements,
   itwSetAuthLevel,
@@ -68,6 +70,13 @@ export function* watchItwSaga(): SagaIterator {
  */
 export function* watchItwOfflineSaga(): SagaIterator {
   yield* fork(watchItwCredentialsSaga);
+
+  // Migrate legacy credentials to vault
+  yield* call(handleItwCredentialsVaultMigrationSaga);
+
+  // Ensure Redux and CredentialsVault are coherent
+  yield* call(handleItwCredentialsVaultCoherenceSaga);
+
   yield* fork(handleWalletCredentialsRehydration);
   // Check if the device has the NFC Feature
   yield* fork(checkHasNfcFeatureSaga);

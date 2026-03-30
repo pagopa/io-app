@@ -27,7 +27,7 @@ export const selectCredentialOption = (snapshot: MachineSnapshot) =>
   // we continue using the SD-JWT format to display credential details.
   O.fromNullable(
     snapshot.context.credentials?.find(
-      ({ format }) => format !== CredentialFormat.MDOC
+      ({ metadata }) => metadata.format !== CredentialFormat.MDOC
     )
   );
 

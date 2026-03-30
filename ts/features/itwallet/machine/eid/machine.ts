@@ -12,7 +12,7 @@ import {
 import { assert } from "../../../../utils/assert.ts";
 import { trackItWalletIntroScreen } from "../../analytics";
 import {
-  StoredCredential,
+  CredentialBundle,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
@@ -22,6 +22,7 @@ import {
   InitMrtdPoPChallengeActorParams,
   type RequestEidActorParams,
   StartAuthFlowActorParams,
+  StoreEidCredentialActorParams,
   ValidateMrtdPoPChallengeActorParams
 } from "./actors";
 import {
@@ -83,7 +84,6 @@ export const itwEidIssuanceMachine = setup({
     cleanupIntegrityKeyTag: notImplemented,
     storeWalletInstanceAttestation: notImplemented,
     storeAuthLevel: notImplemented,
-    storeEidCredential: notImplemented,
     storeCredentialUpgradeFailures: notImplemented,
     handleSessionExpired: notImplemented,
     resetWalletInstance: notImplemented,
@@ -104,7 +104,7 @@ export const itwEidIssuanceMachine = setup({
      */
 
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
-    loadPidIntoContext: notImplemented,
+
     /**
      * Save the final redirect url in the machine context for later reuse.
      * This action is the same for the three identification methods.
@@ -179,7 +179,10 @@ export const itwEidIssuanceMachine = setup({
      * PID issuance actors
      */
 
-    requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
+    requestEid: fromPromise<CredentialBundle, RequestEidActorParams>(
+      notImplemented
+    ),
+    storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
       notImplemented
     ),
 
@@ -195,7 +198,8 @@ export const itwEidIssuanceMachine = setup({
     isOperationAborted: notImplemented,
     hasIntegrityKeyTag: ({ context }) => context.integrityKeyTag !== undefined,
     hasValidWalletInstanceAttestation: notImplemented,
-    hasLegacyCredentials: ({ context }) => context.legacyCredentials.length > 0,
+    hasCredentialsToUpgrade: ({ context }) =>
+      context.credentialsToUpgrade.length > 0,
     isNFCEnabled: ({ context }) => context.cieContext?.isNFCEnabled || false,
     isReissuance: ({ context }) => context.mode === "reissuance",
     isUpgrade: ({ context }) => context.mode === "upgrade",
@@ -482,8 +486,7 @@ export const itwEidIssuanceMachine = setup({
       ],
       always: [
         {
-          guard: "hasLegacyCredentials",
-          actions: "loadPidIntoContext",
+          guard: "hasCredentialsToUpgrade",
           target: "#itwEidIssuanceMachine.CredentialsUpgrade"
         },
         {
@@ -1121,15 +1124,32 @@ export const itwEidIssuanceMachine = setup({
         DisplayingPreview: {
           on: {
             "add-to-wallet": {
-              actions: [
-                "storeEidCredential",
-                "trackWalletInstanceCreation",
-                "freezeSimplifiedActivationRequirements"
-              ],
-              target: "Completed"
+              target: "StoringCredential"
             },
             close: {
               actions: ["closeIssuance"]
+            }
+          }
+        },
+        StoringCredential: {
+          description:
+            "This state stores the obtained credential in the secure storage and redux",
+          tags: [ItwTags.Loading],
+          invoke: {
+            src: "storeEidCredential",
+            input: ({ context }) => ({
+              eid: context.eid
+            }),
+            onDone: {
+              target: "Completed",
+              actions: [
+                "trackWalletInstanceCreation",
+                "freezeSimplifiedActivationRequirements"
+              ]
+            },
+            onError: {
+              target: "#itwEidIssuanceMachine.Failure",
+              actions: "setFailure"
             }
           }
         },
@@ -1140,7 +1160,7 @@ export const itwEidIssuanceMachine = setup({
       onDone: [
         {
           guard: and([
-            "hasLegacyCredentials",
+            "hasCredentialsToUpgrade",
             or(["isReissuance", "isUpgrade"])
           ]),
           target: "#itwEidIssuanceMachine.CredentialsUpgrade"
@@ -1181,7 +1201,7 @@ export const itwEidIssuanceMachine = setup({
                 pid: context.eid,
                 walletInstanceAttestation:
                   context.walletInstanceAttestation?.jwt,
-                credentials: context.legacyCredentials,
+                credentials: context.credentialsToUpgrade,
                 issuanceMode: context.mode
               };
             },

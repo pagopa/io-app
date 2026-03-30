@@ -10,7 +10,7 @@ import mdl from "../../__mocks__/mdl.json";
 import statusAssertion from "../../__mocks__/statusAssertion.json";
 import ts from "../../__mocks__/ts.json";
 import { DigitalCredentialMetadata } from "./itwCredentialsCatalogueUtils";
-import { ParsedStatusAssertion, StoredCredential } from "./itwTypesUtils";
+import { ParsedStatusAssertion, CredentialMetadata } from "./itwTypesUtils";
 
 export const ISSUER_MOCK_NAME = "Istituto Poligrafico e Zecca dello Stato";
 
@@ -30,17 +30,17 @@ export enum CredentialType {
 }
 
 export const ItwStoredCredentialsMocks = {
-  eid: eid as unknown as StoredCredential,
-  dc: dc as unknown as StoredCredential,
-  mdl: mdl as unknown as StoredCredential,
-  ts: ts as unknown as StoredCredential,
+  eid: eid as unknown as CredentialMetadata,
+  dc: dc as unknown as CredentialMetadata,
+  mdl: mdl as unknown as CredentialMetadata,
+  ts: ts as unknown as CredentialMetadata,
   L3: {
-    mdl: mdlL3 as unknown as StoredCredential,
-    ts: tsL3 as unknown as StoredCredential,
-    dc: dcL3 as unknown as StoredCredential,
-    ed: edL3 as unknown as StoredCredential,
-    ee: eeL3 as unknown as StoredCredential,
-    res: resL3 as unknown as StoredCredential
+    mdl: mdlL3 as unknown as CredentialMetadata,
+    ts: tsL3 as unknown as CredentialMetadata,
+    dc: dcL3 as unknown as CredentialMetadata,
+    ed: edL3 as unknown as CredentialMetadata,
+    ee: eeL3 as unknown as CredentialMetadata,
+    res: resL3 as unknown as CredentialMetadata
   }
 };
 

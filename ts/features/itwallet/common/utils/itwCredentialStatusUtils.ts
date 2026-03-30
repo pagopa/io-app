@@ -3,7 +3,7 @@ import { differenceInCalendarDays } from "date-fns";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { getCredentialExpireDate } from "./itwClaimsUtils";
-import { ItwCredentialStatus, StoredCredential } from "./itwTypesUtils";
+import { ItwCredentialStatus, CredentialMetadata } from "./itwTypesUtils";
 
 const DEFAULT_EXPIRING_DAYS = 30;
 
@@ -25,7 +25,7 @@ type GetCredentialStatusOptions = {
  * @returns ItwCredentialStatus
  */
 export const getCredentialStatus = (
-  credential: StoredCredential,
+  credential: CredentialMetadata,
   options: GetCredentialStatusOptions = {}
 ): ItwCredentialStatus => {
   const { expiringDays = DEFAULT_EXPIRING_DAYS } = options;
@@ -89,7 +89,7 @@ export const getCredentialStatus = (
  * Get the credential status and the error message corresponding to the status assertion error, if present.
  * The message is dynamic and extracted from the issuer configuration.
  */
-export const getCredentialStatusObject = (credential: StoredCredential) => {
+export const getCredentialStatusObject = (credential: CredentialMetadata) => {
   const { storedStatusAssertion, issuerConf, credentialId } = credential;
 
   const errorCode =

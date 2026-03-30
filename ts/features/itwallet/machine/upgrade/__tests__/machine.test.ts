@@ -1,13 +1,18 @@
 import { createActor, fromPromise, waitFor } from "xstate";
 import { itwCredentialUpgradeMachine } from "../machine";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
-import { UpgradeCredentialParams, UpgradeCredentialOutput } from "../actors";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
+import {
+  LoadContextOutput,
+  UpgradeCredentialParams,
+  UpgradeCredentialOutput
+} from "../actors";
+
+const mockLoadContext = jest.fn(() => Promise.resolve({} as LoadContextOutput));
 
 const makeCredential = (
-  overrides: Partial<StoredCredential> = {}
-): StoredCredential => ({
+  overrides: Partial<CredentialMetadata> = {}
+): CredentialMetadata => ({
   keyTag: "tag",
-  credential: "credential-data",
   format: "format",
   parsedCredential: {} as any,
   credentialType: "TYPE",
@@ -16,6 +21,13 @@ const makeCredential = (
   jwt: { expiration: new Date().toISOString() },
   spec_version: "1.0.0",
   ...overrides
+});
+
+const makeUpgradeOutput = (
+  credential: CredentialMetadata
+): UpgradeCredentialOutput => ({
+  credentialType: credential.credentialType,
+  credentials: [{ credential: "raw-jwt", metadata: credential }]
 });
 
 describe("itwCredentialUpgradeMachine", () => {
@@ -27,6 +39,7 @@ describe("itwCredentialUpgradeMachine", () => {
 
     const machine = itwCredentialUpgradeMachine.provide({
       actors: {
+        loadContext: fromPromise<LoadContextOutput>(mockLoadContext),
         upgradeCredential: fromPromise<
           UpgradeCredentialOutput,
           UpgradeCredentialParams
@@ -36,13 +49,13 @@ describe("itwCredentialUpgradeMachine", () => {
     });
     const actor = createActor(machine, {
       input: {
-        walletInstanceAttestation: "attestation",
-        pid: makeCredential(),
         credentials: [],
         issuanceMode: "upgrade"
       }
     });
     actor.start();
+
+    await waitFor(actor, snap => snap.matches("Completed"));
 
     expect(mockUpgradeCredential).not.toHaveBeenCalled();
     expect(mockStoreCredential).not.toHaveBeenCalled();
@@ -53,15 +66,13 @@ describe("itwCredentialUpgradeMachine", () => {
 
   it("should upgrade credentials one by one and complete", async () => {
     const mockUpgradeCredential = jest.fn(({ input }) =>
-      Promise.resolve({
-        credentialType: input.credential.credentialType,
-        credentials: [input.credential]
-      })
+      Promise.resolve(makeUpgradeOutput(input.credential))
     );
     const mockStoreCredential = jest.fn();
 
     const machine = itwCredentialUpgradeMachine.provide({
       actors: {
+        loadContext: fromPromise<LoadContextOutput>(mockLoadContext),
         upgradeCredential: fromPromise<
           UpgradeCredentialOutput,
           UpgradeCredentialParams
@@ -77,8 +88,6 @@ describe("itwCredentialUpgradeMachine", () => {
 
     const actor = createActor(machine, {
       input: {
-        walletInstanceAttestation: "attestation",
-        pid: makeCredential(),
         credentials,
         issuanceMode: "upgrade"
       }
@@ -87,8 +96,8 @@ describe("itwCredentialUpgradeMachine", () => {
 
     await waitFor(actor, snap => snap.matches("Completed"));
 
-    expect(mockUpgradeCredential).toHaveBeenCalled();
-    expect(mockStoreCredential).toHaveBeenCalled();
+    expect(mockUpgradeCredential).toHaveBeenCalledTimes(2);
+    expect(mockStoreCredential).toHaveBeenCalledTimes(2);
 
     expect(actor.getSnapshot().value).toBe("Completed");
     expect(actor.getSnapshot().output).toEqual({ failedCredentials: [] });
@@ -99,16 +108,14 @@ describe("itwCredentialUpgradeMachine", () => {
       if (input.credential.credentialType === "fail") {
         return Promise.reject(new Error("fail"));
       }
-      return Promise.resolve({
-        credentialType: input.credential.credentialType,
-        credentials: [input.credential]
-      });
+      return Promise.resolve(makeUpgradeOutput(input.credential));
     });
 
     const mockStoreCredential = jest.fn();
 
     const machine = itwCredentialUpgradeMachine.provide({
       actors: {
+        loadContext: fromPromise<LoadContextOutput>(mockLoadContext),
         upgradeCredential: fromPromise<
           UpgradeCredentialOutput,
           UpgradeCredentialParams
@@ -122,8 +129,6 @@ describe("itwCredentialUpgradeMachine", () => {
     ];
     const actor = createActor(machine, {
       input: {
-        walletInstanceAttestation: "attestation",
-        pid: makeCredential(),
         credentials,
         issuanceMode: "upgrade"
       }

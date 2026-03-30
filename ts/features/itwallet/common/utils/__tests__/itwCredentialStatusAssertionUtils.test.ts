@@ -1,15 +1,14 @@
 import { shouldRequestStatusAssertion } from "../itwCredentialStatusAssertionUtils";
 import { CredentialType, ItwStatusAssertionMocks } from "../itwMocksUtils";
-import { StoredCredential } from "../itwTypesUtils";
+import { CredentialMetadata } from "../itwTypesUtils";
 
 describe("shouldRequestStatusAssertion", () => {
-  const baseMockCredential: StoredCredential = {
-    credential: "",
+  const baseMockCredential: CredentialMetadata = {
     credentialType: CredentialType.DRIVING_LICENSE,
     credentialId: "dc_sd_jwt_mDL",
     format: "dc+sd-jwt",
     keyTag: "9020c6f8-01be-4236-9b6f-834af9dcbc63",
-    issuerConf: {} as StoredCredential["issuerConf"],
+    issuerConf: {} as CredentialMetadata["issuerConf"],
     parsedCredential: {},
     jwt: {
       issuedAt: "2024-09-30T07:32:49.000Z",
@@ -31,7 +30,7 @@ describe("shouldRequestStatusAssertion", () => {
   });
 
   it("return true when the credential status is unknown", () => {
-    const mockCredential: StoredCredential = {
+    const mockCredential: CredentialMetadata = {
       ...baseMockCredential,
       storedStatusAssertion: {
         credentialStatus: "unknown"
@@ -41,7 +40,7 @@ describe("shouldRequestStatusAssertion", () => {
   });
 
   it("return true when the status assertion is expired", () => {
-    const mockCredential: StoredCredential = {
+    const mockCredential: CredentialMetadata = {
       ...baseMockCredential,
       storedStatusAssertion: {
         credentialStatus: "valid",
@@ -56,7 +55,7 @@ describe("shouldRequestStatusAssertion", () => {
   });
 
   it("return false when the status assertion is still valid", () => {
-    const mockCredential: StoredCredential = {
+    const mockCredential: CredentialMetadata = {
       ...baseMockCredential,
       storedStatusAssertion: {
         credentialStatus: "valid",
@@ -71,7 +70,7 @@ describe("shouldRequestStatusAssertion", () => {
   });
 
   it("return true when the credential status is invalid", () => {
-    const mockCredential: StoredCredential = {
+    const mockCredential: CredentialMetadata = {
       ...baseMockCredential,
       storedStatusAssertion: {
         credentialStatus: "invalid"
