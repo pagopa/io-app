@@ -37,6 +37,7 @@ export const itwProximityMachine = setup({
 
     navigateToGrantPermissionsScreen: notImplemented,
     navigateToBluetoothActivationScreen: notImplemented,
+    navigateToQrCodeScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToClaimsDisclosureScreen: notImplemented,
     navigateToSendDocumentsResponseScreen: notImplemented,
@@ -82,9 +83,8 @@ export const itwProximityMachine = setup({
         "The machine is in idle, ready to start the proximity presentation flow",
       on: {
         start: {
-          actions: assign(({ event }) => ({
-            ...InitialContext,
-            credentialType: event.credentialType
+          actions: assign(() => ({
+            ...InitialContext
           })),
           target: "Permissions"
         }
@@ -229,6 +229,7 @@ export const itwProximityMachine = setup({
       }
     },
     GenerateQRCode: {
+      entry: "navigateToQrCodeScreen",
       initial: "StartingProximityFlow",
       description: "Start the proximity and generates the QR code string",
       states: {
