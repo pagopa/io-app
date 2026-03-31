@@ -155,6 +155,9 @@ export const itwProximityMachine = setup({
           on: {
             close: {
               target: "#itwProximityMachine.Idle"
+            },
+            dismiss: {
+              target: "#itwProximityMachine.Idle"
             }
           }
         }
@@ -222,6 +225,9 @@ export const itwProximityMachine = setup({
             "Display the system alert informing the user that must enable the Bluetooth to proceed",
           on: {
             close: {
+              target: "#itwProximityMachine.Idle"
+            },
+            dismiss: {
               target: "#itwProximityMachine.Idle"
             }
           }

@@ -27,7 +27,9 @@ import { ItWalletLogo } from "../../../common/components/ItWalletLogo.tsx";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
 import {
+  selectIsBluetoothRequiredState,
   selectIsLoading,
+  selectIsPermissionsRequiredState,
   selectIsQRCodeGenerationError,
   selectQRCodeString
 } from "../machine/selectors.ts";
@@ -64,6 +66,12 @@ export const ItwProximityQrCodeScreen = () => {
   const isProximityError = ItwProximityMachineContext.useSelector(
     selectIsQRCodeGenerationError
   );
+  const isPermissionsRequired = ItwProximityMachineContext.useSelector(
+    selectIsPermissionsRequiredState
+  );
+  const isBluetoothRequired = ItwProximityMachineContext.useSelector(
+    selectIsBluetoothRequiredState
+  );
   const shouldBlockProximityPresentation = useIOSelector(
     shouldBlockProximityQrCodeSelector
   );
@@ -98,6 +106,13 @@ export const ItwProximityQrCodeScreen = () => {
       }),
     [navigation, machineRef]
   );
+
+  // If the user denied permissions or didn't enable Bluetooth, go back
+  useEffect(() => {
+    if (isPermissionsRequired || isBluetoothRequired) {
+      navigation.goBack();
+    }
+  }, [isPermissionsRequired, isBluetoothRequired, navigation]);
 
   const handleRetry = () => {
     setIsRetrying(true);
