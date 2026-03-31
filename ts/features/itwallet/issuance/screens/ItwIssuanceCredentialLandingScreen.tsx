@@ -175,5 +175,15 @@ export const ItwIssuanceCredentialLandingScreen = ({
     );
   }
 
-  return null;
+  return (
+    <OperationResultScreenContent
+      pictogram="umbrella"
+      title={I18n.t(`features.itWallet.issuance.landingError.title`)}
+      subtitle={I18n.t(`features.itWallet.issuance.landingError.body`)}
+      action={{
+        label: I18n.t(`features.itWallet.issuance.landingError.action`),
+        onPress: () => navigation.popToTop()
+      }}
+    />
+  );
 };
