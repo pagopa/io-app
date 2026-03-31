@@ -75,6 +75,19 @@ export const areAllPresentableCredentialsExpired = (
 };
 
 /**
+ * Selector to determine whether there are any presentable credentials.
+ * Returns `true` if there is at least one MDOC credential in the wallet.
+ *
+ * @param state - The global state.
+ * @returns `true` if there is at least one presentable credential, `false` otherwise.
+ */
+export const hasPresentableCredentialsSelector = createSelector(
+  itwPresentableCredentialsByDocTypeSelector,
+  presentableCredentialsByDocType =>
+    Object.keys(presentableCredentialsByDocType).length > 0
+);
+
+/**
  * Selector to determine whether the Proximity QR Code screen should be blocked.
  * It is blocked when the PID is expired AND all presentable credentials are expired.
  * In this case the user must reissue the PID, which will renew all documents too.

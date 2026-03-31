@@ -29,6 +29,7 @@ import { itwIsL3EnabledSelector } from "../../itwallet/common/store/selectors/pr
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { ITW_PROXIMITY_ROUTES } from "../../itwallet/presentation/proximity/navigation/routes";
 import { trackItwProximityShowQrCode } from "../../itwallet/presentation/proximity/analytics";
+import { hasPresentableCredentialsSelector } from "../../itwallet/presentation/proximity/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../itwallet/lifecycle/store/selectors";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
@@ -57,6 +58,9 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   );
   const isItWalletEnabled = useIOSelector(itwIsL3EnabledSelector);
   const itwFeaturesEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const hasPresentableCredentials = useIOSelector(
+    hasPresentableCredentialsSelector
+  );
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
   const isRequiredEidFeedback = useRef(
@@ -165,7 +169,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   }, [dispatch]);
 
   const proximityActionProps: IOScrollViewActions["primary"] | undefined =
-    itwFeaturesEnabled
+    itwFeaturesEnabled && hasPresentableCredentials
       ? {
           label: I18n.t("features.itWallet.presentation.ctas.showQRCode"),
           icon: "productITWallet",
