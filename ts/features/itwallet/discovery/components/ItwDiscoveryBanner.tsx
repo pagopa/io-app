@@ -51,7 +51,7 @@ export const ItwDiscoveryBanner = ({
 
   const bannerId = useMemo(() => {
     if (isWalletInstanceRemotelyActive) {
-      // TODO: SIW-4026 add reactivation bannerId for tracking purposes
+      return "itwDeviceChangedBannerPid";
     }
     if (!isWalletActive) {
       return "itwDiscoveryItWalletNewUser";
