@@ -23,6 +23,7 @@ import {
   updateNfcInfoTrackingProperties
 } from "../../analytics/saga";
 import {
+  itwClearSimplifiedActivationRequirements,
   itwFreezeSimplifiedActivationRequirements,
   itwSetAuthLevel,
   itwSetFiscalCodeWhitelisted
@@ -99,7 +100,16 @@ const handleAuthLevelSanitizationSaga = function* (
   action: ActionType<typeof itwSetFiscalCodeWhitelisted>
 ): SagaIterator {
   if (action.payload) {
-    // Skip the sanitization for whitelisted users
+    // User is confirmed whitelisted: clear any stale isItwSimplifiedActivationRequired
+    // that may have been incorrectly set during a previous BE downtime.
+    const hasItwPID = pipe(
+      yield* select(itwCredentialsEidSelector),
+      O.map(isItwCredential),
+      O.getOrElse(() => false)
+    );
+    if (hasItwPID) {
+      yield* put(itwClearSimplifiedActivationRequirements());
+    }
     return;
   }
 

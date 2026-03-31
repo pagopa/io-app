@@ -21,10 +21,9 @@ export function* handleGetWhitelistedStatus(
     if (E.isRight(response) && response.right.status === 200) {
       const { whitelisted } = response.right.value;
       yield* put(itwSetFiscalCodeWhitelisted(whitelisted));
-    } else {
-      yield* put(itwSetFiscalCodeWhitelisted(false));
     }
+    // Non-200 responses (e.g. BE downtime): preserve the last known persisted value.
   } catch (e) {
-    yield* put(itwSetFiscalCodeWhitelisted(false));
+    // Network/unexpected errors: preserve the last known persisted value.
   }
 }
