@@ -1,5 +1,5 @@
 import I18n from "i18next";
-import { useMemo } from "react";
+import { useLayoutEffect, useMemo } from "react";
 import { Linking } from "react-native";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
@@ -14,9 +14,12 @@ import {
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { CieWarningType } from "../utils/types";
+import { trackItwUserWithoutL3Requirements } from "../../analytics";
 
 export type ItwIdentificationCieWarningScreenNavigationParams = {
   type: CieWarningType;
+  routeName: string;
+  position: "screen" | "bottom_sheet";
 };
 
 type ScreenProps = IOStackNavigationRouteProps<
@@ -31,7 +34,7 @@ const cieFaqUrls: Record<CieWarningType, string> = {
 };
 
 export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
-  const { type } = params.route.params;
+  const { type, routeName, position } = params.route.params;
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const credentialMachineRef =
     ItwCredentialIssuanceMachineContext.useActorRef();
@@ -48,6 +51,14 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
   );
 
   const sectionKey = isCieRequired ? "ko-no-cie" : "l2-fallback";
+
+  useLayoutEffect(() => {
+    trackItwUserWithoutL3Requirements({
+      screen_name: routeName,
+      reason,
+      position
+    });
+  }, [position, reason, routeName]);
 
   const handlePrimaryActionPress = () => {
     trackItwKoStateAction({

@@ -268,3 +268,10 @@ export const trackItwUserWithoutL3Requirements = (
     buildEventProperties("KO", "screen_view", itwUserWithoutL3requirements)
   );
 };
+
+export const trackItwUserWithoutCie = () => {
+  void mixpanelTrack(
+    ITW_IDENTIFICATION_ACTIONS_EVENTS.ITW_USER_WITHOUT_CIE,
+    buildEventProperties("UX", "action")
+  );
+};

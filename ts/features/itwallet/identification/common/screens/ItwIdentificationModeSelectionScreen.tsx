@@ -32,6 +32,7 @@ import {
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import {
   trackItWalletIDMethod,
+  trackItwUserWithoutCie,
   trackItwUserWithoutL3Requirements
 } from "../../analytics";
 import { useContinueWithBottomSheet } from "../hooks/useContinueWithBottomSheet";
@@ -136,11 +137,7 @@ export const ItwIdentificationModeSelectionScreen = ({
   );
 
   const handleNoCiePress = useCallback(() => {
-    trackItwUserWithoutL3Requirements({
-      screen_name: routeName,
-      reason: "user_without_cie",
-      position: "screen"
-    });
+    trackItwUserWithoutCie();
 
     if (!isL2Active && isL2Credential(credentialType)) {
       machineRef.send({
@@ -151,6 +148,12 @@ export const ItwIdentificationModeSelectionScreen = ({
       });
     } else {
       machineRef.send({ type: "go-to-cie-warning", warning: "card" });
+
+      trackItwUserWithoutL3Requirements({
+        screen_name: routeName,
+        reason: "user_without_cie",
+        position: "screen"
+      });
     }
   }, [machineRef, routeName, credentialType, isL2Active]);
 
