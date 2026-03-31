@@ -106,15 +106,19 @@ describe("`handleResponse` function", () => {
   });
 
   describe("with any other status", () => {
+    const arbitraryStatus = Math.random();
     const success: E.Either<Array<ValidationError>, any> = E.right({
-      status: Math.random(),
+      status: arbitraryStatus,
       value: {}
     });
 
-    it("should run `onFailure` callback with the UNKNOWN error", () => {
+    it("should run `onFailure` callback with the HTTP status error", () => {
       const onFailure = jest.fn();
       handleResponse(success, jest.fn(), onFailure);
-      expect(onFailure).toHaveBeenNthCalledWith(1, new Error("UNKNOWN"));
+      expect(onFailure).toHaveBeenNthCalledWith(
+        1,
+        new Error(`response status ${arbitraryStatus}`)
+      );
     });
 
     // eslint-disable-next-line sonarjs/no-identical-functions

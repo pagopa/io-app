@@ -46,12 +46,10 @@ export function handleResponse<T>(
           return undefined;
         }
 
-        if (data.status === 500) {
-          // TODO: provide status code along with message in error
-          //  see https://www.pivotaltracker.com/story/show/170819193
-          return onFailure(new Error(data.value?.title ?? "UNKNOWN"));
-        }
-        return onFailure(new Error("UNKNOWN"));
+        const errorMessage =
+          data.value?.title || `response status ${data.status}`;
+
+        return onFailure(new Error(errorMessage));
       }
     )
   );
