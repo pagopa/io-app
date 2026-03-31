@@ -25,7 +25,7 @@ const baseEid: StoredCredential = {
 
 const l3Eid: StoredCredential = {
   ...baseEid,
-  verification: { assurance_level: "high" }
+  verification: { assurance_level: "high", trust_framework: "eidas" }
 };
 
 const nonL3Eid: StoredCredential = {
