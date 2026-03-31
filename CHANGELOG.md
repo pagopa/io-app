@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.27.0-rc.9](https://github.com/pagopa/io-app/compare/3.27.0-rc.8...3.27.0-rc.9) (2026-03-30)
+
+
+### Chores
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Adjust `Podfile` for Xcode 26.4 compatibility ([#7967](https://github.com/pagopa/io-app/issues/7967)) ([5a02ff0](https://github.com/pagopa/io-app/commit/5a02ff0e11cf828435bfec95d26d5b800583aeae))
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Pin yarn version ([#7949](https://github.com/pagopa/io-app/issues/7949)) ([4bba558](https://github.com/pagopa/io-app/commit/4bba5582a99d51bd4c19ca5d35c17b808bfc2189))
+* **IT-Wallet:** [[SIW-4079](https://pagopa.atlassian.net/browse/SIW-4079)] Allow switching IT-Wallet specs in playground ([#7963](https://github.com/pagopa/io-app/issues/7963)) ([040460e](https://github.com/pagopa/io-app/commit/040460eabc1a77f8174c86771708d4f6fe019992))
+
+## [3.27.0-rc.8](https://github.com/pagopa/io-app/compare/3.27.0-rc.7...3.27.0-rc.8) (2026-03-27)
+
+
+### Chores
+
+* [[IEL-223](https://pagopa.atlassian.net/browse/IEL-223)] Replaced useIOStore with useIOSelector for SendAARMessageDetailBottomSheetComponent ([#7961](https://github.com/pagopa/io-app/issues/7961)) ([ccc6ae8](https://github.com/pagopa/io-app/commit/ccc6ae8661250e10a08fdfd2f3a7048a77a0516d))
+* [[IOPLT-1724](https://pagopa.atlassian.net/browse/IOPLT-1724)] Use `FlatList` instead of `map` to render main icon set ([#7962](https://github.com/pagopa/io-app/issues/7962)) ([dc595e5](https://github.com/pagopa/io-app/commit/dc595e573e0fa2bb571f47010d96554d81832149))
+
 ## [3.27.0-rc.7](https://github.com/pagopa/io-app/compare/3.27.0-rc.6...3.27.0-rc.7) (2026-03-26)
 
 

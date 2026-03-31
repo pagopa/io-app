@@ -65,6 +65,8 @@ type DSIconViewerBoxProps = {
   image: ReactNode;
   size?: "small" | "medium" | "large" | undefined;
   withDot?: boolean;
+  /** When true, the wrapper fills its parent width instead of using the size-based percentage. */
+  fullWidth?: boolean;
 };
 
 const sizeMap = {
@@ -89,14 +91,19 @@ export const DSIconViewerBox = ({
   name,
   image,
   size,
-  withDot = false
+  withDot = false,
+  fullWidth = false
 }: DSIconViewerBoxProps) => {
   const theme = useIOTheme();
   return (
     <View
       style={[
         styles.iconWrapper,
-        size ? sizeMap[size].wrapper : styles.iconWrapperAuto
+        fullWidth
+          ? undefined
+          : size
+          ? sizeMap[size].wrapper
+          : styles.iconWrapperAuto
       ]}
     >
       <View
