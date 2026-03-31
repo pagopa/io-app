@@ -1,4 +1,3 @@
-import * as O from "fp-ts/lib/Option";
 import { put, select } from "typed-redux-saga/macro";
 import { initiateAarFlow } from "../../pn/aar/store/actions";
 import { isSendAARLink } from "../../pn/aar/utils/deepLinking";
@@ -10,12 +9,12 @@ import {
 } from "../../../utils/deepLinkUtils";
 import { walletUpdate } from "../../wallet/store/actions";
 import { cgnEycaStatus } from "../../bonus/cgn/store/actions/eyca/details";
-import { remoteConfigSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { trackIOOpenedFromUniversalAppLink } from "../analytics";
 
 export function* handleStoredLinkingUrlIfNeeded() {
   const storedLinkingUrl = yield* select(storedLinkingUrlSelector);
   if (storedLinkingUrl !== undefined) {
+    trackIOOpenedFromUniversalAppLink(storedLinkingUrl);
     const shouldNavigateToAAR = yield* select(isSendAARLink, storedLinkingUrl);
     if (shouldNavigateToAAR) {
       yield* put(clearLinkingUrl());
@@ -33,19 +32,4 @@ export function* handleStoredLinkingUrlIfNeeded() {
     }
   }
   return false;
-}
-
-export function* checkStoredLinkingUrlSaga() {
-  const remoteConfig = yield* select(remoteConfigSelector);
-
-  const storedLinkingUrl = yield* select(storedLinkingUrlSelector);
-  if (storedLinkingUrl && O.isSome(remoteConfig)) {
-    const store = yield* select();
-
-    const isSendAARLinkSelector = isSendAARLink(store, storedLinkingUrl);
-
-    trackIOOpenedFromUniversalAppLink(
-      isSendAARLinkSelector ? "aar" : "continua_su_io"
-    );
-  }
 }

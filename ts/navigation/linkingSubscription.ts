@@ -24,7 +24,6 @@ const isDeepLinkBlackListed = (url: string): boolean =>
 
 export const linkingSubscription =
   (dispatch: Dispatch<Action>, store: Store<Readonly<GlobalState>>) =>
-  // eslint-disable-next-line sonarjs/cognitive-complexity
   (listener: (url: string) => void) => {
     const subscription = Linking.addEventListener("url", ({ url }) => {
       // Message archiving/restoring hides the bottom tab bar so we must make
@@ -32,10 +31,7 @@ export const linkingSubscription =
       // a deep link may initiate a navigation flow that will later deliver the
       // user to a screen where the tab bar is hidden (while it should be shown)
       const state = store.getState();
-      const isSendAARLinkSelector = isSendAARLink(store.getState(), url);
-      trackIOOpenedFromUniversalAppLink(
-        isSendAARLinkSelector ? "aar" : "continua_su_io"
-      );
+      trackIOOpenedFromUniversalAppLink(url);
       const isArchivingDisabled = isArchivingDisabledSelector(state);
       if (!isArchivingDisabled) {
         // Auto-reset does not provide feedback to the user
