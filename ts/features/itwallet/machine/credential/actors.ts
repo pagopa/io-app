@@ -1,5 +1,5 @@
 import * as O from "fp-ts/lib/Option";
-import { fromPromise } from "xstate";
+import { fromCallback, fromPromise } from "xstate";
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import { useIOStore } from "../../../../store/hooks";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
@@ -8,6 +8,7 @@ import * as itwAttestationUtils from "../../common/utils/itwAttestationUtils";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
 import { getCredentialStatusAssertion } from "../../common/utils/itwCredentialStatusAssertionUtils";
 import {
+  CredentialAccessToken,
   CredentialFormat,
   StoredCredential
 } from "../../common/utils/itwTypesUtils";
@@ -30,6 +31,13 @@ import { type Context } from "./context";
 
 export type GetWalletAttestationActorOutput = Awaited<
   ReturnType<typeof itwAttestationUtils.getWalletInstanceAttestation>
+>;
+
+export type ObtainAccessTokenActorInput = Partial<
+  Omit<
+    credentialIssuanceUtils.CompleteAuthFlowParams,
+    "env" | "itwVersion" | "pid"
+  >
 >;
 
 export type RequestCredentialActorInput =
@@ -174,44 +182,60 @@ export const createCredentialIssuanceActorsImplementation = (
     });
   });
 
+  const obtainAccessToken = fromPromise<
+    CredentialAccessToken,
+    ObtainAccessTokenActorInput
+  >(async ({ input }) => {
+    const {
+      codeVerifier,
+      issuerConf,
+      walletInstanceAttestation,
+      requestedCredential
+    } = input;
+    const eid = itwCredentialsEidSelector(store.getState());
+
+    assert(codeVerifier, "codeVerifier is undefined");
+    assert(issuerConf, "issuerConf is undefined");
+    assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
+    assert(requestedCredential, "requestedCredential is undefined");
+    assert(O.isSome(eid), "eID is undefined");
+
+    const { accessToken } = await credentialIssuanceUtils.completeAuthFlow({
+      env,
+      itwVersion,
+      codeVerifier,
+      issuerConf,
+      walletInstanceAttestation,
+      requestedCredential,
+      pid: eid.value
+    });
+    return accessToken;
+  });
+
   const obtainCredential = fromPromise<
     ObtainCredentialActorOutput,
     ObtainCredentialActorInput
   >(async ({ input }) => {
-    const {
-      credentialType,
-      requestedCredential,
-      issuerConf,
-      walletInstanceAttestation,
-      clientId,
-      codeVerifier
-    } = input;
+    const { credentialType, accessToken, issuerConf, clientId } = input;
     const state = store.getState();
 
-    const eid = itwCredentialsEidSelector(state);
     const sessionToken = sessionTokenSelector(state);
     const integrityKeyTag = itwIntegrityKeyTagSelector(state);
 
     assert(credentialType, "credentialType is undefined");
-    assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
-    assert(requestedCredential, "requestedCredential is undefined");
     assert(issuerConf, "issuerConf is undefined");
     assert(clientId, "clientId is undefined");
-    assert(codeVerifier, "codeVerifier is undefined");
     assert(sessionToken, "sessionToken is undefined");
-    assert(O.isSome(eid), "eID is undefined");
+    assert(accessToken, "accessToken is undefined");
     assert(O.isSome(integrityKeyTag), "integriyKeyTag is undefined");
 
     return await credentialIssuanceUtils.obtainCredential({
       env,
       itwVersion,
+      accessToken,
       credentialType,
-      walletInstanceAttestation,
-      requestedCredential,
       issuerConf,
       clientId,
-      codeVerifier,
-      pid: eid.value,
       sessionToken,
       hardwareKeyTag: integrityKeyTag.value
     });
@@ -251,11 +275,28 @@ export const createCredentialIssuanceActorsImplementation = (
     );
   });
 
+  const waitForSessionRefresh = fromCallback(({ sendBack }) => {
+    const oldSessionToken = sessionTokenSelector(store.getState());
+
+    const unsubscribe = store.subscribe(() => {
+      const currentSessionToken = sessionTokenSelector(store.getState());
+      if (currentSessionToken !== oldSessionToken) {
+        sendBack({ type: "refresh-complete" });
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  });
+
   return {
     verifyTrustFederation,
     getWalletAttestation,
+    obtainAccessToken,
     requestCredential,
     obtainCredential,
-    obtainStatusAssertion
+    obtainStatusAssertion,
+    waitForSessionRefresh
   };
 };

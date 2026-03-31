@@ -1,8 +1,12 @@
-import { and, assign, fromPromise, not, setup } from "xstate";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { and, assign, fromCallback, fromPromise, not, setup } from "xstate";
+import {
+  CredentialAccessToken,
+  StoredCredential
+} from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import {
   GetWalletAttestationActorOutput,
+  ObtainAccessTokenActorInput,
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
   ObtainStatusAssertionActorInput,
@@ -70,6 +74,10 @@ export const itwCredentialIssuanceMachine = setup({
       RequestCredentialActorOutput,
       RequestCredentialActorInput
     >(notImplemented),
+    obtainAccessToken: fromPromise<
+      CredentialAccessToken,
+      ObtainAccessTokenActorInput
+    >(notImplemented),
     obtainCredential: fromPromise<
       ObtainCredentialActorOutput,
       ObtainCredentialActorInput
@@ -77,7 +85,8 @@ export const itwCredentialIssuanceMachine = setup({
     obtainStatusAssertion: fromPromise<
       Array<StoredCredential>,
       ObtainStatusAssertionActorInput
-    >(notImplemented)
+    >(notImplemented),
+    waitForSessionRefresh: fromCallback(notImplemented)
   },
   guards: {
     isSessionExpired: notImplemented,
@@ -258,9 +267,37 @@ export const itwCredentialIssuanceMachine = setup({
       }
     },
     Issuance: {
-      initial: "ObtainingCredential",
+      initial: "ObtainingAccessToken",
       tags: [ItwTags.Issuing],
       states: {
+        WaitingForSessionRefresh: {
+          invoke: {
+            src: "waitForSessionRefresh"
+          },
+          on: {
+            "refresh-complete": { target: "ObtainingCredential" }
+          }
+        },
+        ObtainingAccessToken: {
+          tags: [ItwTags.Loading],
+          invoke: {
+            src: "obtainAccessToken",
+            input: ({ context }) => ({
+              requestedCredential: context.requestedCredential,
+              codeVerifier: context.codeVerifier,
+              issuerConf: context.issuerConf,
+              walletInstanceAttestation: context.walletInstanceAttestation?.jwt
+            }),
+            onDone: {
+              target: "ObtainingCredential",
+              actions: assign(({ event }) => ({ accessToken: event.output }))
+            },
+            onError: {
+              target: "#itwCredentialIssuanceMachine.Failure",
+              actions: "setFailure"
+            }
+          }
+        },
         ObtainingCredential: {
           invoke: {
             src: "obtainCredential",
@@ -270,7 +307,8 @@ export const itwCredentialIssuanceMachine = setup({
               clientId: context.clientId,
               codeVerifier: context.codeVerifier,
               requestedCredential: context.requestedCredential,
-              issuerConf: context.issuerConf
+              issuerConf: context.issuerConf,
+              accessToken: context.accessToken
             }),
             onDone: {
               target: "ObtainingStatusAssertion",
@@ -278,10 +316,17 @@ export const itwCredentialIssuanceMachine = setup({
                 credentials: event.output.credentials
               }))
             },
-            onError: {
-              target: "#itwCredentialIssuanceMachine.Failure",
-              actions: "setFailure"
-            }
+            onError: [
+              {
+                guard: "isSessionExpired",
+                actions: "handleSessionExpired",
+                target: "WaitingForSessionRefresh"
+              },
+              {
+                target: "#itwCredentialIssuanceMachine.Failure",
+                actions: "setFailure"
+              }
+            ]
           }
         },
         ObtainingStatusAssertion: {

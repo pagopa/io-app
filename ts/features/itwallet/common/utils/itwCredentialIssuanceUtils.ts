@@ -96,46 +96,25 @@ export const requestCredential = async ({
   };
 };
 
-export type ObtainCredentialParams = {
+export type CompleteAuthFlowParams = {
   env: Env;
   itwVersion: ItwVersion;
-  credentialType: string;
   walletInstanceAttestation: string;
   requestedCredential: RequestObject;
   pid: StoredCredential;
-  clientId: string;
   codeVerifier: string;
   issuerConf: IssuerConfiguration;
-  hardwareKeyTag: string;
-  sessionToken: string;
 };
 
-/**
- * Obtains a credential from the issuer.
- * @param env - The environment to use for the wallet provider base URL
- * @param itwVersion - IT-Wallet technical specs version
- * @param credentialType - The type of credential to request
- * @param requestedCredential - The requested credential as a RequestObject
- * @param pid - The PID credential
- * @param walletInstanceAttestation - The wallet instance attestation
- * @param clientId - The client ID
- * @param codeVerifier - The code verifier
- * @param issuerConf - The issuer configuration
- * @returns The obtained credential
- */
-export const obtainCredential = async ({
+export const completeAuthFlow = async ({
   env,
   itwVersion,
-  credentialType,
   requestedCredential: requestObject,
-  pid,
-  walletInstanceAttestation,
-  clientId,
-  codeVerifier,
   issuerConf,
-  hardwareKeyTag,
-  sessionToken
-}: ObtainCredentialParams) => {
+  pid,
+  codeVerifier,
+  walletInstanceAttestation
+}: CompleteAuthFlowParams) => {
   const ioWallet = getIoWallet(itwVersion);
 
   // Get WIA crypto context
@@ -157,7 +136,7 @@ export const obtainCredential = async ({
       }
     );
 
-  const { accessToken } = await ioWallet.CredentialIssuance.authorizeAccess(
+  return await ioWallet.CredentialIssuance.authorizeAccess(
     issuerConf,
     code,
     env.ISSUANCE_REDIRECT_URI,
@@ -168,16 +147,48 @@ export const obtainCredential = async ({
       wiaCryptoContext
     }
   );
+};
 
+export type ObtainCredentialParams = {
+  env: Env;
+  itwVersion: ItwVersion;
+  credentialType: string;
+  clientId: string;
+  issuerConf: IssuerConfiguration;
+  hardwareKeyTag: string;
+  sessionToken: string;
+  accessToken: CredentialAccessToken;
+};
+
+/**
+ * Obtains a credential from the issuer.
+ * @param env - The environment to use for the wallet provider base URL
+ * @param itwVersion - IT-Wallet technical specs version
+ * @param credentialType - The type of credential to request
+ * @param requestedCredential - The requested credential as a RequestObject
+ * @param pid - The PID credential
+ * @param walletInstanceAttestation - The wallet instance attestation
+ * @param clientId - The client ID
+ * @param codeVerifier - The code verifier
+ * @param issuerConf - The issuer configuration
+ * @returns The obtained credential
+ */
+export const obtainCredential = async ({
+  env,
+  itwVersion,
+  credentialType,
+  accessToken,
+  clientId,
+  issuerConf,
+  hardwareKeyTag,
+  sessionToken
+}: ObtainCredentialParams) => {
   const credentialIssuanceMaterials = await prepareCredentialIssuanceMaterials(
     accessToken,
-    {
-      env,
-      itwVersion,
-      hardwareKeyTag,
-      sessionToken
-    }
+    { env, itwVersion, hardwareKeyTag, sessionToken }
   );
+
+  const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
 
   const commonParams: RequestAndParseCredentialParams = {
     accessToken,

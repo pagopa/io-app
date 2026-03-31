@@ -1,7 +1,7 @@
 import { CieUtils } from "@pagopa/io-react-native-cie";
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/lib/Option";
-import { fromPromise } from "xstate";
+import { fromCallback, fromPromise } from "xstate";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
@@ -22,6 +22,7 @@ import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
 import { pollForStoreValue } from "../../common/utils/itwStoreUtils";
 import {
+  CredentialAccessToken,
   StoredCredential,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
@@ -48,10 +49,10 @@ import type {
 
 export type RequestEidActorParams = {
   identification: IdentificationContext | undefined;
-  walletInstanceAttestation: string | undefined;
   authenticationContext: AuthenticationContext | undefined;
   level: EidIssuanceLevel | undefined;
   integrityKeyTag: string | undefined;
+  accessToken: CredentialAccessToken | undefined;
 };
 
 export type StartAuthFlowActorParams = {
@@ -302,27 +303,32 @@ export const createEidIssuanceActorsImplementation = (
     return callbackUrl;
   }),
 
-  requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
+  requestAccessToken: fromPromise<CredentialAccessToken, any>(
     async ({ input }) => {
-      assert(input.identification, "identification is undefined");
       assert(
         input.walletInstanceAttestation,
         "walletInstanceAttestation is undefined"
       );
-
-      // At this point, the authorization flow has already started and just needs to be completed
       assert(
         input.authenticationContext,
         "authenticationContext must exist when the identification mode is ciePin"
       );
 
-      assert(input.integrityKeyTag, "integrityKeyTag is undefined");
-
-      const authParams = await issuanceUtils.completeAuthFlow({
+      const { accessToken } = await issuanceUtils.completeAuthFlow({
         ...input.authenticationContext,
         itwVersion,
         walletAttestation: input.walletInstanceAttestation
       });
+      return accessToken;
+    }
+  ),
+
+  requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
+    async ({ input }) => {
+      assert(input.identification, "identification is undefined");
+      assert(input.integrityKeyTag, "integrityKeyTag is undefined");
+      assert(input.accessToken, "accessToken is undefined");
+      assert(input.authenticationContext, "authenticationContext is undefined");
 
       const sessionToken = sessionTokenSelector(store.getState());
       assert(sessionToken, "sessionToken is undefined");
@@ -337,7 +343,7 @@ export const createEidIssuanceActorsImplementation = (
         sessionToken,
         hardwareKeyTag: input.integrityKeyTag,
         itwVersion,
-        ...authParams,
+        accessToken: input.accessToken,
         ...input.authenticationContext
       });
     }
@@ -346,5 +352,20 @@ export const createEidIssuanceActorsImplementation = (
   credentialUpgradeMachine: itwCredentialUpgradeMachine.provide({
     actors: createCredentialUpgradeActorsImplementation(env, itwVersion),
     actions: createCredentialUpgradeActionsImplementation(store)
+  }),
+
+  waitForSessionRefresh: fromCallback(({ sendBack }) => {
+    const oldSessionToken = sessionTokenSelector(store.getState());
+
+    const unsubscribe = store.subscribe(() => {
+      const currentSessionToken = sessionTokenSelector(store.getState());
+      if (currentSessionToken !== oldSessionToken) {
+        sendBack({ type: "refresh-complete" });
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
   })
 });

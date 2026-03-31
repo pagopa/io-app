@@ -3,6 +3,7 @@ import {
   and,
   assertEvent,
   assign,
+  fromCallback,
   fromPromise,
   not,
   or,
@@ -12,6 +13,7 @@ import {
 import { assert } from "../../../../utils/assert.ts";
 import { trackItWalletIntroScreen } from "../../analytics";
 import {
+  CredentialAccessToken,
   StoredCredential,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
@@ -179,9 +181,11 @@ export const itwEidIssuanceMachine = setup({
      * PID issuance actors
      */
 
+    requestAccessToken: fromPromise<CredentialAccessToken>(notImplemented),
     requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
       notImplemented
     ),
+    waitForSessionRefresh: fromCallback(notImplemented),
 
     /**
      * Credential upgrade actors
@@ -1074,8 +1078,31 @@ export const itwEidIssuanceMachine = setup({
     },
     Issuance: {
       entry: "navigateToEidPreviewScreen",
-      initial: "RequestingEid",
+      initial: "RequestingAccessToken",
       states: {
+        WaitingForSessionRefresh: {
+          tags: [ItwTags.Loading],
+          invoke: {
+            src: "waitForSessionRefresh"
+          },
+          on: {
+            "refresh-complete": { target: "RequestingEid" }
+          }
+        },
+        RequestingAccessToken: {
+          tags: [ItwTags.Loading],
+          invoke: {
+            src: "requestAccessToken",
+            input: ({ context }) => ({
+              authenticationContext: context.authenticationContext,
+              walletInstanceAttestation: context.walletInstanceAttestation?.jwt
+            }),
+            onDone: {
+              target: "RequestingEid",
+              actions: assign(({ event }) => ({ accessToken: event.output }))
+            }
+          }
+        },
         RequestingEid: {
           tags: [ItwTags.Loading],
           invoke: {
@@ -1085,13 +1112,19 @@ export const itwEidIssuanceMachine = setup({
               authenticationContext: context.authenticationContext,
               walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
               level: context.level,
-              integrityKeyTag: context.integrityKeyTag
+              integrityKeyTag: context.integrityKeyTag,
+              accessToken: context.accessToken
             }),
             onDone: {
               actions: assign(({ event }) => ({ eid: event.output })),
               target: "CheckingIdentityMatch"
             },
             onError: [
+              {
+                guard: "isSessionExpired",
+                actions: "handleSessionExpired",
+                target: "WaitingForSessionRefresh"
+              },
               {
                 actions: "setFailure",
                 target: "#itwEidIssuanceMachine.Failure"

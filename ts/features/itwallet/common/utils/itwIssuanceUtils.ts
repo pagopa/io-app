@@ -3,7 +3,6 @@ import {
   createCryptoContextFor,
   ItwVersion
 } from "@pagopa/io-react-native-wallet";
-import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import { type IdentificationContext } from "../../machine/eid/context";
 import {
   CredentialAccessToken,
@@ -143,7 +142,7 @@ const completeAuthFlow = async ({
     }
   );
 
-  return { accessToken, dPoPContext: dPopCryptoContext };
+  return { accessToken };
 };
 
 export type PidIssuanceParams = {
@@ -152,7 +151,6 @@ export type PidIssuanceParams = {
   issuerConf: IssuerConfiguration;
   accessToken: CredentialAccessToken;
   clientId: string;
-  dPoPContext: CryptoContext;
   credentialDefinition: AuthorizationDetail;
   hardwareKeyTag: string;
   sessionToken: string;
@@ -168,7 +166,6 @@ const getPid = async ({
   issuerConf,
   clientId,
   accessToken,
-  dPoPContext,
   env,
   hardwareKeyTag,
   sessionToken
@@ -190,6 +187,7 @@ const getPid = async ({
   } = credentialIssuanceMaterials;
 
   const credentialCryptoContext = createCryptoContextFor(keyTag);
+  const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
 
   const { credential, format } =
     await ioWallet.CredentialIssuance.obtainCredential(
@@ -202,7 +200,7 @@ const getPid = async ({
       },
       {
         credentialCryptoContext,
-        dPopCryptoContext: dPoPContext
+        dPopCryptoContext
       }
     );
 

@@ -3,6 +3,7 @@ import type {
   CredentialIssuance
 } from "@pagopa/io-react-native-wallet";
 import type {
+  CredentialAccessToken,
   IssuerConfiguration,
   StoredCredential,
   WalletInstanceAttestations
@@ -143,6 +144,8 @@ export type Context = {
    * The credential type that triggered the eID issuance flow.
    */
   credentialType: string | undefined;
+
+  accessToken: CredentialAccessToken | undefined;
 };
 
 export const InitialContext: Context = {
@@ -158,5 +161,6 @@ export const InitialContext: Context = {
   failure: undefined,
   legacyCredentials: [],
   failedCredentials: undefined,
-  credentialType: undefined
+  credentialType: undefined,
+  accessToken: undefined
 };

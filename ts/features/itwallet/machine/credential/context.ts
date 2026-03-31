@@ -1,5 +1,6 @@
 import { CryptoContext } from "@pagopa/io-react-native-jwt";
 import {
+  CredentialAccessToken,
   IssuerConfiguration,
   RequestObject,
   StoredCredential,
@@ -59,6 +60,7 @@ export type Context = {
    * The credentials catalogue as a dictionary, with an entry for each credential type.
    */
   credentialsCatalogue: Record<string, DigitalCredentialMetadata> | undefined;
+  accessToken: CredentialAccessToken | undefined;
 };
 
 export const InitialContext: Context = {
@@ -73,5 +75,6 @@ export const InitialContext: Context = {
   requestedCredential: undefined,
   credentials: undefined,
   failure: undefined,
-  credentialsCatalogue: undefined
+  credentialsCatalogue: undefined,
+  accessToken: undefined
 };
