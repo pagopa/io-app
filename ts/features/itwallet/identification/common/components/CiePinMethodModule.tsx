@@ -40,6 +40,9 @@ export const CiePinMethodModule = ({ isL3, isReissuanceMode }: Props) => {
           title={I18n.t(
             "features.itWallet.identification.modeSelection.mode.ciePin.title"
           )}
+          subtitle={I18n.t(
+            "features.itWallet.identification.modeSelection.mode.ciePin.subtitle.l3"
+          )}
           icon="fiscalCodeIndividual"
           onPress={() => {
             trackItWalletIDMethodSelected({

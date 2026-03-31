@@ -30,6 +30,9 @@ export const CieIdMethodModule = ({ isL3 }: Props) => {
           title={I18n.t(
             "features.itWallet.identification.modeSelection.mode.cieId.title"
           )}
+          subtitle={I18n.t(
+            "features.itWallet.identification.modeSelection.mode.cieId.subtitle.l3"
+          )}
           icon="cie"
           onPress={() => {
             trackItWalletIDMethodSelected({

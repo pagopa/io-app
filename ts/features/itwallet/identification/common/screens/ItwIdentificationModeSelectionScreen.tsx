@@ -168,7 +168,7 @@ export const ItwIdentificationModeSelectionScreen = ({
         <VSpacer size={8} />
         <VStack space={16}>
           {isReissuanceMode && isL3 ? (
-            <ReissuanceL3MethodList
+            <GroupedMethodList
               isCiePinDisabled={isCiePinDisabled}
               isCieIdDisabled={isCieIdDisabled}
               isSpidDisabled={isSpidDisabled}
@@ -178,8 +178,8 @@ export const ItwIdentificationModeSelectionScreen = ({
               isCiePinDisabled={isCiePinDisabled}
               isCieIdDisabled={isCieIdDisabled}
               isSpidDisabled={isSpidDisabled}
-              isL3={isL3}
               isReissuanceMode={isReissuanceMode}
+              isL3={isL3}
             />
           )}
           {!isReissuanceMode && isL3 && (
@@ -201,17 +201,17 @@ export const ItwIdentificationModeSelectionScreen = ({
   );
 };
 
-type ReissuanceL3MethodListProps = {
+type GroupedMethodListProps = {
   isCiePinDisabled: boolean;
   isCieIdDisabled: boolean;
   isSpidDisabled: boolean;
 };
 
-const ReissuanceL3MethodList = ({
+const GroupedMethodList = ({
   isCiePinDisabled,
   isCieIdDisabled,
   isSpidDisabled
-}: ReissuanceL3MethodListProps) => (
+}: GroupedMethodListProps) => (
   <>
     {(!isCiePinDisabled || !isCieIdDisabled) && (
       <VStack space={8}>
@@ -276,6 +276,7 @@ const DefaultMethodList = ({
 
 const styles = StyleSheet.create({
   noCieButtonContainer: {
+    marginTop: 16,
     flexDirection: "row",
     justifyContent: "center"
   }

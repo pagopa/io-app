@@ -30,6 +30,9 @@ export const SpidMethodModule = ({ isL3 }: Props) => {
           title={I18n.t(
             "features.itWallet.identification.modeSelection.mode.spid.title.l3"
           )}
+          subtitle={I18n.t(
+            "features.itWallet.identification.modeSelection.mode.spid.subtitle.l3"
+          )}
           icon="spid"
           onPress={() => {
             trackItWalletIDMethodSelected({
