@@ -96,7 +96,7 @@ export function* watchItwOfflineSaga(): SagaIterator {
  *
  * TODO: This check can be safely removed once the minimum supported app version is greater than 3.21
  */
-const handleAuthLevelSanitizationSaga = function* (
+export const handleAuthLevelSanitizationSaga = function* (
   action: ActionType<typeof itwSetFiscalCodeWhitelisted>
 ): SagaIterator {
   if (action.payload) {
