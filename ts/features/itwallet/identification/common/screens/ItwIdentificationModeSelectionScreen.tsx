@@ -49,8 +49,6 @@ export type ItwIdentificationModeSelectionScreenProps =
     "ITW_IDENTIFICATION_MODE_SELECTION"
   >;
 
-const i18nNs = "features.itWallet.identification.modeSelection" as const;
-
 export const ItwIdentificationModeSelectionScreen = ({
   route
 }: ItwIdentificationModeSelectionScreenProps) => {
@@ -97,22 +95,37 @@ export const ItwIdentificationModeSelectionScreen = ({
   const { section, title, description } = useMemo(() => {
     if (mode === "reissuance") {
       return {
-        section: I18n.t(`${i18nNs}.section.reissuance`),
-        title: I18n.t(`${i18nNs}.title.reissuance`),
-        description: I18n.t(`${i18nNs}.description.reissuance`, {
-          feature: featureName
-        })
+        section: I18n.t(
+          "features.itWallet.identification.modeSelection.section.reissuance"
+        ),
+        title: I18n.t(
+          "features.itWallet.identification.modeSelection.title.reissuance"
+        ),
+        description: I18n.t(
+          "features.itWallet.identification.modeSelection.description.reissuance",
+          {
+            feature: featureName
+          }
+        )
       };
     }
 
     return {
-      section: I18n.t(`${i18nNs}.section.issuance`, {
-        feature: featureName
-      }),
-      title: I18n.t(`${i18nNs}.title.issuance`),
-      description: I18n.t(`${i18nNs}.description.issuance`, {
-        feature: featureName
-      })
+      section: I18n.t(
+        "features.itWallet.identification.modeSelection.section.issuance",
+        {
+          feature: featureName
+        }
+      ),
+      title: I18n.t(
+        "features.itWallet.identification.modeSelection.title.issuance"
+      ),
+      description: I18n.t(
+        "features.itWallet.identification.modeSelection.description.issuance",
+        {
+          feature: featureName
+        }
+      )
     };
   }, [mode, featureName]);
 
@@ -186,11 +199,15 @@ export const ItwIdentificationModeSelectionScreen = ({
               {(!isCiePinDisabled || !isCieIdDisabled) && (
                 <VStack space={8}>
                   <ListItemHeader
-                    label={I18n.t(`${i18nNs}.frequency.every12Months`)}
+                    label={I18n.t(
+                      "features.itWallet.identification.modeSelection.frequency.every12Months"
+                    )}
                     endElement={{
                       type: "badge",
                       componentProps: {
-                        text: I18n.t(`${i18nNs}.mode.ciePin.reissuanceBadge`),
+                        text: I18n.t(
+                          "features.itWallet.identification.modeSelection.mode.ciePin.reissuanceBadge"
+                        ),
                         variant: "highlight",
                         outline: false,
                         testID: "CiePinReissuanceBadgeTestID"
@@ -206,7 +223,9 @@ export const ItwIdentificationModeSelectionScreen = ({
               {!isSpidDisabled && (
                 <VStack space={8}>
                   <ListItemHeader
-                    label={I18n.t(`${i18nNs}.frequency.every90Days`)}
+                    label={I18n.t(
+                      "features.itWallet.identification.modeSelection.frequency.every90Days"
+                    )}
                   />
                   <SpidMethodModule />
                 </VStack>
@@ -219,12 +238,14 @@ export const ItwIdentificationModeSelectionScreen = ({
               {!isSpidDisabled && <SpidMethodModule />}
             </>
           )}
-          {isL3 && !params.eidReissuing && (
+          {!isReissuanceMode && isL3 && (
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <IOButton
                 variant="link"
                 textAlign="center"
-                label={I18n.t(`${i18nNs}.noCieCta`)}
+                label={I18n.t(
+                  "features.itWallet.identification.modeSelection.noCieCta"
+                )}
                 onPress={handleNoCiePress}
                 testID={"noCieButtonTestID"}
               />
@@ -240,7 +261,9 @@ const CiePinMethodModule = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
   const mode = ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
-  const isL3 = level === "l3";
+
+  const isItw = level === "l3";
+  const isReissuanceMode = mode === "reissuance";
 
   const handleOnPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "ciePin" });
@@ -249,54 +272,61 @@ const CiePinMethodModule = () => {
   const ciePinBottomSheet = useContinueWithBottomSheet({
     type: "ciePin",
     onPrimaryAction: handleOnPress,
-    isL3
+    isL3: isItw
   });
 
-  const badgeProps: Badge | undefined = useMemo(() => {
-    // Show the recommended badge only during the L3 activation flow.
-    if (level !== "l3" || mode === "reissuance") {
-      return undefined;
-    }
+  const badgeProps: Badge = {
+    testID: "CiePinRecommendedBadgeTestID",
+    text: I18n.t(
+      "features.itWallet.identification.modeSelection.mode.ciePin.badge"
+    ),
+    variant: "highlight",
+    outline: false
+  };
 
-    return {
-      text: I18n.t(`${i18nNs}.mode.ciePin.badge`),
-      variant: "highlight",
-      outline: false,
-      testID: "CiePinRecommendedBadgeTestID"
-    };
-  }, [level, mode]);
-
-  return (
-    <>
-      <ModuleNavigationAlt
-        title={I18n.t(`${i18nNs}.mode.ciePin.title`)}
-        subtitle={I18n.t(
-          `${i18nNs}.mode.ciePin.subtitle.${isL3 ? "l3" : "default"}`
-        )}
-        testID="CiePinMethodModuleTestID"
-        icon="cieCard"
-        onPress={() => {
-          if (isL3) {
+  if (isItw) {
+    return (
+      <>
+        <ModuleNavigationAlt
+          testID="CiePinMethodModuleTestIDL3"
+          title={I18n.t(
+            "features.itWallet.identification.modeSelection.mode.ciePin.title"
+          )}
+          icon="fiscalCodeIndividual"
+          onPress={() => {
             trackItWalletIDMethodSelected({
               ITW_ID_method: "ciePin",
               itw_flow: "L3"
             });
             ciePinBottomSheet.present();
-          } else {
-            handleOnPress();
-          }
-        }}
-        badge={badgeProps}
-      />
-      {isL3 && ciePinBottomSheet.bottomSheet}
-    </>
+          }}
+        />
+        {ciePinBottomSheet.bottomSheet}
+      </>
+    );
+  }
+
+  return (
+    <ModuleNavigationAlt
+      testID="CiePinMethodModuleTestIDL2"
+      title={I18n.t(
+        "features.itWallet.identification.modeSelection.mode.ciePin.title"
+      )}
+      subtitle={I18n.t(
+        "features.itWallet.identification.modeSelection.mode.ciePin.subtitle.default"
+      )}
+      icon="cieCard"
+      onPress={handleOnPress}
+      badge={isReissuanceMode ? badgeProps : undefined}
+    />
   );
 };
 
 const SpidMethodModule = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
-  const isL3 = level === "l3";
+
+  const isItw = level === "l3";
 
   const handleOnPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "spid" });
@@ -305,51 +335,50 @@ const SpidMethodModule = () => {
   const spidBottomSheet = useContinueWithBottomSheet({
     type: "spid",
     onPrimaryAction: handleOnPress,
-    isL3
+    isL3: isItw
   });
 
-  const { title, subtitle } = useMemo(() => {
-    if (isL3) {
-      return {
-        title: I18n.t(`${i18nNs}.mode.spid.title.l3`),
-        subtitle: I18n.t(`${i18nNs}.mode.spid.subtitle.l3`)
-      };
-    }
-
-    return {
-      title: I18n.t(`${i18nNs}.mode.spid.title.default`),
-      subtitle: I18n.t(`${i18nNs}.mode.spid.subtitle.default`)
-    };
-  }, [isL3]);
-
-  return (
-    <>
-      <ModuleNavigationAlt
-        title={title}
-        subtitle={subtitle}
-        testID="SpidMethodModuleTestID"
-        icon="spid"
-        onPress={() => {
-          if (isL3) {
+  if (isItw) {
+    return (
+      <>
+        <ModuleNavigationAlt
+          testID="SpidMethodModuleTestIDL3"
+          title={I18n.t(
+            "features.itWallet.identification.modeSelection.mode.spid.title.l3"
+          )}
+          icon="spid"
+          onPress={() => {
             trackItWalletIDMethodSelected({
               ITW_ID_method: "spid",
               itw_flow: "L3"
             });
             spidBottomSheet.present();
-          } else {
-            handleOnPress();
-          }
-        }}
-      />
-      {isL3 && spidBottomSheet.bottomSheet}
-    </>
+          }}
+        />
+        {spidBottomSheet.bottomSheet}
+      </>
+    );
+  }
+  return (
+    <ModuleNavigationAlt
+      testID="SpidMethodModuleTestIDL2"
+      title={I18n.t(
+        "features.itWallet.identification.modeSelection.mode.spid.title.default"
+      )}
+      subtitle={I18n.t(
+        "features.itWallet.identification.modeSelection.mode.spid.subtitle.default"
+      )}
+      icon="spid"
+      onPress={handleOnPress}
+    />
   );
 };
 
 const CieIdMethodModule = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
-  const isL3 = level === "l3";
+
+  const isItw = level === "l3";
 
   const handleOnPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "cieId" });
@@ -358,43 +387,42 @@ const CieIdMethodModule = () => {
   const cieIdBottomSheet = useContinueWithBottomSheet({
     type: "cieId",
     onPrimaryAction: handleOnPress,
-    isL3
+    isL3: isItw
   });
 
-  const { title, subtitle } = useMemo(() => {
-    if (isL3) {
-      return {
-        title: I18n.t(`${i18nNs}.mode.cieId.title`),
-        subtitle: I18n.t(`${i18nNs}.mode.cieId.subtitle.l3`)
-      };
-    }
-
-    return {
-      title: I18n.t(`${i18nNs}.mode.cieId.title`),
-      subtitle: I18n.t(`${i18nNs}.mode.cieId.subtitle.default`)
-    };
-  }, [isL3]);
-
-  return (
-    <>
-      <ModuleNavigationAlt
-        title={title}
-        subtitle={subtitle}
-        icon={"cie"}
-        testID="CieIDMethodModuleTestID"
-        onPress={() => {
-          if (isL3) {
+  if (isItw) {
+    return (
+      <>
+        <ModuleNavigationAlt
+          testID="CieIDMethodModuleTestIDL3"
+          title={I18n.t(
+            "features.itWallet.identification.modeSelection.mode.cieId.title"
+          )}
+          icon={"cie"}
+          onPress={() => {
             trackItWalletIDMethodSelected({
               ITW_ID_method: "cieId",
               itw_flow: "L3"
             });
             cieIdBottomSheet.present();
-          } else {
-            handleOnPress();
-          }
-        }}
-      />
-      {isL3 && cieIdBottomSheet.bottomSheet}
-    </>
+          }}
+        />
+        {cieIdBottomSheet.bottomSheet}
+      </>
+    );
+  }
+
+  return (
+    <ModuleNavigationAlt
+      testID="CieIDMethodModuleTestIDL2"
+      title={I18n.t(
+        "features.itWallet.identification.modeSelection.mode.cieId.title"
+      )}
+      subtitle={I18n.t(
+        "features.itWallet.identification.modeSelection.mode.cieId.subtitle.default"
+      )}
+      icon={"cie"}
+      onPress={handleOnPress}
+    />
   );
 };
