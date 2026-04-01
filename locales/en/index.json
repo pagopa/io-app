@@ -1063,7 +1063,7 @@
       "cardGeneric": "Card",
       "a11y": {
         "credit": {
-          "hpan": "{{circuit}} ending {{spacedHpan}}"
+          "hpan": "Credit card {{circuit}} ending {{spacedHpan}}"
         },
         "bpay": {
           "phone": "Mobile number: {{phoneNumber}}",
