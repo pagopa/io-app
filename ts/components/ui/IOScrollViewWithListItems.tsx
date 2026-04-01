@@ -1,9 +1,7 @@
 import {
-  Body,
-  BodyProps,
-  ComposedBodyFromArray,
   Divider,
   H2,
+  IOMarkdownLite,
   ListItemHeader,
   ListItemInfo,
   VSpacer
@@ -13,7 +11,7 @@ import { IOScrollView, IOScrollViewActions } from "./IOScrollView";
 
 export type IOScrollViewWithListItems = {
   title?: string;
-  subtitle?: string | Array<BodyProps>;
+  subtitle?: string;
   renderItems: Array<ListItemInfo>;
   listItemHeaderLabel?: string;
   actions: IOScrollViewActions;
@@ -43,11 +41,7 @@ export const IOScrollViewWithListItems = ({
     {subtitle && (
       <>
         <VSpacer size={8} />
-        {typeof subtitle === "string" ? (
-          <Body>{subtitle}</Body>
-        ) : (
-          <ComposedBodyFromArray body={subtitle} />
-        )}
+        <IOMarkdownLite content={subtitle} />
       </>
     )}
     {listItemHeaderLabel && (
