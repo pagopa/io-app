@@ -1,7 +1,6 @@
-import { useMemo, useCallback } from "react";
+import { useCallback } from "react";
 import * as O from "fp-ts/lib/Option";
 import { Route, useRoute } from "@react-navigation/native";
-import { BodyProps } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
@@ -62,25 +61,6 @@ const ValidateEmailScreen = () => {
     navigateToInsertEmailScreen();
   }, [dispatch, navigateToInsertEmailScreen]);
 
-  const bodyPropsArray: Array<BodyProps> = useMemo(
-    () => [
-      {
-        text: I18n.t("email.cduScreens.validateMail.subtitle"),
-        style: {
-          textAlign: "center"
-        }
-      },
-      {
-        text: <> {email} </>,
-        style: {
-          textAlign: "center"
-        },
-        weight: "Semibold"
-      }
-    ],
-    [email]
-  );
-
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
@@ -92,7 +72,7 @@ const ValidateEmailScreen = () => {
     <OperationResultScreenContent
       pictogram="attention"
       title={I18n.t("email.cduScreens.validateMail.title")}
-      subtitle={bodyPropsArray}
+      subtitle={I18n.t("email.cduScreens.validateMail.subtitle", { email })}
       action={{
         label: I18n.t("email.cduScreens.validateMail.validateButton"),
         accessibilityLabel: I18n.t(

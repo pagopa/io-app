@@ -531,27 +531,7 @@ exports[`DifferentCFErrorScreen should render correctly and match snapshot 1`] =
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Hai fatto l’accesso con un’altra identità. Per usare l’app, accedi con le tue credenziali.
                             </Text>
                             <View
