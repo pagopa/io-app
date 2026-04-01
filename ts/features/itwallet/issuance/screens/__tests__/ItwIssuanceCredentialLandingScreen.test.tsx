@@ -213,6 +213,39 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
       expect(mockReplace).not.toHaveBeenCalled();
     });
   });
+
+  describe("Invalid credential and EID expired/expiring", () => {
+    it("renders the error screen", () => {
+      mockSelectors({
+        credentialStatus: undefined,
+        pidStatus: undefined,
+        isItwValid: true
+      });
+
+      const { getByText } = renderComponent();
+
+      expect(
+        getByText(I18n.t(`features.itWallet.issuance.landingError.title`))
+      ).toBeTruthy();
+      expect(mockReplace).toHaveBeenCalled();
+    });
+
+    it("primary actions navigates to CTA message", () => {
+      mockSelectors({
+        credentialStatus: undefined,
+        pidStatus: undefined,
+        isItwValid: true
+      });
+
+      const { getByText } = renderComponent();
+
+      fireEvent.press(
+        getByText(I18n.t(`features.itWallet.issuance.landingError.action`))
+      );
+
+      expect(mockPopToTop).toHaveBeenCalled();
+    });
+  });
 });
 
 type MockSelectorOptions = {
