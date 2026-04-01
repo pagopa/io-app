@@ -53,7 +53,6 @@ import { UtmLinkActions } from "../../features/utmLink/store/actions";
 import { WalletActions } from "../../features/wallet/store/actions";
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
-import { BackgroundFetchActions } from "../../features/backgroundFetch/store/actions";
 import { GlobalState } from "../reducers/types";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
@@ -128,8 +127,7 @@ export type Action =
   | BackgroundLinkingActions
   | SENDLoginEngagementActions
   | CdcActions
-  | TourActions
-  | BackgroundFetchActions;
+  | TourActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

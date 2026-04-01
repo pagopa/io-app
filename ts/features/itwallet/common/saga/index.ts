@@ -1,8 +1,10 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
+import * as BackgroundTask from "expo-background-task";
 import { SagaIterator } from "redux-saga";
 import { call, fork, put, select, takeLatest } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+import { backgroundTaskIntervalMinutes } from "../../../../config";
 import { watchItwCredentialsSaga } from "../../credentials/saga";
 import { checkCredentialsStatusAssertion } from "../../credentials/saga/checkCredentialsStatusAssertion";
 import { handleWalletCredentialsRehydration } from "../../credentials/saga/handleWalletCredentialsRehydration";
@@ -17,6 +19,7 @@ import {
   checkWalletInstanceStateSaga
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
 import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga.ts";
+import { ITW_WALLET_CHECK_TASK } from "../../background/constants";
 import {
   watchItwAnalyticsSaga,
   syncItwAnalyticsProperties,
@@ -80,6 +83,31 @@ export function* watchItwOfflineSaga(): SagaIterator {
 
   // TODO remove this fork when NFC antenna info tracking is not needed anymore
   yield* fork(updateNfcInfoTrackingProperties);
+  // Register the background task for Wallet Instance status checks
+  yield* fork(registerItwBackgroundTaskSaga);
+}
+
+/**
+ * Registers the ITW background task with expo-background-task.
+ *
+ * This is a fire-and-forget operation: if the background task API is not
+ * available (e.g. restricted by the OS), the registration is silently skipped.
+ * The task must be defined in global scope via TaskManager.defineTask before
+ * this saga is called (see ts/features/itwallet/background/tasks.ts).
+ */
+export function* registerItwBackgroundTaskSaga(): SagaIterator {
+  try {
+    const status: BackgroundTask.BackgroundTaskStatus = yield* call(
+      BackgroundTask.getStatusAsync
+    );
+    if (status === BackgroundTask.BackgroundTaskStatus.Available) {
+      yield* call(BackgroundTask.registerTaskAsync, ITW_WALLET_CHECK_TASK, {
+        minimumInterval: backgroundTaskIntervalMinutes
+      });
+    }
+  } catch {
+    // Registration failure is non-critical: the app still works normally
+  }
 }
 
 /**

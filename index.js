@@ -21,6 +21,10 @@ import {
 import * as Sentry from "@sentry/react-native";
 
 import App from "./ts/App";
+// IMPORTANT: ITW background task definition must be imported at the top level
+// so that TaskManager.defineTask is called before the app renders.
+// eslint-disable-next-line import/no-unresolved
+import "./ts/features/itwallet/background/tasks";
 import { initI18n } from "./ts/i18n";
 import { isMixpanelInstanceInitialized, mixpanelTrack } from "./ts/mixpanel";
 import { name as appName } from "./app.json";

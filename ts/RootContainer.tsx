@@ -14,7 +14,6 @@ import { connect } from "react-redux";
 import DebugInfoOverlay from "./components/debug/DebugInfoOverlay";
 import PagoPATestIndicatorOverlay from "./components/PagoPATestIndicatorOverlay";
 import { LightModalRoot } from "./components/ui/LightModal";
-import { useBackgroundFetch } from "./features/backgroundFetch/hooks/useBackgroundFetch";
 import { configurePushNotifications } from "./features/pushNotifications/utils/configurePushNotification";
 import { IONavigationContainer } from "./navigation/AppStackNavigator";
 import RootModal from "./screens/modal/RootModal";
@@ -160,7 +159,6 @@ const RootContainerClass = connect(
 
 const RootContainerFC = ({ store }: { store: Store }) => {
   useAppThemeConfiguration();
-  useBackgroundFetch();
 
   return <RootContainerClass store={store} />;
 };

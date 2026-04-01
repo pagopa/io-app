@@ -27,6 +27,19 @@ import "react-native-get-random-values";
 require("@shopify/flash-list/jestSetup");
 jest.mock("rn-qr-generator", () => mockRNQRGenerator);
 jest.mock("expo-screen-capture", () => ({}));
+jest.mock("expo-background-task", () => ({
+  BackgroundTaskStatus: { Available: 2, Restricted: 1 },
+  BackgroundTaskResult: { Success: 1, Failed: 2 },
+  getStatusAsync: jest.fn(),
+  registerTaskAsync: jest.fn(),
+  unregisterTaskAsync: jest.fn(),
+  triggerTaskWorkerForTestingAsync: jest.fn(),
+  addExpirationListener: jest.fn(() => ({ remove: jest.fn() }))
+}));
+jest.mock("expo-task-manager", () => ({
+  defineTask: jest.fn(),
+  isTaskRegisteredAsync: jest.fn(() => Promise.resolve(false))
+}));
 jest.mock("react-native-haptic-feedback", () => ({
   ...jest.requireActual("react-native-haptic-feedback"),
   trigger: jest.fn()
