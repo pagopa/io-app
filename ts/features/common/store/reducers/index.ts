@@ -14,6 +14,10 @@ import {
   FastLoginState,
   fastLoginReducer
 } from "../../../authentication/fastLogin/store/reducers";
+import {
+  BackgroundFetchState,
+  backgroundFetchReducer
+} from "../../../backgroundFetch/store/reducers";
 import fciReducer, { FciState } from "../../../fci/store/reducers";
 import fimsReducer, { FimsState } from "../../../fims/common/store/reducer";
 import idPayReducer, { IDPayState } from "../../../idpay/common/store/reducers";
@@ -115,6 +119,7 @@ export type FeaturesState = {
   backgroundLinking: BackgroundLinkingState;
   cdc: CdcState;
   tour: TourState & PersistPartial;
+  backgroundFetch: BackgroundFetchState;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
@@ -148,7 +153,8 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   connectivityStatus: connectivityStateReducer,
   backgroundLinking: backgroundLinkingReducer,
   cdc: cdcReducer,
-  tour: tourReducer
+  tour: tourReducer,
+  backgroundFetch: backgroundFetchReducer
 });
 
 const CURRENT_REDUX_FEATURES_STORE_VERSION = 1;
