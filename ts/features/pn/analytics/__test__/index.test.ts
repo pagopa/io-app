@@ -85,8 +85,8 @@ describe("index", () => {
                       firstTimeOpening === true
                         ? "yes"
                         : firstTimeOpening === false
-                        ? "no"
-                        : "not_set",
+                          ? "no"
+                          : "not_set",
                     notification_status: isCancelled ? "cancelled" : "active",
                     contains_multipayment: paymentCount > 1 ? "yes" : "no",
                     count_payment: paymentCount,

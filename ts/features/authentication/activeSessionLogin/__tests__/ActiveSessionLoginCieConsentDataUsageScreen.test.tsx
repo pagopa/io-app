@@ -61,5 +61,5 @@ runConsentScreenSuite({
         statusCode: 500,
         url: "https://fake.url/consent"
       }
-    } as any)
+    }) as any
 });

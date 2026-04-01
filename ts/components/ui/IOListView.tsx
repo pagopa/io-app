@@ -165,7 +165,7 @@ export const IOListView = <T,>({
       renderItem={item =>
         // If the refresh control is active, show the skeleton (if present) instead of the content
         loading || refreshControlProps?.refreshing
-          ? skeleton ?? null
+          ? (skeleton ?? null)
           : renderItem(item)
       }
       testID={testID}
@@ -256,8 +256,8 @@ export const IOListView = <T,>({
           paddingBottom: excludeEndContentMargin
             ? 0
             : actions
-            ? safeBottomAreaHeight
-            : bottomMargin + contentEndMargin,
+              ? safeBottomAreaHeight
+              : bottomMargin + contentEndMargin,
           paddingHorizontal: includeContentMargins
             ? IOVisualCostants.appMarginDefault
             : 0,

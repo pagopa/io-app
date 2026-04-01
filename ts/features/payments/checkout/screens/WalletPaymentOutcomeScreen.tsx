@@ -183,8 +183,8 @@ const WalletPaymentOutcomeScreen = () => {
       outcome === WalletPaymentOutcomeEnum.SUCCESS
         ? "COMPLETED"
         : outcome === WalletPaymentOutcomeEnum.DUPLICATE_ORDER
-        ? "DUPLICATED"
-        : undefined;
+          ? "DUPLICATED"
+          : undefined;
     const rptId = paymentOngoingHistory?.rptId;
 
     if (kind && rptId) {

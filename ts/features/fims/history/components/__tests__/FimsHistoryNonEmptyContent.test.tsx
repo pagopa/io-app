@@ -52,7 +52,7 @@ const generateMockStoreForSelectors = (
         }
       }
     }
-  } as GlobalState);
+  }) as GlobalState;
 const renderComponent = (
   props: FimsHistoryNonEmptyContentProps,
   mockState: GlobalState

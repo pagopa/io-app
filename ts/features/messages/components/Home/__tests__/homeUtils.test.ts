@@ -72,7 +72,7 @@ const createGlobalState = (
         }
       }
     }
-  } as GlobalState);
+  }) as GlobalState;
 
 const checkReturnedAction = (action?: Action, getArchived: boolean = false) => {
   expect(action).not.toBeUndefined();

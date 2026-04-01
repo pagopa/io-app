@@ -15,8 +15,8 @@ export const QtspDocumentToSign = t.type({
   url: t.string
 });
 
-export type QtspDocumentToSign =
-  | t.TypeOf<typeof QtspDocumentToSign> & DocumentToSign;
+export type QtspDocumentToSign = t.TypeOf<typeof QtspDocumentToSign> &
+  DocumentToSign;
 
 const getFileDigest = (url: string) =>
   pipe(

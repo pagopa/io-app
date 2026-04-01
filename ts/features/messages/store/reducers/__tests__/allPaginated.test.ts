@@ -1816,7 +1816,7 @@ const generateAllPaginatedDataStateForCategory = (
         }
       }
     }
-  } as GlobalState);
+  }) as GlobalState;
 
 const readonlyNonEmptyMessageList: ReadonlyArray<UIMessage> = [{} as UIMessage];
 const nonEmptyMessagePage = {

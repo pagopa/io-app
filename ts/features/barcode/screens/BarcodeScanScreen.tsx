@@ -78,8 +78,8 @@ const BarcodeScanScreen = () => {
     type === "IDPAY"
       ? isIdPayEnabledInScanScreen
       : type === "SEND"
-      ? isSendEnabled
-      : true
+        ? isSendEnabled
+        : true
   );
 
   /**

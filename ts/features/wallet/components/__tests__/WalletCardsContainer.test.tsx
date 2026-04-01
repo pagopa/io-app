@@ -97,7 +97,7 @@ const T_PLACEHOLDERS: WalletCardsState = _.mapValues(
       type: "placeholder",
       category: card.category,
       key: card.key
-    } as WalletCard)
+    }) as WalletCard
 );
 
 describe("WalletCardsContainer", () => {

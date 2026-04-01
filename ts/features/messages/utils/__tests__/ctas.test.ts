@@ -1816,10 +1816,10 @@ describe("handleCtaAction", () => {
       linkToCalled
         ? "linkTo"
         : fimsCalled
-        ? "fimsCallback"
-        : openUrlCalled
-        ? "Linking.openUrl"
-        : "nothing"
+          ? "fimsCallback"
+          : openUrlCalled
+            ? "Linking.openUrl"
+            : "nothing"
     }' when the CTA's action is ${anUri}`, () => {
       const spiedOnMockedOpenURL = jest
         .spyOn(Linking, "openURL")

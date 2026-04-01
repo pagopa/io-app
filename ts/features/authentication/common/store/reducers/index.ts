@@ -121,8 +121,8 @@ const authenticationReducer = (
       reason: isActionOf(sessionExpired, action)
         ? "SESSION_EXPIRED"
         : isActionOf(sessionCorrupted, action)
-        ? "SESSION_CORRUPTED"
-        : "NOT_LOGGED_IN"
+          ? "SESSION_CORRUPTED"
+          : "NOT_LOGGED_IN"
     };
   }
 

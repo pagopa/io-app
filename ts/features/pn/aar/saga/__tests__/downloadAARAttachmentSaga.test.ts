@@ -895,7 +895,7 @@ const generateMocks = (response: E.Either<unknown, unknown>) => {
           mockedGetNotificationAttachmentInput(input);
           return mockedGetNotificationAttachment;
         }
-      } as any)
+      }) as any
   );
   return {
     mockedGetNotificationAttachment,
