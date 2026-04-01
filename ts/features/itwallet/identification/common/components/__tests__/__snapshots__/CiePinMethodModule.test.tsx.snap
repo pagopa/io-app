@@ -385,6 +385,7 @@ exports[`CiePinMethodModule renders correctly for L2 reissuance (shows recommend
                   "borderCurve": "continuous",
                   "flexDirection": "row",
                   "justifyContent": "center",
+                  "overflow": "hidden",
                 },
                 {
                   "borderRadius": 36,
@@ -416,7 +417,6 @@ exports[`CiePinMethodModule renders correctly for L2 reissuance (shows recommend
                   },
                   {
                     "alignSelf": "center",
-                    "flexShrink": 1,
                     "letterSpacing": 0.5,
                     "textTransform": "uppercase",
                   },
