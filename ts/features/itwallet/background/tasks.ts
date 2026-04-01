@@ -12,7 +12,7 @@ export const itwWalletCheckTaskHandler =
   async (): Promise<BackgroundTask.BackgroundTaskResult> => {
     try {
       trackItwBackgroundFetchWakeUp();
-      // TODO add WI and credentials check
+      // TODO add WI and credentials check once Status List is implemented
       return BackgroundTask.BackgroundTaskResult.Success;
     } catch {
       return BackgroundTask.BackgroundTaskResult.Failed;
