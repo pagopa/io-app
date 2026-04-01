@@ -12,7 +12,7 @@ describe("`handleResponse` function", () => {
   describe("given a null/undefined response", () => {
     it("should run `onFailure` with 'Response is undefined'", () => {
       const onFailure = jest.fn();
-       
+
       handleResponse(null as any, jest.fn(), onFailure);
       expect(onFailure).toHaveBeenNthCalledWith(
         1,
