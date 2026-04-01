@@ -83,6 +83,22 @@ export function* watchItwOfflineSaga(): SagaIterator {
 }
 
 /**
+ * Performs a full validity check for the Wallet Instance and its credentials.
+ *
+ * This saga is designed to be called from background contexts (e.g. background
+ * fetch events) where a session may or may not be available. It replicates the
+ * same checks that are performed at foreground app startup.
+ *
+ * Must be called sequentially — credential status assertions depend on a valid
+ * wallet instance state.
+ */
+export function* checkWalletInstanceAndCredentialsValiditySaga(): SagaIterator {
+  yield* call(checkWalletInstanceStateSaga);
+  yield* call(checkCurrentWalletInstanceStateSaga);
+  yield* call(checkCredentialsStatusAssertion);
+}
+
+/**
  * Sanitizes the authentication level to fix an inconsistency introduced by a regression in app version 3.21.
  *
  * This saga ensures that users with an L3 PID credential (assurance_level = high) have their
