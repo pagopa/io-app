@@ -179,12 +179,14 @@ const ItwCredentialOnboardingSection = () => {
           />
         </AsyncCredentialsCatalogue>
 
-        <Alert
-          variant="info"
-          content={I18n.t("features.wallet.onboarding.no-nfc-banner.content")}
-          action={I18n.t("features.wallet.onboarding.no-nfc-banner.cta")}
-          onPress={() => openWebUrl(NFC_NOT_SUPPORTED_FAQ_URL)}
-        />
+        {isItWalletActivationDisabled && (
+          <Alert
+            variant="info"
+            content={I18n.t("features.wallet.onboarding.no-nfc-banner.content")}
+            action={I18n.t("features.wallet.onboarding.no-nfc-banner.cta")}
+            onPress={() => openWebUrl(NFC_NOT_SUPPORTED_FAQ_URL)}
+          />
+        )}
 
         {/* Obtained credentials  */}
         {obtained.length > 0 && (

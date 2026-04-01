@@ -67,14 +67,6 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   // For example, the payments section
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const onboardingScreen = useMemo(() => {
-    if (!isItWalletEnabled) {
-      return ITW_ROUTES.ONBOARDING;
-    }
-
-    return ITW_ROUTES.L3_ONBOARDING;
-  }, [isItWalletEnabled]);
-
   useEffect(() => {
     // Mutate the local state only when the refresh ends
     if (!isRefreshingContent) {
@@ -86,9 +78,11 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     trackWalletAdd();
 
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: onboardingScreen
+      screen: isItWalletEnabled
+        ? ITW_ROUTES.L3_ONBOARDING
+        : ITW_ROUTES.ONBOARDING
     });
-  }, [navigation, onboardingScreen]);
+  }, [navigation, isItWalletEnabled]);
 
   useHeaderFirstLevel({
     currentRoute: ROUTES.WALLET_HOME,
