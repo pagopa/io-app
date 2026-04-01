@@ -205,10 +205,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const resultScreenProps = getOperationResultScreenContentProps();
   return (
     <>
-      <OperationResultScreenContent
-        {...resultScreenProps}
-        subtitleProps={{ textBreakStrategy: "simple" }}
-      />
+      <OperationResultScreenContent {...resultScreenProps} />
       {supportModal.bottomSheet}
     </>
   );
