@@ -9,6 +9,18 @@ import {
 import { reloadAllMessages } from "../../store/actions";
 import { ResponseType, handleResponse } from "../responseHandling";
 describe("`handleResponse` function", () => {
+  describe("given a null/undefined response", () => {
+    it("should run `onFailure` with 'Response is undefined'", () => {
+      const onFailure = jest.fn();
+       
+      handleResponse(null as any, jest.fn(), onFailure);
+      expect(onFailure).toHaveBeenNthCalledWith(
+        1,
+        new Error("Response is undefined")
+      );
+    });
+  });
+
   describe("given a failure", () => {
     const failure: E.Either<
       Array<ValidationError>,

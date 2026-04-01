@@ -14,7 +14,7 @@ export type ResponseType<T> =
 /**
  * Discern between Either.Right/Left, and status codes.
  * Will call onSuccess if and only if response is _Right with status 200_.
- * Takes care of managing status 401 via sessionExpired action.
+ * Returns undefined for status 401 (session expired, handled upstream).
  *
  * @param response
  * @param onSuccess
@@ -25,6 +25,10 @@ export function handleResponse<T>(
   onSuccess: (payload: T) => Action,
   onFailure: (e: Error) => Action
 ): Action | undefined {
+  if (!response) {
+    return onFailure(new Error("Response is undefined"));
+  }
+
   if (E.isLeft(response)) {
     return onFailure(new Error(readablePrivacyReport(response.left)));
   }
