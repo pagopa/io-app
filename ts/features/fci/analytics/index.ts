@@ -46,6 +46,18 @@ export const trackFciDocAlreadySigned = () =>
     buildEventProperties("KO", "screen_view")
   );
 
+export const trackFciSignatureMismatch = () =>
+  mixpanelTrack(
+    "FCI_SIGNATURE_MISMATCH",
+    buildEventProperties("KO", "screen_view")
+  );
+
+export const trackFciSignatureGenericFailure = (reason: string) =>
+  mixpanelTrack(
+    "FCI_SIGNATURE_GENERIC_FAILURE",
+    buildEventProperties("KO", "screen_view", { reason })
+  );
+
 /**
  * Centralized analytics tracking for signature request status changes.
  * Handles all status-based tracking logic in one place.
@@ -117,6 +129,13 @@ export const trackFciDocOpening = (
 export const trackFciDocumentsView = () =>
   mixpanelTrack("FCI_DOCUMENTS", buildEventProperties("UX", "screen_view"));
 
+// TODO: check if the reason is needed and if it provides useful insights for debugging
+export const trackFciDocOpeningFailure = (reason: string) =>
+  mixpanelTrack(
+    "FCI_DOC_OPENING_FAILURE",
+    buildEventProperties("KO", "control", { reason })
+  );
+
 export const trackFciSignatureFieldsView = () =>
   mixpanelTrack(
     "FCI_SIGNATURE_FIELDS",
@@ -139,6 +158,12 @@ export const trackFciTosDocPreview = () =>
   mixpanelTrack(
     "FCI_TOS_DOC_PREVIEW",
     buildEventProperties("UX", "screen_view")
+  );
+
+export const trackFciTosDocPreviewSuccess = () =>
+  mixpanelTrack(
+    "FCI_TOS_DOC_PREVIEW_SUCCESS",
+    buildEventProperties("UX", "control")
   );
 
 export const trackFciTosDocPreviewFailure = () =>

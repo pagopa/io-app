@@ -26,6 +26,7 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import {
+  trackFciDocOpeningFailure,
   trackFciDocOpeningSuccess,
   trackFciDocumentsView,
   trackFciSigningDoc
@@ -227,6 +228,9 @@ const FciDocumentsScreen = () => {
         }
         setTotalPages(numberOfPages);
         setCurrentPage(page);
+      }}
+      onError={error => {
+        trackFciDocOpeningFailure(error.toString());
       }}
       enablePaging
       style={styles.pdf}
