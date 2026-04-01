@@ -5,18 +5,16 @@ import {
   IOThemeContextProvider,
   ToastProvider
 } from "@pagopa/io-app-design-system";
-import { ErrorEvent, TransactionEvent } from "@sentry/core";
-import * as Sentry from "@sentry/react-native";
-import * as TaskManager from "expo-task-manager";
-import { JSX } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import * as Sentry from "@sentry/react-native";
+import { ErrorEvent, TransactionEvent } from "@sentry/core";
+import { JSX } from "react";
+import * as TaskManager from "expo-task-manager";
 import RootContainer from "./RootContainer";
 import { persistor, store } from "./boot/configureStoreAndPersistor";
-import { IOAlertVisibleContextProvider } from "./components/StatusMessages/IOAlertVisibleContext";
-import { StatusMessages } from "./components/StatusMessages/StatusMessages";
 import { LightModalProvider } from "./components/ui/LightModal";
 import {
   apiLoginUrlPrefix,
@@ -30,12 +28,14 @@ import {
   walletApiBaseUrl,
   walletApiUatBaseUrl
 } from "./config";
+import { isDevEnv } from "./utils/environment";
+import { StatusMessages } from "./components/StatusMessages/StatusMessages";
 import { AppFeedbackProvider } from "./features/appReviews/components/AppFeedbackProvider";
+import { TourProvider } from "./features/tour/components/TourProvider";
+import { IOAlertVisibleContextProvider } from "./components/StatusMessages/IOAlertVisibleContext";
+import { getEnv } from "./features/itwallet/common/utils/environment";
 import { ITW_WALLET_CHECK_TASK } from "./features/itwallet/background/constants";
 import { itwWalletCheckTaskHandler } from "./features/itwallet/background/tasks";
-import { getEnv } from "./features/itwallet/common/utils/environment";
-import { TourProvider } from "./features/tour/components/TourProvider";
-import { isDevEnv } from "./utils/environment";
 
 /**
  * BACKGROUND TASKS
