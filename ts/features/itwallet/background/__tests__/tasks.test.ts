@@ -6,36 +6,6 @@ import {
 } from "../constants";
 import { registerItwBackgroundTaskSaga } from "../saga";
 
-jest.mock("expo-task-manager", () => ({
-  defineTask: jest.fn()
-}));
-
-jest.mock("redux-saga", () => ({
-  ...jest.requireActual("redux-saga"),
-  runSaga: jest.fn()
-}));
-
-jest.mock("../../analytics", () => ({
-  trackItwBackgroundFetchWakeUp: jest.fn()
-}));
-
-jest.mock("../../walletInstance/store/selectors", () => ({
-  itwNeedWalletInstanceStatusCheck: jest.fn()
-}));
-
-jest.mock("../../common/saga", () => ({
-  ...jest.requireActual("../../common/saga"),
-  checkWalletInstanceAndCredentialsValiditySaga: jest.fn()
-}));
-
-jest.mock("../../../../boot/configureStoreAndPersistor", () => ({
-  store: {
-    getState: jest.fn(),
-    dispatch: jest.fn(),
-    subscribe: jest.fn()
-  }
-}));
-
 jest.mock("expo-background-task", () => ({
   BackgroundTaskStatus: { Available: 2, Restricted: 1 },
   BackgroundTaskResult: { Success: 1, Failed: 2 },
@@ -44,11 +14,6 @@ jest.mock("expo-background-task", () => ({
   unregisterTaskAsync: jest.fn(),
   triggerTaskWorkerForTestingAsync: jest.fn(),
   addExpirationListener: jest.fn(() => ({ remove: jest.fn() }))
-}));
-
-jest.mock("expo-task-manager", () => ({
-  defineTask: jest.fn(),
-  isTaskRegisteredAsync: jest.fn(() => Promise.resolve(false))
 }));
 
 describe("ITW_WALLET_CHECK_TASK", () => {
