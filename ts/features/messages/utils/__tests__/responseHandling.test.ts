@@ -93,7 +93,10 @@ describe("`handleResponse` function", () => {
         const expectedAction = reloadAllMessages.failure(defaultRequestError);
         const onFailure = jest.fn(() => expectedAction);
         const action = handleResponse(success, jest.fn(), onFailure);
-        expect(onFailure).toHaveBeenNthCalledWith(1, new Error("seriously?"));
+        expect(onFailure).toHaveBeenNthCalledWith(
+          1,
+          new Error("Response status code 500 seriously?")
+        );
         expect(action).toEqual(expectedAction);
       });
 
@@ -109,7 +112,7 @@ describe("`handleResponse` function", () => {
     const arbitraryStatus = Math.random();
     const success: E.Either<Array<ValidationError>, any> = E.right({
       status: arbitraryStatus,
-      value: {}
+      value: { title: "seriously?" }
     });
 
     it("should run `onFailure` callback with the HTTP status error", () => {
@@ -117,7 +120,7 @@ describe("`handleResponse` function", () => {
       handleResponse(success, jest.fn(), onFailure);
       expect(onFailure).toHaveBeenNthCalledWith(
         1,
-        new Error(`response status ${arbitraryStatus}`)
+        new Error(`Response status code ${arbitraryStatus} seriously?`)
       );
     });
 
