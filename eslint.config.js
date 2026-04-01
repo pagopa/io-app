@@ -148,7 +148,10 @@ module.exports = defineConfig([
             "react/no-direct-mutation-state": "off",
             "react/require-render-return": "off",
             "functional/no-let": "error",
-            "functional/immutable-data": "error",
+            "functional/immutable-data": ["error", {
+                // TODO: Remove this once we migrate to newer versions of `react-navigation`
+                ignoreAccessorPattern: ["navigation.**", "navigate.**", "StackActions.**"],
+            }],
             "sonarjs/no-small-switch": "off",
             "sonarjs/no-duplicate-string": "off",
             "sonarjs/no-nested-template-literals": "warn",
