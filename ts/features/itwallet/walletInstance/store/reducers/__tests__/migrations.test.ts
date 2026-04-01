@@ -52,4 +52,27 @@ describe("ITW Wallet Instance reducer migrations", () => {
       _persist: { version: 0, rehydrated: false }
     });
   });
+
+  it("should migrate the store from 2 to 3 adding lastStatusUpdateDate as undefined", async () => {
+    const previousState = {
+      attestation: { jwt: "wallet-attestation" },
+      status: pot.some({
+        id: "54285dcc-1614-4f00-9a01-8d75e00895c3",
+        is_revoked: false
+      }),
+      renewalError: false,
+      _persist: { version: 2, rehydrated: false }
+    };
+    const newState = await migrate(previousState, 3);
+    expect(newState).toEqual({
+      attestation: { jwt: "wallet-attestation" },
+      status: pot.some({
+        id: "54285dcc-1614-4f00-9a01-8d75e00895c3",
+        is_revoked: false
+      }),
+      renewalError: false,
+      lastStatusUpdateDate: undefined,
+      _persist: { version: 2, rehydrated: false }
+    });
+  });
 });
