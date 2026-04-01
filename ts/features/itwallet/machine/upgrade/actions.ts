@@ -4,6 +4,7 @@ import {
   itwCredentialsRemoveByType,
   itwCredentialsStore
 } from "../../credentials/store/actions";
+import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import { Context } from "./context";
 import { CredentialUpgradeEvents } from "./events";
 import { UpgradeCredentialOutput } from "./actors";
@@ -20,5 +21,8 @@ export const createCredentialUpgradeActionsImplementation = (
     store.dispatch(itwCredentialsRemoveByType(credentialType));
     // Stores the new credentials
     store.dispatch(itwCredentialsStore(credentials));
-  }
+  },
+
+  handleSessionExpired: () =>
+    store.dispatch(checkCurrentSession.success({ isSessionValid: false }))
 });

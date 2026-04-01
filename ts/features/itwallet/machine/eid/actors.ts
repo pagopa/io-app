@@ -39,6 +39,7 @@ import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { createCredentialUpgradeActionsImplementation } from "../upgrade/actions";
 import { createCredentialUpgradeActorsImplementation } from "../upgrade/actors";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine";
+import { createCommonActorsImplementation } from "../utils/actors";
 import type {
   AuthenticationContext,
   CieContext,
@@ -350,22 +351,9 @@ export const createEidIssuanceActorsImplementation = (
   ),
 
   credentialUpgradeMachine: itwCredentialUpgradeMachine.provide({
-    actors: createCredentialUpgradeActorsImplementation(env, itwVersion),
+    actors: createCredentialUpgradeActorsImplementation(env, itwVersion, store),
     actions: createCredentialUpgradeActionsImplementation(store)
   }),
 
-  waitForSessionRefresh: fromCallback(({ sendBack }) => {
-    const oldSessionToken = sessionTokenSelector(store.getState());
-
-    const unsubscribe = store.subscribe(() => {
-      const currentSessionToken = sessionTokenSelector(store.getState());
-      if (currentSessionToken !== oldSessionToken) {
-        sendBack({ type: "refresh-complete" });
-      }
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  })
+  ...createCommonActorsImplementation(store)
 });

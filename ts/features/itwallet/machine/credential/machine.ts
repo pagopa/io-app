@@ -275,11 +275,10 @@ export const itwCredentialIssuanceMachine = setup({
             src: "waitForSessionRefresh"
           },
           on: {
-            "refresh-complete": { target: "ObtainingCredential" }
+            "session-refresh-complete": { target: "ObtainingCredential" }
           }
         },
         ObtainingAccessToken: {
-          tags: [ItwTags.Loading],
           invoke: {
             src: "obtainAccessToken",
             input: ({ context }) => ({
@@ -299,6 +298,8 @@ export const itwCredentialIssuanceMachine = setup({
           }
         },
         ObtainingCredential: {
+          description:
+            "Obtain the credential(s) with the WUA if supported. This state is retried when the session expires, so it must contain the minimal retriable logic to obtain the credential",
           invoke: {
             src: "obtainCredential",
             input: ({ context }) => ({

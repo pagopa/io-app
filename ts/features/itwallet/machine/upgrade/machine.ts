@@ -1,5 +1,11 @@
-import { assign, fromPromise, setup } from "xstate";
-import { UpgradeCredentialOutput, UpgradeCredentialParams } from "./actors";
+import { assign, fromCallback, fromPromise, setup } from "xstate";
+import { ItwSessionExpiredError } from "../../api/client";
+import {
+  RequestAccessTokenOutput,
+  RequestAccessTokenParams,
+  UpgradeCredentialOutput,
+  UpgradeCredentialParams
+} from "./actors";
 import { Context, getInitialContext } from "./context";
 import { CredentialUpgradeEvents } from "./events";
 import { mapUpgradeEventToFailure } from "./failure";
@@ -38,15 +44,23 @@ export const itwCredentialUpgradeMachine = setup({
 
         return [...context.failedCredentials, failedCredential];
       }
-    })
+    }),
+    handleSessionExpired: notImplemented
   },
   actors: {
+    requestAccessToken: fromPromise<
+      RequestAccessTokenOutput,
+      RequestAccessTokenParams
+    >(notImplemented),
     upgradeCredential: fromPromise<
       UpgradeCredentialOutput,
       UpgradeCredentialParams
-    >(notImplemented)
+    >(notImplemented),
+    waitForSessionRefresh: fromCallback(notImplemented)
   },
   guards: {
+    isSessionExpired: ({ event }) =>
+      "error" in event && event.error instanceof ItwSessionExpiredError,
     hasMoreCredentials: ({ context }) =>
       context.credentialIndex < context.credentials.length - 1
   }
@@ -61,16 +75,16 @@ export const itwCredentialUpgradeMachine = setup({
         {
           guard: "hasMoreCredentials",
           actions: "pickNextCredential",
-          target: "UpgradeCredential"
+          target: "RequestAccessToken"
         },
         {
           target: "Completed"
         }
       ]
     },
-    UpgradeCredential: {
+    RequestAccessToken: {
       invoke: {
-        src: "upgradeCredential",
+        src: "requestAccessToken",
         input: ({ context }) => ({
           pid: context.pid,
           walletInstanceAttestation: context.walletInstanceAttestation,
@@ -78,13 +92,52 @@ export const itwCredentialUpgradeMachine = setup({
           issuanceMode: context.issuanceMode
         }),
         onDone: {
-          actions: ["storeCredential"],
-          target: "Checking"
+          target: "UpgradeCredential",
+          actions: assign(({ event }) => event.output)
         },
         onError: {
           actions: ["setFailedCredential"],
           target: "Checking"
         }
+      }
+    },
+    UpgradeCredential: {
+      invoke: {
+        description:
+          "Obtain the credential(s) with the WUA if supported. This state is retried when the session expires, so it must contain the minimal retriable logic to obtain the credential",
+        src: "upgradeCredential",
+        input: ({ context }) => ({
+          pid: context.pid,
+          credential: context.credentials[context.credentialIndex],
+          accessToken: context.accessToken!,
+          issuerConf: context.issuerConf!,
+          clientId: context.clientId!,
+          integrityKeyTag: context.integrityKeyTag,
+          issuanceMode: context.issuanceMode
+        }),
+        onDone: {
+          actions: ["storeCredential"],
+          target: "Checking"
+        },
+        onError: [
+          {
+            guard: "isSessionExpired",
+            actions: "handleSessionExpired",
+            target: "WaitingForSessionRefresh"
+          },
+          {
+            actions: ["setFailedCredential"],
+            target: "Checking"
+          }
+        ]
+      }
+    },
+    WaitingForSessionRefresh: {
+      invoke: {
+        src: "waitForSessionRefresh"
+      },
+      on: {
+        "session-refresh-complete": { target: "UpgradeCredential" }
       }
     },
     Completed: {

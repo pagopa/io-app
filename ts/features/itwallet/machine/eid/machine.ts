@@ -1086,7 +1086,7 @@ export const itwEidIssuanceMachine = setup({
             src: "waitForSessionRefresh"
           },
           on: {
-            "refresh-complete": { target: "RequestingEid" }
+            "session-refresh-complete": { target: "RequestingEid" }
           }
         },
         RequestingAccessToken: {
@@ -1105,6 +1105,8 @@ export const itwEidIssuanceMachine = setup({
         },
         RequestingEid: {
           tags: [ItwTags.Loading],
+          description:
+            "Obtain the EID with the WUA if supported. This state is retried when the session expires, so it must contain the minimal retriable logic to obtain the credential",
           invoke: {
             src: "requestEid",
             input: ({ context }) => ({
@@ -1210,13 +1212,18 @@ export const itwEidIssuanceMachine = setup({
                 "Wallet instance attestation must be defined"
               );
               assert(context.mode, "Issuance mode must be defined");
+              assert(
+                context.integrityKeyTag,
+                "Integrity key tag must be defined"
+              );
 
               return {
                 pid: context.eid,
                 walletInstanceAttestation:
                   context.walletInstanceAttestation?.jwt,
                 credentials: context.legacyCredentials,
-                issuanceMode: context.mode
+                issuanceMode: context.mode,
+                integrityKeyTag: context.integrityKeyTag
               };
             },
             onDone: {

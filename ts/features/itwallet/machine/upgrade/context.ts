@@ -1,4 +1,8 @@
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import {
+  CredentialAccessToken,
+  IssuerConfiguration,
+  StoredCredential
+} from "../../common/utils/itwTypesUtils";
 import { EidIssuanceMode } from "../eid/context";
 import { Input } from "./input";
 
@@ -29,6 +33,10 @@ export type Context = {
    * - "reissuance": reissuing the eID on Documenti su IO, reissuing also owned credentials.
    */
   issuanceMode: EidIssuanceMode;
+  integrityKeyTag: string;
+  issuerConf?: IssuerConfiguration;
+  accessToken?: CredentialAccessToken;
+  clientId?: string;
 };
 
 export const getInitialContext = (input: Input): Context => ({
@@ -37,5 +45,6 @@ export const getInitialContext = (input: Input): Context => ({
   credentials: input.credentials,
   credentialIndex: -1,
   failedCredentials: [],
-  issuanceMode: input.issuanceMode
+  issuanceMode: input.issuanceMode,
+  integrityKeyTag: input.integrityKeyTag
 });

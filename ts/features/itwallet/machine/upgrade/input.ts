@@ -20,4 +20,5 @@ export type Input = {
    * - "reissuance": reissuing the eID on Documenti su IO, reissuing also owned credentials.
    */
   issuanceMode: EidIssuanceMode;
+  integrityKeyTag: string;
 };

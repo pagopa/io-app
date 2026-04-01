@@ -1,5 +1,5 @@
 import * as O from "fp-ts/lib/Option";
-import { fromCallback, fromPromise } from "xstate";
+import { fromPromise } from "xstate";
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import { useIOStore } from "../../../../store/hooks";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
@@ -23,6 +23,7 @@ import {
   enrichErrorWithMetadata,
   isAssertionGenerationError
 } from "../../common/utils/itwFailureUtils";
+import { createCommonActorsImplementation } from "../utils/actors";
 import {
   trackWalletInstanceRenewalFailure,
   trackWalletInstanceRenewalSuccess
@@ -275,21 +276,6 @@ export const createCredentialIssuanceActorsImplementation = (
     );
   });
 
-  const waitForSessionRefresh = fromCallback(({ sendBack }) => {
-    const oldSessionToken = sessionTokenSelector(store.getState());
-
-    const unsubscribe = store.subscribe(() => {
-      const currentSessionToken = sessionTokenSelector(store.getState());
-      if (currentSessionToken !== oldSessionToken) {
-        sendBack({ type: "refresh-complete" });
-      }
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  });
-
   return {
     verifyTrustFederation,
     getWalletAttestation,
@@ -297,6 +283,6 @@ export const createCredentialIssuanceActorsImplementation = (
     requestCredential,
     obtainCredential,
     obtainStatusAssertion,
-    waitForSessionRefresh
+    ...createCommonActorsImplementation(store)
   };
 };
