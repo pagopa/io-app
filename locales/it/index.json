@@ -3118,7 +3118,8 @@
         "email": "Scrivi una mail",
         "website": "Visita il sito",
         "additionalDataTitle": "Dati aggiuntivi",
-        "errorCode": "Codice errore"
+        "errorCode": "Codice errore",
+        "visitHelpCenter": "Visita il centro di assistenza"
       },
       "generic": {
         "error": {

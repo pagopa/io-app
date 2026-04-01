@@ -79,6 +79,7 @@ type Props = {
   credentialType?: string;
   supportChatEnabled: boolean;
   zendeskSubcategory: ZendeskSubcategoryValue;
+  supportLink?: string;
 };
 
 /**
@@ -88,7 +89,8 @@ export const useItwFailureSupportModal = ({
   failure,
   credentialType,
   supportChatEnabled,
-  zendeskSubcategory
+  zendeskSubcategory,
+  supportLink
 }: Props) => {
   const { startItwZendeskSupport } = useItwZendeskSupport();
   const code = extractErrorCode(failure);
@@ -200,6 +202,18 @@ export const useItwFailureSupportModal = ({
               <ListItemHeader
                 label={I18n.t("features.itWallet.support.supportTitle")}
               />
+              {supportLink && (
+                <>
+                  <ListItemAction
+                    testID="contact-method-help-center"
+                    variant="primary"
+                    icon="website"
+                    label={I18n.t("features.itWallet.support.visitHelpCenter")}
+                    onPress={() => Linking.openURL(supportLink)}
+                  />
+                  <Divider />
+                </>
+              )}
               {contactMethods}
             </View>
           )}
