@@ -10,7 +10,6 @@ const {
 
 const tseslint = require("typescript-eslint");
 const reactNativeConfig = require("@react-native/eslint-config/flat");
-const reactNative = require("eslint-plugin-react-native");
 const _import = require("eslint-plugin-import");
 const functional = require("eslint-plugin-functional");
 const sonarjs = require("eslint-plugin-sonarjs");
@@ -63,10 +62,6 @@ module.exports = defineConfig([
                 },
             },
 
-            globals: {
-                ...reactNative.environments["react-native"]["react-native"],
-                __DEV__: true,
-            },
         },
 
         plugins: {
