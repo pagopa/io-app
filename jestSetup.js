@@ -210,9 +210,7 @@ jest.mock(
     };
   }
 );
-jest
-  .spyOn(AppState, "addEventListener")
-  .mockImplementation(() => ({ remove: jest.fn() }));
+jest.spyOn(AppState, "addEventListener").mockImplementation(() => ({remove: jest.fn()}));
 
 jest.mock("mixpanel-react-native", () => ({
   __esModule: true,
