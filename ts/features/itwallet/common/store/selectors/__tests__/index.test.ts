@@ -306,7 +306,7 @@ describe("itwShouldRenderInboxDiscoveryBannerSelector", () => {
           }
         }
       } as GlobalState;
-      
+
       jest
         .spyOn(remoteConfigSelectors, "isItwEnabledSelector")
         .mockReturnValue(itwEnabled);
