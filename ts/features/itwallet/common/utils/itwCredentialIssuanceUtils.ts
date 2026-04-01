@@ -13,7 +13,6 @@ import {
 import {
   CredentialAccessToken,
   CredentialFormat,
-  IssuanceStoredCredential,
   IssuerConfiguration,
   RequestObject,
   StoredCredential
@@ -151,13 +150,12 @@ export const completeAuthFlow = async ({
 };
 
 export type ObtainCredentialParams = {
+  authorizedCredentials: ReadonlyArray<AuthorizedCredentialMetadata>;
   env: Env;
   itwVersion: ItwVersion;
   credentialType: string;
   clientId: string;
   issuerConf: IssuerConfiguration;
-  hardwareKeyTag: string;
-  sessionToken: string;
   accessToken: CredentialAccessToken;
 };
 
@@ -175,20 +173,14 @@ export type ObtainCredentialParams = {
  * @returns The obtained credential
  */
 export const obtainCredential = async ({
+  authorizedCredentials,
   env,
   itwVersion,
   credentialType,
   accessToken,
   clientId,
-  issuerConf,
-  hardwareKeyTag,
-  sessionToken
+  issuerConf
 }: ObtainCredentialParams) => {
-  const credentialIssuanceMaterials = await prepareCredentialIssuanceMaterials(
-    accessToken,
-    { env, itwVersion, hardwareKeyTag, sessionToken }
-  );
-
   const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
 
   const commonParams: RequestAndParseCredentialParams = {
@@ -202,8 +194,8 @@ export const obtainCredential = async ({
   };
 
   if (SEQUENTIAL_ISSUANCE_CREDENTIALS.includes(credentialType)) {
-    const credentials: Array<IssuanceStoredCredential> = [];
-    for (const credentialParams of credentialIssuanceMaterials) {
+    const credentials: Array<StoredCredential> = [];
+    for (const credentialParams of authorizedCredentials) {
       const credential = await requestAndParseCredential({
         ...commonParams,
         ...credentialParams
@@ -215,7 +207,7 @@ export const obtainCredential = async ({
   }
 
   const credentials = await Promise.all(
-    credentialIssuanceMaterials.map(credentialParams =>
+    authorizedCredentials.map(credentialParams =>
       requestAndParseCredential({ ...commonParams, ...credentialParams })
     )
   );
@@ -268,10 +260,9 @@ const requestAndParseCredential = async ({
   env,
   itwVersion,
   keyTag,
-  walletUnitAttestation,
   walletUnitAttestationId
 }: RequestAndParseCredentialParams &
-  CredentialIssuanceMaterials): Promise<IssuanceStoredCredential> => {
+  AuthorizedCredentialMetadata): Promise<StoredCredential> => {
   const ioWallet = getIoWallet(itwVersion);
   const { credential_configuration_id, credential_identifiers } = authDetails;
   const credentialCryptoContext = createCryptoContextFor(keyTag);
@@ -324,12 +315,11 @@ const requestAndParseCredential = async ({
     },
     spec_version: ioWallet.version,
     verification: extractVerification({ format, credential, parsedCredential }),
-    walletUnitAttestation,
     walletUnitAttestationId
   };
 };
 
-type CredentialIssuanceMaterials = {
+export type AuthorizedCredentialMetadata = {
   keyTag: string;
   authDetails: CredentialAccessToken["authorization_details"][number];
   walletUnitAttestation?: string;
@@ -337,17 +327,20 @@ type CredentialIssuanceMaterials = {
 };
 
 /**
- * Iterate the Issuer authorization details to create the keys and the WUA for each credential to request.
+ * Create the keys and the WUA for each credential to request. The exact credentials are taken from the authorization details
+ * of the Issuer's access token, that contains the list of authorized credential identifiers. At present we always receive one
+ * credential identifier, so we can generate one key/WUA per authorization detail.
  *
  * If the WUA is not supported, only the keys are generated.
+ *
  * @param accessToken The Issuer access token with the authorization details
  * @param params.env Environment variables
  * @param params.itwVersion IT-Wallet technical specs version
  * @param params.hardwareKeyTag The hardware key associated with the Wallet Instance
  * @param params.sessionToken The session token for the Wallet Provider API
- * @returns The authorization details with the corresponding keys and WUA if supported
+ * @returns The authorization details enriched with the generated keys and WUA if supported
  */
-export const prepareCredentialIssuanceMaterials = async (
+export const generateKeysWithWalletUnitAttestation = async (
   accessToken: CredentialAccessToken,
   {
     env,
@@ -360,7 +353,7 @@ export const prepareCredentialIssuanceMaterials = async (
     hardwareKeyTag: string;
     sessionToken: string;
   }
-): Promise<Array<CredentialIssuanceMaterials>> => {
+): Promise<Array<AuthorizedCredentialMetadata>> => {
   const ioWallet = getIoWallet(itwVersion);
 
   return Promise.all(

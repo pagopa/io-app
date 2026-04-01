@@ -36,6 +36,7 @@ import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/act
 import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
+import { generateKeysWithWalletUnitAttestation } from "../../common/utils/itwCredentialIssuanceUtils";
 import { createCredentialUpgradeActionsImplementation } from "../upgrade/actions";
 import { createCredentialUpgradeActorsImplementation } from "../upgrade/actors";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine";
@@ -56,9 +57,10 @@ export type RequestEidActorParams = {
   accessToken: CredentialAccessToken | undefined;
 };
 
-export type RequestEidActorOutput = Awaited<
-  ReturnType<typeof issuanceUtils.getPid>
->;
+export type RequestEidActorOutput = {
+  credential: StoredCredential;
+  walletUnitAttestations: Record<string, string>;
+};
 
 export type StartAuthFlowActorParams = {
   walletInstanceAttestation: string | undefined;
@@ -343,14 +345,31 @@ export const createEidIssuanceActorsImplementation = (
         input.level === "l3" ? "L3" : "L2"
       );
 
-      return await issuanceUtils.getPid({
-        env,
-        sessionToken,
-        hardwareKeyTag: input.integrityKeyTag,
+      // Take the first element as only one credential is authorized during PID issuance
+      const [authorizedCredential] =
+        await generateKeysWithWalletUnitAttestation(input.accessToken, {
+          env,
+          itwVersion,
+          hardwareKeyTag: input.integrityKeyTag,
+          sessionToken
+        });
+
+      const credential = await issuanceUtils.getPid({
+        authorizedCredential,
         itwVersion,
         accessToken: input.accessToken,
         ...input.authenticationContext
       });
+
+      const { walletUnitAttestationId, walletUnitAttestation } =
+        authorizedCredential;
+      return {
+        credential,
+        walletUnitAttestations:
+          walletUnitAttestationId && walletUnitAttestation
+            ? { [walletUnitAttestationId]: walletUnitAttestation }
+            : {}
+      };
     }
   ),
 

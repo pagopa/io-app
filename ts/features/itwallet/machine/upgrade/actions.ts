@@ -17,23 +17,13 @@ export const createCredentialUpgradeActionsImplementation = (
     event
   }: ActionArgs<Context, CredentialUpgradeEvents, CredentialUpgradeEvents>) => {
     const doneEvent = event as DoneActorEvent<UpgradeCredentialOutput>;
-    const { credentialType, credentials } = doneEvent.output;
+    const { credentialType, credentials, walletUnitAttestations } =
+      doneEvent.output;
     // Removes old credential using the credential type
     store.dispatch(itwCredentialsRemoveByType(credentialType));
     // Stores the new credentials without the WUA
-    store.dispatch(
-      itwCredentialsStore(
-        credentials.map(({ walletUnitAttestation, ...rest }) => rest)
-      )
-    );
+    store.dispatch(itwCredentialsStore(credentials));
     // Stores WUAs separately
-    const walletUnitAttestations = credentials.reduce(
-      (acc, c) =>
-        c.walletUnitAttestation && c.walletUnitAttestationId
-          ? { ...acc, [c.walletUnitAttestationId]: c.walletUnitAttestation }
-          : acc,
-      {} as Record<string, string>
-    );
     store.dispatch(itwWalletUnitAttestationsStore(walletUnitAttestations));
   },
 

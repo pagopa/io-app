@@ -37,6 +37,7 @@ export type UpgradeCredentialOutput = Awaited<
   ReturnType<typeof credentialIssuanceUtils.obtainCredential>
 > & {
   credentialType: string;
+  walletUnitAttestations: Record<string, string>;
 };
 
 export const createCredentialUpgradeActorsImplementation = (
@@ -89,6 +90,17 @@ export const createCredentialUpgradeActorsImplementation = (
     const sessionToken = sessionTokenSelector(store.getState());
     assert(sessionToken, "sessionToken is undefined");
 
+    const authorizedCredentials =
+      await credentialIssuanceUtils.generateKeysWithWalletUnitAttestation(
+        accessToken,
+        {
+          env,
+          itwVersion,
+          hardwareKeyTag: integrityKeyTag,
+          sessionToken
+        }
+      );
+
     const result = await credentialIssuanceUtils.obtainCredential({
       env,
       itwVersion,
@@ -96,13 +108,19 @@ export const createCredentialUpgradeActorsImplementation = (
       issuerConf,
       clientId,
       accessToken,
-      sessionToken,
-      hardwareKeyTag: integrityKeyTag
+      authorizedCredentials
     });
 
     return {
       credentialType: credential.credentialType,
-      credentials: result.credentials
+      credentials: result.credentials,
+      walletUnitAttestations: authorizedCredentials.reduce(
+        (acc, c) =>
+          c.walletUnitAttestationId && c.walletUnitAttestation
+            ? { ...acc, [c.walletUnitAttestationId]: c.walletUnitAttestation }
+            : acc,
+        {} as Record<string, string>
+      )
     };
   }),
 

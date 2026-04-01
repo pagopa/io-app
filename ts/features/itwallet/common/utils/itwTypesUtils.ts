@@ -173,13 +173,3 @@ export const isMultiLevelCredential = (
     claim => Array.isArray(claim.value) && claim.value.length > 1
   );
 };
-
-/**
- * @internal For issuance low-level flows only. Use {@link StoredCredential} outside.
- *
- * During issuance the credential object might include the Wallet Unit Attestation JWT.
- * The attestation is then removed and stored separately, keeping only its ID in the StoredCredential.
- */
-export type IssuanceStoredCredential = StoredCredential & {
-  walletUnitAttestation?: string;
-};

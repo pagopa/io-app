@@ -6,8 +6,8 @@ import {
 import { type IdentificationContext } from "../../machine/eid/context";
 import {
   CredentialAccessToken,
-  IssuanceStoredCredential,
-  IssuerConfiguration
+  IssuerConfiguration,
+  StoredCredential
 } from "./itwTypesUtils";
 import {
   DPOP_KEYTAG,
@@ -17,7 +17,7 @@ import {
 import { extractVerification } from "./itwCredentialUtils";
 import { Env } from "./environment";
 import { getIoWallet } from "./itwIoWallet";
-import { prepareCredentialIssuanceMaterials } from "./itwCredentialIssuanceUtils";
+import { AuthorizedCredentialMetadata } from "./itwCredentialIssuanceUtils";
 
 const CREDENTIAL_TYPE = "PersonIdentificationData";
 
@@ -146,18 +146,16 @@ const completeAuthFlow = async ({
 };
 
 export type PidIssuanceParams = {
-  env: Env;
   itwVersion: ItwVersion;
   issuerConf: IssuerConfiguration;
   accessToken: CredentialAccessToken;
   clientId: string;
   credentialDefinition: AuthorizationDetail;
-  hardwareKeyTag: string;
-  sessionToken: string;
+  authorizedCredential: AuthorizedCredentialMetadata;
 };
 
 /**
- * Function to get the PID, parse it and return it in {@link IssuanceStoredCredential} format.
+ * Function to get the PID, parse it and return it in {@link StoredCredential} format.
  * It must be called after `startAuthFlow` and `completeAuthFlow`.
  * @returns The stored credential.
  */
@@ -166,27 +164,15 @@ const getPid = async ({
   issuerConf,
   clientId,
   accessToken,
-  env,
-  hardwareKeyTag,
-  sessionToken
-}: PidIssuanceParams): Promise<IssuanceStoredCredential> => {
+  authorizedCredential
+}: PidIssuanceParams): Promise<StoredCredential> => {
   const ioWallet = getIoWallet(itwVersion);
-
-  // Take the first element as only one credential is authorized during PID issuance
-  const [credentialIssuanceMaterials] =
-    await prepareCredentialIssuanceMaterials(accessToken, {
-      env,
-      itwVersion,
-      hardwareKeyTag,
-      sessionToken
-    });
 
   const {
     keyTag,
     authDetails: { credential_configuration_id, credential_identifiers },
-    walletUnitAttestation,
     walletUnitAttestationId
-  } = credentialIssuanceMaterials;
+  } = authorizedCredential;
 
   const credentialCryptoContext = createCryptoContextFor(keyTag);
   const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
@@ -228,7 +214,6 @@ const getPid = async ({
     },
     spec_version: ioWallet.version,
     verification: extractVerification({ format, credential, parsedCredential }),
-    walletUnitAttestation,
     walletUnitAttestationId
   };
 };

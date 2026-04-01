@@ -55,7 +55,9 @@ export type ObtainCredentialActorInput =
 
 export type ObtainCredentialActorOutput = Awaited<
   ReturnType<typeof credentialIssuanceUtils.obtainCredential>
->;
+> & {
+  walletUnitAttestations: Record<string, string>;
+};
 
 export type ObtainStatusAssertionActorInput = Pick<Context, "credentials">;
 
@@ -230,16 +232,37 @@ export const createCredentialIssuanceActorsImplementation = (
     assert(accessToken, "accessToken is undefined");
     assert(O.isSome(integrityKeyTag), "integriyKeyTag is undefined");
 
-    return await credentialIssuanceUtils.obtainCredential({
+    const authorizedCredentials =
+      await credentialIssuanceUtils.generateKeysWithWalletUnitAttestation(
+        accessToken,
+        {
+          env,
+          itwVersion,
+          hardwareKeyTag: integrityKeyTag.value,
+          sessionToken
+        }
+      );
+
+    const { credentials } = await credentialIssuanceUtils.obtainCredential({
+      authorizedCredentials,
       env,
       itwVersion,
       accessToken,
       credentialType,
       issuerConf,
-      clientId,
-      sessionToken,
-      hardwareKeyTag: integrityKeyTag.value
+      clientId
     });
+
+    return {
+      credentials,
+      walletUnitAttestations: authorizedCredentials.reduce(
+        (acc, c) =>
+          c.walletUnitAttestationId && c.walletUnitAttestation
+            ? { ...acc, [c.walletUnitAttestationId]: c.walletUnitAttestation }
+            : acc,
+        {} as Record<string, string>
+      )
+    };
   });
 
   const obtainStatusAssertion = fromPromise<

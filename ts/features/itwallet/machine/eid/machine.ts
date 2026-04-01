@@ -1118,16 +1118,10 @@ export const itwEidIssuanceMachine = setup({
               accessToken: context.accessToken
             }),
             onDone: {
-              actions: assign(({ event }) => {
-                const { walletUnitAttestation, ...eid } = event.output;
-                return {
-                  eid,
-                  walletUnitAttestations:
-                    walletUnitAttestation && eid.walletUnitAttestationId
-                      ? { [eid.walletUnitAttestationId]: walletUnitAttestation }
-                      : {}
-                };
-              }),
+              actions: assign(({ event }) => ({
+                eid: event.output.credential,
+                walletUnitAttestations: event.output.walletUnitAttestations
+              })),
               target: "CheckingIdentityMatch"
             },
             onError: [

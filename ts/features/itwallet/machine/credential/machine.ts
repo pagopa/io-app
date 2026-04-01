@@ -313,21 +313,7 @@ export const itwCredentialIssuanceMachine = setup({
             }),
             onDone: {
               target: "ObtainingStatusAssertion",
-              actions: assign(({ event }) => ({
-                credentials: event.output.credentials.map(
-                  ({ walletUnitAttestation, ...rest }) => rest
-                ),
-                walletUnitAttestations: event.output.credentials.reduce(
-                  (acc, c) =>
-                    c.walletUnitAttestation && c.walletUnitAttestationId
-                      ? {
-                          ...acc,
-                          [c.walletUnitAttestationId]: c.walletUnitAttestation
-                        }
-                      : acc,
-                  {} as Record<string, string>
-                )
-              }))
+              actions: assign(({ event }) => event.output)
             },
             onError: [
               {
