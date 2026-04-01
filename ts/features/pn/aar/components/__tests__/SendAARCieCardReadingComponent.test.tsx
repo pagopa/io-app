@@ -14,12 +14,12 @@ import {
 } from "../../hooks/useCieInternalAuthAndMrtdReading";
 import { useTrackCieReadingEvents } from "../../hooks/useTrackCieReadingEvents";
 import { setAarFlowState } from "../../store/actions";
-import { sendAARFlowStates } from "../../utils/stateUtils";
+import { sendAarFlowStates } from "../../utils/stateUtils";
 import { useAarGenericErrorBottomSheet } from "../errors/hooks/useAarGenericErrorBottomSheet";
 import {
-  SendAARCieCardReadingComponent,
-  SendAARCieCardReadingComponentProps
-} from "../SendAARCieCardReadingComponent";
+  SendAarCieCardReadingComponent,
+  SendAarCieCardReadingComponentProps
+} from "../SendAarCieCardReadingComponent";
 import { SendAarZendeskSecondLevelTag } from "../errors/hooks/useAarStartSendZendeskSupport";
 type ReadState = ReturnType<
   typeof useCieInternalAuthAndMrtdReading
@@ -49,7 +49,7 @@ const testRestartHandlerCalled = (
     case "canAdvisory":
       expect(mockDispatch).toHaveBeenCalledWith(
         setAarFlowState({
-          type: sendAARFlowStates.cieCanAdvisory,
+          type: sendAarFlowStates.cieCanAdvisory,
           iun,
           recipientInfo,
           mandateId,
@@ -60,7 +60,7 @@ const testRestartHandlerCalled = (
     case "scanningAdvisory":
       expect(mockDispatch).toHaveBeenCalledWith(
         setAarFlowState({
-          type: sendAARFlowStates.cieScanningAdvisory,
+          type: sendAarFlowStates.cieScanningAdvisory,
           iun,
           recipientInfo,
           mandateId,
@@ -102,7 +102,7 @@ jest.mock("../../hooks/useTrackCieReadingEvents", () => ({
   useTrackCieReadingEvents: jest.fn()
 }));
 
-const cieCardReadingComponentProps: SendAARCieCardReadingComponentProps = {
+const cieCardReadingComponentProps: SendAarCieCardReadingComponentProps = {
   can: "123456",
   iun: "iun",
   mandateId: "mandate_id",
@@ -150,7 +150,7 @@ const mockReadStates: ReadonlyArray<ReadState> = [
   ...errorsMock.map<ReadState>(error => ({ status: ReadStatus.ERROR, error }))
 ];
 
-describe("SendAARCieCardReadingComponent", () => {
+describe("SendAarCieCardReadingComponent", () => {
   afterEach(jest.clearAllMocks);
 
   it.each<ReadState>(mockReadStates)(
@@ -191,7 +191,7 @@ describe("SendAARCieCardReadingComponent", () => {
     }
   );
 
-  describe("SendAARCieCardReadingComponent: ReadState is IDLE", () => {
+  describe("SendAarCieCardReadingComponent: ReadState is IDLE", () => {
     beforeEach(() => {
       mockReadState({ status: ReadStatus.IDLE });
     });
@@ -247,7 +247,7 @@ describe("SendAARCieCardReadingComponent", () => {
       expect(mockStartReading).toHaveBeenCalledTimes(1);
     });
   });
-  describe("SendAARCieCardReadingComponent: ReadState is READING", () => {
+  describe("SendAarCieCardReadingComponent: ReadState is READING", () => {
     beforeEach(() => {
       mockReadState({ status: ReadStatus.READING, progress: 0.1 });
     });
@@ -301,7 +301,7 @@ describe("SendAARCieCardReadingComponent", () => {
       expect(mockStartReading).toHaveBeenCalledTimes(1);
     });
   });
-  describe("SendAARCieCardReadingComponent: ReadState is SUCCESS", () => {
+  describe("SendAarCieCardReadingComponent: ReadState is SUCCESS", () => {
     beforeEach(() => {
       mockReadState({ status: ReadStatus.SUCCESS, data: successDataMock });
     });
@@ -320,7 +320,7 @@ describe("SendAARCieCardReadingComponent", () => {
       expect(mockDispatch).toHaveBeenCalledTimes(1);
       expect(mockDispatch).toHaveBeenCalledWith(
         setAarFlowState({
-          type: sendAARFlowStates.validatingMandate,
+          type: sendAarFlowStates.validatingMandate,
           iun: cieCardReadingComponentProps.iun,
           mandateId: cieCardReadingComponentProps.mandateId,
           recipientInfo: cieCardReadingComponentProps.recipientInfo,
@@ -333,7 +333,7 @@ describe("SendAARCieCardReadingComponent", () => {
       );
     });
   });
-  describe("SendAARCieCardReadingComponent: ReadState is ERROR", () => {
+  describe("SendAarCieCardReadingComponent: ReadState is ERROR", () => {
     const unmappedErrors: Array<ErrorState["error"]> = [
       { name: "CANCELLED_BY_USER" },
       { name: "GENERIC_ERROR" },
@@ -502,7 +502,7 @@ function testCancelErrorAction() {
 }
 
 const Component = (
-  <SendAARCieCardReadingComponent {...cieCardReadingComponentProps} />
+  <SendAarCieCardReadingComponent {...cieCardReadingComponentProps} />
 );
 
 function renderComponent() {

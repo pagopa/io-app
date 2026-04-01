@@ -87,23 +87,23 @@ describe("linkingSubscription", () => {
   );
 
   [true, false].forEach(isLoggedIn => {
-    [true, false].forEach(isAARLink => {
+    [true, false].forEach(isAarLink => {
       it(`should handle a URL event when${
         isLoggedIn ? "" : " not"
       } logged in, and the link passed ${
-        isAARLink ? "is" : "isn't"
-      } a valid AAR link`, () => {
+        isAarLink ? "is" : "isn't"
+      } a valid Aar link`, () => {
         const { mockDispatch, mockCurrySubscription, addEventListenerSpy } =
           initializeTests();
         const mockNav = jest.fn();
-        const testUrl = `https://example.com/${isAARLink}/${isLoggedIn}`;
+        const testUrl = `https://example.com/${isAarLink}/${isLoggedIn}`;
 
         jest
           .spyOn(UTIL_GUARDS, "isLoggedIn")
           .mockImplementation(() => isLoggedIn);
         jest
-          .spyOn(DEEP_LINKING, "isSendAARLink")
-          .mockImplementation(() => isAARLink);
+          .spyOn(DEEP_LINKING, "isSendAarLink")
+          .mockImplementation(() => isAarLink);
 
         mockCurrySubscription(jest.fn());
 
@@ -115,7 +115,7 @@ describe("linkingSubscription", () => {
             expect.objectContaining({ type: "STORE_LINKING_URL" })
           );
 
-          if (isAARLink) {
+          if (isAarLink) {
             expect(mockDispatch).toHaveBeenCalledWith(
               initiateAarFlow({ aarUrl: testUrl })
             );

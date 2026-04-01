@@ -15,7 +15,7 @@ import * as NFC_AVAILABLE from "../../hooks/useIsNfcFeatureAvailable";
 import * as BS_HOOK from "../../hooks/useSendAarDelegationProposalScreenBottomSheet";
 import * as FLOW_MANAGER from "../../hooks/useSendAarFlowManager";
 import { setAarFlowState } from "../../store/actions";
-import { sendAARFlowStates } from "../../utils/stateUtils";
+import { sendAarFlowStates } from "../../utils/stateUtils";
 import {
   sendAarMockStateFactory,
   sendAarMockStates
@@ -106,7 +106,7 @@ describe("SendAarDelegationProposalScreen", () => {
   describe("Delegation screen content", () => {
     sendAarMockStates.forEach(currentFlowData => {
       const isNotAddresseState =
-        currentFlowData.type === sendAARFlowStates.notAddressee;
+        currentFlowData.type === sendAarFlowStates.notAddressee;
 
       it(`${
         isNotAddresseState ? "should" : "should not"
@@ -182,7 +182,7 @@ describe("SendAarDelegationProposalScreen", () => {
             expect(mockDispatch).toHaveBeenCalledWith(
               setAarFlowState({
                 ...currentStateMockData,
-                type: sendAARFlowStates.nfcNotSupportedFinal
+                type: sendAarFlowStates.nfcNotSupportedFinal
               })
             );
           }
@@ -231,9 +231,9 @@ describe("SendAarDelegationProposalScreen", () => {
 
   describe("navigation to SEND AAR error screen", () => {
     const statesThatNavigate = [
-      sendAARFlowStates.nfcNotSupportedFinal,
-      sendAARFlowStates.ko,
-      sendAARFlowStates.cieCanAdvisory
+      sendAarFlowStates.nfcNotSupportedFinal,
+      sendAarFlowStates.ko,
+      sendAarFlowStates.cieCanAdvisory
     ];
 
     sendAarMockStates.forEach(state => {
@@ -286,7 +286,7 @@ describe("SendAarDelegationProposalScreen", () => {
         state.type
       } state, displaying 
       ${
-        state.type === sendAARFlowStates.notAddressee
+        state.type === sendAarFlowStates.notAddressee
           ? "the delegation proposal screen"
           : "a loading screen"
       }`;
@@ -302,7 +302,7 @@ describe("SendAarDelegationProposalScreen", () => {
         const { toJSON, findByTestId } = renderScreen();
         const getLoadingScreen = () => findByTestId("delegationLoading");
         const getDelegationScreen = () => findByTestId("delegationProposal");
-        if (state.type === sendAARFlowStates.notAddressee) {
+        if (state.type === sendAarFlowStates.notAddressee) {
           await expect(getDelegationScreen()).resolves.toBeDefined();
           await expect(getLoadingScreen()).rejects.toThrow();
         } else {

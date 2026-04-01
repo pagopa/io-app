@@ -48,7 +48,7 @@ describe("MessageDetails component", () => {
     jest.restoreAllMocks();
   });
   // eslint-disable-next-line sonarjs/cognitive-complexity
-  describe("isAARMessage logic", () => {
+  describe("isAarMessage logic", () => {
     beforeEach(() => {
       jest.clearAllMocks();
     });

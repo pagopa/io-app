@@ -15,7 +15,7 @@ import { decodePosteDataMatrix } from "../../../utils/payment";
 import { ItwRemoteRequestPayload } from "../../itwallet/presentation/remote/utils/itwRemoteTypeUtils";
 import { validateItwPresentationQrCodeParams } from "../../itwallet/presentation/remote/utils/itwRemotePresentationUtils";
 import { selectItwSpecsVersion } from "../../itwallet/common/store/selectors/environment";
-import { pnAARQRCodeRegexSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { pnAarQRCodeRegexSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { IOBarcodeType } from "./IOBarcode";
 
 // Discriminated barcode type
@@ -154,13 +154,13 @@ const decodeItwRemoteBarcode: IOBarcodeRuntimeDecoderFn = (
     }))
   );
 
-const decodeSENDAARBarcode: IOBarcodeRuntimeDecoderFn = (
+const decodeSENDAarBarcode: IOBarcodeRuntimeDecoderFn = (
   state: GlobalState,
   data: string
 ) =>
   pipe(
     state,
-    pnAARQRCodeRegexSelector,
+    pnAarQRCodeRegexSelector,
     O.fromNullable,
     O.map(aarQRCodeRegexString => new RegExp(aarQRCodeRegexString, "i")),
     O.filter(aarQRCodeRegExp => aarQRCodeRegExp.test(data)),
@@ -187,7 +187,7 @@ const StaticIOBarcodeDecoders: IOBarcodeStaticDecodersType = {
 };
 
 const RuntimeIOBarcodeDecoders: IOBarcodeRuntimeDecodersType = {
-  SEND: decodeSENDAARBarcode,
+  SEND: decodeSENDAarBarcode,
   ITW_REMOTE: decodeItwRemoteBarcode
 };
 
