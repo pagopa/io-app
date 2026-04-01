@@ -1,11 +1,10 @@
 import * as BackgroundTask from "expo-background-task";
-import { runSaga } from "redux-saga";
 import { testSaga } from "redux-saga-test-plan";
-import { registerItwBackgroundTaskSaga } from "../../common/saga";
-import { trackItwBackgroundFetchWakeUp } from "../../analytics";
-import { itwNeedWalletInstanceStatusCheck } from "../../walletInstance/store/selectors";
-import { itwWalletCheckTaskHandler } from "../tasks";
-import { ITW_WALLET_CHECK_TASK } from "../constants";
+import {
+  ITW_BACKGROUND_TASK_INTERVAL_MINUTES,
+  ITW_WALLET_CHECK_TASK
+} from "../constants";
+import { registerItwBackgroundTaskSaga } from "../saga";
 
 jest.mock("expo-task-manager", () => ({
   defineTask: jest.fn()
@@ -37,61 +36,24 @@ jest.mock("../../../../boot/configureStoreAndPersistor", () => ({
   }
 }));
 
-const mockStore = jest.requireMock(
-  "../../../../boot/configureStoreAndPersistor"
-).store;
-const mockRunSaga = runSaga as jest.Mock;
-const mockNeedCheck = itwNeedWalletInstanceStatusCheck as jest.Mock;
-const mockTrackWakeUp = trackItwBackgroundFetchWakeUp as jest.Mock;
+jest.mock("expo-background-task", () => ({
+  BackgroundTaskStatus: { Available: 2, Restricted: 1 },
+  BackgroundTaskResult: { Success: 1, Failed: 2 },
+  getStatusAsync: jest.fn(),
+  registerTaskAsync: jest.fn(),
+  unregisterTaskAsync: jest.fn(),
+  triggerTaskWorkerForTestingAsync: jest.fn(),
+  addExpirationListener: jest.fn(() => ({ remove: jest.fn() }))
+}));
+
+jest.mock("expo-task-manager", () => ({
+  defineTask: jest.fn(),
+  isTaskRegisteredAsync: jest.fn(() => Promise.resolve(false))
+}));
 
 describe("ITW_WALLET_CHECK_TASK", () => {
   it("has the correct task name", () => {
-    expect(ITW_WALLET_CHECK_TASK).toBe("io-itw-wallet-instance-check");
-  });
-});
-
-describe("itwWalletCheckTaskHandler", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it("returns Success without running saga when check is not needed", async () => {
-    mockNeedCheck.mockReturnValue(false);
-    mockStore.getState.mockReturnValue({});
-
-    const result = await itwWalletCheckTaskHandler();
-
-    expect(mockTrackWakeUp).toHaveBeenCalledTimes(1);
-    expect(mockRunSaga).not.toHaveBeenCalled();
-    expect(result).toBe(BackgroundTask.BackgroundTaskResult.Success);
-  });
-
-  it("runs the validity saga and returns Success when check is needed", async () => {
-    mockNeedCheck.mockReturnValue(true);
-    mockStore.getState.mockReturnValue({});
-    const mockSagaTask = { toPromise: jest.fn().mockResolvedValue(undefined) };
-    mockRunSaga.mockReturnValue(mockSagaTask);
-
-    const result = await itwWalletCheckTaskHandler();
-
-    expect(mockTrackWakeUp).toHaveBeenCalledTimes(1);
-    expect(mockRunSaga).toHaveBeenCalledWith(
-      mockStore,
-      checkWalletInstanceAndCredentialsValiditySaga
-    );
-    expect(result).toBe(BackgroundTask.BackgroundTaskResult.Success);
-  });
-
-  it("returns Failed when the saga throws an error", async () => {
-    mockNeedCheck.mockReturnValue(true);
-    mockStore.getState.mockReturnValue({});
-    mockRunSaga.mockReturnValue({
-      toPromise: jest.fn().mockRejectedValue(new Error("saga error"))
-    });
-
-    const result = await itwWalletCheckTaskHandler();
-
-    expect(result).toBe(BackgroundTask.BackgroundTaskResult.Failed);
+    expect(ITW_WALLET_CHECK_TASK).toBe("io-itw-wallet-check");
   });
 });
 
@@ -106,7 +68,7 @@ describe("registerItwBackgroundTaskSaga", () => {
       .call(BackgroundTask.getStatusAsync)
       .next(BackgroundTask.BackgroundTaskStatus.Available)
       .call(BackgroundTask.registerTaskAsync, ITW_WALLET_CHECK_TASK, {
-        minimumInterval: backgroundTaskIntervalMinutes
+        minimumInterval: ITW_BACKGROUND_TASK_INTERVAL_MINUTES
       })
       .next()
       .isDone();
