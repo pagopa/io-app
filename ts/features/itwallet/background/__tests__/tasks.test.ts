@@ -5,6 +5,8 @@ import {
   checkWalletInstanceAndCredentialsValiditySaga,
   registerItwBackgroundTaskSaga
 } from "../../common/saga";
+import { trackItwBackgroundFetchWakeUp } from "../../analytics";
+import { itwNeedWalletInstanceStatusCheck } from "../../walletInstance/store/selectors";
 import { itwWalletCheckTaskHandler } from "../tasks";
 import { ITW_WALLET_CHECK_TASK } from "../constants";
 import { backgroundTaskIntervalMinutes } from "../../../../config";
