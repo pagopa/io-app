@@ -629,6 +629,33 @@ export const paymentsFeedbackBannerConfigSelector = createSelector(
     )
 );
 
+export const isPnFeedbackBannerEnabledSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): boolean =>
+    pipe(
+      remoteConfig,
+      O.map(config =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? config.pn.aar?.feedbackBanner?.min_app_version.ios
+            : config.pn.aar?.feedbackBanner?.min_app_version.android,
+          getAppVersion()
+        )
+      ),
+      O.getOrElse(() => false)
+    )
+);
+
+export const pnFeedbackBannerConfigSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): Banner | undefined =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.pn.aar?.feedbackBanner),
+      O.toUndefined
+    )
+);
+
 export const landingScreenBannerOrderSelector = (state: GlobalState) =>
   pipe(
     state,

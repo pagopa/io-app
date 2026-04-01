@@ -52,21 +52,21 @@ describe("index", () => {
       const code = testable!.getEventCodeFromBarcode(idPayIOBarcode);
       expect(code).toBe("SEND");
     });
-    it("should return undefined for barcode of type 'FCI' and format 'DATA_MATRIX'", () => {
+    it("should return 'firma con IO' for barcode of type 'FCI' and format 'DATA_MATRIX'", () => {
       const idPayIOBarcode = {
         type: "FCI",
         format: "DATA_MATRIX"
       } as IOBarcode;
       const code = testable!.getEventCodeFromBarcode(idPayIOBarcode);
-      expect(code).toBeUndefined();
+      expect(code).toBe("firma con IO");
     });
-    it("should return undefined for barcode of type 'FCI' and format 'QR_CODE'", () => {
+    it("should return 'firma con IO' for barcode of type 'FCI' and format 'QR_CODE'", () => {
       const idPayIOBarcode = {
         type: "FCI",
         format: "QR_CODE"
       } as IOBarcode;
       const code = testable!.getEventCodeFromBarcode(idPayIOBarcode);
-      expect(code).toBeUndefined();
+      expect(code).toBe("firma con IO");
     });
     it("should return ITW presentazione remota for barcode of type 'ITW_REMOTE' and format 'DATA_MATRIX'", () => {
       const idPayIOBarcode = {
@@ -140,6 +140,8 @@ const codeFromTypeAndFormat = (barcodeType: string, format: string) => {
       }
     case "ITW_REMOTE":
       return "ITW presentazione remota";
+    case "FCI":
+      return "firma con IO";
     default:
       return undefined;
   }

@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { RefObject } from "react";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
-import { useIOStore } from "../../../../store/hooks";
+import { useIOSelector } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { MessagesParamsList } from "../../../messages/navigation/params";
 import { SendUserType } from "../../../pushNotifications/analytics";
@@ -27,24 +27,21 @@ export const SendAARMessageDetailBottomSheetComponent = ({
     useNavigation<
       IOStackNavigationProp<MessagesParamsList, "MESSAGE_DETAIL">
     >();
-  const store = useIOStore();
+  // This selector returns undefined if service's preferences have
+  // not been requested and loaded yet. But here, we are looking at
+  // the SEND special service's preferences, which were requested
+  // upon application startup. So, we make the assumption that
+  // either they were properly retrieved (and the selector will not
+  // return undefined) or, if there was an error of some sort, we
+  // do not make the request again and do not wait for them to be
+  // retrieved. The undefined case is treated as a disabled service,
+  // showing the activation flow to the user.
+  const isSendServiceEnabled = useIOSelector(isPnServiceEnabled) ?? false;
 
   const onSecondaryActionPress = () => {
     trackSendAarNotificationClosureConfirm(sendUserType);
 
     dismiss();
-
-    const state = store.getState();
-    // This selector returns undefined if service's preferences have
-    // not been requested and loaded yet. But here, we are looking at
-    // the SEND special service's preferences, which were requested
-    // upon application startup. So, we make the assumption that
-    // either they were properly retrieved (and the selector will not
-    // return undefined) or, if there was an error of some sort, we
-    // do not make the request again and do not wait for them to be
-    // retrieved. The undefined case is treated as a disabled service,
-    // showing the activation flow to the user.
-    const isSendServiceEnabled = isPnServiceEnabled(state) ?? false;
     if (isSendServiceEnabled) {
       navigation.popToTop();
       return;
