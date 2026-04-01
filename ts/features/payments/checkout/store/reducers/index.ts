@@ -102,6 +102,7 @@ const INITIAL_STATE: PaymentsCheckoutState = {
 const reducer = (
   state: PaymentsCheckoutState = INITIAL_STATE,
   action: Action
+  // eslint-disable-next-line complexity
 ): PaymentsCheckoutState => {
   // eslint-disable-next-line sonarjs/max-switch-cases
   switch (action.type) {
