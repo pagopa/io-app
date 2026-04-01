@@ -25,6 +25,8 @@ export function handleResponse<T>(
   onSuccess: (payload: T) => Action,
   onFailure: (e: Error) => Action
 ): Action | undefined {
+  // This check has been kept for retro-compatibility,
+  // even if typescript suggests that 'response' is always defined
   if (!response) {
     return onFailure(new Error("Response is undefined"));
   }
