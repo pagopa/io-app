@@ -21,7 +21,10 @@ import {
 } from "../../credentials/store/actions";
 import { itwClearCredentialUpgradeFailed } from "../../common/store/actions/preferences";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
+import {
+  itwWalletInstanceAttestationStore,
+  itwWalletUnitAttestationsStore
+} from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
@@ -143,6 +146,12 @@ export const createCredentialIssuanceActionsImplementation = (
     store.dispatch(itwCredentialsStore(context.credentials));
     // Clear older upgrade-failed flag for this credential after a successful issuance/upgrade.
     store.dispatch(itwClearCredentialUpgradeFailed(context.credentialType));
+    // Stores WUAs separately if present
+    if (context.walletUnitAttestations) {
+      store.dispatch(
+        itwWalletUnitAttestationsStore(context.walletUnitAttestations)
+      );
+    }
   },
 
   trackStartAddCredential: ({

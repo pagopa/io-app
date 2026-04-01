@@ -14,7 +14,8 @@ import {
   itwWalletInstanceAttestationStore,
   itwUpdateWalletInstanceStatus,
   itwSetWalletInstanceRenewalError,
-  itwWalletUnitAttestationStore
+  itwWalletUnitAttestationsStore,
+  itwWalletUnitAttestationsRemoveById
 } from "../actions";
 import {
   WalletInstanceStatus,
@@ -117,14 +118,24 @@ const reducer = (
         renewalError: action.payload
       };
 
-    case getType(itwWalletUnitAttestationStore): {
-      const [id, attestation] = action.payload;
+    case getType(itwWalletUnitAttestationsStore): {
       return {
         ...state,
         walletUnitAttestations: {
           ...state.walletUnitAttestations,
-          [id]: attestation
+          ...action.payload
         }
+      };
+    }
+
+    case getType(itwWalletUnitAttestationsRemoveById): {
+      return {
+        ...state,
+        walletUnitAttestations: Object.fromEntries(
+          Object.entries(state.walletUnitAttestations).filter(
+            ([id]) => !action.payload.includes(id)
+          )
+        )
       };
     }
 

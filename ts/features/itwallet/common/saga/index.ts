@@ -27,6 +27,7 @@ import {
   itwSetAuthLevel,
   itwSetFiscalCodeWhitelisted
 } from "../store/actions/preferences.ts";
+import { handleWalletUnitAttestationsCleanUp } from "../../credentials/saga/handleWalletUnitAttestationsCleanUp.ts";
 import { isItwCredential } from "../utils/itwCredentialUtils.ts";
 import { watchItwEnvironment } from "./environment";
 import { watchItwOfflineAccess } from "./offlineAccess.ts";
@@ -77,6 +78,8 @@ export function* watchItwOfflineSaga(): SagaIterator {
   yield* fork(watchItwOfflineAccess);
   // Sync ITW analytics properties
   yield* fork(syncItwAnalyticsProperties);
+  // Clean up stale Wallet Unit Attestations
+  yield* fork(handleWalletUnitAttestationsCleanUp);
 
   // TODO remove this fork when NFC antenna info tracking is not needed anymore
   yield* fork(updateNfcInfoTrackingProperties);

@@ -33,9 +33,10 @@ export type UpgradeCredentialParams = {
   integrityKeyTag: string;
 } & RequestAccessTokenOutput;
 
-export type UpgradeCredentialOutput = {
+export type UpgradeCredentialOutput = Awaited<
+  ReturnType<typeof credentialIssuanceUtils.obtainCredential>
+> & {
   credentialType: string;
-  credentials: ReadonlyArray<StoredCredential>;
 };
 
 export const createCredentialUpgradeActorsImplementation = (

@@ -56,6 +56,10 @@ export type RequestEidActorParams = {
   accessToken: CredentialAccessToken | undefined;
 };
 
+export type RequestEidActorOutput = Awaited<
+  ReturnType<typeof issuanceUtils.getPid>
+>;
+
 export type StartAuthFlowActorParams = {
   walletInstanceAttestation: string | undefined;
   identification: IdentificationContext | undefined;
@@ -324,7 +328,7 @@ export const createEidIssuanceActorsImplementation = (
     }
   ),
 
-  requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
+  requestEid: fromPromise<RequestEidActorOutput, RequestEidActorParams>(
     async ({ input }) => {
       assert(input.identification, "identification is undefined");
       assert(input.integrityKeyTag, "integrityKeyTag is undefined");
@@ -339,7 +343,7 @@ export const createEidIssuanceActorsImplementation = (
         input.level === "l3" ? "L3" : "L2"
       );
 
-      return issuanceUtils.getPid({
+      return await issuanceUtils.getPid({
         env,
         sessionToken,
         hardwareKeyTag: input.integrityKeyTag,

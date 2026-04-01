@@ -6,8 +6,8 @@ import {
 import { type IdentificationContext } from "../../machine/eid/context";
 import {
   CredentialAccessToken,
-  IssuerConfiguration,
-  StoredCredential
+  IssuanceStoredCredential,
+  IssuerConfiguration
 } from "./itwTypesUtils";
 import {
   DPOP_KEYTAG,
@@ -157,7 +157,7 @@ export type PidIssuanceParams = {
 };
 
 /**
- * Function to get the PID, parse it and return it in {@link StoredCredential} format.
+ * Function to get the PID, parse it and return it in {@link IssuanceStoredCredential} format.
  * It must be called after `startAuthFlow` and `completeAuthFlow`.
  * @returns The stored credential.
  */
@@ -169,7 +169,7 @@ const getPid = async ({
   env,
   hardwareKeyTag,
   sessionToken
-}: PidIssuanceParams): Promise<StoredCredential> => {
+}: PidIssuanceParams): Promise<IssuanceStoredCredential> => {
   const ioWallet = getIoWallet(itwVersion);
 
   // Take the first element as only one credential is authorized during PID issuance
@@ -183,7 +183,9 @@ const getPid = async ({
 
   const {
     keyTag,
-    authDetails: { credential_configuration_id, credential_identifiers }
+    authDetails: { credential_configuration_id, credential_identifiers },
+    walletUnitAttestation,
+    walletUnitAttestationId
   } = credentialIssuanceMaterials;
 
   const credentialCryptoContext = createCryptoContextFor(keyTag);
@@ -225,7 +227,9 @@ const getPid = async ({
       issuedAt: issuedAt?.toISOString()
     },
     spec_version: ioWallet.version,
-    verification: extractVerification({ format, credential, parsedCredential })
+    verification: extractVerification({ format, credential, parsedCredential }),
+    walletUnitAttestation,
+    walletUnitAttestationId
   };
 };
 

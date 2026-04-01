@@ -38,7 +38,10 @@ import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
+import {
+  itwWalletInstanceAttestationStore,
+  itwWalletUnitAttestationsStore
+} from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
@@ -294,6 +297,11 @@ export const createEidIssuanceActionsImplementation = (
     // the eID is always removed before storing the new one. If no previous eID is present, the action is a no-op.
     store.dispatch(itwCredentialsRemoveByType(context.eid.credentialType));
     store.dispatch(itwCredentialsStore([context.eid]));
+    if (context.walletUnitAttestations) {
+      store.dispatch(
+        itwWalletUnitAttestationsStore(context.walletUnitAttestations)
+      );
+    }
   },
 
   handleSessionExpired: () =>

@@ -34,12 +34,23 @@ export const itwSetWalletInstanceRenewalError = createStandardAction(
   "ITW_SET_WALLET_INSTANCE_RENEWAL_ERROR"
 )<boolean>();
 
-export const itwWalletUnitAttestationStore = createStandardAction(
-  "ITW_WALLET_UNIT_ATTESTATION_STORE"
-)<[id: string, attestation: string]>();
+/**
+ * Store multiple Wallet Unit Attestations under the provided IDs.
+ */
+export const itwWalletUnitAttestationsStore = createStandardAction(
+  "ITW_WALLET_UNIT_ATTESTATIONS_STORE"
+)<Record<string, string>>();
+
+/**
+ * Removes multiple Wallet Unit Attestations by their IDs.
+ */
+export const itwWalletUnitAttestationsRemoveById = createStandardAction(
+  "ITW_WALLET_UNIT_ATTESTATIONS_REMOVE_BY_ID"
+)<ReadonlyArray<string>>();
 
 export type ItwWalletInstanceActions =
   | ActionType<typeof itwWalletInstanceAttestationStore>
   | ActionType<typeof itwUpdateWalletInstanceStatus>
   | ActionType<typeof itwSetWalletInstanceRenewalError>
-  | ActionType<typeof itwWalletUnitAttestationStore>;
+  | ActionType<typeof itwWalletUnitAttestationsStore>
+  | ActionType<typeof itwWalletUnitAttestationsRemoveById>;

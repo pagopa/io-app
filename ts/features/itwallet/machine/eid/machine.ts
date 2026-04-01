@@ -14,7 +14,6 @@ import { assert } from "../../../../utils/assert.ts";
 import { trackItWalletIntroScreen } from "../../analytics";
 import {
   CredentialAccessToken,
-  StoredCredential,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
@@ -22,6 +21,7 @@ import { itwCredentialUpgradeMachine } from "../upgrade/machine.ts";
 import {
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
+  RequestEidActorOutput,
   type RequestEidActorParams,
   StartAuthFlowActorParams,
   ValidateMrtdPoPChallengeActorParams
@@ -182,7 +182,7 @@ export const itwEidIssuanceMachine = setup({
      */
 
     requestAccessToken: fromPromise<CredentialAccessToken>(notImplemented),
-    requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
+    requestEid: fromPromise<RequestEidActorOutput, RequestEidActorParams>(
       notImplemented
     ),
     waitForSessionRefresh: fromCallback(notImplemented),
@@ -1118,7 +1118,16 @@ export const itwEidIssuanceMachine = setup({
               accessToken: context.accessToken
             }),
             onDone: {
-              actions: assign(({ event }) => ({ eid: event.output })),
+              actions: assign(({ event }) => {
+                const { walletUnitAttestation, ...eid } = event.output;
+                return {
+                  eid,
+                  walletUnitAttestations:
+                    walletUnitAttestation && eid.walletUnitAttestationId
+                      ? { [eid.walletUnitAttestationId]: walletUnitAttestation }
+                      : {}
+                };
+              }),
               target: "CheckingIdentityMatch"
             },
             onError: [

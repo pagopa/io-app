@@ -13,6 +13,7 @@ import {
 import {
   CredentialAccessToken,
   CredentialFormat,
+  IssuanceStoredCredential,
   IssuerConfiguration,
   RequestObject,
   StoredCredential
@@ -201,7 +202,7 @@ export const obtainCredential = async ({
   };
 
   if (SEQUENTIAL_ISSUANCE_CREDENTIALS.includes(credentialType)) {
-    const credentials: Array<StoredCredential> = [];
+    const credentials: Array<IssuanceStoredCredential> = [];
     for (const credentialParams of credentialIssuanceMaterials) {
       const credential = await requestAndParseCredential({
         ...commonParams,
@@ -269,7 +270,8 @@ const requestAndParseCredential = async ({
   keyTag,
   walletUnitAttestation,
   walletUnitAttestationId
-}: RequestAndParseCredentialParams & CredentialIssuanceMaterials) => {
+}: RequestAndParseCredentialParams &
+  CredentialIssuanceMaterials): Promise<IssuanceStoredCredential> => {
   const ioWallet = getIoWallet(itwVersion);
   const { credential_configuration_id, credential_identifiers } = authDetails;
   const credentialCryptoContext = createCryptoContextFor(keyTag);
@@ -334,6 +336,17 @@ type CredentialIssuanceMaterials = {
   walletUnitAttestationId?: string;
 };
 
+/**
+ * Iterate the Issuer authorization details to create the keys and the WUA for each credential to request.
+ *
+ * If the WUA is not supported, only the keys are generated.
+ * @param accessToken The Issuer access token with the authorization details
+ * @param params.env Environment variables
+ * @param params.itwVersion IT-Wallet technical specs version
+ * @param params.hardwareKeyTag The hardware key associated with the Wallet Instance
+ * @param params.sessionToken The session token for the Wallet Provider API
+ * @returns The authorization details with the corresponding keys and WUA if supported
+ */
 export const prepareCredentialIssuanceMaterials = async (
   accessToken: CredentialAccessToken,
   {
@@ -350,34 +363,33 @@ export const prepareCredentialIssuanceMaterials = async (
 ): Promise<Array<CredentialIssuanceMaterials>> => {
   const ioWallet = getIoWallet(itwVersion);
 
-  // Create a key tag for each credential to request
-  const materials = accessToken.authorization_details.map(authDetails => ({
-    keyTag: uuidv4().toString(),
-    authDetails
-  }));
+  return Promise.all(
+    accessToken.authorization_details.map(async authDetails => {
+      const keyTag = uuidv4().toString();
 
-  // When the WUA is not supported, only generate cryptographic keys
-  if (!ioWallet.WalletUnitAttestation.isSupported) {
-    await Promise.all(materials.map(x => generate(x.keyTag)));
-    return materials;
-  }
+      // If the WUA is supported, keys are generated via the KeyAttestationCryptoContext
+      // and sent to the Wallet Provider to get the Wallet Unit Attestation
+      if (ioWallet.WalletUnitAttestation.isSupported) {
+        const walletUnitAttestation = await getWalletUnitAttestation(
+          env,
+          itwVersion,
+          [keyTag],
+          hardwareKeyTag,
+          sessionToken
+        );
+        // Unique ID to correlate multiple keys to the same WUA (ex. batch issuance)
+        const walletUnitAttestationId = uuidv4().toString();
+        return {
+          keyTag,
+          authDetails,
+          walletUnitAttestation,
+          walletUnitAttestationId
+        };
+      }
 
-  // Request the WUA: keys are generated via the KeyAttestationCryptoContext
-  // and sent to the Wallet Provider to get the attestation
-  const walletUnitAttestation = await getWalletUnitAttestation(
-    env,
-    itwVersion,
-    materials.map(x => x.keyTag),
-    hardwareKeyTag,
-    sessionToken
+      // If the WUA is not supported, only generate the cryptographic key
+      await generate(keyTag);
+      return { keyTag, authDetails };
+    })
   );
-
-  // Create a unique ID to correlate multiple keys to the same WUA
-  const walletUnitAttestationId = uuidv4().toString();
-
-  return materials.map(material => ({
-    ...material,
-    walletUnitAttestation,
-    walletUnitAttestationId
-  }));
 };

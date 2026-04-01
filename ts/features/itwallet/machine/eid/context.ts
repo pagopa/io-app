@@ -146,6 +146,8 @@ export type Context = {
   credentialType: string | undefined;
 
   accessToken: CredentialAccessToken | undefined;
+
+  walletUnitAttestations?: Record<string, string>;
 };
 
 export const InitialContext: Context = {

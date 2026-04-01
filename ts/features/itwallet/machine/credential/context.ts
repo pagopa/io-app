@@ -61,6 +61,7 @@ export type Context = {
    */
   credentialsCatalogue: Record<string, DigitalCredentialMetadata> | undefined;
   accessToken: CredentialAccessToken | undefined;
+  walletUnitAttestations?: Record<string, string>;
 };
 
 export const InitialContext: Context = {

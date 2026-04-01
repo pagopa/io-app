@@ -111,7 +111,7 @@ export type StoredCredential = {
   verification?: StoredVerification;
   /**
    * The ID of the Wallet Unit Attestation that contains the credential attested key.
-   * The corresponding attestation is stored in `walletInstace.walletUnitAttestation`.
+   * The corresponding attestation is stored in `walletInstace.walletUnitAttestations`.
    * Only credentials issued with the newer IT-Wallet specs contain this field.
    */
   walletUnitAttestationId?: string;
@@ -172,4 +172,14 @@ export const isMultiLevelCredential = (
   return Object.values(parsedCredential).some(
     claim => Array.isArray(claim.value) && claim.value.length > 1
   );
+};
+
+/**
+ * @internal For issuance low-level flows only. Use {@link StoredCredential} outside.
+ *
+ * During issuance the credential object might include the Wallet Unit Attestation JWT.
+ * The attestation is then removed and stored separately, keeping only its ID in the StoredCredential.
+ */
+export type IssuanceStoredCredential = StoredCredential & {
+  walletUnitAttestation?: string;
 };
