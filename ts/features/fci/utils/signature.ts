@@ -85,8 +85,7 @@ export const getCustomSignature = (
             .map(signatureField =>
               "unique_name" in signatureField.attrs
                 ? signatureField.attrs.unique_name
-                : // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-                  signatureField.attrs.page +
+                : signatureField.attrs.page +
                   "-" +
                   signatureField.attrs.bottom_left.x +
                   "-" +

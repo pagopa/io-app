@@ -117,7 +117,7 @@ const scrollVerticallyToView = (
       (_: number, y: number, __: number) => {
         scrollViewRef.current?.scrollTo({ y, animated: true });
       },
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
+
       () => {}
     );
   }

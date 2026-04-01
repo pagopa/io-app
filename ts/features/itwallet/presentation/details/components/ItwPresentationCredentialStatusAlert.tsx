@@ -91,7 +91,6 @@ const useAlertPressHandler =
 // Helper function that calculates which alert type should be shown.
 export const deriveCredentialAlertType = (
   props: CredentialAlertProps
-  // eslint-disable-next-line sonarjs/cognitive-complexity
 ): CredentialAlertType | undefined => {
   const { eidStatus, credentialStatus, message, isOffline, isItwL3 } = props;
 

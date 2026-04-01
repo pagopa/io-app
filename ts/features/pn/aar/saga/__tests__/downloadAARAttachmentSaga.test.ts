@@ -370,7 +370,7 @@ describe("getAttachmentMetadata", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  // eslint-disable-next-line sonarjs/cognitive-complexity
+
   [undefined, mandateId].forEach(mandateIdVariant => {
     [false, true].forEach(useUATEnvironment => {
       it(`should return url on successful response (mandateId: ${mandateIdVariant} isUAT: ${useUATEnvironment})`, () => {

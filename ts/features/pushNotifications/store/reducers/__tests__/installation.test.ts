@@ -39,7 +39,7 @@ describe("installation", () => {
       expect(initialState.id).not.toEqual(anotherInitialState.id);
     });
   });
-  // eslint-disable-next-line sonarjs/cognitive-complexity
+
   describe("installationReducer", () => {
     // Reducer states are not dynamically generated in order
     // to ease the reader's comprehension of the test cases

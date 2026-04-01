@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-nested-switch */
 import { ActionType } from "typesafe-actions";
 import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
 import { TagEnum as PaymentTagEnum } from "../../../../../../definitions/backend/MessageCategoryPayment";
@@ -63,7 +62,6 @@ const messagePreconditionStatusesGenerator = (
   toUpdateRequiredMPS()
 ];
 
-// eslint-disable-next-line complexity
 const computeExpectedOutput = (
   fromStatus: MessagePreconditionStatus,
   withAction: ActionType<

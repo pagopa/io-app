@@ -1,5 +1,3 @@
-/* eslint-disable sonarjs/cognitive-complexity */
-
 import {
   IOColors,
   IOSpacingScale,
@@ -110,7 +108,7 @@ export const IOListView = <T,>({
   ItemSeparatorComponent,
   testID,
   loading
-// eslint-disable-next-line complexity
+  // eslint-disable-next-line complexity
 }: IOListView<T>) => {
   const theme = useIOTheme();
 
