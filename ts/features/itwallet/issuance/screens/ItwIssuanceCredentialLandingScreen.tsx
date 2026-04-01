@@ -17,6 +17,8 @@ import {
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { trackItwIssuanceFromMsgFailure } from "../../issuance/analytics";
+import { getMixPanelCredential } from "../../analytics/utils";
 
 export type ItwIssuanceCredentialLandingScreenNavigationParams = {
   credentialType: string;
@@ -65,6 +67,8 @@ export const ItwIssuanceCredentialLandingScreen = ({
     [pidStatus]
   );
 
+  const isLandingError = !isEidExpiredOrExpiring && !isCredentialValid;
+
   useEffect(() => {
     if (isCredentialValid) {
       // Credential already present and valid, no need to issue it again
@@ -99,6 +103,14 @@ export const ItwIssuanceCredentialLandingScreen = ({
     isCredentialValid,
     isEidExpiredOrExpiring
   ]);
+
+  useEffect(() => {
+    if (isLandingError) {
+      trackItwIssuanceFromMsgFailure(
+        getMixPanelCredential(credentialType, isWhitelisted)
+      );
+    }
+  }, [isLandingError, credentialType, isWhitelisted]);
 
   if (isEidExpiredOrExpiring) {
     return (
