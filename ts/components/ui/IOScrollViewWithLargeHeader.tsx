@@ -1,11 +1,9 @@
 import {
-  Body,
-  BodyProps,
   BodySmall,
-  ComposedBodyFromArray,
   ContentWrapper,
   H2,
   HeaderSecondLevel,
+  IOMarkdownLite,
   useIOTheme,
   VSpacer,
   VStack
@@ -44,7 +42,8 @@ type Props = WithTestID<
     children?: ReactNode;
     actions?: ComponentProps<typeof IOScrollView>["actions"];
     title: LargeHeaderTitleProps;
-    description?: string | Array<BodyProps>;
+    description?: string;
+    onDescriptionLinkPress?: (url: string) => void;
     goBack?: BackProps["goBack"];
     ignoreSafeAreaMargin?: ComponentProps<
       typeof HeaderSecondLevel
@@ -73,6 +72,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
       children,
       title,
       description,
+      onDescriptionLinkPress,
       actions,
       goBack,
       canGoback = true,
@@ -166,11 +166,10 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
         {description && (
           <ContentWrapper>
             <VSpacer size={16} />
-            {typeof description === "string" ? (
-              <Body color={theme["textBody-tertiary"]}>{description}</Body>
-            ) : (
-              <ComposedBodyFromArray body={description} textAlign="left" />
-            )}
+            <IOMarkdownLite
+              content={description}
+              onLinkPress={onDescriptionLinkPress}
+            />
           </ContentWrapper>
         )}
         {children && (
