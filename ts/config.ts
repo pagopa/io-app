@@ -30,6 +30,10 @@ const DEFAULT_FETCH_PAYMENT_MANAGER_LONG_TIMEOUT_MS = 10000;
 // default seconds of background activity before asking the unlock code login
 const DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S = 30;
 
+// Default minimum interval (in minutes) between background fetch events.
+// The OS enforces a hard minimum of 15 minutes; values below this are ignored.
+const DEFAULT_BACKGROUND_FETCH_INTERVAL_MINUTES = 15;
+
 // default fast login max retries
 const DEFAULT_FAST_LOGIN_MAX_RETRIES = 3;
 
@@ -156,6 +160,12 @@ export const backgroundActivityTimeout = pipe(
   t.Integer.decode,
   E.getOrElse(() => DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S)
 ) as Second;
+
+export const backgroundFetchIntervalMinutes = pipe(
+  parseInt(Config.BACKGROUND_FETCH_INTERVAL_MINUTES, 10),
+  t.Integer.decode,
+  E.getOrElse(() => DEFAULT_BACKGROUND_FETCH_INTERVAL_MINUTES)
+);
 
 export const contentRepoUrl = pipe(
   Config.CONTENT_REPO_URL,
