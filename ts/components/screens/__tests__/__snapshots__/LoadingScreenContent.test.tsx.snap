@@ -631,27 +631,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
                               >
                                 Test Content Title
                               </Text>
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 24,
-                                    },
-                                    {
-                                      "textAlign": "center",
-                                    },
-                                  ]
-                                }
-                              >
+                              <Text>
                                 Test Content Subtitle
                               </Text>
                             </View>
@@ -1302,27 +1282,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
                               >
                                 Test Content Title
                               </Text>
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 24,
-                                    },
-                                    {
-                                      "textAlign": "center",
-                                    },
-                                  ]
-                                }
-                              >
+                              <Text>
                                 Test Content Subtitle
                               </Text>
                             </View>

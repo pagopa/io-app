@@ -6,6 +6,7 @@ import {
   HeaderSecondLevel,
   HStack,
   Icon,
+  IOMarkdownLite,
   useIOTheme,
   VStack
 } from "@pagopa/io-app-design-system";
@@ -14,7 +15,6 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useCallback, useLayoutEffect } from "react";
-import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -179,19 +179,17 @@ const ContentView = ({ eid }: ContentViewProps) => {
               />
             )}
             <H2>
-              {I18n.t(
-                `features.itWallet.issuance.eidPreview.${
-                  isL3 ? "titleL3" : "title"
-                }`
-              )}
+              {isL3
+                ? I18n.t("features.itWallet.issuance.eidPreview.titleL3")
+                : I18n.t("features.itWallet.issuance.eidPreview.title")}
             </H2>
           </HStack>
-          <IOMarkdown
-            content={I18n.t(
-              `features.itWallet.issuance.eidPreview.${
-                isL3 ? "subtitleL3" : "subtitle"
-              }`
-            )}
+          <IOMarkdownLite
+            content={
+              isL3
+                ? I18n.t("features.itWallet.issuance.eidPreview.subtitleL3")
+                : I18n.t("features.itWallet.issuance.eidPreview.subtitle")
+            }
           />
           <ItwCredentialPreviewClaimsList data={eid} releaserVisible={false} />
           {isL3 && (
