@@ -114,7 +114,9 @@ module.exports = defineConfig([
             "arrow-body-style": "error",
             "import/order": "error",
             "@typescript-eslint/no-unused-vars": "off",
-            "@typescript-eslint/no-require-imports": "off",
+            "@typescript-eslint/no-require-imports": ["error", {
+                allow: ["\\.png$", "\\.jpg$", "\\.jpeg$", "\\.gif$", "\\.svg", "\\.webp$"],
+            }],
             "@typescript-eslint/explicit-module-boundary-types": "off",
             "@typescript-eslint/no-inferrable-types": "off",
             "@typescript-eslint/no-explicit-any": "off",
@@ -213,6 +215,7 @@ module.exports = defineConfig([
         rules: {
             "@typescript-eslint/no-non-null-assertion": "off",
             "@typescript-eslint/no-shadow": "off",
+            "@typescript-eslint/no-require-imports": "off",
             "i18next/no-literal-string": "off",
             "no-restricted-imports": "off",
         },
