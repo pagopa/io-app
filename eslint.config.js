@@ -209,6 +209,7 @@ module.exports = defineConfig([
 
         rules: {
             "@typescript-eslint/no-non-null-assertion": "off",
+            "@typescript-eslint/no-shadow": "off",
             "i18next/no-literal-string": "off",
             "no-restricted-imports": "off",
         },
