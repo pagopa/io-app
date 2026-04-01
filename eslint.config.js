@@ -17,6 +17,7 @@ const sonarjs = require("eslint-plugin-sonarjs");
 const stylisticEslintPluginJs = require("@stylistic/eslint-plugin-js");
 const i18Next = require("eslint-plugin-i18next");
 const js = require("@eslint/js");
+const delegateEffectsRule = require("./scripts/eslint/delegate-effects.js");
 
 const {
     FlatCompat,
@@ -74,6 +75,7 @@ module.exports = defineConfig([
             sonarjs,
             "@stylistic/js": stylisticEslintPluginJs,
             i18next: i18Next,
+            "typed-redux-saga": { rules: { "delegate-effects": delegateEffectsRule } },
         },
 
         rules: {
@@ -187,6 +189,8 @@ module.exports = defineConfig([
                     exclude: ["testID"],
                 },
             }],
+
+            "typed-redux-saga/delegate-effects": "error",
 
             "no-restricted-imports": ["error", {
                 paths: [{
