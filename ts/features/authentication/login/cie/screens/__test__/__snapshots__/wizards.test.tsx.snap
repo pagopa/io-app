@@ -90,24 +90,7 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
             }
           }
         />
-        <Text
-          allowFontScaling={true}
-          dynamicTypeRamp="body"
-          maxFontSizeMultiplier={1.5}
-          style={
-            [
-              {},
-              {
-                "color": "#555C70",
-                "fontFamily": "Titillio",
-                "fontSize": 16,
-                "fontStyle": "normal",
-                "fontWeight": "400",
-                "lineHeight": 24,
-              },
-            ]
-          }
-        >
+        <Text>
           Se hai l’app CieID sul tuo dispositivo, inserisci il codice che hai impostato per l’app CieID o usa il tuo volto o l’impronta.
 
 Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, devi prima abilitare l’accesso con livello 1 e 2 nell’app CieID.
@@ -1086,24 +1069,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
             }
           }
         />
-        <Text
-          allowFontScaling={true}
-          dynamicTypeRamp="body"
-          maxFontSizeMultiplier={1.5}
-          style={
-            [
-              {},
-              {
-                "color": "#555C70",
-                "fontFamily": "Titillio",
-                "fontSize": 16,
-                "fontStyle": "normal",
-                "fontWeight": "400",
-                "lineHeight": 24,
-              },
-            ]
-          }
-        >
+        <Text>
           Se hai la tua Carta di Identità Elettronica a portata di mano, puoi accedere a IO inserendo il PIN della carta e avvicinandola al dispositivo per consentire la lettura dei dati.
         </Text>
       </View>
@@ -2543,24 +2509,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
             }
           }
         />
-        <Text
-          allowFontScaling={true}
-          dynamicTypeRamp="body"
-          maxFontSizeMultiplier={1.5}
-          style={
-            [
-              {},
-              {
-                "color": "#555C70",
-                "fontFamily": "Titillio",
-                "fontSize": 16,
-                "fontStyle": "normal",
-                "fontWeight": "400",
-                "lineHeight": 24,
-              },
-            ]
-          }
-        >
+        <Text>
           Devi avere un’identità digitale SPID o CIE (Carta di Identità Elettronica) attiva per usare IO.
         </Text>
       </View>
@@ -3778,24 +3727,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
             }
           }
         />
-        <Text
-          allowFontScaling={true}
-          dynamicTypeRamp="body"
-          maxFontSizeMultiplier={1.5}
-          style={
-            [
-              {},
-              {
-                "color": "#555C70",
-                "fontFamily": "Titillio",
-                "fontSize": 16,
-                "fontStyle": "normal",
-                "fontWeight": "400",
-                "lineHeight": 24,
-              },
-            ]
-          }
-        >
+        <Text>
           Se hai SPID, entra su IO inserendo le tue credenziali, usando il tuo volto o l’impronta, oppure tramite l’app del tuo fornitore di SPID.
         </Text>
       </View>
