@@ -3,13 +3,13 @@ import {
   FeatureInfo,
   ForceScrollDownView,
   H2,
+  IOMarkdownLite,
   VStack
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import IOMarkdown from "../../../../../components/IOMarkdown/index.tsx";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
@@ -138,7 +138,7 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
                 "features.itWallet.presentation.proximity.selectiveDisclosure.title"
               )}
             </H2>
-            <IOMarkdown
+            <IOMarkdownLite
               content={I18n.t(
                 "features.itWallet.presentation.proximity.selectiveDisclosure.subtitle",
                 { relyingParty: ISSUER_MOCK_NAME }
@@ -158,7 +158,7 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
               "features.itWallet.presentation.proximity.selectiveDisclosure.disclaimer.1"
             )}
           />
-          <IOMarkdown
+          <IOMarkdownLite
             content={I18n.t(
               "features.itWallet.presentation.proximity.selectiveDisclosure.tos",
               { privacyUrl }
