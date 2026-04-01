@@ -12,6 +12,7 @@
     "noImplicitReturns": true,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
+    "strictNullChecks": true,
     "strictFunctionTypes": true,
     "useUnknownInCatchVariables": true,
   },
