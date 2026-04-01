@@ -17,7 +17,7 @@ jobs:
         run: yarn tsc:noemit
       - id: run-lint
         run: yarn lint
-      - id: run-prettier
+      - id: run-formatter
         run: yarn prettier:check
   unit-test:
     runs-on: ubuntu-latest

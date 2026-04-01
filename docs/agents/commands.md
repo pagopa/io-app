@@ -34,5 +34,5 @@ yarn generate           # Regenerate API models + locales from OpenAPI specs
 yarn lint               # ESLint check
 yarn lint-autofix       # ESLint with auto-fix
 yarn tsc:noemit         # TypeScript check only
-yarn prettier:check     # Check formatting
+yarn prettier:check     # Check formatting (oxfmt)
 ```
