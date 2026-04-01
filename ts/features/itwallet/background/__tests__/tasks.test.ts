@@ -1,15 +1,11 @@
 import * as BackgroundTask from "expo-background-task";
 import { runSaga } from "redux-saga";
 import { testSaga } from "redux-saga-test-plan";
-import {
-  checkWalletInstanceAndCredentialsValiditySaga,
-  registerItwBackgroundTaskSaga
-} from "../../common/saga";
+import { registerItwBackgroundTaskSaga } from "../../common/saga";
 import { trackItwBackgroundFetchWakeUp } from "../../analytics";
 import { itwNeedWalletInstanceStatusCheck } from "../../walletInstance/store/selectors";
 import { itwWalletCheckTaskHandler } from "../tasks";
 import { ITW_WALLET_CHECK_TASK } from "../constants";
-import { backgroundTaskIntervalMinutes } from "../../../../config";
 
 jest.mock("expo-task-manager", () => ({
   defineTask: jest.fn()

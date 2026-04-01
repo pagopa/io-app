@@ -30,11 +30,6 @@ const DEFAULT_FETCH_PAYMENT_MANAGER_LONG_TIMEOUT_MS = 10000;
 // default seconds of background activity before asking the unlock code login
 const DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S = 30;
 
-// Default minimum interval (in minutes) between background task executions.
-// The OS enforces a hard minimum of 15 minutes; values below this are ignored.
-// Default is 12 hours (720 minutes) as per IO-WALLET-DR-0025.
-const DEFAULT_BACKGROUND_TASK_INTERVAL_MINUTES = 720;
-
 // default fast login max retries
 const DEFAULT_FAST_LOGIN_MAX_RETRIES = 3;
 
@@ -161,12 +156,6 @@ export const backgroundActivityTimeout = pipe(
   t.Integer.decode,
   E.getOrElse(() => DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S)
 ) as Second;
-
-export const backgroundTaskIntervalMinutes = pipe(
-  parseInt(Config.BACKGROUND_TASK_INTERVAL_MINUTES, 10),
-  t.Integer.decode,
-  E.getOrElse(() => DEFAULT_BACKGROUND_TASK_INTERVAL_MINUTES)
-);
 
 export const contentRepoUrl = pipe(
   Config.CONTENT_REPO_URL,

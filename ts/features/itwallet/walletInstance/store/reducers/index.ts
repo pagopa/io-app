@@ -36,23 +36,17 @@ export type ItwWalletInstanceState = {
    * Used to prevent re-entering the recovery block on subsequent actor retries.
    */
   renewalError: boolean;
-  /**
-   * ISO-8601 date string of the last successful Wallet Instance status update.
-   * Used by the background fetch saga to determine if a new check is needed.
-   */
-  lastStatusUpdateDate: string | undefined;
 };
 
 export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
   attestation: undefined,
   status: pot.none,
-  renewalError: false,
-  lastStatusUpdateDate: undefined
+  renewalError: false
 };
 
 type MigrationState = PersistedState & Record<string, any>;
 
-const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = 3;
+const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = 2;
 
 export const migrations: MigrationManifest = {
   // Convert status into a pot for better async handling
@@ -71,11 +65,6 @@ export const migrations: MigrationManifest = {
   "2": (state: MigrationState) => ({
     ...state,
     renewalError: false
-  }),
-  // Add lastStatusUpdateDate field for background fetch tracking
-  "3": (state: MigrationState) => ({
-    ...state,
-    lastStatusUpdateDate: undefined
   })
 };
 
@@ -88,16 +77,14 @@ const reducer = (
       return {
         status: pot.none,
         attestation: action.payload,
-        renewalError: false,
-        lastStatusUpdateDate: new Date().toISOString()
+        renewalError: false
       };
     }
 
     case getType(itwUpdateWalletInstanceStatus.success): {
       return {
         ...state,
-        status: pot.some(action.payload),
-        lastStatusUpdateDate: new Date().toISOString()
+        status: pot.some(action.payload)
       };
     }
 

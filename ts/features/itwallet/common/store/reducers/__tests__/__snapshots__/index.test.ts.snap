@@ -32,7 +32,6 @@ exports[`itWalletReducer should match snapshot [if this test fails, remember to 
   },
   "walletInstance": {
     "attestation": undefined,
-    "lastStatusUpdateDate": undefined,
     "renewalError": false,
     "status": {
       "kind": "PotNone",
