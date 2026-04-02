@@ -29,12 +29,12 @@ describe("connectionStatusSaga", () => {
         expect(effect).toMatchObject({ type: "CALL" });
       })
       .next(libraryResponse)
-      .select(appCurrentStateSelector)
-      .next("active")
       .inspect(effect => {
         expect(effect).toMatchObject({ type: "CALL" });
       })
       .next(true)
+      .select(appCurrentStateSelector)
+      .next("active")
       .put(setConnectionStatus(true))
       .next()
       .select()
@@ -59,12 +59,12 @@ describe("connectionStatusSaga", () => {
         expect(effect).toMatchObject({ type: "CALL" });
       })
       .next(libraryResponse)
-      .select(appCurrentStateSelector)
-      .next("active")
       .inspect(effect => {
         expect(effect).toMatchObject({ type: "CALL" });
       })
       .next(false)
+      .select(appCurrentStateSelector)
+      .next("active")
       .put(setConnectionStatus(false))
       .next()
       .select()
@@ -88,8 +88,6 @@ describe("connectionStatusSaga", () => {
         expect(effect).toMatchObject({ type: "CALL" });
       })
       .next(libraryResponse)
-      .select(appCurrentStateSelector)
-      .next("active")
       .put(setConnectionStatus(false))
       .next()
       .delay(10000)
@@ -145,6 +143,10 @@ describe("connectionStatusSaga", () => {
         expect(effect).toMatchObject({ type: "CALL" });
       })
       .next(libraryResponse)
+      .inspect(effect => {
+        expect(effect).toMatchObject({ type: "CALL" });
+      })
+      .next(true)
       .select(appCurrentStateSelector)
       .next("background")
       .inspect(effect => {

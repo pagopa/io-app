@@ -60,36 +60,35 @@ export function* connectionStatusSaga(
       }
 
       const libraryResponse = yield* call(fetchNetInfoState());
-      const statePostAwait = yield* select(appCurrentStateSelector);
-      if (statePostAwait === "active") {
-        if (E.isRight(libraryResponse)) {
-          const backendResponse = yield* call(
-            checkBackendConnectionStatus,
-            client
-          );
+      if (E.isRight(libraryResponse)) {
+        const backendResponse = yield* call(
+          checkBackendConnectionStatus,
+          client
+        );
 
-          const isAppConnected =
-            !!libraryResponse.right.isConnected && backendResponse;
-
-          // App is connected update the store and wait for the next check
-          yield* put(setConnectionStatus(isAppConnected));
-
-          // update mixpanel super properties
-          const state: GlobalState = yield* select();
-          void updateMixpanelSuperProperties(state);
-          if (isAppConnected) {
-            yield* delay(CONNECTIVITY_STATUS_LOAD_INTERVAL);
-            continue;
-          }
-        } else {
-          // NetInfo read failed: keep store aligned with failure handling.
-          yield* put(setConnectionStatus(false));
+        const statePostAwait = yield* select(appCurrentStateSelector);
+        if (statePostAwait !== "active") {
+          yield* call(waitForAppActive);
+          continue;
         }
-        yield* delay(CONNECTIVITY_STATUS_FAILURE_INTERVAL);
-        continue;
-      }
+        const isAppConnected =
+          !!libraryResponse.right.isConnected && backendResponse;
 
-      yield* call(waitForAppActive);
+        // App is connected update the store and wait for the next check
+        yield* put(setConnectionStatus(isAppConnected));
+
+        // update mixpanel super properties
+        const state: GlobalState = yield* select();
+        void updateMixpanelSuperProperties(state);
+        if (isAppConnected) {
+          yield* delay(CONNECTIVITY_STATUS_LOAD_INTERVAL);
+          continue;
+        }
+      } else {
+        // NetInfo read failed: keep store aligned with failure handling.
+        yield* put(setConnectionStatus(false));
+      }
+      yield* delay(CONNECTIVITY_STATUS_FAILURE_INTERVAL);
       continue;
     } catch (e) {
       // we ignore errors and treat them as a connection failure
