@@ -1,7 +1,13 @@
-import { createActor, fromPromise, waitFor } from "xstate";
+import { createActor, fromCallback, fromPromise, waitFor } from "xstate";
 import { itwCredentialUpgradeMachine } from "../machine";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
-import { UpgradeCredentialParams, UpgradeCredentialOutput } from "../actors";
+import {
+  UpgradeCredentialParams,
+  UpgradeCredentialOutput,
+  RequestAccessTokenOutput,
+  RequestAccessTokenParams
+} from "../actors";
+import { ItwSessionExpiredError } from "../../../api/client";
 
 const makeCredential = (
   overrides: Partial<StoredCredential> = {}
@@ -20,6 +26,7 @@ const makeCredential = (
 
 describe("itwCredentialUpgradeMachine", () => {
   it("should immediately complete if there are no credentials", async () => {
+    const mockRequestAccessToken = jest.fn();
     const mockUpgradeCredential = jest.fn(() =>
       Promise.reject(new Error("should not be called"))
     );
@@ -27,6 +34,10 @@ describe("itwCredentialUpgradeMachine", () => {
 
     const machine = itwCredentialUpgradeMachine.provide({
       actors: {
+        requestAccessToken: fromPromise<
+          RequestAccessTokenOutput,
+          RequestAccessTokenParams
+        >(mockRequestAccessToken),
         upgradeCredential: fromPromise<
           UpgradeCredentialOutput,
           UpgradeCredentialParams
@@ -36,6 +47,7 @@ describe("itwCredentialUpgradeMachine", () => {
     });
     const actor = createActor(machine, {
       input: {
+        integrityKeyTag: "integrity-keytag",
         walletInstanceAttestation: "attestation",
         pid: makeCredential(),
         credentials: [],
@@ -52,16 +64,22 @@ describe("itwCredentialUpgradeMachine", () => {
   });
 
   it("should upgrade credentials one by one and complete", async () => {
+    const mockRequestAccessToken = jest.fn();
     const mockUpgradeCredential = jest.fn(({ input }) =>
       Promise.resolve({
         credentialType: input.credential.credentialType,
-        credentials: [input.credential]
+        credentials: [input.credential],
+        walletUnitAttestations: { wua1: "wua-jwt" }
       })
     );
     const mockStoreCredential = jest.fn();
 
     const machine = itwCredentialUpgradeMachine.provide({
       actors: {
+        requestAccessToken: fromPromise<
+          RequestAccessTokenOutput,
+          RequestAccessTokenParams
+        >(mockRequestAccessToken),
         upgradeCredential: fromPromise<
           UpgradeCredentialOutput,
           UpgradeCredentialParams
@@ -77,6 +95,7 @@ describe("itwCredentialUpgradeMachine", () => {
 
     const actor = createActor(machine, {
       input: {
+        integrityKeyTag: "integrity-keytag",
         walletInstanceAttestation: "attestation",
         pid: makeCredential(),
         credentials,
@@ -95,13 +114,15 @@ describe("itwCredentialUpgradeMachine", () => {
   });
 
   it("should collect failed credentials in output", async () => {
+    const mockRequestAccessToken = jest.fn();
     const mockUpgradeCredential = jest.fn(({ input }) => {
       if (input.credential.credentialType === "fail") {
         return Promise.reject(new Error("fail"));
       }
       return Promise.resolve({
         credentialType: input.credential.credentialType,
-        credentials: [input.credential]
+        credentials: [input.credential],
+        walletUnitAttestations: { wua1: "wua-jwt" }
       });
     });
 
@@ -109,6 +130,10 @@ describe("itwCredentialUpgradeMachine", () => {
 
     const machine = itwCredentialUpgradeMachine.provide({
       actors: {
+        requestAccessToken: fromPromise<
+          RequestAccessTokenOutput,
+          RequestAccessTokenParams
+        >(mockRequestAccessToken),
         upgradeCredential: fromPromise<
           UpgradeCredentialOutput,
           UpgradeCredentialParams
@@ -122,6 +147,7 @@ describe("itwCredentialUpgradeMachine", () => {
     ];
     const actor = createActor(machine, {
       input: {
+        integrityKeyTag: "integrity-keytag",
         walletInstanceAttestation: "attestation",
         pid: makeCredential(),
         credentials,
@@ -139,5 +165,66 @@ describe("itwCredentialUpgradeMachine", () => {
     expect(actor.getSnapshot().output?.failedCredentials).toEqual([
       expect.objectContaining({ credentialType: "fail" })
     ]);
+  });
+
+  it("Should wait for session refresh then retry the credentials upgrade", async () => {
+    const mockRequestAccessToken = jest.fn();
+    const waitForSessionRefresh = jest.fn();
+    const handleSessionExpired = jest.fn();
+    const mockUpgradeCredential = jest
+      .fn()
+      .mockRejectedValueOnce(new ItwSessionExpiredError());
+    mockUpgradeCredential.mockImplementation(({ input }) =>
+      Promise.resolve({
+        credentialType: input.credential.credentialType,
+        credentials: [input.credential],
+        walletUnitAttestations: { wua2: "wua-jwt" }
+      })
+    );
+    const mockStoreCredential = jest.fn();
+
+    const machine = itwCredentialUpgradeMachine.provide({
+      actors: {
+        requestAccessToken: fromPromise<
+          RequestAccessTokenOutput,
+          RequestAccessTokenParams
+        >(mockRequestAccessToken),
+        upgradeCredential: fromPromise<
+          UpgradeCredentialOutput,
+          UpgradeCredentialParams
+        >(mockUpgradeCredential),
+        waitForSessionRefresh: fromCallback(waitForSessionRefresh)
+      },
+      actions: { storeCredential: mockStoreCredential, handleSessionExpired }
+    });
+
+    const credentials = [
+      makeCredential({ credentialType: "expire-then-ok" }),
+      makeCredential({ credentialType: "ok" })
+    ];
+
+    const actor = createActor(machine, {
+      input: {
+        integrityKeyTag: "integrity-keytag",
+        walletInstanceAttestation: "attestation",
+        pid: makeCredential(),
+        credentials,
+        issuanceMode: "upgrade"
+      }
+    });
+    actor.start();
+
+    await waitFor(actor, snap => snap.matches("WaitingForSessionRefresh"));
+    expect(handleSessionExpired).toHaveBeenCalledTimes(1);
+
+    actor.send({ type: "session-refresh-complete" });
+
+    await waitFor(actor, snap => snap.matches("Completed"));
+
+    expect(mockUpgradeCredential).toHaveBeenCalledTimes(3); // 1 failed for session expired + 2 successful
+    expect(mockStoreCredential).toHaveBeenCalledTimes(2);
+
+    expect(actor.getSnapshot().value).toBe("Completed");
+    expect(actor.getSnapshot().output).toEqual({ failedCredentials: [] });
   });
 });

@@ -20,6 +20,7 @@ import { ItwTags } from "../../tags";
 import {
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
+  RequestAccessTokenActorParams,
   RequestEidActorOutput,
   RequestEidActorParams,
   StartAuthFlowActorParams,
@@ -175,8 +176,10 @@ describe("itwEidIssuanceMachine", () => {
         GetWalletAttestationActorParams
       >(getWalletAttestation),
       getCieStatus: fromPromise<CieContext>(getCieStatus),
-      requestAccessToken:
-        fromPromise<CredentialAccessToken>(requestAccessToken),
+      requestAccessToken: fromPromise<
+        CredentialAccessToken,
+        RequestAccessTokenActorParams
+      >(requestAccessToken),
       requestEid: fromPromise<RequestEidActorOutput, RequestEidActorParams>(
         requestEid
       ),
@@ -2358,6 +2361,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(intermediateSnapshot1.value).toEqual({
       Issuance: "WaitingForSessionRefresh"
     });
+    expect(handleSessionExpired).toHaveBeenCalledTimes(1);
 
     actor.send({ type: "session-refresh-complete" });
 

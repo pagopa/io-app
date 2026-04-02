@@ -794,6 +794,7 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(intermediateSnapshot1.value).toEqual({
       Issuance: "WaitingForSessionRefresh"
     });
+    expect(handleSessionExpired).toHaveBeenCalledTimes(1);
 
     actor.send({ type: "session-refresh-complete" });
 
