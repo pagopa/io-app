@@ -27,10 +27,7 @@ import {
   selectIssuanceMode
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
-import {
-  trackItWalletIDMethod,
-  trackItwUserWithoutL3Requirements
-} from "../../analytics";
+import { trackItWalletIDMethod, trackItwUserWithoutCie } from "../../analytics";
 import { CieIdMethodModule } from "../components/CieIdMethodModule";
 import { CiePinMethodModule } from "../components/CiePinMethodModule";
 import { SpidMethodModule } from "../components/SpidMethodModule";
@@ -127,11 +124,7 @@ export const ItwIdentificationModeSelectionScreen = ({
   );
 
   const handleNoCiePress = useCallback(() => {
-    trackItwUserWithoutL3Requirements({
-      screen_name: routeName,
-      reason: "user_without_cie",
-      position: "screen"
-    });
+    trackItwUserWithoutCie();
 
     if (!isL2Active && isL2Credential(credentialType)) {
       machineRef.send({
@@ -141,7 +134,11 @@ export const ItwIdentificationModeSelectionScreen = ({
         credentialType
       });
     } else {
-      machineRef.send({ type: "go-to-cie-warning", warning: "card" });
+      machineRef.send({
+        type: "go-to-cie-warning",
+        warning: "card",
+        routeName
+      });
     }
   }, [machineRef, routeName, credentialType, isL2Active]);
 
