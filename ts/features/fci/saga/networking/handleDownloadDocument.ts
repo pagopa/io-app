@@ -36,7 +36,7 @@ export function* handleDownloadDocument(
     if (status !== 200) {
       const error = new Error(`error ${status} fetching ${document.url}`);
       const networkError = getNetworkError(error);
-      trackFciDocOpeningFailure(error.toString());
+      trackFciDocOpeningFailure();
       yield* put(fciDownloadPreview.failure(networkError));
       return;
     }
@@ -44,7 +44,7 @@ export function* handleDownloadDocument(
     yield* put(fciDownloadPreview.success({ path }));
   } catch (error) {
     const networkError = getNetworkError(error);
-    trackFciDocOpeningFailure(error as unknown as string);
+    trackFciDocOpeningFailure();
     yield* put(fciDownloadPreview.failure(networkError));
   } finally {
     if (yield* cancelled()) {

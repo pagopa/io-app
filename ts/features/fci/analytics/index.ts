@@ -130,10 +130,10 @@ export const trackFciDocumentsView = () =>
   mixpanelTrack("FCI_DOCUMENTS", buildEventProperties("UX", "screen_view"));
 
 // TODO: check if the reason is needed and if it provides useful insights for debugging
-export const trackFciDocOpeningFailure = (reason: string) =>
+export const trackFciDocOpeningFailure = () =>
   mixpanelTrack(
     "FCI_DOC_OPENING_FAILURE",
-    buildEventProperties("KO", "control", { reason })
+    buildEventProperties("KO", "control")
   );
 
 export const trackFciSignatureFieldsView = () =>

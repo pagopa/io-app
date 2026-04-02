@@ -229,8 +229,8 @@ const FciDocumentsScreen = () => {
         setTotalPages(numberOfPages);
         setCurrentPage(page);
       }}
-      onError={error => {
-        trackFciDocOpeningFailure(error.toString());
+      onError={_ => {
+        trackFciDocOpeningFailure();
       }}
       enablePaging
       style={styles.pdf}
