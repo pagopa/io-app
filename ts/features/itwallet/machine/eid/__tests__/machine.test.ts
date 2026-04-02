@@ -4,6 +4,7 @@ import _ from "lodash";
 import {
   assign,
   createActor,
+  fromCallback,
   fromPromise,
   StateFrom,
   waitFor as waitForActor
@@ -11,6 +12,7 @@ import {
 import { idps } from "../../../../../utils/idps";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import {
+  CredentialAccessToken,
   StoredCredential,
   WalletInstanceAttestations
 } from "../../../common/utils/itwTypesUtils";
@@ -18,6 +20,7 @@ import { ItwTags } from "../../tags";
 import {
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
+  RequestEidActorOutput,
   RequestEidActorParams,
   StartAuthFlowActorParams,
   ValidateMrtdPoPChallengeActorParams
@@ -37,6 +40,18 @@ type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
 const T_INTEGRITY_KEY = "abc";
 const T_WIA: string = "abcdefg";
+const T_WUA = { wua1: "wua-jwt" };
+const T_ACCESS_TOKEN: CredentialAccessToken = {
+  access_token: "mock_access_token",
+  token_type: "DPoP",
+  authorization_details: [
+    {
+      type: "openid_credential",
+      credential_configuration_id: "mock-cred",
+      credential_identifiers: ["mock-cred-id"]
+    }
+  ]
+};
 
 /**
  * Actions
@@ -89,10 +104,12 @@ const verifyTrustFederation = jest.fn();
 const createWalletInstance = jest.fn();
 const getCieStatus = jest.fn();
 const getWalletAttestation = jest.fn();
+const requestAccessToken = jest.fn();
 const requestEid = jest.fn();
 const startAuthFlow = jest.fn();
 const initMrtdPoPChallenge = jest.fn();
 const validateMrtdPoPChallenge = jest.fn();
+const waitForSessionRefresh = jest.fn();
 
 /**
  * Guards
@@ -158,7 +175,9 @@ describe("itwEidIssuanceMachine", () => {
         GetWalletAttestationActorParams
       >(getWalletAttestation),
       getCieStatus: fromPromise<CieContext>(getCieStatus),
-      requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
+      requestAccessToken:
+        fromPromise<CredentialAccessToken>(requestAccessToken),
+      requestEid: fromPromise<RequestEidActorOutput, RequestEidActorParams>(
         requestEid
       ),
       startAuthFlow: fromPromise<
@@ -173,7 +192,8 @@ describe("itwEidIssuanceMachine", () => {
         string,
         ValidateMrtdPoPChallengeActorParams
       >(validateMrtdPoPChallenge),
-      credentialUpgradeMachine: itwCredentialUpgradeMachine
+      credentialUpgradeMachine: itwCredentialUpgradeMachine,
+      waitForSessionRefresh: fromCallback(waitForSessionRefresh)
     },
     guards: {
       issuedEidMatchesAuthenticatedUser,
@@ -239,8 +259,14 @@ describe("itwEidIssuanceMachine", () => {
         new Promise(resolve => setTimeout(() => resolve({ jwt: T_WIA }), 10))
     );
     startAuthFlow.mockImplementation(() => Promise.resolve({}));
+    requestAccessToken.mockImplementation(() =>
+      Promise.resolve(T_ACCESS_TOKEN)
+    );
     requestEid.mockImplementation(() =>
-      Promise.resolve(ItwStoredCredentialsMocks.eid)
+      Promise.resolve({
+        credential: ItwStoredCredentialsMocks.eid,
+        walletUnitAttestations: T_WUA
+      })
     );
     issuedEidMatchesAuthenticatedUser.mockImplementation(() => true);
 
@@ -399,11 +425,16 @@ describe("itwEidIssuanceMachine", () => {
       authRedirectUrl: "http://test.it"
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual({
-      Issuance: "RequestingEid"
-    });
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
-    expect(actor.getSnapshot().context).toMatchObject({
+    /**
+     * Obtain access token and eID
+     */
+    const intermediateSnapshot = await waitForActor(actor, s =>
+      s.matches({ Issuance: "RequestingEid" })
+    );
+
+    expect(intermediateSnapshot.tags).toStrictEqual(new Set([ItwTags.Loading]));
+    expect(intermediateSnapshot.context).toMatchObject({
+      accessToken: T_ACCESS_TOKEN,
       authenticationContext: {
         callbackUrl: "http://test.it"
       }
@@ -438,7 +469,9 @@ describe("itwEidIssuanceMachine", () => {
       authenticationContext: expect.objectContaining({
         callbackUrl: "http://test.it"
       }),
-      eid: ItwStoredCredentialsMocks.eid
+      accessToken: T_ACCESS_TOKEN,
+      eid: ItwStoredCredentialsMocks.eid,
+      walletUnitAttestations: T_WUA
     });
 
     /**
@@ -454,7 +487,11 @@ describe("itwEidIssuanceMachine", () => {
     /** Initial part is the same as the previous test, we can start from the identification */
 
     startAuthFlow.mockImplementation(() => Promise.resolve({}));
+    requestAccessToken.mockImplementation(() =>
+      Promise.resolve(T_ACCESS_TOKEN)
+    );
     requestEid.mockImplementation(() => Promise.resolve({}));
+    issuedEidMatchesAuthenticatedUser.mockImplementation(() => true);
 
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
@@ -514,15 +551,18 @@ describe("itwEidIssuanceMachine", () => {
       authRedirectUrl: "http://cieid.test.it"
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual({
-      Issuance: "RequestingEid"
-    });
-    expect(actor.getSnapshot().context).toMatchObject({
+    const intermediateSnapshot = await waitForActor(actor, s =>
+      s.matches({
+        Issuance: "RequestingEid"
+      })
+    );
+    expect(intermediateSnapshot.value).toEqual({ Issuance: "RequestingEid" });
+    expect(intermediateSnapshot.context).toMatchObject({
+      accessToken: T_ACCESS_TOKEN,
       authenticationContext: {
         callbackUrl: "http://cieid.test.it"
       }
     });
-
     expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
     expect(requestEid).toHaveBeenCalledTimes(1);
 
@@ -637,17 +677,24 @@ describe("itwEidIssuanceMachine", () => {
     /**
      * Cie reading complete
      */
+    requestAccessToken.mockImplementation(() =>
+      Promise.resolve(T_ACCESS_TOKEN)
+    );
 
     actor.send({
       type: "user-identification-completed",
       authRedirectUrl: "http://test.it"
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual({
-      Issuance: "RequestingEid"
-    });
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
-    expect(actor.getSnapshot().context).toMatchObject({
+    const intermediateSnapshot = await waitForActor(actor, s =>
+      s.matches({
+        Issuance: "RequestingEid"
+      })
+    );
+    expect(intermediateSnapshot.value).toEqual({ Issuance: "RequestingEid" });
+    expect(intermediateSnapshot.tags).toStrictEqual(new Set([ItwTags.Loading]));
+    expect(intermediateSnapshot.context).toMatchObject({
+      accessToken: T_ACCESS_TOKEN,
       authenticationContext: {
         callbackUrl: "http://test.it"
       }
@@ -1142,11 +1189,13 @@ describe("itwEidIssuanceMachine", () => {
       authRedirectUrl: "http://cieid.test.it"
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual({
-      Issuance: "RequestingEid"
-    });
+    await waitForActor(actor, s =>
+      s.matches({
+        Issuance: "RequestingEid"
+      })
+    );
 
-    await waitFor(() => expect(requestEid).toHaveBeenCalledTimes(1));
+    expect(requestEid).toHaveBeenCalledTimes(1);
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
   });
@@ -1309,8 +1358,14 @@ describe("itwEidIssuanceMachine", () => {
 
     startAuthFlow.mockImplementation(() => Promise.resolve({}));
 
+    requestAccessToken.mockImplementation(() =>
+      Promise.resolve(T_ACCESS_TOKEN)
+    );
     requestEid.mockImplementation(() =>
-      Promise.resolve(ItwStoredCredentialsMocks.eid)
+      Promise.resolve({
+        credential: ItwStoredCredentialsMocks.eid,
+        walletUnitAttestations: T_WUA
+      })
     );
 
     issuedEidMatchesAuthenticatedUser.mockImplementation(() => true);
@@ -1351,12 +1406,16 @@ describe("itwEidIssuanceMachine", () => {
       authRedirectUrl: "http://test.it"
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual({
-      Issuance: "RequestingEid"
-    });
+    const intermediateSnapshot = await waitForActor(actor, s =>
+      s.matches({
+        Issuance: "RequestingEid"
+      })
+    );
 
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
-    expect(actor.getSnapshot().context).toMatchObject({
+    expect(intermediateSnapshot.value).toEqual({ Issuance: "RequestingEid" });
+    expect(intermediateSnapshot.tags).toStrictEqual(new Set([ItwTags.Loading]));
+    expect(intermediateSnapshot.context).toMatchObject({
+      accessToken: T_ACCESS_TOKEN,
       authenticationContext: {
         callbackUrl: "http://test.it"
       }
@@ -1393,7 +1452,9 @@ describe("itwEidIssuanceMachine", () => {
       authenticationContext: expect.objectContaining({
         callbackUrl: "http://test.it"
       }),
-      eid: ItwStoredCredentialsMocks.eid
+      accessToken: T_ACCESS_TOKEN,
+      eid: ItwStoredCredentialsMocks.eid,
+      walletUnitAttestations: T_WUA
     });
   });
 
@@ -2231,14 +2292,14 @@ describe("itwEidIssuanceMachine", () => {
     );
     issuedEidMatchesAuthenticatedUser.mockImplementation(() => true);
 
-    await waitFor(() =>
-      expect(actor.getSnapshot().value).toStrictEqual({
+    await waitForActor(actor, s =>
+      s.matches({
         Issuance: "RequestingEid"
       })
     );
 
     expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
-    await waitFor(() => expect(requestEid).toHaveBeenCalledTimes(1));
+    expect(requestEid).toHaveBeenCalledTimes(1);
 
     // EID obtained
     await waitFor(() =>
@@ -2246,5 +2307,71 @@ describe("itwEidIssuanceMachine", () => {
         Issuance: "DisplayingPreview"
       })
     );
+  });
+
+  it("Should wait for session refresh then retry the eID request", async () => {
+    requestAccessToken.mockImplementation(() =>
+      Promise.resolve(T_ACCESS_TOKEN)
+    );
+    requestEid.mockImplementationOnce(() => Promise.reject({}));
+    requestEid.mockImplementationOnce(() =>
+      Promise.resolve({
+        credential: ItwStoredCredentialsMocks.eid,
+        walletUnitAttestations: T_WUA
+      })
+    );
+    isSessionExpired.mockImplementation(() => true);
+    issuedEidMatchesAuthenticatedUser.mockImplementation(() => true);
+
+    const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
+
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { UserIdentification: { CiePin: "ReadingCieCard" } },
+      context: {
+        level: "l3",
+        mode: "issuance",
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA },
+        identification: {
+          level: "L3",
+          mode: "ciePin",
+          pin: "123456"
+        },
+        authenticationContext: {}
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+
+    actor.start();
+    actor.send({
+      type: "user-identification-completed",
+      authRedirectUrl: "http://test.it"
+    });
+
+    const intermediateSnapshot1 = await waitForActor(actor, s =>
+      s.matches({
+        Issuance: "WaitingForSessionRefresh"
+      })
+    );
+
+    expect(intermediateSnapshot1.value).toEqual({
+      Issuance: "WaitingForSessionRefresh"
+    });
+
+    actor.send({ type: "session-refresh-complete" });
+
+    const intermediateSnapshot2 = await waitForActor(actor, s =>
+      s.matches({
+        Issuance: "DisplayingPreview"
+      })
+    );
+    expect(intermediateSnapshot2.value).toEqual({
+      Issuance: "DisplayingPreview"
+    });
+    expect(intermediateSnapshot2.context).toMatchObject<Partial<Context>>({
+      eid: ItwStoredCredentialsMocks.eid,
+      walletUnitAttestations: T_WUA
+    });
   });
 });
