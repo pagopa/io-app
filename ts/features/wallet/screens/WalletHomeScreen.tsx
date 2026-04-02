@@ -76,6 +76,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
 
   const handleAddToWalletButtonPress = useCallback(() => {
     trackWalletAdd();
+
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: isItWalletEnabled
         ? ITW_ROUTES.L3_ONBOARDING
