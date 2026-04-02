@@ -1,4 +1,4 @@
-import { ActionArgs, DoneActorEvent } from "xstate";
+import { ActionArgs, assertEvent } from "xstate";
 import { useIOStore } from "../../../../store/hooks";
 import {
   itwCredentialsRemoveByType,
@@ -8,7 +8,6 @@ import { checkCurrentSession } from "../../../authentication/common/store/action
 import { itwWalletUnitAttestationsStore } from "../../walletInstance/store/actions";
 import { Context } from "./context";
 import { CredentialUpgradeEvents } from "./events";
-import { UpgradeCredentialOutput } from "./actors";
 
 export const createCredentialUpgradeActionsImplementation = (
   store: ReturnType<typeof useIOStore>
@@ -16,9 +15,9 @@ export const createCredentialUpgradeActionsImplementation = (
   storeCredential: ({
     event
   }: ActionArgs<Context, CredentialUpgradeEvents, CredentialUpgradeEvents>) => {
-    const doneEvent = event as DoneActorEvent<UpgradeCredentialOutput>;
+    assertEvent(event, "xstate.done.actor.upgradeCredential");
     const { credentialType, credentials, walletUnitAttestations } =
-      doneEvent.output;
+      event.output;
     // Removes old credential using the credential type
     store.dispatch(itwCredentialsRemoveByType(credentialType));
     // Stores the new credentials without the WUA

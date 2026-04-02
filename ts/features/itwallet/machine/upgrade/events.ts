@@ -1,4 +1,5 @@
 import { DoneActorEvent, ErrorActorEvent } from "xstate";
+import { UpgradeCredentialOutput } from "./actors";
 
 type SessionRefreshComplete = {
   type: "session-refresh-complete";
@@ -6,5 +7,5 @@ type SessionRefreshComplete = {
 
 export type CredentialUpgradeEvents =
   | SessionRefreshComplete
-  | DoneActorEvent
+  | DoneActorEvent<UpgradeCredentialOutput, "upgradeCredential">
   | ErrorActorEvent;

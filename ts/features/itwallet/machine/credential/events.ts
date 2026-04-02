@@ -43,5 +43,5 @@ export type CredentialIssuanceEvents =
   | Back
   | Close
   | Continue
-  | SessionRefreshComplete;
-// | ErrorActorEvent;
+  | SessionRefreshComplete
+  | ErrorActorEvent;

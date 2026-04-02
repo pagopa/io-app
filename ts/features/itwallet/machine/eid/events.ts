@@ -158,7 +158,7 @@ export type EidIssuanceEvents =
   | NfcEnabled
   | Abort
   | RevokeWalletInstance
-  // | ErrorActorEvent
+  | ErrorActorEvent
   | ExternalErrorEvent
   | DoneActorEvent<Output, "credentialUpgradeMachine">
   | GoToCieWarning
