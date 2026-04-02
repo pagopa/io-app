@@ -28,7 +28,16 @@ export const itwCredentialsRemoveByType = createStandardAction(
   "ITW_CREDENTIALS_REMOVE_BY_TYPE"
 )<string>();
 
+/**
+ * Refresh the status of a credential, requesting a status assertion
+ * to the Issuer and updating the stored credential with the result.
+ */
+export const itwCredentialsRefreshStatusByType = createStandardAction(
+  "ITW_CREDENTIALS_REFRESH_STATUS_BY_TYPE"
+)<string>();
+
 export type ItwCredentialsActions =
   | ActionType<typeof itwCredentialsStore>
   | ActionType<typeof itwCredentialsRemove>
-  | ActionType<typeof itwCredentialsRemoveByType>;
+  | ActionType<typeof itwCredentialsRemoveByType>
+  | ActionType<typeof itwCredentialsRefreshStatusByType>;
