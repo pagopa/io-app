@@ -1,19 +1,32 @@
 import * as E from "fp-ts/lib/Either";
-import { call, fork, put, select } from "typed-redux-saga/macro";
+import { call, delay, fork, put, select, take } from "typed-redux-saga/macro";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { ActionType } from "typesafe-actions";
 import { fetchNetInfoState } from "../utils";
-import { startTimer } from "../../../utils/timer";
 import { setConnectionStatus } from "../store/actions";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
 import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
 import { GlobalState } from "../../../store/reducers/types";
 import { ConnectivityClient, createConnectivityClient } from "../api/client";
 import { apiUrlPrefix } from "../../../config";
-// import { appCurrentStateSelector } from "../../../store/reducers/appState";
+import { appCurrentStateSelector } from "../../../store/reducers/appState";
+import { applicationChangeState } from "../../../store/actions/application";
 
 const CONNECTIVITY_STATUS_LOAD_INTERVAL = (30 * 1000) as Millisecond;
 const CONNECTIVITY_STATUS_FAILURE_INTERVAL = (10 * 1000) as Millisecond;
-// const CONNECTIVITY_STATUS_BACKGROUND_INTERVAL = 1000 as Millisecond;
+
+function* waitForAppActive(): Generator<
+  ReduxSagaEffect,
+  void,
+  ActionType<typeof applicationChangeState>
+> {
+  while (true) {
+    const appStateChange = yield* take(applicationChangeState);
+    if (appStateChange.payload === "active") {
+      return;
+    }
+  }
+}
 
 function* checkBackendConnectionStatus(
   client: ConnectivityClient
@@ -29,6 +42,7 @@ function* checkBackendConnectionStatus(
 /**
  * this saga requests and checks the connection status
  */
+// eslint-disable-next-line sonarjs/cognitive-complexity
 export function* connectionStatusSaga(
   client: ConnectivityClient
 ): Generator<
@@ -38,44 +52,50 @@ export function* connectionStatusSaga(
 > {
   while (true) {
     try {
-      // const appState = yield* select(appCurrentStateSelector);
+      const appState = yield* select(appCurrentStateSelector);
 
-      // if (appState !== "active") {
-      //   // if the app is not active we wait for the next check
-      //   yield* call(startTimer, CONNECTIVITY_STATUS_BACKGROUND_INTERVAL);
-      //   continue;
-      // }
-      const libraryResponse = yield* call(fetchNetInfoState());
-
-      if (E.isRight(libraryResponse)) {
-        const backendResponse = yield* call(
-          checkBackendConnectionStatus,
-          client
-        );
-
-        const isAppConnected =
-          !!libraryResponse.right.isConnected && backendResponse;
-
-        // App is connected update the store and wait for the next check
-        yield* put(setConnectionStatus(isAppConnected));
-
-        // update mixpanel super properties
-        const state: GlobalState = yield* select();
-        void updateMixpanelSuperProperties(state);
-
-        if (isAppConnected) {
-          yield* call(startTimer, CONNECTIVITY_STATUS_LOAD_INTERVAL);
-          continue;
-        }
-        yield* call(startTimer, CONNECTIVITY_STATUS_FAILURE_INTERVAL);
+      if (appState !== "active") {
+        yield* call(waitForAppActive);
         continue;
       }
-      yield* call(startTimer, CONNECTIVITY_STATUS_FAILURE_INTERVAL);
+
+      const libraryResponse = yield* call(fetchNetInfoState());
+      const statePostAwait = yield* select(appCurrentStateSelector);
+      if (statePostAwait === "active") {
+        if (E.isRight(libraryResponse)) {
+          const backendResponse = yield* call(
+            checkBackendConnectionStatus,
+            client
+          );
+
+          const isAppConnected =
+            !!libraryResponse.right.isConnected && backendResponse;
+
+          // App is connected update the store and wait for the next check
+          yield* put(setConnectionStatus(isAppConnected));
+
+          // update mixpanel super properties
+          const state: GlobalState = yield* select();
+          void updateMixpanelSuperProperties(state);
+          if (isAppConnected) {
+            yield* delay(CONNECTIVITY_STATUS_LOAD_INTERVAL);
+            continue;
+          }
+        } else {
+          // NetInfo read failed: keep store aligned with failure handling.
+          yield* put(setConnectionStatus(false));
+        }
+        yield* delay(CONNECTIVITY_STATUS_FAILURE_INTERVAL);
+        continue;
+      }
+
+      yield* call(waitForAppActive);
       continue;
     } catch (e) {
-      yield* call(startTimer, CONNECTIVITY_STATUS_FAILURE_INTERVAL);
-      continue;
+      // we ignore errors and treat them as a connection failure
+      yield* put(setConnectionStatus(false));
     }
+    yield* delay(CONNECTIVITY_STATUS_FAILURE_INTERVAL);
   }
 }
 
