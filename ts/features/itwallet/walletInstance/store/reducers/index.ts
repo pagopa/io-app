@@ -55,7 +55,7 @@ export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
 
 type MigrationState = PersistedState & Record<string, any>;
 
-const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = 2;
+const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = 3;
 
 export const migrations: MigrationManifest = {
   // Convert status into a pot for better async handling
@@ -74,6 +74,11 @@ export const migrations: MigrationManifest = {
   "2": (state: MigrationState) => ({
     ...state,
     renewalError: false
+  }),
+  // Add Wallet Unit Attestations
+  "3": (state: MigrationState) => ({
+    ...state,
+    walletUnitAttestations: {}
   })
 };
 
