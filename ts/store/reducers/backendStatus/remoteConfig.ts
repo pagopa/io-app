@@ -143,6 +143,31 @@ export const isCGNEnabledAfterLoadSelector = createSelector(
   (isLoaded, isEnabled) => (isLoaded ? isEnabled : true)
 );
 
+export const isCGNDiscoveryBannerEnabledSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.map(config =>
+      isVersionSupported(
+        Platform.OS === "ios"
+          ? config.cgn.show_cgn_engagement_banner?.min_app_version?.ios
+          : config.cgn.show_cgn_engagement_banner?.min_app_version?.android,
+        getAppVersion()
+      )
+    ),
+    O.getOrElse(() => false)
+  );
+
+export const engagementCGNDiscoveryBannerSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): Banner | undefined =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.cgn.show_cgn_engagement_banner),
+      O.toUndefined
+    )
+);
+
 export const fimsRequiresAppUpdateSelector = (state: GlobalState) =>
   pipe(
     state,
