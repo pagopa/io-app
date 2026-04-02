@@ -944,7 +944,7 @@
       "cardGeneric": "Karte",
       "a11y": {
         "credit": {
-          "hpan": "Kreditkarte {{circuit}} mit der Endung {{spacedHpan}}"
+          "hpan": "Karte {{circuit}} mit der Endung {{spacedHpan}}"
         },
         "paypal": {
           "owner": "Konto: {{email}}"
