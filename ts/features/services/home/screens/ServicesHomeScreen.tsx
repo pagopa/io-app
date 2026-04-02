@@ -1,5 +1,4 @@
 import { HeaderActionProps } from "@pagopa/io-app-design-system";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
@@ -10,13 +9,7 @@ import SectionStatusComponent from "../../../../components/SectionStatus";
 import { useHeaderFirstLevel } from "../../../../hooks/useHeaderFirstLevel";
 import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { cgnDetails } from "../../../bonus/cgn/store/actions/details";
-import {
-  cgnDetailSelector,
-  isCgnAlreadyFetchedSelector
-} from "../../../bonus/cgn/store/reducers/details";
+import { useIOSelector } from "../../../../store/hooks";
 import * as analytics from "../../common/analytics";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { isFavouriteServicesEnabledSelector } from "../../common/store/selectors/remoteConfig";
@@ -25,23 +18,11 @@ import { useServicesHomeBottomSheet } from "../hooks/useServicesHomeBottomSheet"
 
 export const ServicesHomeScreen = () => {
   const navigation = useIONavigation();
-  const dispatch = useIODispatch();
-  const cgnStatus = useIOSelector(cgnDetailSelector);
-  const cgnFetched = useIOSelector(isCgnAlreadyFetchedSelector);
 
   useFocusEffect(
     useCallback(() => {
       analytics.trackServicesHome();
     }, [])
-  );
-
-  useOnFirstRender(
-    () => {
-      if (!cgnFetched && pot.isNone(cgnStatus)) {
-        dispatch(cgnDetails.request());
-      }
-    },
-    () => !cgnFetched && pot.isNone(cgnStatus)
   );
 
   /* CODE RELATED TO THE HEADER -- START */

@@ -1,6 +1,6 @@
 import { Banner, VSpacer } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
-import { VoidType } from "io-ts";
 import Animated, {
   FadeIn,
   FadeOut,
@@ -11,6 +11,7 @@ import {
   engagementCGNDiscoveryBannerSelector,
   isCGNDiscoveryBannerEnabledSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import {
   fallbackForLocalizedMessageKeys,
   getFullLocale
@@ -19,7 +20,14 @@ import { trackStartAddNewCredential } from "../../../itwallet/analytics";
 import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
 import useCgnEligibility from "../hooks/useCgnEligibility.tsx";
 import { cgnActivationStart } from "../store/actions/activation";
-import { isCgnEnrolledSelector } from "../store/reducers/details";
+import { setCgnDiscoveryBannerClosed } from "../store/actions/banners";
+import { cgnDetails } from "../store/actions/details.ts";
+import { isCgnDiscoveryBannerClosedSelector } from "../store/reducers/banners";
+import {
+  cgnDetailSelector,
+  isCgnAlreadyFetchedSelector,
+  isCgnEnrolledSelector
+} from "../store/reducers/details";
 
 const CgnDiscoveryBanner = () => {
   const dispatch = useIODispatch();
@@ -35,12 +43,27 @@ const CgnDiscoveryBanner = () => {
   );
   const eligibleForCgn = useCgnEligibility();
   const isCgnEnrolled = useIOSelector(isCgnEnrolledSelector);
+  const isBannerClosed = useIOSelector(isCgnDiscoveryBannerClosedSelector);
 
-  if (!eligibleForCgn || !isRemoteBannerEnabled || !engagementBannerContent) {
-    return null;
-  }
+  const cgnStatus = useIOSelector(cgnDetailSelector);
+  const cgnFetched = useIOSelector(isCgnAlreadyFetchedSelector);
 
-  if (isCgnEnrolled) {
+  useOnFirstRender(
+    () => {
+      if (!cgnFetched && pot.isNone(cgnStatus)) {
+        dispatch(cgnDetails.request());
+      }
+    },
+    () => !cgnFetched && pot.isNone(cgnStatus) && !isBannerClosed
+  );
+
+  if (
+    !eligibleForCgn ||
+    !isRemoteBannerEnabled ||
+    !engagementBannerContent ||
+    isCgnEnrolled ||
+    isBannerClosed
+  ) {
     return null;
   }
 
@@ -61,7 +84,7 @@ const CgnDiscoveryBanner = () => {
         }
         pictogramName="star"
         color="turquoise"
-        onClose={() => VoidType}
+        onClose={() => dispatch(setCgnDiscoveryBannerClosed(true))}
         labelClose={I18n.t("global.buttons.close")}
         onPress={() => {
           trackStartAddNewCredential("CGN");
