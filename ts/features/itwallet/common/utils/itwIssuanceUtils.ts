@@ -171,7 +171,8 @@ const getPid = async ({
   const {
     keyTag,
     authDetails: { credential_configuration_id, credential_identifiers },
-    walletUnitAttestationId
+    walletUnitAttestationId,
+    walletUnitAttestation
   } = authorizedCredential;
 
   const credentialCryptoContext = createCryptoContextFor(keyTag);
@@ -188,6 +189,7 @@ const getPid = async ({
       },
       {
         credentialCryptoContext,
+        walletUnitAttestation,
         dPopCryptoContext
       }
     );

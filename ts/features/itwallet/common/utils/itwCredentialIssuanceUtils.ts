@@ -260,7 +260,8 @@ const requestAndParseCredential = async ({
   env,
   itwVersion,
   keyTag,
-  walletUnitAttestationId
+  walletUnitAttestationId,
+  walletUnitAttestation
 }: RequestAndParseCredentialParams &
   AuthorizedCredentialMetadata): Promise<StoredCredential> => {
   const ioWallet = getIoWallet(itwVersion);
@@ -279,7 +280,8 @@ const requestAndParseCredential = async ({
       },
       {
         dPopCryptoContext,
-        credentialCryptoContext
+        credentialCryptoContext,
+        walletUnitAttestation
       }
     ).catch(
       enrichErrorWithMetadata({
