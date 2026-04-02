@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.28.0-rc.2](https://github.com/pagopa/io-app/compare/3.28.0-rc.1...3.28.0-rc.2) (2026-04-02)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-3955](https://pagopa.atlassian.net/browse/SIW-3955)] new KO no NFC fallback cases ([#7930](https://github.com/pagopa/io-app/issues/7930)) ([28b5352](https://github.com/pagopa/io-app/commit/28b53528d6ef1ba611ee00cd8a2d268c2e8057d7))
+* **IT-Wallet:** [[SIW-3984](https://pagopa.atlassian.net/browse/SIW-3984)] Refinement tracking ITW activation flow ([#7982](https://github.com/pagopa/io-app/issues/7982)) ([3927f31](https://github.com/pagopa/io-app/commit/3927f31ca81e0c8c9dfede3aa4f4cf193f7f7fbb))
+
+
+### Chores
+
+* [[IOCOM-3012](https://pagopa.atlassian.net/browse/IOCOM-3012)] notification platform registration update ([#7968](https://github.com/pagopa/io-app/issues/7968)) ([d54db02](https://github.com/pagopa/io-app/commit/d54db02290f65164b30481767e1a3f9e77a6b86f))
+* **IT-Wallet:** [[SIW-3583](https://pagopa.atlassian.net/browse/SIW-3583)] Update identification methods screen UI ([#7971](https://github.com/pagopa/io-app/issues/7971)) ([07fa353](https://github.com/pagopa/io-app/commit/07fa353406856369963db8258c681cdb270f6c2e))
+* **IT-Wallet:** [[SIW-3869](https://pagopa.atlassian.net/browse/SIW-3869)] Allow status assertion retry and reissuing of credentials with unknown status ([#7958](https://github.com/pagopa/io-app/issues/7958)) ([952a371](https://github.com/pagopa/io-app/commit/952a37115ad42a576547055add6ad6c29af4f6b5))
+
 ## [3.28.0-rc.1](https://github.com/pagopa/io-app/compare/3.28.0-rc.0...3.28.0-rc.1) (2026-04-01)
 
 
