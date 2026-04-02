@@ -31,6 +31,10 @@ export type Continue = {
   type: "continue";
 };
 
+type SessionRefreshComplete = {
+  type: "session-refresh-complete";
+};
+
 export type CredentialIssuanceEvents =
   | SelectCredential
   | ConfirmTrustData
@@ -39,4 +43,5 @@ export type CredentialIssuanceEvents =
   | Back
   | Close
   | Continue
-  | ErrorActorEvent;
+  | SessionRefreshComplete;
+// | ErrorActorEvent;
