@@ -4,7 +4,6 @@ import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import { Errors } from "@pagopa/io-react-native-wallet";
 import {
-  Body,
   Divider,
   ListItemAction,
   ListItemHeader,
@@ -194,45 +193,42 @@ export const useItwFailureSupportModal = ({
   const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
     title: "",
     component: (
-      <VStack space={16}>
-        <Body>{I18n.t("features.itWallet.support.supportDescription")}</Body>
-        <VStack space={24}>
-          {hasContactMethods && (
-            <View>
-              <ListItemHeader
-                label={I18n.t("features.itWallet.support.supportTitle")}
-              />
-              {supportLink && (
-                <>
-                  <ListItemAction
-                    testID="contact-method-help-center"
-                    variant="primary"
-                    icon="website"
-                    label={I18n.t("features.itWallet.support.visitHelpCenter")}
-                    onPress={() => Linking.openURL(supportLink)}
-                  />
-                  <Divider />
-                </>
-              )}
-              {contactMethods}
-            </View>
-          )}
-          {code && (
-            <View>
-              <ListItemHeader
-                label={I18n.t("features.itWallet.support.additionalDataTitle")}
-              />
-              <ListItemInfoCopy
-                icon="ladybug"
-                label={I18n.t("features.itWallet.support.errorCode")}
-                accessibilityHint={I18n.t("clipboard.copyIntoClipboard")}
-                value={code}
-                onPress={() => clipboardSetStringWithFeedback(code)}
-              />
-              <VSpacer size={24} />
-            </View>
-          )}
-        </VStack>
+      <VStack space={24}>
+        {hasContactMethods && (
+          <View>
+            <ListItemHeader
+              label={I18n.t("features.itWallet.support.supportTitle")}
+            />
+            {supportLink && (
+              <>
+                <ListItemAction
+                  testID="contact-method-help-center"
+                  variant="primary"
+                  icon="website"
+                  label={I18n.t("features.itWallet.support.visitHelpCenter")}
+                  onPress={() => Linking.openURL(supportLink)}
+                />
+                <Divider />
+              </>
+            )}
+            {contactMethods}
+          </View>
+        )}
+        {code && (
+          <View>
+            <ListItemHeader
+              label={I18n.t("features.itWallet.support.additionalDataTitle")}
+            />
+            <ListItemInfoCopy
+              icon="ladybug"
+              label={I18n.t("features.itWallet.support.errorCode")}
+              accessibilityHint={I18n.t("clipboard.copyIntoClipboard")}
+              value={code}
+              onPress={() => clipboardSetStringWithFeedback(code)}
+            />
+            <VSpacer size={24} />
+          </View>
+        )}
       </VStack>
     )
   });
