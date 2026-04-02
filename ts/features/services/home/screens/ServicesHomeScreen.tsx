@@ -13,7 +13,10 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { cgnDetails } from "../../../bonus/cgn/store/actions/details";
-import { cgnDetailSelector } from "../../../bonus/cgn/store/reducers/details";
+import {
+  cgnDetailSelector,
+  isCgnAlreadyFetchedSelector
+} from "../../../bonus/cgn/store/reducers/details";
 import * as analytics from "../../common/analytics";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { isFavouriteServicesEnabledSelector } from "../../common/store/selectors/remoteConfig";
@@ -24,6 +27,7 @@ export const ServicesHomeScreen = () => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const cgnStatus = useIOSelector(cgnDetailSelector);
+  const cgnFetched = useIOSelector(isCgnAlreadyFetchedSelector);
 
   useFocusEffect(
     useCallback(() => {
@@ -33,11 +37,11 @@ export const ServicesHomeScreen = () => {
 
   useOnFirstRender(
     () => {
-      if (pot.isNone(cgnStatus)) {
+      if (!cgnFetched && pot.isNone(cgnStatus)) {
         dispatch(cgnDetails.request());
       }
     },
-    () => pot.isNone(cgnStatus)
+    () => !cgnFetched && pot.isNone(cgnStatus)
   );
 
   /* CODE RELATED TO THE HEADER -- START */
