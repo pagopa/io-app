@@ -6,7 +6,7 @@ import { canAccessCgn } from "../utils/dates";
 const useCgnEligibility = () => {
   const profile = pot.toUndefined(useIOSelector(profileSelector));
 
-  return canAccessCgn(profile?.date_of_birth);
+  return canAccessCgn(profile);
 };
 
 export default useCgnEligibility;

@@ -7,18 +7,16 @@ type CgnUserAgeRange = "18-25" | "26-30" | "31-35" | "unrecognized";
 export const getCgnUserAgeRange = (
   profileBDay: InitializedProfile["date_of_birth"]
 ): CgnUserAgeRange => {
-  if (profileBDay) {
-    const date = new Date();
-    const birthDate = new Date(profileBDay);
-    const age = date.getFullYear() - birthDate.getFullYear();
-
-    if (age > 30) {
-      return "31-35";
-    } else if (age > 25) {
-      return "26-30";
-    } else if (age > 17) {
-      return "18-25";
-    }
+  if (!profileBDay) {
+    return "unrecognized";
+  }
+  const age = ageFromDate(new Date(profileBDay));
+  if (age > 30) {
+    return "31-35";
+  } else if (age > 25) {
+    return "26-30";
+  } else if (age > 17) {
+    return "18-25";
   }
   return "unrecognized";
 };
@@ -46,14 +44,47 @@ export const getAccessibleExpirationDate = (
     status: I18n.t(`bonus.cgn.detail.status.badge.${status}`)
   })}`;
 
-export const canAccessCgn = (
-  profileBDay: InitializedProfile["date_of_birth"]
-) => {
-  if (!profileBDay) {
+const MONTH_CODES: Record<string, number> = {
+  A: 0,
+  B: 1,
+  C: 2,
+  D: 3,
+  E: 4,
+  H: 5,
+  L: 6,
+  M: 7,
+  P: 8,
+  R: 9,
+  S: 10,
+  T: 11
+};
+
+const ageFromDate = (birthDate: Date, today: Date = new Date()): number => {
+  const age = today.getFullYear() - birthDate.getFullYear();
+  const hasBirthdayPassed =
+    today.getMonth() > birthDate.getMonth() ||
+    (today.getMonth() === birthDate.getMonth() &&
+      today.getDate() >= birthDate.getDate());
+  return hasBirthdayPassed ? age : age - 1;
+};
+
+const birthDateFromTaxCode = (cf: string): Date => {
+  const year = Number.parseInt(cf.slice(6, 8), 10);
+  const month = MONTH_CODES[cf[8]];
+  const rawDay = Number.parseInt(cf.slice(9, 11), 10);
+  // Women have 40 added to their day of birth in the tax code
+  const day = rawDay > 40 ? rawDay - 40 : rawDay;
+  const currentYear = new Date().getFullYear() % 100;
+  const fullYear = (year <= currentYear ? 2000 : 1900) + year;
+  return new Date(fullYear, month, day);
+};
+
+export const canAccessCgn = (profile?: InitializedProfile) => {
+  if (!profile) {
     return false;
   }
-  const date = new Date();
-  const birthDate = new Date(profileBDay);
-  const age = date.getFullYear() - birthDate.getFullYear();
-  return age <= 35;
+  const birthDate = profile.date_of_birth
+    ? new Date(profile.date_of_birth)
+    : birthDateFromTaxCode(profile.fiscal_code);
+  return ageFromDate(birthDate) <= 35;
 };
