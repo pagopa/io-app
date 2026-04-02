@@ -161,11 +161,11 @@ export const useCieInfoBottomSheet = ({
                       `features.itWallet.identification.cie.bottomSheet.${type}.secondaryAction`
                     ),
                     onPress: () => {
-                      // trackItwUserWithoutL3Requirements({
-                      //   screen_name: routeName,
-                      //   reason,
-                      //   position: "bottom_sheet"
-                      // });
+                      trackItwUserWithoutL3Requirements({
+                        screen_name: routeName,
+                        reason,
+                        position: "bottom_sheet"
+                      });
                       showPinNotFoundAlert();
                       bottomSheet.dismiss();
                     }

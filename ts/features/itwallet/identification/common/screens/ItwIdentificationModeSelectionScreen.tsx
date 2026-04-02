@@ -30,11 +30,7 @@ import {
   selectIssuanceMode
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
-import {
-  trackItWalletIDMethod,
-  trackItwUserWithoutCie,
-  trackItwUserWithoutL3Requirements
-} from "../../analytics";
+import { trackItWalletIDMethod, trackItwUserWithoutCie } from "../../analytics";
 import { useContinueWithBottomSheet } from "../hooks/useContinueWithBottomSheet";
 
 export type ItwIdentificationNavigationParams = {
@@ -147,12 +143,10 @@ export const ItwIdentificationModeSelectionScreen = ({
         credentialType
       });
     } else {
-      machineRef.send({ type: "go-to-cie-warning", warning: "card" });
-
-      trackItwUserWithoutL3Requirements({
-        screen_name: routeName,
-        reason: "user_without_cie",
-        position: "screen"
+      machineRef.send({
+        type: "go-to-cie-warning",
+        warning: "card",
+        routeName
       });
     }
   }, [machineRef, routeName, credentialType, isL2Active]);
