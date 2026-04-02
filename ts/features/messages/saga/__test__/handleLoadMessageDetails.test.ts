@@ -71,7 +71,12 @@ describe("handleLoadMessageDetails", () => {
           action.request({ id })
         )
         .next(E.right({ status: 500, value: { title: "Backend error" } }))
-        .put(action.failure({ id, error: Error("Backend error") }))
+        .put(
+          action.failure({
+            id,
+            error: Error("Response status code 500 Backend error")
+          })
+        )
         .next()
         .isDone();
     });

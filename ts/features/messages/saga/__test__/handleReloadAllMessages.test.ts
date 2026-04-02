@@ -78,7 +78,14 @@ describe("handleReloadAllMessages", () => {
             value: { title: defaultRequestError.error.message }
           })
         )
-        .put(action.failure(defaultRequestError))
+        .put(
+          action.failure({
+            error: new Error(
+              `Response status code 500 ${defaultRequestError.error.message}`
+            ),
+            filter: defaultRequestPayload.filter
+          })
+        )
         .next()
         .isDone();
     });

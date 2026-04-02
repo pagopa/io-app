@@ -81,7 +81,7 @@ describe("handleLoadNextPageMessages", () => {
         .next(E.right({ status: 500, value: { title: "Backend error" } }))
         .put(
           action.failure({
-            error: new Error("Backend error"),
+            error: new Error("Response status code 500 Backend error"),
             filter: defaultRequestPayload.filter
           })
         )
