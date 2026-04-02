@@ -49,6 +49,11 @@ import type {
   MrtdPoPContext
 } from "./context";
 
+export type RequestAccessTokenActorParams = {
+  walletInstanceAttestation: string | undefined;
+  authenticationContext: AuthenticationContext | undefined;
+};
+
 export type RequestEidActorParams = {
   identification: IdentificationContext | undefined;
   authenticationContext: AuthenticationContext | undefined;
@@ -310,26 +315,30 @@ export const createEidIssuanceActorsImplementation = (
     return callbackUrl;
   }),
 
-  requestAccessToken: fromPromise<CredentialAccessToken, any>(
-    async ({ input }) => {
-      assert(
-        input.walletInstanceAttestation,
-        "walletInstanceAttestation is undefined"
-      );
-      assert(
-        input.authenticationContext,
-        "authenticationContext must exist when the identification mode is ciePin"
-      );
+  requestAccessToken: fromPromise<
+    CredentialAccessToken,
+    RequestAccessTokenActorParams
+  >(async ({ input }) => {
+    assert(
+      input.walletInstanceAttestation,
+      "walletInstanceAttestation is undefined"
+    );
+    assert(
+      input.authenticationContext,
+      "authenticationContext must exist when the identification mode is ciePin"
+    );
 
-      const { accessToken } = await issuanceUtils.completeAuthFlow({
-        ...input.authenticationContext,
-        itwVersion,
-        walletAttestation: input.walletInstanceAttestation
-      });
-      return accessToken;
-    }
-  ),
+    const { accessToken } = await issuanceUtils.completeAuthFlow({
+      ...input.authenticationContext,
+      itwVersion,
+      walletAttestation: input.walletInstanceAttestation
+    });
+    return accessToken;
+  }),
 
+  // To ensure a smooth experience when the session token expires, it is important to keep this actor
+  // retriable: it must fail as early as possible when `generateKeysWithWalletUnitAttestation` is
+  // rejected for session expired, so it can be reentered and retried from where it failed.
   requestEid: fromPromise<RequestEidActorOutput, RequestEidActorParams>(
     async ({ input }) => {
       assert(input.identification, "identification is undefined");
@@ -340,11 +349,6 @@ export const createEidIssuanceActorsImplementation = (
       const sessionToken = sessionTokenSelector(store.getState());
       assert(sessionToken, "sessionToken is undefined");
 
-      trackItwRequest(
-        input.identification.mode,
-        input.level === "l3" ? "L3" : "L2"
-      );
-
       // Take the first element as only one credential is authorized during PID issuance
       const [authorizedCredential] =
         await generateKeysWithWalletUnitAttestation(input.accessToken, {
@@ -353,6 +357,11 @@ export const createEidIssuanceActorsImplementation = (
           hardwareKeyTag: input.integrityKeyTag,
           sessionToken
         });
+
+      trackItwRequest(
+        input.identification.mode,
+        input.level === "l3" ? "L3" : "L2"
+      );
 
       const credential = await issuanceUtils.getPid({
         authorizedCredential,

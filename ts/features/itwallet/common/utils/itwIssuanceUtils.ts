@@ -1,5 +1,4 @@
 import {
-  AuthorizationDetail,
   createCryptoContextFor,
   ItwVersion
 } from "@pagopa/io-react-native-wallet";
@@ -94,15 +93,10 @@ export type CompleteAuthFlowParams = {
   callbackUrl: string;
   itwVersion: ItwVersion;
   issuerConf: IssuerConfiguration;
-  clientId: string;
   codeVerifier: string;
   walletAttestation: string;
   redirectUri: string;
 };
-
-export type CompleteAuthFlowResult = Awaited<
-  ReturnType<typeof completeAuthFlow>
->;
 
 /**
  * Function to complete the authentication flow. It must be invoked after `startAuthFlow`
@@ -110,7 +104,7 @@ export type CompleteAuthFlowResult = Awaited<
  * The rest of the parameters are those obtained from `startAuthFlow` + the wallet attestation.
  * @param walletAttestation - The wallet attestation.
  * @param callbackUrl - The callback url from which the code to get the access token is extracted.
- * @returns Authentication tokens.
+ * @returns The access token with the authorized credentials.
  */
 const completeAuthFlow = async ({
   callbackUrl,
@@ -150,7 +144,6 @@ export type PidIssuanceParams = {
   issuerConf: IssuerConfiguration;
   accessToken: CredentialAccessToken;
   clientId: string;
-  credentialDefinition: AuthorizationDetail;
   authorizedCredential: AuthorizedCredentialMetadata;
 };
 

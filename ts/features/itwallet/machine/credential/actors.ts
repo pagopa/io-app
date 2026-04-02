@@ -215,13 +215,15 @@ export const createCredentialIssuanceActorsImplementation = (
     return accessToken;
   });
 
+  // To ensure a smooth experience when the session token expires, it is important to keep this actor
+  // retriable: it must fail as early as possible when `generateKeysWithWalletUnitAttestation` is
+  // rejected for session expired, so it can be reentered and retried from where it failed.
   const obtainCredential = fromPromise<
     ObtainCredentialActorOutput,
     ObtainCredentialActorInput
   >(async ({ input }) => {
     const { credentialType, accessToken, issuerConf, clientId } = input;
     const state = store.getState();
-
     const sessionToken = sessionTokenSelector(state);
     const integrityKeyTag = itwIntegrityKeyTagSelector(state);
 

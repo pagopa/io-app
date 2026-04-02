@@ -106,6 +106,12 @@ export type CompleteAuthFlowParams = {
   issuerConf: IssuerConfiguration;
 };
 
+/**
+ * Function to complete the authorization flow. It must be used to obtain the access token
+ * for the requested credential(s).
+ * This token is then used in {@link obtainCredential} to get the credential from the Issuer.
+ * @returns The access token with the authorized credentials.
+ */
 export const completeAuthFlow = async ({
   env,
   itwVersion,

@@ -21,6 +21,7 @@ import { itwCredentialUpgradeMachine } from "../upgrade/machine.ts";
 import {
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
+  RequestAccessTokenActorParams,
   RequestEidActorOutput,
   type RequestEidActorParams,
   StartAuthFlowActorParams,
@@ -181,7 +182,10 @@ export const itwEidIssuanceMachine = setup({
      * PID issuance actors
      */
 
-    requestAccessToken: fromPromise<CredentialAccessToken>(notImplemented),
+    requestAccessToken: fromPromise<
+      CredentialAccessToken,
+      RequestAccessTokenActorParams
+    >(notImplemented),
     requestEid: fromPromise<RequestEidActorOutput, RequestEidActorParams>(
       notImplemented
     ),
