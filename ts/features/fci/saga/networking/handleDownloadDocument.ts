@@ -35,17 +35,15 @@ export function* handleDownloadDocument(
     const { status } = result.info();
     if (status !== 200) {
       const error = new Error(`error ${status} fetching ${document.url}`);
-      const networkError = getNetworkError(error);
       trackFciDocOpeningFailure();
-      yield* put(fciDownloadPreview.failure(networkError));
+      yield* put(fciDownloadPreview.failure(getNetworkError(error)));
       return;
     }
     const path = result.path();
     yield* put(fciDownloadPreview.success({ path }));
   } catch (error) {
-    const networkError = getNetworkError(error);
     trackFciDocOpeningFailure();
-    yield* put(fciDownloadPreview.failure(networkError));
+    yield* put(fciDownloadPreview.failure(getNetworkError(error)));
   } finally {
     if (yield* cancelled()) {
       yield* put(fciDownloadPreview.cancel());
