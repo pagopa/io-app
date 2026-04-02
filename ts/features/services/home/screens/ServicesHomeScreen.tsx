@@ -1,28 +1,43 @@
 import { HeaderActionProps } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useFocusEffect } from "@react-navigation/native";
+import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
-import I18n from "i18next";
-import { useFocusEffect } from "@react-navigation/native";
 import { Institution } from "../../../../../definitions/services/Institution";
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import { useHeaderFirstLevel } from "../../../../hooks/useHeaderFirstLevel";
 import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { SERVICES_ROUTES } from "../../common/navigation/routes";
-import { useServicesHomeBottomSheet } from "../hooks/useServicesHomeBottomSheet";
-import { InstitutionList } from "../components/InstitutionList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { cgnDetails } from "../../../bonus/cgn/store/actions/details";
+import { cgnDetailSelector } from "../../../bonus/cgn/store/reducers/details";
 import * as analytics from "../../common/analytics";
+import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { isFavouriteServicesEnabledSelector } from "../../common/store/selectors/remoteConfig";
-import { useIOSelector } from "../../../../store/hooks";
+import { InstitutionList } from "../components/InstitutionList";
+import { useServicesHomeBottomSheet } from "../hooks/useServicesHomeBottomSheet";
 
 export const ServicesHomeScreen = () => {
   const navigation = useIONavigation();
+  const dispatch = useIODispatch();
+  const cgnStatus = useIOSelector(cgnDetailSelector);
 
   useFocusEffect(
     useCallback(() => {
       analytics.trackServicesHome();
     }, [])
+  );
+
+  useOnFirstRender(
+    () => {
+      if (pot.isNone(cgnStatus)) {
+        dispatch(cgnDetails.request());
+      }
+    },
+    () => pot.isNone(cgnStatus)
   );
 
   /* CODE RELATED TO THE HEADER -- START */
