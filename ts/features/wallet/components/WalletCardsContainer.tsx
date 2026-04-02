@@ -119,18 +119,18 @@ const OtherWalletCardsContainer = withWalletCategoryFilter("other", () => {
   }
 
   return (
-    <WalletCardsCategoryContainer
-      key="cards_category_other"
-      testID="otherWalletCardsContainerTestID"
-      cards={cards}
-      header={
-        <ListItemHeader
-          testID={"walletCardsCategoryOtherHeaderTestID"}
-          label={I18n.t("features.wallet.cards.categories.other")}
-        />
-      }
-      bottomElement={<WalletCardsCategoryRetryErrorBanner />}
-    />
+    <View>
+      <ListItemHeader
+        testID={"walletCardsCategoryOtherHeaderTestID"}
+        label={I18n.t("features.wallet.cards.categories.other")}
+      />
+      <WalletCardsCategoryContainer
+        key="cards_category_other"
+        testID="otherWalletCardsContainerTestID"
+        cards={cards}
+      />
+      <WalletCardsCategoryRetryErrorBanner />
+    </View>
   );
 });
 

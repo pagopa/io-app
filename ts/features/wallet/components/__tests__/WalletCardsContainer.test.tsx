@@ -2,7 +2,6 @@ import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 
 import I18n from "i18next";
-import { ComponentType } from "react";
 import { Alert } from "react-native";
 import configureMockStore from "redux-mock-store";
 import ROUTES from "../../../../navigation/routes";
@@ -24,6 +23,7 @@ import * as itwCredentialsSelectors from "../../../itwallet/credentials/store/se
 import * as itwLifecycleSelectors from "../../../itwallet/lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
 import * as itwWalletInstanceSelectors from "../../../itwallet/walletInstance/store/selectors";
+import { TourProvider } from "../../../tour/components/TourProvider";
 import { WalletCardsState } from "../../store/reducers/cards";
 import * as walletSelectors from "../../store/selectors";
 import { WalletCard } from "../../types";
@@ -115,7 +115,7 @@ describe("WalletCardsContainer", () => {
       .spyOn(walletSelectors, "selectWalletCategoryFilter")
       .mockImplementation(() => undefined);
 
-    const { queryByTestId } = renderComponent(WalletCardsContainer);
+    const { queryByTestId } = renderComponent(<WalletCardsContainer />);
 
     expect(queryByTestId("walletCardSkeletonTestID_1")).not.toBeNull();
     expect(queryByTestId("walletCardSkeletonTestID_2")).not.toBeNull();
@@ -137,7 +137,7 @@ describe("WalletCardsContainer", () => {
       .spyOn(walletSelectors, "selectWalletOtherCards")
       .mockImplementation(() => []);
 
-    const { queryByTestId } = renderComponent(WalletCardsContainer);
+    const { queryByTestId } = renderComponent(<WalletCardsContainer />);
 
     expect(queryByTestId("walletCardSkeletonTestID_1")).toBeNull();
     expect(queryByTestId("walletCardSkeletonTestID_2")).toBeNull();
@@ -177,7 +177,7 @@ describe("WalletCardsContainer", () => {
         .spyOn(walletSelectors, "shouldRenderWalletEmptyStateSelector")
         .mockImplementation(() => false);
 
-      const { queryByTestId } = renderComponent(WalletCardsContainer);
+      const { queryByTestId } = renderComponent(<WalletCardsContainer />);
 
       expect(queryByTestId("walletCardSkeletonTestID_1")).toBeNull();
       expect(queryByTestId("walletCardSkeletonTestID_2")).toBeNull();
@@ -203,7 +203,7 @@ describe("ItwWalletCardsContainer", () => {
       .spyOn(itwSelectors, "itwShouldRenderWalletReadyBannerSelector")
       .mockImplementation(() => false);
 
-    const { queryByTestId } = renderComponent(ItwWalletCardsContainer);
+    const { queryByTestId } = renderComponent(<ItwWalletCardsContainer />);
     expect(queryByTestId("itwWalletReadyBannerTestID")).toBeNull();
   });
 
@@ -228,7 +228,7 @@ describe("ItwWalletCardsContainer", () => {
       .spyOn(walletSelectors, "selectWalletCardsByCategory")
       .mockReturnValue([]);
 
-    const { queryByTestId } = renderComponent(ItwWalletCardsContainer);
+    const { queryByTestId } = renderComponent(<ItwWalletCardsContainer />);
 
     expect(queryByTestId("itwWalletReadyBannerTestID")).not.toBeNull();
   });
@@ -246,7 +246,7 @@ describe("ItwWalletCardsContainer", () => {
       .spyOn(walletSelectors, "selectWalletCardsByCategory")
       .mockReturnValue([]);
 
-    const { queryByTestId } = renderComponent(ItwWalletCardsContainer);
+    const { queryByTestId } = renderComponent(<ItwWalletCardsContainer />);
 
     expect(queryByTestId("itwWalletL2BannerTestID")).not.toBeNull();
   });
@@ -262,7 +262,7 @@ describe("ItwWalletCardsContainer", () => {
       .spyOn(walletSelectors, "selectWalletCardsByCategory")
       .mockImplementation(() => [T_CARDS["4"], T_CARDS["5"]]);
 
-    const { queryByTestId } = renderComponent(ItwWalletCardsContainer);
+    const { queryByTestId } = renderComponent(<ItwWalletCardsContainer />);
     expect(queryByTestId(`walletCardsCategoryItwHeaderTestID`)).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_itw_itw_4`)).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_itw_itw_5`)).not.toBeNull();
@@ -288,7 +288,7 @@ describe("ItwWalletCardsContainer", () => {
         .spyOn(itwCredentialsSelectors, "itwCredentialsEidStatusSelector")
         .mockImplementation(() => eidStatus as ItwJwtCredentialStatus);
 
-      const { getAllByTestId } = renderComponent(ItwWalletCardsContainer);
+      const { getAllByTestId } = renderComponent(<ItwWalletCardsContainer />);
       const alerts = getAllByTestId(`itwEidLifecycleAlertTestID_${eidStatus}`);
       expect(alerts).toHaveLength(renderCount + 1);
     }
@@ -301,7 +301,7 @@ describe("OtherWalletCardsContainer", () => {
       .spyOn(walletSelectors, "selectWalletOtherCards")
       .mockImplementation(() => []);
 
-    const { queryByTestId } = renderComponent(OtherWalletCardsContainer);
+    const { queryByTestId } = renderComponent(<OtherWalletCardsContainer />);
     expect(queryByTestId("otherWalletCardsContainerTestID")).toBeNull();
   });
 
@@ -310,7 +310,7 @@ describe("OtherWalletCardsContainer", () => {
       .spyOn(walletSelectors, "selectWalletOtherCards")
       .mockImplementation(() => [T_CARDS["1"], T_CARDS["2"], T_CARDS["3"]]);
 
-    const { queryByTestId } = renderComponent(OtherWalletCardsContainer);
+    const { queryByTestId } = renderComponent(<OtherWalletCardsContainer />);
     expect(
       queryByTestId(`walletCardsCategoryOtherHeaderTestID`)
     ).not.toBeNull();
@@ -327,7 +327,7 @@ describe("OtherWalletCardsContainer", () => {
       .spyOn(walletSelectors, "selectWalletCategories")
       .mockImplementation(() => new Set(["itw", "other"]));
 
-    const { queryByTestId } = renderComponent(OtherWalletCardsContainer);
+    const { queryByTestId } = renderComponent(<OtherWalletCardsContainer />);
     expect(
       queryByTestId(`walletCardsCategoryOtherHeaderTestID`)
     ).not.toBeNull();
@@ -338,7 +338,7 @@ describe("OtherWalletCardsContainer", () => {
       .spyOn(walletSelectors, "selectWalletOtherCards")
       .mockImplementation(() => Object.values(T_PLACEHOLDERS));
 
-    const { queryByTestId } = renderComponent(OtherWalletCardsContainer);
+    const { queryByTestId } = renderComponent(<OtherWalletCardsContainer />);
 
     expect(
       queryByTestId(`walletCardTestID_payment_placeholder_1`)
@@ -360,7 +360,7 @@ describe("OtherWalletCardsContainer", () => {
         T_PLACEHOLDERS["4"]
       ]);
 
-    const { queryByTestId } = renderComponent(OtherWalletCardsContainer);
+    const { queryByTestId } = renderComponent(<OtherWalletCardsContainer />);
 
     expect(queryByTestId(`walletCardTestID_payment_payment_1`)).not.toBeNull();
     expect(
@@ -379,7 +379,7 @@ describe("OtherWalletCardsContainer", () => {
         revocation_reason: undefined
       }));
 
-    renderComponent(WalletCardsContainer);
+    renderComponent(<WalletCardsContainer />);
 
     expect(Alert.alert).not.toHaveBeenCalled();
   });
@@ -393,7 +393,7 @@ describe("OtherWalletCardsContainer", () => {
         revocation_reason: "NEW_WALLET_INSTANCE_CREATED"
       }));
 
-    renderComponent(WalletCardsContainer);
+    renderComponent(<WalletCardsContainer />);
 
     expect(Alert.alert).toHaveBeenCalledWith(
       I18n.t(
@@ -425,7 +425,7 @@ describe("OtherWalletCardsContainer", () => {
         revocation_reason: "CERTIFICATE_REVOKED_BY_ISSUER"
       }));
 
-    renderComponent(WalletCardsContainer);
+    renderComponent(<WalletCardsContainer />);
 
     expect(Alert.alert).toHaveBeenCalledWith(
       I18n.t(
@@ -457,7 +457,7 @@ describe("OtherWalletCardsContainer", () => {
         revocation_reason: "REVOKED_BY_USER"
       }));
 
-    renderComponent(WalletCardsContainer);
+    renderComponent(<WalletCardsContainer />);
 
     expect(Alert.alert).toHaveBeenCalledWith(
       I18n.t(
@@ -491,11 +491,11 @@ describe("OtherWalletCardsContainer", () => {
       .spyOn(itwPreferencesSelectors, "itwIsPendingReviewSelector")
       .mockImplementation(() => true);
     const requestReview = jest.fn();
-    const { queryByTestId } = renderComponent(() => (
+    const { queryByTestId } = renderComponent(
       <AppFeedbackContext.Provider value={{ requestFeedback: requestReview }}>
         <ItwWalletCardsContainer />
       </AppFeedbackContext.Provider>
-    ));
+    );
 
     expect(queryByTestId(`walletCardsCategoryItwHeaderTestID`)).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_itw_itw_4`)).not.toBeNull();
@@ -521,14 +521,14 @@ describe("OtherWalletCardsContainer", () => {
   });
 });
 
-const renderComponent = (component: ComponentType<any>) => {
+const renderComponent = (component: React.ReactElement) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    component,
+    () => <TourProvider>{component}</TourProvider>,
     ROUTES.WALLET_HOME,
     {},
     store
