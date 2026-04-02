@@ -45,3 +45,15 @@ export const getAccessibleExpirationDate = (
   )}. ${I18n.t("bonus.cgn.detail.status.a11y.cardStatus", {
     status: I18n.t(`bonus.cgn.detail.status.badge.${status}`)
   })}`;
+
+export const canAccessCgn = (
+  profileBDay: InitializedProfile["date_of_birth"]
+) => {
+  if (!profileBDay) {
+    return false;
+  }
+  const date = new Date();
+  const birthDate = new Date(profileBDay);
+  const age = date.getFullYear() - birthDate.getFullYear();
+  return age <= 35;
+};
