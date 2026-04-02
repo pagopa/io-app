@@ -1,15 +1,4 @@
-# Testing
-
-## Commands
-
-```bash
-yarn test:dev                    # Run tests without coverage
-yarn test:ci                     # CI mode with coverage
-jest path/to/file.test.ts        # Single test file
-jest -t "test name pattern"      # Tests matching pattern
-```
-
-## Structure
+## Testing instructions
 
 - Co-locate tests in `__tests__/` next to implementation
 - Use `renderScreenWithNavigationStoreContext` for screens
@@ -17,12 +6,17 @@ jest -t "test name pattern"      # Tests matching pattern
 - Use `expectSaga` for saga integration tests, `testSaga` for unit tests
 - Use `test.each` to avoid repeating similar tests across multiple scenarios
 - Define scenario arrays with descriptive names and use `$name` interpolation in test titles
+- Derive initial state from `appReducer(undefined, applicationChangeState("active"))` for realistic defaults.
+- Mock SVGs via `ts/__mocks__/svgMock.js` (already configured in jest).
 
-## Common Utilities
-
-```tsx
-import { renderScreenWithNavigationStoreContext } from "../../utils/testWrapper";
-import { withStore } from "../../utils/jest/withStore";
+```ts
+// Typical test setup
+const store = configureMockStore<GlobalState>()(
+  appReducer(undefined, applicationChangeState("active"))
+);
+render(<Provider store={store}><MyComponent /></Provider>);
 ```
 
-
+Run single test file during development:
+```bash
+yarn test:dev -- ts/features/myFeature/__tests__/myTest.test.ts

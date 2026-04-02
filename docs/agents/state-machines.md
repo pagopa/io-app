@@ -1,41 +1,28 @@
-# XState State Machines
+# XState State Machines Instructions
 
-This document describes the conventions for XState v5 state machines in the IO App.
-
-## File Structure
-
-Each machine is organized in a dedicated folder with the following files:
-
-```
-ts/features/<feature>/machine/<machine-name>/
-├── machine.ts           # Machine definition with setup()
-├── context.ts           # Context types and initial state
-├── events.ts            # Event type definitions
-├── actions.ts           # Action implementations (factory function)
-├── actors.ts            # Async operations (factory function)
-├── guards.ts            # Guard implementations (factory function)
-├── selectors.ts         # Context selectors
-├── failure.ts           # Failure types and mapping
-├── provider.tsx         # React provider with dependency injection
-└── __tests__/
-    └── machine.test.ts  # Machine tests
-```
-
-## Machine Definition
-
-- Machines use `setup()` to define their interface with stub implementations:
-- All actions, actors, and guards are stubs (throw `notImplemented()`)
-- Implementations are provided via `.provide()` in the React provider
-- Export the machine type for use in selectors
+- use **XState v5** 
+- `machine.ts` must be **pure and portable**, it contains no React, Redux, or navigation imports;
+- All side-effects (navigation, Redux dispatch, toasts) are injected via the provider.
+- Use `createActorContext` from `@xstate/react` to expose the machine context to React.
 - Use nexted states for complex flows with sub-steps
 - Define fully-typed context with JSDoc comments and an initial state
 - Define events as tagged union types with kebab-case type names
-- When implementing actions, actors or guards, create a factory function that receives dependencies and returns the actual implementations
-- Selector must operate on machine snapshot (e.g. `type MachineSnapshot = StateFrom<MyMachine>`)
-- Handle failures with typed failures and a mapping function
-- Use tags for state classification (e.g. `Loading`, `Processing`)
-- Use already definted Tags if possibile
 - Use absolute state IDs for cross-hierarchy transitions (e.g. `#myMachine.Failure`)
+
+## File Structure
+
+Complex multi-step flows (IT-Wallet issuance, identification, etc.) use **XState v5** with a strict file layout inside `machine/`:
+
+- `machine.ts` — Pure `setup({...})` call — **no implementations**, uses `notImplemented` stubs
+- `context.ts` — `Context` type + `InitialContext` constant
+- `events.ts` — Discriminated union of all machine events
+- `guards.ts` — Pure guard functions (no side-effects)
+- `actions.ts` — `createXxxActionsImplementation(navigation, store, toast)` factory
+- `actors.ts` — `fromPromise(...)` async actor factories
+- `failure.ts` — Failure state/type mapping
+- `selectors.ts` — Selectors scoped to machine context
+- `provider.tsx` — `createActorContext` + `<MachineProvider>` component that wires implementations
+- `tags.ts` — Enum of machine tags (e.g., `Loading`, `Issuing`)
 
 ## Reference Examples
 
