@@ -9,25 +9,26 @@ import {
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { useCallback, useEffect, useMemo } from "react";
 import { ListRenderItemInfo, View } from "react-native";
 import Animated, {
   AnimatedRef,
   LinearTransition
 } from "react-native-reanimated";
-import I18n from "i18next";
 import { Institution } from "../../../../../definitions/services/Institution";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
+import CgnDiscoveryBanner from "../../../bonus/cgn/components/CgnDiscoveryBanner";
+import { IdPayInitiativeWaitingList } from "../../../idpay/wallet/components/IdPayInitiativeWaitingList";
+import * as analytics from "../../common/analytics";
 import { ServiceListSkeleton } from "../../common/components/ServiceListSkeleton";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
 import { featuredInstitutionsGet, featuredServicesGet } from "../store/actions";
-import * as analytics from "../../common/analytics";
-import { IdPayInitiativeWaitingList } from "../../../idpay/wallet/components/IdPayInitiativeWaitingList";
+import { EmailNotificationBanner } from "./EmailNotificationBanner";
 import { FeaturedInstitutionList } from "./FeaturedInstitutionList";
 import { FeaturedServiceList } from "./FeaturedServiceList";
-import { EmailNotificationBanner } from "./EmailNotificationBanner";
 import { InstitutionListItem } from "./InstitutionListItem";
 
 export type InstitutionListProps = {
@@ -102,6 +103,7 @@ export const InstitutionList = ({
           }}
         />
         <EmailNotificationBanner />
+        <CgnDiscoveryBanner />
         <Animated.View layout={LinearTransition.duration(300)}>
           <VStack space={16}>
             <IdPayInitiativeWaitingList />
