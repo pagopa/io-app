@@ -14,7 +14,7 @@ import it from "../locales/it/index.json";
 import en from "../locales/en/index.json";
 import de from "../locales/de/index.json";
 import { PreferredLanguageEnum } from "../definitions/session_manager/PreferredLanguage";
-// import { newContentRepoUrl } from "./config";
+// import { contentRepoUrl } from "./config";
 
 const resources = {
   it: {
@@ -123,7 +123,7 @@ export interface SmartBackendOptions {
 
 //   async loadRemote(language: Locales, namespace: string) {
 //     try {
-//       const url = `${newContentRepoUrl}/locales/${language}/${namespace}.json`;
+//       const url = `${contentRepoUrl}/locales/${language}/${namespace}.json`;
 //       const response = await fetch(url);
 //       if (!response.ok) {
 //         captureException(
