@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.27.1-rc.0](https://github.com/pagopa/io-app/compare/3.27.0-rc.6...3.27.1-rc.0) (2026-04-03)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4091](https://pagopa.atlassian.net/browse/SIW-4091)] legacy SD-JWT credentials decode ([#7987](https://github.com/pagopa/io-app/issues/7987)) ([e97ff54](https://github.com/pagopa/io-app/commit/e97ff5443a63e7f2a2e250f4e315c1e41e0b92c4))
+
+
+### Chores
+
+* [[IOAPPX-503](https://pagopa.atlassian.net/browse/IOAPPX-503)] Rename workflows ([#7717](https://github.com/pagopa/io-app/issues/7717)) ([68b12c3](https://github.com/pagopa/io-app/commit/68b12c3eafdc9d9526dded4699bef07579d24a21))
+* update Android versionCode ([0de9530](https://github.com/pagopa/io-app/commit/0de95304d32e47807308fab897c65f8ef4978b91))
+
 ## [3.27.0-rc.6](https://github.com/pagopa/io-app/compare/3.27.0-rc.5...3.27.0-rc.6) (2026-03-26)
 
 
