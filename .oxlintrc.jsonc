@@ -242,33 +242,35 @@
         "react-native/no-color-literals": "error",
         "react-native/no-raw-text": "off",
         "react-native/no-single-element-style-arrays": "warn",
-        "i18next/no-literal-string": [
-          "error",
-          {
-            "mode": "jsx-only",
-            "jsx-attributes": {
-              "include": [
-                "accessibilityLabel",
-                "accessibilityHint",
-                "placeholder",
-                "title",
-                "alt"
-              ],
-              "exclude": []
-            },
-            "jsx-components": {
-              "include": [],
-              "exclude": ["Trans"]
-            },
-            "words": {
-              "exclude": ["\\s+", "[0-9!-/:-@\\[-`{-~]+", "[•·]+", "."]
-            },
-            "object-properties": {
-              "include": [],
-              "exclude": ["testID"]
-            }
-          }
-        ],
+        // TODO: Re-enable when eslint-plugin-i18next fixes context.getSourceCode() for oxlint compatibility
+        // See: https://github.com/edvardchen/eslint-plugin-i18next/issues/151
+        // "i18next/no-literal-string": [
+        //   "error",
+        //   {
+        //     "mode": "jsx-only",
+        //     "jsx-attributes": {
+        //       "include": [
+        //         "accessibilityLabel",
+        //         "accessibilityHint",
+        //         "placeholder",
+        //         "title",
+        //         "alt"
+        //       ],
+        //       "exclude": []
+        //     },
+        //     "jsx-components": {
+        //       "include": [],
+        //       "exclude": ["Trans"]
+        //     },
+        //     "words": {
+        //       "exclude": ["\\s+", "[0-9!-/:-@\\[-`{-~]+", "[•·]+", "."]
+        //     },
+        //     "object-properties": {
+        //       "include": [],
+        //       "exclude": ["testID"]
+        //     }
+        //   }
+        // ],
         "no-restricted-imports": [
           "error",
           {
@@ -311,8 +313,9 @@
         "eslint-plugin-react-native",
         "eslint-plugin-react-native-a11y",
         "eslint-plugin-functional",
-        "eslint-plugin-sonarjs",
-        "eslint-plugin-i18next"
+        "eslint-plugin-sonarjs"
+        // TODO: Re-enable when eslint-plugin-i18next is compatible with oxlint
+        // "eslint-plugin-i18next"
       ],
       "env": {
         "es2026": true
@@ -364,7 +367,6 @@
     {
       "files": ["**/*.test.{ts,tsx}"],
       "rules": {
-        "i18next/no-literal-string": "off",
         "no-restricted-imports": "off",
         "no-shadow": "off",
         "typescript/no-non-null-assertion": "off",
@@ -372,21 +374,21 @@
         "typescript/unbound-method": "off",
         "typescript/no-misused-spread": "off"
       },
-      "jsPlugins": ["eslint-plugin-i18next"],
       "plugins": ["typescript"]
-    },
-    {
-      "files": [
-        "**/design-system/**/*.{ts,tsx}",
-        "**/playgrounds/**/*.{ts,tsx}",
-        "**/devMode/**/*.{ts,tsx}",
-        "**/debug/**/*.{ts,tsx}",
-        "**/__mocks__/**/*.{ts,tsx}"
-      ],
-      "rules": {
-        "i18next/no-literal-string": "off"
-      },
-      "jsPlugins": ["eslint-plugin-i18next"]
     }
+    // TODO: Re-enable when eslint-plugin-i18next is compatible with oxlint
+    // {
+    //   "files": [
+    //     "**/design-system/**/*.{ts,tsx}",
+    //     "**/playgrounds/**/*.{ts,tsx}",
+    //     "**/devMode/**/*.{ts,tsx}",
+    //     "**/debug/**/*.{ts,tsx}",
+    //     "**/__mocks__/**/*.{ts,tsx}"
+    //   ],
+    //   "rules": {
+    //     "i18next/no-literal-string": "off"
+    //   },
+    //   "jsPlugins": ["eslint-plugin-i18next"]
+    // }
   ]
 }
