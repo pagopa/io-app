@@ -61,7 +61,7 @@ jobs:
     name: Run static checks
     needs: detect-changes
     if: needs.detect-changes.outputs.has_changes == 'true'
-    uses: ./.github/workflows/staticcheck.yaml
+    uses: ./.github/workflows/static-checks.yaml
   bump-app-version:
     name: Bump app version
     needs: [detect-changes, run-static-checks]
