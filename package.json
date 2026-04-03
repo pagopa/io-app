@@ -226,7 +226,7 @@
     "babel-preset-react-native": "^4.0.1",
     "chalk": "^2.4.1",
     "eslint": "^9.39.4",
-    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-prettier": "latest",
     "eslint-plugin-ft-flow": "latest",
     "eslint-plugin-functional": "^4.1.1",
     "eslint-plugin-i18next": "^6.1.3",
