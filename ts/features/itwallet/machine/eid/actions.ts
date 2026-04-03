@@ -229,7 +229,8 @@ export const createEidIssuanceActionsImplementation = (
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.CIE_WARNING,
       params: {
-        type: event.warning
+        type: event.warning,
+        routeName: event.routeName
       }
     });
   },
