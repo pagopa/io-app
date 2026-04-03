@@ -17,6 +17,9 @@ const eslintRulesDir = path.join(
 );
 
 module.exports = {
+  meta: {
+    name: "oxlint-compat"
+  },
   rules: {
     "one-var": require(path.join(eslintRulesDir, "one-var")),
     "object-shorthand": require(path.join(eslintRulesDir, "object-shorthand")),

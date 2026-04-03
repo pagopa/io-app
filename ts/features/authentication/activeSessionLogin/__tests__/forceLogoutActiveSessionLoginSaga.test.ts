@@ -53,12 +53,12 @@ jest.mock("../../../../api/BackendClientManager", () => ({
 }));
 
 jest.mock("../../../lollipop/saga", () => ({
-  // eslint-disable-next-line object-shorthand, require-yield
-  getKeyInfo: function* () {
+  // oxlint-disable-next-line require-yield
+  *getKeyInfo() {
     return defaultKeyInfo;
   },
-  // eslint-disable-next-line object-shorthand, require-yield
-  deleteCurrentLollipopKeyAndGenerateNewKeyTag: function* () {
+  // oxlint-disable-next-line require-yield
+  *deleteCurrentLollipopKeyAndGenerateNewKeyTag() {
     return;
   }
 }));

@@ -1,0 +1,7 @@
+{
+  "name": "eslint-plugin-oxlint-compat",
+  "version": "0.0.1",
+  "description": "Local ESLint plugin bridging rules not yet natively implemented in oxlint",
+  "main": "oxlint-compat-plugin.js",
+  "private": true
+}

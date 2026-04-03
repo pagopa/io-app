@@ -73,7 +73,7 @@ module.exports = {
             node,
             messageId: "useYieldStar",
             fix(fixer) {
-              const sourceCode = context.sourceCode ?? context.getSourceCode();
+              const sourceCode = context.sourceCode;
               const yieldToken = sourceCode.getFirstToken(node);
               // Replace "yield" with "yield*"
               return fixer.replaceText(yieldToken, "yield*");

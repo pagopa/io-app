@@ -5,7 +5,9 @@
     "correctness": "off"
   },
   "options": {
-    "typeAware": true
+    "typeAware": true,
+    // Replaces eslint-plugin-eslint-comments/no-unused-disable
+    "reportUnusedDisableDirectives": "warn"
   },
   "env": {
     "builtin": true
@@ -114,17 +116,6 @@
         "typescript/triple-slash-reference": "error",
         "curly": "error",
         "unicode-bom": "off",
-        "flowtype/boolean-style": "off",
-        "flowtype/delimiter-dangle": "off",
-        "flowtype/generic-spacing": "off",
-        "flowtype/object-type-curly-spacing": "off",
-        "flowtype/object-type-delimiter": "off",
-        "flowtype/quotes": "off",
-        "flowtype/semi": "off",
-        "flowtype/space-after-type-colon": "off",
-        "flowtype/space-before-generic-bracket": "off",
-        "flowtype/space-before-type-colon": "off",
-        "flowtype/union-intersection-spacing": "off",
         "unicorn/empty-brace-spaces": "off",
         "unicorn/no-nested-ternary": "off",
         "unicorn/number-literal-case": "off",
@@ -165,10 +156,23 @@
         "no-shadow": "warn",
         "no-undefined": "off",
         "no-use-before-define": "off",
-        "eslint-comments/no-aggregating-enable": "warn",
-        "eslint-comments/no-unlimited-disable": "warn",
-        "eslint-comments/no-unused-disable": "warn",
-        "eslint-comments/no-unused-enable": "warn",
+        // eslint-plugin-eslint-comments is replaced by oxlint's native reportUnusedDisableDirectives (see options above)
+        // eslint-comments/no-aggregating-enable and no-unlimited-disable are not supported natively; the plugin crashes in oxlint's JS runner
+        "oxlint-compat/one-var": ["error", "never"],
+        "oxlint-compat/object-shorthand": "error",
+        "oxlint-compat/no-underscore-dangle": [
+          "error",
+          {
+            "allow": [
+              "_persist", // redux-persist internal state key
+              "_tag", // io-ts tagged union discriminant
+              "_type", // io-ts tagged union discriminant
+              "_links", // HAL REST convention
+              "__REDUX_DEVTOOLS_EXTENSION_COMPOSE__" // Redux DevTools global
+            ]
+          }
+        ],
+        "oxlint-compat/delegate-effects": "error",
         "func-names": "off",
         "func-style": "off",
         "new-cap": "off",
@@ -308,12 +312,16 @@
       },
       "plugins": ["typescript", "unicorn", "react", "jest"],
       "jsPlugins": [
-        "eslint-plugin-flowtype",
-        "eslint-plugin-eslint-comments",
+        // eslint-plugin-flowtype: removed, all rules were off and it's no longer used
+        // eslint-plugin-eslint-comments: removed, crashes in oxlint's JS runner (RangeError on no-unlimited-disable);
+        //   replaced by oxlint's native reportUnusedDisableDirectives (see options above)
         "eslint-plugin-react-native",
         "eslint-plugin-react-native-a11y",
         "eslint-plugin-functional",
-        "eslint-plugin-sonarjs"
+        "eslint-plugin-sonarjs",
+        // Local compat plugin: wraps ESLint rules not yet natively in oxlint + custom delegate-effects rule
+        // Source: scripts/eslint/oxlint-compat-plugin.js (installed as a local package)
+        "eslint-plugin-oxlint-compat"
         // TODO: Re-enable when eslint-plugin-i18next is compatible with oxlint
         // "eslint-plugin-i18next"
       ],
