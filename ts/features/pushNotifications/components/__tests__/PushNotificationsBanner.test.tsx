@@ -121,7 +121,7 @@ describe("PushNotificationsBanner", () => {
       );
     }
   );
-  it('should reset the dismiss state if "shouldResetNotificationBannerDismissStateSelector" evaluates to "true" ', () => {
+  it('should reset the dismiss state if "shouldResetNotificationBannerDismissStateSelector" evaluates to "true"', () => {
     const ioDispatchMock = jest.fn();
     jest
       .spyOn(
@@ -164,7 +164,7 @@ describe("PushNotificationsBanner", () => {
     expect(spyOnBS.mock.calls[0][0]).toBeDefined();
 
     const primaryActionCallback = (
-      spyOnBS.mock.calls[0][0].footer?.props as ComponentProps<
+      spyOnBS.mock.calls[0][0].footer!.props as ComponentProps<
         typeof FooterActions
       >
     ).actions?.primary.onPress;
@@ -204,7 +204,7 @@ describe("PushNotificationsBanner", () => {
     expect(spyOnBS.mock.calls[0][0]).toBeDefined();
 
     const secondaryActionCallback = (
-      spyOnBS.mock.calls[0][0].footer?.props as ComponentProps<
+      spyOnBS.mock.calls[0][0].footer!.props as ComponentProps<
         typeof FooterActions
       >
     ).actions?.secondary?.onPress;
