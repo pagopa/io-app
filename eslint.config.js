@@ -1,10 +1,10 @@
 const { defineConfig, globalIgnores } = require("eslint/config");
 
-const { fixupConfigRules, fixupPluginRules } = require("@eslint/compat");
+const { fixupConfigRules } = require("@eslint/compat");
 
 const tseslint = require("typescript-eslint");
 const reactNativeConfig = require("@react-native/eslint-config/flat");
-const _import = require("eslint-plugin-import");
+const importPlugin = require("eslint-plugin-import");
 const functional = require("eslint-plugin-functional");
 const sonarjs = require("eslint-plugin-sonarjs");
 const stylisticEslintPluginJs = require("@stylistic/eslint-plugin-js");
@@ -55,7 +55,7 @@ module.exports = defineConfig([
     },
 
     plugins: {
-      import: fixupPluginRules(_import),
+      import: importPlugin,
       functional,
       sonarjs,
       "@stylistic/js": stylisticEslintPluginJs,
