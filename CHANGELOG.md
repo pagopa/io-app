@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.28.0-rc.3](https://github.com/pagopa/io-app/compare/3.28.0-rc.2...3.28.0-rc.3) (2026-04-03)
+
+
+### Features
+
+* [[IEL-255](https://pagopa.atlassian.net/browse/IEL-255)] Add MP event `IO_UNIVERSAL_APP_LINK` ([#7978](https://github.com/pagopa/io-app/issues/7978)) ([1b6e966](https://github.com/pagopa/io-app/commit/1b6e96663a3b68f15021f57674333f688397406e))
+* [[IEL-284](https://pagopa.atlassian.net/browse/IEL-284)] added remaining MP events to the FCI flow  ([#7981](https://github.com/pagopa/io-app/issues/7981)) ([60353d6](https://github.com/pagopa/io-app/commit/60353d6373ea41480153478ec51bdfe034c4cede))
+* **IT-Wallet:** [[SIW-4016](https://pagopa.atlassian.net/browse/SIW-4016)] Unique QR Code screen ([#7945](https://github.com/pagopa/io-app/issues/7945)) ([68f8ed8](https://github.com/pagopa/io-app/commit/68f8ed88cf817d1c34cb6d09f5e7dabe31ae1800))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4091](https://pagopa.atlassian.net/browse/SIW-4091)] legacy SD-JWT credentials decode ([#7987](https://github.com/pagopa/io-app/issues/7987)) ([bd5415e](https://github.com/pagopa/io-app/commit/bd5415e6e5642f30104655d5a5eabea73c5c9758))
+
+
+### Chores
+
+* **release:** 3.27.1-rc.0 ([#7990](https://github.com/pagopa/io-app/issues/7990)) ([a15c1ad](https://github.com/pagopa/io-app/commit/a15c1add43fec1136325eee945061c5c75f4a887))
+* [[IOAPPX-503](https://pagopa.atlassian.net/browse/IOAPPX-503)] Rename workflows ([#7717](https://github.com/pagopa/io-app/issues/7717)) ([ba72941](https://github.com/pagopa/io-app/commit/ba729410ea1673d787c113d4ffe80eda6afdf91e))
+
 ## [3.28.0-rc.2](https://github.com/pagopa/io-app/compare/3.28.0-rc.1...3.28.0-rc.2) (2026-04-02)
 
 
