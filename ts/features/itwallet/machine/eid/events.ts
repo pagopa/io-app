@@ -49,6 +49,7 @@ export type SelectIdentificationMode = {
 export type GoToCieWarning = {
   type: "go-to-cie-warning";
   warning: CieWarningType;
+  routeName: string;
 };
 
 export type SelectSpidIdp = {

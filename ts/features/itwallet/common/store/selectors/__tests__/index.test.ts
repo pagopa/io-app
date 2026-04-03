@@ -3,6 +3,8 @@ import {
   itwOfflineAccessAvailableSelector,
   itwShouldRenderDiscoveryBannerSelector,
   itwShouldRenderInboxDiscoveryBannerSelector,
+  itwShouldRenderL2EngagementBannerSelector,
+  itwShouldRenderL2EngagementBannerForInactiveWalletSelector,
   itwShouldRenderL3UpgradeBannerSelector,
   itwShouldRenderWalletDiscoveryBannerSelector,
   itwShouldRenderWalletReadyBannerSelector,
@@ -132,6 +134,14 @@ describe("itwShouldRenderWalletReadyBannerSelector", () => {
   `(
     "should return $expected when eidStatus is $eidStatus and isWalletEmpty is $isWalletEmpty",
     ({ eidStatus, isWalletEmpty, expected }) => {
+      const state = {
+        features: {
+          itWallet: {
+            preferences: {}
+          }
+        }
+      } as GlobalState;
+
       jest
         .spyOn(ingressSelectors, "offlineAccessReasonSelector")
         .mockReturnValue(undefined);
@@ -151,9 +161,7 @@ describe("itwShouldRenderWalletReadyBannerSelector", () => {
         .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
         .mockReturnValue(isWalletEmpty);
 
-      expect(
-        itwShouldRenderWalletReadyBannerSelector({} as unknown as GlobalState)
-      ).toBe(expected);
+      expect(itwShouldRenderWalletReadyBannerSelector(state)).toBe(expected);
     }
   );
 });
@@ -232,6 +240,14 @@ describe("itwShouldRenderDiscoveryBannerSelector", () => {
       lifecycleValid,
       expected
     }) => {
+      const state = {
+        features: {
+          itWallet: {
+            preferences: {}
+          }
+        }
+      } as GlobalState;
+
       jest
         .spyOn(remoteConfigSelectors, "isItwEnabledSelector")
         .mockReturnValue(itwEnabled);
@@ -245,9 +261,7 @@ describe("itwShouldRenderDiscoveryBannerSelector", () => {
         .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
         .mockReturnValue(lifecycleValid);
 
-      expect(
-        itwShouldRenderDiscoveryBannerSelector({} as unknown as GlobalState)
-      ).toBe(expected);
+      expect(itwShouldRenderDiscoveryBannerSelector(state)).toBe(expected);
     }
   );
 });
@@ -285,6 +299,14 @@ describe("itwShouldRenderInboxDiscoveryBannerSelector", () => {
       isWalletInstanceRemotelyActive,
       expected
     }) => {
+      const state = {
+        features: {
+          itWallet: {
+            preferences: {}
+          }
+        }
+      } as GlobalState;
+
       jest
         .spyOn(remoteConfigSelectors, "isItwEnabledSelector")
         .mockReturnValue(itwEnabled);
@@ -305,11 +327,7 @@ describe("itwShouldRenderInboxDiscoveryBannerSelector", () => {
         )
         .mockReturnValue(isWalletInstanceRemotelyActive);
 
-      expect(
-        itwShouldRenderInboxDiscoveryBannerSelector(
-          {} as unknown as GlobalState
-        )
-      ).toBe(expected);
+      expect(itwShouldRenderInboxDiscoveryBannerSelector(state)).toBe(expected);
     }
   );
 });
@@ -329,6 +347,14 @@ describe("itwShouldRenderWalletDiscoveryBannerSelector", () => {
   `(
     "should return $expected when itwEnabled=$itwEnabled, isL3Enabled=$isL3Enabled, lifecycleValid=$lifecycleValid, isBannerHidden=$isBannerHidden",
     ({ itwEnabled, isL3Enabled, lifecycleValid, isBannerHidden, expected }) => {
+      const state = {
+        features: {
+          itWallet: {
+            preferences: {}
+          }
+        }
+      } as GlobalState;
+
       jest
         .spyOn(remoteConfigSelectors, "isItwEnabledSelector")
         .mockReturnValue(itwEnabled);
@@ -343,11 +369,113 @@ describe("itwShouldRenderWalletDiscoveryBannerSelector", () => {
         .mockReturnValue(lifecycleValid);
       mockItwIsBannerHiddenSelector(isBannerHidden);
 
+      expect(itwShouldRenderWalletDiscoveryBannerSelector(state)).toBe(
+        expected
+      );
+    }
+  );
+});
+
+describe("itwShouldRenderL2EngagementBannerForInactiveWalletSelector", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    jest.clearAllMocks();
+  });
+
+  it.each`
+    offlineAccessReason                       | isITWalletValid | isWalletValid | isActivationDisabled | expected
+    ${undefined}                              | ${false}        | ${false}      | ${true}              | ${true}
+    ${undefined}                              | ${true}         | ${false}      | ${true}              | ${false}
+    ${undefined}                              | ${false}        | ${true}       | ${true}              | ${false}
+    ${undefined}                              | ${false}        | ${false}      | ${false}             | ${false}
+    ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${false}        | ${false}      | ${true}              | ${false}
+  `(
+    "should return $expected when offlineAccessReason=$offlineAccessReason, isITWalletValid=$isITWalletValid, isWalletValid=$isWalletValid, isActivationDisabled=$isActivationDisabled",
+    ({
+      offlineAccessReason,
+      isITWalletValid,
+      isWalletValid,
+      isActivationDisabled,
+      expected
+    }) => {
+      const state = {
+        features: {
+          itWallet: {
+            preferences: {}
+          }
+        }
+      } as GlobalState;
+
+      jest
+        .spyOn(ingressSelectors, "offlineAccessReasonSelector")
+        .mockReturnValue(offlineAccessReason);
+
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+        .mockReturnValue(isITWalletValid);
+
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
+        .mockReturnValue(isWalletValid);
+
+      jest
+        .spyOn(preferencesSelectors, "itwIsActivationDisabledSelector")
+        .mockReturnValue(isActivationDisabled);
+
       expect(
-        itwShouldRenderWalletDiscoveryBannerSelector(
-          {} as unknown as GlobalState
-        )
+        itwShouldRenderL2EngagementBannerForInactiveWalletSelector(state)
       ).toBe(expected);
+    }
+  );
+});
+
+describe("itwShouldRenderL2EngagementBannerSelector", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    jest.clearAllMocks();
+  });
+
+  it.each`
+    offlineAccessReason                       | isITWalletValid | isWalletValid | isActivationDisabled | expected
+    ${undefined}                              | ${false}        | ${true}       | ${true}              | ${true}
+    ${undefined}                              | ${true}         | ${true}       | ${true}              | ${false}
+    ${undefined}                              | ${false}        | ${false}      | ${true}              | ${false}
+    ${undefined}                              | ${false}        | ${true}       | ${false}             | ${false}
+    ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${false}        | ${true}       | ${true}              | ${false}
+  `(
+    "should return $expected when offlineAccessReason=$offlineAccessReason, isITWalletValid=$isITWalletValid, isWalletValid=$isWalletValid, isActivationDisabled=$isActivationDisabled",
+    ({
+      offlineAccessReason,
+      isITWalletValid,
+      isWalletValid,
+      isActivationDisabled,
+      expected
+    }) => {
+      const state = {
+        features: {
+          itWallet: {
+            preferences: {}
+          }
+        }
+      } as GlobalState;
+
+      jest
+        .spyOn(ingressSelectors, "offlineAccessReasonSelector")
+        .mockReturnValue(offlineAccessReason);
+
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+        .mockReturnValue(isITWalletValid);
+
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
+        .mockReturnValue(isWalletValid);
+
+      jest
+        .spyOn(preferencesSelectors, "itwIsActivationDisabledSelector")
+        .mockReturnValue(isActivationDisabled);
+
+      expect(itwShouldRenderL2EngagementBannerSelector(state)).toBe(expected);
     }
   );
 });
