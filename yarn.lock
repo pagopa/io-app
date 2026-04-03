@@ -11083,17 +11083,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-prettier@npm:^8.3.0":
-  version: 8.10.2
-  resolution: "eslint-config-prettier@npm:8.10.2"
-  peerDependencies:
-    eslint: ">=7.0.0"
-  bin:
-    eslint-config-prettier: bin/cli.js
-  checksum: a92b7e8a996e65adf79de1579524235687e9d3552d088cfab4f170da60d23762addb4276169c8ca3a9551329dda8408c59f7e414101b238a6385379ac1bc3b16
-  languageName: node
-  linkType: hard
-
 "eslint-config-prettier@npm:^8.5.0":
   version: 8.10.0
   resolution: "eslint-config-prettier@npm:8.10.0"
@@ -11102,6 +11091,17 @@ __metadata:
   bin:
     eslint-config-prettier: bin/cli.js
   checksum: 153266badd477e49b0759816246b2132f1dbdb6c7f313ca60a9af5822fd1071c2bc5684a3720d78b725452bbac04bb130878b2513aea5e72b1b792de5a69fec8
+  languageName: node
+  linkType: hard
+
+"eslint-config-prettier@npm:latest":
+  version: 10.1.8
+  resolution: "eslint-config-prettier@npm:10.1.8"
+  peerDependencies:
+    eslint: ">=7.0.0"
+  bin:
+    eslint-config-prettier: bin/cli.js
+  checksum: 9140e19f78f0dbc888b160bb72b85f8043bada7b12a548faa56cea0ba74f8ef16653250ffd014d85d9a376a88c4941c96a3cdc9d39a07eb3def6967166635bd8
   languageName: node
   linkType: hard
 
@@ -11263,8 +11263,8 @@ __metadata:
 
 "eslint-plugin-oxlint-compat@file:./scripts/eslint::locator=io%40workspace%3A.":
   version: 0.0.1
-  resolution: "eslint-plugin-oxlint-compat@file:./scripts/eslint#./scripts/eslint::hash=c6d60f&locator=io%40workspace%3A."
-  checksum: 4b26c3a195ed81185a1c189c2ef1c091e4866595ab21ff9f710c01e269ca3f1077565eca382385bf7f19ba7ad51767f361faeba3f1ea82916d0db4c21b3846b3
+  resolution: "eslint-plugin-oxlint-compat@file:./scripts/eslint#./scripts/eslint::hash=e28477&locator=io%40workspace%3A."
+  checksum: 425baf9ac6c4df56f9d2c3bda9f662be636982a6582e6a767038a7cfb046f1b2a92c65960d3f618ffa2c2d34c15841c1ece8d2d3551c41dbc1418d30bf89becf
   languageName: node
   linkType: hard
 
@@ -13622,7 +13622,7 @@ __metadata:
     color: ^3.0.0
     date-fns: ^1.29.0
     eslint: ^9.39.4
-    eslint-config-prettier: ^8.3.0
+    eslint-config-prettier: latest
     eslint-plugin-flowtype: ^8.0.3
     eslint-plugin-ft-flow: ^3.0.11
     eslint-plugin-functional: ^4.1.1

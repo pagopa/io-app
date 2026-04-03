@@ -1,15 +1,16 @@
 const { defineConfig, globalIgnores } = require("eslint/config");
 
-const { fixupConfigRules, fixupPluginRules } = require("@eslint/compat");
+const { fixupConfigRules } = require("@eslint/compat");
 
 const tseslint = require("typescript-eslint");
 const reactNativeConfig = require("@react-native/eslint-config/flat");
-const _import = require("eslint-plugin-import");
+const importPlugin = require("eslint-plugin-import");
 const functional = require("eslint-plugin-functional");
 const sonarjs = require("eslint-plugin-sonarjs");
 const stylisticEslintPluginJs = require("@stylistic/eslint-plugin-js");
 const i18Next = require("eslint-plugin-i18next");
 const js = require("@eslint/js");
+const prettierConfig = require("eslint-config-prettier");
 const delegateEffectsRule = require("./scripts/eslint/delegate-effects.js");
 
 const { FlatCompat } = require("@eslint/eslintrc");
@@ -36,9 +37,8 @@ module.exports = defineConfig([
       js.configs.recommended,
       ...tseslint.configs.recommended,
       ...reactNativeConfig,
-      ...fixupConfigRules(
-        compat.extends("plugin:react-native-a11y/all", "prettier")
-      )
+      ...fixupConfigRules(compat.extends("plugin:react-native-a11y/all")),
+      prettierConfig
     ],
 
     languageOptions: {
@@ -55,7 +55,7 @@ module.exports = defineConfig([
     },
 
     plugins: {
-      import: fixupPluginRules(_import),
+      import: importPlugin,
       functional,
       sonarjs,
       "@stylistic/js": stylisticEslintPluginJs,
