@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 jobs:
   run-static-checks:
-    uses: ./.github/workflows/staticcheck.yaml
+    uses: ./.github/workflows/static-checks.yaml
   prepare-canary-release:
     name: Prepare canary release
     needs: run-static-checks
