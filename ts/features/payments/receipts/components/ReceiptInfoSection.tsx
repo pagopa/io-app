@@ -35,11 +35,11 @@ type Props = {
 /**
  * Component that shows the biz-events transaction info
  */
+// oxlint-disable-next-line complexity
 const ReceiptInfoSection = ({
   transaction,
   loading,
   showUnavailableReceiptBanner
-  // eslint-disable-next-line complexity
 }: Props) => {
   const theme = useIOTheme();
   const backgroundColor = IOColors[theme["appBackground-primary"]];

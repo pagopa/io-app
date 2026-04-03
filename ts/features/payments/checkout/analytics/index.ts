@@ -36,9 +36,9 @@ export type PaymentAnalyticsProps = {
 
 const MYBANK_PSP_BANNER_ID = "mybank_psp_selection";
 
+// oxlint-disable-next-line complexity
 const getPaymentAnalyticsEventFromFailureOutcome = (
   outcome: WalletPaymentOutcomeEnum
-  // eslint-disable-next-line complexity
 ) => {
   switch (outcome) {
     case WalletPaymentOutcomeEnum.AUTH_ERROR:

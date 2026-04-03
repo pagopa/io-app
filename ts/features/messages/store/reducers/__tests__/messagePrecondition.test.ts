@@ -62,6 +62,7 @@ const messagePreconditionStatusesGenerator = (
   toUpdateRequiredMPS()
 ];
 
+// oxlint-disable-next-line complexity
 const computeExpectedOutput = (
   fromStatus: MessagePreconditionStatus,
   withAction: ActionType<
@@ -73,7 +74,6 @@ const computeExpectedOutput = (
     | typeof shownPreconditionStatusAction
     | typeof updateRequiredPreconditionStatusAction
   >
-  // eslint-disable-next-line complexity
 ) => {
   switch (fromStatus.state) {
     case "error":

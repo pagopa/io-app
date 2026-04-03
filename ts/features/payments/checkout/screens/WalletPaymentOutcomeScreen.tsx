@@ -193,7 +193,7 @@ const WalletPaymentOutcomeScreen = () => {
     trackOutcomeScreen();
   });
 
-  // eslint-disable-next-line complexity
+  // oxlint-disable-next-line complexity
   const trackOutcomeScreen = () => {
     if (outcome === WalletPaymentOutcomeEnum.SUCCESS) {
       analytics.trackPaymentOutcomeSuccess({
@@ -230,7 +230,7 @@ const WalletPaymentOutcomeScreen = () => {
     });
   };
 
-  // eslint-disable-next-line complexity
+  // oxlint-disable-next-line complexity
   const getPropsForOutcome = (): OperationResultScreenContentProps => {
     switch (outcome) {
       case WalletPaymentOutcomeEnum.SUCCESS:

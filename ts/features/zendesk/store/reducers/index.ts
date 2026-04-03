@@ -63,10 +63,10 @@ const INITIAL_STATE: ZendeskState = {
   zendeskSubcategoriesErrorMap: remoteUndefined
 };
 
+// oxlint-disable-next-line complexity
 const reducer = (
   state: ZendeskState = INITIAL_STATE,
   action: Action
-  // eslint-disable-next-line complexity
 ): ZendeskState => {
   switch (action.type) {
     case getType(getZendeskToken.request):

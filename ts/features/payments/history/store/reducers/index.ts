@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 import * as O from "fp-ts/lib/Option";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
@@ -74,6 +73,7 @@ const INITIAL_STATE: PaymentsHistoryState = {
 
 const ARCHIVE_SIZE = 15;
 
+// oxlint-disable-next-line complexity
 const reducer = (
   state: PaymentsHistoryState = INITIAL_STATE,
   action: Action

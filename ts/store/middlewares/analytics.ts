@@ -57,7 +57,7 @@ import { trackSessionCorrupted } from "../../features/authentication/activeSessi
 import { trackContentAction } from "./contentAnalytics";
 
 const trackAction =
-  // eslint-disable-next-line complexity
+  // oxlint-disable-next-line complexity
   (action: Action): void | ReadonlyArray<null> => {
     switch (action.type) {
       //
