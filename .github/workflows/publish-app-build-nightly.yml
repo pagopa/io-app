@@ -1,19 +1,80 @@
-name: Canary release
+name: Publish app build (nightly)
 on:
+  schedule:
+    - cron: '59 21 * * *'
   workflow_dispatch:
+concurrency:
+  group: nightly-release-master
+  cancel-in-progress: false
 jobs:
-  run-static-checks:
-    uses: ./.github/workflows/staticcheck.yaml
-  prepare-canary-release:
-    needs: run-static-checks
+  detect-changes:
+    name: Detect changes since last tag
     runs-on: ubuntu-24.04
     outputs:
-      canaryVersion: ${{ steps.github-release-creation.outputs.CANARY_VERSION }}
+      has_changes: ${{ steps.detect.outputs.HAS_CHANGES }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+        with:
+          fetch-depth: 0
+      - name: Get changes since last tag
+        id: detect
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          # If manually dispatched, force run
+          if [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ]; then
+            echo "Manual dispatch detected: forcing HAS_CHANGES=true"
+            echo "HAS_CHANGES=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          BASE_REF="origin/${BRANCH_NAME}"
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+
+          echo "Last tag: ${LAST_TAG}"
+
+          if [ -z "${LAST_TAG}" ]; then
+            RANGE="${BASE_REF}"
+          else
+            RANGE="${LAST_TAG}..${BASE_REF}"
+          fi
+
+          echo "Range for commits: ${RANGE}"
+
+          # Count commits count since last tag, excluding merges and commits by bots
+          COMMITS_COUNT=$(git log --no-merges --pretty=format:'%H%x09%ae%x09%an' ${RANGE} \
+            | grep -Ev 'github-actions\[bot\]|actions@github.com' \
+            | wc -l | tr -d ' ')
+
+          echo "Number of commits since last tag: ${COMMITS_COUNT}"
+
+          if [ "${COMMITS_COUNT}" -gt 0 ]; then
+            echo "HAS_CHANGES=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "HAS_CHANGES=false" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          BRANCH_NAME: ${{ github.ref_name }}
+  run-static-checks:
+    name: Run static checks
+    needs: detect-changes
+    if: needs.detect-changes.outputs.has_changes == 'true'
+    uses: ./.github/workflows/staticcheck.yaml
+  bump-app-version:
+    name: Bump app version
+    needs: [detect-changes, run-static-checks]
+    runs-on: ubuntu-24.04
+    environment: prod
+    outputs:
+      currentAppVersion: ${{ steps.github-release-creation.outputs.CURRENT_APP_VERSION }}
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
+          ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
       - id: setup-node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
@@ -28,39 +89,32 @@ jobs:
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
       - id: install-packages
         run: yarn install --frozen-lockfile
-      - id: replace-version-with-canary
-        run: |
-          UPDATED_BUILD_CODE=$(git rev-list HEAD --count)
-          node scripts/canary/replaceCanaryVersion.js $UPDATED_BUILD_CODE
-          mv ios/fastlane/Matchfile ios/fastlane/Matchfile_prod
-          mv ios/fastlane/Matchfile_canary ios/fastlane/Matchfile
       - id: bump-version
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add .; git commit -m "Replace Matchfile for canary" --no-verify;
-          yarn release-canary
+          yarn release-rc
       - id: push-tags
         run: |
-          APP_VERSION=$(node -p -e "require('./package.json').version")
-          git push --no-verify origin tag $APP_VERSION
+          git push --no-verify --follow-tags origin HEAD:${GITHUB_REF#refs/heads/}
       - id: github-release-creation
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
-          gh release create $APP_VERSION --generate-notes
-          echo "CANARY_VERSION=$APP_VERSION" >> $GITHUB_OUTPUT
+          echo "CURRENT_APP_VERSION=$APP_VERSION" >> $GITHUB_OUTPUT
+          gh release create $APP_VERSION --latest --generate-notes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-android:
-    needs: prepare-canary-release
-    environment: canary
+    name: Publish Android build to Play Store for 
+    needs: bump-app-version
+    environment: prod
     runs-on: ubuntu-24.04
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
-          ref: ${{ needs.prepare-canary-release.outputs.canaryVersion }}
+          ref: ${{ needs.bump-app-version.outputs.currentAppVersion }}
       - id: free-up-disk-space
         run: |
           echo "Before cleanup:"
@@ -97,7 +151,7 @@ jobs:
       - id: build-release-android
         run: |
           ./scripts/android-release.sh ./android/app
-          cd android && bundle exec fastlane alpha_canary
+          cd android && bundle exec fastlane alpha
         shell: bash
         env:
           RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
@@ -105,7 +159,7 @@ jobs:
           ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}
           ENCODED_IO_APP_RELEASE_KEYSTORE: ${{secrets.ENCODED_IO_APP_RELEASE_KEYSTORE}}
           ENCODED_IO_APP_SENTRY_PROPERTIES: ${{secrets.ENCODED_IO_APP_SENTRY_PROPERTIES}}
-          IO_APP_RELEASE_STORE_FILE : ${{secrets.IO_APP_RELEASE_STORE_FILE}}
+          IO_APP_RELEASE_STORE_FILE: ${{secrets.IO_APP_RELEASE_STORE_FILE}}
           IO_APP_RELEASE_STORE_PASSWORD: ${{secrets.IO_APP_RELEASE_STORE_PASSWORD}}
           IO_APP_RELEASE_KEY_ALIAS: ${{secrets.IO_APP_RELEASE_KEY_ALIAS}}
           IO_APP_RELEASE_KEY_PASSWORD: ${{secrets.IO_APP_RELEASE_KEY_PASSWORD}}
@@ -117,35 +171,36 @@ jobs:
           cd android
           VERSION_CODE=$(sed -n 's/.*versionCode \(.*\)/\1/p' "app/build.gradle")
           echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
-          bundle exec fastlane download_canary_apk
+          bundle exec fastlane download_apk
         env:
           RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
-          ENCODED_IOAPP_JSON_KEY_FILE: ${{ secrets.ENCODED_IOAPP_JSON_KEY_FILE }}          
+          ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}          
           VERSION_CODE: ${{ env.VERSION_CODE }}
       - id: upload-universal-apk          
         # We don't want to fail whole job if the universal APK upload step fails
         continue-on-error: true
         uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
         with:
-          name: io-app-canary-universal.apk
-          path: android/io-app-canary-universal.apk
+          name: io-app-universal.apk
+          path: android/io-app-universal.apk
       - id: upload-aab
         # We don't want to fail whole job if the AAB upload step fails
         continue-on-error: true
         uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
         with:
-          name: app-canary-release.aab
-          path: android/app/build/outputs/bundle/canaryRelease/app-canary-release.aab
+          name: app-release.aab
+          path: android/app/build/outputs/bundle/productionRelease/app-production-release.aab
       - id: upload-android-assets-release
         continue-on-error: true
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
-          gh release upload $APP_VERSION android/app/build/outputs/bundle/canaryRelease/app-canary-release.aab#android-app-canary-release.aab android/io-app-canary-universal.apk#io-app-canary-universal.apk
+          gh release upload $APP_VERSION android/app/build/outputs/bundle/productionRelease/app-production-release.aab#android-app-release.aab android/io-app-universal.apk#io-app-universal.apk
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-ios:
-    needs: prepare-canary-release
-    environment: canary
+    name: Publish iOS build to App Store for internal testers
+    needs: bump-app-version
+    environment: prod
     runs-on: macos-26-xlarge
     steps:
       - id: set-xcode-version
@@ -155,7 +210,7 @@ jobs:
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
-          ref: ${{ needs.prepare-canary-release.outputs.canaryVersion }}
+          ref: ${{ needs.bump-app-version.outputs.currentAppVersion }}
       - id: setup-node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
@@ -199,7 +254,7 @@ jobs:
         name: Build & submit to App store
         run: |
           cd ios
-          bundle exec fastlane canary_ci_testflight
+          bundle exec fastlane beta_circleci_testflight
         env:
           LC_ALL: en_US.UTF-8
           LANG: en_US.UTF-8
@@ -230,41 +285,6 @@ jobs:
         continue-on-error: true
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
-          gh release upload $APP_VERSION ios/IO.ipa#IO-canary-iOS.ipa
+          gh release upload $APP_VERSION ios/IO.ipa#IO-iOS.ipa
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  notify-new-version:
-    runs-on: ubuntu-24.04
-    environment: dev
-    needs:
-        - prepare-canary-release
-        - release-android
-        - release-ios
-    steps:
-      - name: Send Slack Notification on Success
-        continue-on-error: true
-        env:
-          IO_APP_SLACK_HELPER_BOT_TOKEN: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
-          APP_VERSION_TAG: ${{ needs.prepare-canary-release.outputs.canaryVersion }}
-        run: |
-          echo "APP_VERSION_TAG=$APP_VERSION_TAG"
-          STATUS_ICON=":white_check_mark:"
-
-          # Use jq to safely construct the JSON payload for Slack          
-          slack_payload=$(jq -n \
-            --arg channel "io_app_core" \
-            --arg text ":gear: *L'ultima versione della canary è disponibile*
-            
-            - *App Version Tag:* \`$APP_VERSION_TAG\`
-            '{
-              "channel": $channel,
-              "text": $text,
-              "unfurl_links": false,
-              "unfurl_media": false
-            }')
-
-          # Post the message to Slack using curl
-          curl -X POST https://slack.com/api/chat.postMessage \
-            -H "Authorization: Bearer $IO_APP_SLACK_HELPER_BOT_TOKEN" \
-            -H "Content-Type: application/json; charset=utf-8" \
-            -d "$slack_payload"
