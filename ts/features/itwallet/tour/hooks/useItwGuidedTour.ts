@@ -1,9 +1,11 @@
 import { useHeaderHeight } from "@react-navigation/elements";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { Dimensions, Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
 import { useGuidedTourRegion } from "../../../tour/components/useGuidedTourRegion";
 import { startTourAction } from "../../../tour/store/actions";
 import { isTourCompletedSelector } from "../../../tour/store/selectors";
@@ -17,6 +19,8 @@ export const useItwGuidedTour = () => {
   const dispatch = useIODispatch();
   const headerHeight = useHeaderHeight();
   const insets = useSafeAreaInsets();
+  const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
+
   const { width: screenWidth } = Dimensions.get("window");
   const isItwActive = useIOSelector(itwIsL3EnabledSelector);
   const isCompleted = useIOSelector(state =>
@@ -42,11 +46,17 @@ export const useItwGuidedTour = () => {
     region: headerRegion
   });
 
-  // Start the tour when the IT-Wallet is activated and user lands on the wallet
-  // screen, if not already completed.
-  useEffect(() => {
-    if (isItwActive && !isCompleted) {
-      dispatch(startTourAction({ groupId: ITW_TOUR_GROUP_ID }));
-    }
-  }, [dispatch, isItwActive, isCompleted]);
+  /**
+   * Starts the tour guide for the ITW on screen focus when:
+   * - ITW is active and valid
+   * - tour guide was not completed yet
+   * - it is not in offline mode (no offline access reason set)
+   */
+  useFocusEffect(
+    useCallback(() => {
+      if (isItwActive && !isCompleted && !offlineAccessReason) {
+        dispatch(startTourAction({ groupId: ITW_TOUR_GROUP_ID }));
+      }
+    }, [dispatch, isItwActive, isCompleted, offlineAccessReason])
+  );
 };
