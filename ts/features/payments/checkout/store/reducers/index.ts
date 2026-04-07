@@ -201,7 +201,7 @@ const reducer = (
         selectedPsp
       };
     case getType(paymentsCreateTransactionAction.failure):
-      // falls through
+    // falls through
     case getType(paymentsGetPaymentTransactionInfoAction.failure):
       return {
         ...state,
@@ -217,7 +217,7 @@ const reducer = (
         }
       };
     case getType(paymentsCreateTransactionAction.success):
-      // falls through
+    // falls through
     case getType(paymentsGetPaymentTransactionInfoAction.success):
       return {
         ...state,

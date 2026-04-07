@@ -55,7 +55,7 @@ export type ReasonTypeByFailure = {
 };
 
 type TypedIssuanceFailures = {
-  [K in IssuanceFailureType]: { reason: ReasonTypeByFailure[K]; type: K; };
+  [K in IssuanceFailureType]: { reason: ReasonTypeByFailure[K]; type: K };
 };
 
 /**

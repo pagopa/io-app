@@ -58,7 +58,10 @@ import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import { clearCache } from "../../common/store/actions";
 import ExperimentalDesignEnableSwitch from "./ExperimentalDesignEnableSwitch";
 
-type DevActionButton = Pick<IOButtonBlockSpecificProps, "color" | "label" | "onPress"> & {
+type DevActionButton = Pick<
+  IOButtonBlockSpecificProps,
+  "color" | "label" | "onPress"
+> & {
   condition: boolean;
 };
 

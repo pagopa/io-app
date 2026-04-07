@@ -44,7 +44,7 @@ export const initPaymentStateAction = createStandardAction(
 
 export const selectPaymentMethodAction = createStandardAction(
   "PAYMENTS_SELECT_PAYMENT_METHOD"
-)<{ paymentMethod?: PaymentMethodResponse; userWallet?: WalletInfo; }>();
+)<{ paymentMethod?: PaymentMethodResponse; userWallet?: WalletInfo }>();
 
 export const selectPaymentPspAction = createStandardAction(
   "PAYMENTS_SELECT_PAYMENT_PSP"

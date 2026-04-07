@@ -15,7 +15,10 @@ import {
   IOScrollViewProps
 } from "./IOScrollView";
 
-export type IOScrollViewCentredContentProps = Omit<IOScrollViewProps, "actions" | "centerContent"> & {
+export type IOScrollViewCentredContentProps = Omit<
+  IOScrollViewProps,
+  "actions" | "centerContent"
+> & {
   actions: IOScrollViewActions;
   additionalLink?: Pick<
     ComponentProps<typeof IOButton>,

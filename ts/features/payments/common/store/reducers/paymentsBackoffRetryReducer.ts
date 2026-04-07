@@ -11,7 +11,10 @@ import {
   increasePaymentsBackoffRetry
 } from "../actions";
 
-export type PaymentsBackoffRetryState = Record<string, PaymentsBackoffRetryValue | undefined>;
+export type PaymentsBackoffRetryState = Record<
+  string,
+  PaymentsBackoffRetryValue | undefined
+>;
 
 const INITIAL_STATE: PaymentsBackoffRetryState = {};
 

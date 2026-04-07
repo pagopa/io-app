@@ -22,7 +22,10 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DSIconViewerBox, iconItemGutter } from "../components/DSIconViewerBox";
 
-type IconSetObject = Record<string, ({ size, style }: SVGIconProps) => JSX.Element>;
+type IconSetObject = Record<
+  string,
+  ({ size, style }: SVGIconProps) => JSX.Element
+>;
 // Filter the main object, removing already displayed icons in the other sets
 type IconSubsetObject = Record<
   string,

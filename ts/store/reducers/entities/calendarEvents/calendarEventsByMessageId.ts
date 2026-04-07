@@ -12,7 +12,10 @@ export type CalendarEvent = {
   messageId: string;
 };
 
-export type CalendarEventsByMessageIdState = Record<string, CalendarEvent | undefined>;
+export type CalendarEventsByMessageIdState = Record<
+  string,
+  CalendarEvent | undefined
+>;
 
 export const INITIAL_STATE: CalendarEventsByMessageIdState = {};
 

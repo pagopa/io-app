@@ -32,7 +32,7 @@ const OPACITY_RANGE = [0.4, 0.5] as const;
 const SEED_RANGE = [1, 7] as const;
 
 interface AnimatedBlobProps {
-  canvasSize: { value: { height: number; width: number; } };
+  canvasSize: { value: { height: number; width: number } };
   color: string;
   index: number;
 }

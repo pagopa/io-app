@@ -89,7 +89,7 @@ export const createActorsImplementation = (
 
   const enrollIban = fromPromise<
     undefined,
-    { iban: IbanDTO | IbanPutDTO; initiativeId: string; }
+    { iban: IbanDTO | IbanPutDTO; initiativeId: string }
   >(async ({ input }) => {
     try {
       const res = await idPayClient.enrollIban({

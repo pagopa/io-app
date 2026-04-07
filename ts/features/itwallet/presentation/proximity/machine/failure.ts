@@ -28,7 +28,7 @@ export type ReasonTypeByFailure = {
 };
 
 type TypedProximityFailures = {
-  [K in ProximityFailureType]: { reason: ReasonTypeByFailure[K]; type: K; };
+  [K in ProximityFailureType]: { reason: ReasonTypeByFailure[K]; type: K };
 };
 
 /**

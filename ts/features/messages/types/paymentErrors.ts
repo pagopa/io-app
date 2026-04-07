@@ -6,7 +6,7 @@ export type MessagePaymentError =
   | MessagePaymentGenericError
   | MessagePaymentSpecificError
   | MessagePaymentTimeoutError;
-export type MessagePaymentGenericError = { message: string; type: "generic"; };
+export type MessagePaymentGenericError = { message: string; type: "generic" };
 export type MessagePaymentSpecificError = {
   details: Detail_v2Enum;
   type: "specific";

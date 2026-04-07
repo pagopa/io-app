@@ -77,8 +77,8 @@ export const loadThirdPartyMessage = createAsyncAction(
   "THIRD_PARTY_MESSAGE_LOAD_FAILURE"
 )<
   { id: string; serviceId: ServiceId; tag: string },
-  { content: ThirdPartyMessageUnion; id: string; },
-  { error: Error; id: string; }
+  { content: ThirdPartyMessageUnion; id: string },
+  { error: Error; id: string }
 >();
 
 export const resetGetMessageDataAction = createAction(
@@ -96,7 +96,7 @@ export const loadMessageById = createAsyncAction(
   "MESSAGE_BY_ID_LOAD_REQUEST",
   "MESSAGE_BY_ID_LOAD_SUCCESS",
   "MESSAGE_BY_ID_LOAD_FAILURE"
-)<{ id: string }, UIMessage, { error: Error; id: string; }>();
+)<{ id: string }, UIMessage, { error: Error; id: string }>();
 
 /**
  * Load a single message's details given its ID
@@ -105,7 +105,7 @@ export const loadMessageDetails = createAsyncAction(
   "MESSAGE_DETAILS_LOAD_REQUEST",
   "MESSAGE_DETAILS_LOAD_SUCCESS",
   "MESSAGE_DETAILS_LOAD_FAILURE"
-)<{ id: string }, UIMessageDetails, { error: Error; id: string; }>();
+)<{ id: string }, UIMessageDetails, { error: Error; id: string }>();
 
 export type LoadMessagesRequestPayload = {
   cursor?: string;
@@ -163,7 +163,7 @@ export const loadPreviousPageMessages = createAsyncAction(
 
 // Forces a refresh of the internal state
 export type ReloadMessagesPayload = PaginatedMessagesSuccessPayload & {
-  pagination: { next?: string; previous?: string; };
+  pagination: { next?: string; previous?: string };
 };
 
 export const reloadAllMessages = createAsyncAction(
@@ -179,8 +179,8 @@ export const reloadAllMessages = createAsyncAction(
 export type UpsertMessageStatusAttributesPayload = {
   message: UIMessage;
   update:
-    | { isArchived: boolean; tag: "archiving"; }
-    | { isArchived: boolean; tag: "bulk"; }
+    | { isArchived: boolean; tag: "archiving" }
+    | { isArchived: boolean; tag: "bulk" }
     | { tag: "reading" };
 };
 

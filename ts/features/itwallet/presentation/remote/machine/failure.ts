@@ -75,7 +75,7 @@ export type ReasonTypeByFailure = {
 export type RemoteFailure = TypedRemoteFailures[keyof TypedRemoteFailures];
 
 type TypedRemoteFailures = {
-  [K in RemoteFailureType]: { reason: ReasonTypeByFailure[K]; type: K; };
+  [K in RemoteFailureType]: { reason: ReasonTypeByFailure[K]; type: K };
 };
 
 /**

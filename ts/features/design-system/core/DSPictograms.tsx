@@ -49,7 +49,10 @@ const styles = StyleSheet.create({
   }
 });
 
-type PictogramSetObject = Record<string, ({ size }: SVGPictogramProps) => JSX.Element>;
+type PictogramSetObject = Record<
+  string,
+  ({ size }: SVGPictogramProps) => JSX.Element
+>;
 // Filter the main object, removing already displayed pictograms in the other sets
 type PictogramSubsetObject = Record<
   string,

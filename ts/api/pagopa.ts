@@ -881,7 +881,7 @@ export function PaymentManagerClient(
           language: getLocalePrimaryWithFallback()
         })
     ),
-    getPspV2: (payload: { idPayment: string; idWallet: number; }) =>
+    getPspV2: (payload: { idPayment: string; idWallet: number }) =>
       pipe(
         createFetchRequestForApi(getPspListV2, options),
         withPaymentManagerToken,

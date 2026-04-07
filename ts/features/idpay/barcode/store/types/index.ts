@@ -4,12 +4,12 @@ import { TransactionBarCodeResponse } from "../../../../../../definitions/idpay/
 import { TransactionErrorDTO } from "../../../../../../definitions/idpay/TransactionErrorDTO";
 import { NetworkError } from "../../../../../utils/errors";
 
-export type IdPayBarcodeState = Record<string, pot.Pot<
-    TransactionBarCodeResponse,
-    NetworkError | TransactionErrorDTO
-  >>;
+export type IdPayBarcodeState = Record<
+  string,
+  pot.Pot<TransactionBarCodeResponse, NetworkError | TransactionErrorDTO>
+>;
 
-export type IdPayStaticCodeState = Record<string, pot.Pot<
-    TransactionBarCodeResponse,
-    NetworkError | TransactionErrorDTO
-  >>;
+export type IdPayStaticCodeState = Record<
+  string,
+  pot.Pot<TransactionBarCodeResponse, NetworkError | TransactionErrorDTO>
+>;

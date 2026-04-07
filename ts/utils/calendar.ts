@@ -22,7 +22,7 @@ import { formatDateAsReminder } from "./dates";
  * asked means (when true) that the authorized values comes from user choise
  * otherwise comes from a previous recorded choice
  */
-type CalendarAuthorization = { asked: boolean; authorized: boolean; };
+type CalendarAuthorization = { asked: boolean; authorized: boolean };
 
 type CalendarTitleTranslation = Record<string, TranslationKeys>;
 

@@ -110,9 +110,9 @@ const reducer = (
         shownCategory: action.payload
       };
     case getType(upsertMessageStatusAttributes.failure):
-      // falls through
+    // falls through
     case getType(upsertMessageStatusAttributes.request):
-      // falls through
+    // falls through
     case getType(upsertMessageStatusAttributes.success):
       return reduceUpsertMessageStatusAttributes(state, action);
 

@@ -52,7 +52,7 @@ export const ItwBrandedBox = ({
   const { themeType } = useIOThemeContext();
   const isLightMode = themeType === "light";
 
-  const [size, setSize] = useState<{ height: number; width: number; }>({
+  const [size, setSize] = useState<{ height: number; width: number }>({
     width: 0,
     height: 0
   });

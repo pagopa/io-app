@@ -47,7 +47,8 @@ type NoAdditionalActions = {
 };
 
 type PropsWithoutSupport = HeaderHookManagedProps &
-  NoAdditionalActions & SpecificHookProps & {
+  NoAdditionalActions &
+  SpecificHookProps & {
     contextualHelp?: never;
     contextualHelpMarkdown?: never;
     faqCategories?: never;
@@ -56,7 +57,8 @@ type PropsWithoutSupport = HeaderHookManagedProps &
   };
 
 type PropsWithSupport = HeaderHookManagedProps &
-  SpecificHookProps & WithAdditionalActions & {
+  SpecificHookProps &
+  WithAdditionalActions & {
     contextualHelp?: ContextualHelpProps;
     contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
     faqCategories?: ReadonlyArray<FAQsCategoriesType>;

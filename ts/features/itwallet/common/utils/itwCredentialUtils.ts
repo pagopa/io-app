@@ -88,7 +88,10 @@ export const getCredentialNameFromType = (
     O.getOrElse(() => withDefault)
   );
 
-export const useBorderColorByStatus: () => Record<ItwCredentialStatus, string> = () => {
+export const useBorderColorByStatus: () => Record<
+  ItwCredentialStatus,
+  string
+> = () => {
   const theme = useIOTheme();
 
   return {

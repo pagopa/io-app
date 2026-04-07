@@ -37,7 +37,7 @@ type TourContextValue = {
   getConfig: (
     groupId: string,
     index: number
-  ) => undefined | { description: string; title: string; };
+  ) => undefined | { description: string; title: string };
   getMeasurement: (
     groupId: string,
     index: number
@@ -56,13 +56,13 @@ type TourContextValue = {
     groupId: string,
     index: number,
     viewRef: AnimatedRef<Animated.View>,
-    config: { description: string; title: string; }
+    config: { description: string; title: string }
   ) => void;
   registerRegion: (
     groupId: string,
     index: number,
     regionProvider: () => TourItemMeasurement | undefined,
-    config: { description: string; title: string; }
+    config: { description: string; title: string }
   ) => void;
   registerScrollRef: (
     groupId: string,
@@ -111,7 +111,7 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
       groupId: string,
       index: number,
       viewRef: AnimatedRef<Animated.View>,
-      config: { description: string; title: string; }
+      config: { description: string; title: string }
     ) => {
       dispatch(registerTourItemAction({ groupId, index }));
       itemsRef.current.set(makeKey(groupId, index), {
@@ -136,7 +136,7 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
       groupId: string,
       index: number,
       regionProvider: () => TourItemMeasurement | undefined,
-      config: { description: string; title: string; }
+      config: { description: string; title: string }
     ) => {
       dispatch(registerTourItemAction({ groupId, index }));
       itemsRef.current.set(makeKey(groupId, index), {

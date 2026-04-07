@@ -26,10 +26,16 @@ type IOBarcodeRuntimeDecoderFn = (
   data: string
 ) => O.Option<DecodedIOBarcode>;
 
-type IOBarcodeRuntimeDecodersType = Record<RuntimeDecodedIOBarcode["type"], IOBarcodeRuntimeDecoderFn>;
+type IOBarcodeRuntimeDecodersType = Record<
+  RuntimeDecodedIOBarcode["type"],
+  IOBarcodeRuntimeDecoderFn
+>;
 // Barcode decoder function which is used to determine the type and content of a barcode
 type IOBarcodeStaticDecoderFn = (data: string) => O.Option<DecodedIOBarcode>;
-type IOBarcodeStaticDecodersType = Record<StaticDecodedIOBarcode["type"], IOBarcodeStaticDecoderFn>;
+type IOBarcodeStaticDecodersType = Record<
+  StaticDecodedIOBarcode["type"],
+  IOBarcodeStaticDecoderFn
+>;
 
 type RuntimeDecodedIOBarcode =
   | {

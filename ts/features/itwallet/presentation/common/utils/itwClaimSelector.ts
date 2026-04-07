@@ -15,7 +15,10 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils";
  * Defines gradient color schemes for different credential types
  * to be used in the header of the {@link ClaimsSelector} component.
  */
-export const claimsSelectorHeaderGradientsByCredentialType: Record<string, Array<string>> = {
+export const claimsSelectorHeaderGradientsByCredentialType: Record<
+  string,
+  Array<string>
+> = {
   [CredentialType.PID]: ["#ECECEC", "#CEE2F2"],
   [CredentialType.DRIVING_LICENSE]: ["#ECECEC", "#FADCF5"],
   [CredentialType.EUROPEAN_DISABILITY_CARD]: ["#ECECEC", "#E8EEF4"],

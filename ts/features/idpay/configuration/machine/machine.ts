@@ -130,7 +130,7 @@ export const idPayConfigurationMachine = setup({
     ),
     enrollIban: fromPromise<
       undefined,
-      { iban: IbanDTO | IbanPutDTO; initiativeId: string; }
+      { iban: IbanDTO | IbanPutDTO; initiativeId: string }
     >(notImplementedStub)
   },
   guards: {

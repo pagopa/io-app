@@ -8,7 +8,7 @@ import { Alert, AlertButton, AlertOptions } from "react-native";
  */
 type AlertResult =
   | { kind: "onDismiss" }
-  | { kind: "onPress"; style: AlertButton["style"]; text: AlertButton["text"]; };
+  | { kind: "onPress"; style: AlertButton["style"]; text: AlertButton["text"] };
 
 /**
  * Wraps the {@link Alert.alert} using promises instead of callback.

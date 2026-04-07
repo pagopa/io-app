@@ -22,7 +22,7 @@ import { ComponentProps, ReactNode } from "react";
 
 export type AnyTxtNodeWithSpacer =
   | AnyTxtNode
-  | { key: string; size: number; type: "Spacer"; };
+  | { key: string; size: number; type: "Spacer" };
 export type IOMarkdownRenderRules = RendererMap;
 export type Renderer = (txtNode: AnyTxtNodeWithSpacer) => ReactNode;
 

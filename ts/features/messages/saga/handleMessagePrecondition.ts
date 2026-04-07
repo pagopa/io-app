@@ -34,7 +34,7 @@ import {
 
 export function* getMessageIdAndCategoryTag(): Generator<
   ReduxSagaEffect,
-  undefined | { categoryTag: MessageCategory["tag"]; messageId: string; },
+  undefined | { categoryTag: MessageCategory["tag"]; messageId: string },
   any
 > {
   const messageId = yield* select(preconditionsMessageIdSelector);

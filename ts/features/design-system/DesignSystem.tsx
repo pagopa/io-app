@@ -126,7 +126,7 @@ export const DesignSystem = () => {
   const renderDSNavItem = ({
     item: { title, route }
   }: {
-    item: { route: string; title: string; };
+    item: { route: string; title: string };
   }) => (
     <ListItemNav
       accessibilityLabel={`Go to the ${title} page`}
@@ -138,7 +138,7 @@ export const DesignSystem = () => {
   const renderDSSection = ({
     section: { title, description }
   }: {
-    section: { description?: string; title: string; };
+    section: { description?: string; title: string };
   }) => (
     <VStack space={4}>
       <H2 color={theme["textHeading-default"]} weight="Bold">

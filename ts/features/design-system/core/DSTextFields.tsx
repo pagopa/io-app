@@ -118,7 +118,7 @@ const InputValidationComponentWrapper = (
   props: Omit<
     ComponentProps<typeof TextInputValidation>,
     "errorMessage" | "onChangeText" | "value"
-  > & { errorMessage?: string; value?: string; }
+  > & { errorMessage?: string; value?: string }
 ) => {
   const [inputValue, setInputValue] = useState(props.value ?? "");
 

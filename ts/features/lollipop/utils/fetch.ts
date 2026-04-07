@@ -225,7 +225,10 @@ export type SignatureConfigForgeInput = {
   publicKey: PublicKey;
 };
 
-type RequestAndKeyInfoForLPFetch = Pick<SignatureConfigForgeInput, "keyTag" | "method" | "publicKey"> & {
+type RequestAndKeyInfoForLPFetch = Pick<
+  SignatureConfigForgeInput,
+  "keyTag" | "method" | "publicKey"
+> & {
   headers: HeadersInit;
   init: RequestInit;
   input: string;

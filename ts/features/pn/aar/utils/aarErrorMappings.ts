@@ -75,7 +75,10 @@ type AarErrorBehaviour = {
   track: (reason: string) => void;
 };
 
-const specificBehavioursByStatus: Record<number, Partial<Record<SendAarErrorCodes, AarErrorBehaviour>>> = {
+const specificBehavioursByStatus: Record<
+  number,
+  Partial<Record<SendAarErrorCodes, AarErrorBehaviour>>
+> = {
   [404]: {
     [sendAarProblemJsonErrorCodes.PN_MANDATE_NOTFOUND]: {
       track: trackSendAarMandateTtlExpiredError,

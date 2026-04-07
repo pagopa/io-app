@@ -20,7 +20,7 @@ import {
 
 type TestCaseParams = [
   ItwCredentialStatus,
-  Record<string, { description: string; title: string; }> | undefined
+  Record<string, { description: string; title: string }> | undefined
 ];
 
 const mockMessage = {

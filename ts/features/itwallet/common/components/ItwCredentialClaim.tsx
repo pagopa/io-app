@@ -227,7 +227,7 @@ const DateClaimItem = ({
  * @param label - the label of the claim
  * @param _claim - the claim value of unknown type. We are not interested in its value but it's needed for the exaustive type checking.
  */
-const UnknownClaimItem = ({ label }: { _claim?: unknown; label: string; }) => (
+const UnknownClaimItem = ({ label }: { _claim?: unknown; label: string }) => (
   <PlainTextClaimItem
     claim={I18n.t("features.itWallet.generic.placeholders.claimNotAvailable")}
     label={label}

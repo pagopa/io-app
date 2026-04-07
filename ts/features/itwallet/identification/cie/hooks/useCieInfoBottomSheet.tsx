@@ -20,7 +20,7 @@ import {
 } from "../../analytics";
 import { CieWarningType } from "../utils/types";
 
-type Props = { showSecondaryAction?: boolean; type: CieWarningType; };
+type Props = { showSecondaryAction?: boolean; type: CieWarningType };
 
 const trackBottomSheetView = (
   type: CieWarningType,

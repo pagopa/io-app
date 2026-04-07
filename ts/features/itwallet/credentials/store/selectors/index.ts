@@ -20,7 +20,10 @@ import {
   StoredCredential
 } from "../../../common/utils/itwTypesUtils";
 
-type CredentialsByType = Record<string, Record<CredentialFormat, StoredCredential>>;
+type CredentialsByType = Record<
+  string,
+  Record<CredentialFormat, StoredCredential>
+>;
 
 /**
  * The Wallet might contain older credentials in `vc+sd-jwt` format.

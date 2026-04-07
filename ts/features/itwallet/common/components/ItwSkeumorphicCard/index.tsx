@@ -158,7 +158,7 @@ type CardSideBaseProps = {
 const CardSideBase = ({ status, children, isItw }: CardSideBaseProps) => {
   const borderColorMap = useBorderColorByStatus();
 
-  const [size, setSize] = useState<{ height: number; width: number; }>({
+  const [size, setSize] = useState<{ height: number; width: number }>({
     width: 0,
     height: 0
   });

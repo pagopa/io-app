@@ -61,8 +61,10 @@ export type PaymentStatistics = {
   unpaidCount: number;
 };
 
-export type SinglePaymentState = Record<string, | RemoteValue<PaymentInfoResponse, MessagePaymentError>
-    | undefined>;
+export type SinglePaymentState = Record<
+  string,
+  RemoteValue<PaymentInfoResponse, MessagePaymentError> | undefined
+>;
 
 const initialPaymentStatistics = (paymentCount: number): PaymentStatistics => ({
   paymentCount,

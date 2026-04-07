@@ -9,7 +9,10 @@ export enum ConfigurationMode {
   INSTRUMENTS = "INSTRUMENTS"
 }
 
-export type InstrumentStatusByIdWallet = Record<string, pot.Pot<InstrumentStatusEnum | undefined, Error>>;
+export type InstrumentStatusByIdWallet = Record<
+  string,
+  pot.Pot<InstrumentStatusEnum | undefined, Error>
+>;
 
 export const IbanSchema = z
   .string()

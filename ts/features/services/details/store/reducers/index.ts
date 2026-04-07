@@ -118,7 +118,7 @@ const reducer = (
         }
       };
     case getType(logoutSuccess):
-      // falls through
+    // falls through
     case getType(sessionCorrupted):
     case getType(sessionExpired):
       return INITIAL_STATE;

@@ -432,7 +432,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
   );
 };
 
-const Title = (props: { accessibilityLabel: string; text: string; }) => {
+const Title = (props: { accessibilityLabel: string; text: string }) => {
   const titleRef = useRef<View>(null);
 
   useFocusEffect(

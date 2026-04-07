@@ -128,7 +128,9 @@ export type ItwCopyListItem = {
   item_copied: string;
 };
 
-export type ItwCredentialDetails = Partial<Record<MixPanelCredential, ItwCredentialMixpanelStatus>>;
+export type ItwCredentialDetails = Partial<
+  Record<MixPanelCredential, ItwCredentialMixpanelStatus>
+>;
 
 export type ItwCredentialInfoDetails = {
   credential: MixPanelCredential;

@@ -87,7 +87,7 @@ export type IOAnimatedPictograms = keyof typeof IOAnimatedPictogramsAssets;
 
 const pictogramsMap: Record<
   IOAnimatedPictograms,
-  { loop: boolean; static: IOPictograms; }
+  { loop: boolean; static: IOPictograms }
 > = {
   welcome: { static: "hello", loop: false },
   empty: { static: "empty", loop: false },

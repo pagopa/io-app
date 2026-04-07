@@ -2,11 +2,14 @@
  * A mocked version of the Keychain
  */
 
-export type KeychainDB = Record<string, {
+export type KeychainDB = Record<
+  string,
+  {
     password: string;
     service: string;
     username: string;
-  }>;
+  }
+>;
 
 type Options = {
   service: string;

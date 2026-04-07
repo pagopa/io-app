@@ -376,7 +376,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
         break;
       // The card is temporarily locked. Unlock is available by CieID app
       case "ON_CARD_PIN_LOCKED":
-        // falls through
+      // falls through
       case "ON_PIN_ERROR":
       case "PIN Locked":
         this.setError({
@@ -517,7 +517,7 @@ const ReaderScreen = (props: Props) => (
   </View>
 );
 
-const Title = (props: { accessibilityLabel: string; text: string; }) => {
+const Title = (props: { accessibilityLabel: string; text: string }) => {
   const titleRef = useRef<View>(null);
 
   useFocusEffect(

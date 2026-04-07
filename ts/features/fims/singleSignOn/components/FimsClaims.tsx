@@ -35,7 +35,7 @@ const ClaimListItem = ({ label, iconColor }: ClaimsListItemProps) => (
     <Icon color={iconColor} name="checkTickBig" size={24} />
   </View>
 );
-type ClaimsListItemProps = { iconColor: IOColors; label?: string; };
+type ClaimsListItemProps = { iconColor: IOColors; label?: string };
 type ClaimsListProps = {
   claims: ReadonlyArray<Claim>;
 };

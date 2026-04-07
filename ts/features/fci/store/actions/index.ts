@@ -140,7 +140,7 @@ export const fciDocumentSignatureFields = createAsyncAction(
   "FCI_DOCUMENT_SIGNATURE_FIELDS_REQUEST",
   "FCI_DOCUMENT_SIGNATURE_FIELDS_SUCCESS",
   "FCI_DOCUMENT_SIGNATURE_FIELDS_FAILURE"
-)<{ attrs: SignatureFieldAttrType; uri: string; }, Document, Error>();
+)<{ attrs: SignatureFieldAttrType; uri: string }, Document, Error>();
 
 /**
  * Action to interact with the environment reducer.

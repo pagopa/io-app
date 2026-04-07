@@ -30,5 +30,5 @@ export type WithCredentialMetadata<E = Error> = E & {
 };
 
 type TypedRemoteFailures = {
-  [K in ItwFailureType]: { reason: ReasonTypeByFailure[K]; type: K; };
+  [K in ItwFailureType]: { reason: ReasonTypeByFailure[K]; type: K };
 };

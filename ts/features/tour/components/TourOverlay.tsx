@@ -120,7 +120,7 @@ export const TourOverlay = () => {
   const [tooltipReady, setTooltipReady] = useState(false);
 
   const [tooltipConfig, setTooltipConfig] = useState<
-    undefined | { description: string; title: string; }
+    undefined | { description: string; title: string }
   >(undefined);
 
   const opacity = useSharedValue(0);
@@ -217,7 +217,7 @@ export const TourOverlay = () => {
   const applyCutout = useCallback(
     (
       padded: TourItemMeasurement,
-      config: undefined | { description: string; title: string; },
+      config: undefined | { description: string; title: string },
       onCommit: () => void,
       didScroll: boolean
     ) => {

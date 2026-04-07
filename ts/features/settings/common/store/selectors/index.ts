@@ -172,7 +172,7 @@ export const profileNotificationSettingsSelector = createSelector(
     profile: ProfileState
   ):
     | undefined
-    | { preview: boolean | undefined; reminder: boolean | undefined; } =>
+    | { preview: boolean | undefined; reminder: boolean | undefined } =>
     pot.getOrElse(
       pot.map(profile, p => ({
         reminder:

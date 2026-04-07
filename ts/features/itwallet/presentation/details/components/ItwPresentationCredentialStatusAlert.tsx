@@ -72,7 +72,7 @@ type CredentialAlertProps = {
   eidStatus: ItwJwtCredentialStatus | undefined;
   isItwL3: boolean;
   isOffline: boolean;
-  message: Record<string, { description: string; title: string; }> | undefined;
+  message: Record<string, { description: string; title: string }> | undefined;
 };
 
 type CredentialStatusAlertProps = {
@@ -350,7 +350,7 @@ const DocumentExpiringAlert = ({
 
 type IssuerDynamicErrorAlertProps = {
   credential: StoredCredential;
-  message: Record<string, { description: string; title: string; }>;
+  message: Record<string, { description: string; title: string }>;
   onTrack: TrackCredentialAlert;
 };
 

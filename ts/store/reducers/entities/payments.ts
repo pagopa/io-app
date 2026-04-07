@@ -31,7 +31,9 @@ export type PaidReason = Readonly<
 /**
  * Maps a paid rptId to the resulting completed transaction ID
  */
-export type PaymentByRptIdState = Readonly<Record<string, PaidReason | undefined>>;
+export type PaymentByRptIdState = Readonly<
+  Record<string, PaidReason | undefined>
+>;
 
 export const INITIAL_STATE: PaymentByRptIdState = {};
 

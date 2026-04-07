@@ -23,8 +23,8 @@ import { getCieProgressEmojis } from "../utils/strings";
 export type CieManagerFailure = CieError | NfcError;
 
 export type CieManagerState =
-  | { failure: CieManagerFailure; progress?: number; state: "failure"; }
-  | { progress: number; state: "reading"; }
+  | { failure: CieManagerFailure; progress?: number; state: "failure" }
+  | { progress: number; state: "reading" }
   | { state: "idle" }
   | { state: "success" };
 

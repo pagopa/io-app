@@ -120,7 +120,7 @@ describe("IDPay configuration machine", () => {
       getIbanList: fromPromise<IbanListDTO>(getIbanList),
       enrollIban: fromPromise<
         undefined,
-        { iban: IbanDTO | IbanPutDTO; initiativeId: string; }
+        { iban: IbanDTO | IbanPutDTO; initiativeId: string }
       >(enrollIban),
       getWalletInstruments:
         fromPromise<ReadonlyArray<Wallet>>(getWalletInstruments),

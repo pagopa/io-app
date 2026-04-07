@@ -56,11 +56,11 @@ type Props = OwnProps &
     "contextualHelp" | "contextualHelpMarkdown" | "faqCategories"
   >;
 
-type SecondaryAction = { text: string; type: "back"; };
+type SecondaryAction = { text: string; type: "back" };
 
 const getTosFooter = (
   maybeBonusTos: O.Option<string>,
-  maybeRegulationUrl: O.Option<{ name: string; url: string; }>,
+  maybeRegulationUrl: O.Option<{ name: string; url: string }>,
   handleModalPress: (tos: string) => void,
   ctaText: string
 ) =>

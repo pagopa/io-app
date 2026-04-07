@@ -23,7 +23,9 @@ import {
   selectNameSurnameFromEid
 } from "../index";
 
-const getStateWithCredentials = (credentials: Record<string, Partial<StoredCredential>>) => {
+const getStateWithCredentials = (
+  credentials: Record<string, Partial<StoredCredential>>
+) => {
   const defaultState = appReducer(undefined, applicationChangeState("active"));
   return _.merge(undefined, defaultState, {
     features: {

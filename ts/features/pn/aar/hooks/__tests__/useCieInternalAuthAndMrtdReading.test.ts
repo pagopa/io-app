@@ -227,7 +227,7 @@ describe("useCieInternalAuthAndMrtdReading", () => {
       platform: "android",
       it: 'shouldn\'t invoke "CieManager.setAlertMessage" when platform is android'
     }
-  ] as Array<{ it: string; platform: typeof Platform.OS; }>)(
+  ] as Array<{ it: string; platform: typeof Platform.OS }>)(
     "$it",
     async ({ platform }) => {
       jest.replaceProperty(Platform, "OS", platform);
@@ -283,7 +283,7 @@ describe("useCieInternalAuthAndMrtdReading", () => {
       platform: "android",
       it: 'shouldn\'t invoke "CieManager.setCurrentAlertMessage" when platform is android'
     }
-  ] as Array<{ it: string; platform: typeof Platform.OS; }>)(
+  ] as Array<{ it: string; platform: typeof Platform.OS }>)(
     "$it",
     ({ platform }) => {
       jest.replaceProperty(Platform, "OS", platform);

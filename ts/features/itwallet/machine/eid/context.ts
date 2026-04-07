@@ -115,8 +115,8 @@ export type EidIssuanceLevel = "l2" | "l2-fallback" | "l3";
 export type EidIssuanceMode = "issuance" | "reissuance" | "upgrade";
 
 export type IdentificationContext =
-  | { idpId: string; level: "L2"; mode: "spid"; }
-  | { level: "L2" | "L3"; mode: "cieId"; }
+  | { idpId: string; level: "L2"; mode: "spid" }
+  | { level: "L2" | "L3"; mode: "cieId" }
   | { level: "L3"; mode: "ciePin"; pin: string };
 
 /**

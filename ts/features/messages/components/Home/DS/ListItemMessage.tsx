@@ -59,20 +59,20 @@ const styles = StyleSheet.create({
 });
 
 export type ListItemMessageProps = Pick<
-    ComponentProps<typeof Pressable>,
-    "accessibilityLabel" | "accessibilityRole" | "onLongPress" | "onPress"
-  > &
+  ComponentProps<typeof Pressable>,
+  "accessibilityLabel" | "accessibilityRole" | "onLongPress" | "onPress"
+> &
   WithTestID<{
-  avatarDouble?: boolean;
-  formattedDate: string;
-  isRead: boolean;
-  messageTitle: string;
-  organizationName: string;
-  selected?: boolean;
-  serviceLogos?: ImageSourcePropType;
-  serviceName: string;
-  tag?: ListItemMessageTag;
-}>;
+    avatarDouble?: boolean;
+    formattedDate: string;
+    isRead: boolean;
+    messageTitle: string;
+    organizationName: string;
+    selected?: boolean;
+    serviceLogos?: ImageSourcePropType;
+    serviceName: string;
+    tag?: ListItemMessageTag;
+  }>;
 
 type ListItemMessageTag = {
   text: string;

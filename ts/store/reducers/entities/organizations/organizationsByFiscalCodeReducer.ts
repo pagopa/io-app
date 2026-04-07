@@ -17,7 +17,9 @@ import { GlobalState } from "../../types";
 /**
  * Maps organization fiscal code to serviceId
  */
-export type OrganizationNamesByFiscalCodeState = Readonly<Record<string, NonEmptyString | undefined>>;
+export type OrganizationNamesByFiscalCodeState = Readonly<
+  Record<string, NonEmptyString | undefined>
+>;
 
 const INITIAL_STATE: OrganizationNamesByFiscalCodeState = {};
 
@@ -27,7 +29,7 @@ const reducer = (
 ): OrganizationNamesByFiscalCodeState => {
   switch (action.type) {
     case getType(logoutSuccess):
-      // falls through
+    // falls through
     case getType(sessionCorrupted):
     case getType(sessionExpired):
       return INITIAL_STATE;

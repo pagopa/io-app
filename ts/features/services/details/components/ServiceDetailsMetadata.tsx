@@ -27,22 +27,25 @@ type MetadataListItem =
   | MetadataListItemInfo
   | MetadataListItemInfoCopy;
 
-type MetadataListItemAction = MetadataListItemBase & Omit<ListItemAction, "variant"> & {
-  kind: "ListItemAction";
-};
+type MetadataListItemAction = MetadataListItemBase &
+  Omit<ListItemAction, "variant"> & {
+    kind: "ListItemAction";
+  };
 
 type MetadataListItemBase = {
   condition?: boolean;
 };
 
-type MetadataListItemInfo = ListItemInfo & MetadataListItemBase & {
-  kind: "ListItemInfo";
-  label: string;
-};
+type MetadataListItemInfo = ListItemInfo &
+  MetadataListItemBase & {
+    kind: "ListItemInfo";
+    label: string;
+  };
 
-type MetadataListItemInfoCopy = ListItemInfoCopy & MetadataListItemBase & {
-  kind: "ListItemInfoCopy";
-};
+type MetadataListItemInfoCopy = ListItemInfoCopy &
+  MetadataListItemBase & {
+    kind: "ListItemInfoCopy";
+  };
 
 export const ServiceDetailsMetadata = ({
   organizationFiscalCode,
