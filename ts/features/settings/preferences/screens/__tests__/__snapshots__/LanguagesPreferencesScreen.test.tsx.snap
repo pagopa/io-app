@@ -428,7 +428,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
                                   onTouchEnd={[Function]}
-                                  testID="RadioItemTestID_app-locale-it"
+                                  testID="RadioItemTestID_app-locale-en"
                                 >
                                   <View
                                     collapsable={false}
@@ -543,7 +543,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                               ]
                                             }
                                           >
-                                            Italiano
+                                            English
                                           </Text>
                                         </View>
                                         <View
@@ -724,7 +724,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
                                   onTouchEnd={[Function]}
-                                  testID="RadioItemTestID_app-locale-en"
+                                  testID="RadioItemTestID_app-locale-it"
                                 >
                                   <View
                                     collapsable={false}
@@ -839,7 +839,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                               ]
                                             }
                                           >
-                                            English
+                                            Italiano
                                           </Text>
                                         </View>
                                         <View
