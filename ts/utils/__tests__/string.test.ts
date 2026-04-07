@@ -40,15 +40,15 @@ describe("isStringNullyOrEmpty", () => {
     expect(isStringNullyOrEmpty("hello")).toBeFalsy();
   });
 
-  it("should return true", () => {
+  it("should return true for a whitespace-only string", () => {
     expect(isStringNullyOrEmpty("    ")).toBeTruthy();
   });
 
-  it("should return true", () => {
+  it("should return true for an empty string", () => {
     expect(isStringNullyOrEmpty("")).toBeTruthy();
   });
 
-  it("should return true", () => {
+  it("should return true for null", () => {
     expect(isStringNullyOrEmpty(null)).toBeTruthy();
   });
 });
@@ -62,15 +62,15 @@ describe("maybeNotNullyString", () => {
     expect(maybeNotNullyString("hello")).toEqual(O.some("hello"));
   });
 
-  it("should return none", () => {
+  it("should return none for a whitespace-only string", () => {
     expect(maybeNotNullyString("    ")).toEqual(O.none);
   });
 
-  it("should return none", () => {
+  it("should return none for an empty string", () => {
     expect(maybeNotNullyString("")).toEqual(O.none);
   });
 
-  it("should return none", () => {
+  it("should return none for null", () => {
     expect(maybeNotNullyString(null)).toEqual(O.none);
   });
 });
@@ -106,7 +106,7 @@ describe("formatBytesWithUnit", () => {
     expect(formatBytesWithUnit(1345001000200123)).toEqual("1.3 TB");
   });
 
-  it("should format bytes with the correct unit (B)", () => {
+  it("should format bytes with the correct unit (B) when input is zero", () => {
     expect(formatBytesWithUnit(0)).toEqual("0 B");
   });
 

@@ -15,7 +15,7 @@ describe("areSetEqual", () => {
     expect(areSetEqual(setA, setB)).toBeFalsy();
   });
 
-  it("should return false for not equal set of strings", () => {
+  it("should return false when set A has an extra string element not in set B", () => {
     const setA: O.Option<Set<string>> = O.some(new Set(["1", "2", "4"]));
     const setB: O.Option<Set<string>> = O.some(new Set(["1", "2"]));
     expect(areSetEqual(setA, setB)).toBeFalsy();
@@ -27,7 +27,7 @@ describe("areSetEqual", () => {
     expect(areSetEqual(setA, setB)).toBeFalsy();
   });
 
-  it("should return false for not equal set of numbers", () => {
+  it("should return false when one set of numbers is none", () => {
     const setA: O.Option<Set<number>> = O.some(new Set([1, 2, 3]));
     const setB: O.Option<Set<number>> = O.none;
     expect(areSetEqual(setA, setB)).toBeFalsy();
@@ -65,7 +65,7 @@ describe("areStringEqual", () => {
     expect(areStringsEqual(O.some("abc"), O.some("ab"))).toBeFalsy();
   });
 
-  it("should return false if the strings are not equal", () => {
+  it("should return false if the strings have different lengths and content", () => {
     expect(areStringsEqual(O.some("a"), O.some("bb"))).toBeFalsy();
   });
 
@@ -93,7 +93,7 @@ describe("maybeInnerProperty", () => {
     expect(innerProp).toEqual(O.some("John"));
   });
 
-  it("should return the inner property", () => {
+  it("should return the transformed inner property", () => {
     const obj = {
       person: {
         name: "John"
@@ -113,7 +113,7 @@ describe("maybeInnerProperty", () => {
     expect(innerProp).toEqual(O.none);
   });
 
-  it("should return the O.none", () => {
+  it("should return O.none when the object itself is undefined", () => {
     type Person = {
       person?: { name?: string };
     };

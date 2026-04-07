@@ -23,7 +23,7 @@ describe("getResourceNameFromUrl", () => {
     );
   });
 
-  it("should return the resource name without extension", () => {
+  it("should return the resource name without extension for a local file URL", () => {
     const localHost = "file://somefolder/somefolder2/";
     const localResource = localHost + resource + extension;
     expect(getResourceNameFromUrl(localResource)).toEqual(resource);
