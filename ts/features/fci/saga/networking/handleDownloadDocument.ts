@@ -5,9 +5,9 @@ import { ActionType } from "typesafe-actions";
 
 import { fetchTimeout } from "../../../../config";
 import { getNetworkError } from "../../../../utils/errors";
+import { trackFciDocOpeningFailure } from "../../analytics";
 import { getFileNameFromUrl } from "../../components/DocumentViewer";
 import { fciDownloadPreview } from "../../store/actions";
-import { trackFciDocOpeningFailure } from "../../analytics";
 
 export const FciDownloadPreviewDirectoryPath =
   RNFS.CachesDirectoryPath + "/fci";

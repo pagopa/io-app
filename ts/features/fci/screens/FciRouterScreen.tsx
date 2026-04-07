@@ -17,6 +17,11 @@ import {
   getGenericError,
   NetworkError
 } from "../../../utils/errors";
+import {
+  trackFciSignatureDetailFailureAction,
+  trackFciSignatureGenericFailure,
+  trackFciSignatureMismatch
+} from "../analytics";
 import LoadingComponent from "../components/LoadingComponent";
 import {
   default as ErrorComponent,
@@ -26,11 +31,6 @@ import SuccessComponent from "../components/SuccessComponent";
 import { FciParamsList } from "../navigation/params";
 import { fciEndRequest, fciSignatureRequestFromId } from "../store/actions";
 import { fciSignatureRequestSelector } from "../store/reducers/fciSignatureRequest";
-import {
-  trackFciSignatureDetailFailureAction,
-  trackFciSignatureGenericFailure,
-  trackFciSignatureMismatch
-} from "../analytics";
 
 export type FciRouterScreenNavigationParams = Readonly<{
   signatureRequestId: SignatureRequestDetailView["id"];

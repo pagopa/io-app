@@ -2,8 +2,8 @@ import {
   createStackNavigator,
   TransitionPresets
 } from "@react-navigation/stack";
+
 import { isGestureEnabled } from "../../../../../utils/navigation";
-import { ItwProximityQrCodeScreen } from "../screens/ItwProximityQrCodeScreen.tsx";
 import {
   ItwProximityMachineContext,
   ItwProximityMachineProvider
@@ -12,6 +12,7 @@ import { ItwActivateBluetoothScreen } from "../screens/ItwActivateBluetoothScree
 import { ItwGrantPermissionsScreen } from "../screens/ItwGrantPermissionsScreen";
 import { ItwProximityClaimsDisclosureScreen } from "../screens/ItwProximityClaimsDisclosureScreen";
 import { ItwProximityFailureScreen } from "../screens/ItwProximityFailureScreen";
+import { ItwProximityQrCodeScreen } from "../screens/ItwProximityQrCodeScreen.tsx";
 import { ItwProximitySendDocumentsResponseScreen } from "../screens/ItwProximitySendDocumentsResponseScreen";
 import { ItwProximityParamsList } from "./ItwProximityParamsList";
 import { ITW_PROXIMITY_ROUTES } from "./routes";
@@ -32,41 +33,41 @@ const InnerNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName={ITW_PROXIMITY_ROUTES.QR_CODE}
-      screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
       screenListeners={{
         beforeRemove: () => {
           proximityMachineRef.send({ type: "back" });
         }
       }}
+      screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
     >
       <Stack.Screen
-        name={ITW_PROXIMITY_ROUTES.QR_CODE}
         component={ItwProximityQrCodeScreen}
+        name={ITW_PROXIMITY_ROUTES.QR_CODE}
         options={TransitionPresets.ModalSlideFromBottomIOS}
       />
       <Stack.Screen
-        name={ITW_PROXIMITY_ROUTES.DEVICE_PERMISSIONS}
         component={ItwGrantPermissionsScreen}
+        name={ITW_PROXIMITY_ROUTES.DEVICE_PERMISSIONS}
         options={hiddenHeader}
       />
       <Stack.Screen
-        name={ITW_PROXIMITY_ROUTES.BLUETOOTH_ACTIVATION}
         component={ItwActivateBluetoothScreen}
+        name={ITW_PROXIMITY_ROUTES.BLUETOOTH_ACTIVATION}
         options={hiddenHeader}
       />
       <Stack.Screen
-        name={ITW_PROXIMITY_ROUTES.CLAIMS_DISCLOSURE}
         component={ItwProximityClaimsDisclosureScreen}
+        name={ITW_PROXIMITY_ROUTES.CLAIMS_DISCLOSURE}
         options={hiddenHeader}
       />
       <Stack.Screen
-        name={ITW_PROXIMITY_ROUTES.SEND_DOCUMENTS_RESPONSE}
         component={ItwProximitySendDocumentsResponseScreen}
+        name={ITW_PROXIMITY_ROUTES.SEND_DOCUMENTS_RESPONSE}
         options={hiddenHeader}
       />
       <Stack.Screen
-        name={ITW_PROXIMITY_ROUTES.FAILURE}
         component={ItwProximityFailureScreen}
+        name={ITW_PROXIMITY_ROUTES.FAILURE}
         options={hiddenHeader}
       />
     </Stack.Navigator>

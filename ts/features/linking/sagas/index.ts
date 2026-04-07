@@ -9,8 +9,8 @@ import { initiateAarFlow } from "../../pn/aar/store/actions";
 import { isSendAARLink } from "../../pn/aar/utils/deepLinking";
 import { walletUpdate } from "../../wallet/store/actions";
 import { clearLinkingUrl } from "../actions";
-import { storedLinkingUrlSelector } from "../reducers";
 import { trackIOOpenedFromUniversalAppLink } from "../analytics";
+import { storedLinkingUrlSelector } from "../reducers";
 
 export function* handleStoredLinkingUrlIfNeeded() {
   const storedLinkingUrl = yield* select(storedLinkingUrlSelector);

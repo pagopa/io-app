@@ -1,14 +1,15 @@
-import { createActor, StateFrom } from "xstate";
 import { createStore } from "redux";
+import { createActor, StateFrom } from "xstate";
+
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { itwProximityMachine } from "../../machine/machine";
 import { ItwProximityMachineContext } from "../../machine/provider";
-import { ItwProximityQrCodeScreen } from "../ItwProximityQrCodeScreen";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import { appReducer } from "../../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../../store/actions/application";
-import { ITW_PROXIMITY_ROUTES } from "../../navigation/routes";
-import { GlobalState } from "../../../../../../store/reducers/types";
 import { ItwPresentationTags } from "../../machine/tags";
+import { ITW_PROXIMITY_ROUTES } from "../../navigation/routes";
+import { ItwProximityQrCodeScreen } from "../ItwProximityQrCodeScreen";
 
 jest.mock("react-native-qrcode-skia", () => {
   const React = jest.requireActual("react");
@@ -58,10 +59,10 @@ describe("ItwProximityQrCodeScreen", () => {
 });
 
 type RenderOptions =
-  | { machineState: "loading" }
+  | { machineState: "blocked" }
   | { machineState: "displayQrCode"; qrCodeString: string }
   | { machineState: "error" }
-  | { machineState: "blocked" };
+  | { machineState: "loading" };
 
 const renderComponent = (options: RenderOptions) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
@@ -86,12 +87,15 @@ const buildSnapshot = (
   options: RenderOptions
 ): StateFrom<typeof itwProximityMachine> => {
   switch (options.machineState) {
-    case "loading":
+    case "blocked":
       return {
         ...initialSnapshot,
-        value: { GenerateQRCode: "StartingProximityFlow" },
-        tags: new Set([ItwPresentationTags.Loading]),
-        context: { ...initialSnapshot.context }
+        value: { DeviceCommunication: "DisplayQrCode" },
+        tags: new Set([ItwPresentationTags.Presenting]),
+        context: {
+          ...initialSnapshot.context,
+          qrCodeString: "mock-qr-code-string"
+        }
       };
 
     case "displayQrCode":
@@ -116,15 +120,12 @@ const buildSnapshot = (
         }
       };
 
-    case "blocked":
+    case "loading":
       return {
         ...initialSnapshot,
-        value: { DeviceCommunication: "DisplayQrCode" },
-        tags: new Set([ItwPresentationTags.Presenting]),
-        context: {
-          ...initialSnapshot.context,
-          qrCodeString: "mock-qr-code-string"
-        }
+        value: { GenerateQRCode: "StartingProximityFlow" },
+        tags: new Set([ItwPresentationTags.Loading]),
+        context: { ...initialSnapshot.context }
       };
   }
 };

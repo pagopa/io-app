@@ -38,7 +38,7 @@ export const itwCredentialsRefreshStatusByType = createStandardAction(
 )<string>();
 
 export type ItwCredentialsActions =
-  | ActionType<typeof itwCredentialsStore>
+  | ActionType<typeof itwCredentialsRefreshStatusByType>
   | ActionType<typeof itwCredentialsRemove>
   | ActionType<typeof itwCredentialsRemoveByType>
-  | ActionType<typeof itwCredentialsRefreshStatusByType>;
+  | ActionType<typeof itwCredentialsStore>;

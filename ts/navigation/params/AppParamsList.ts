@@ -41,10 +41,10 @@ import { IdPayUnsubscriptionParamsList } from "../../features/idpay/unsubscripti
 import { IdPayUnsubscriptionRoutes } from "../../features/idpay/unsubscription/navigation/routes";
 import { ItwParamsList } from "../../features/itwallet/navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
-import { ItwRemoteParamsList } from "../../features/itwallet/presentation/remote/navigation/ItwRemoteParamsList.ts";
-import { ITW_REMOTE_ROUTES } from "../../features/itwallet/presentation/remote/navigation/routes.ts";
 import { ItwProximityParamsList } from "../../features/itwallet/presentation/proximity/navigation/ItwProximityParamsList";
 import { ITW_PROXIMITY_ROUTES } from "../../features/itwallet/presentation/proximity/navigation/routes";
+import { ItwRemoteParamsList } from "../../features/itwallet/presentation/remote/navigation/ItwRemoteParamsList.ts";
+import { ITW_REMOTE_ROUTES } from "../../features/itwallet/presentation/remote/navigation/routes.ts";
 import { MessagesParamsList } from "../../features/messages/navigation/params";
 import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
 import { OnboardingParamsList } from "../../features/onboarding/navigation/params/OnboardingParamsList.ts";

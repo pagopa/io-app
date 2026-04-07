@@ -10,10 +10,12 @@ import {
   useIOThemeContext,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { useEffect, useState } from "react";
 import { StyleSheet, useWindowDimensions, View } from "react-native";
 import QRCode from "react-native-qrcode-skia";
-import I18n from "i18next";
+
+import ItwIcon from "../../../../../../img/features/itWallet/brand/itw_icon.svg";
 import {
   IOScrollView,
   IOScrollViewActions
@@ -22,8 +24,9 @@ import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
-import { ItwBrandedBox } from "../../../common/components/ItwBrandedBox.tsx";
+import { emptyContextualHelp } from "../../../../../utils/contextualHelp.ts";
 import { ItWalletLogo } from "../../../common/components/ItWalletLogo.tsx";
+import { ItwBrandedBox } from "../../../common/components/ItwBrandedBox.tsx";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
 import {
@@ -33,21 +36,19 @@ import {
   selectIsQRCodeGenerationError,
   selectQRCodeString
 } from "../machine/selectors.ts";
-import ItwIcon from "../../../../../../img/features/itWallet/brand/itw_icon.svg";
 import { shouldBlockProximityQrCodeSelector } from "../store/selectors";
-import { emptyContextualHelp } from "../../../../../utils/contextualHelp.ts";
 
 const QR_CODE_LOGO_SIZE = 52;
 
 type StatusBoxProps = {
-  iconName: "warningFilled" | "qrCode";
-  description: string;
   action?: React.ReactNode;
+  description: string;
+  iconName: "qrCode" | "warningFilled";
 };
 
 const StatusBox = ({ iconName, description, action }: StatusBoxProps) => (
   <View style={styles.statusBox}>
-    <Icon name={iconName} size={24} color="grey-700" />
+    <Icon color="grey-700" name={iconName} size={24} />
     <Body style={styles.statusDescription}>{description}</Body>
     {action}
   </View>
@@ -147,10 +148,6 @@ export const ItwProximityQrCodeScreen = () => {
     if (isProximityError) {
       return (
         <StatusBox
-          iconName="warningFilled"
-          description={I18n.t(
-            "features.itWallet.presentation.qrCode.error.message"
-          )}
           action={
             <View
               style={[
@@ -161,13 +158,17 @@ export const ItwProximityQrCodeScreen = () => {
               {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
               {/* @ts-ignore */}
               <IOButton
-                variant="link"
-                loading={isRetrying}
                 label={I18n.t("global.buttons.retry")}
+                loading={isRetrying}
                 onPress={handleRetry}
+                variant="link"
               />
             </View>
           }
+          description={I18n.t(
+            "features.itWallet.presentation.qrCode.error.message"
+          )}
+          iconName="warningFilled"
         />
       );
     }
@@ -175,27 +176,27 @@ export const ItwProximityQrCodeScreen = () => {
     if (shouldBlockProximityPresentation) {
       return (
         <StatusBox
-          iconName="qrCode"
           description={I18n.t(
             "features.itWallet.presentation.qrCode.error.invalid"
           )}
+          iconName="qrCode"
         />
       );
     }
 
     if (isLoading || !qrCodeString) {
-      return <IOSkeleton shape="square" size={qrCodeSize} radius={16} />;
+      return <IOSkeleton radius={16} shape="square" size={qrCodeSize} />;
     }
 
     return (
       <QRCode
         color={qrCodeColor}
-        value={qrCodeString}
-        size={qrCodeSize}
         errorCorrectionLevel="H"
-        shapeOptions={{ shape: "rounded", eyePatternShape: "rounded" }}
+        logo={<ItwIcon height={QR_CODE_LOGO_SIZE} width={QR_CODE_LOGO_SIZE} />}
         logoAreaSize={QR_CODE_LOGO_SIZE + 8}
-        logo={<ItwIcon width={QR_CODE_LOGO_SIZE} height={QR_CODE_LOGO_SIZE} />}
+        shapeOptions={{ shape: "rounded", eyePatternShape: "rounded" }}
+        size={qrCodeSize}
+        value={qrCodeString}
       />
     );
   };
@@ -203,13 +204,13 @@ export const ItwProximityQrCodeScreen = () => {
   return (
     <IOScrollView actions={scrollViewActions}>
       <ItwBrandedBox
-        variant={showStatusContent ? "error" : "default"}
         backgroundVariant={"gradient"}
+        variant={showStatusContent ? "error" : "default"}
       >
         <View style={styles.logoContainer}>
-          <ItWalletLogo width={134} height={28} />
+          <ItWalletLogo height={28} width={134} />
           {shouldBlockProximityPresentation && (
-            <Icon name="errorFilled" size={20} color={theme.errorIcon} />
+            <Icon color={theme.errorIcon} name="errorFilled" size={20} />
           )}
         </View>
         {!showStatusContent && (
@@ -227,11 +228,11 @@ export const ItwProximityQrCodeScreen = () => {
         <>
           <VSpacer size={24} />
           <Alert
-            testID="itwExpiredBannerTestID"
-            variant="error"
             content={I18n.t(
               "features.itWallet.presentation.qrCode.banner.invalid"
             )}
+            testID="itwExpiredBannerTestID"
+            variant="error"
           />
         </>
       )}

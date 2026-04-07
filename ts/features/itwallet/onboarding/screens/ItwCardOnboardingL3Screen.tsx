@@ -26,6 +26,7 @@ import {
 } from "../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
+import { openWebUrl } from "../../../../utils/url.ts";
 import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation.ts";
 import {
   isCgnDetailsLoading,
@@ -58,7 +59,6 @@ import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
 import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalogueWrapper.tsx";
 import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
-import { openWebUrl } from "../../../../utils/url.ts";
 
 const MAX_INDEX = 1;
 
@@ -182,10 +182,10 @@ const ItwCredentialOnboardingSection = () => {
 
         {isItWalletActivationDisabled && (
           <Alert
-            variant="info"
-            content={I18n.t("features.wallet.onboarding.no-nfc-banner.content")}
             action={I18n.t("features.wallet.onboarding.no-nfc-banner.cta")}
+            content={I18n.t("features.wallet.onboarding.no-nfc-banner.content")}
             onPress={() => openWebUrl(NFC_NOT_SUPPORTED_FAQ_URL)}
+            variant="info"
           />
         )}
 

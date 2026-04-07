@@ -1,6 +1,7 @@
 import { ModuleNavigationAlt } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { useCallback } from "react";
+
 import { trackItWalletIDMethodSelected } from "../../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { useContinueWithBottomSheet } from "../hooks/useContinueWithBottomSheet";
@@ -26,13 +27,6 @@ export const CieIdMethodModule = ({ isL3 }: Props) => {
     return (
       <>
         <ModuleNavigationAlt
-          testID="CieIDMethodModuleTestIDL3"
-          title={I18n.t(
-            "features.itWallet.identification.modeSelection.mode.cieId.title"
-          )}
-          subtitle={I18n.t(
-            "features.itWallet.identification.modeSelection.mode.cieId.subtitle.l3"
-          )}
           icon="cie"
           onPress={() => {
             trackItWalletIDMethodSelected({
@@ -41,6 +35,13 @@ export const CieIdMethodModule = ({ isL3 }: Props) => {
             });
             cieIdBottomSheet.present();
           }}
+          subtitle={I18n.t(
+            "features.itWallet.identification.modeSelection.mode.cieId.subtitle.l3"
+          )}
+          testID="CieIDMethodModuleTestIDL3"
+          title={I18n.t(
+            "features.itWallet.identification.modeSelection.mode.cieId.title"
+          )}
         />
         {cieIdBottomSheet.bottomSheet}
       </>
@@ -49,15 +50,15 @@ export const CieIdMethodModule = ({ isL3 }: Props) => {
 
   return (
     <ModuleNavigationAlt
+      icon="cie"
+      onPress={handleOnPress}
+      subtitle={I18n.t(
+        "features.itWallet.identification.modeSelection.mode.cieId.subtitle.default"
+      )}
       testID="CieIDMethodModuleTestIDL2"
       title={I18n.t(
         "features.itWallet.identification.modeSelection.mode.cieId.title"
       )}
-      subtitle={I18n.t(
-        "features.itWallet.identification.modeSelection.mode.cieId.subtitle.default"
-      )}
-      icon="cie"
-      onPress={handleOnPress}
     />
   );
 };

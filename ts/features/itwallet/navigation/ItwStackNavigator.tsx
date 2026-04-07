@@ -1,5 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { ComponentType, memo } from "react";
+
 import { useIOSelector } from "../../../store/hooks";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorContent";
@@ -45,6 +46,8 @@ import {
   ItwEidIssuanceMachineContext,
   ItwEidIssuanceMachineProvider
 } from "../machine/eid/provider";
+import { ItwCardOnboardingL2Screen } from "../onboarding/screens/ItwCardOnboardingL2Screen.tsx";
+import { ItwCardOnboardingL3Screen } from "../onboarding/screens/ItwCardOnboardingL3Screen.tsx";
 import { WalletCardOnboardingScreen } from "../onboarding/screens/WalletCardOnboardingScreen";
 import { ItwL3CredentialDetailScreen } from "../playgrounds/screens/ItwL3CredentialDetailScreen.tsx";
 import ItwPlayground from "../playgrounds/screens/ItwPlayground.tsx";
@@ -57,8 +60,6 @@ import { ItwPresentationPidDetailScreen } from "../presentation/details/screens/
 import { ItwSettingsScreen } from "../settings/screens/ItwSettingsScreen.tsx";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
-import { ItwCardOnboardingL3Screen } from "../onboarding/screens/ItwCardOnboardingL3Screen.tsx";
-import { ItwCardOnboardingL2Screen } from "../onboarding/screens/ItwCardOnboardingL2Screen.tsx";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -82,7 +83,6 @@ const InnerNavigator = memo(() => {
   return (
     <Stack.Navigator
       initialRouteName={ITW_ROUTES.OFFLINE.WALLET}
-      screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
       screenListeners={{
         beforeRemove: () => {
           // Read more on https://reactnavigation.org/docs/preventing-going-back/
@@ -92,22 +92,23 @@ const InnerNavigator = memo(() => {
           credentialIssuanceMachineRef.send({ type: "back" });
         }
       }}
+      screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
     >
       <Stack.Screen
-        name={ITW_ROUTES.ONBOARDING}
         component={WalletCardOnboardingScreen}
+        name={ITW_ROUTES.ONBOARDING}
       />
       <Stack.Screen
-        name={ITW_ROUTES.L3_ONBOARDING}
         component={ItwCardOnboardingL3Screen}
+        name={ITW_ROUTES.L3_ONBOARDING}
       />
       <Stack.Screen
-        name={ITW_ROUTES.L2_ONBOARDING}
         component={ItwCardOnboardingL2Screen}
+        name={ITW_ROUTES.L2_ONBOARDING}
       />
       <Stack.Screen
-        name={ITW_ROUTES.OFFLINE.WALLET}
         component={ItwOfflineWalletScreen}
+        name={ITW_ROUTES.OFFLINE.WALLET}
         options={{
           gestureEnabled: isGestureEnabled,
           headerShown: false
@@ -115,220 +116,220 @@ const InnerNavigator = memo(() => {
       />
       {/* Landing screens from deep links */}
       <Stack.Screen
-        name={ITW_ROUTES.LANDING.DISCOVERY}
         component={ItwDiscoveryLandingScreen}
+        name={ITW_ROUTES.LANDING.DISCOVERY}
         options={hiddenHeader}
       />
       <Stack.Screen
-        name={ITW_ROUTES.LANDING.CREDENTIAL_ISSUANCE}
         component={ItwIssuanceCredentialLandingScreen}
+        name={ITW_ROUTES.LANDING.CREDENTIAL_ISSUANCE}
         options={hiddenHeader}
       />
       <Stack.Screen
-        name={ITW_ROUTES.LANDING.CREDENTIAL_ASYNC_FLOW_CONTINUATION}
         component={withItwEnabled(ItwIssuanceCredentialAsyncContinuationScreen)}
+        name={ITW_ROUTES.LANDING.CREDENTIAL_ASYNC_FLOW_CONTINUATION}
         options={hiddenHeader}
       />
       <Stack.Screen
-        name={ITW_ROUTES.LANDING.EID_REISSUANCE}
         component={withItwEnabled(ItwIssuanceEidReissuanceLandingScreen)}
+        name={ITW_ROUTES.LANDING.EID_REISSUANCE}
         options={hiddenHeader}
       />
       {/* DISCOVERY */}
       <Stack.Screen
-        name={ITW_ROUTES.DISCOVERY.INFO}
         component={withItwEnabled(ItwDiscoveryInfoScreen)}
+        name={ITW_ROUTES.DISCOVERY.INFO}
         options={({ route }) => ({
           ...hiddenHeader,
           animationEnabled: route.params?.animationEnabled
         })}
       />
       <Stack.Screen
-        name={ITW_ROUTES.DISCOVERY.IPZS_PRIVACY}
         component={ItwIpzsPrivacyScreen}
+        name={ITW_ROUTES.DISCOVERY.IPZS_PRIVACY}
       />
       <Stack.Screen
-        name={ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN}
         component={withItwEnabled(ItwAlreadyActiveScreen)}
+        name={ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN}
         options={{ ...hiddenHeader, animationEnabled: false }}
       />
       {/* IDENTIFICATION */}
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION}
         component={ItwIdentificationModeSelectionScreen}
+        name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION}
         options={({ route }) => ({
           animationEnabled: route.params.animationEnabled
         })}
       />
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.CIE_WARNING}
         component={ItwIdentificationCieWarningScreen}
+        name={ITW_ROUTES.IDENTIFICATION.CIE_WARNING}
       />
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.IDP_SELECTION}
         component={ItwIdentificationIdpSelectionScreen}
+        name={ITW_ROUTES.IDENTIFICATION.IDP_SELECTION}
       />
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.SPID.LOGIN}
         component={ItwSpidIdpLoginScreen}
+        name={ITW_ROUTES.IDENTIFICATION.SPID.LOGIN}
       />
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.CIE_ID.LOGIN}
         component={ItwCieIdLoginScreen}
+        name={ITW_ROUTES.IDENTIFICATION.CIE_ID.LOGIN}
       />
       {/* IDENTIFICATION CIE */}
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.PIN_SCREEN}
         component={ItwCiePreparationPinScreen}
+        name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.PIN_SCREEN}
       />
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.NFC_SCREEN}
         component={ItwCiePreparationNfcScreen}
+        name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.NFC_SCREEN}
       />
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CAN_SCREEN}
         component={ItwCiePreparationCanScreen}
+        name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CAN_SCREEN}
       />
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CARD_SCREEN}
         component={ItwCiePreparationCardScreen}
+        name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CARD_SCREEN}
       />
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN}
         component={ItwCiePinScreen}
+        name={ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN}
       />
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.CIE.CAN_SCREEN}
         component={ItwCieCanScreen}
+        name={ITW_ROUTES.IDENTIFICATION.CIE.CAN_SCREEN}
       />
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.CIE.AUTH_SCREEN}
         component={ItwCieAuthenticationScreen}
+        name={ITW_ROUTES.IDENTIFICATION.CIE.AUTH_SCREEN}
         options={hiddenHeader}
       />
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.CIE.INTERNAL_AUTH_MRTD_SCREEN}
         component={ItwCieInternalAuthAndMrtdScreen}
+        name={ITW_ROUTES.IDENTIFICATION.CIE.INTERNAL_AUTH_MRTD_SCREEN}
         options={hiddenHeader}
       />
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC}
         component={ItwActivateNfcScreen}
+        name={ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC}
       />
       {/* ISSUANCE */}
       <Stack.Screen
-        name={ITW_ROUTES.ISSUANCE.EID_PREVIEW}
         component={ItwIssuanceEidPreviewScreen}
+        name={ITW_ROUTES.ISSUANCE.EID_PREVIEW}
         options={hiddenHeader}
       />
       <Stack.Screen
-        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION}
         component={ItwIssuanceCredentialIntroductionScreen}
+        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION}
         options={hiddenHeader}
       />
       <Stack.Screen
-        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER}
         component={ItwIssuanceCredentialTrustIssuerScreen}
+        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER}
         options={({ route }) => ({
           ...hiddenHeader,
           animationEnabled: route.params?.animationEnabled
         })}
       />
       <Stack.Screen
-        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW}
         component={ItwIssuanceCredentialPreviewScreen}
+        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW}
         options={hiddenHeader}
       />
       <Stack.Screen
-        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_FAILURE}
         component={ItwIssuanceCredentialFailureScreen}
+        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_FAILURE}
         options={hiddenHeader}
       />
       <Stack.Screen
-        name={ITW_ROUTES.ISSUANCE.EID_RESULT}
         component={ItwIssuanceEidResultScreen}
+        name={ITW_ROUTES.ISSUANCE.EID_RESULT}
         options={hiddenHeader}
       />
       <Stack.Screen
-        name={ITW_ROUTES.ISSUANCE.EID_FAILURE}
         component={ItwIssuanceEidFailureScreen}
+        name={ITW_ROUTES.ISSUANCE.EID_FAILURE}
         options={{ headerShown: false, gestureEnabled: false }}
         /* gestureEnabled to false prevents going back to the loading screen, just go back to the home screen when swiping back.
          * TODO: [SIW-1375] better retry and go back handling logic for the issuance process
          */
       />
       <Stack.Screen
-        name={ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL}
         component={ItwIssuanceUpcomingCredentialScreen}
+        name={ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL}
         options={hiddenHeader}
       />
       <Stack.Screen
-        name={ITW_ROUTES.ISSUANCE.UPGRADE_CREDENTIALS}
         component={ItwIssuanceUpgradeCredentialsScreen}
+        name={ITW_ROUTES.ISSUANCE.UPGRADE_CREDENTIALS}
         options={hiddenHeader}
       />
       {/* CREDENTIAL PRESENTATION */}
       <Stack.Screen
-        name={ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL}
         component={ItwPresentationCredentialDetailScreen}
+        name={ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL}
         options={hiddenHeader}
       />
       <Stack.Screen
-        name={ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT}
         component={ItwPresentationCredentialAttachmentScreen}
+        name={ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT}
       />
       <Stack.Screen
-        name={ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_MODAL}
         component={ItwPresentationCredentialCardModal}
+        name={ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_MODAL}
         options={{
           gestureEnabled: false,
           presentation: "transparentModal"
         }}
       />
       <Stack.Screen
-        name={ITW_ROUTES.PRESENTATION.CREDENTIAL_TRUSTMARK}
         component={ItwCredentialTrustmarkScreen}
+        name={ITW_ROUTES.PRESENTATION.CREDENTIAL_TRUSTMARK}
       />
       <Stack.Screen
-        name={ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL}
         component={ItwPresentationCredentialFiscalCodeModal}
+        name={ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL}
       />
       <Stack.Screen
-        name={ITW_ROUTES.PRESENTATION.PID_DETAIL}
         component={ItwPresentationPidDetailScreen}
+        name={ITW_ROUTES.PRESENTATION.PID_DETAIL}
       />
       {/* LIFECYCLE */}
       <Stack.Screen
-        name={ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN}
         component={ItwIdentityNotMatchingScreen}
+        name={ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN}
         options={{ gestureEnabled: false }}
       />
       <Stack.Screen
-        name={ITW_ROUTES.WALLET_REVOCATION_SCREEN}
         component={ItwLifecycleWalletRevocationScreen}
+        name={ITW_ROUTES.WALLET_REVOCATION_SCREEN}
         options={{ headerShown: false, gestureEnabled: false }}
       />
       <Stack.Screen
-        name={ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED}
         component={ItwPresentationEidVerificationExpiredScreen}
+        name={ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED}
         options={{ headerShown: false }}
       />
       {/* Playground's routes */}
       <Stack.Group screenOptions={hiddenHeader}>
         <Stack.Screen
-          name={ITW_ROUTES.PLAYGROUNDS.LANDING}
           component={ItwPlayground}
+          name={ITW_ROUTES.PLAYGROUNDS.LANDING}
         />
         <Stack.Screen
-          name={ITW_ROUTES.PLAYGROUNDS.CREDENTIAL_DETAIL}
           component={ItwL3CredentialDetailScreen}
+          name={ITW_ROUTES.PLAYGROUNDS.CREDENTIAL_DETAIL}
         />
         <Stack.Screen
-          name={ITW_ROUTES.PLAYGROUNDS.DISCOVERY_INFO_NEW}
           component={ItwDiscoveryInfoFallbackComponent}
+          name={ITW_ROUTES.PLAYGROUNDS.DISCOVERY_INFO_NEW}
         />
       </Stack.Group>
-      <Stack.Screen name={ITW_ROUTES.SETTINGS} component={ItwSettingsScreen} />
+      <Stack.Screen component={ItwSettingsScreen} name={ITW_ROUTES.SETTINGS} />
     </Stack.Navigator>
   );
 });

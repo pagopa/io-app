@@ -1,15 +1,16 @@
 import { createSelector } from "reselect";
+
 import { getCredentialStatus } from "../../../../common/utils/itwCredentialStatusUtils";
-import {
-  itwCredentialsEidStatusSelector,
-  makeSelectAllCredentials
-} from "../../../../credentials/store/selectors";
 import {
   CredentialFormat,
   ItwJwtCredentialStatus,
   MdocSupportedCredentialConfiguration,
   StoredCredential
 } from "../../../../common/utils/itwTypesUtils";
+import {
+  itwCredentialsEidStatusSelector,
+  makeSelectAllCredentials
+} from "../../../../credentials/store/selectors";
 
 type PresentableCredentialsByDocType = Record<string, StoredCredential>;
 

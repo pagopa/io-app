@@ -36,10 +36,10 @@ import { IdPayUnsubscriptionNavigator } from "../features/idpay/unsubscription/n
 import { IdPayUnsubscriptionRoutes } from "../features/idpay/unsubscription/navigation/routes";
 import { ItwStackNavigator } from "../features/itwallet/navigation/ItwStackNavigator";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
-import { ItwRemoteStackNavigator } from "../features/itwallet/presentation/remote/navigation/ItwRemoteStackNavigator.tsx";
-import { ITW_REMOTE_ROUTES } from "../features/itwallet/presentation/remote/navigation/routes.ts";
 import { ItwProximityStackNavigator } from "../features/itwallet/presentation/proximity/navigation/ItwProximityStackNavigator";
 import { ITW_PROXIMITY_ROUTES } from "../features/itwallet/presentation/proximity/navigation/routes";
+import { ItwRemoteStackNavigator } from "../features/itwallet/presentation/remote/navigation/ItwRemoteStackNavigator.tsx";
+import { ITW_REMOTE_ROUTES } from "../features/itwallet/presentation/remote/navigation/routes.ts";
 import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
 import CheckEmailNavigator from "../features/mailCheck/navigation/CheckEmailNavigator.tsx";
 import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
@@ -370,8 +370,8 @@ const AuthenticatedStackNavigator = () => {
         options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
       />
       <Stack.Screen
-        name={ITW_PROXIMITY_ROUTES.MAIN}
         component={ItwProximityStackNavigator}
+        name={ITW_PROXIMITY_ROUTES.MAIN}
         options={{
           ...TransitionPresets.ModalSlideFromBottomIOS,
           gestureEnabled: isGestureEnabled,

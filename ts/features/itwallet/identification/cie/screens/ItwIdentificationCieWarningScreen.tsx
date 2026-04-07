@@ -14,17 +14,17 @@ import {
   selectCredentialType
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
-import { CieWarningType } from "../utils/types";
 import {
   trackItwFallbackL2Flow,
   trackItwFallbackL2FlowExit,
   trackItwFallbackL2FlowStart,
   trackItwUserWithoutL3Requirements
 } from "../../analytics";
+import { CieWarningType } from "../utils/types";
 
 export type ItwIdentificationCieWarningScreenNavigationParams = {
-  type: CieWarningType;
   routeName: string;
+  type: CieWarningType;
 };
 
 type ScreenProps = IOStackNavigationRouteProps<

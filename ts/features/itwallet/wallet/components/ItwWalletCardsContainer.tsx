@@ -22,8 +22,8 @@ import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingRevi
 import { useItwStatusIconColor } from "../../common/hooks/useItwStatusIconColor.ts";
 import {
   itwShouldHideEidLifecycleAlert,
-  itwShouldRenderNewItWalletSelector,
   itwShouldRenderL2EngagementBannerSelector,
+  itwShouldRenderNewItWalletSelector,
   itwShouldRenderUpgradeBannerSelector
 } from "../../common/store/selectors";
 import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils.ts";
