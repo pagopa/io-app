@@ -214,12 +214,12 @@ export const createProximityActorsImplementation = (env: Env) => {
   >(async ({ input }) => {
     const { verifierRequest, walletInstanceAttestation, credentials } = input;
 
+    assert(credentials, "Missing credentials for sending documents");
     assert(verifierRequest, "Missing verifier request");
     assert(
       walletInstanceAttestation,
       "Missing wallet instance attestation for sending documents"
     );
-    assert(credentials, "Missing credentials for sending documents");
 
     const wiaMdoc = walletInstanceAttestation[CredentialFormat.MDOC];
     assert(wiaMdoc, "Missing Wallet Attestation in MDOC format");

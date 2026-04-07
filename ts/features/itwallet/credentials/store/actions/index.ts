@@ -72,10 +72,19 @@ export const itwCredentialsReplaceByType = createStandardAction(
   "ITW_CREDENTIALS_REPLACE_BY_TYPE"
 )<ReadonlyArray<CredentialBundle>, CallbackActionMeta>();
 
+/**
+ * Refresh the status of a credential, requesting a status assertion
+ * to the Issuer and updating the stored credential with the result.
+ */
+export const itwCredentialsRefreshStatusByType = createStandardAction(
+  "ITW_CREDENTIALS_REFRESH_STATUS_BY_TYPE"
+)<string>();
+
 export type ItwCredentialsActions =
   | ActionType<typeof itwCredentialsStoreBundle>
   | ActionType<typeof itwCredentialsStore>
   | ActionType<typeof itwCredentialsRemove>
   | ActionType<typeof itwCredentialsRemoveByType>
+  | ActionType<typeof itwCredentialsRefreshStatusByType>
   | ActionType<typeof itwCredentialsReplaceByType>
   | ActionType<typeof itwCredentialsVaultMigrationComplete>;

@@ -4,12 +4,14 @@ import {
   itwCredentialsRemoveByType,
   itwCredentialsReplaceByType,
   itwCredentialsStore,
-  itwCredentialsStoreBundle
+  itwCredentialsStoreBundle,
+  itwCredentialsRefreshStatusByType
 } from "../store/actions";
 import { handleItwCredentialsRemoveByTypeSaga } from "./handleItwCredentialsRemoveByTypeSaga";
 import { handleItwCredentialsReplaceByTypeSaga } from "./handleItwCredentialsReplaceByTypeSaga";
 import { handleItwCredentialsStoreSaga } from "./handleItwCredentialsStoreSaga";
 import { handleItwCredentialsStoreBundleSaga } from "./handleItwCredentialsStoreBundleSaga";
+import { handleCredentialStatusAssertionRetry } from "./checkCredentialsStatusAssertion";
 
 export function* watchItwCredentialsSaga(): SagaIterator {
   yield* takeLeading(
@@ -24,5 +26,9 @@ export function* watchItwCredentialsSaga(): SagaIterator {
   yield* takeLeading(
     itwCredentialsReplaceByType,
     handleItwCredentialsReplaceByTypeSaga
+  );
+  yield* takeLeading(
+    itwCredentialsRefreshStatusByType,
+    handleCredentialStatusAssertionRetry
   );
 }

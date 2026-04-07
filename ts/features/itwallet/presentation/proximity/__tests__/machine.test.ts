@@ -59,6 +59,7 @@ describe("itwProximityMachine", () => {
   const setHasGivenConsent = jest.fn();
   const navigateToGrantPermissionsScreen = jest.fn();
   const navigateToBluetoothActivationScreen = jest.fn();
+  const navigateToQrCodeScreen = jest.fn();
   const navigateToFailureScreen = jest.fn();
   const navigateToClaimsDisclosureScreen = jest.fn();
   const navigateToSendDocumentsResponseScreen = jest.fn();
@@ -87,6 +88,7 @@ describe("itwProximityMachine", () => {
       setHasGivenConsent,
       navigateToGrantPermissionsScreen,
       navigateToBluetoothActivationScreen,
+      navigateToQrCodeScreen,
       navigateToFailureScreen,
       navigateToClaimsDisclosureScreen,
       navigateToSendDocumentsResponseScreen,
@@ -151,7 +153,7 @@ describe("itwProximityMachine", () => {
 
       const actor = createActor(mockedMachine);
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
+      actor.send({ type: "start" });
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
@@ -187,7 +189,7 @@ describe("itwProximityMachine", () => {
 
       const actor = createActor(mockedMachine);
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
+      actor.send({ type: "start" });
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
@@ -230,7 +232,7 @@ describe("itwProximityMachine", () => {
 
       const actor = createActor(mockedMachine);
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
+      actor.send({ type: "start" });
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
@@ -267,6 +269,14 @@ describe("itwProximityMachine", () => {
       const actor = createActor(mockedMachine, { snapshot });
       actor.start();
 
+      actor.send({ type: "start" });
+
+      await waitFor(() =>
+        expect(actor.getSnapshot().value).toStrictEqual({
+          Bluetooth: "EnableBluetooth"
+        })
+      );
+
       expect(actor.getSnapshot().value).toStrictEqual({
         Bluetooth: "EnableBluetooth"
       });
@@ -298,7 +308,7 @@ describe("itwProximityMachine", () => {
 
       const actor = createActor(mockedMachine);
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
+      actor.send({ type: "start" });
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
@@ -345,7 +355,7 @@ describe("itwProximityMachine", () => {
 
       const actor = createActor(mockedMachine);
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
+      actor.send({ type: "start" });
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
@@ -389,8 +399,7 @@ describe("itwProximityMachine", () => {
       const actor = createActor(mockedMachine, { snapshot });
       actor.start();
 
-      // Enter the QR generation flow (BT check returns true, goes to GenerateQRCode)
-      actor.send({ type: "continue" });
+      actor.send({ type: "start" });
 
       expect(actor.getSnapshot().tags).toStrictEqual(
         new Set([ItwTags.Loading])
@@ -438,8 +447,7 @@ describe("itwProximityMachine", () => {
       const actor = createActor(mockedMachine, { snapshot });
       actor.start();
 
-      // Enter the QR generation flow (BT check returns true, goes to GenerateQRCode)
-      actor.send({ type: "continue" });
+      actor.send({ type: "start" });
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
@@ -491,7 +499,7 @@ describe("itwProximityMachine", () => {
 
       const actor = createActor(mockedMachine);
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
+      actor.send({ type: "start" });
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
@@ -534,6 +542,14 @@ describe("itwProximityMachine", () => {
       } as unknown as MachineSnapshot);
       const actor = createActor(mockedMachine, { snapshot });
       actor.start();
+
+      actor.send({ type: "start" });
+
+      await waitFor(() =>
+        expect(actor.getSnapshot().value).toStrictEqual({
+          DeviceCommunication: "DisplayQrCode"
+        })
+      );
 
       expect(actor.getSnapshot().tags).toStrictEqual(
         new Set([ItwPresentationTags.Presenting])
@@ -611,6 +627,14 @@ describe("itwProximityMachine", () => {
       const actor = createActor(mockedMachine, { snapshot, clock });
       actor.start();
 
+      actor.send({ type: "start" });
+
+      await waitFor(() =>
+        expect(actor.getSnapshot().value).toStrictEqual({
+          DeviceCommunication: "DisplayQrCode"
+        })
+      );
+
       actor.send({ type: "device-connecting" });
       actor.send({ type: "device-connected" });
       actor.send({
@@ -662,6 +686,14 @@ describe("itwProximityMachine", () => {
       const actor = createActor(mockedMachine, { snapshot });
       actor.start();
 
+      actor.send({ type: "start" });
+
+      await waitFor(() =>
+        expect(actor.getSnapshot().value).toStrictEqual({
+          DeviceCommunication: "DisplayQrCode"
+        })
+      );
+
       actor.send({ type: "device-connecting" });
       actor.send({ type: "device-connected" });
       actor.send({
@@ -707,6 +739,14 @@ describe("itwProximityMachine", () => {
       } as unknown as MachineSnapshot);
       const actor = createActor(mockedMachine, { snapshot });
       actor.start();
+
+      actor.send({ type: "start" });
+
+      await waitFor(() =>
+        expect(actor.getSnapshot().value).toStrictEqual({
+          DeviceCommunication: "DisplayQrCode"
+        })
+      );
 
       expect(actor.getSnapshot().hasTag("Presenting")).toBe(true);
 
