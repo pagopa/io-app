@@ -27,8 +27,6 @@
  * keeping the displayed step indicator and controls in sync with the
  * visual transition.
  */
-import { useCallback, useEffect, useRef, useState } from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
 import {
   Canvas,
   Group,
@@ -36,6 +34,8 @@ import {
   Rect,
   RoundedRect
 } from "@shopify/react-native-skia";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Dimensions, StyleSheet, View } from "react-native";
 import Animated, {
   cancelAnimation,
   Easing,
@@ -45,17 +45,18 @@ import Animated, {
 } from "react-native-reanimated";
 import { scheduleOnRN } from "react-native-worklets";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { trackTourGuideAction } from "../analytics";
+import {
+  completeTourAction,
+  nextTourStepAction,
+  prevTourStepAction
+} from "../store/actions";
 import {
   activeGroupIdSelector,
   activeStepIndexSelector,
   isTourActiveSelector,
   tourItemsForActiveGroupSelector
 } from "../store/selectors";
-import {
-  completeTourAction,
-  nextTourStepAction,
-  prevTourStepAction
-} from "../store/actions";
 import { TourItemMeasurement } from "../types";
 import { useTourContext } from "./TourProvider";
 import { TourTooltip } from "./TourTooltip";
@@ -410,29 +411,36 @@ export const TourOverlay = () => {
     const nextIndex = pendingStepRef.current + 1;
     if (nextIndex >= items.length) {
       setTooltipReady(false);
+      trackTourGuideAction(groupId, "conclude");
       dispatch(completeTourAction({ groupId }));
       return;
     }
     pendingStepRef.current = nextIndex;
     void navigateToStep(nextIndex, () => {
+      trackTourGuideAction(groupId, "next");
       dispatch(nextTourStepAction());
     });
   }, [groupId, items.length, navigateToStep, dispatch]);
 
   const handleBack = useCallback(() => {
+    if (!groupId) {
+      return;
+    }
     const prevIndex = pendingStepRef.current - 1;
     if (prevIndex < 0) {
       return;
     }
     pendingStepRef.current = prevIndex;
     void navigateToStep(prevIndex, () => {
+      trackTourGuideAction(groupId, "back");
       dispatch(prevTourStepAction());
     });
-  }, [navigateToStep, dispatch]);
+  }, [navigateToStep, dispatch, groupId]);
 
   const handleSkip = useCallback(() => {
     if (groupId) {
       setTooltipReady(false);
+      trackTourGuideAction(groupId, "close");
       dispatch(completeTourAction({ groupId }));
     }
   }, [dispatch, groupId]);
