@@ -399,7 +399,7 @@ describe("itwProximityMachine", () => {
       const actor = createActor(mockedMachine, { snapshot });
       actor.start();
 
-      actor.send({ type: "start" });
+      actor.send({ type: "continue" });
 
       expect(actor.getSnapshot().tags).toStrictEqual(
         new Set([ItwTags.Loading])
@@ -447,7 +447,7 @@ describe("itwProximityMachine", () => {
       const actor = createActor(mockedMachine, { snapshot });
       actor.start();
 
-      actor.send({ type: "start" });
+      actor.send({ type: "continue" });
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({

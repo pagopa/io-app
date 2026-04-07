@@ -12,7 +12,7 @@ describe("createProximityActionsImplementation", () => {
   });
 
   it("pops the proximity navigator on success", () => {
-    const actions = createProximityActionsImplementation(navigation);
+    const actions = createProximityActionsImplementation(navigation, {} as any);
 
     actions.navigateToWallet();
 
@@ -20,7 +20,7 @@ describe("createProximityActionsImplementation", () => {
   });
 
   it("pops the proximity navigator when closing the flow", () => {
-    const actions = createProximityActionsImplementation(navigation);
+    const actions = createProximityActionsImplementation(navigation, {} as any);
 
     actions.closeProximity();
 
